@@ -1,0 +1,47 @@
+---
+name: _build
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        description: The Python version.
+        type: string
+        required: false
+        default: '3.12'
+      runs_on:
+        description: The runner environment.
+        type: string
+        required: false
+        default: ubuntu-latest
+      upload_artifact:
+        description: Upload the built artifact.
+        type: string
+        required: false
+        default: 'false'
+    outputs:
+      artifact_name:
+        description: The artifact name.
+        value: build-${{ github.sha }}
+
+jobs:
+  build:
+    name: Package
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          python_version: ${{ inputs.python_version }}
+      - name: Build
+        run: make build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        if: inputs.upload_artifact == 'true'
+        with:
+          name: build-${{ github.sha }}
+          if-no-files-found: error
+          path: dist/

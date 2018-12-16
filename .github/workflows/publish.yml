@@ -1,0 +1,44 @@
+---
+name: Publish
+
+run-name: Publish ${{ github.ref_name }}
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/_build.yml
+    with:
+      upload_artifact: 'true'
+  release:
+    name: GitHub Releases
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: dist/
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fail_on_unmatched_files: true
+          prerelease: ${{ contains(github.ref_name, 'a') || contains(github.ref_name, 'b') || contains(github.ref_name, 'rc') }}
+          files: dist/*
+  pypi:
+    name: PyPI
+    uses: ./.github/workflows/_publish.yml
+    needs: build
+    with:
+      artifact_name: ${{ needs.build.outputs.artifact_name }}
+    secrets:
+      registry_token: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Python",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "POETRY_VERSION": "1.8.2",
+      "VARIANT": "3.12"
+    }
+  },
+  "remoteEnv": {
+    "POETRY_VIRTUALENVS_IN_PROJECT": "true",
+    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
+  },
+  "extensions": [
+    "ms-vsliveshare.vsliveshare",
+    "ms-python.python",
+    "EditorConfig.EditorConfig"
+  ],
+  "postCreateCommand": "poetry install",
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,37 @@
+---
+name: _publish
+
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        description: The artifact name.
+        type: string
+        required: true
+    secrets:
+      registry_token:
+        description: The package registry token.
+        required: true
+
+jobs:
+  publish:
+    name: Publish package
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          install_dependencies: 'false'
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: dist/
+      - name: Publish
+        run: poetry publish --skip-existing -u $USERNAME -p $PASSWORD
+        env:
+          USERNAME: __token__
+          PASSWORD: ${{ secrets.registry_token }}

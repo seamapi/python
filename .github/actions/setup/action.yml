@@ -1,0 +1,60 @@
+---
+name: Setup
+description: Setup Python and install dependencies.
+
+inputs:
+  python_version:
+    description: The Python version.
+    required: false
+    default: '3.12'
+  poetry_version:
+    description: The Poetry version.
+    required: false
+    default: '1.8.2'
+  install_dependencies:
+    description: Install dependencies.
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Poetry cache on Linux
+      uses: actions/cache@v4
+      if: runner.os == 'Linux'
+      with:
+        key: poetry-${{ inputs.poetry_version }}-${{ inputs.python_version }}-${{ runner.os }}-${{ runner.arch }}
+        path: |
+          ~/.local/bin
+          ~/.local/share/pypoetry
+    - name: Setup Poetry cache on macOS
+      uses: actions/cache@v4
+      if: runner.os == 'macOS'
+      with:
+        key: poetry-${{ inputs.poetry_version }}-${{ inputs.python_version }}-${{ runner.os }}-${{ runner.arch }}
+        path: |
+          ~/.local/bin
+          ~/.local/share/pypoetry
+          ~/Library/Application Support/pypoetry
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python_version }}
+    - name: Setup Poetry
+      uses: Gr1N/setup-poetry@v9
+      with:
+        poetry-version: ${{ inputs.poetry_version }}
+    - name: Setup Python with cache
+      uses: actions/setup-python@v5
+      if: inputs.install_dependencies == 'true'
+      with:
+        cache: poetry
+        python-version: ${{ inputs.python_version }}
+    - name: Check lockfile
+      if: inputs.install_dependencies == 'true'
+      shell: bash
+      run: poetry check --lock
+    - name: Install dependencies
+      if: inputs.install_dependencies == 'true'
+      shell: bash
+      run: poetry install --sync
