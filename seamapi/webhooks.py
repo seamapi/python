@@ -1,171 +1,62 @@
-from seamapi.types import (
-    AbstractSeam as Seam,
-    AbstractWebhooks,
-    Webhook,
-    WebhookId,
-)
-import time
-from typing import List, Union, Optional, cast
-import requests
-from seamapi.utils.convert_to_id import (
-    to_connect_webview_id,
-    to_connected_account_id,
-    to_device_id,
-    to_webhook_id,
-)
-from seamapi.utils.report_error import report_error
+from seamapi.types import AbstractWebhooks, AbstractSeam as Seam, Webhook
+from typing import Optional, Any, List, Dict, Union
 
 
 class Webhooks(AbstractWebhooks):
-    """
-    A class used to interact with webhooks API
-
-    ...
-
-    Attributes
-    ----------
-    seam : Seam
-        Initial seam class
-
-    Methods
-    -------
-    create(url, event_types=None)
-        Creates a new webhook
-    delete(webhook_id)
-        Deletes a webhook
-    get(webhook_id)
-        Fetches a webhook
-    list()
-        Lists webhooks
-    """
-
     seam: Seam
 
     def __init__(self, seam: Seam):
-        """
-        Parameters
-        ----------
-        seam : Seam
-          Initial seam class
-        """
-
         self.seam = seam
 
-    @report_error
-    def create(
-        self,
-        url: str,
-        event_types: Optional[list] = None,
-    ) -> Webhook:
-        """Creates a new webhook.
+    def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
+        json_payload = {}
 
-        Parameters
-        ----------
-        url : str
-            URL to send webhook events to
-        event_types : Optional[List[str]]
-            List of event types to send to webhook eg. ["connected_account.connected"]. Defaults to ["*"]
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            A webhook.
-        """
-        create_payload = {"url": url}
+        if url is not None:
+            json_payload["url"] = url
         if event_types is not None:
-            create_payload["event_types"] = event_types
+            json_payload["event_types"] = event_types
 
-        res = self.seam.make_request(
-            "POST",
-            "/webhooks/create",
-            json=create_payload,
-        )
+        res = self.seam.make_request("POST", "/webhooks/create", json=json_payload)
 
         return Webhook.from_dict(res["webhook"])
 
-    @report_error
-    def delete(
-        self,
-        webhook: Union[WebhookId, Webhook],
-    ) -> bool:
-        """Deletes a webhook.
+    def delete(self, *, webhook_id: str) -> None:
+        json_payload = {}
 
-        Parameters
-        ----------
-        webhook : Union[WebhookId, Webhook]
-            Webhook ID or Webhook
+        if webhook_id is not None:
+            json_payload["webhook_id"] = webhook_id
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        self.seam.make_request("POST", "/webhooks/delete", json=json_payload)
 
-        Returns
-        ------
-            Boolean.
-        """
+        return None
 
-        res = self.seam.make_request(
-            "DELETE",
-            "/webhooks/delete",
-            json={"webhook_id": to_webhook_id(webhook)},
-        )
+    def get(self, *, webhook_id: str) -> Webhook:
+        json_payload = {}
 
-        return True
+        if webhook_id is not None:
+            json_payload["webhook_id"] = webhook_id
 
-    @report_error
-    def get(
-        self,
-        webhook: Union[WebhookId, Webhook],
-    ) -> Webhook:
-        """Fetches a webhook.
-
-        Parameters
-        ----------
-        webhook : Union[WebhookId, Webhook]
-            Webhook ID or Webhook
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            A webhook.
-        """
-
-        res = self.seam.make_request(
-            "GET",
-            "/webhooks/get",
-            params={"webhook_id": to_webhook_id(webhook)},
-        )
+        res = self.seam.make_request("POST", "/webhooks/get", json=json_payload)
 
         return Webhook.from_dict(res["webhook"])
 
-    @report_error
     def list(
         self,
     ) -> List[Webhook]:
-        """Lists webhooks.
+        json_payload = {}
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        res = self.seam.make_request("POST", "/webhooks/list", json=json_payload)
 
-        Returns
-        ------
-            A list of webhooks.
-        """
+        return [Webhook.from_dict(item) for item in res["webhooks"]]
 
-        res = self.seam.make_request(
-            "GET",
-            "/webhooks/list",
-        )
+    def update(self, *, webhook_id: str, event_types: List[str]) -> None:
+        json_payload = {}
 
-        return [Webhook.from_dict(w) for w in res["webhooks"]]
+        if webhook_id is not None:
+            json_payload["webhook_id"] = webhook_id
+        if event_types is not None:
+            json_payload["event_types"] = event_types
+
+        self.seam.make_request("POST", "/webhooks/update", json=json_payload)
+
+        return None

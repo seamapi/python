@@ -1,465 +1,135 @@
-from seamapi.types import (
-    AbstractDevices,
-    AbstractUnmanagedDevices,
-    ConnectWebview,
-    ConnectWebviewId,
-    ConnectedAccount,
-    ConnectedAccountId,
-    Device,
-    DeviceId,
-    UnmanagedDevice,
-    AbstractSeam as Seam,
-    DeviceType,
-)
-from typing import Any, List, Union, Optional, Dict
-from seamapi.utils.parse_list_device_params import parse_list_device_params
-from seamapi.utils.convert_to_id import (
-    to_device_id,
-)
-from seamapi.utils.report_error import report_error
+from seamapi.types import AbstractDevices, AbstractSeam as Seam, Device, DeviceProvider
+from typing import Optional, Any, List, Dict, Union
+from seamapi.devices_simulate import DevicesSimulate
+from seamapi.devices_unmanaged import DevicesUnmanaged
 
 
 class Devices(AbstractDevices):
-    """
-    A class used to retrieve device data
-    through interaction with Seam API
-
-    ...
-
-    Attributes
-    ----------
-    seam : Seam
-        Initial seam class
-
-    Methods
-    -------
-    list(connected_account=None, connected_accounts=None, connect_webview=None, device_type=None, device_ids=None, manufacturer=None)
-        Gets a list of devices
-    get(device=None, name=None)
-        Gets a device
-    update(device, name=None, properties=None, location=None)
-        Updates a device
-    list_device_providers(provider_category=None):
-        Gets a list of device providers
-    """
-
     seam: Seam
 
     def __init__(self, seam: Seam):
-        """
-        Parameters
-        ----------
-        seam : Seam
-          Initial seam class
-        """
-
         self.seam = seam
-        self.unmanaged = UnmanagedDevices(seam)
+        self._simulate = DevicesSimulate(seam=seam)
+        self._unmanaged = DevicesUnmanaged(seam=seam)
 
-    @report_error
-    def list(
-        self,
-        connected_account: Union[ConnectedAccountId, ConnectedAccount] = None,
-        connected_accounts: List[
-            Union[ConnectedAccountId, ConnectedAccount]
-        ] = None,
-        connect_webview: Union[ConnectWebviewId, ConnectWebview] = None,
-        device_type: Optional[DeviceType] = None,
-        device_types: Optional[List[DeviceType]] = None,
-        device_ids: Optional[List[Union[DeviceId, Device]]] = None,
-        manufacturer: Optional[str] = None,
-        limit: Optional[float] = None,
-        created_before: Optional[str] = None,
-    ) -> List[Device]:
-        """Gets a list of devices.
+    @property
+    def simulate(self) -> DevicesSimulate:
+        return self._simulate
 
-        Parameters
-        ----------
-        connected_account : ConnectedAccountId or ConnectedAccount, optional
-            Connected account id or ConnectedAccount to get devices associated with
-        connected_accounts : ConnectedAccountId(s) or ConnectedAccount(s), optional
-            Connected account ids or ConnectedAccount(s) to get devices associated with
-        connect_webview : ConnectWebviewId or ConnectWebview, optional
-            Connect webview id or ConnectWebview to get devices associated with
-        device_type : DeviceType, optional
-            Device type e.g. august_lock
-        device_types : List[DeviceType], optional
-            List of device types e.g. august_lock
-        device_ids : Optional[List[Union[DeviceId, Device]]]
-            Device IDs to filter devices by
-        manufacturer : Optional[str]
-            Manufacturer name to filter devices by e.g. august, schlage
-        limit : str, optional
-            Limit the number of devices returned
-        created_before : str, optional
-            If specified, only devices created before this date will be returned
+    @property
+    def unmanaged(self) -> DevicesUnmanaged:
+        return self._unmanaged
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+    def delete(self, *, device_id: str) -> None:
+        json_payload = {}
 
-        Returns
-        ------
-            A list of devices.
-        """
+        if device_id is not None:
+            json_payload["device_id"] = device_id
 
-        params = parse_list_device_params(
-            connected_account,
-            connected_accounts,
-            connect_webview,
-            device_type,
-            device_types,
-            device_ids,
-            manufacturer,
-            limit,
-            created_before,
-        )
+        self.seam.make_request("POST", "/devices/delete", json=json_payload)
 
-        res = self.seam.make_request(
-            "GET",
-            "/devices/list",
-            params=params,
-        )
-        devices = res["devices"]
+        return None
 
-        return [Device.from_dict(d) for d in devices]
-
-    @report_error
     def get(
-        self,
-        device: Optional[Union[DeviceId, Device]] = None,
-        name: Optional[str] = None,
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Gets a device.
+        json_payload = {}
 
-        Parameters
-        ----------
-        device : DeviceId or Device, optional
-            Device id or Device to get the state of
-        name : str, optional
-            Device name
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if name is not None:
+            json_payload["name"] = name
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        res = self.seam.make_request("POST", "/devices/get", json=json_payload)
 
-        Returns
-        ------
-            Device
-        """
+        return Device.from_dict(res["device"])
 
-        params = {}
-        if device:
-            params["device_id"] = to_device_id(device)
-        if name:
-            params["name"] = name
-        res = self.seam.make_request("GET", "/devices/get", params=params)
-        json_device = res["device"]
-        return Device.from_dict(json_device)
-
-    @report_error
-    def update(
-        self,
-        device: Union[DeviceId, Device],
-        name: Optional[str] = None,
-        properties: Optional[dict] = None,
-        location: Optional[dict] = None,
-        is_managed: Optional[bool] = None,
-    ) -> bool:
-        """Updates a device.
-
-        Parameters
-        ----------
-        device : DeviceId or Device
-            Device id or Device to update
-        name : str, optional
-            New device name
-        properties : dict, optional
-            New device properties
-        location : str, optional
-            New device location
-        is_managed : bool, optional
-            The managed state of the device
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            Boolean
-        """
-
-        if not device:
-            raise Exception("device is required")
-
-        update_payload = {
-            "device_id": to_device_id(device),
-        }
-        if name:
-            update_payload["name"] = name
-        if properties:
-            update_payload["properties"] = properties
-        if location:
-            update_payload["location"] = location
-        if is_managed is not None:
-            update_payload["is_managed"] = is_managed
-
-        self.seam.make_request(
-            "POST",
-            "/devices/update",
-            json=update_payload,
-        )
-
-        return True
-
-    @report_error
-    def delete(self, device: Union[DeviceId, Device]) -> bool:
-        """Deletes a device.
-
-        Parameters
-        ----------
-        device : DeviceId or Device
-            Device id or Device to delete
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            Boolean
-        """
-
-        if not device:
-            raise Exception("device is required")
-
-        delete_payload = {"device_id": to_device_id(device)}
-        self.seam.make_request(
-            "DELETE",
-            "/devices/delete",
-            json=delete_payload,
-        )
-
-        return True
-
-    @report_error
-    def list_device_providers(
-        self, provider_category: Optional[str] = None
-    ) -> List[Dict[str, Any]]:
-        """Retrieve a list of device providers
-
-        Parameters
-        ----------
-        provider_category : Optional[str]
-            Provider category to filter by eg. stable
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            List of device providers
-        """
-        params = {}
-
-        if provider_category:
-            params["provider_category"] = provider_category
-
-        res = self.seam.make_request(
-            "GET",
-            "/devices/list_device_providers",
-            params=params,
-        )
-
-        return res["device_providers"]
-
-
-class UnmanagedDevices(AbstractUnmanagedDevices):
-    """
-    A class used to retrieve unmanaged device data
-    through interaction with Seam API
-
-    ...
-
-    Attributes
-    ----------
-    seam : Seam
-        Initial seam class
-
-    Methods
-    -------
-    get(device=None, name=None)
-        Gets an unmanaged device
-    list(connected_account=None, connected_accounts=None, connect_webview=None, device_type=None, device_ids=None, manufacturer=None)
-        Gets a list of unmanaged devices
-    update(device, is_managed)
-        Updates an unmanaged device
-    """
-
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        """
-        Parameters
-        ----------
-        seam : Seam
-          Initial seam class
-        """
-
-        self.seam = seam
-
-    @report_error
-    def get(
-        self,
-        device: Optional[Union[DeviceId, Device]] = None,
-        name: Optional[str] = None,
-    ) -> UnmanagedDevice:
-        """Gets an unmanaged devices.
-
-        Parameters
-        ----------
-        device : Union[DeviceId, Device], optional
-            Device ID or Device
-        name : str, optional
-            Device name
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            An unmanaged device.
-        """
-
-        params = {}
-
-        if device:
-            params["device_id"] = to_device_id(device)
-        if name:
-            params["name"] = name
-
-        res = self.seam.make_request(
-            "GET",
-            "/devices/unmanaged/get",
-            params=params,
-        )
-        json_device = res["device"]
-
-        return UnmanagedDevice.from_dict(json_device)
-
-    @report_error
     def list(
         self,
-        connected_account: Union[ConnectedAccountId, ConnectedAccount] = None,
-        connected_accounts: List[
-            Union[ConnectedAccountId, ConnectedAccount]
-        ] = None,
-        connect_webview: Union[ConnectWebviewId, ConnectWebview] = None,
-        device_type: Optional[DeviceType] = None,
-        device_types: Optional[List[DeviceType]] = None,
-        device_ids: Optional[List[Union[DeviceId, Device]]] = None,
+        *,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        connect_webview_id: Optional[str] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[Any]] = None,
         manufacturer: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         created_before: Optional[str] = None,
-    ) -> List[UnmanagedDevice]:
-        """Gets a list of unmanaged devices.
+        user_identifier_key: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        include_if: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None
+    ) -> List[Device]:
+        json_payload = {}
 
-        Parameters
-        ----------
-        connected_account : ConnectedAccountId or ConnectedAccount, optional
-            Connected account id or ConnectedAccount to get devices associated with
-        connected_accounts : ConnectedAccountId(s) or ConnectedAccount(s), optional
-            Connected account ids or ConnectedAccount(s) to get devices associated with
-        connect_webview : ConnectWebviewId or ConnectWebview, optional
-            Connect webview id or ConnectWebview to get devices associated with
-        device_type : DeviceType, optional
-            Device type e.g. august_lock
-        device_types : List[DeviceType], optional
-            List of device types e.g. august_lock
-        device_ids : List[Union[DeviceId, Device]], optional
-            Device IDs to filter devices by
-        manufacturer : str, optional
-            Manufacturer name to filter devices by e.g. august, schlage
-        limit : str, optional
-            Limit the number of devices returned
-        created_before : str, optional
-            If specified, only devices created before this date will be returned
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
+        if connected_account_ids is not None:
+            json_payload["connected_account_ids"] = connected_account_ids
+        if connect_webview_id is not None:
+            json_payload["connect_webview_id"] = connect_webview_id
+        if device_type is not None:
+            json_payload["device_type"] = device_type
+        if device_types is not None:
+            json_payload["device_types"] = device_types
+        if manufacturer is not None:
+            json_payload["manufacturer"] = manufacturer
+        if device_ids is not None:
+            json_payload["device_ids"] = device_ids
+        if limit is not None:
+            json_payload["limit"] = limit
+        if created_before is not None:
+            json_payload["created_before"] = created_before
+        if user_identifier_key is not None:
+            json_payload["user_identifier_key"] = user_identifier_key
+        if custom_metadata_has is not None:
+            json_payload["custom_metadata_has"] = custom_metadata_has
+        if include_if is not None:
+            json_payload["include_if"] = include_if
+        if exclude_if is not None:
+            json_payload["exclude_if"] = exclude_if
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        res = self.seam.make_request("POST", "/devices/list", json=json_payload)
 
-        Returns
-        ------
-            A list of unmanaged devices.
-        """
+        return [Device.from_dict(item) for item in res["devices"]]
 
-        params = parse_list_device_params(
-            connected_account,
-            connected_accounts,
-            connect_webview,
-            device_type,
-            device_types,
-            device_ids,
-            manufacturer,
-            limit,
-            created_before,
-        )
+    def list_device_providers(
+        self, *, provider_category: Optional[str] = None
+    ) -> List[DeviceProvider]:
+        json_payload = {}
+
+        if provider_category is not None:
+            json_payload["provider_category"] = provider_category
 
         res = self.seam.make_request(
-            "GET",
-            "/devices/unmanaged/list",
-            params=params,
+            "POST", "/devices/list_device_providers", json=json_payload
         )
-        devices = res["devices"]
 
-        return [UnmanagedDevice.from_dict(d) for d in devices]
+        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
-    @report_error
     def update(
         self,
-        device: Union[DeviceId, UnmanagedDevice],
-        is_managed: bool,
-    ) -> bool:
-        """Updates a device transitioning it from an unmanaged state to a managed one.
+        *,
+        device_id: str,
+        properties: Optional[Dict[str, Any]] = None,
+        name: Optional[str] = None,
+        is_managed: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None
+    ) -> None:
+        json_payload = {}
 
-        Parameters
-        ----------
-        device : DeviceId or Device
-            Device id or Device to update
-        is_managed : bool
-            The managed state of the device
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if properties is not None:
+            json_payload["properties"] = properties
+        if name is not None:
+            json_payload["name"] = name
+        if is_managed is not None:
+            json_payload["is_managed"] = is_managed
+        if custom_metadata is not None:
+            json_payload["custom_metadata"] = custom_metadata
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        self.seam.make_request("POST", "/devices/update", json=json_payload)
 
-        Returns
-        ------
-            Boolean
-        """
-
-        if not device:
-            raise Exception("device is required")
-
-        self.seam.make_request(
-            "POST",
-            "/devices/unmanaged/update",
-            json={
-                "device_id": to_device_id(device),
-                "is_managed": is_managed,
-            },
-        )
-
-        return True
+        return None

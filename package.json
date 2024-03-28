@@ -8,9 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "generate": "./generate.sh",
-    "generate:dev": "./generate.sh --dev",
-    "prerelease": "npm run generate"
+    "generate": "./scripts/generate.sh",
+    "format": "black ./seamapi"
   },
   "repository": {
     "type": "git",
@@ -22,13 +21,10 @@
   "bugs": {
     "url": "https://github.com/seamapi/python/issues"
   },
-  "homepage": "https://github.com/seamapi/python#readme",
+  "private": true,
+  "homepage": "https://github.com/seamapi/python",
   "devDependencies": {
-    "@seamapi/nextlove-sdk-generator": "^1.1.1"
-  },
-  "dependencies": {
-    "@seamapi/types": "^1.22.1",
-    "seamapi": "^8.20.0",
-    "tsx": "^4.6.1"
+    "@seamapi/nextlove-sdk-generator": "^1.6.2",
+    "@seamapi/types": "^1.141.0"
   }
 }

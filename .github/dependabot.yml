@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "main"
+    versioning-strategy: "auto"
+    allow:
+      - dependency-name: "@seamapi/*"
+        dependency-type: "development"
+    ignore:
+      - dependency-name: "@seamapi/*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      seam:
+        dependency-type: development
+        update-types:
+          - patch
+          - minor

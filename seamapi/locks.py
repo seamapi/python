@@ -1,205 +1,135 @@
-from seamapi.types import (
-    AbstractLocks,
-    ActionAttempt,
-    ConnectWebview,
-    ConnectWebviewId,
-    ConnectedAccount,
-    ConnectedAccountId,
-    Device,
-    DeviceId,
-    AbstractSeam as Seam,
-)
-import time
-from typing import List, Union, Optional, cast
-import requests
-from seamapi.utils.convert_to_id import (
-    to_connect_webview_id,
-    to_connected_account_id,
-    to_device_id,
-)
-from seamapi.utils.report_error import report_error
+from seamapi.types import AbstractLocks, AbstractSeam as Seam, Device, ActionAttempt
+from typing import Optional, Any, List, Dict, Union
 
 
 class Locks(AbstractLocks):
-    """
-    A class used to retreive lock data
-    through interaction with Seam API
-
-    ...
-
-    Attributes
-    ----------
-    seam : Seam
-        Initial seam class
-
-    Methods
-    -------
-    list(connected_account=None, connect_webview=None)
-        Gets a list of locks
-    get(device=None, name=None)
-        Gets a lock
-    lock_door(device)
-        Locks a lock
-    unlock_door(device)
-        Unlocks a lock
-    """
-
     seam: Seam
 
     def __init__(self, seam: Seam):
-        """
-        Parameters
-        ----------
-        seam : Seam
-          Initial seam class
-        """
-
         self.seam = seam
 
-    @report_error
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if name is not None:
+            json_payload["name"] = name
+
+        res = self.seam.make_request("POST", "/locks/get", json=json_payload)
+
+        return Device.from_dict(res["device"])
+
     def list(
         self,
-        connected_account: Optional[
-            Union[ConnectedAccountId, ConnectedAccount]
-        ] = None,
-        connect_webview: Optional[
-            Union[ConnectWebviewId, ConnectWebview]
-        ] = None,
+        *,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        connect_webview_id: Optional[str] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[Any]] = None,
+        manufacturer: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        created_before: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        include_if: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None
     ) -> List[Device]:
-        """Gets a list of locks.
+        json_payload = {}
 
-        Parameters
-        ----------
-        connected_account : ConnectedAccountId or ConnectedAccount, optional
-            Connected account id or ConnectedAccount to get locks associated with
-        connect_webview : ConnectWebviewId or ConnectWebview, optional
-            Connect webview id or ConnectWebview to get locks associated with
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
+        if connected_account_ids is not None:
+            json_payload["connected_account_ids"] = connected_account_ids
+        if connect_webview_id is not None:
+            json_payload["connect_webview_id"] = connect_webview_id
+        if device_type is not None:
+            json_payload["device_type"] = device_type
+        if device_types is not None:
+            json_payload["device_types"] = device_types
+        if manufacturer is not None:
+            json_payload["manufacturer"] = manufacturer
+        if device_ids is not None:
+            json_payload["device_ids"] = device_ids
+        if limit is not None:
+            json_payload["limit"] = limit
+        if created_before is not None:
+            json_payload["created_before"] = created_before
+        if user_identifier_key is not None:
+            json_payload["user_identifier_key"] = user_identifier_key
+        if custom_metadata_has is not None:
+            json_payload["custom_metadata_has"] = custom_metadata_has
+        if include_if is not None:
+            json_payload["include_if"] = include_if
+        if exclude_if is not None:
+            json_payload["exclude_if"] = exclude_if
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        res = self.seam.make_request("POST", "/locks/list", json=json_payload)
 
-        Returns
-        ------
-            A list of locks.
-        """
+        return [Device.from_dict(item) for item in res["devices"]]
 
-        params = {}
-        if connected_account:
-            params["connected_account_id"] = to_connected_account_id(
-                connected_account
-            )
-        if connect_webview:
-            params["connect_webview_id"] = to_connect_webview_id(
-                connect_webview
-            )
-
-        res = self.seam.make_request(
-            "GET",
-            "/locks/list",
-            params=params,
-        )
-        json_locks = res["devices"]
-
-        return [Device.from_dict(d) for d in json_locks]
-
-    @report_error
-    def get(
+    def lock_door(
         self,
-        device: Optional[Union[DeviceId, Device]] = None,
-        name: Optional[str] = None,
-    ) -> Device:
-        """Gets a lock.
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = True
+    ) -> ActionAttempt:
+        json_payload = {}
 
-        Parameters
-        ----------
-        device : DeviceId or Device, optional
-            Device id or Device to get the latest state of
-        name : str, optional
-            Device name
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if sync is not None:
+            json_payload["sync"] = sync
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
+        res = self.seam.make_request("POST", "/locks/lock_door", json=json_payload)
 
-        Returns
-        ------
-            A lock dict.
-        """
+        if isinstance(wait_for_action_attempt, dict):
+            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=res["action_attempt"]["action_attempt_id"],
+                timeout=wait_for_action_attempt.get("timeout", None),
+                polling_interval=wait_for_action_attempt.get("polling_interval", None),
+            )
+        elif wait_for_action_attempt is True:
+            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=res["action_attempt"]["action_attempt_id"]
+            )
+        else:
+            return ActionAttempt.from_dict(res["action_attempt"])
 
-        params = {}
-        if device:
-            params["device_id"] = to_device_id(device)
-        if name:
-            params["name"] = name
+        return updated_action_attempt
 
-        res = self.seam.make_request(
-            "GET",
-            "/locks/get",
-            params=params,
-        )
-        json_lock = res["device"]
+    def unlock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = True
+    ) -> ActionAttempt:
+        json_payload = {}
 
-        return Device.from_dict(json_lock)
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if sync is not None:
+            json_payload["sync"] = sync
 
-    @report_error
-    def lock_door(self, device: Union[DeviceId, Device]) -> ActionAttempt:
-        """Locks a lock.
+        res = self.seam.make_request("POST", "/locks/unlock_door", json=json_payload)
 
-        Parameters
-        ----------
-        device : DeviceId or Device
-            Device id or Device to be locked
+        if isinstance(wait_for_action_attempt, dict):
+            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=res["action_attempt"]["action_attempt_id"],
+                timeout=wait_for_action_attempt.get("timeout", None),
+                polling_interval=wait_for_action_attempt.get("polling_interval", None),
+            )
+        elif wait_for_action_attempt is True:
+            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=res["action_attempt"]["action_attempt_id"]
+            )
+        else:
+            return ActionAttempt.from_dict(res["action_attempt"])
 
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            ActionAttempt
-        """
-
-        device_id = to_device_id(device)
-        res = self.seam.make_request(
-            "POST",
-            "/locks/lock_door",
-            json={"device_id": device_id},
-        )
-
-        return self.seam.action_attempts.poll_until_ready(
-            res["action_attempt"]["action_attempt_id"]
-        )
-
-    @report_error
-    def unlock_door(self, device: Union[DeviceId, Device]) -> ActionAttempt:
-        """Unlocks a lock.
-
-        Parameters
-        ----------
-        device : DeviceId or Device
-            Device id or Device to be locked
-
-        Raises
-        ------
-        Exception
-            If the API request wasn't successful.
-
-        Returns
-        ------
-            ActionAttempt
-        """
-
-        device_id = to_device_id(device)
-        res = self.seam.make_request(
-            "POST",
-            "/locks/unlock_door",
-            json={"device_id": device_id},
-        )
-
-        return self.seam.action_attempts.poll_until_ready(
-            res["action_attempt"]["action_attempt_id"]
-        )
+        return updated_action_attempt

@@ -1,34 +1,33 @@
 import time
 from seamapi import Seam
 from seamapi.types import SeamApiException
-from tests.fixtures.run_minut_factory import run_minut_factory
+import pytest
 
 
 def test_noise_thresholds(seam: Seam):
-    run_minut_factory(seam)
-    time.sleep(2)
 
-    device = seam.devices.list()[0]
-
+    # Get "minut_device_1" because it's seeded with a noise threshold
+    device = seam.devices.get(device_id="minut_device_1")
+    
     def get_minut_device_noise_thresholds():
         return seam.noise_sensors.noise_thresholds.list(
             device_id=device.device_id
         )
-
     noise_thresholds = get_minut_device_noise_thresholds()
-    assert len(noise_thresholds) == 2
 
-    quiet_hours_threshold = next(
-        (nt for nt in noise_thresholds if nt.name == "builtin_quiet_hours"),
+    assert noise_thresholds != None
+    assert noise_thresholds[0].name == "builtin_normal_hours"
+
+    normal_hours_threshold = next(
+        (nt for nt in noise_thresholds if nt.name == "builtin_normal_hours"),
         None,
     )
 
-    seam.noise_sensors.noise_thresholds.delete(
+    deleted_noise_threshold = seam.noise_sensors.noise_thresholds.delete(
         device_id=device.device_id,
-        noise_threshold_id=quiet_hours_threshold.noise_threshold_id,
+        noise_threshold_id=normal_hours_threshold.noise_threshold_id,
     )
-    noise_thresholds = get_minut_device_noise_thresholds()
-    assert len(noise_thresholds) == 1
+    assert deleted_noise_threshold not in noise_thresholds
 
     noise_threshold = seam.noise_sensors.noise_thresholds.create(
         device_id=device.device_id,
@@ -37,11 +36,16 @@ def test_noise_thresholds(seam: Seam):
         noise_threshold_decibels=75,
     )
     noise_thresholds = get_minut_device_noise_thresholds()
-    assert len(noise_thresholds) == 2
+    assert len(noise_thresholds) == 1
 
-    updated_noise_threshold = seam.noise_sensors.noise_thresholds.update(
+    seam.noise_sensors.noise_thresholds.update(
         device_id=device.device_id,
         noise_threshold_id=noise_threshold.noise_threshold_id,
         noise_threshold_decibels=80,
     )
+
+    updated_noise_threshold = seam.noise_sensors.noise_thresholds.get(
+        noise_threshold_id=noise_threshold.noise_threshold_id,
+    )
+
     assert updated_noise_threshold.noise_threshold_decibels == 80

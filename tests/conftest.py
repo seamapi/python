@@ -1,38 +1,13 @@
-import random
-import string
 import pytest
 from seamapi import Seam
-from dotenv import load_dotenv
 from typing import Any
-from dataclasses import dataclass
+import random
+import string
 
-
-@pytest.fixture(autouse=True)
-def dotenv_fixture():
-    load_dotenv()
-
-
-@dataclass
-class SeamBackend:
-    url: str
-    sandbox_api_key: str
-
-
-# TODO this should use scope="session", but there's some issue, this would
-# dramatically reduce test time to switch
 @pytest.fixture(scope="function")
-def seam_backend():
-    random_string = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-    yield SeamBackend(
-        url=f"https://{random_string}.fakeseamconnect.seam.vc",
-        sandbox_api_key="seam_apikey1_token",
-    )
-
-
-@pytest.fixture
-def seam(seam_backend: Any):
-    seam = Seam(api_url=seam_backend.url, api_key=seam_backend.sandbox_api_key)
-    # seam.make_request("POST", "/workspaces/reset_sandbox")
+def seam():
+    r = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    seam = Seam(api_url=f"https://{r}.fakeseamconnect.seam.vc", api_key="seam_apikey1_token")
     yield seam
 
 

@@ -8,3 +8,4 @@ node_modules
 .deeper
 .yalc
 yalc.lock
+generated
