@@ -36,7 +36,7 @@ jobs:
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Generate code
+          commit_message: 'ci: Generate code'
           commit_user_name: ${{ secrets.GIT_USER_NAME }}
           commit_user_email: ${{ secrets.GIT_USER_EMAIL }}
           commit_author: ${{ secrets.GIT_USER_NAME }} <${{ secrets.GIT_USER_EMAIL }}>
