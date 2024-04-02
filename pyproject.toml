@@ -9,7 +9,7 @@ homepage = "https://github.com/seamapi/python-next"
 repository = "https://github.com/seamapi/python-next"
 
 [tool.poetry.dependencies]
-python = "^3.11.0"
+python = "^3.9.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"
