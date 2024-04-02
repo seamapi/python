@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": true
+    "generate": true,
+    "format": "prettier --write --ignore-path .gitignore ."
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
