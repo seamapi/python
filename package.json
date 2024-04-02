@@ -1,0 +1,9 @@
+{
+  "name": "@seamapi/python",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": true
+  },
+  "devDependencies": {}
+}
