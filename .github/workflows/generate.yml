@@ -31,8 +31,14 @@ jobs:
         uses: ./.github/actions/setup
         with:
           install_dependencies: 'false'
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+        with:
+          install_dependencies: 'false'
       - name: Normalize poetry.lock
         run: poetry lock --no-update
+      - name: Normalize package-lock.json
+        run: npm install
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
