@@ -1,0 +1,12 @@
+{
+  "name": "@seamapi/python",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "true",
+    "format": "prettier --write --ignore-path .gitignore ."
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

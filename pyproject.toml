@@ -25,3 +25,8 @@ rstcheck = "^6.1.2"
 [build-system]
 requires = ["poetry>=1.8"]
 build-backend = "poetry.masonry.api"
+
+[tool.pytest.ini_options]
+norecursedirs = [
+    "node_modules"
+]

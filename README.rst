@@ -67,14 +67,17 @@ Clone the project with
 Requirements
 ~~~~~~~~~~~~
 
-You will need `Python 3`_ and Poetry_.
+You will need `Python 3`_ and Poetry_ and Node.js_ with npm_.
 
 Install the development dependencies with
 
 ::
 
     $ poetry install
+    $ npm install
 
+.. _Node.js: https://nodejs.org/
+.. _npm: https://www.npmjs.com/
 .. _Poetry: https://poetry.eustace.io/
 .. _Python 3: https://www.python.org/
 
