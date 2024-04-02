@@ -16,7 +16,8 @@
   "extensions": [
     "ms-vsliveshare.vsliveshare",
     "ms-python.python",
-    "EditorConfig.EditorConfig"
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode"
   ],
   "postCreateCommand": "poetry install && npm install",
   "remoteUser": "vscode"
