@@ -8,7 +8,7 @@ format:
 	@poetry run black .
 
 lint:
-	@poetry run pylint ./seam
+	@poetry run pylint ./seam ./test
 	@poetry run black --check .
 	@poetry run rstcheck README.rst
 
