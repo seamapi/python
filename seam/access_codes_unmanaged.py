@@ -26,9 +26,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
         if is_external_modification_allowed is not None:
-            json_payload[
-                "is_external_modification_allowed"
-            ] = is_external_modification_allowed
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if force is not None:
@@ -112,9 +112,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if is_external_modification_allowed is not None:
-            json_payload[
-                "is_external_modification_allowed"
-            ] = is_external_modification_allowed
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if force is not None:
             json_payload["force"] = force
 

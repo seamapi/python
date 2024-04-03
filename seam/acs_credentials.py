@@ -40,15 +40,15 @@ class AcsCredentials(AbstractAcsCredentials):
         if access_method is not None:
             json_payload["access_method"] = access_method
         if credential_manager_acs_system_id is not None:
-            json_payload[
-                "credential_manager_acs_system_id"
-            ] = credential_manager_acs_system_id
+            json_payload["credential_manager_acs_system_id"] = (
+                credential_manager_acs_system_id
+            )
         if code is not None:
             json_payload["code"] = code
         if is_multi_phone_sync_credential is not None:
-            json_payload[
-                "is_multi_phone_sync_credential"
-            ] = is_multi_phone_sync_credential
+            json_payload["is_multi_phone_sync_credential"] = (
+                is_multi_phone_sync_credential
+            )
         if allowed_acs_entrance_ids is not None:
             json_payload["allowed_acs_entrance_ids"] = allowed_acs_entrance_ids
         if visionline_metadata is not None:
@@ -99,9 +99,9 @@ class AcsCredentials(AbstractAcsCredentials):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
         if is_multi_phone_sync_credential is not None:
-            json_payload[
-                "is_multi_phone_sync_credential"
-            ] = is_multi_phone_sync_credential
+            json_payload["is_multi_phone_sync_credential"] = (
+                is_multi_phone_sync_credential
+            )
 
         self.seam.make_request("POST", "/acs/credentials/list", json=json_payload)
 

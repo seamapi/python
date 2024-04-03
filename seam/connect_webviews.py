@@ -35,9 +35,9 @@ class ConnectWebviews(AbstractConnectWebviews):
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
         if automatically_manage_new_devices is not None:
-            json_payload[
-                "automatically_manage_new_devices"
-            ] = automatically_manage_new_devices
+            json_payload["automatically_manage_new_devices"] = (
+                automatically_manage_new_devices
+            )
         if wait_for_device_creation is not None:
             json_payload["wait_for_device_creation"] = wait_for_device_creation
 

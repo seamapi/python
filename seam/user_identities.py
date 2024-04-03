@@ -98,9 +98,9 @@ class UserIdentities(AbstractUserIdentities):
         json_payload = {}
 
         if credential_manager_acs_system_id is not None:
-            json_payload[
-                "credential_manager_acs_system_id"
-            ] = credential_manager_acs_system_id
+            json_payload["credential_manager_acs_system_id"] = (
+                credential_manager_acs_system_id
+            )
 
         self.seam.make_request("POST", "/user_identities/list", json=json_payload)
 

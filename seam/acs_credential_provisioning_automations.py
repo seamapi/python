@@ -27,19 +27,19 @@ class AcsCredentialProvisioningAutomations(
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
         if credential_manager_acs_system_id is not None:
-            json_payload[
-                "credential_manager_acs_system_id"
-            ] = credential_manager_acs_system_id
+            json_payload["credential_manager_acs_system_id"] = (
+                credential_manager_acs_system_id
+            )
         if acs_credential_pool_id is not None:
             json_payload["acs_credential_pool_id"] = acs_credential_pool_id
         if create_credential_manager_user is not None:
-            json_payload[
-                "create_credential_manager_user"
-            ] = create_credential_manager_user
+            json_payload["create_credential_manager_user"] = (
+                create_credential_manager_user
+            )
         if credential_manager_acs_user_id is not None:
-            json_payload[
-                "credential_manager_acs_user_id"
-            ] = credential_manager_acs_user_id
+            json_payload["credential_manager_acs_user_id"] = (
+                credential_manager_acs_user_id
+            )
 
         self.seam.make_request(
             "POST", "/acs/credential_provisioning_automations/launch", json=json_payload

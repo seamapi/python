@@ -65,9 +65,9 @@ class AccessCodes(AbstractAccessCodes):
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if is_external_modification_allowed is not None:
-            json_payload[
-                "is_external_modification_allowed"
-            ] = is_external_modification_allowed
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
         if is_offline_access_code is not None:
@@ -106,9 +106,9 @@ class AccessCodes(AbstractAccessCodes):
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if behavior_when_code_cannot_be_shared is not None:
-            json_payload[
-                "behavior_when_code_cannot_be_shared"
-            ] = behavior_when_code_cannot_be_shared
+            json_payload["behavior_when_code_cannot_be_shared"] = (
+                behavior_when_code_cannot_be_shared
+            )
         if preferred_code_length is not None:
             json_payload["preferred_code_length"] = preferred_code_length
         if name is not None:
@@ -128,9 +128,9 @@ class AccessCodes(AbstractAccessCodes):
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if is_external_modification_allowed is not None:
-            json_payload[
-                "is_external_modification_allowed"
-            ] = is_external_modification_allowed
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
         if is_offline_access_code is not None:
@@ -275,9 +275,9 @@ class AccessCodes(AbstractAccessCodes):
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if is_external_modification_allowed is not None:
-            json_payload[
-                "is_external_modification_allowed"
-            ] = is_external_modification_allowed
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
         if is_offline_access_code is not None:
