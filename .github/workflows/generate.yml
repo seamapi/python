@@ -30,7 +30,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          install_dependencies: 'false'
+          install_dependencies: 'true'
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
         with:
