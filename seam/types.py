@@ -647,7 +647,12 @@ class SeamApiException(Exception):
 class AbstractActionAttempts(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, action_attempt_id: str) -> ActionAttempt:
+    def get(
+        self,
+        *,
+        action_attempt_id: str,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -661,6 +666,7 @@ class AbstractActionAttempts(abc.ABC):
         action_attempt_id: str,
         timeout: Optional[float] = 5.0,
         polling_interval: Optional[float] = 0.5,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -857,13 +863,21 @@ class AbstractLocks(abc.ABC):
 
     @abc.abstractmethod
     def lock_door(
-        self, *, device_id: str, sync: Optional[bool] = None
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def unlock_door(
-        self, *, device_id: str, sync: Optional[bool] = None
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1462,6 +1476,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1479,6 +1494,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1492,6 +1508,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1516,7 +1533,13 @@ class AbstractThermostats(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def off(self, *, device_id: str, sync: Optional[bool] = None) -> ActionAttempt:
+    def off(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1527,6 +1550,7 @@ class AbstractThermostats(abc.ABC):
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
         sync: Optional[bool] = None,
+        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1887,6 +1911,7 @@ class AbstractSeam(AbstractRoutes):
     def __init__(
         self,
         api_key: Optional[str] = None,
+        *,
         workspace_id: Optional[str] = None,
         api_url: Optional[str] = None,
     ):
