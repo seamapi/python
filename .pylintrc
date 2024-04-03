@@ -1,0 +1,23 @@
+[MESSAGES CONTROL]
+disable=
+    missing-function-docstring,
+    too-many-arguments,
+    too-many-locals,
+    missing-module-docstring,
+    useless-return,
+    wrong-import-order,
+    unused-import,
+    missing-class-docstring,
+    too-few-public-methods,
+    too-many-branches,
+    super-init-not-called,
+    redefined-builtin,
+    too-many-instance-attributes,
+    non-parent-init-called,
+    broad-exception-raised,
+    missing-timeout,
+    line-too-long,
+    too-many-lines,
+    unnecessary-pass,
+    redefined-outer-name,
+    duplicate-code
