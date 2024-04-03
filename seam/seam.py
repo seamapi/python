@@ -2,7 +2,7 @@ import os
 
 from .routes import Routes
 import requests
-import pkg_resources
+from importlib.metadata import version
 from typing import Optional, cast
 from .types import AbstractSeam, SeamApiException
 
@@ -78,7 +78,7 @@ class Seam(AbstractSeam):
         """
 
         url = self.api_url + path
-        sdk_version = pkg_resources.get_distribution("seam").version
+        sdk_version = version("seam")
         headers = {
             "Authorization": "Bearer " + self.api_key,
             "Content-Type": "application/json",
