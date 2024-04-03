@@ -38,5 +38,5 @@ class Routes(AbstractRoutes):
         self.acs = Acs(seam=self)
         self.noise_sensors = NoiseSensors(seam=self)
 
-    def make_request(self):
+    def make_request(self, method: str, path: str, **kwargs):
         raise NotImplementedError()
