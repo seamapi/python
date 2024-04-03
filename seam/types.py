@@ -645,6 +645,7 @@ class SeamApiException(Exception):
 
 
 class AbstractActionAttempts(abc.ABC):
+
     @abc.abstractmethod
     def get(self, *, action_attempt_id: str) -> ActionAttempt:
         raise NotImplementedError()
@@ -665,6 +666,7 @@ class AbstractActionAttempts(abc.ABC):
 
 
 class AbstractClientSessions(abc.ABC):
+
     @abc.abstractmethod
     def create(
         self,
@@ -732,6 +734,7 @@ class AbstractClientSessions(abc.ABC):
 
 
 class AbstractConnectWebviews(abc.ABC):
+
     @abc.abstractmethod
     def create(
         self,
@@ -766,6 +769,7 @@ class AbstractConnectWebviews(abc.ABC):
 
 
 class AbstractConnectedAccounts(abc.ABC):
+
     @abc.abstractmethod
     def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
         raise NotImplementedError()
@@ -794,6 +798,7 @@ class AbstractConnectedAccounts(abc.ABC):
 
 
 class AbstractEvents(abc.ABC):
+
     @abc.abstractmethod
     def get(
         self,
@@ -823,6 +828,7 @@ class AbstractEvents(abc.ABC):
 
 
 class AbstractLocks(abc.ABC):
+
     @abc.abstractmethod
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -863,6 +869,7 @@ class AbstractLocks(abc.ABC):
 
 
 class AbstractNetworks(abc.ABC):
+
     @abc.abstractmethod
     def get(self, *, network_id: str) -> None:
         raise NotImplementedError()
@@ -875,6 +882,7 @@ class AbstractNetworks(abc.ABC):
 
 
 class AbstractWebhooks(abc.ABC):
+
     @abc.abstractmethod
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
         raise NotImplementedError()
@@ -899,6 +907,7 @@ class AbstractWebhooks(abc.ABC):
 
 
 class AbstractWorkspaces(abc.ABC):
+
     @abc.abstractmethod
     def create(
         self,
@@ -931,6 +940,7 @@ class AbstractWorkspaces(abc.ABC):
 
 
 class AbstractAccessCodesSimulate(abc.ABC):
+
     @abc.abstractmethod
     def create_unmanaged_access_code(
         self, *, device_id: str, name: str, code: str
@@ -939,6 +949,7 @@ class AbstractAccessCodesSimulate(abc.ABC):
 
 
 class AbstractAccessCodesUnmanaged(abc.ABC):
+
     @abc.abstractmethod
     def convert_to_managed(
         self,
@@ -985,6 +996,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
 
 
 class AbstractAcsAccessGroups(abc.ABC):
+
     @abc.abstractmethod
     def add_user(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
         raise NotImplementedError()
@@ -1009,12 +1021,14 @@ class AbstractAcsAccessGroups(abc.ABC):
 
 
 class AbstractAcsCredentialPools(abc.ABC):
+
     @abc.abstractmethod
     def list(self, *, acs_system_id: str) -> None:
         raise NotImplementedError()
 
 
 class AbstractAcsCredentialProvisioningAutomations(abc.ABC):
+
     @abc.abstractmethod
     def launch(
         self,
@@ -1029,6 +1043,7 @@ class AbstractAcsCredentialProvisioningAutomations(abc.ABC):
 
 
 class AbstractAcsCredentials(abc.ABC):
+
     @abc.abstractmethod
     def assign(self, *, acs_user_id: str, acs_credential_id: str) -> None:
         raise NotImplementedError()
@@ -1078,6 +1093,7 @@ class AbstractAcsCredentials(abc.ABC):
 
 
 class AbstractAcsEntrances(abc.ABC):
+
     @abc.abstractmethod
     def get(self, *, acs_entrance_id: str) -> None:
         raise NotImplementedError()
@@ -1103,6 +1119,7 @@ class AbstractAcsEntrances(abc.ABC):
 
 
 class AbstractAcsSystems(abc.ABC):
+
     @abc.abstractmethod
     def get(self, *, acs_system_id: str) -> None:
         raise NotImplementedError()
@@ -1113,6 +1130,7 @@ class AbstractAcsSystems(abc.ABC):
 
 
 class AbstractAcsUsers(abc.ABC):
+
     @abc.abstractmethod
     def add_to_access_group(
         self, *, acs_user_id: str, acs_access_group_id: str
@@ -1191,12 +1209,14 @@ class AbstractAcsUsers(abc.ABC):
 
 
 class AbstractDevicesSimulate(abc.ABC):
+
     @abc.abstractmethod
     def remove(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
 
 class AbstractDevicesUnmanaged(abc.ABC):
+
     @abc.abstractmethod
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -1229,12 +1249,14 @@ class AbstractDevicesUnmanaged(abc.ABC):
 
 
 class AbstractHealthService(abc.ABC):
+
     @abc.abstractmethod
     def by_service_name(self, *, service_name: str) -> None:
         raise NotImplementedError()
 
 
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
+
     @abc.abstractmethod
     def create(
         self,
@@ -1282,12 +1304,14 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
 
 class AbstractNoiseSensorsSimulate(abc.ABC):
+
     @abc.abstractmethod
     def trigger_noise_threshold(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
 
 class AbstractPhonesSimulate(abc.ABC):
+
     @abc.abstractmethod
     def create_sandbox_phone(
         self,
@@ -1301,6 +1325,7 @@ class AbstractPhonesSimulate(abc.ABC):
 
 
 class AbstractThermostatsClimateSettingSchedules(abc.ABC):
+
     @abc.abstractmethod
     def create(
         self,
@@ -1362,6 +1387,7 @@ class AbstractThermostatsClimateSettingSchedules(abc.ABC):
 
 
 class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
+
     @abc.abstractmethod
     def delete(self, *, enrollment_automation_id: str) -> None:
         raise NotImplementedError()
@@ -1388,6 +1414,7 @@ class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
 
 
 class AbstractHealth(abc.ABC):
+
     @property
     @abc.abstractmethod
     def service(self) -> AbstractHealthService:
@@ -1405,6 +1432,7 @@ class AbstractHealth(abc.ABC):
 
 
 class AbstractPhones(abc.ABC):
+
     @property
     @abc.abstractmethod
     def simulate(self) -> AbstractPhonesSimulate:
@@ -1420,6 +1448,7 @@ class AbstractPhones(abc.ABC):
 
 
 class AbstractThermostats(abc.ABC):
+
     @property
     @abc.abstractmethod
     def climate_setting_schedules(self) -> AbstractThermostatsClimateSettingSchedules:
@@ -1509,6 +1538,7 @@ class AbstractThermostats(abc.ABC):
 
 
 class AbstractUserIdentities(abc.ABC):
+
     @property
     @abc.abstractmethod
     def enrollment_automations(self) -> AbstractUserIdentitiesEnrollmentAutomations:
@@ -1584,6 +1614,7 @@ class AbstractUserIdentities(abc.ABC):
 
 
 class AbstractAccessCodes(abc.ABC):
+
     @property
     @abc.abstractmethod
     def simulate(self) -> AbstractAccessCodesSimulate:
@@ -1705,6 +1736,7 @@ class AbstractAccessCodes(abc.ABC):
 
 
 class AbstractDevices(abc.ABC):
+
     @property
     @abc.abstractmethod
     def simulate(self) -> AbstractDevicesSimulate:
