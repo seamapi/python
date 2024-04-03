@@ -3,10 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "true",
-    "format": "prettier --write --ignore-path .gitignore ."
+    "generate": "./scripts/generate.sh && npm run format",
+    "format": "poetry run black ."
   },
   "devDependencies": {
+    "@seamapi/nextlove-sdk-generator": "^1.7.4",
+    "@seamapi/types": "^1.149.0",
     "prettier": "^3.2.5"
   }
 }
