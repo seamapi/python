@@ -22,6 +22,7 @@ class Seam(AbstractSeam):
         *,
         workspace_id: Optional[str] = None,
         api_url: Optional[str] = None,
+        wait_for_action_attempt: Optional[bool] = False,
     ):
         """
         Parameters
@@ -46,6 +47,7 @@ class Seam(AbstractSeam):
         self.api_key = api_key
         self.workspace_id = workspace_id
         self.lts_version = Seam.lts_version
+        self.wait_for_action_attempt = wait_for_action_attempt
 
         if os.environ.get("SEAM_API_URL", None) is not None:
             print(

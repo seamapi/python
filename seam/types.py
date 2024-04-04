@@ -651,7 +651,7 @@ class AbstractActionAttempts(abc.ABC):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -666,7 +666,15 @@ class AbstractActionAttempts(abc.ABC):
         action_attempt_id: str,
         timeout: Optional[float] = 5.0,
         polling_interval: Optional[float] = 0.5,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def decide_and_wait(
+        self,
+        *,
+        action_attempt: ActionAttempt,
+        wait_for_action_attempt: Union[bool, Dict[str, float]],
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -867,7 +875,7 @@ class AbstractLocks(abc.ABC):
         *,
         device_id: str,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -877,7 +885,7 @@ class AbstractLocks(abc.ABC):
         *,
         device_id: str,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1476,7 +1484,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1494,7 +1502,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1508,7 +1516,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1538,7 +1546,7 @@ class AbstractThermostats(abc.ABC):
         *,
         device_id: str,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1550,7 +1558,7 @@ class AbstractThermostats(abc.ABC):
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -1906,6 +1914,7 @@ class AbstractSeam(AbstractRoutes):
     workspace_id: str
     api_url: str
     lts_version: str
+    wait_for_action_attempt: bool
 
     @abc.abstractmethod
     def __init__(
@@ -1914,5 +1923,6 @@ class AbstractSeam(AbstractRoutes):
         *,
         workspace_id: Optional[str] = None,
         api_url: Optional[str] = None,
+        wait_for_action_attempt: Optional[bool] = False,
     ):
         raise NotImplementedError

@@ -23,7 +23,7 @@ class Thermostats(AbstractThermostats):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -38,20 +38,10 @@ class Thermostats(AbstractThermostats):
 
         res = self.seam.make_request("POST", "/thermostats/cool", json=json_payload)
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -74,7 +64,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -89,20 +79,10 @@ class Thermostats(AbstractThermostats):
 
         res = self.seam.make_request("POST", "/thermostats/heat", json=json_payload)
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def heat_cool(
         self,
@@ -113,7 +93,7 @@ class Thermostats(AbstractThermostats):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -134,20 +114,10 @@ class Thermostats(AbstractThermostats):
             "POST", "/thermostats/heat_cool", json=json_payload
         )
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def list(
         self,
@@ -204,7 +174,7 @@ class Thermostats(AbstractThermostats):
         *,
         device_id: str,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -215,20 +185,10 @@ class Thermostats(AbstractThermostats):
 
         res = self.seam.make_request("POST", "/thermostats/off", json=json_payload)
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def set_fan_mode(
         self,
@@ -237,7 +197,7 @@ class Thermostats(AbstractThermostats):
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
         sync: Optional[bool] = None,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -254,20 +214,10 @@ class Thermostats(AbstractThermostats):
             "POST", "/thermostats/set_fan_mode", json=json_payload
         )
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def update(
         self, *, device_id: str, default_climate_setting: Dict[str, Any]

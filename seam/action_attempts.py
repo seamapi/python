@@ -14,7 +14,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Union[bool, Dict[str, float]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -23,20 +23,10 @@ class ActionAttempts(AbstractActionAttempts):
 
         res = self.seam.make_request("POST", "/action_attempts/get", json=json_payload)
 
-        if isinstance(wait_for_action_attempt, dict):
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"],
-                timeout=wait_for_action_attempt.get("timeout", None),
-                polling_interval=wait_for_action_attempt.get("polling_interval", None),
-            )
-        elif wait_for_action_attempt is True:
-            updated_action_attempt = self.seam.action_attempts.poll_until_ready(
-                action_attempt_id=res["action_attempt"]["action_attempt_id"]
-            )
-        else:
-            return ActionAttempt.from_dict(res["action_attempt"])
-
-        return updated_action_attempt
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def list(self, *, action_attempt_ids: List[str]) -> List[ActionAttempt]:
         json_payload = {}
@@ -76,5 +66,30 @@ class ActionAttempts(AbstractActionAttempts):
 
         if action_attempt.status == "failed":
             raise Exception(f"Action Attempt failed: {action_attempt.error.message}")
+
+        return action_attempt
+
+    def decide_and_wait(
+        self,
+        *,
+        action_attempt: ActionAttempt,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
+        wait_decision = (
+            self.seam.wait_for_action_attempt
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        if wait_decision is True:
+            return self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=action_attempt.action_attempt_id
+            )
+        elif isinstance(wait_decision, dict):
+            return self.seam.action_attempts.poll_until_ready(
+                action_attempt_id=action_attempt.action_attempt_id,
+                timeout=wait_decision.get("timeout", None),
+                polling_interval=wait_decision.get("polling_interval", None),
+            )
 
         return action_attempt
