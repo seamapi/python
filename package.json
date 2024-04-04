@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "./scripts/generate.sh && npm run format",
-    "format": "poetry run black ."
+    "generate": "./scripts/generate.sh",
+    "format": "prettier --write --ignore-path .gitignore .",
+    "preformat": "make format"
   },
   "devDependencies": {
     "@seamapi/nextlove-sdk-generator": "^1.7.10",
