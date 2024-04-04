@@ -1,6 +1,5 @@
 from seam import Seam
 from seam.types import SeamApiException
-from seam.utils.deep_attr_dict import DeepAttrDict
 
 
 def test_devices(seam: Seam):
@@ -19,7 +18,7 @@ def test_devices(seam: Seam):
     devices = seam.devices.list(connected_account_ids=connected_account_ids)
     assert len(devices) > 0
 
-    devices = seam.devices.list(device_types="august_lock")
+    devices = seam.devices.list(device_types=["august_lock"])
     assert len(devices) > 0
     devices = seam.devices.list(device_types=["august_lock"])
     assert len(devices) > 0
