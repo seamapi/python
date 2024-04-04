@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e # Exit immediately if any command exits with a non-zero status.
 
 # Remove the existing 'seam' directory
 rm -rf ./seam
