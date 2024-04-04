@@ -184,15 +184,15 @@ class ClimateSettingSchedule:
 @dataclass
 class ConnectWebview:
     connect_webview_id: str
+    workspace_id: str
+    created_at: str
     connected_account_id: str
     url: str
-    workspace_id: str
     device_selection_mode: str
     accepted_providers: List[str]
     accepted_devices: List[str]
     any_provider_allowed: bool
     any_device_allowed: bool
-    created_at: str
     login_successful: bool
     status: str
     custom_redirect_url: str
@@ -207,15 +207,15 @@ class ConnectWebview:
     def from_dict(d: Dict[str, Any]):
         return ConnectWebview(
             connect_webview_id=d.get("connect_webview_id", None),
+            workspace_id=d.get("workspace_id", None),
+            created_at=d.get("created_at", None),
             connected_account_id=d.get("connected_account_id", None),
             url=d.get("url", None),
-            workspace_id=d.get("workspace_id", None),
             device_selection_mode=d.get("device_selection_mode", None),
             accepted_providers=d.get("accepted_providers", None),
             accepted_devices=d.get("accepted_devices", None),
             any_provider_allowed=d.get("any_provider_allowed", None),
             any_device_allowed=d.get("any_device_allowed", None),
-            created_at=d.get("created_at", None),
             login_successful=d.get("login_successful", None),
             status=d.get("status", None),
             custom_redirect_url=d.get("custom_redirect_url", None),
