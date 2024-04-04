@@ -85,7 +85,7 @@ class ActionAttempts(AbstractActionAttempts):
             return self.seam.action_attempts.poll_until_ready(
                 action_attempt_id=action_attempt.action_attempt_id
             )
-        elif isinstance(wait_decision, dict):
+        if isinstance(wait_decision, dict):
             return self.seam.action_attempts.poll_until_ready(
                 action_attempt_id=action_attempt.action_attempt_id,
                 timeout=wait_decision.get("timeout", None),
