@@ -8,8 +8,8 @@
     "preformat": "make format"
   },
   "devDependencies": {
-    "@seamapi/nextlove-sdk-generator": "^1.7.10",
-    "@seamapi/types": "^1.149.0",
+    "@seamapi/nextlove-sdk-generator": "1.7.10",
+    "@seamapi/types": "1.149.0",
     "prettier": "^3.2.5"
   }
 }
