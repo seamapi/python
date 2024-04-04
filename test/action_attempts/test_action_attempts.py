@@ -18,7 +18,13 @@ def test_action_attempts(seam: Seam):
     # Create multiple ActionAttempts
     some_device = seam.devices.list()[0]
     unlock_door1 = seam.locks.unlock_door(device_id=some_device.device_id)
-    unlock_door2 = seam.locks.unlock_door(device_id=some_device.device_id)
+    unlock_door2 = seam.locks.unlock_door(
+        device_id=some_device.device_id,
+        wait_for_action_attempt={
+            "timeout": 10.0,
+            "polling_interval": 2.0,
+        },
+    )
 
     # Retrieve the list of ActionAttempts
     action_attempts = seam.action_attempts.list(
