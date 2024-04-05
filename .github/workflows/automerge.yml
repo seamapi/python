@@ -7,11 +7,36 @@ on:
       - main
 
 jobs:
-  merge:
-    name: Merge #${{ number }}
+  changes:
+    name: Get changes
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: github.actor == 'dependabot[bot]'
+    permissions:
+      checks: read
+    outputs:
+      has_changes: ${{ steps.changed.outputs.any_changed == 'true' }}
+      is_generation_successful: ${{ steps.checks.outputs.conclusion == 'success' }}
+    steps:
+      - name: Wait for checks
+        uses: fountainhead/action-wait-for-check@v1.2.0
+        id: checks
+        with:
+          checkName: Generate code
+          ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get changed generated files
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            seam/**
+  merge:
+    name: Merge
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: changes
+    if: needs.changes.outputs.has_changes == 'true'
     steps:
       - name: Approve pull request
         run: gh pr review --approve "$PR_URL"
@@ -20,6 +45,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Merge pull request
         run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  close:
+    name: Close
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: changes
+    if: needs.changes.outputs.has_changes == 'false' && needs.changes.outputs.is_generation_successful == 'true'
+    steps:
+      - name: Close pull request
+        run: gh pr close "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

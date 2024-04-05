@@ -1,20 +1,24 @@
+---
 version: 2
 updates:
-  - package-ecosystem: 'npm'
+  - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: 'daily'
-    target-branch: 'main'
-    versioning-strategy: 'auto'
+      interval: daily
+    commit-message:
+      prefix: feat
+      include: scope
     allow:
-      - dependency-name: '@seamapi/*'
-        dependency-type: 'development'
+      - dependency-type: development
     ignore:
-      - dependency-name: '@seamapi/*'
-        update-types: ['version-update:semver-major']
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
     groups:
       seam:
         dependency-type: development
+        patterns:
+          - '@seamapi/*'
         update-types:
           - patch
           - minor
