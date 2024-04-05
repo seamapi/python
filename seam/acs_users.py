@@ -1,4 +1,4 @@
-from seam.types import AbstractAcsUsers, AbstractSeam as Seam
+from seam.types import AbstractAcsUsers, AbstractSeam as Seam, AcsUser, AcsEntrance
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -35,7 +35,7 @@ class AcsUsers(AbstractAcsUsers):
         email: Optional[str] = None,
         phone_number: Optional[str] = None,
         email_address: Optional[str] = None
-    ) -> None:
+    ) -> AcsUser:
         json_payload = {}
 
         if acs_system_id is not None:
@@ -55,9 +55,9 @@ class AcsUsers(AbstractAcsUsers):
         if email_address is not None:
             json_payload["email_address"] = email_address
 
-        self.seam.make_request("POST", "/acs/users/create", json=json_payload)
+        res = self.seam.make_request("POST", "/acs/users/create", json=json_payload)
 
-        return None
+        return AcsUser.from_dict(res["acs_user"])
 
     def delete(self, *, acs_user_id: str) -> None:
         json_payload = {}
@@ -69,15 +69,15 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
-    def get(self, *, acs_user_id: str) -> None:
+    def get(self, *, acs_user_id: str) -> AcsUser:
         json_payload = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/users/get", json=json_payload)
+        res = self.seam.make_request("POST", "/acs/users/get", json=json_payload)
 
-        return None
+        return AcsUser.from_dict(res["acs_user"])
 
     def list(
         self,
@@ -86,7 +86,7 @@ class AcsUsers(AbstractAcsUsers):
         user_identity_phone_number: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         acs_system_id: Optional[str] = None
-    ) -> None:
+    ) -> List[AcsUser]:
         json_payload = {}
 
         if user_identity_id is not None:
@@ -98,21 +98,21 @@ class AcsUsers(AbstractAcsUsers):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        self.seam.make_request("POST", "/acs/users/list", json=json_payload)
+        res = self.seam.make_request("POST", "/acs/users/list", json=json_payload)
 
-        return None
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
-    def list_accessible_entrances(self, *, acs_user_id: str) -> None:
+    def list_accessible_entrances(self, *, acs_user_id: str) -> List[AcsEntrance]:
         json_payload = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/acs/users/list_accessible_entrances", json=json_payload
         )
 
-        return None
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def remove_from_access_group(
         self, *, acs_user_id: str, acs_access_group_id: str

@@ -191,8 +191,8 @@ class ConnectWebview:
     device_selection_mode: str
     accepted_providers: List[str]
     accepted_devices: List[str]
-    any_provider_allowed: bool
     any_device_allowed: bool
+    any_provider_allowed: bool
     login_successful: bool
     status: str
     custom_redirect_url: str
@@ -214,8 +214,8 @@ class ConnectWebview:
             device_selection_mode=d.get("device_selection_mode", None),
             accepted_providers=d.get("accepted_providers", None),
             accepted_devices=d.get("accepted_devices", None),
-            any_provider_allowed=d.get("any_provider_allowed", None),
             any_device_allowed=d.get("any_device_allowed", None),
+            any_provider_allowed=d.get("any_provider_allowed", None),
             login_successful=d.get("login_successful", None),
             status=d.get("status", None),
             custom_redirect_url=d.get("custom_redirect_url", None),
@@ -561,6 +561,120 @@ class AcsUser:
 
 
 @dataclass
+class AcsEntrance:
+    acs_entrance_id: str
+    display_name: str
+    acs_system_id: str
+    created_at: str
+    latch_metadata: Dict[str, Any]
+    visionline_metadata: Dict[str, Any]
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AcsEntrance(
+            acs_entrance_id=d.get("acs_entrance_id", None),
+            display_name=d.get("display_name", None),
+            acs_system_id=d.get("acs_system_id", None),
+            created_at=d.get("created_at", None),
+            latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
+            visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
+        )
+
+
+@dataclass
+class AcsCredentialProvisioningAutomation:
+    acs_credential_provisioning_automation_id: str
+    credential_manager_acs_system_id: str
+    user_identity_id: str
+    created_at: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AcsCredentialProvisioningAutomation(
+            acs_credential_provisioning_automation_id=d.get(
+                "acs_credential_provisioning_automation_id", None
+            ),
+            credential_manager_acs_system_id=d.get(
+                "credential_manager_acs_system_id", None
+            ),
+            user_identity_id=d.get("user_identity_id", None),
+            created_at=d.get("created_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class AcsCredentialPool:
+    acs_credential_pool_id: str
+    acs_system_id: str
+    display_name: str
+    external_type: str
+    external_type_display_name: str
+    created_at: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AcsCredentialPool(
+            acs_credential_pool_id=d.get("acs_credential_pool_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            display_name=d.get("display_name", None),
+            external_type=d.get("external_type", None),
+            external_type_display_name=d.get("external_type_display_name", None),
+            created_at=d.get("created_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class AcsCredential:
+    acs_credential_id: str
+    acs_user_id: str
+    acs_credential_pool_id: str
+    acs_system_id: str
+    parent_acs_credential_id: str
+    display_name: str
+    code: str
+    access_method: str
+    external_type: str
+    external_type_display_name: str
+    created_at: str
+    workspace_id: str
+    starts_at: str
+    ends_at: str
+    errors: List[Dict[str, Any]]
+    warnings: List[Dict[str, Any]]
+    is_multi_phone_sync_credential: bool
+    visionline_metadata: Dict[str, Any]
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AcsCredential(
+            acs_credential_id=d.get("acs_credential_id", None),
+            acs_user_id=d.get("acs_user_id", None),
+            acs_credential_pool_id=d.get("acs_credential_pool_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            parent_acs_credential_id=d.get("parent_acs_credential_id", None),
+            display_name=d.get("display_name", None),
+            code=d.get("code", None),
+            access_method=d.get("access_method", None),
+            external_type=d.get("external_type", None),
+            external_type_display_name=d.get("external_type_display_name", None),
+            created_at=d.get("created_at", None),
+            workspace_id=d.get("workspace_id", None),
+            starts_at=d.get("starts_at", None),
+            ends_at=d.get("ends_at", None),
+            errors=d.get("errors", None),
+            warnings=d.get("warnings", None),
+            is_multi_phone_sync_credential=d.get(
+                "is_multi_phone_sync_credential", None
+            ),
+            visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
+        )
+
+
+@dataclass
 class EnrollmentAutomation:
     credential_manager_acs_system_id: str
     user_identity_id: str
@@ -623,6 +737,48 @@ class Phone:
                 "can_program_online_access_codes", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
+        )
+
+
+@dataclass
+class UserIdentity:
+    user_identity_id: str
+    user_identity_key: str
+    email_address: str
+    phone_number: str
+    display_name: str
+    full_name: str
+    created_at: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return UserIdentity(
+            user_identity_id=d.get("user_identity_id", None),
+            user_identity_key=d.get("user_identity_key", None),
+            email_address=d.get("email_address", None),
+            phone_number=d.get("phone_number", None),
+            display_name=d.get("display_name", None),
+            full_name=d.get("full_name", None),
+            created_at=d.get("created_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class Network:
+    network_id: str
+    workspace_id: str
+    display_name: str
+    created_at: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Network(
+            network_id=d.get("network_id", None),
+            workspace_id=d.get("workspace_id", None),
+            display_name=d.get("display_name", None),
+            created_at=d.get("created_at", None),
         )
 
 
@@ -893,13 +1049,13 @@ class AbstractLocks(abc.ABC):
 class AbstractNetworks(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, network_id: str) -> None:
+    def get(self, *, network_id: str) -> Network:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self,
-    ) -> None:
+    ) -> List[Network]:
         raise NotImplementedError()
 
 
@@ -939,7 +1095,7 @@ class AbstractWorkspaces(abc.ABC):
         is_sandbox: Optional[bool] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_logo_shape: Optional[str] = None,
-    ) -> None:
+    ) -> Workspace:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1024,17 +1180,17 @@ class AbstractAcsAccessGroups(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, acs_access_group_id: str) -> None:
+    def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> List[AcsAccessGroup]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_users(self, *, acs_access_group_id: str) -> None:
+    def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1045,7 +1201,7 @@ class AbstractAcsAccessGroups(abc.ABC):
 class AbstractAcsCredentialPools(abc.ABC):
 
     @abc.abstractmethod
-    def list(self, *, acs_system_id: str) -> None:
+    def list(self, *, acs_system_id: str) -> List[AcsCredentialPool]:
         raise NotImplementedError()
 
 
@@ -1060,7 +1216,7 @@ class AbstractAcsCredentialProvisioningAutomations(abc.ABC):
         acs_credential_pool_id: Optional[str] = None,
         create_credential_manager_user: Optional[bool] = None,
         credential_manager_acs_user_id: Optional[str] = None,
-    ) -> None:
+    ) -> AcsCredentialProvisioningAutomation:
         raise NotImplementedError()
 
 
@@ -1083,7 +1239,7 @@ class AbstractAcsCredentials(abc.ABC):
         visionline_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         ends_at: Optional[str] = None,
-    ) -> None:
+    ) -> AcsCredential:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1091,7 +1247,7 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, acs_credential_id: str) -> None:
+    def get(self, *, acs_credential_id: str) -> AcsCredential:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1102,7 +1258,7 @@ class AbstractAcsCredentials(abc.ABC):
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
-    ) -> None:
+    ) -> List[AcsCredential]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1117,7 +1273,7 @@ class AbstractAcsCredentials(abc.ABC):
 class AbstractAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_entrance_id: str) -> None:
+    def get(self, *, acs_entrance_id: str) -> AcsEntrance:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1130,24 +1286,24 @@ class AbstractAcsEntrances(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
-    ) -> None:
+    ) -> List[AcsEntrance]:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
-    ) -> None:
+    ) -> List[AcsCredential]:
         raise NotImplementedError()
 
 
 class AbstractAcsSystems(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_system_id: str) -> None:
+    def get(self, *, acs_system_id: str) -> AcsSystem:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, connected_account_id: Optional[str] = None) -> None:
+    def list(self, *, connected_account_id: Optional[str] = None) -> List[AcsSystem]:
         raise NotImplementedError()
 
 
@@ -1171,7 +1327,7 @@ class AbstractAcsUsers(abc.ABC):
         email: Optional[str] = None,
         phone_number: Optional[str] = None,
         email_address: Optional[str] = None,
-    ) -> None:
+    ) -> AcsUser:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1179,7 +1335,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, acs_user_id: str) -> None:
+    def get(self, *, acs_user_id: str) -> AcsUser:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1190,11 +1346,11 @@ class AbstractAcsUsers(abc.ABC):
         user_identity_phone_number: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-    ) -> None:
+    ) -> List[AcsUser]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_accessible_entrances(self, *, acs_user_id: str) -> None:
+    def list_accessible_entrances(self, *, acs_user_id: str) -> List[AcsEntrance]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1408,7 +1564,7 @@ class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, enrollment_automation_id: str) -> None:
+    def get(self, *, enrollment_automation_id: str) -> EnrollmentAutomation:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1424,7 +1580,7 @@ class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, user_identity_id: str) -> None:
+    def list(self, *, user_identity_id: str) -> List[EnrollmentAutomation]:
         raise NotImplementedError()
 
 
@@ -1563,7 +1719,7 @@ class AbstractUserIdentities(abc.ABC):
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         full_name: Optional[str] = None,
-    ) -> None:
+    ) -> UserIdentity:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1576,7 +1732,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
-    ) -> None:
+    ) -> UserIdentity:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1584,19 +1740,21 @@ class AbstractUserIdentities(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, credential_manager_acs_system_id: Optional[str] = None) -> None:
+    def list(
+        self, *, credential_manager_acs_system_id: Optional[str] = None
+    ) -> List[UserIdentity]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_accessible_devices(self, *, user_identity_id: str) -> None:
+    def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_acs_systems(self, *, user_identity_id: str) -> None:
+    def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_acs_users(self, *, user_identity_id: str) -> None:
+    def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
         raise NotImplementedError()
 
     @abc.abstractmethod

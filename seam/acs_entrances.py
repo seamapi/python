@@ -1,4 +1,9 @@
-from seam.types import AbstractAcsEntrances, AbstractSeam as Seam
+from seam.types import (
+    AbstractAcsEntrances,
+    AbstractSeam as Seam,
+    AcsEntrance,
+    AcsCredential,
+)
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -8,15 +13,15 @@ class AcsEntrances(AbstractAcsEntrances):
     def __init__(self, seam: Seam):
         self.seam = seam
 
-    def get(self, *, acs_entrance_id: str) -> None:
+    def get(self, *, acs_entrance_id: str) -> AcsEntrance:
         json_payload = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
 
-        self.seam.make_request("POST", "/acs/entrances/get", json=json_payload)
+        res = self.seam.make_request("POST", "/acs/entrances/get", json=json_payload)
 
-        return None
+        return AcsEntrance.from_dict(res["acs_entrance"])
 
     def grant_access(self, *, acs_entrance_id: str, acs_user_id: str) -> None:
         json_payload = {}
@@ -35,7 +40,7 @@ class AcsEntrances(AbstractAcsEntrances):
         *,
         acs_system_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None
-    ) -> None:
+    ) -> List[AcsEntrance]:
         json_payload = {}
 
         if acs_system_id is not None:
@@ -43,13 +48,13 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        self.seam.make_request("POST", "/acs/entrances/list", json=json_payload)
+        res = self.seam.make_request("POST", "/acs/entrances/list", json=json_payload)
 
-        return None
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
-    ) -> None:
+    ) -> List[AcsCredential]:
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -57,8 +62,8 @@ class AcsEntrances(AbstractAcsEntrances):
         if include_if is not None:
             json_payload["include_if"] = include_if
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/acs/entrances/list_credentials_with_access", json=json_payload
         )
 
-        return None
+        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]

@@ -1,4 +1,8 @@
-from seam.types import AbstractUserIdentitiesEnrollmentAutomations, AbstractSeam as Seam
+from seam.types import (
+    AbstractUserIdentitiesEnrollmentAutomations,
+    AbstractSeam as Seam,
+    EnrollmentAutomation,
+)
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -20,17 +24,17 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
 
         return None
 
-    def get(self, *, enrollment_automation_id: str) -> None:
+    def get(self, *, enrollment_automation_id: str) -> EnrollmentAutomation:
         json_payload = {}
 
         if enrollment_automation_id is not None:
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/user_identities/enrollment_automations/get", json=json_payload
         )
 
-        return None
+        return EnrollmentAutomation.from_dict(res["enrollment_automation"])
 
     def launch(
         self,
@@ -66,14 +70,17 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
 
         return None
 
-    def list(self, *, user_identity_id: str) -> None:
+    def list(self, *, user_identity_id: str) -> List[EnrollmentAutomation]:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/user_identities/enrollment_automations/list", json=json_payload
         )
 
-        return None
+        return [
+            EnrollmentAutomation.from_dict(item)
+            for item in res["enrollment_automations"]
+        ]
