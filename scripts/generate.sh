@@ -1,14 +1,17 @@
 #!/bin/bash
 set -e # Exit immediately if any command exits with a non-zero status.
 
-# Remove the existing 'seam' directory
-rm -rf ./seam
+mkdir -p ./tmp
+
+# Remove the existing temporary SDK generation folder
+rm -rf ./tmp/nextlove-sdk-generator-output
 
 # Generate SDK files
-nextlove-sdk-generator generate python ./temp_sdk
+nextlove-sdk-generator generate python ./tmp/nextlove-sdk-generator-output
 
 # Move only the 'seam' folder
-mv ./temp_sdk/seam ./seam
+rm -rf ./seam
+mv ./tmp/nextlove-sdk-generator-output/seam ./seam
 
 # Clean up the temporary SDK generation folder
-rm -rf ./temp_sdk
+rm -rf ./tmp/nextlove-sdk-generator-output
