@@ -1,4 +1,8 @@
-from seam.types import AbstractAcsCredentialPools, AbstractSeam as Seam
+from seam.types import (
+    AbstractAcsCredentialPools,
+    AbstractSeam as Seam,
+    AcsCredentialPool,
+)
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -8,12 +12,16 @@ class AcsCredentialPools(AbstractAcsCredentialPools):
     def __init__(self, seam: Seam):
         self.seam = seam
 
-    def list(self, *, acs_system_id: str) -> None:
+    def list(self, *, acs_system_id: str) -> List[AcsCredentialPool]:
         json_payload = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        self.seam.make_request("POST", "/acs/credential_pools/list", json=json_payload)
+        res = self.seam.make_request(
+            "POST", "/acs/credential_pools/list", json=json_payload
+        )
 
-        return None
+        return [
+            AcsCredentialPool.from_dict(item) for item in res["acs_credential_pools"]
+        ]
