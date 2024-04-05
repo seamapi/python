@@ -1,4 +1,11 @@
-from seam.types import AbstractUserIdentities, AbstractSeam as Seam
+from seam.types import (
+    AbstractUserIdentities,
+    AbstractSeam as Seam,
+    UserIdentity,
+    Device,
+    AcsSystem,
+    AcsUser,
+)
 from typing import Optional, Any, List, Dict, Union
 from seam.user_identities_enrollment_automations import (
     UserIdentitiesEnrollmentAutomations,
@@ -37,7 +44,7 @@ class UserIdentities(AbstractUserIdentities):
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         full_name: Optional[str] = None
-    ) -> None:
+    ) -> UserIdentity:
         json_payload = {}
 
         if user_identity_key is not None:
@@ -49,9 +56,11 @@ class UserIdentities(AbstractUserIdentities):
         if full_name is not None:
             json_payload["full_name"] = full_name
 
-        self.seam.make_request("POST", "/user_identities/create", json=json_payload)
+        res = self.seam.make_request(
+            "POST", "/user_identities/create", json=json_payload
+        )
 
-        return None
+        return UserIdentity.from_dict(res["user_identity"])
 
     def delete(self, *, user_identity_id: str) -> None:
         json_payload = {}
@@ -68,7 +77,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None
-    ) -> None:
+    ) -> UserIdentity:
         json_payload = {}
 
         if user_identity_id is not None:
@@ -76,9 +85,9 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        self.seam.make_request("POST", "/user_identities/get", json=json_payload)
+        res = self.seam.make_request("POST", "/user_identities/get", json=json_payload)
 
-        return None
+        return UserIdentity.from_dict(res["user_identity"])
 
     def grant_access_to_device(self, *, user_identity_id: str, device_id: str) -> None:
         json_payload = {}
@@ -94,7 +103,9 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
-    def list(self, *, credential_manager_acs_system_id: Optional[str] = None) -> None:
+    def list(
+        self, *, credential_manager_acs_system_id: Optional[str] = None
+    ) -> List[UserIdentity]:
         json_payload = {}
 
         if credential_manager_acs_system_id is not None:
@@ -102,45 +113,45 @@ class UserIdentities(AbstractUserIdentities):
                 credential_manager_acs_system_id
             )
 
-        self.seam.make_request("POST", "/user_identities/list", json=json_payload)
+        res = self.seam.make_request("POST", "/user_identities/list", json=json_payload)
 
-        return None
+        return [UserIdentity.from_dict(item) for item in res["user_identities"]]
 
-    def list_accessible_devices(self, *, user_identity_id: str) -> None:
+    def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/user_identities/list_accessible_devices", json=json_payload
         )
 
-        return None
+        return [Device.from_dict(item) for item in res["devices"]]
 
-    def list_acs_systems(self, *, user_identity_id: str) -> None:
+    def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/user_identities/list_acs_systems", json=json_payload
         )
 
-        return None
+        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
-    def list_acs_users(self, *, user_identity_id: str) -> None:
+    def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/user_identities/list_acs_users", json=json_payload
         )
 
-        return None
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
     def remove_acs_user(self, *, user_identity_id: str, acs_user_id: str) -> None:
         json_payload = {}

@@ -16,7 +16,7 @@ class Workspaces(AbstractWorkspaces):
         is_sandbox: Optional[bool] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_logo_shape: Optional[str] = None
-    ) -> None:
+    ) -> Workspace:
         json_payload = {}
 
         if name is not None:
@@ -30,9 +30,9 @@ class Workspaces(AbstractWorkspaces):
         if webview_logo_shape is not None:
             json_payload["webview_logo_shape"] = webview_logo_shape
 
-        self.seam.make_request("POST", "/workspaces/create", json=json_payload)
+        res = self.seam.make_request("POST", "/workspaces/create", json=json_payload)
 
-        return None
+        return Workspace.from_dict(res["workspace"])
 
     def get(
         self,

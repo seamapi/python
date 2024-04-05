@@ -1,4 +1,9 @@
-from seam.types import AbstractAcsAccessGroups, AbstractSeam as Seam
+from seam.types import (
+    AbstractAcsAccessGroups,
+    AbstractSeam as Seam,
+    AcsAccessGroup,
+    AcsUser,
+)
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -20,19 +25,21 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return None
 
-    def get(self, *, acs_access_group_id: str) -> None:
+    def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
         json_payload = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
 
-        self.seam.make_request("POST", "/acs/access_groups/get", json=json_payload)
+        res = self.seam.make_request(
+            "POST", "/acs/access_groups/get", json=json_payload
+        )
 
-        return None
+        return AcsAccessGroup.from_dict(res["acs_access_group"])
 
     def list(
         self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> List[AcsAccessGroup]:
         json_payload = {}
 
         if acs_system_id is not None:
@@ -40,21 +47,23 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/access_groups/list", json=json_payload)
+        res = self.seam.make_request(
+            "POST", "/acs/access_groups/list", json=json_payload
+        )
 
-        return None
+        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
 
-    def list_users(self, *, acs_access_group_id: str) -> None:
+    def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
         json_payload = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/acs/access_groups/list_users", json=json_payload
         )
 
-        return None
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
     def remove_user(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
         json_payload = {}

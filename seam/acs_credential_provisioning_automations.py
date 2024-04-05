@@ -1,6 +1,7 @@
 from seam.types import (
     AbstractAcsCredentialProvisioningAutomations,
     AbstractSeam as Seam,
+    AcsCredentialProvisioningAutomation,
 )
 from typing import Optional, Any, List, Dict, Union
 
@@ -21,7 +22,7 @@ class AcsCredentialProvisioningAutomations(
         acs_credential_pool_id: Optional[str] = None,
         create_credential_manager_user: Optional[bool] = None,
         credential_manager_acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> AcsCredentialProvisioningAutomation:
         json_payload = {}
 
         if user_identity_id is not None:
@@ -41,8 +42,10 @@ class AcsCredentialProvisioningAutomations(
                 credential_manager_acs_user_id
             )
 
-        self.seam.make_request(
+        res = self.seam.make_request(
             "POST", "/acs/credential_provisioning_automations/launch", json=json_payload
         )
 
-        return None
+        return AcsCredentialProvisioningAutomation.from_dict(
+            res["acs_credential_provisioning_automation"]
+        )
