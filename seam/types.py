@@ -1270,13 +1270,6 @@ class AbstractDevicesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractHealthService(abc.ABC):
-
-    @abc.abstractmethod
-    def by_service_name(self, *, service_name: str) -> None:
-        raise NotImplementedError()
-
-
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
     @abc.abstractmethod
@@ -1432,24 +1425,6 @@ class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
 
     @abc.abstractmethod
     def list(self, *, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-
-class AbstractHealth(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def service(self) -> AbstractHealthService:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get_health(
-        self,
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get_service_health(self, *, service: str) -> None:
         raise NotImplementedError()
 
 
@@ -1892,7 +1867,6 @@ class AbstractRoutes(abc.ABC):
     connected_accounts: AbstractConnectedAccounts
     devices: AbstractDevices
     events: AbstractEvents
-    health: AbstractHealth
     locks: AbstractLocks
     networks: AbstractNetworks
     phones: AbstractPhones

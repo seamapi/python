@@ -3,7 +3,7 @@ import os
 from .routes import Routes
 import requests
 from importlib.metadata import version
-from typing import Optional, cast
+from typing import Optional, Union, Dict, cast
 from .types import AbstractSeam, SeamApiException
 
 
@@ -22,7 +22,7 @@ class Seam(AbstractSeam):
         *,
         workspace_id: Optional[str] = None,
         api_url: Optional[str] = None,
-        wait_for_action_attempt: Optional[bool] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ):
         """
         Parameters

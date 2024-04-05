@@ -6,7 +6,6 @@ from .connect_webviews import ConnectWebviews
 from .connected_accounts import ConnectedAccounts
 from .devices import Devices
 from .events import Events
-from .health import Health
 from .locks import Locks
 from .networks import Networks
 from .phones import Phones
@@ -27,7 +26,6 @@ class Routes(AbstractRoutes):
         self.connected_accounts = ConnectedAccounts(seam=self)
         self.devices = Devices(seam=self)
         self.events = Events(seam=self)
-        self.health = Health(seam=self)
         self.locks = Locks(seam=self)
         self.networks = Networks(seam=self)
         self.phones = Phones(seam=self)
