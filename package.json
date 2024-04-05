@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@seamapi/nextlove-sdk-generator": "1.7.12",
-    "@seamapi/types": "1.149.0",
+    "@seamapi/types": "1.153.0",
     "prettier": "^3.2.5"
   }
 }
