@@ -27,7 +27,7 @@ Install it with
 
 ::
 
-    $ poetry add seam
+    $ pip install seam
 
 .. _seam: https://pypi.python.org/pypi/seam
 .. _Python Package Index (PyPI): https://pypi.python.org/
