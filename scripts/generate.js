@@ -27,4 +27,4 @@ const main = async () => {
   }
 }
 
-await main().catch((error) => console.error('Unexpected error:', error))
+await main()
