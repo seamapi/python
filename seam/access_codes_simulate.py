@@ -13,16 +13,16 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         self.seam = seam
 
     def create_unmanaged_access_code(
-        self, *, device_id: str, name: str, code: str
+        self, *, code: str, device_id: str, name: str
     ) -> UnmanagedAccessCode:
         json_payload = {}
 
+        if code is not None:
+            json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
         if name is not None:
             json_payload["name"] = name
-        if code is not None:
-            json_payload["code"] = code
 
         res = self.seam.make_request(
             "POST",

@@ -16,23 +16,23 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         self,
         *,
         access_code_id: str,
-        is_external_modification_allowed: Optional[bool] = None,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
+        is_external_modification_allowed: Optional[bool] = None,
         sync: Optional[bool] = None
     ) -> None:
         json_payload = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-        if is_external_modification_allowed is not None:
-            json_payload["is_external_modification_allowed"] = (
-                is_external_modification_allowed
-            )
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
         if force is not None:
             json_payload["force"] = force
+        if is_external_modification_allowed is not None:
+            json_payload["is_external_modification_allowed"] = (
+                is_external_modification_allowed
+            )
         if sync is not None:
             json_payload["sync"] = sync
 
@@ -59,18 +59,18 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
     def get(
         self,
         *,
-        device_id: Optional[str] = None,
         access_code_id: Optional[str] = None,
-        code: Optional[str] = None
+        code: Optional[str] = None,
+        device_id: Optional[str] = None
     ) -> UnmanagedAccessCode:
         json_payload = {}
 
-        if device_id is not None:
-            json_payload["device_id"] = device_id
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
         if code is not None:
             json_payload["code"] = code
+        if device_id is not None:
+            json_payload["device_id"] = device_id
 
         res = self.seam.make_request(
             "POST", "/access_codes/unmanaged/get", json=json_payload
@@ -100,8 +100,8 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         access_code_id: str,
         is_managed: bool,
         allow_external_modification: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None,
-        force: Optional[bool] = None
+        force: Optional[bool] = None,
+        is_external_modification_allowed: Optional[bool] = None
     ) -> None:
         json_payload = {}
 
@@ -111,12 +111,12 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["is_managed"] = is_managed
         if allow_external_modification is not None:
             json_payload["allow_external_modification"] = allow_external_modification
+        if force is not None:
+            json_payload["force"] = force
         if is_external_modification_allowed is not None:
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-        if force is not None:
-            json_payload["force"] = force
 
         self.seam.make_request(
             "POST", "/access_codes/unmanaged/update", json=json_payload

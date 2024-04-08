@@ -11,24 +11,24 @@ class Workspaces(AbstractWorkspaces):
     def create(
         self,
         *,
-        name: str,
         connect_partner_name: str,
+        name: str,
         is_sandbox: Optional[bool] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_logo_shape: Optional[str] = None
+        webview_logo_shape: Optional[str] = None,
+        webview_primary_button_color: Optional[str] = None
     ) -> Workspace:
         json_payload = {}
 
-        if name is not None:
-            json_payload["name"] = name
         if connect_partner_name is not None:
             json_payload["connect_partner_name"] = connect_partner_name
+        if name is not None:
+            json_payload["name"] = name
         if is_sandbox is not None:
             json_payload["is_sandbox"] = is_sandbox
-        if webview_primary_button_color is not None:
-            json_payload["webview_primary_button_color"] = webview_primary_button_color
         if webview_logo_shape is not None:
             json_payload["webview_logo_shape"] = webview_logo_shape
+        if webview_primary_button_color is not None:
+            json_payload["webview_primary_button_color"] = webview_primary_button_color
 
         res = self.seam.make_request("POST", "/workspaces/create", json=json_payload)
 

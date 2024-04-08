@@ -11,33 +11,33 @@ class ConnectWebviews(AbstractConnectWebviews):
     def create(
         self,
         *,
-        device_selection_mode: Optional[str] = None,
-        custom_redirect_url: Optional[str] = None,
-        custom_redirect_failure_url: Optional[str] = None,
         accepted_providers: Optional[List[str]] = None,
-        provider_category: Optional[str] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_redirect_failure_url: Optional[str] = None,
+        custom_redirect_url: Optional[str] = None,
+        device_selection_mode: Optional[str] = None,
+        provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
     ) -> ConnectWebview:
         json_payload = {}
 
-        if device_selection_mode is not None:
-            json_payload["device_selection_mode"] = device_selection_mode
-        if custom_redirect_url is not None:
-            json_payload["custom_redirect_url"] = custom_redirect_url
-        if custom_redirect_failure_url is not None:
-            json_payload["custom_redirect_failure_url"] = custom_redirect_failure_url
         if accepted_providers is not None:
             json_payload["accepted_providers"] = accepted_providers
-        if provider_category is not None:
-            json_payload["provider_category"] = provider_category
-        if custom_metadata is not None:
-            json_payload["custom_metadata"] = custom_metadata
         if automatically_manage_new_devices is not None:
             json_payload["automatically_manage_new_devices"] = (
                 automatically_manage_new_devices
             )
+        if custom_metadata is not None:
+            json_payload["custom_metadata"] = custom_metadata
+        if custom_redirect_failure_url is not None:
+            json_payload["custom_redirect_failure_url"] = custom_redirect_failure_url
+        if custom_redirect_url is not None:
+            json_payload["custom_redirect_url"] = custom_redirect_url
+        if device_selection_mode is not None:
+            json_payload["device_selection_mode"] = device_selection_mode
+        if provider_category is not None:
+            json_payload["provider_category"] = provider_category
         if wait_for_device_creation is not None:
             json_payload["wait_for_device_creation"] = wait_for_device_creation
 
@@ -70,15 +70,15 @@ class ConnectWebviews(AbstractConnectWebviews):
     def list(
         self,
         *,
-        user_identifier_key: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         json_payload = {}
 
-        if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if user_identifier_key is not None:
+            json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.seam.make_request(
             "POST", "/connect_webviews/list", json=json_payload

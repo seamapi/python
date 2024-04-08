@@ -23,13 +23,13 @@ class UserIdentities(AbstractUserIdentities):
     def enrollment_automations(self) -> UserIdentitiesEnrollmentAutomations:
         return self._enrollment_automations
 
-    def add_acs_user(self, *, user_identity_id: str, acs_user_id: str) -> None:
+    def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         json_payload = {}
 
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.seam.make_request(
             "POST", "/user_identities/add_acs_user", json=json_payload
@@ -40,21 +40,21 @@ class UserIdentities(AbstractUserIdentities):
     def create(
         self,
         *,
-        user_identity_key: Optional[str] = None,
         email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        full_name: Optional[str] = None
+        user_identity_key: Optional[str] = None
     ) -> UserIdentity:
         json_payload = {}
 
-        if user_identity_key is not None:
-            json_payload["user_identity_key"] = user_identity_key
         if email_address is not None:
             json_payload["email_address"] = email_address
-        if phone_number is not None:
-            json_payload["phone_number"] = phone_number
         if full_name is not None:
             json_payload["full_name"] = full_name
+        if phone_number is not None:
+            json_payload["phone_number"] = phone_number
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
 
         res = self.seam.make_request(
             "POST", "/user_identities/create", json=json_payload
@@ -89,13 +89,13 @@ class UserIdentities(AbstractUserIdentities):
 
         return UserIdentity.from_dict(res["user_identity"])
 
-    def grant_access_to_device(self, *, user_identity_id: str, device_id: str) -> None:
+    def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
         json_payload = {}
 
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.seam.make_request(
             "POST", "/user_identities/grant_access_to_device", json=json_payload
@@ -153,13 +153,13 @@ class UserIdentities(AbstractUserIdentities):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
-    def remove_acs_user(self, *, user_identity_id: str, acs_user_id: str) -> None:
+    def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         json_payload = {}
 
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.seam.make_request(
             "POST", "/user_identities/remove_acs_user", json=json_payload
@@ -167,13 +167,13 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
-    def revoke_access_to_device(self, *, user_identity_id: str, device_id: str) -> None:
+    def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
         json_payload = {}
 
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.seam.make_request(
             "POST", "/user_identities/revoke_access_to_device", json=json_payload
@@ -185,23 +185,23 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         user_identity_id: str,
-        user_identity_key: Optional[str] = None,
         email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        full_name: Optional[str] = None
+        user_identity_key: Optional[str] = None
     ) -> None:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_key is not None:
-            json_payload["user_identity_key"] = user_identity_key
         if email_address is not None:
             json_payload["email_address"] = email_address
-        if phone_number is not None:
-            json_payload["phone_number"] = phone_number
         if full_name is not None:
             json_payload["full_name"] = full_name
+        if phone_number is not None:
+            json_payload["phone_number"] = phone_number
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
 
         self.seam.make_request("POST", "/user_identities/update", json=json_payload)
 

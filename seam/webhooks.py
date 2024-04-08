@@ -49,13 +49,13 @@ class Webhooks(AbstractWebhooks):
 
         return [Webhook.from_dict(item) for item in res["webhooks"]]
 
-    def update(self, *, webhook_id: str, event_types: List[str]) -> None:
+    def update(self, *, event_types: List[str], webhook_id: str) -> None:
         json_payload = {}
 
-        if webhook_id is not None:
-            json_payload["webhook_id"] = webhook_id
         if event_types is not None:
             json_payload["event_types"] = event_types
+        if webhook_id is not None:
+            json_payload["webhook_id"] = webhook_id
 
         self.seam.make_request("POST", "/webhooks/update", json=json_payload)
 

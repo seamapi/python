@@ -88,10 +88,10 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
         sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
@@ -99,14 +99,14 @@ class Thermostats(AbstractThermostats):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if heating_set_point_celsius is not None:
-            json_payload["heating_set_point_celsius"] = heating_set_point_celsius
-        if heating_set_point_fahrenheit is not None:
-            json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if heating_set_point_celsius is not None:
+            json_payload["heating_set_point_celsius"] = heating_set_point_celsius
+        if heating_set_point_fahrenheit is not None:
+            json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if sync is not None:
             json_payload["sync"] = sync
 
@@ -122,48 +122,48 @@ class Thermostats(AbstractThermostats):
     def list(
         self,
         *,
+        connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
-        connect_webview_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        created_before: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        exclude_if: Optional[List[str]] = None,
         include_if: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         json_payload = {}
 
+        if connect_webview_id is not None:
+            json_payload["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
         if connected_account_ids is not None:
             json_payload["connected_account_ids"] = connected_account_ids
-        if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+        if created_before is not None:
+            json_payload["created_before"] = created_before
+        if custom_metadata_has is not None:
+            json_payload["custom_metadata_has"] = custom_metadata_has
+        if device_ids is not None:
+            json_payload["device_ids"] = device_ids
         if device_type is not None:
             json_payload["device_type"] = device_type
         if device_types is not None:
             json_payload["device_types"] = device_types
-        if manufacturer is not None:
-            json_payload["manufacturer"] = manufacturer
-        if device_ids is not None:
-            json_payload["device_ids"] = device_ids
-        if limit is not None:
-            json_payload["limit"] = limit
-        if created_before is not None:
-            json_payload["created_before"] = created_before
-        if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
-        if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
-        if include_if is not None:
-            json_payload["include_if"] = include_if
         if exclude_if is not None:
             json_payload["exclude_if"] = exclude_if
+        if include_if is not None:
+            json_payload["include_if"] = include_if
+        if limit is not None:
+            json_payload["limit"] = limit
+        if manufacturer is not None:
+            json_payload["manufacturer"] = manufacturer
+        if user_identifier_key is not None:
+            json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.seam.make_request("POST", "/thermostats/list", json=json_payload)
 
@@ -220,14 +220,14 @@ class Thermostats(AbstractThermostats):
         )
 
     def update(
-        self, *, device_id: str, default_climate_setting: Dict[str, Any]
+        self, *, default_climate_setting: Dict[str, Any], device_id: str
     ) -> None:
         json_payload = {}
 
-        if device_id is not None:
-            json_payload["device_id"] = device_id
         if default_climate_setting is not None:
             json_payload["default_climate_setting"] = default_climate_setting
+        if device_id is not None:
+            json_payload["device_id"] = device_id
 
         self.seam.make_request("POST", "/thermostats/update", json=json_payload)
 
