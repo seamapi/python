@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node ./scripts/generate.js",
+    "generate": "rm -rf ./seam && node ./scripts/generate.js",
     "format": "prettier --write --ignore-path .gitignore .",
     "preformat": "make format"
   },
