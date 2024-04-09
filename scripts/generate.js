@@ -2,15 +2,19 @@ import { generatePythonSDK, writeFs } from '@seamapi/nextlove-sdk-generator'
 import { openapi } from '@seamapi/types/connect'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { deleteAsync } from 'del'
 
 const SEAM_DIRECTORY_PREFIX = 'seam/'
-const OUTPUT_DIRECTORY = path.resolve(
+const PROJECT_ROOT_PATH = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '../',
 )
+const MAIN_SEAM_DIR_PATH = path.resolve(PROJECT_ROOT_PATH, 'seam')
 
 const main = async () => {
   try {
+    await deleteAsync(MAIN_SEAM_DIR_PATH)
+
     const pythonSdkFileSystem = await generatePythonSDK({
       openApiSpecObject: openapi,
     })
@@ -19,7 +23,7 @@ const main = async () => {
       fileName.startsWith(SEAM_DIRECTORY_PREFIX),
     )
 
-    writeFs(OUTPUT_DIRECTORY, Object.fromEntries(seamFiles))
+    writeFs(PROJECT_ROOT_PATH, Object.fromEntries(seamFiles))
 
     console.log('Python SDK generated successfully!')
   } catch (error) {
