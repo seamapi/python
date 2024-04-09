@@ -6,7 +6,7 @@ inputs:
   node_version:
     description: The Node.js version.
     required: false
-    default: '20'
+    default: "20"
   registry_url:
     description: The Node.js package registry URL.
     required: false
@@ -14,7 +14,7 @@ inputs:
   install_dependencies:
     description: Install dependencies.
     required: false
-    default: 'true'
+    default: "true"
 
 runs:
   using: composite
