@@ -253,6 +253,7 @@ class AcsUser:
     is_suspended: bool
     phone_number: str
     user_identity_email_address: str
+    user_identity_full_name: str
     user_identity_id: str
     user_identity_phone_number: str
     workspace_id: str
@@ -274,6 +275,7 @@ class AcsUser:
             is_suspended=d.get("is_suspended", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
+            user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
             workspace_id=d.get("workspace_id", None),
