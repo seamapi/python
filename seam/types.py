@@ -530,6 +530,7 @@ class AcsUser:
     is_suspended: bool
     access_schedule: Dict[str, Any]
     user_identity_id: str
+    user_identity_full_name: str
     user_identity_email_address: str
     user_identity_phone_number: str
     full_name: str
@@ -551,6 +552,7 @@ class AcsUser:
             is_suspended=d.get("is_suspended", None),
             access_schedule=DeepAttrDict(d.get("access_schedule", None)),
             user_identity_id=d.get("user_identity_id", None),
+            user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
             full_name=d.get("full_name", None),
