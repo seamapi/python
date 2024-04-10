@@ -6,15 +6,15 @@ inputs:
   python_version:
     description: The Python version.
     required: false
-    default: "3.12"
+    default: '3.12'
   poetry_version:
     description: The Poetry version.
     required: false
-    default: "1.8.2"
+    default: '1.8.2'
   install_dependencies:
     description: Install dependencies.
     required: false
-    default: "true"
+    default: 'true'
 
 runs:
   using: composite
