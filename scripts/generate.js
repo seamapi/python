@@ -1,7 +1,7 @@
 import { generatePythonSDK, writeFs } from "@seamapi/nextlove-sdk-generator"
 import { openapi } from "@seamapi/types/connect"
-import path from "path"
-import { fileURLToPath } from "url"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 import { deleteAsync } from "del"
 
 const SEAM_DIRECTORY_PREFIX = "seam/"
