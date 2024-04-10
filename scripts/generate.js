@@ -9,7 +9,10 @@ const PROJECT_ROOT_PATH = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '../',
 )
-const MAIN_SEAM_DIR_PATH = path.resolve(PROJECT_ROOT_PATH, 'seam')
+const MAIN_SEAM_DIR_PATH = path.resolve(
+  PROJECT_ROOT_PATH,
+  SEAM_DIRECTORY_PREFIX,
+)
 
 const main = async () => {
   try {
