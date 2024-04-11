@@ -253,22 +253,10 @@ class AcsUser:
     is_suspended: bool
     phone_number: str
     user_identity_email_address: str
+    user_identity_full_name: str
     user_identity_id: str
     user_identity_phone_number: str
     workspace_id: str
-<<<<<<< HEAD
-=======
-    errors: List[Dict[str, Any]]
-    warnings: List[Dict[str, Any]]
-    created_at: str
-    is_managed: bool
-    custom_metadata: Dict[str, Any]
-    can_remotely_unlock: bool
-    can_remotely_lock: bool
-    can_program_offline_access_codes: bool
-    can_program_online_access_codes: bool
-    can_simulate_removal: bool
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -277,7 +265,6 @@ class AcsUser:
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
             created_at=d.get("created_at", None),
-<<<<<<< HEAD
             display_name=d.get("display_name", None),
             email=d.get("email", None),
             email_address=d.get("email_address", None),
@@ -288,65 +275,10 @@ class AcsUser:
             is_suspended=d.get("is_suspended", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
+            user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
             workspace_id=d.get("workspace_id", None),
-=======
-            is_managed=d.get("is_managed", None),
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
-            can_remotely_unlock=d.get("can_remotely_unlock", None),
-            can_remotely_lock=d.get("can_remotely_lock", None),
-            can_program_offline_access_codes=d.get(
-                "can_program_offline_access_codes", None
-            ),
-            can_program_online_access_codes=d.get(
-                "can_program_online_access_codes", None
-            ),
-            can_simulate_removal=d.get("can_simulate_removal", None),
-        )
-
-
-@dataclass
-class UnmanagedDevice:
-    device_id: str
-    device_type: Any
-    connected_account_id: str
-    capabilities_supported: List[str]
-    workspace_id: str
-    errors: List[Dict[str, Any]]
-    warnings: List[Dict[str, Any]]
-    created_at: str
-    is_managed: bool
-    properties: Dict[str, Any]
-    can_remotely_unlock: bool
-    can_remotely_lock: bool
-    can_program_offline_access_codes: bool
-    can_program_online_access_codes: bool
-    can_simulate_removal: bool
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return UnmanagedDevice(
-            device_id=d.get("device_id", None),
-            device_type=d.get("device_type", None),
-            connected_account_id=d.get("connected_account_id", None),
-            capabilities_supported=d.get("capabilities_supported", None),
-            workspace_id=d.get("workspace_id", None),
-            errors=d.get("errors", None),
-            warnings=d.get("warnings", None),
-            created_at=d.get("created_at", None),
-            is_managed=d.get("is_managed", None),
-            properties=DeepAttrDict(d.get("properties", None)),
-            can_remotely_unlock=d.get("can_remotely_unlock", None),
-            can_remotely_lock=d.get("can_remotely_lock", None),
-            can_program_offline_access_codes=d.get(
-                "can_program_offline_access_codes", None
-            ),
-            can_program_online_access_codes=d.get(
-                "can_program_online_access_codes", None
-            ),
-            can_simulate_removal=d.get("can_simulate_removal", None),
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
         )
 
 
@@ -517,6 +449,7 @@ class ConnectedAccount:
 
 @dataclass
 class Device:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -539,6 +472,9 @@ class Device:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Device(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -585,17 +521,7 @@ class EnrollmentAutomation:
     credential_manager_acs_system_id: str
     enrollment_automation_id: str
     user_identity_id: str
-<<<<<<< HEAD
     workspace_id: str
-=======
-    user_identity_full_name: str
-    user_identity_email_address: str
-    user_identity_phone_number: str
-    full_name: str
-    email: str
-    email_address: str
-    phone_number: str
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -606,17 +532,7 @@ class EnrollmentAutomation:
             ),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
             user_identity_id=d.get("user_identity_id", None),
-<<<<<<< HEAD
             workspace_id=d.get("workspace_id", None),
-=======
-            user_identity_full_name=d.get("user_identity_full_name", None),
-            user_identity_email_address=d.get("user_identity_email_address", None),
-            user_identity_phone_number=d.get("user_identity_phone_number", None),
-            full_name=d.get("full_name", None),
-            email=d.get("email", None),
-            email_address=d.get("email_address", None),
-            phone_number=d.get("phone_number", None),
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
         )
 
 
@@ -683,6 +599,7 @@ class NoiseThreshold:
 
 @dataclass
 class Phone:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -704,6 +621,9 @@ class Phone:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Phone(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -776,6 +696,7 @@ class UnmanagedAccessCode:
 
 @dataclass
 class UnmanagedDevice:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -787,7 +708,6 @@ class UnmanagedDevice:
     device_type: Any
     errors: List[Dict[str, Any]]
     is_managed: bool
-<<<<<<< HEAD
     properties: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -795,36 +715,9 @@ class UnmanagedDevice:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return UnmanagedDevice(
-=======
-    custom_metadata: Dict[str, Any]
-    can_remotely_unlock: bool
-    can_remotely_lock: bool
-    can_program_offline_access_codes: bool
-    can_program_online_access_codes: bool
-    can_simulate_removal: bool
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Phone(
-            device_id=d.get("device_id", None),
-            device_type=d.get("device_type", None),
-            nickname=d.get("nickname", None),
-            display_name=d.get("display_name", None),
-            capabilities_supported=d.get("capabilities_supported", None),
-            properties=DeepAttrDict(d.get("properties", None)),
-            location=DeepAttrDict(d.get("location", None)),
-            workspace_id=d.get("workspace_id", None),
-            errors=d.get("errors", None),
-            warnings=d.get("warnings", None),
-            created_at=d.get("created_at", None),
-            is_managed=d.get("is_managed", None),
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
-            can_remotely_unlock=d.get("can_remotely_unlock", None),
-            can_remotely_lock=d.get("can_remotely_lock", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -1100,7 +993,6 @@ class AbstractAcsEntrances(abc.ABC):
         raise NotImplementedError()
 
 
-<<<<<<< HEAD
 class AbstractAcsSystems(abc.ABC):
 
     @abc.abstractmethod
@@ -1171,9 +1063,6 @@ class AbstractAcsUsers(abc.ABC):
     @abc.abstractmethod
     def suspend(self, *, acs_user_id: str) -> None:
         raise NotImplementedError()
-=======
-class AbstractAcsAccessGroups(abc.ABC):
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
 
     @abc.abstractmethod
     def unsuspend(self, *, acs_user_id: str) -> None:
@@ -1459,7 +1348,6 @@ class AbstractLocks(abc.ABC):
     ) -> List[Device]:
         raise NotImplementedError()
 
-<<<<<<< HEAD
     @abc.abstractmethod
     def lock_door(
         self,
@@ -1469,66 +1357,6 @@ class AbstractLocks(abc.ABC):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         raise NotImplementedError()
-=======
-
-class AbstractAccessCodesSimulate(abc.ABC):
-
-    @abc.abstractmethod
-    def create_unmanaged_access_code(
-        self, *, device_id: str, name: str, code: str
-    ) -> UnmanagedAccessCode:
-        raise NotImplementedError()
-
-
-class AbstractAccessCodesUnmanaged(abc.ABC):
-
-    @abc.abstractmethod
-    def convert_to_managed(
-        self,
-        *,
-        access_code_id: str,
-        is_external_modification_allowed: Optional[bool] = None,
-        allow_external_modification: Optional[bool] = None,
-        force: Optional[bool] = None,
-        sync: Optional[bool] = None,
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, access_code_id: str, sync: Optional[bool] = None) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self,
-        *,
-        device_id: Optional[str] = None,
-        access_code_id: Optional[str] = None,
-        code: Optional[str] = None,
-    ) -> UnmanagedAccessCode:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self, *, device_id: str, user_identifier_key: Optional[str] = None
-    ) -> List[UnmanagedAccessCode]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        access_code_id: str,
-        is_managed: bool,
-        allow_external_modification: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None,
-        force: Optional[bool] = None,
-    ) -> None:
-        raise NotImplementedError()
-
-
-class AbstractDevicesSimulate(abc.ABC):
->>>>>>> 578d3991b7c29a39e345d25c9bde8de6188dc5e7
 
     @abc.abstractmethod
     def unlock_door(
