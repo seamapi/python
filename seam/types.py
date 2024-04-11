@@ -449,6 +449,7 @@ class ConnectedAccount:
 
 @dataclass
 class Device:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -471,6 +472,9 @@ class Device:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Device(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -595,6 +599,7 @@ class NoiseThreshold:
 
 @dataclass
 class Phone:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -616,6 +621,9 @@ class Phone:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Phone(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -688,6 +696,7 @@ class UnmanagedAccessCode:
 
 @dataclass
 class UnmanagedDevice:
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
@@ -706,6 +715,9 @@ class UnmanagedDevice:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return UnmanagedDevice(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
