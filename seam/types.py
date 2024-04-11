@@ -277,6 +277,7 @@ class Device:
     custom_metadata: Dict[str, Any]
     can_remotely_unlock: bool
     can_remotely_lock: bool
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_simulate_removal: bool
 
@@ -299,6 +300,9 @@ class Device:
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_remotely_lock=d.get("can_remotely_lock", None),
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -320,6 +324,7 @@ class UnmanagedDevice:
     properties: Dict[str, Any]
     can_remotely_unlock: bool
     can_remotely_lock: bool
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_simulate_removal: bool
 
@@ -338,6 +343,9 @@ class UnmanagedDevice:
             properties=DeepAttrDict(d.get("properties", None)),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_remotely_lock=d.get("can_remotely_lock", None),
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -714,6 +722,7 @@ class Phone:
     custom_metadata: Dict[str, Any]
     can_remotely_unlock: bool
     can_remotely_lock: bool
+    can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_simulate_removal: bool
 
@@ -735,6 +744,9 @@ class Phone:
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_remotely_lock=d.get("can_remotely_lock", None),
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
             ),
@@ -1119,62 +1131,6 @@ class AbstractWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractAccessCodesSimulate(abc.ABC):
-
-    @abc.abstractmethod
-    def create_unmanaged_access_code(
-        self, *, device_id: str, name: str, code: str
-    ) -> UnmanagedAccessCode:
-        raise NotImplementedError()
-
-
-class AbstractAccessCodesUnmanaged(abc.ABC):
-
-    @abc.abstractmethod
-    def convert_to_managed(
-        self,
-        *,
-        access_code_id: str,
-        is_external_modification_allowed: Optional[bool] = None,
-        allow_external_modification: Optional[bool] = None,
-        force: Optional[bool] = None,
-        sync: Optional[bool] = None,
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, access_code_id: str, sync: Optional[bool] = None) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self,
-        *,
-        device_id: Optional[str] = None,
-        access_code_id: Optional[str] = None,
-        code: Optional[str] = None,
-    ) -> UnmanagedAccessCode:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self, *, device_id: str, user_identifier_key: Optional[str] = None
-    ) -> List[UnmanagedAccessCode]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        access_code_id: str,
-        is_managed: bool,
-        allow_external_modification: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None,
-        force: Optional[bool] = None,
-    ) -> None:
-        raise NotImplementedError()
-
-
 class AbstractAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
@@ -1384,6 +1340,62 @@ class AbstractAcsUsers(abc.ABC):
         phone_number: Optional[str] = None,
         email_address: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
+    ) -> None:
+        raise NotImplementedError()
+
+
+class AbstractAccessCodesSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def create_unmanaged_access_code(
+        self, *, device_id: str, name: str, code: str
+    ) -> UnmanagedAccessCode:
+        raise NotImplementedError()
+
+
+class AbstractAccessCodesUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def convert_to_managed(
+        self,
+        *,
+        access_code_id: str,
+        is_external_modification_allowed: Optional[bool] = None,
+        allow_external_modification: Optional[bool] = None,
+        force: Optional[bool] = None,
+        sync: Optional[bool] = None,
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_code_id: str, sync: Optional[bool] = None) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        device_id: Optional[str] = None,
+        access_code_id: Optional[str] = None,
+        code: Optional[str] = None,
+    ) -> UnmanagedAccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self, *, device_id: str, user_identifier_key: Optional[str] = None
+    ) -> List[UnmanagedAccessCode]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_code_id: str,
+        is_managed: bool,
+        allow_external_modification: Optional[bool] = None,
+        is_external_modification_allowed: Optional[bool] = None,
+        force: Optional[bool] = None,
     ) -> None:
         raise NotImplementedError()
 
