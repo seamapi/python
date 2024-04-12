@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "./scripts/generate.sh",
+    "generate": "node ./scripts/generate.js",
     "format": "prettier --write --ignore-path .gitignore .",
     "preformat": "make format"
   },
   "devDependencies": {
     "@seamapi/nextlove-sdk-generator": "1.8.1",
     "@seamapi/types": "1.157.0",
+    "del": "^7.1.0",
     "prettier": "^3.2.5"
   }
 }

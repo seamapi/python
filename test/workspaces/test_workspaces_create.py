@@ -16,5 +16,4 @@ def test_workspaces_create(seam: Seam):
         is_sandbox=True,
     )
 
-    # Improve the assertion when `x-fern-sdk-return-value` of `/workspaces/create` is fixed on the API side.
-    assert workspace is None
+    assert workspace.workspace_id
