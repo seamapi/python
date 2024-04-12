@@ -1593,8 +1593,8 @@ class AbstractWorkspaces(abc.ABC):
 
     @abc.abstractmethod
     def reset_sandbox(
-        self,
-    ) -> None:
+        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
 
