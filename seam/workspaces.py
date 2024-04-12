@@ -1,4 +1,9 @@
-from seam.types import AbstractWorkspaces, AbstractSeam as Seam, Workspace
+from seam.types import (
+    AbstractWorkspaces,
+    AbstractSeam as Seam,
+    Workspace,
+    ActionAttempt,
+)
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -53,10 +58,15 @@ class Workspaces(AbstractWorkspaces):
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
     def reset_sandbox(
-        self,
-    ) -> None:
+        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         json_payload = {}
 
-        self.seam.make_request("POST", "/workspaces/reset_sandbox", json=json_payload)
+        res = self.seam.make_request(
+            "POST", "/workspaces/reset_sandbox", json=json_payload
+        )
 
-        return None
+        return self.seam.action_attempts.decide_and_wait(
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
