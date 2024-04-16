@@ -208,6 +208,7 @@ class AcsEntrance:
 class AcsSystem:
     acs_system_id: str
     can_automate_enrollment: bool
+    can_create_acs_access_groups: bool
     connected_account_ids: List[str]
     created_at: str
     external_type: str
@@ -224,6 +225,7 @@ class AcsSystem:
         return AcsSystem(
             acs_system_id=d.get("acs_system_id", None),
             can_automate_enrollment=d.get("can_automate_enrollment", None),
+            can_create_acs_access_groups=d.get("can_create_acs_access_groups", None),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
             external_type=d.get("external_type", None),
@@ -538,6 +540,7 @@ class EnrollmentAutomation:
 
 @dataclass
 class Event:
+    action_attempt_id: str
     created_at: str
     device_id: str
     event_id: str
@@ -548,6 +551,7 @@ class Event:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Event(
+            action_attempt_id=d.get("action_attempt_id", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             event_id=d.get("event_id", None),
