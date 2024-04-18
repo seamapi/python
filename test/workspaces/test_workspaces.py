@@ -9,4 +9,4 @@ def test_workspaces(seam: Seam):
     assert len(ws_list) > 0
 
     reset_sandbox_action_attempt = seam.workspaces.reset_sandbox()
-    assert reset_sandbox_action_attempt.action_type == 'RESET_SANDBOX_WORKSPACE'
+    assert reset_sandbox_action_attempt.action_type == "RESET_SANDBOX_WORKSPACE"
