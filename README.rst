@@ -106,14 +106,32 @@ Run tests on changes with
 Publishing
 ~~~~~~~~~~
 
-Use the `poetry version`_ command to release a new version.
-Then run `make version` to commit and push a new git tag
-which will trigger a GitHub action.
+New versions are created with `poetry version`_.
 
-Publishing may be triggered using a `workflow_dispatch on GitHub Actions`_.
+Automatic
+^^^^^^^^^
+
+New versions are released automatically with semantic-release_
+as long as commits follow the `Angular Commit Message Conventions`_.
+
+.. _Angular Commit Message Conventions: https://semantic-release.gitbook.io/semantic-release/#commit-message-format
+.. _semantic-release: https://semantic-release.gitbook.io/
+
+Manual
+^^^^^^
+
+Publish a new version by triggering a `version workflow_dispatch on GitHub Actions`_.
+The `version` input will be passed as the first argument to `poetry version`_.
+
+This may be done on the web or using the `GitHub CLI`_ with
+
+::
+
+    $ gh workflow run version.yml --raw-field version=<version>
 
 .. _Poetry version: https://python-poetry.org/docs/cli/#version
-.. _workflow_dispatch on GitHub Actions: https://github.com/seamapi/python-next/actions?query=workflow%3Aversion
+.. _GitHub CLI: https://cli.github.com/
+.. _version workflow_dispatch on GitHub Actions: https://github.com/seamapi/python-next/actions?query=workflow%3Aversion
 
 GitHub Actions
 --------------
@@ -129,7 +147,7 @@ These must be set manually.
 Secrets for Optional GitHub Actions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The version and format GitHub actions
+The version, format, generate, and semantic-release GitHub actions
 require a user with write access to the repository
 including access to read and write packages.
 Set these additional secrets to enable the action:
