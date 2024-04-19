@@ -15,7 +15,7 @@ SDK for the Seam API written in Python.
 Description
 -----------
 
-`Seam <https://www.seam.co/>`_ makes it easy to integrate IoT devices with your applications.
+`Seam <seam_home_>`_ makes it easy to integrate IoT devices with your applications.
 This is an official SDK for the Seam API.
 Please refer to the official `Seam Docs <https://docs.seam.co/latest/>`_ to get started.
 
@@ -23,6 +23,8 @@ Parts of this SDK are generated from always up-to-date type information
 provided by `@seamapi/types <https://github.com/seamapi/types/>`_ node package.
 This ensures all API methods, request shapes, and response shapes are
 accurate and fully typed.
+
+.. _seam_home: https://www.seam.co
 
 Installation
 ------------
@@ -164,7 +166,6 @@ Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
 Either pass the `api_url` option to the constructor, or set the `SEAM_ENDPOINT` environment variable.
-
 
 Development and Testing
 -----------------------
