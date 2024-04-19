@@ -30,9 +30,7 @@ Installation
 This package is registered on the `Python Package Index (PyPI)`_
 as seam_.
 
-Install it with
-
-::
+Install it with::
 
     $ pip install seam
 
@@ -43,12 +41,12 @@ Usage
 -----
 
 Examples
-********
+~~~~~~~~
 
 .. note:: These examples assume `SEAM_API_KEY` is set in your environment.
 
 List devices
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -58,7 +56,7 @@ List devices
     devices = seam.devices.list()
 
 Unlock a door
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -69,7 +67,7 @@ Unlock a door
     seam.locks.unlock_door(device_id="lock.device_id")
 
 Authentication Method
-*********************
+~~~~~~~~~~~~~~~~~~~~~
 
 The SDK supports API key authentication mechanism.
 
@@ -88,7 +86,7 @@ Obtain one from the Seam Console.
     seam = Seam(api_key='your-api-key')
 
 Action Attempts
-***************
+~~~~~~~~~~~~~~~
 
 Some asynchronous operations, e.g., unlocking a door, return an `action attempt <https://docs.seam.co/latest/core-concepts/action-attempts>`_.
 Seam tracks the progress of requested operation and updates the action attempt.
@@ -157,15 +155,16 @@ Using the `wait_for_action_attempt` option:
       print(f'Error: {e}')
 
 Advanced Usage
-**************
+~~~~~~~~~~~~~~
 
 Setting the endpoint
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
 Either pass the `api_url` option to the constructor, or set the `SEAM_ENDPOINT` environment variable.
+
 
 Development and Testing
 -----------------------
