@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node ./scripts/generate.js",
-    "format": "prettier --write --ignore-path .gitignore .",
-    "preformat": "make format"
+    "generate": "node generate-routes.js",
+    "postgenerate": "make format",
+    "format": "prettier --write --ignore-path .gitignore ."
   },
   "devDependencies": {
     "@seamapi/nextlove-sdk-generator": "1.8.5",
