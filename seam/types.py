@@ -189,6 +189,7 @@ class AcsEntrance:
     acs_system_id: str
     created_at: str
     display_name: str
+    errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
     visionline_metadata: Dict[str, Any]
 
@@ -199,6 +200,7 @@ class AcsEntrance:
             acs_system_id=d.get("acs_system_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
         )
