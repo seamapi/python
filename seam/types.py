@@ -189,6 +189,7 @@ class AcsEntrance:
     acs_system_id: str
     created_at: str
     display_name: str
+    errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
     visionline_metadata: Dict[str, Any]
 
@@ -199,6 +200,7 @@ class AcsEntrance:
             acs_system_id=d.get("acs_system_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
         )
@@ -548,9 +550,14 @@ class EnrollmentAutomation:
 
 @dataclass
 class Event:
+    acs_credential_id: str
+    acs_system_id: str
+    acs_user_id: str
     action_attempt_id: str
+    client_session_id: str
     created_at: str
     device_id: str
+    enrollment_automation_id: str
     event_id: str
     event_type: str
     occurred_at: str
@@ -559,9 +566,14 @@ class Event:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Event(
+            acs_credential_id=d.get("acs_credential_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            acs_user_id=d.get("acs_user_id", None),
             action_attempt_id=d.get("action_attempt_id", None),
+            client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
+            enrollment_automation_id=d.get("enrollment_automation_id", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
@@ -975,7 +987,13 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, acs_credential_id: str, code: str) -> None:
+    def update(
+        self,
+        *,
+        acs_credential_id: str,
+        code: Optional[str] = None,
+        ends_at: Optional[str] = None,
+    ) -> None:
         raise NotImplementedError()
 
 
