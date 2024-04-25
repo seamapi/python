@@ -35,3 +35,6 @@ class Routes(AbstractRoutes):
         self.user_identities = UserIdentities(seam=self)
         self.webhooks = Webhooks(seam=self)
         self.workspaces = Workspaces(seam=self)
+
+    def make_request(self, method: str, path: str, **kwargs):
+        raise NotImplementedError()
