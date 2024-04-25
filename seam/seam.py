@@ -4,7 +4,14 @@ from .routes import Routes
 import requests
 from importlib.metadata import version
 from typing import Optional, Union, Dict, cast
+from typing_extensions import Self
+from seam.utils.auth import get_auth_headers, warn_on_insecure_user_identifier_key
+from seam.utils.parse_options import get_api_key_from_env, get_endpoint_from_env
+from .routes import Routes
 from .types import AbstractSeam, SeamApiException
+
+
+DEFAULT_ENDPOINT = "https://connect.getseam.com"
 
 
 class Seam(AbstractSeam):
@@ -21,7 +28,7 @@ class Seam(AbstractSeam):
         api_key: Optional[str] = None,
         *,
         workspace_id: Optional[str] = None,
-        api_url: Optional[str] = None,
+        endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ):
         """
@@ -30,9 +37,11 @@ class Seam(AbstractSeam):
         api_key : str, optional
           API key
         workspace_id : str, optional
-          Workspace id
-        api_url : str, optional
-          API url
+          Workspace id.
+        endpoint : str, optional
+          The API endpoint to which the request should be sent.
+        wait_for_action_attempt : bool or dict, optional
+          Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
         """
         Routes.__init__(self)
 
@@ -57,13 +66,9 @@ class Seam(AbstractSeam):
                 "Support will be removed in a later major version. Use SEAM_ENDPOINT instead."
                 "\033[0m"
             )
-        api_url = (
-            os.environ.get("SEAM_API_URL", None)
-            or os.environ.get("SEAM_ENDPOINT", None)
-            or api_url
-        )
-        if api_url is not None:
-            self.api_url = cast(str, api_url)
+        endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
+        if endpoint is not None:
+            self.endpoint = cast(str, endpoint)
 
     def make_request(self, method: str, path: str, **kwargs):
         """
