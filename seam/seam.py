@@ -81,8 +81,6 @@ class Seam(AbstractSeam):
                 "\033[0m"
             )
         endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
-        if endpoint is not None:
-            self.endpoint = cast(str, endpoint)
 
     def make_request(self, method: str, path: str, **kwargs):
         """
