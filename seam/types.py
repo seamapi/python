@@ -2077,18 +2077,11 @@ class AbstractSeam(AbstractRoutes):
         console_session_token: Optional[str] = None,
         personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
-        endpoint: Optional[str] = "https://connect.getseam.com",
+        endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ):
-        self.api_key = api_key
-        self.client_session_token = client_session_token
-        self.publishable_key = publishable_key
-        self.user_identifier_key = user_identifier_key
-        self.console_session_token = console_session_token
-        self.personal_access_token = personal_access_token
-        self.workspace_id = workspace_id
-        self.endpoint = endpoint
         self.wait_for_action_attempt = wait_for_action_attempt
+        self.lts_version = AbstractSeam.lts_version
 
     @abc.abstractmethod
     def make_request(self, method: str, path: str, **kwargs) -> Any:
