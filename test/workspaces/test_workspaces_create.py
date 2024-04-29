@@ -7,7 +7,8 @@ def test_workspaces_create(seam: Seam):
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     seam = Seam(
         endpoint=f"https://{r}.fakeseamconnect.seam.vc",
-        api_key="seam_at1_shorttoken_longtoken",
+        personal_access_token="seam_at1_shorttoken_longtoken",
+        workspace_id="seed_workspace_1",
     )
 
     workspace = seam.workspaces.create(

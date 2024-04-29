@@ -64,7 +64,7 @@ class Seam(AbstractSeam):
                 "Support will be removed in a later major version. Use SEAM_ENDPOINT instead."
                 "\033[0m"
             )
-        endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
+        self.endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
 
     def make_request(self, method: str, path: str, **kwargs):
         """
