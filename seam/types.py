@@ -2071,10 +2071,6 @@ class AbstractSeam(AbstractRoutes):
         self,
         api_key: Optional[str] = None,
         *,
-        client_session_token: Optional[str] = None,
-        publishable_key: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
-        console_session_token: Optional[str] = None,
         personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
@@ -2092,41 +2088,6 @@ class AbstractSeam(AbstractRoutes):
     def from_api_key(
         cls,
         api_key: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        raise NotImplementedError
-
-    @classmethod
-    @abc.abstractmethod
-    def from_client_session_token(
-        cls,
-        client_session_token: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        raise NotImplementedError
-
-    @classmethod
-    @abc.abstractmethod
-    def from_publishable_key(
-        cls,
-        publishable_key: str,
-        user_identifier_key: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        raise NotImplementedError
-
-    @classmethod
-    @abc.abstractmethod
-    def from_console_session_token(
-        cls,
-        console_session_token: str,
-        workspace_id: str,
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,

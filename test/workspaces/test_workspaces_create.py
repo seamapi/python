@@ -6,7 +6,7 @@ from seam import Seam
 def test_workspaces_create(seam: Seam):
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     seam = Seam(
-        api_url=f"https://{r}.fakeseamconnect.seam.vc",
+        endpoint=f"https://{r}.fakeseamconnect.seam.vc",
         api_key="seam_at1_shorttoken_longtoken",
     )
 

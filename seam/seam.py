@@ -3,7 +3,7 @@ import requests
 from importlib.metadata import version
 from typing import Optional, Union, Dict, cast
 from typing_extensions import Self
-from seam.utils.auth import get_auth_headers, warn_on_insecure_user_identifier_key
+from seam.utils.auth import get_auth_headers
 from seam.utils.parse_options import get_api_key_from_env, get_endpoint_from_env
 from .routes import Routes
 from .types import AbstractSeam, SeamApiException
@@ -23,9 +23,6 @@ class Seam(AbstractSeam):
         self,
         api_key: Optional[str] = None,
         *,
-        client_session_token: Optional[str] = None,
-        publishable_key: Optional[str] = None,
-        console_session_token: Optional[str] = None,
         personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
@@ -36,14 +33,6 @@ class Seam(AbstractSeam):
         ----------
         api_key : str, optional
           API key.
-        client_session_token : str, optional
-          Client session token.
-        publishable_key : str, optional
-          Publishable key.
-        user_identifier_key : str, optional
-          User identifier key.
-        console_session_token : str, optional
-          Console session token.
         personal_access_token : str, optional
           Personal access token.
         workspace_id : str, optional
@@ -57,15 +46,10 @@ class Seam(AbstractSeam):
         Routes.__init__(self)
 
         api_key = api_key or get_api_key_from_env(
-            client_session_token=client_session_token,
-            console_session_token=console_session_token,
             personal_access_token=personal_access_token,
         )
         self.__auth_headers = get_auth_headers(
             api_key=api_key,
-            client_session_token=client_session_token,
-            publishable_key=publishable_key,
-            console_session_token=console_session_token,
             personal_access_token=personal_access_token,
             workspace_id=workspace_id,
         )
@@ -128,62 +112,6 @@ class Seam(AbstractSeam):
     ) -> Self:
         return cls(
             api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
-        )
-
-    @classmethod
-    def from_client_session_token(
-        cls,
-        client_session_token: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        return cls(
-            client_session_token=client_session_token,
-            endpoint=endpoint,
-            wait_for_action_attempt=wait_for_action_attempt,
-        )
-
-    @classmethod
-    def from_publishable_key(
-        cls,
-        publishable_key: str,
-        user_identifier_key: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        warn_on_insecure_user_identifier_key(publishable_key)
-
-        seam = cls(
-            publishable_key=publishable_key,
-            endpoint=endpoint,
-            wait_for_action_attempt=wait_for_action_attempt,
-        )
-        client_session = seam.client_sessions.get_or_create(
-            user_identifier_key=user_identifier_key
-        )
-
-        return cls.from_client_session_token(
-            client_session.token,
-            endpoint=endpoint,
-            wait_for_action_attempt=wait_for_action_attempt,
-        )
-
-    @classmethod
-    def from_console_session_token(
-        cls,
-        console_session_token: str,
-        workspace_id: str,
-        *,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ) -> Self:
-        return cls(
-            console_session_token=console_session_token,
-            workspace_id=workspace_id,
-            endpoint=endpoint,
-            wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @classmethod
