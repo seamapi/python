@@ -73,7 +73,7 @@ def get_auth_headers_for_api_key(api_key: str) -> dict:
 
 
 def get_auth_headers_for_personal_access_token(
-    personal_access_token: str, workspace_id: Optional[str] = None
+    personal_access_token: str, workspace_id: str
 ) -> dict:
     if is_jwt(personal_access_token):
         raise SeamHttpInvalidTokenError(
@@ -95,8 +95,7 @@ def get_auth_headers_for_personal_access_token(
             f"Unknown or invalid personal_access_token format, expected token to start with {access_token_prefix}"
         )
 
-    headers = {"authorization": f"Bearer {personal_access_token}"}
-    if workspace_id is not None:
-        headers["seam-workspace"] = workspace_id
-
-    return headers
+    return {
+        "authorization": f"Bearer {personal_access_token}",
+        "seam-workspace": workspace_id,
+    }
