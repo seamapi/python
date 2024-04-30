@@ -154,7 +154,7 @@ Using the `wait_for_action_attempt` option:
           },
       )
 
-      console.log("Door unlocked")
+      print("Door unlocked")
   except Exception as e:
       print(f"Error: {e}")
 
