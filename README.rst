@@ -155,8 +155,10 @@ Using the `wait_for_action_attempt` option:
       )
 
       print("Door unlocked")
-  except Exception as e:
-      print(f"Error: {e}")
+  except SeamActionAttemptFailedError as e:
+      print("Could not unlock the door")
+  except SeamActionAttemptTimeoutError as e:
+      print("Door took too long to unlock")
 
 Advanced Usage
 ~~~~~~~~~~~~~~
