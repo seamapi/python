@@ -136,10 +136,14 @@ Using the `wait_for_action_attempt` option:
 
 .. code-block:: python
 
+  seam = Seam("your-api-key")
+
   lock = seam.locks.list()[0]
 
-  if lock is None:
+  if len(locks) == 0:
       raise Exception("No locks in this workspace")
+
+  lock = locks[0]
 
   try:
       seam.locks.unlock_door(
