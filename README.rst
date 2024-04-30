@@ -52,21 +52,21 @@ List devices
 
 .. code-block:: python
 
-    from seam import Seam
+  from seam import Seam
 
-    seam = Seam()
-    devices = seam.devices.list()
+  seam = Seam()
+  devices = seam.devices.list()
 
 Unlock a door
 ^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    from seam import Seam
+  from seam import Seam
 
-    seam = Seam()
-    lock = seam.locks.get(name="Front Door")
-    seam.locks.unlock_door(device_id="lock.device_id")
+  seam = Seam()
+  lock = seam.locks.get(name="Front Door")
+  seam.locks.unlock_door(device_id="lock.device_id")
 
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
@@ -78,14 +78,14 @@ Obtain one from the Seam Console.
 
 .. code-block:: python
 
-    # Set the `SEAM_API_KEY` environment variable
-    seam = Seam()
+  # Set the `SEAM_API_KEY` environment variable
+  seam = Seam()
 
-    # Pass as the first argument to the constructor
-    seam = Seam('your-api-key')
+  # Pass as the first argument to the constructor
+  seam = Seam("your-api-key")
 
-    # Pass as a keyword argument to the constructor
-    seam = Seam(api_key='your-api-key')
+  # Pass as a keyword argument to the constructor
+  seam = Seam(api_key="your-api-key")
 
 Action Attempts
 ~~~~~~~~~~~~~~~
@@ -100,31 +100,31 @@ Pass the option per-request,
 
 .. code-block:: python
 
-    seam.locks.unlock_door(
+  seam.locks.unlock_door(
       device_id=device_id,
       wait_for_action_attempt=True,
-    )
+  )
 
 or set the default option for the client:
 
 .. code-block:: python
 
-    seam = Seam(
-      api_key='your-api-key',
+  seam = Seam(
+      api_key="your-api-key",
       wait_for_action_attempt=True,
-    )
+  )
 
-    seam.locks.unlock_door({ device_id })
+  seam.locks.unlock_door(device_id=device_id)
 
 If you already have an action attempt id
 and want to wait for it to resolve, simply use
 
 .. code-block:: python
 
-    seam.action_attempts.get(
+  seam.action_attempts.get(
       action_attempt_id=action_attempt_id,
       wait_for_action_attempt=True,
-    )
+  )
 
 Using the `wait_for_action_attempt` option:
 
@@ -136,25 +136,23 @@ Using the `wait_for_action_attempt` option:
 
 .. code-block:: python
 
-    seam = Seam('your-api-key')
+  lock = seam.locks.list()[0]
 
-    lock = seam.locks.list()[0]
+  if lock is None:
+      raise Exception("No locks in this workspace")
 
-    if lock is None:
-        raise Exception('No locks in this workspace')
-
-    try:
+  try:
       seam.locks.unlock_door(
-        device_id=lock.device_id,
-        wait_for_action_attempt={
-            "timeout": 5.0,
-            "polling_interval": 1.0,
-        },
+          device_id=lock.device_id,
+          wait_for_action_attempt={
+              "timeout": 5.0,
+              "polling_interval": 1.0,
+          },
       )
 
-      console.log('Door unlocked')
-    except Exception as e:
-      print(f'Error: {e}')
+      console.log("Door unlocked")
+  except Exception as e:
+      print(f"Error: {e}")
 
 Advanced Usage
 ~~~~~~~~~~~~~~
