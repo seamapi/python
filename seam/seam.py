@@ -1,15 +1,11 @@
-import os
 import requests
 from importlib.metadata import version
-from typing import Optional, Union, Dict, cast
+from typing import Optional, Union, Dict
 from typing_extensions import Self
-from seam.utils.auth import get_auth_headers
-from seam.utils.parse_options import get_api_key_from_env, get_endpoint_from_env
+
+from seam.utils.parse_options import parse_options
 from .routes import Routes
 from .types import AbstractSeam, SeamApiException
-
-
-DEFAULT_ENDPOINT = "https://connect.getseam.com"
 
 
 class Seam(AbstractSeam):
@@ -45,26 +41,17 @@ class Seam(AbstractSeam):
 
         Routes.__init__(self)
 
-        api_key = api_key or get_api_key_from_env(
-            personal_access_token=personal_access_token,
-        )
-        self.__auth_headers = get_auth_headers(
-            api_key=api_key,
-            personal_access_token=personal_access_token,
-            workspace_id=workspace_id,
-        )
         self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
 
-        if os.environ.get("SEAM_API_URL", None) is not None:
-            print(
-                "\n"
-                "\033[93m"
-                "Using the SEAM_API_URL environment variable is deprecated. "
-                "Support will be removed in a later major version. Use SEAM_ENDPOINT instead."
-                "\033[0m"
-            )
-        self.endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
+        auth_headers, endpoint = parse_options(
+            api_key=api_key,
+            personal_access_token=personal_access_token,
+            workspace_id=workspace_id,
+            endpoint=endpoint,
+        )
+        self.__auth_headers = auth_headers
+        self.endpoint = endpoint
 
     def make_request(self, method: str, path: str, **kwargs):
         """
