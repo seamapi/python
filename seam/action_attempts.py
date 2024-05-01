@@ -3,6 +3,11 @@ from typing import Optional, Any, List, Dict, Union
 
 import time
 
+from seam.utils.action_attempt_errors import (
+    SeamActionAttemptFailedError,
+    SeamActionAttemptTimeoutError,
+)
+
 
 class ActionAttempts(AbstractActionAttempts):
     seam: Seam
@@ -14,7 +19,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -43,7 +48,7 @@ class ActionAttempts(AbstractActionAttempts):
         *,
         action_attempt_id: str,
         timeout: Optional[float] = 5.0,
-        polling_interval: Optional[float] = 0.5,
+        polling_interval: Optional[float] = 0.5
     ) -> ActionAttempt:
         seam = self.seam
         time_waiting = 0.0
@@ -57,7 +62,7 @@ class ActionAttempts(AbstractActionAttempts):
             time_waiting += polling_interval
 
             if time_waiting > timeout:
-                raise Exception("Timed out waiting for action attempt to be ready")
+                raise SeamActionAttemptTimeoutError(action_attempt, timeout)
 
             action_attempt = seam.action_attempts.get(
                 action_attempt_id=action_attempt.action_attempt_id,
@@ -65,7 +70,7 @@ class ActionAttempts(AbstractActionAttempts):
             )
 
         if action_attempt.status == "failed":
-            raise Exception(f"Action Attempt failed: {action_attempt.error.message}")
+            raise SeamActionAttemptFailedError(action_attempt)
 
         return action_attempt
 
@@ -73,7 +78,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt: ActionAttempt,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         wait_decision = (
             self.seam.wait_for_action_attempt
