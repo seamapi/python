@@ -12,9 +12,9 @@ def parse_options(
     workspace_id: Optional[str] = None,
     endpoint: Optional[str] = None,
 ):
-    api_key = api_key or get_api_key_from_env(
-        personal_access_token=personal_access_token,
-    )
+    if personal_access_token is None:
+        api_key = api_key or os.getenv("SEAM_API_KEY")
+
     auth_headers = get_auth_headers(
         api_key=api_key,
         personal_access_token=personal_access_token,
@@ -23,15 +23,6 @@ def parse_options(
     endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
 
     return auth_headers, endpoint
-
-
-def get_api_key_from_env(
-    personal_access_token: Optional[str] = None,
-):
-    if personal_access_token is not None:
-        return None
-
-    return os.getenv("SEAM_API_KEY")
 
 
 def get_endpoint_from_env():
