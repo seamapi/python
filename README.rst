@@ -15,7 +15,16 @@ SDK for the Seam API written in Python.
 Description
 -----------
 
-TODO
+`Seam <seam_home_>`_ makes it easy to integrate IoT devices with your applications.
+This is an official SDK for the Seam API.
+Please refer to the official `Seam Docs <https://docs.seam.co/latest/>`_ to get started.
+
+Parts of this SDK are generated from always up-to-date type information
+provided by `@seamapi/types <https://github.com/seamapi/types/>`_ node package.
+This ensures all API methods, request shapes, and response shapes are
+accurate and fully typed.
+
+.. _seam_home: https://www.seam.co
 
 Installation
 ------------
@@ -23,14 +32,144 @@ Installation
 This package is registered on the `Python Package Index (PyPI)`_
 as seam_.
 
-Install it with
-
-::
+Install it with::
 
     $ pip install seam
 
 .. _seam: https://pypi.python.org/pypi/seam
 .. _Python Package Index (PyPI): https://pypi.python.org/
+
+Usage
+-----
+
+Examples
+~~~~~~~~
+
+**Note:** *These examples assume `SEAM_API_KEY` is set in your environment.*
+
+List devices
+^^^^^^^^^^^^
+
+.. code-block:: python
+
+  from seam import Seam
+
+  seam = Seam()
+  devices = seam.devices.list()
+
+Unlock a door
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+  from seam import Seam
+
+  seam = Seam()
+  lock = seam.locks.get(name="Front Door")
+  seam.locks.unlock_door(device_id="lock.device_id")
+
+Authentication Method
+~~~~~~~~~~~~~~~~~~~~~
+
+The SDK supports API key authentication mechanism.
+
+An API key is scoped to a single workspace and should only be used on the server.
+Obtain one from the Seam Console.
+
+.. code-block:: python
+
+  # Set the `SEAM_API_KEY` environment variable
+  seam = Seam()
+
+  # Pass as the first argument to the constructor
+  seam = Seam("your-api-key")
+
+  # Pass as a keyword argument to the constructor
+  seam = Seam(api_key="your-api-key")
+
+Action Attempts
+~~~~~~~~~~~~~~~
+
+Some asynchronous operations, e.g., unlocking a door, return an `action attempt <https://docs.seam.co/latest/core-concepts/action-attempts>`_.
+Seam tracks the progress of requested operation and updates the action attempt.
+
+To make working with action attempts more convenient for applications,
+this library provides the `wait_for_action_attempt` option.
+
+Pass the option per-request,
+
+.. code-block:: python
+
+  seam.locks.unlock_door(
+      device_id=device_id,
+      wait_for_action_attempt=True,
+  )
+
+or set the default option for the client:
+
+.. code-block:: python
+
+  seam = Seam(
+      api_key="your-api-key",
+      wait_for_action_attempt=True,
+  )
+
+  seam.locks.unlock_door(device_id=device_id)
+
+If you already have an action attempt id
+and want to wait for it to resolve, simply use
+
+.. code-block:: python
+
+  seam.action_attempts.get(
+      action_attempt_id=action_attempt_id,
+      wait_for_action_attempt=True,
+  )
+
+Using the `wait_for_action_attempt` option:
+
+- Polls the action attempt up to the `timeout`
+  at the `polling_interval` (both in seconds).
+- Resolves with a fresh copy of the successful action attempt.
+- Raises an exception if the action attempt is unsuccessful.
+- Raises an exception if the action attempt is still pending when the `timeout` is reached.
+
+.. code-block:: python
+
+  seam = Seam("your-api-key")
+
+  lock = seam.locks.list()[0]
+
+  if len(locks) == 0:
+      raise Exception("No locks in this workspace")
+
+  lock = locks[0]
+
+  try:
+      seam.locks.unlock_door(
+          device_id=lock.device_id,
+          wait_for_action_attempt={
+              "timeout": 5.0,
+              "polling_interval": 1.0,
+          },
+      )
+
+      print("Door unlocked")
+  except SeamActionAttemptFailedError as e:
+      print("Could not unlock the door")
+  except SeamActionAttemptTimeoutError as e:
+      print("Door took too long to unlock")
+
+Advanced Usage
+~~~~~~~~~~~~~~
+
+Setting the endpoint
+^^^^^^^^^^^^^^^^^^^^
+
+Some contexts may need to override the API endpoint,
+e.g., testing or proxy setups.
+
+Either pass the `api_url` option to the constructor, or set the `SEAM_ENDPOINT` environment variable.
 
 Development and Testing
 -----------------------
