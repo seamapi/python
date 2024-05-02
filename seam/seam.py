@@ -3,7 +3,7 @@ from importlib.metadata import version
 from typing import Optional, Union, Dict
 from typing_extensions import Self
 
-from seam.utils.parse_options import parse_options
+from seam.parse_options import parse_options
 from .routes import Routes
 from .types import AbstractSeam, SeamApiException
 
