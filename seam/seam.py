@@ -78,8 +78,7 @@ class Seam(AbstractSeam):
             "seam-sdk-version": sdk_version,
             "seam-lts-version": self.lts_version,
         }
-        if self.workspace_id is not None:
-            headers["seam-workspace"] = self.workspace_id
+
         response = requests.request(method, url, headers=headers, **kwargs)
 
         if response.status_code != 200:
