@@ -45,7 +45,7 @@ Usage
 Examples
 ~~~~~~~~
 
-**Note:** *These examples assume `SEAM_API_KEY` is set in your environment.*
+**Note:** *These examples assume ``SEAM_API_KEY`` is set in your environment.*
 
 List devices
 ^^^^^^^^^^^^
@@ -71,7 +71,7 @@ Unlock a door
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
 
-The SDK supports API key and personal access token authentication mechanisms. Authentication may be configured by passing the corresponding options directly to the `Seam` constructor, or with the more ergonomic static factory methods.
+The SDK supports API key and personal access token authentication mechanisms. Authentication may be configured by passing the corresponding options directly to the ``Seam`` constructor, or with the more ergonomic static factory methods.
 
 API Key
 ^^^^^^^
@@ -119,7 +119,7 @@ Some asynchronous operations, e.g., unlocking a door, return an `action attempt 
 Seam tracks the progress of requested operation and updates the action attempt.
 
 To make working with action attempts more convenient for applications,
-this library provides the :code:`wait_for_action_attempt` option.
+this library provides the ``wait_for_action_attempt`` option.
 
 Pass the option per-request,
 
@@ -151,14 +151,14 @@ and want to wait for it to resolve, simply use
       wait_for_action_attempt=True,
   )
 
-Using the `wait_for_action_attempt` option:
+Using the ``wait_for_action_attempt`` option:
 
-- Polls the action attempt up to the `timeout`
-  at the `polling_interval` (both in seconds).
+- Polls the action attempt up to the ``timeout``
+  at the ``polling_interval`` (both in seconds).
 - Resolves with a fresh copy of the successful action attempt.
-- Raises a `SeamActionAttemptFailedError` if the action attempt is unsuccessful.
-- Raises a `SeamActionAttemptTimeoutError` if the action attempt is still pending when the `timeout` is reached.
-- Both errors expose an `action_attempt` property.
+- Raises a ``SeamActionAttemptFailedError`` if the action attempt is unsuccessful.
+- Raises a ``SeamActionAttemptTimeoutError`` if the action attempt is still pending when the ``timeout`` is reached.
+- Both errors expose an ``action_attempt`` property.
 
 .. code-block:: python
 
@@ -197,7 +197,7 @@ Setting the endpoint
 Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
-Either pass the `api_url` option to the constructor, or set the `SEAM_ENDPOINT` environment variable.
+Either pass the ``api_url`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
 
 Development and Testing
 -----------------------
@@ -217,7 +217,7 @@ Run each command below in a separate terminal window:
 
     $ make watch
 
-Primary development tasks are defined in the `Makefile`.
+Primary development tasks are defined in the ``Makefile``.
 
 Source Code
 ~~~~~~~~~~~
@@ -288,7 +288,7 @@ Manual
 ^^^^^^
 
 Publish a new version by triggering a `version workflow_dispatch on GitHub Actions`_.
-The `version` input will be passed as the first argument to `poetry version`_.
+The ``version`` input will be passed as the first argument to `poetry version`_.
 
 This may be done on the web or using the `GitHub CLI`_ with
 
