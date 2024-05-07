@@ -45,7 +45,7 @@ Usage
 Examples
 ~~~~~~~~
 
-**Note:** *These examples assume ``SEAM_API_KEY`` is set in your environment.*
+**Note:** *These examples assume :code:`SEAM_API_KEY` is set in your environment.*
 
 List devices
 ^^^^^^^^^^^^
