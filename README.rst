@@ -119,7 +119,7 @@ Some asynchronous operations, e.g., unlocking a door, return an `action attempt 
 Seam tracks the progress of requested operation and updates the action attempt.
 
 To make working with action attempts more convenient for applications,
-this library provides the `wait_for_action_attempt` option.
+this library provides the :code:`wait_for_action_attempt` option.
 
 Pass the option per-request,
 
