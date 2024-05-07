@@ -121,13 +121,21 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return None
 
-    def update(self, *, acs_credential_id: str, code: str) -> None:
+    def update(
+        self,
+        *,
+        acs_credential_id: str,
+        code: Optional[str] = None,
+        ends_at: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if code is not None:
             json_payload["code"] = code
+        if ends_at is not None:
+            json_payload["ends_at"] = ends_at
 
         self.seam.make_request("POST", "/acs/credentials/update", json=json_payload)
 

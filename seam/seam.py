@@ -1,9 +1,10 @@
-import os
-
-from .routes import Routes
 import requests
 from importlib.metadata import version
-from typing import Optional, Union, Dict, cast
+from typing import Optional, Union, Dict
+from typing_extensions import Self
+
+from seam.parse_options import parse_options
+from .routes import Routes
 from .types import AbstractSeam, SeamApiException
 
 
@@ -12,58 +13,44 @@ class Seam(AbstractSeam):
     Initial Seam class used to interact with Seam API
     """
 
-    api_key: str
-    api_url: str = "https://connect.getseam.com"
     lts_version: str = "1.0.0"
 
     def __init__(
         self,
         api_key: Optional[str] = None,
         *,
+        personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
-        api_url: Optional[str] = None,
+        endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ):
         """
         Parameters
         ----------
         api_key : str, optional
-          API key
+          API key.
+        personal_access_token : str, optional
+          Personal access token.
         workspace_id : str, optional
-          Workspace id
-        api_url : str, optional
-          API url
+          Workspace id.
+        endpoint : str, optional
+          The API endpoint to which the request should be sent.
+        wait_for_action_attempt : bool or dict, optional
+          Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
         """
+
         Routes.__init__(self)
 
-        if api_key is None:
-            api_key = os.environ.get("SEAM_API_KEY", None)
-        if api_key is None:
-            raise Exception(
-                "SEAM_API_KEY not found in environment, and api_key not provided"
-            )
-        if workspace_id is None:
-            workspace_id = os.environ.get("SEAM_WORKSPACE_ID", None)
-        self.api_key = api_key
-        self.workspace_id = workspace_id
         self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-
-        if os.environ.get("SEAM_API_URL", None) is not None:
-            print(
-                "\n"
-                "\033[93m"
-                "Using the SEAM_API_URL environment variable is deprecated. "
-                "Support will be removed in a later major version. Use SEAM_ENDPOINT instead."
-                "\033[0m"
-            )
-        api_url = (
-            os.environ.get("SEAM_API_URL", None)
-            or os.environ.get("SEAM_ENDPOINT", None)
-            or api_url
+        auth_headers, endpoint = parse_options(
+            api_key=api_key,
+            personal_access_token=personal_access_token,
+            workspace_id=workspace_id,
+            endpoint=endpoint,
         )
-        if api_url is not None:
-            self.api_url = cast(str, api_url)
+        self.__auth_headers = auth_headers
+        self.__endpoint = endpoint
 
     def make_request(self, method: str, path: str, **kwargs):
         """
@@ -79,14 +66,14 @@ class Seam(AbstractSeam):
           Keyword arguments passed to requests.request
         """
 
-        url = self.api_url + path
+        url = self.__endpoint + path
         sdk_version = version("seam")
         headers = {
-            "Authorization": "Bearer " + self.api_key,
+            **self.__auth_headers,
             "Content-Type": "application/json",
             "User-Agent": "Python SDK v"
             + sdk_version
-            + " (https://github.com/seamapi/python)",
+            + " (https://github.com/seamapi/python-next)",
             "seam-sdk-name": "seamapi/python",
             "seam-sdk-version": sdk_version,
             "seam-lts-version": self.lts_version,
@@ -102,3 +89,31 @@ class Seam(AbstractSeam):
             return response.json()
 
         return response.text
+
+    @classmethod
+    def from_api_key(
+        cls,
+        api_key: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+    ) -> Self:
+        return cls(
+            api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
+        )
+
+    @classmethod
+    def from_personal_access_token(
+        cls,
+        personal_access_token: str,
+        workspace_id: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+    ) -> Self:
+        return cls(
+            personal_access_token=personal_access_token,
+            workspace_id=workspace_id,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
