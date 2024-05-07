@@ -131,8 +131,9 @@ Using the `wait_for_action_attempt` option:
 - Polls the action attempt up to the `timeout`
   at the `polling_interval` (both in seconds).
 - Resolves with a fresh copy of the successful action attempt.
-- Raises an exception if the action attempt is unsuccessful.
-- Raises an exception if the action attempt is still pending when the `timeout` is reached.
+- Raises a `SeamActionAttemptFailedError` if the action attempt is unsuccessful.
+- Raises a `SeamActionAttemptTimeoutError` if the action attempt is still pending when the `timeout` is reached.
+- Both errors expose an `action_attempt` property.
 
 .. code-block:: python
 
