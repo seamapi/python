@@ -71,7 +71,10 @@ Unlock a door
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
 
-The SDK supports API key authentication mechanism.
+The SDK supports API key and personal access token authentication mechanisms. Authentication may be configured by passing the corresponding options directly to the `Seam` constructor, or with the more ergonomic static factory methods.
+
+API Key
+^^^^^^^
 
 An API key is scoped to a single workspace and should only be used on the server.
 Obtain one from the Seam Console.
@@ -86,6 +89,28 @@ Obtain one from the Seam Console.
 
   # Pass as a keyword argument to the constructor
   seam = Seam(api_key="your-api-key")
+
+  # Use the factory method
+  seam = Seam.from_api_key("your-api-key")
+
+Personal Access Token
+^^^^^^^^^^^^^^^^^^^^^
+
+A Personal Access Token is scoped to a Seam Console user. Obtain one from the Seam Console. A workspace id must be provided when using this method and all requests will be scoped to that workspace.
+
+.. code-block:: python
+
+  # Pass as an option the constructor
+  seam = Seam(
+      personal_access_token="your-personal-access-token",
+      workspace_id="your-workspace-id",
+  )
+
+  # Use the factory method
+  seam = Seam.from_personal_access_token(
+      "your-personal-access-token",
+      "your-workspace-id",
+  )
 
 Action Attempts
 ~~~~~~~~~~~~~~~
@@ -137,9 +162,11 @@ Using the `wait_for_action_attempt` option:
 
 .. code-block:: python
 
+  from seam import Seam, SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
+
   seam = Seam("your-api-key")
 
-  lock = seam.locks.list()[0]
+  lock = seam.locks.list()
 
   if len(locks) == 0:
       raise Exception("No locks in this workspace")
