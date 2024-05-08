@@ -2,6 +2,7 @@ import requests
 from typing import Dict, Optional, Union
 from importlib.metadata import version
 
+from seam.constants import LTS_VERSION
 from seam.types import AbstractSeam, SeamApiException
 from .workspaces import Workspaces
 
@@ -11,7 +12,7 @@ class SeamMultiWorkspace(AbstractSeam):
     Seam class used to interact with Seam API without being scoped to any specific workspace.
     """
 
-    lts_version: str = "1.0.0"  # use constant for LTS version
+    lts_version: str = LTS_VERSION
 
     def __init__(
         self,

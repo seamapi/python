@@ -2,9 +2,8 @@ import os
 from typing import Optional
 
 from seam.auth import get_auth_headers
+from seam.constants import DEFAULT_ENDPOINT
 from seam.options import get_endpoint_from_env
-
-DEFAULT_ENDPOINT = "https://connect.getseam.com"
 
 
 def parse_options(
