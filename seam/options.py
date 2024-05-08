@@ -1,12 +1,6 @@
 import os
 from typing import Optional
 
-from seam.constants import DEFAULT_ENDPOINT
-
-
-def get_endpoint(endpoint: Optional[str] = None):
-    return endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
-
 
 def get_endpoint_from_env():
     seam_api_url = os.getenv("SEAM_API_URL")
