@@ -3,6 +3,7 @@ from importlib.metadata import version
 from typing import Optional, Union, Dict
 from typing_extensions import Self
 
+from seam.constants import LTS_VERSION
 from seam.parse_options import parse_options
 from .routes import Routes
 from .types import AbstractSeam, SeamApiException
@@ -13,7 +14,7 @@ class Seam(AbstractSeam):
     Initial Seam class used to interact with Seam API
     """
 
-    lts_version: str = "1.0.0"
+    lts_version: str = LTS_VERSION
 
     def __init__(
         self,
