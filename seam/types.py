@@ -2079,10 +2079,6 @@ class AbstractSeam(AbstractRoutes):
         self.wait_for_action_attempt = wait_for_action_attempt
         self.lts_version = AbstractSeam.lts_version
 
-    @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs) -> Any:
-        raise NotImplementedError
-
     @classmethod
     @abc.abstractmethod
     def from_api_key(
@@ -2104,4 +2100,9 @@ class AbstractSeam(AbstractRoutes):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ) -> Self:
+        raise NotImplementedError
+
+class AbstractRequestMixin:
+    @abc.abstractmethod
+    def make_request(self, method: str, path: str, **kwargs) -> Any:
         raise NotImplementedError
