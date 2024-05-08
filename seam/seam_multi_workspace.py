@@ -3,6 +3,7 @@ from typing import Dict, Optional, Union
 from importlib.metadata import version
 
 from seam.constants import LTS_VERSION
+from seam.options import get_endpoint
 from seam.types import AbstractSeam, SeamApiException
 from .workspaces import Workspaces
 
@@ -34,8 +35,8 @@ class SeamMultiWorkspace(AbstractSeam):
 
         self.lts_version = SeamMultiWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        self.__auth_headers = {"Authorization": f"Bearer {personal_access_token}"}
-        self.__endpoint = ""  # get_endpoint()
+        self.__auth_headers = {"authorization": f"Bearer {personal_access_token}"}
+        self.__endpoint = get_endpoint(endpoint)
 
         self._workspaces = Workspaces(seam=self)
         self.workspaces = self.WorkspacesProxy(self._workspaces)

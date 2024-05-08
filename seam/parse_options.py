@@ -2,8 +2,7 @@ import os
 from typing import Optional
 
 from seam.auth import get_auth_headers
-from seam.constants import DEFAULT_ENDPOINT
-from seam.options import get_endpoint_from_env
+from seam.options import get_endpoint
 
 
 def parse_options(
@@ -20,6 +19,6 @@ def parse_options(
         personal_access_token=personal_access_token,
         workspace_id=workspace_id,
     )
-    endpoint = endpoint or get_endpoint_from_env() or DEFAULT_ENDPOINT
+    endpoint = get_endpoint(endpoint)
 
     return auth_headers, endpoint
