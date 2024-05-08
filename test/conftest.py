@@ -1,6 +1,5 @@
 import pytest
 from seam import Seam
-from typing import Any
 import random
 import string
 
