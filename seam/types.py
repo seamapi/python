@@ -2102,6 +2102,7 @@ class AbstractSeam(AbstractRoutes):
     ) -> Self:
         raise NotImplementedError
 
+
 class AbstractRequestMixin:
     @abc.abstractmethod
     def make_request(self, method: str, path: str, **kwargs) -> Any:
