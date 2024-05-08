@@ -1,14 +1,13 @@
-import requests
 from typing import Dict, Optional, Union
-from importlib.metadata import version
 
 from seam.constants import LTS_VERSION
 from seam.options import get_endpoint
-from seam.types import AbstractSeam, SeamApiException
-from .workspaces import Workspaces
+from seam.request import RequestMixin
+from seam.types import AbstractSeam
+from seam.workspaces import Workspaces
 
 
-class SeamMultiWorkspace(AbstractSeam):
+class SeamMultiWorkspace(AbstractSeam, RequestMixin):
     """
     Seam class used to interact with Seam API without being scoped to any specific workspace.
     """
@@ -35,8 +34,8 @@ class SeamMultiWorkspace(AbstractSeam):
 
         self.lts_version = SeamMultiWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        self.__auth_headers = {"authorization": f"Bearer {personal_access_token}"}
-        self.__endpoint = get_endpoint(endpoint)
+        self._auth_headers = {"authorization": f"Bearer {personal_access_token}"}
+        self._endpoint = get_endpoint(endpoint)
 
         self._workspaces = Workspaces(seam=self)
         self.workspaces = self.WorkspacesProxy(self._workspaces)
@@ -52,40 +51,3 @@ class SeamMultiWorkspace(AbstractSeam):
 
         def create(self, data, *args, **kwargs):
             return self._workspaces.create(data, *args, **kwargs)
-
-    def make_request(self, method: str, path: str, **kwargs):
-        """
-        Makes a request to the API
-
-        Parameters
-        ----------
-        method : str
-          Request method
-        path : str
-          Request path
-        **kwargs
-          Keyword arguments passed to requests.request
-        """
-
-        url = self.__endpoint + path
-        sdk_version = version("seam")
-        headers = {
-            **self.__auth_headers,
-            "Content-Type": "application/json",
-            "User-Agent": "Python SDK v"
-            + sdk_version
-            + " (https://github.com/seamapi/python-next)",
-            "seam-sdk-name": "seamapi/python",
-            "seam-sdk-version": sdk_version,
-            "seam-lts-version": self.lts_version,
-        }
-
-        response = requests.request(method, url, headers=headers, **kwargs)
-
-        if response.status_code != 200:
-            raise SeamApiException(response)
-
-        if "application/json" in response.headers["content-type"]:
-            return response.json()
-
-        return response.text

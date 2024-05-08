@@ -1,15 +1,14 @@
-import requests
-from importlib.metadata import version
 from typing import Optional, Union, Dict
 from typing_extensions import Self
 
 from seam.constants import LTS_VERSION
 from seam.parse_options import parse_options
-from .routes import Routes
-from .types import AbstractSeam, SeamApiException
+from seam.request import RequestMixin
+from seam.routes import Routes
+from seam.types import AbstractSeam
 
 
-class Seam(AbstractSeam):
+class Seam(AbstractSeam, RequestMixin):
     """
     Initial Seam class used to interact with Seam API
     """
@@ -50,45 +49,8 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self.__auth_headers = auth_headers
-        self.__endpoint = endpoint
-
-    def make_request(self, method: str, path: str, **kwargs):
-        """
-        Makes a request to the API
-
-        Parameters
-        ----------
-        method : str
-          Request method
-        path : str
-          Request path
-        **kwargs
-          Keyword arguments passed to requests.request
-        """
-
-        url = self.__endpoint + path
-        sdk_version = version("seam")
-        headers = {
-            **self.__auth_headers,
-            "Content-Type": "application/json",
-            "User-Agent": "Python SDK v"
-            + sdk_version
-            + " (https://github.com/seamapi/python-next)",
-            "seam-sdk-name": "seamapi/python",
-            "seam-sdk-version": sdk_version,
-            "seam-lts-version": self.lts_version,
-        }
-
-        response = requests.request(method, url, headers=headers, **kwargs)
-
-        if response.status_code != 200:
-            raise SeamApiException(response)
-
-        if "application/json" in response.headers["content-type"]:
-            return response.json()
-
-        return response.text
+        self._auth_headers = auth_headers
+        self._endpoint = endpoint
 
     @classmethod
     def from_api_key(
