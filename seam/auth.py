@@ -1,5 +1,5 @@
 from typing import Optional
-from seam.parse_options import (
+from seam.options import (
     SeamHttpInvalidOptionsError,
     is_seam_http_options_with_api_key,
     is_seam_http_options_with_personal_access_token,
