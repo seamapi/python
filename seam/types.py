@@ -2043,6 +2043,26 @@ class AbstractAcs(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        connect_partner_name: str,
+        name: str,
+        is_sandbox: Optional[bool] = None,
+        webview_logo_shape: Optional[str] = None,
+        webview_primary_button_color: Optional[str] = None,
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Workspace]:
+        raise NotImplementedError()
+
+
 @dataclass
 class AbstractRoutes(abc.ABC):
     access_codes: AbstractAccessCodes
@@ -2063,21 +2083,20 @@ class AbstractRoutes(abc.ABC):
     workspaces: AbstractWorkspaces
 
 
-class AbstractSeam(AbstractRoutes):
-    lts_version: str
-
+class AbstractRequestMixin(abc.ABC):
     @abc.abstractmethod
-    def __init__(
-        self,
-        api_key: Optional[str] = None,
-        *,
-        personal_access_token: Optional[str] = None,
-        workspace_id: Optional[str] = None,
-        endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
-    ):
-        self.wait_for_action_attempt = wait_for_action_attempt
-        self.lts_version = AbstractSeam.lts_version
+    def make_request(self, method: str, path: str, **kwargs) -> Any:
+        raise NotImplementedError
+
+
+@dataclass
+class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
+    lts_version: str
+    api_key: Optional[str] = (None,)
+    personal_access_token: Optional[str] = (None,)
+    workspace_id: Optional[str] = (None,)
+    endpoint: Optional[str] = (None,)
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = (False,)
 
     @classmethod
     @abc.abstractmethod
@@ -2103,7 +2122,22 @@ class AbstractSeam(AbstractRoutes):
         raise NotImplementedError
 
 
-class AbstractRequestMixin:
+@dataclass
+class AbstractSeamMultiWorkspace(AbstractRequestMixin):
+    workspaces: AbstractSeamMultiWorkspaceWorkspaces
+
+    lts_version: str
+    personal_access_token: Optional[str] = (None,)
+    endpoint: Optional[str] = (None,)
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = (False,)
+
+    @classmethod
     @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs) -> Any:
+    def from_personal_access_token(
+        cls,
+        personal_access_token: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+    ) -> Self:
         raise NotImplementedError
