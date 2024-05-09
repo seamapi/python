@@ -1,24 +1,24 @@
-token_prefix = "seam_"
+TOKEN_PREFIX = "seam_"
 
-access_token_prefix = "seam_at"
+ACCESS_TOKEN_PREFIX = "seam_at"
 
-jwt_prefix = "ey"
+JWT_PREFIX = "ey"
 
-client_session_token_prefix = "seam_cst"
+CLIENT_SESSION_TOKEN_PREFIX = "seam_cst"
 
-publishable_key_token_prefix = "seam_pk"
+PUBLISHABLE_KEY_TOKEN_PREFIX = "seam_pk"
 
 
 def is_access_token(token: str) -> bool:
-    return token.startswith(access_token_prefix)
+    return token.startswith(ACCESS_TOKEN_PREFIX)
 
 
 def is_jwt(token: str) -> bool:
-    return token.startswith(jwt_prefix)
+    return token.startswith(JWT_PREFIX)
 
 
 def is_seam_token(token: str) -> bool:
-    return token.startswith(token_prefix)
+    return token.startswith(TOKEN_PREFIX)
 
 
 def is_api_key(token: str) -> bool:
@@ -32,11 +32,11 @@ def is_api_key(token: str) -> bool:
 
 
 def is_client_session_token(token: str) -> bool:
-    return token.startswith(client_session_token_prefix)
+    return token.startswith(CLIENT_SESSION_TOKEN_PREFIX)
 
 
 def is_publishable_key(token: str) -> bool:
-    return token.startswith(publishable_key_token_prefix)
+    return token.startswith(PUBLISHABLE_KEY_TOKEN_PREFIX)
 
 
 def is_console_session_token(token: str) -> bool:

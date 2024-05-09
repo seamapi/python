@@ -10,8 +10,8 @@ from seam.token import (
     is_client_session_token,
     is_publishable_key,
     is_seam_token,
-    token_prefix,
-    access_token_prefix,
+    TOKEN_PREFIX,
+    ACCESS_TOKEN_PREFIX,
 )
 
 
@@ -66,7 +66,7 @@ def get_auth_headers_for_api_key(api_key: str) -> dict:
 
     if not is_seam_token(api_key):
         raise SeamHttpInvalidTokenError(
-            f"Unknown or invalid api_key format, expected token to start with {token_prefix}"
+            f"Unknown or invalid api_key format, expected token to start with {TOKEN_PREFIX}"
         )
 
     return {"authorization": f"Bearer {api_key}"}
@@ -92,7 +92,7 @@ def get_auth_headers_for_personal_access_token(
 
     if not is_access_token(personal_access_token):
         raise SeamHttpInvalidTokenError(
-            f"Unknown or invalid personal_access_token format, expected token to start with {access_token_prefix}"
+            f"Unknown or invalid personal_access_token format, expected token to start with {ACCESS_TOKEN_PREFIX}"
         )
 
     return {
