@@ -50,11 +50,11 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
         def __init__(self, workspaces):
             self._workspaces = workspaces
 
-        def list(self, *args, **kwargs):
-            return self._workspaces.list(*args, **kwargs)
+        def list(self, **kwargs):
+            return self._workspaces.list(**kwargs)
 
-        def create(self, *args, **kwargs):
-            return self._workspaces.create(*args, **kwargs)
+        def create(self, **kwargs):
+            return self._workspaces.create(**kwargs)
 
     @classmethod
     def from_personal_access_token(
