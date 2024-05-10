@@ -97,7 +97,9 @@ Obtain one from the Seam Console.
 Personal Access Token
 ^^^^^^^^^^^^^^^^^^^^^
 
-A Personal Access Token is scoped to a Seam Console user. Obtain one from the Seam Console. A workspace id must be provided when using this method and all requests will be scoped to that workspace.
+A Personal Access Token is scoped to a Seam Console user.
+Obtain one from the Seam Console.
+A workspace id must be provided when using this method and all requests will be scoped to that workspace.
 
 .. code-block:: python
 
