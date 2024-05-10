@@ -9,6 +9,19 @@ from seam.types import AbstractSeamMultiWorkspace
 from seam.workspaces import Workspaces
 
 
+class WorkspacesProxy:
+    """Proxy to expose only the 'create' and 'list' methods of Workspaces."""
+
+    def __init__(self, workspaces):
+        self._workspaces = workspaces
+
+    def list(self, **kwargs):
+        return self._workspaces.list(**kwargs)
+
+    def create(self, **kwargs):
+        return self._workspaces.create(**kwargs)
+
+
 class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
     """
     Seam class used to interact with Seam API without being scoped to any specific workspace.
@@ -43,18 +56,6 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
 
         self._workspaces = Workspaces(seam=self)
         self.workspaces = self.WorkspacesProxy(self._workspaces)
-
-    class WorkspacesProxy:
-        """Proxy to expose only the 'create' and 'list' methods of Workspaces."""
-
-        def __init__(self, workspaces):
-            self._workspaces = workspaces
-
-        def list(self, **kwargs):
-            return self._workspaces.list(**kwargs)
-
-        def create(self, **kwargs):
-            return self._workspaces.create(**kwargs)
 
     @classmethod
     def from_personal_access_token(
