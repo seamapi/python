@@ -71,7 +71,8 @@ Unlock a door
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
 
-The SDK supports API key and personal access token authentication mechanisms. Authentication may be configured by passing the corresponding options directly to the ``Seam`` constructor, or with the more ergonomic static factory methods.
+The SDK supports API key and personal access token authentication mechanisms.
+Authentication may be configured by passing the corresponding options directly to the ``Seam`` constructor, or with the more ergonomic static factory methods.
 
 API Key
 ^^^^^^^
