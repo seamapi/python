@@ -4,7 +4,7 @@ from typing import Optional, Union, Dict
 from typing_extensions import Self
 
 from seam.parse_options import parse_options
-from .routes import Routes
+from seam.routes.routes import Routes
 from .types import AbstractSeam, SeamApiException
 
 
