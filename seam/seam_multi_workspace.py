@@ -55,7 +55,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
         self._endpoint = get_endpoint(endpoint)
 
         self._workspaces = Workspaces(seam=self)
-        self.workspaces = self.WorkspacesProxy(self._workspaces)
+        self.workspaces = WorkspacesProxy(self._workspaces)
 
     @classmethod
     def from_personal_access_token(
