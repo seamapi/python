@@ -1,9 +1,10 @@
 from typing import Optional, Union, Dict
+import requests
 from typing_extensions import Self
 
 from seam.constants import LTS_VERSION
 from seam.parse_options import parse_options
-from seam.request import RequestMixin
+from seam.request import RequestMixin, SeamHttpClient
 from seam.routes import Routes
 from seam.types import AbstractSeam
 
@@ -23,6 +24,8 @@ class Seam(AbstractSeam, RequestMixin):
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        client: Optional[requests.Session] = None,
+        client_options: Optional[Dict[str, str]] = {},
     ):
         """
         Parameters
@@ -49,8 +52,8 @@ class Seam(AbstractSeam, RequestMixin):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self._auth_headers = auth_headers
-        self._endpoint = endpoint
+        self.client = client or SeamHttpClient(headers=auth_headers, **client_options)
+        self.endpoint = endpoint
 
     @classmethod
     def from_api_key(

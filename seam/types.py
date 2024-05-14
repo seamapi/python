@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Union
+import requests
 from typing_extensions import Self
 import abc
 from dataclasses import dataclass
@@ -2092,11 +2093,12 @@ class AbstractRequestMixin(abc.ABC):
 @dataclass
 class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
     lts_version: str
-    api_key: Optional[str] = (None,)
-    personal_access_token: Optional[str] = (None,)
-    workspace_id: Optional[str] = (None,)
-    endpoint: Optional[str] = (None,)
-    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = (False,)
+    api_key: Optional[str] = None
+    personal_access_token: Optional[str] = None
+    workspace_id: Optional[str] = None
+    endpoint: Optional[str] = None
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False
+    client: Optional[requests.Session] = None
 
     @classmethod
     @abc.abstractmethod
