@@ -8,7 +8,7 @@ import {
 import { openapi } from '@seamapi/types/connect'
 import { deleteAsync } from 'del'
 
-const libName = 'seam'
+const libName = 'seam/routes'
 
 const rootPath = dirname(fileURLToPath(import.meta.url))
 const outputPath = resolve(rootPath, libName)
@@ -19,8 +19,11 @@ const fileSystem = await generateSdk({
   openApiSpecObject: openapi,
 })
 
-const files = Object.entries(fileSystem).filter(([fileName]) =>
-  fileName.startsWith(`${libName}/`),
-)
+const files = Object.entries(fileSystem)
+  .filter(([fileName]) => fileName.startsWith(`${libName}/`))
+  .map(([fileName, contents]) => [
+    fileName.replace(/^seam\/routes\//, ''),
+    contents,
+  ])
 
-writeFs(rootPath, Object.fromEntries(files))
+writeFs(resolve(rootPath, 'seam'), Object.fromEntries(files))

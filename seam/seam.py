@@ -4,7 +4,7 @@ from typing_extensions import Self
 
 from seam.constants import LTS_VERSION
 from seam.parse_options import parse_options
-from seam.request import RequestMixin, SeamHttpClient
+from seam.request import RequestMixin, HttpRequester
 from seam.routes import Routes
 from seam.types import AbstractSeam
 
@@ -52,7 +52,7 @@ class Seam(AbstractSeam, RequestMixin):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self.client = client or SeamHttpClient(headers=auth_headers, **client_options)
+        self.client = client or HttpRequester(headers=auth_headers, **client_options)
         self.endpoint = endpoint
 
     @classmethod

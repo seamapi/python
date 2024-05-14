@@ -48,7 +48,7 @@ class RequestMixin(AbstractRequestMixin):
         return response.text
 
 
-class SeamHttpClient:
+class HttpRequester:
     def __init__(self, headers: Dict[str, str], **kwargs):
         self.session = requests.Session()
         self.session.headers.update(headers)

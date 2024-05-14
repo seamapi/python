@@ -1,6 +1,6 @@
+from seam.types import AbstractSeam as Seam
 from seam.types import (
     AbstractAcsCredentialProvisioningAutomations,
-    AbstractSeam as Seam,
     AcsCredentialProvisioningAutomation,
 )
 from typing import Optional, Any, List, Dict, Union
@@ -42,8 +42,9 @@ class AcsCredentialProvisioningAutomations(
                 credential_manager_acs_user_id
             )
 
-        res = self.seam.make_request(
-            "POST", "/acs/credential_provisioning_automations/launch", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/credential_provisioning_automations/launch",
+            json=json_payload,
         )
 
         return AcsCredentialProvisioningAutomation.from_dict(

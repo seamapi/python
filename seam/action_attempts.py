@@ -1,12 +1,29 @@
-from seam.types import AbstractActionAttempts, AbstractSeam as Seam, ActionAttempt
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractActionAttempts, ActionAttempt
 from typing import Optional, Any, List, Dict, Union
 
 import time
 
-from seam.utils.action_attempt_errors import (
-    SeamActionAttemptFailedError,
-    SeamActionAttemptTimeoutError,
-)
+
+class SeamActionAttemptError(Exception):
+    def __init__(self, message: str, action_attempt: ActionAttempt):
+        super().__init__(message)
+        self.name = self.__class__.__name__
+        self.action_attempt = action_attempt
+
+
+class SeamActionAttemptFailedError(SeamActionAttemptError):
+    def __init__(self, action_attempt: ActionAttempt):
+        super().__init__(action_attempt.error.message, action_attempt)
+        self.name = self.__class__.__name__
+        self.code = action_attempt.error.type
+
+
+class SeamActionAttemptTimeoutError(SeamActionAttemptError):
+    def __init__(self, action_attempt: ActionAttempt, timeout: str):
+        message = f"Timed out waiting for action attempt after {timeout}s"
+        super().__init__(message, action_attempt)
+        self.name = self.__class__.__name__
 
 
 class ActionAttempts(AbstractActionAttempts):
@@ -19,14 +36,16 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         json_payload = {}
 
         if action_attempt_id is not None:
             json_payload["action_attempt_id"] = action_attempt_id
 
-        res = self.seam.make_request("POST", "/action_attempts/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/action_attempts/get", json=json_payload
+        )
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -39,7 +58,9 @@ class ActionAttempts(AbstractActionAttempts):
         if action_attempt_ids is not None:
             json_payload["action_attempt_ids"] = action_attempt_ids
 
-        res = self.seam.make_request("POST", "/action_attempts/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/action_attempts/list", json=json_payload
+        )
 
         return [ActionAttempt.from_dict(item) for item in res["action_attempts"]]
 
@@ -48,7 +69,7 @@ class ActionAttempts(AbstractActionAttempts):
         *,
         action_attempt_id: str,
         timeout: Optional[float] = 5.0,
-        polling_interval: Optional[float] = 0.5
+        polling_interval: Optional[float] = 0.5,
     ) -> ActionAttempt:
         seam = self.seam
         time_waiting = 0.0
@@ -78,7 +99,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt: ActionAttempt,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         wait_decision = (
             self.seam.wait_for_action_attempt

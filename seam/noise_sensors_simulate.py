@@ -1,4 +1,5 @@
-from seam.types import AbstractNoiseSensorsSimulate, AbstractSeam as Seam
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractNoiseSensorsSimulate
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -14,8 +15,9 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.make_request(
-            "POST", "/noise_sensors/simulate/trigger_noise_threshold", json=json_payload
+        self.seam.client.post(
+            self.seam.endpoint + "/noise_sensors/simulate/trigger_noise_threshold",
+            json=json_payload,
         )
 
         return None

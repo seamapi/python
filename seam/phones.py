@@ -1,4 +1,5 @@
-from seam.types import AbstractPhones, AbstractSeam as Seam, Phone
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractPhones, Phone
 from typing import Optional, Any, List, Dict, Union
 from seam.phones_simulate import PhonesSimulate
 
@@ -20,7 +21,9 @@ class Phones(AbstractPhones):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.make_request("POST", "/phones/deactivate", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/phones/deactivate", json=json_payload
+        )
 
         return None
 
@@ -30,6 +33,8 @@ class Phones(AbstractPhones):
         if owner_user_identity_id is not None:
             json_payload["owner_user_identity_id"] = owner_user_identity_id
 
-        res = self.seam.make_request("POST", "/phones/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/phones/list", json=json_payload
+        )
 
         return [Phone.from_dict(item) for item in res["phones"]]

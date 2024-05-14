@@ -1,4 +1,5 @@
-from seam.types import AbstractConnectWebviews, AbstractSeam as Seam, ConnectWebview
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractConnectWebviews, ConnectWebview
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -41,8 +42,8 @@ class ConnectWebviews(AbstractConnectWebviews):
         if wait_for_device_creation is not None:
             json_payload["wait_for_device_creation"] = wait_for_device_creation
 
-        res = self.seam.make_request(
-            "POST", "/connect_webviews/create", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connect_webviews/create", json=json_payload
         )
 
         return ConnectWebview.from_dict(res["connect_webview"])
@@ -53,7 +54,9 @@ class ConnectWebviews(AbstractConnectWebviews):
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
 
-        self.seam.make_request("POST", "/connect_webviews/delete", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/connect_webviews/delete", json=json_payload
+        )
 
         return None
 
@@ -63,7 +66,9 @@ class ConnectWebviews(AbstractConnectWebviews):
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
 
-        res = self.seam.make_request("POST", "/connect_webviews/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connect_webviews/get", json=json_payload
+        )
 
         return ConnectWebview.from_dict(res["connect_webview"])
 
@@ -80,8 +85,8 @@ class ConnectWebviews(AbstractConnectWebviews):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.make_request(
-            "POST", "/connect_webviews/list", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connect_webviews/list", json=json_payload
         )
 
         return [ConnectWebview.from_dict(item) for item in res["connect_webviews"]]

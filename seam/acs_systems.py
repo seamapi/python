@@ -1,4 +1,5 @@
-from seam.types import AbstractAcsSystems, AbstractSeam as Seam, AcsSystem
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractAcsSystems, AcsSystem
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -14,7 +15,9 @@ class AcsSystems(AbstractAcsSystems):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        res = self.seam.make_request("POST", "/acs/systems/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/systems/get", json=json_payload
+        )
 
         return AcsSystem.from_dict(res["acs_system"])
 
@@ -24,6 +27,24 @@ class AcsSystems(AbstractAcsSystems):
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
 
-        res = self.seam.make_request("POST", "/acs/systems/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/systems/list", json=json_payload
+        )
+
+        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+
+    def list_compatible_credential_manager_acs_systems(
+        self, *, acs_system_id: str
+    ) -> List[AcsSystem]:
+        json_payload = {}
+
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
+
+        res = self.seam.client.post(
+            self.seam.endpoint
+            + "/acs/systems/list_compatible_credential_manager_acs_systems",
+            json=json_payload,
+        )
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]

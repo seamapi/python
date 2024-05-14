@@ -1,4 +1,5 @@
-from seam.types import AbstractConnectedAccounts, AbstractSeam as Seam, ConnectedAccount
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractConnectedAccounts, ConnectedAccount
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -16,7 +17,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.make_request("POST", "/connected_accounts/delete", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/connected_accounts/delete", json=json_payload
+        )
 
         return None
 
@@ -30,8 +33,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if email is not None:
             json_payload["email"] = email
 
-        res = self.seam.make_request(
-            "POST", "/connected_accounts/get", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connected_accounts/get", json=json_payload
         )
 
         return ConnectedAccount.from_dict(res["connected_account"])
@@ -44,8 +47,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
 
-        res = self.seam.make_request(
-            "POST", "/connected_accounts/list", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connected_accounts/list", json=json_payload
         )
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
@@ -68,8 +71,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
 
-        res = self.seam.make_request(
-            "POST", "/connected_accounts/update", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/connected_accounts/update", json=json_payload
         )
 
         return ConnectedAccount.from_dict(res["connected_account"])

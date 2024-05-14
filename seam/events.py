@@ -1,4 +1,5 @@
-from seam.types import AbstractEvents, AbstractSeam as Seam, Event
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractEvents, Event
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -24,7 +25,9 @@ class Events(AbstractEvents):
         if event_type is not None:
             json_payload["event_type"] = event_type
 
-        res = self.seam.make_request("POST", "/events/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/events/get", json=json_payload
+        )
 
         return Event.from_dict(res["event"])
 
@@ -65,6 +68,8 @@ class Events(AbstractEvents):
         if since is not None:
             json_payload["since"] = since
 
-        res = self.seam.make_request("POST", "/events/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/events/list", json=json_payload
+        )
 
         return [Event.from_dict(item) for item in res["events"]]

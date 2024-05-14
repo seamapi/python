@@ -1,4 +1,5 @@
-from seam.types import AbstractAcs, AbstractSeam as Seam
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractAcs
 from typing import Optional, Any, List, Dict, Union
 from seam.acs_access_groups import AcsAccessGroups
 from seam.acs_credential_pools import AcsCredentialPools

@@ -1,8 +1,5 @@
-from seam.types import (
-    AbstractUserIdentitiesEnrollmentAutomations,
-    AbstractSeam as Seam,
-    EnrollmentAutomation,
-)
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractUserIdentitiesEnrollmentAutomations, EnrollmentAutomation
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -18,8 +15,9 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if enrollment_automation_id is not None:
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
-        self.seam.make_request(
-            "POST", "/user_identities/enrollment_automations/delete", json=json_payload
+        self.seam.client.post(
+            self.seam.endpoint + "/user_identities/enrollment_automations/delete",
+            json=json_payload,
         )
 
         return None
@@ -30,8 +28,9 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if enrollment_automation_id is not None:
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
-        res = self.seam.make_request(
-            "POST", "/user_identities/enrollment_automations/get", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/user_identities/enrollment_automations/get",
+            json=json_payload,
         )
 
         return EnrollmentAutomation.from_dict(res["enrollment_automation"])
@@ -64,8 +63,9 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
                 credential_manager_acs_user_id
             )
 
-        self.seam.make_request(
-            "POST", "/user_identities/enrollment_automations/launch", json=json_payload
+        self.seam.client.post(
+            self.seam.endpoint + "/user_identities/enrollment_automations/launch",
+            json=json_payload,
         )
 
         return None
@@ -76,8 +76,9 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.make_request(
-            "POST", "/user_identities/enrollment_automations/list", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/user_identities/enrollment_automations/list",
+            json=json_payload,
         )
 
         return [

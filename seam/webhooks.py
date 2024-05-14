@@ -1,4 +1,5 @@
-from seam.types import AbstractWebhooks, AbstractSeam as Seam, Webhook
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractWebhooks, Webhook
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -16,7 +17,9 @@ class Webhooks(AbstractWebhooks):
         if event_types is not None:
             json_payload["event_types"] = event_types
 
-        res = self.seam.make_request("POST", "/webhooks/create", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/webhooks/create", json=json_payload
+        )
 
         return Webhook.from_dict(res["webhook"])
 
@@ -26,7 +29,9 @@ class Webhooks(AbstractWebhooks):
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
 
-        self.seam.make_request("POST", "/webhooks/delete", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/webhooks/delete", json=json_payload
+        )
 
         return None
 
@@ -36,7 +41,9 @@ class Webhooks(AbstractWebhooks):
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
 
-        res = self.seam.make_request("POST", "/webhooks/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/webhooks/get", json=json_payload
+        )
 
         return Webhook.from_dict(res["webhook"])
 
@@ -45,7 +52,9 @@ class Webhooks(AbstractWebhooks):
     ) -> List[Webhook]:
         json_payload = {}
 
-        res = self.seam.make_request("POST", "/webhooks/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/webhooks/list", json=json_payload
+        )
 
         return [Webhook.from_dict(item) for item in res["webhooks"]]
 
@@ -57,6 +66,8 @@ class Webhooks(AbstractWebhooks):
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
 
-        self.seam.make_request("POST", "/webhooks/update", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/webhooks/update", json=json_payload
+        )
 
         return None

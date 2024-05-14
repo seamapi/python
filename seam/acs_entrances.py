@@ -1,9 +1,5 @@
-from seam.types import (
-    AbstractAcsEntrances,
-    AbstractSeam as Seam,
-    AcsEntrance,
-    AcsCredential,
-)
+from seam.types import AbstractSeam as Seam
+from seam.types import AbstractAcsEntrances, AcsEntrance, AcsCredential
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -19,7 +15,9 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
 
-        res = self.seam.make_request("POST", "/acs/entrances/get", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/entrances/get", json=json_payload
+        )
 
         return AcsEntrance.from_dict(res["acs_entrance"])
 
@@ -31,7 +29,9 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/entrances/grant_access", json=json_payload)
+        self.seam.client.post(
+            self.seam.endpoint + "/acs/entrances/grant_access", json=json_payload
+        )
 
         return None
 
@@ -48,7 +48,9 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        res = self.seam.make_request("POST", "/acs/entrances/list", json=json_payload)
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/entrances/list", json=json_payload
+        )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
@@ -62,8 +64,9 @@ class AcsEntrances(AbstractAcsEntrances):
         if include_if is not None:
             json_payload["include_if"] = include_if
 
-        res = self.seam.make_request(
-            "POST", "/acs/entrances/list_credentials_with_access", json=json_payload
+        res = self.seam.client.post(
+            self.seam.endpoint + "/acs/entrances/list_credentials_with_access",
+            json=json_payload,
         )
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
