@@ -2090,14 +2090,8 @@ class AbstractRoutes(abc.ABC):
     workspaces: AbstractWorkspaces
 
 
-class AbstractRequestMixin(abc.ABC):
-    @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs) -> Any:
-        raise NotImplementedError
-
-
 @dataclass
-class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
+class AbstractSeam(AbstractRoutes):
     lts_version: str
     api_key: Optional[str] = None
     personal_access_token: Optional[str] = None
@@ -2131,7 +2125,7 @@ class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
 
 
 @dataclass
-class AbstractSeamMultiWorkspace(AbstractRequestMixin):
+class AbstractSeamMultiWorkspace:
     workspaces: AbstractSeamMultiWorkspaceWorkspaces
 
     lts_version: str

@@ -1,15 +1,15 @@
-from typing import Optional, Union, Dict
+from typing import Any, Optional, Union, Dict
 import requests
 from typing_extensions import Self
 
 from seam.constants import LTS_VERSION
 from seam.parse_options import parse_options
-from seam.request import RequestMixin, HttpRequester
+from seam.request import  SeamHttpClient
 from seam.routes import Routes
 from seam.types import AbstractSeam
 
 
-class Seam(AbstractSeam, RequestMixin):
+class Seam(AbstractSeam):
     """
     Initial Seam class used to interact with Seam API
     """
@@ -25,7 +25,7 @@ class Seam(AbstractSeam, RequestMixin):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
         client: Optional[requests.Session] = None,
-        client_options: Optional[Dict[str, str]] = {},
+        client_options: Optional[Dict[str, Any]] = {},
     ):
         """
         Parameters
@@ -52,8 +52,9 @@ class Seam(AbstractSeam, RequestMixin):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self.client = client or HttpRequester(headers=auth_headers, **client_options)
-        self.endpoint = endpoint
+        self.client = client or SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, **client_options
+        )
 
     @classmethod
     def from_api_key(

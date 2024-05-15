@@ -1,10 +1,11 @@
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
+import requests
 from typing_extensions import Self
 
 from seam.auth import get_auth_headers_for_multi_workspace_personal_access_token
 from seam.constants import LTS_VERSION
 from seam.options import get_endpoint
-from seam.request import RequestMixin
+from seam.request import SeamHttpClient
 from seam.types import AbstractSeamMultiWorkspace
 from seam.workspaces import Workspaces
 
@@ -22,7 +23,7 @@ class WorkspacesProxy:
         return self._workspaces.create(**kwargs)
 
 
-class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
+class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
     """
     Seam class used to interact with Seam API without being scoped to any specific workspace.
     """
@@ -35,6 +36,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        client: Optional[requests.Session] = None,
+        client_options: Optional[Dict[str, Any]] = {},
     ):
         """
         Parameters
@@ -49,10 +52,13 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
 
         self.lts_version = SeamMultiWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        self._auth_headers = get_auth_headers_for_multi_workspace_personal_access_token(
+        auth_headers = get_auth_headers_for_multi_workspace_personal_access_token(
             personal_access_token
         )
-        self._endpoint = get_endpoint(endpoint)
+        endpoint = get_endpoint(endpoint)
+        self.client = client or SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, **client_options
+        )
 
         self._workspaces = Workspaces(seam=self)
         self.workspaces = WorkspacesProxy(self._workspaces)
