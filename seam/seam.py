@@ -25,7 +25,7 @@ class Seam(AbstractSeam):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
         client: Optional[requests.Session] = None,
-        client_options: Optional[Dict[str, Any]] = {},
+        client_options: Optional[Dict[str, Any]] = None,
     ):
         """
         Parameters
@@ -52,6 +52,10 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
+
+        if client_options is None:
+            client_options = {}
+
         self.client = client or SeamHttpClient(
             base_url=endpoint, auth_headers=auth_headers, **client_options
         )
