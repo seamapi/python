@@ -1,1 +1,4 @@
-seam/** linguist-generated
+seam/** linguist-generated=true
+seam/seam.py linguist-generated=false
+seam/request.py linguist-generated=false
+seam/seam_multi_workspace.py linguist-generated=false
