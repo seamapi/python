@@ -78,9 +78,7 @@ class AccessCodes(AbstractAccessCodes):
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/create", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(res["access_code"])
 
@@ -143,9 +141,7 @@ class AccessCodes(AbstractAccessCodes):
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/create_multiple", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/create_multiple", json=json_payload)
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -165,9 +161,7 @@ class AccessCodes(AbstractAccessCodes):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post(
-            self.seam.endpoint + "/access_codes/delete", json=json_payload
-        )
+        self.seam.client.post("/access_codes/delete", json=json_payload)
 
         return None
 
@@ -177,9 +171,7 @@ class AccessCodes(AbstractAccessCodes):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/generate_code", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/generate_code", json=json_payload)
 
         return AccessCode.from_dict(res["generated_code"])
 
@@ -199,9 +191,7 @@ class AccessCodes(AbstractAccessCodes):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/get", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/get", json=json_payload)
 
         return AccessCode.from_dict(res["access_code"])
 
@@ -221,9 +211,7 @@ class AccessCodes(AbstractAccessCodes):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/list", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/list", json=json_payload)
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -234,7 +222,7 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["access_code_id"] = access_code_id
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/pull_backup_access_code",
+            "/access_codes/pull_backup_access_code",
             json=json_payload,
         )
 
@@ -303,8 +291,6 @@ class AccessCodes(AbstractAccessCodes):
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
 
-        self.seam.client.post(
-            self.seam.endpoint + "/access_codes/update", json=json_payload
-        )
+        self.seam.client.post("/access_codes/update", json=json_payload)
 
         return None

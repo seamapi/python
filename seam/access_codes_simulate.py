@@ -22,7 +22,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             json_payload["name"] = name
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/simulate/create_unmanaged_access_code",
+            "/access_codes/simulate/create_unmanaged_access_code",
             json=json_payload,
         )
 

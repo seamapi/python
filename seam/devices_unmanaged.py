@@ -19,9 +19,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/devices/unmanaged/get", json=json_payload
-        )
+        res = self.seam.client.post("/devices/unmanaged/get", json=json_payload)
 
         return UnmanagedDevice.from_dict(res["device"])
 
@@ -71,9 +69,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/devices/unmanaged/list", json=json_payload
-        )
+        res = self.seam.client.post("/devices/unmanaged/list", json=json_payload)
 
         return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
 
@@ -85,8 +81,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
 
-        self.seam.client.post(
-            self.seam.endpoint + "/devices/unmanaged/update", json=json_payload
-        )
+        self.seam.client.post("/devices/unmanaged/update", json=json_payload)
 
         return None

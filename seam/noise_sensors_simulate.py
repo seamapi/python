@@ -16,7 +16,7 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
             json_payload["device_id"] = device_id
 
         self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/simulate/trigger_noise_threshold",
+            "/noise_sensors/simulate/trigger_noise_threshold",
             json=json_payload,
         )
 

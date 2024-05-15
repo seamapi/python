@@ -15,8 +15,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.client.post(
-            self.seam.endpoint + "/devices/simulate/remove", json=json_payload
-        )
+        self.seam.client.post("/devices/simulate/remove", json=json_payload)
 
         return None

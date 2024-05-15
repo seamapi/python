@@ -38,7 +38,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/noise_thresholds/create",
+            "/noise_sensors/noise_thresholds/create",
             json=json_payload,
         )
 
@@ -57,7 +57,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/noise_thresholds/delete",
+            "/noise_sensors/noise_thresholds/delete",
             json=json_payload,
         )
 
@@ -70,7 +70,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_id"] = noise_threshold_id
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/noise_thresholds/get",
+            "/noise_sensors/noise_thresholds/get",
             json=json_payload,
         )
 
@@ -87,7 +87,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["is_programmed"] = is_programmed
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/noise_thresholds/list",
+            "/noise_sensors/noise_thresholds/list",
             json=json_payload,
         )
 
@@ -125,7 +125,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            self.seam.endpoint + "/noise_sensors/noise_thresholds/update",
+            "/noise_sensors/noise_thresholds/update",
             json=json_payload,
         )
 

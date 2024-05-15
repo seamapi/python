@@ -59,7 +59,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["schedule_type"] = schedule_type
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/thermostats/climate_setting_schedules/create",
+            "/thermostats/climate_setting_schedules/create",
             json=json_payload,
         )
 
@@ -72,7 +72,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["climate_setting_schedule_id"] = climate_setting_schedule_id
 
         self.seam.client.post(
-            self.seam.endpoint + "/thermostats/climate_setting_schedules/delete",
+            "/thermostats/climate_setting_schedules/delete",
             json=json_payload,
         )
 
@@ -92,7 +92,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["device_id"] = device_id
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/thermostats/climate_setting_schedules/get",
+            "/thermostats/climate_setting_schedules/get",
             json=json_payload,
         )
 
@@ -109,7 +109,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/thermostats/climate_setting_schedules/list",
+            "/thermostats/climate_setting_schedules/list",
             json=json_payload,
         )
 
@@ -165,7 +165,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["schedule_type"] = schedule_type
 
         self.seam.client.post(
-            self.seam.endpoint + "/thermostats/climate_setting_schedules/update",
+            "/thermostats/climate_setting_schedules/update",
             json=json_payload,
         )
 

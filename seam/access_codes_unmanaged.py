@@ -34,7 +34,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            self.seam.endpoint + "/access_codes/unmanaged/convert_to_managed",
+            "/access_codes/unmanaged/convert_to_managed",
             json=json_payload,
         )
 
@@ -48,9 +48,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post(
-            self.seam.endpoint + "/access_codes/unmanaged/delete", json=json_payload
-        )
+        self.seam.client.post("/access_codes/unmanaged/delete", json=json_payload)
 
         return None
 
@@ -70,9 +68,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/unmanaged/get", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/unmanaged/get", json=json_payload)
 
         return UnmanagedAccessCode.from_dict(res["access_code"])
 
@@ -86,9 +82,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/access_codes/unmanaged/list", json=json_payload
-        )
+        res = self.seam.client.post("/access_codes/unmanaged/list", json=json_payload)
 
         return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -116,8 +110,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
                 is_external_modification_allowed
             )
 
-        self.seam.client.post(
-            self.seam.endpoint + "/access_codes/unmanaged/update", json=json_payload
-        )
+        self.seam.client.post("/access_codes/unmanaged/update", json=json_payload)
 
         return None

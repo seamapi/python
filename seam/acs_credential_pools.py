@@ -15,9 +15,7 @@ class AcsCredentialPools(AbstractAcsCredentialPools):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/acs/credential_pools/list", json=json_payload
-        )
+        res = self.seam.client.post("/acs/credential_pools/list", json=json_payload)
 
         return [
             AcsCredentialPool.from_dict(item) for item in res["acs_credential_pools"]

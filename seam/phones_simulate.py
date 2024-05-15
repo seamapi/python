@@ -29,7 +29,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
             json_payload["phone_metadata"] = phone_metadata
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/phones/simulate/create_sandbox_phone",
+            "/phones/simulate/create_sandbox_phone",
             json=json_payload,
         )
 

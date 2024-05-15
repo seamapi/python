@@ -16,7 +16,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
         self.seam.client.post(
-            self.seam.endpoint + "/user_identities/enrollment_automations/delete",
+            "/user_identities/enrollment_automations/delete",
             json=json_payload,
         )
 
@@ -29,7 +29,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/user_identities/enrollment_automations/get",
+            "/user_identities/enrollment_automations/get",
             json=json_payload,
         )
 
@@ -64,7 +64,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             )
 
         self.seam.client.post(
-            self.seam.endpoint + "/user_identities/enrollment_automations/launch",
+            "/user_identities/enrollment_automations/launch",
             json=json_payload,
         )
 
@@ -77,7 +77,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["user_identity_id"] = user_identity_id
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/user_identities/enrollment_automations/list",
+            "/user_identities/enrollment_automations/list",
             json=json_payload,
         )
 

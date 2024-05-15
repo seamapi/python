@@ -31,9 +31,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/create", json=json_payload
-        )
+        res = self.seam.client.post("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(res["client_session"])
 
@@ -43,9 +41,7 @@ class ClientSessions(AbstractClientSessions):
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
 
-        self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/delete", json=json_payload
-        )
+        self.seam.client.post("/client_sessions/delete", json=json_payload)
 
         return None
 
@@ -62,9 +58,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/get", json=json_payload
-        )
+        res = self.seam.client.post("/client_sessions/get", json=json_payload)
 
         return ClientSession.from_dict(res["client_session"])
 
@@ -90,9 +84,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/get_or_create", json=json_payload
-        )
+        res = self.seam.client.post("/client_sessions/get_or_create", json=json_payload)
 
         return ClientSession.from_dict(res["client_session"])
 
@@ -118,9 +110,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/grant_access", json=json_payload
-        )
+        self.seam.client.post("/client_sessions/grant_access", json=json_payload)
 
         return None
 
@@ -146,9 +136,7 @@ class ClientSessions(AbstractClientSessions):
         if without_user_identifier_key is not None:
             json_payload["without_user_identifier_key"] = without_user_identifier_key
 
-        res = self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/list", json=json_payload
-        )
+        res = self.seam.client.post("/client_sessions/list", json=json_payload)
 
         return [ClientSession.from_dict(item) for item in res["client_sessions"]]
 
@@ -158,8 +146,6 @@ class ClientSessions(AbstractClientSessions):
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
 
-        self.seam.client.post(
-            self.seam.endpoint + "/client_sessions/revoke", json=json_payload
-        )
+        self.seam.client.post("/client_sessions/revoke", json=json_payload)
 
         return None

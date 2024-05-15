@@ -43,7 +43,7 @@ class AcsCredentialProvisioningAutomations(
             )
 
         res = self.seam.client.post(
-            self.seam.endpoint + "/acs/credential_provisioning_automations/launch",
+            "/acs/credential_provisioning_automations/launch",
             json=json_payload,
         )
 
