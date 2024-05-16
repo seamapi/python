@@ -1,5 +1,5 @@
 from typing import Any, Optional, Union, Dict
-import requests
+import niquests as requests
 from typing_extensions import Self
 
 from .constants import LTS_VERSION

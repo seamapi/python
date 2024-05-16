@@ -1,5 +1,5 @@
 from typing import Any, Dict, Optional, Union
-import requests
+import niquests as requests
 from typing_extensions import Self
 
 from .auth import get_auth_headers_for_multi_workspace_personal_access_token

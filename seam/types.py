@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union
-import requests
+import niquests as requests
 from typing_extensions import Self
 import abc
 

@@ -1,6 +1,6 @@
 from typing import Dict
 from urllib.parse import urljoin
-import requests
+import niquests as requests
 from importlib.metadata import version
 
 from seam.constants import LTS_VERSION
