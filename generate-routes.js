@@ -8,7 +8,7 @@ import {
 import { openapi } from '@seamapi/types/connect'
 import { deleteAsync } from 'del'
 
-const libRoutesPath = 'seam/routes'
+const libName = 'seam'
 
 const rootPath = dirname(fileURLToPath(import.meta.url))
 const outputPath = resolve(rootPath, libRoutesPath)
