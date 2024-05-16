@@ -20,7 +20,7 @@ const fileSystem = await generateSdk({
 })
 
 const files = Object.entries(fileSystem).filter(([fileName]) =>
-  fileName.startsWith(`${libRoutesPath}/`),
+  fileName.startsWith(`${libName}/routes/`),
 )
 
 writeFs(rootPath, Object.fromEntries(files))
