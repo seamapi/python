@@ -84,7 +84,7 @@ class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamMultiWorkspace():
+class AbstractSeamMultiWorkspace:
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
@@ -108,19 +108,3 @@ class AbstractSeamMultiWorkspace():
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ) -> Self:
         raise NotImplementedError
-
-
-class SeamApiException(Exception):
-    def __init__(
-        self,
-        response,
-    ):
-        self.status_code = response.status_code
-        self.request_id = response.headers.get("seam-request-id", None)
-        self.metadata = None
-        if "application/json" in response.headers["content-type"]:
-            parsed_response = response.json()
-            self.metadata = parsed_response.get("error", None)
-        super().__init__(
-            f"SeamApiException: status={self.status_code}, request_id={self.request_id}, metadata={self.metadata}"
-        )
