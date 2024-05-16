@@ -1,11 +1,11 @@
 from typing import Optional, Union, Dict
 from typing_extensions import Self
 
-from seam.constants import LTS_VERSION
-from seam.parse_options import parse_options
-from seam.request import RequestMixin
-from seam.routes import Routes
-from seam.types import AbstractSeam
+from .constants import LTS_VERSION
+from .parse_options import parse_options
+from .request import RequestMixin
+from .routes.routes import Routes
+from .types import AbstractSeam
 
 
 class Seam(AbstractSeam, RequestMixin):
