@@ -24,13 +24,7 @@ class SeamApiException(Exception):
         )
 
 
-class AbstractRequestMixin(abc.ABC):
-    @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs):
-        raise NotImplementedError
-
-
-class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
+class AbstractSeam(AbstractRoutes):
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
@@ -90,7 +84,7 @@ class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamMultiWorkspace(AbstractRequestMixin):
+class AbstractSeamMultiWorkspace():
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 

@@ -5,7 +5,7 @@ from typing_extensions import Self
 from .constants import LTS_VERSION
 from .parse_options import parse_options
 from .request import SeamHttpClient
-from .routes import Routes
+from .routes.routes import Routes
 from .types import AbstractSeam
 
 
