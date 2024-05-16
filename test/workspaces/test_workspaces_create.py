@@ -18,4 +18,3 @@ def test_workspaces_create(seam: Seam):
     )
 
     assert workspace.workspace_id
-    pass

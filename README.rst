@@ -71,7 +71,11 @@ Unlock a door
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
 
-The SDK supports API key authentication mechanism.
+The SDK supports API key and personal access token authentication mechanisms.
+Authentication may be configured by passing the corresponding options directly to the ``Seam`` constructor, or with the more ergonomic static factory methods.
+
+API Key
+^^^^^^^
 
 An API key is scoped to a single workspace and should only be used on the server.
 Obtain one from the Seam Console.
@@ -87,6 +91,30 @@ Obtain one from the Seam Console.
   # Pass as a keyword argument to the constructor
   seam = Seam(api_key="your-api-key")
 
+  # Use the factory method
+  seam = Seam.from_api_key("your-api-key")
+
+Personal Access Token
+^^^^^^^^^^^^^^^^^^^^^
+
+A Personal Access Token is scoped to a Seam Console user.
+Obtain one from the Seam Console.
+A workspace id must be provided when using this method and all requests will be scoped to that workspace.
+
+.. code-block:: python
+
+  # Pass as an option the constructor
+  seam = Seam(
+      personal_access_token="your-personal-access-token",
+      workspace_id="your-workspace-id",
+  )
+
+  # Use the factory method
+  seam = Seam.from_personal_access_token(
+      "your-personal-access-token",
+      "your-workspace-id",
+  )
+
 Action Attempts
 ~~~~~~~~~~~~~~~
 
@@ -94,7 +122,7 @@ Some asynchronous operations, e.g., unlocking a door, return an `action attempt 
 Seam tracks the progress of requested operation and updates the action attempt.
 
 To make working with action attempts more convenient for applications,
-this library provides the `wait_for_action_attempt` option.
+this library provides the ``wait_for_action_attempt`` option.
 
 Pass the option per-request,
 
@@ -126,19 +154,22 @@ and want to wait for it to resolve, simply use
       wait_for_action_attempt=True,
   )
 
-Using the `wait_for_action_attempt` option:
+Using the ``wait_for_action_attempt`` option:
 
-- Polls the action attempt up to the `timeout`
-  at the `polling_interval` (both in seconds).
+- Polls the action attempt up to the ``timeout``
+  at the ``polling_interval`` (both in seconds).
 - Resolves with a fresh copy of the successful action attempt.
-- Raises an exception if the action attempt is unsuccessful.
-- Raises an exception if the action attempt is still pending when the `timeout` is reached.
+- Raises a ``SeamActionAttemptFailedError`` if the action attempt is unsuccessful.
+- Raises a ``SeamActionAttemptTimeoutError`` if the action attempt is still pending when the ``timeout`` is reached.
+- Both errors expose an ``action_attempt`` property.
 
 .. code-block:: python
 
+  from seam import Seam, SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
+
   seam = Seam("your-api-key")
 
-  lock = seam.locks.list()[0]
+  lock = seam.locks.list()
 
   if len(locks) == 0:
       raise Exception("No locks in this workspace")
@@ -169,7 +200,7 @@ Setting the endpoint
 Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
-Either pass the `api_url` option to the constructor, or set the `SEAM_ENDPOINT` environment variable.
+Either pass the ``api_url`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
 
 Development and Testing
 -----------------------
@@ -189,7 +220,7 @@ Run each command below in a separate terminal window:
 
     $ make watch
 
-Primary development tasks are defined in the `Makefile`.
+Primary development tasks are defined in the ``Makefile``.
 
 Source Code
 ~~~~~~~~~~~
@@ -260,7 +291,7 @@ Manual
 ^^^^^^
 
 Publish a new version by triggering a `version workflow_dispatch on GitHub Actions`_.
-The `version` input will be passed as the first argument to `poetry version`_.
+The ``version`` input will be passed as the first argument to `poetry version`_.
 
 This may be done on the web or using the `GitHub CLI`_ with
 

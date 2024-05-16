@@ -2,12 +2,12 @@ from typing import Any, Dict, Optional, Union
 import requests
 from typing_extensions import Self
 
-from seam.auth import get_auth_headers_for_multi_workspace_personal_access_token
-from seam.constants import LTS_VERSION
-from seam.options import get_endpoint
-from seam.request import SeamHttpClient
-from seam.types import AbstractSeamMultiWorkspace
-from seam.workspaces import Workspaces
+from .auth import get_auth_headers_for_multi_workspace_personal_access_token
+from .constants import LTS_VERSION
+from .options import get_endpoint
+from .request import SeamHttpClient
+from .types import AbstractSeamMultiWorkspace
+from .routes.workspaces import Workspaces
 
 
 class WorkspacesProxy:
