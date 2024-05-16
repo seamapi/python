@@ -1,8 +1,8 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 
-from seam.routes.types import AbstractRoutes
+from seam.routes.types import AbstractRoutes, Workspace
 
 
 class SeamApiException(Exception):
@@ -23,8 +23,15 @@ class SeamApiException(Exception):
         )
 
 
-class AbstractSeam(AbstractRoutes):
+class AbstractRequestMixin(abc.ABC):
+    @abc.abstractmethod
+    def make_request(self, method: str, path: str, **kwargs):
+        raise NotImplementedError
+
+
+class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
     lts_version: str
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
     @abc.abstractmethod
     def __init__(
@@ -36,11 +43,6 @@ class AbstractSeam(AbstractRoutes):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
     ):
-        self.wait_for_action_attempt = wait_for_action_attempt
-        self.lts_version = AbstractSeam.lts_version
-
-    @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs) -> Any:
         raise NotImplementedError
 
     @classmethod
@@ -60,6 +62,52 @@ class AbstractSeam(AbstractRoutes):
         cls,
         personal_access_token: str,
         workspace_id: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+    ) -> Self:
+        raise NotImplementedError
+
+
+class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        connect_partner_name: str,
+        name: str,
+        is_sandbox: Optional[bool] = None,
+        webview_logo_shape: Optional[str] = None,
+        webview_primary_button_color: Optional[str] = None,
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Workspace]:
+        raise NotImplementedError()
+
+
+class AbstractSeamMultiWorkspace(AbstractRequestMixin):
+    lts_version: str
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+    @abc.abstractmethod
+    def __init__(
+        self,
+        personal_access_token: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+    ):
+        raise NotImplementedError
+
+    @classmethod
+    @abc.abstractmethod
+    def from_personal_access_token(
+        cls,
+        personal_access_token: str,
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,

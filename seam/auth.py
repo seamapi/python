@@ -99,3 +99,31 @@ def get_auth_headers_for_personal_access_token(
         "authorization": f"Bearer {personal_access_token}",
         "seam-workspace": workspace_id,
     }
+
+
+def get_auth_headers_for_multi_workspace_personal_access_token(
+    personal_access_token: str,
+) -> dict:
+    if is_jwt(personal_access_token):
+        raise SeamHttpInvalidTokenError(
+            "A JWT cannot be used as a personal_access_token"
+        )
+
+    if is_client_session_token(personal_access_token):
+        raise SeamHttpInvalidTokenError(
+            "A Client Session Token cannot be used as a personal_access_token"
+        )
+
+    if is_publishable_key(personal_access_token):
+        raise SeamHttpInvalidTokenError(
+            "A Publishable Key cannot be used as a personal_access_token"
+        )
+
+    if not is_access_token(personal_access_token):
+        raise SeamHttpInvalidTokenError(
+            f"Unknown or invalid personal_access_token format, expected token to start with {ACCESS_TOKEN_PREFIX}"
+        )
+
+    return {
+        "authorization": f"Bearer {personal_access_token}",
+    }
