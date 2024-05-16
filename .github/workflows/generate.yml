@@ -4,7 +4,7 @@ name: Generate
 on:
   push:
     branches-ignore:
-      - '**'
+      - main
   workflow_dispatch: {}
 
 jobs:
