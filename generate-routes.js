@@ -11,7 +11,7 @@ import { deleteAsync } from 'del'
 const libName = 'seam'
 
 const rootPath = dirname(fileURLToPath(import.meta.url))
-const outputPath = resolve(rootPath, libRoutesPath)
+const outputPath = resolve(rootPath, libName, 'routes')
 
 await deleteAsync(outputPath)
 
