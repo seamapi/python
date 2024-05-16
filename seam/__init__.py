@@ -4,7 +4,7 @@
 from seam.seam import Seam, SeamApiException
 from seam.options import SeamHttpInvalidOptionsError
 from seam.auth import SeamHttpInvalidTokenError
-from seam.utils.action_attempt_errors import (
+from seam.routes.action_attempts import (
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,
