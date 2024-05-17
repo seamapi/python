@@ -5,7 +5,7 @@ from .constants import LTS_VERSION
 from .parse_options import parse_options
 from .request import RequestMixin
 from .routes import Routes
-from .types import AbstractSeam
+from .models import AbstractSeam
 
 
 class Seam(AbstractSeam, RequestMixin):
