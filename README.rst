@@ -191,6 +191,23 @@ Using the ``wait_for_action_attempt`` option:
   except SeamActionAttemptTimeoutError as e:
       print("Door took too long to unlock")
 
+Interacting with Multiple Workspaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Seam API endpoints interact with multiple workspaces. The ``SeamMultiWorkspace`` client is not bound to a specific workspace and may use those endpoints with a personal access token authentication method.
+
+A Personal Access Token is scoped to a Seam Console user. Obtain one from the Seam Console.
+
+.. code-block:: python
+  # Pass as an option the constructor
+  seam = SeamMultiWorkspace(personal_access_token="your-personal-access-token")
+
+  # Use the factory method
+  seam = SeamMultiWorkspace.from_personal_access_token("your-personal-access-token")
+
+  # List workspaces authorized for this Personal Access Token
+  workspaces = seam.workspaces.list()
+
 Advanced Usage
 ~~~~~~~~~~~~~~
 
