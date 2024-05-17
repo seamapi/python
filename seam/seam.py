@@ -43,7 +43,7 @@ class Seam(AbstractSeam):
         client : requests.Session, optional
           A pre-configured requests session to be used for making HTTP requests. If not provided, a new `SeamHttpClient` instance will be created using the `client_options` and other relevant parameters.
         client_options : dict, optional
-          A dictionary of options that will be passed to the `SeamHttpClient` constructor when initializing a new requests session client. This allows for customization of the HTTP client, such as setting additional headers or configuring timeouts. For detailed information on available options, refer to the niquests library documentation [here](https://github.com/jawah/niquests/blob/954764c22f3c51ab51add3c6e3635bbfb3e1ee23/src/niquests/sessions.py#L252). If client is provided, this parameter will be ignored.
+          A dictionary of options that will be passed to the `SeamHttpClient` constructor when initializing a new requests session client. This allows for customization of the HTTP client, such as setting additional headers or configuring timeouts. For detailed information on available options, refer to the niquests library [repo](https://github.com/jawah/niquests). If client is provided, this parameter will be ignored.
         """
 
         Routes.__init__(self)
