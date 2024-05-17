@@ -12,6 +12,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
     def create_sandbox_phone(
         self,
         *,
+        credential_manager_acs_system_id: str,
         user_identity_id: str,
         assa_abloy_metadata: Optional[Dict[str, Any]] = None,
         custom_sdk_installation_id: Optional[str] = None,
@@ -19,6 +20,10 @@ class PhonesSimulate(AbstractPhonesSimulate):
     ) -> Phone:
         json_payload = {}
 
+        if credential_manager_acs_system_id is not None:
+            json_payload["credential_manager_acs_system_id"] = (
+                credential_manager_acs_system_id
+            )
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
         if assa_abloy_metadata is not None:

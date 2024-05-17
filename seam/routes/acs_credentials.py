@@ -1,5 +1,5 @@
 from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcsCredentials, AcsCredential
+from seam.routes.types import AbstractAcsCredentials, AcsCredential, AcsEntrance
 from typing import Optional, Any, List, Dict, Union
 
 
@@ -109,6 +109,18 @@ class AcsCredentials(AbstractAcsCredentials):
         res = self.seam.make_request("POST", "/acs/credentials/list", json=json_payload)
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
+        json_payload = {}
+
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
+
+        res = self.seam.make_request(
+            "POST", "/acs/credentials/list_accessible_entrances", json=json_payload
+        )
+
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
         json_payload = {}

@@ -966,6 +966,10 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
         raise NotImplementedError()
 
@@ -1462,6 +1466,7 @@ class AbstractPhonesSimulate(abc.ABC):
     def create_sandbox_phone(
         self,
         *,
+        credential_manager_acs_system_id: str,
         user_identity_id: str,
         assa_abloy_metadata: Optional[Dict[str, Any]] = None,
         custom_sdk_installation_id: Optional[str] = None,
