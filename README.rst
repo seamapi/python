@@ -199,6 +199,7 @@ Some Seam API endpoints interact with multiple workspaces. The ``SeamMultiWorksp
 A Personal Access Token is scoped to a Seam Console user. Obtain one from the Seam Console.
 
 .. code-block:: python
+
   # Pass as an option the constructor
   seam = SeamMultiWorkspace(personal_access_token="your-personal-access-token")
 
