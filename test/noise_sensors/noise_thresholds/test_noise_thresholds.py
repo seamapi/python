@@ -1,6 +1,6 @@
 import time
 from seam import Seam
-from seam.types import SeamApiException
+from seam.exceptions import SeamApiException
 import pytest
 
 

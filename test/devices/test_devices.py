@@ -1,5 +1,5 @@
 from seam import Seam
-from seam.types import SeamApiException
+from seam.exceptions import SeamApiException
 
 
 def test_devices(seam: Seam):

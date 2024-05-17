@@ -1,7 +1,8 @@
 import requests
 from importlib.metadata import version
 
-from .models import AbstractRequestMixin, SeamApiException
+from .models import AbstractRequestMixin
+from .exceptions import SeamApiException
 
 
 class RequestMixin(AbstractRequestMixin):
