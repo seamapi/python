@@ -1,12 +1,12 @@
 # flake8: noqa
 # type: ignore
 
-from seam.seam import Seam
-from seam.types import SeamApiException
-from seam.seam_multi_workspace import SeamMultiWorkspace
-from seam.options import SeamHttpInvalidOptionsError
-from seam.auth import SeamHttpInvalidTokenError
-from seam.routes.action_attempts import (
+from .seam import Seam
+from .types import SeamApiException
+from .seam_multi_workspace import SeamMultiWorkspace
+from .options import SeamHttpInvalidOptionsError
+from .auth import SeamHttpInvalidTokenError
+from .exceptions import (
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,

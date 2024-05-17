@@ -2,7 +2,8 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 
-from seam.routes.types import AbstractRoutes, Workspace
+from .routes import AbstractRoutes
+from .models import Workspace
 
 
 class SeamApiException(Exception):
