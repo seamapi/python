@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
+from niquests import Response
 
 from .routes.models import AbstractRoutes, Workspace
 
@@ -8,7 +9,7 @@ from .routes.models import AbstractRoutes, Workspace
 class SeamApiException(Exception):
     def __init__(
         self,
-        response,
+        response: Response,
     ):
         self.status_code = response.status_code
         self.request_id = response.headers.get("seam-request-id", None)
