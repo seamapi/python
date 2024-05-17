@@ -1,7 +1,7 @@
 import requests
 from importlib.metadata import version
 
-from seam.types import AbstractRequestMixin, SeamApiException
+from seam.types import AbstractRequestMixin, SeamHttpApiError
 
 
 class RequestMixin(AbstractRequestMixin):
@@ -20,7 +20,7 @@ class RequestMixin(AbstractRequestMixin):
 
         Raises
         ------
-        SeamApiException: If the response status code is not successful.
+        SeamHttpApiError: If the response status code is not successful.
         """
 
         url = self._endpoint + path
@@ -39,7 +39,7 @@ class RequestMixin(AbstractRequestMixin):
         response = requests.request(method, url, headers=headers, **kwargs)
 
         if response.status_code != 200:
-            raise SeamApiException(response)
+            raise SeamHttpApiError(response)
 
         if "application/json" in response.headers["content-type"]:
             return response.json()
