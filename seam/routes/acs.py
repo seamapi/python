@@ -1,15 +1,15 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcs
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.acs_access_groups import AcsAccessGroups
-from seam.routes.acs_credential_pools import AcsCredentialPools
-from seam.routes.acs_credential_provisioning_automations import (
+from ..models import AbstractSeam as Seam
+from .models import AbstractAcs
+from .acs_access_groups import AcsAccessGroups
+from .acs_credential_pools import AcsCredentialPools
+from .acs_credential_provisioning_automations import (
     AcsCredentialProvisioningAutomations,
 )
-from seam.routes.acs_credentials import AcsCredentials
-from seam.routes.acs_entrances import AcsEntrances
-from seam.routes.acs_systems import AcsSystems
-from seam.routes.acs_users import AcsUsers
+from .acs_credentials import AcsCredentials
+from .acs_entrances import AcsEntrances
+from .acs_systems import AcsSystems
+from .acs_users import AcsUsers
 
 
 class Acs(AbstractAcs):
