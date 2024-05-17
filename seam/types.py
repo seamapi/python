@@ -24,6 +24,20 @@ class SeamApiException(Exception):
         )
 
 
+class AbstractSeamHttpClient(abc.ABC):
+    @abc.abstractmethod
+    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def request(self, method: str, url: str, *args, **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _handle_response(self, response: requests.Response):
+        raise NotImplementedError
+
+
 class AbstractSeam(AbstractRoutes):
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
