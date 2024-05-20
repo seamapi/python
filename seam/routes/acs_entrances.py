@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcsEntrances, AcsEntrance, AcsCredential
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential
 
 
 class AcsEntrances(AbstractAcsEntrances):

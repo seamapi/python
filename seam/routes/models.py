@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 from dataclasses import dataclass
-from seam.routes.utils.deep_attr_dict import DeepAttrDict
+from ..utils.deep_attr_dict import DeepAttrDict
 
 
 @dataclass
@@ -963,6 +963,10 @@ class AbstractAcsCredentials(abc.ABC):
         user_identity_id: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None
     ) -> List[AcsCredential]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
         raise NotImplementedError()
 
     @abc.abstractmethod
