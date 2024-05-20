@@ -1,5 +1,5 @@
 from seam import Seam
-from seam.types import SeamApiException
+from seam.types import SeamHttpApiError
 import pytest
 
 
@@ -31,7 +31,7 @@ def test_access_codes(seam: Seam):
     )
     assert access_code.code == "4444"
 
-    with pytest.raises(SeamApiException):
+    with pytest.raises(SeamHttpApiError):
         seam.access_codes.create(
             device_id=some_device.device_id, name="Duplicate Access Code", code="4444"
         )
