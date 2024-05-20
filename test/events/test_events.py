@@ -1,6 +1,5 @@
-from seam import Seam
+from seam import Seam, SeamApiException
 
-from seam.exceptions import SeamApiException
 
 SINCE = "2021-01-01T00:00:00.000Z"
 EVENT_TYPE = "device.connected"

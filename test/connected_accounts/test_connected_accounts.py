@@ -1,5 +1,4 @@
-from seam import Seam
-from seam.exceptions import SeamApiException
+from seam import Seam, SeamApiException
 
 EMAIL = "john@example.com"
 

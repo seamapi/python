@@ -1,7 +1,6 @@
 import random
 import string
-from seam import Seam
-from seam.seam_multi_workspace import SeamMultiWorkspace
+from seam import Seam, SeamMultiWorkspace
 
 
 def test_workspaces_create(seam: Seam):
