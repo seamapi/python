@@ -1,8 +1,8 @@
 import os
 from typing import Optional
 
-from seam.auth import get_auth_headers
-from seam.options import get_endpoint
+from .auth import get_auth_headers
+from .options import get_endpoint
 
 
 def parse_options(

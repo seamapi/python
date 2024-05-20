@@ -1,7 +1,7 @@
 import os
 from typing import Optional
 
-from seam.constants import DEFAULT_ENDPOINT
+from .constants import DEFAULT_ENDPOINT
 
 
 def get_endpoint(endpoint: Optional[str] = None):
