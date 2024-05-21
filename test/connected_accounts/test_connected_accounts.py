@@ -1,5 +1,5 @@
 from seam import Seam
-from seam.types import SeamApiException
+from seam.types import SeamHttpApiError
 
 EMAIL = "john@example.com"
 
@@ -27,5 +27,5 @@ def test_connected_accounts(seam: Seam):
     # connected_account and email parameters are not provided.
     try:
         seam.connected_accounts.get()
-    except SeamApiException as e:
+    except SeamHttpApiError as e:
         assert e.metadata["message"] == "Invalid input"

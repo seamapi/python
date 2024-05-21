@@ -4,7 +4,7 @@ import niquests as requests
 from importlib.metadata import version
 
 from seam.constants import LTS_VERSION
-from seam.types import AbstractSeamHttpClient, SeamApiException
+from seam.types import AbstractSeamHttpClient, SeamHttpApiError
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
@@ -30,7 +30,7 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
 
     def _handle_response(self, response: requests.Response):
         if response.status_code != 200:
-            raise SeamApiException(response)
+            raise SeamHttpApiError(response)
 
         if "application/json" in response.headers["content-type"]:
             return response.json()

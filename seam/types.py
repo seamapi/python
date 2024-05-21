@@ -6,7 +6,7 @@ import abc
 from seam.routes.types import AbstractRoutes, Workspace
 
 
-class SeamApiException(Exception):
+class SeamHttpApiError(Exception):
     def __init__(
         self,
         response,
@@ -20,7 +20,7 @@ class SeamApiException(Exception):
             self.metadata = parsed_response.get("error", None)
 
         super().__init__(
-            f"SeamApiException: status={self.status_code}, request_id={self.request_id}, metadata={self.metadata}"
+            f"SeamHttpApiError: status={self.status_code}, request_id={self.request_id}, metadata={self.metadata}"
         )
 
 
