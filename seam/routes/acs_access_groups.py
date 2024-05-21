@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractAcsAccessGroups, AcsAccessGroup, AcsUser
 
 
 class AcsAccessGroups(AbstractAcsAccessGroups):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def add_user(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
         json_payload = {}
@@ -17,7 +18,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/access_groups/add_user", json=json_payload)
+        self.client.post("/acs/access_groups/add_user", json=json_payload)
 
         return None
 
@@ -27,7 +28,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
 
-        res = self.seam.client.post("/acs/access_groups/get", json=json_payload)
+        res = self.client.post("/acs/access_groups/get", json=json_payload)
 
         return AcsAccessGroup.from_dict(res["acs_access_group"])
 
@@ -41,7 +42,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.seam.client.post("/acs/access_groups/list", json=json_payload)
+        res = self.client.post("/acs/access_groups/list", json=json_payload)
 
         return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
 
@@ -51,7 +52,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
 
-        res = self.seam.client.post("/acs/access_groups/list_users", json=json_payload)
+        res = self.client.post("/acs/access_groups/list_users", json=json_payload)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -63,6 +64,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/access_groups/remove_user", json=json_payload)
+        self.client.post("/acs/access_groups/remove_user", json=json_payload)
 
         return None

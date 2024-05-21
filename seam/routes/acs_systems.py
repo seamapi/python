@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractAcsSystems, AcsSystem
 
 
 class AcsSystems(AbstractAcsSystems):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def get(self, *, acs_system_id: str) -> AcsSystem:
         json_payload = {}
@@ -15,7 +16,7 @@ class AcsSystems(AbstractAcsSystems):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        res = self.seam.client.post("/acs/systems/get", json=json_payload)
+        res = self.client.post("/acs/systems/get", json=json_payload)
 
         return AcsSystem.from_dict(res["acs_system"])
 
@@ -25,7 +26,7 @@ class AcsSystems(AbstractAcsSystems):
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
 
-        res = self.seam.client.post("/acs/systems/list", json=json_payload)
+        res = self.client.post("/acs/systems/list", json=json_payload)
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
@@ -37,7 +38,7 @@ class AcsSystems(AbstractAcsSystems):
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             self.seam.endpoint
             + "/acs/systems/list_compatible_credential_manager_acs_systems",
             json=json_payload,

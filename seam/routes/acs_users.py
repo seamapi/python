@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractAcsUsers, AcsUser, AcsEntrance
 
 
 class AcsUsers(AbstractAcsUsers):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def add_to_access_group(
         self, *, acs_access_group_id: str, acs_user_id: str
@@ -19,7 +20,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/users/add_to_access_group", json=json_payload)
+        self.client.post("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
@@ -54,7 +55,7 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.client.post("/acs/users/create", json=json_payload)
+        res = self.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(res["acs_user"])
 
@@ -64,7 +65,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/users/delete", json=json_payload)
+        self.client.post("/acs/users/delete", json=json_payload)
 
         return None
 
@@ -74,7 +75,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.seam.client.post("/acs/users/get", json=json_payload)
+        res = self.client.post("/acs/users/get", json=json_payload)
 
         return AcsUser.from_dict(res["acs_user"])
 
@@ -97,7 +98,7 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_phone_number is not None:
             json_payload["user_identity_phone_number"] = user_identity_phone_number
 
-        res = self.seam.client.post("/acs/users/list", json=json_payload)
+        res = self.client.post("/acs/users/list", json=json_payload)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -107,7 +108,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/acs/users/list_accessible_entrances",
             json=json_payload,
         )
@@ -124,7 +125,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post(
+        self.client.post(
             "/acs/users/remove_from_access_group",
             json=json_payload,
         )
@@ -137,7 +138,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post(
+        self.client.post(
             "/acs/users/revoke_access_to_all_entrances",
             json=json_payload,
         )
@@ -150,7 +151,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/users/suspend", json=json_payload)
+        self.client.post("/acs/users/suspend", json=json_payload)
 
         return None
 
@@ -160,7 +161,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/users/unsuspend", json=json_payload)
+        self.client.post("/acs/users/unsuspend", json=json_payload)
 
         return None
 
@@ -192,6 +193,6 @@ class AcsUsers(AbstractAcsUsers):
         if phone_number is not None:
             json_payload["phone_number"] = phone_number
 
-        self.seam.client.post("/acs/users/update", json=json_payload)
+        self.client.post("/acs/users/update", json=json_payload)
 
         return None

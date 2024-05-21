@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractNoiseSensorsNoiseThresholds, NoiseThreshold
 
 
 class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def create(
         self,
@@ -37,7 +38,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/noise_sensors/noise_thresholds/create",
             json=json_payload,
         )
@@ -56,7 +57,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post(
+        self.client.post(
             "/noise_sensors/noise_thresholds/delete",
             json=json_payload,
         )
@@ -69,7 +70,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if noise_threshold_id is not None:
             json_payload["noise_threshold_id"] = noise_threshold_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/noise_sensors/noise_thresholds/get",
             json=json_payload,
         )
@@ -86,7 +87,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if is_programmed is not None:
             json_payload["is_programmed"] = is_programmed
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/noise_sensors/noise_thresholds/list",
             json=json_payload,
         )
@@ -124,7 +125,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post(
+        self.client.post(
             "/noise_sensors/noise_thresholds/update",
             json=json_payload,
         )

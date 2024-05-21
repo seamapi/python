@@ -16,6 +16,7 @@ class Seam(AbstractSeam):
     """
 
     lts_version: str = LTS_VERSION
+    defaults: Dict[str, Any]
 
     def __init__(
         self,
@@ -47,8 +48,6 @@ class Seam(AbstractSeam):
           A dictionary of options that will be passed to the `SeamHttpClient` constructor when initializing a new requests session client. This allows for customization of the HTTP client, such as setting additional headers or configuring timeouts. For detailed information on available options, refer to the niquests library [repo](https://github.com/jawah/niquests). If client is provided, this parameter will be ignored.
         """
 
-        Routes.__init__(self)
-
         self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_options(
@@ -64,6 +63,10 @@ class Seam(AbstractSeam):
         self.client = client or SeamHttpClient(
             base_url=endpoint, auth_headers=auth_headers, **client_options
         )
+
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+
+        Routes.__init__(self, client=self.client, defaults=defaults)
 
     @classmethod
     def from_api_key(

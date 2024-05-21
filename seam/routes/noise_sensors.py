@@ -1,17 +1,20 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractNoiseSensors
 from .noise_sensors_noise_thresholds import NoiseSensorsNoiseThresholds
 from .noise_sensors_simulate import NoiseSensorsSimulate
 
 
 class NoiseSensors(AbstractNoiseSensors):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
-        self._noise_thresholds = NoiseSensorsNoiseThresholds(seam=seam)
-        self._simulate = NoiseSensorsSimulate(seam=seam)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._noise_thresholds = NoiseSensorsNoiseThresholds(
+            client=client, defaults=defaults
+        )
+        self._simulate = NoiseSensorsSimulate(client=client, defaults=defaults)
 
     @property
     def noise_thresholds(self) -> NoiseSensorsNoiseThresholds:

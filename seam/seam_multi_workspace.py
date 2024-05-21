@@ -68,7 +68,9 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
             base_url=endpoint, auth_headers=auth_headers, **client_options
         )
 
-        self._workspaces = Workspaces(seam=self)
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+
+        self._workspaces = Workspaces(client=self.client, defaults=defaults)
         self.workspaces = WorkspacesProxy(self._workspaces)
 
     @classmethod

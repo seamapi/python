@@ -1,3 +1,5 @@
+from typing import Any, Dict
+from ..request import SeamHttpClient
 from .models import AbstractRoutes
 from .access_codes import AccessCodes
 from .acs import Acs
@@ -18,20 +20,20 @@ from .workspaces import Workspaces
 
 
 class Routes(AbstractRoutes):
-    def __init__(self):
-        self.access_codes = AccessCodes(seam=self)
-        self.acs = Acs(seam=self)
-        self.action_attempts = ActionAttempts(seam=self)
-        self.client_sessions = ClientSessions(seam=self)
-        self.connect_webviews = ConnectWebviews(seam=self)
-        self.connected_accounts = ConnectedAccounts(seam=self)
-        self.devices = Devices(seam=self)
-        self.events = Events(seam=self)
-        self.locks = Locks(seam=self)
-        self.networks = Networks(seam=self)
-        self.noise_sensors = NoiseSensors(seam=self)
-        self.phones = Phones(seam=self)
-        self.thermostats = Thermostats(seam=self)
-        self.user_identities = UserIdentities(seam=self)
-        self.webhooks = Webhooks(seam=self)
-        self.workspaces = Workspaces(seam=self)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.access_codes = AccessCodes(client=client, defaults=defaults)
+        self.acs = Acs(client=client, defaults=defaults)
+        self.action_attempts = ActionAttempts(client=client, defaults=defaults)
+        self.client_sessions = ClientSessions(client=client, defaults=defaults)
+        self.connect_webviews = ConnectWebviews(client=client, defaults=defaults)
+        self.connected_accounts = ConnectedAccounts(client=client, defaults=defaults)
+        self.devices = Devices(client=client, defaults=defaults)
+        self.events = Events(client=client, defaults=defaults)
+        self.locks = Locks(client=client, defaults=defaults)
+        self.networks = Networks(client=client, defaults=defaults)
+        self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
+        self.phones = Phones(client=client, defaults=defaults)
+        self.thermostats = Thermostats(client=client, defaults=defaults)
+        self.user_identities = UserIdentities(client=client, defaults=defaults)
+        self.webhooks = Webhooks(client=client, defaults=defaults)
+        self.workspaces = Workspaces(client=client, defaults=defaults)

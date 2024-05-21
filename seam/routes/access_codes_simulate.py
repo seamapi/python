@@ -1,13 +1,15 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+
+from ..request import SeamHttpClient
+
 from .models import AbstractAccessCodesSimulate, UnmanagedAccessCode
 
 
 class AccessCodesSimulate(AbstractAccessCodesSimulate):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def create_unmanaged_access_code(
         self, *, code: str, device_id: str, name: str
@@ -21,7 +23,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/access_codes/simulate/create_unmanaged_access_code",
             json=json_payload,
         )

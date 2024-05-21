@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractEvents, Event
 
 
 class Events(AbstractEvents):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def get(
         self,
@@ -25,7 +26,7 @@ class Events(AbstractEvents):
         if event_type is not None:
             json_payload["event_type"] = event_type
 
-        res = self.seam.client.post("/events/get", json=json_payload)
+        res = self.client.post("/events/get", json=json_payload)
 
         return Event.from_dict(res["event"])
 
@@ -66,6 +67,6 @@ class Events(AbstractEvents):
         if since is not None:
             json_payload["since"] = since
 
-        res = self.seam.client.post("/events/list", json=json_payload)
+        res = self.client.post("/events/list", json=json_payload)
 
         return [Event.from_dict(item) for item in res["events"]]

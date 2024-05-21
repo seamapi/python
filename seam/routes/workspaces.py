@@ -1,13 +1,16 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+
+from ..lib.action_attempts import resolve_action_attempt
+from ..request import SeamHttpClient
+
 from .models import AbstractWorkspaces, Workspace, ActionAttempt
 
 
 class Workspaces(AbstractWorkspaces):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def create(
         self,
@@ -31,7 +34,7 @@ class Workspaces(AbstractWorkspaces):
         if webview_primary_button_color is not None:
             json_payload["webview_primary_button_color"] = webview_primary_button_color
 
-        res = self.seam.client.post("/workspaces/create", json=json_payload)
+        res = self.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(res["workspace"])
 
@@ -40,7 +43,7 @@ class Workspaces(AbstractWorkspaces):
     ) -> Workspace:
         json_payload = {}
 
-        res = self.seam.client.post("/workspaces/get", json=json_payload)
+        res = self.client.post("/workspaces/get", json=json_payload)
 
         return Workspace.from_dict(res["workspace"])
 
@@ -49,7 +52,7 @@ class Workspaces(AbstractWorkspaces):
     ) -> List[Workspace]:
         json_payload = {}
 
-        res = self.seam.client.post("/workspaces/list", json=json_payload)
+        res = self.client.post("/workspaces/list", json=json_payload)
 
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
@@ -58,9 +61,16 @@ class Workspaces(AbstractWorkspaces):
     ) -> ActionAttempt:
         json_payload = {}
 
-        res = self.seam.client.post("/workspaces/reset_sandbox", json=json_payload)
+        res = self.client.post("/workspaces/reset_sandbox", json=json_payload)
 
-        return self.seam.action_attempts.decide_and_wait(
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )

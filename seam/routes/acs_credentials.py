@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractAcsCredentials, AcsCredential
 
 
 class AcsCredentials(AbstractAcsCredentials):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def assign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
         json_payload = {}
@@ -17,7 +18,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/credentials/assign", json=json_payload)
+        self.client.post("/acs/credentials/assign", json=json_payload)
 
         return None
 
@@ -59,7 +60,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if visionline_metadata is not None:
             json_payload["visionline_metadata"] = visionline_metadata
 
-        res = self.seam.client.post("/acs/credentials/create", json=json_payload)
+        res = self.client.post("/acs/credentials/create", json=json_payload)
 
         return AcsCredential.from_dict(res["acs_credential"])
 
@@ -69,7 +70,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        self.seam.client.post("/acs/credentials/delete", json=json_payload)
+        self.client.post("/acs/credentials/delete", json=json_payload)
 
         return None
 
@@ -79,7 +80,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        res = self.seam.client.post("/acs/credentials/get", json=json_payload)
+        res = self.client.post("/acs/credentials/get", json=json_payload)
 
         return AcsCredential.from_dict(res["acs_credential"])
 
@@ -104,7 +105,7 @@ class AcsCredentials(AbstractAcsCredentials):
                 is_multi_phone_sync_credential
             )
 
-        res = self.seam.client.post("/acs/credentials/list", json=json_payload)
+        res = self.client.post("/acs/credentials/list", json=json_payload)
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
 
@@ -116,7 +117,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post("/acs/credentials/unassign", json=json_payload)
+        self.client.post("/acs/credentials/unassign", json=json_payload)
 
         return None
 
@@ -136,6 +137,6 @@ class AcsCredentials(AbstractAcsCredentials):
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
 
-        self.seam.client.post("/acs/credentials/update", json=json_payload)
+        self.client.post("/acs/credentials/update", json=json_payload)
 
         return None

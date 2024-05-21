@@ -1,13 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
+from ..request import SeamHttpClient
+
 from .models import AbstractUserIdentitiesEnrollmentAutomations, EnrollmentAutomation
 
 
 class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutomations):
-    seam: Seam
 
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def delete(self, *, enrollment_automation_id: str) -> None:
         json_payload = {}
@@ -15,7 +16,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if enrollment_automation_id is not None:
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
-        self.seam.client.post(
+        self.client.post(
             "/user_identities/enrollment_automations/delete",
             json=json_payload,
         )
@@ -28,7 +29,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if enrollment_automation_id is not None:
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/user_identities/enrollment_automations/get",
             json=json_payload,
         )
@@ -63,7 +64,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
                 credential_manager_acs_user_id
             )
 
-        self.seam.client.post(
+        self.client.post(
             "/user_identities/enrollment_automations/launch",
             json=json_payload,
         )
@@ -76,7 +77,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/user_identities/enrollment_automations/list",
             json=json_payload,
         )
