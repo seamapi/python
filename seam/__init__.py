@@ -6,7 +6,7 @@ from .seam_multi_workspace import SeamMultiWorkspace
 from .options import SeamHttpInvalidOptionsError
 from .auth import SeamHttpInvalidTokenError
 from .exceptions import (
-    SeamApiException,
+    SeamHttpApiError,
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,

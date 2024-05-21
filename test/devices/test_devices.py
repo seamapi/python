@@ -1,4 +1,4 @@
-from seam import Seam, SeamApiException
+from seam import Seam, SeamHttpApiError
 
 
 def test_devices(seam: Seam):
@@ -60,7 +60,7 @@ def test_devices(seam: Seam):
     try:
         seam.devices.get(name="foo")
         assert False
-    except SeamApiException as error:
+    except SeamHttpApiError as error:
         assert error.status_code == 404
         assert type(error.request_id) == str
         assert error.metadata["type"] == "device_not_found"

@@ -1,6 +1,4 @@
-import time
-from seam import Seam, SeamApiException
-import pytest
+from seam import Seam
 
 
 def test_noise_thresholds(seam: Seam):

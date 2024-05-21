@@ -1,4 +1,4 @@
-from seam import Seam, SeamApiException
+from seam import Seam, SeamHttpApiError
 
 
 SINCE = "2021-01-01T00:00:00.000Z"
@@ -22,5 +22,5 @@ def test_events(seam: Seam):
 
     try:
         seam.events.get(event_id=FAKE_UUID)
-    except SeamApiException as e:
+    except SeamHttpApiError as e:
         assert e.metadata["message"] == "Event not found"

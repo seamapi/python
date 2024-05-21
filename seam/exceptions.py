@@ -3,7 +3,7 @@ from .routes.models import ActionAttempt
 
 
 # HTTP
-class SeamApiException(Exception):
+class SeamHttpApiError(Exception):
     def __init__(
         self,
         response: Response,
