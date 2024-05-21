@@ -21,8 +21,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.make_request(
-            "POST",
+        res = self.seam.client.post(
             "/access_codes/simulate/create_unmanaged_access_code",
             json=json_payload,
         )

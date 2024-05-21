@@ -25,7 +25,7 @@ class Events(AbstractEvents):
         if event_type is not None:
             json_payload["event_type"] = event_type
 
-        res = self.seam.make_request("POST", "/events/get", json=json_payload)
+        res = self.seam.client.post("/events/get", json=json_payload)
 
         return Event.from_dict(res["event"])
 
@@ -66,6 +66,6 @@ class Events(AbstractEvents):
         if since is not None:
             json_payload["since"] = since
 
-        res = self.seam.make_request("POST", "/events/list", json=json_payload)
+        res = self.seam.client.post("/events/list", json=json_payload)
 
         return [Event.from_dict(item) for item in res["events"]]

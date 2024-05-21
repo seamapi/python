@@ -28,8 +28,9 @@ class PhonesSimulate(AbstractPhonesSimulate):
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
 
-        res = self.seam.make_request(
-            "POST", "/phones/simulate/create_sandbox_phone", json=json_payload
+        res = self.seam.client.post(
+            "/phones/simulate/create_sandbox_phone",
+            json=json_payload,
         )
 
         return Phone.from_dict(res["phone"])

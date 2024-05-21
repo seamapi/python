@@ -11,7 +11,7 @@ repository = "https://github.com/seamapi/python-next"
 [tool.poetry.dependencies]
 python = "^3.9.0"
 dataclasses-json = "^0.6.4"
-requests = "^2.26.0"
+niquests = "^3.6.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"

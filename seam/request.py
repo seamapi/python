@@ -1,44 +1,35 @@
-import requests
+from typing import Dict
+from urllib.parse import urljoin
+import niquests as requests
 from importlib.metadata import version
 
-from .models import AbstractRequestMixin
+from .constants import LTS_VERSION
 from .exceptions import SeamHttpApiError
+from .models import AbstractSeamHttpClient
+
+SDK_HEADERS = {
+    "seam-sdk-name": "seamapi/python",
+    "seam-sdk-version": version("seam"),
+    "seam-lts-version": LTS_VERSION,
+}
 
 
-class RequestMixin(AbstractRequestMixin):
-    def make_request(self, method: str, path: str, **kwargs):
-        """
-        Makes a request to the API
+class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
+    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
+        super().__init__(**kwargs)
 
-        Parameters
-        ----------
-        method : str
-          Request method
-        path : str
-          Request path
-        **kwargs
-          Keyword arguments passed to requests.request
+        self.base_url = base_url
+        headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
 
-        Raises
-        ------
-        SeamHttpApiError: If the response status code is not successful.
-        """
+        self.headers.update(headers)
 
-        url = self._endpoint + path
-        sdk_version = version("seam")
-        headers = {
-            **self._auth_headers,
-            "Content-Type": "application/json",
-            "User-Agent": "Python SDK v"
-            + sdk_version
-            + " (https://github.com/seamapi/python-next)",
-            "seam-sdk-name": "seamapi/python",
-            "seam-sdk-version": sdk_version,
-            "seam-lts-version": self.lts_version,
-        }
+    def request(self, method, url, *args, **kwargs):
+        url = urljoin(self.base_url, url)
+        response = super().request(method, url, *args, **kwargs)
 
-        response = requests.request(method, url, headers=headers, **kwargs)
+        return self._handle_response(response)
 
+    def _handle_response(self, response: requests.Response):
         if response.status_code != 200:
             raise SeamHttpApiError(response)
 

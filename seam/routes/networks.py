@@ -15,7 +15,7 @@ class Networks(AbstractNetworks):
         if network_id is not None:
             json_payload["network_id"] = network_id
 
-        res = self.seam.make_request("POST", "/networks/get", json=json_payload)
+        res = self.seam.client.post("/networks/get", json=json_payload)
 
         return Network.from_dict(res["network"])
 
@@ -24,6 +24,6 @@ class Networks(AbstractNetworks):
     ) -> List[Network]:
         json_payload = {}
 
-        res = self.seam.make_request("POST", "/networks/list", json=json_payload)
+        res = self.seam.client.post("/networks/list", json=json_payload)
 
         return [Network.from_dict(item) for item in res["networks"]]

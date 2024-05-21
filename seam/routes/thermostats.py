@@ -35,7 +35,7 @@ class Thermostats(AbstractThermostats):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request("POST", "/thermostats/cool", json=json_payload)
+        res = self.seam.client.post("/thermostats/cool", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -52,7 +52,7 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.make_request("POST", "/thermostats/get", json=json_payload)
+        res = self.seam.client.post("/thermostats/get", json=json_payload)
 
         return Device.from_dict(res["thermostat"])
 
@@ -76,7 +76,7 @@ class Thermostats(AbstractThermostats):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request("POST", "/thermostats/heat", json=json_payload)
+        res = self.seam.client.post("/thermostats/heat", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -109,9 +109,7 @@ class Thermostats(AbstractThermostats):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request(
-            "POST", "/thermostats/heat_cool", json=json_payload
-        )
+        res = self.seam.client.post("/thermostats/heat_cool", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -164,7 +162,7 @@ class Thermostats(AbstractThermostats):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.make_request("POST", "/thermostats/list", json=json_payload)
+        res = self.seam.client.post("/thermostats/list", json=json_payload)
 
         return [Device.from_dict(item) for item in res["thermostats"]]
 
@@ -182,7 +180,7 @@ class Thermostats(AbstractThermostats):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request("POST", "/thermostats/off", json=json_payload)
+        res = self.seam.client.post("/thermostats/off", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -209,9 +207,7 @@ class Thermostats(AbstractThermostats):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request(
-            "POST", "/thermostats/set_fan_mode", json=json_payload
-        )
+        res = self.seam.client.post("/thermostats/set_fan_mode", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -228,6 +224,6 @@ class Thermostats(AbstractThermostats):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.make_request("POST", "/thermostats/update", json=json_payload)
+        self.seam.client.post("/thermostats/update", json=json_payload)
 
         return None

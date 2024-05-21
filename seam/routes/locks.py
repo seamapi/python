@@ -19,7 +19,7 @@ class Locks(AbstractLocks):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.make_request("POST", "/locks/get", json=json_payload)
+        res = self.seam.client.post("/locks/get", json=json_payload)
 
         return Device.from_dict(res["device"])
 
@@ -69,7 +69,7 @@ class Locks(AbstractLocks):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.make_request("POST", "/locks/list", json=json_payload)
+        res = self.seam.client.post("/locks/list", json=json_payload)
 
         return [Device.from_dict(item) for item in res["devices"]]
 
@@ -87,7 +87,7 @@ class Locks(AbstractLocks):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request("POST", "/locks/lock_door", json=json_payload)
+        res = self.seam.client.post("/locks/lock_door", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -108,7 +108,7 @@ class Locks(AbstractLocks):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.make_request("POST", "/locks/unlock_door", json=json_payload)
+        res = self.seam.client.post("/locks/unlock_door", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),

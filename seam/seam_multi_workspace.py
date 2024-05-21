@@ -1,10 +1,11 @@
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
+import niquests as requests
 from typing_extensions import Self
 
 from .auth import get_auth_headers_for_multi_workspace_personal_access_token
 from .constants import LTS_VERSION
 from .options import get_endpoint
-from .request import RequestMixin
+from .request import SeamHttpClient
 from .models import AbstractSeamMultiWorkspace
 from .routes.workspaces import Workspaces
 
@@ -22,7 +23,7 @@ class WorkspacesProxy:
         return self._workspaces.create(**kwargs)
 
 
-class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
+class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
     """
     Seam class used to interact with Seam API without being scoped to any specific workspace.
     """
@@ -35,6 +36,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        client: Optional[requests.Session] = None,
+        client_options: Optional[Dict[str, Any]] = None,
     ):
         """
         Parameters
@@ -45,14 +48,25 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace, RequestMixin):
           The API endpoint to which the request should be sent.
         wait_for_action_attempt : bool or dict, optional
           Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
+        client : requests.Session, optional
+          A pre-configured requests session to be used for making HTTP requests. If not provided, a new `SeamHttpClient` instance will be created using the `client_options` and other relevant parameters.
+        client_options : dict, optional
+          A dictionary of options that will be passed to the `SeamHttpClient` constructor when initializing a new requests session client. This allows for customization of the HTTP client, such as setting additional headers or configuring timeouts. For detailed information on available options, refer to the niquests library [repo](https://github.com/jawah/niquests). If client is provided, this parameter will be ignored.
         """
 
         self.lts_version = SeamMultiWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        self._auth_headers = get_auth_headers_for_multi_workspace_personal_access_token(
+        auth_headers = get_auth_headers_for_multi_workspace_personal_access_token(
             personal_access_token
         )
-        self._endpoint = get_endpoint(endpoint)
+        endpoint = get_endpoint(endpoint)
+
+        if client_options is None:
+            client_options = {}
+
+        self.client = client or SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, **client_options
+        )
 
         self._workspaces = Workspaces(seam=self)
         self.workspaces = WorkspacesProxy(self._workspaces)

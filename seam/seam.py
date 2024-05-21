@@ -1,14 +1,16 @@
-from typing import Optional, Union, Dict
+from typing import Any, Optional, Union, Dict
+import niquests as requests
 from typing_extensions import Self
 
 from .constants import LTS_VERSION
 from .parse_options import parse_options
-from .request import RequestMixin
 from .routes import Routes
 from .models import AbstractSeam
+from .request import SeamHttpClient
+from .routes import Routes
 
 
-class Seam(AbstractSeam, RequestMixin):
+class Seam(AbstractSeam):
     """
     Initial Seam class used to interact with Seam API
     """
@@ -23,6 +25,8 @@ class Seam(AbstractSeam, RequestMixin):
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        client: Optional[requests.Session] = None,
+        client_options: Optional[Dict[str, Any]] = None,
     ):
         """
         Parameters
@@ -37,6 +41,10 @@ class Seam(AbstractSeam, RequestMixin):
           The API endpoint to which the request should be sent.
         wait_for_action_attempt : bool or dict, optional
           Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
+        client : requests.Session, optional
+          A pre-configured requests session to be used for making HTTP requests. If not provided, a new `SeamHttpClient` instance will be created using the `client_options` and other relevant parameters.
+        client_options : dict, optional
+          A dictionary of options that will be passed to the `SeamHttpClient` constructor when initializing a new requests session client. This allows for customization of the HTTP client, such as setting additional headers or configuring timeouts. For detailed information on available options, refer to the niquests library [repo](https://github.com/jawah/niquests). If client is provided, this parameter will be ignored.
         """
 
         Routes.__init__(self)
@@ -49,8 +57,13 @@ class Seam(AbstractSeam, RequestMixin):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self._auth_headers = auth_headers
-        self._endpoint = endpoint
+
+        if client_options is None:
+            client_options = {}
+
+        self.client = client or SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, **client_options
+        )
 
     @classmethod
     def from_api_key(

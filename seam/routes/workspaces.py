@@ -31,7 +31,7 @@ class Workspaces(AbstractWorkspaces):
         if webview_primary_button_color is not None:
             json_payload["webview_primary_button_color"] = webview_primary_button_color
 
-        res = self.seam.make_request("POST", "/workspaces/create", json=json_payload)
+        res = self.seam.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(res["workspace"])
 
@@ -40,7 +40,7 @@ class Workspaces(AbstractWorkspaces):
     ) -> Workspace:
         json_payload = {}
 
-        res = self.seam.make_request("POST", "/workspaces/get", json=json_payload)
+        res = self.seam.client.post("/workspaces/get", json=json_payload)
 
         return Workspace.from_dict(res["workspace"])
 
@@ -49,7 +49,7 @@ class Workspaces(AbstractWorkspaces):
     ) -> List[Workspace]:
         json_payload = {}
 
-        res = self.seam.make_request("POST", "/workspaces/list", json=json_payload)
+        res = self.seam.client.post("/workspaces/list", json=json_payload)
 
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
@@ -58,9 +58,7 @@ class Workspaces(AbstractWorkspaces):
     ) -> ActionAttempt:
         json_payload = {}
 
-        res = self.seam.make_request(
-            "POST", "/workspaces/reset_sandbox", json=json_payload
-        )
+        res = self.seam.client.post("/workspaces/reset_sandbox", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),

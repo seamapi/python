@@ -55,8 +55,9 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if schedule_type is not None:
             json_payload["schedule_type"] = schedule_type
 
-        res = self.seam.make_request(
-            "POST", "/thermostats/climate_setting_schedules/create", json=json_payload
+        res = self.seam.client.post(
+            "/thermostats/climate_setting_schedules/create",
+            json=json_payload,
         )
 
         return ClimateSettingSchedule.from_dict(res["climate_setting_schedule"])
@@ -67,8 +68,9 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if climate_setting_schedule_id is not None:
             json_payload["climate_setting_schedule_id"] = climate_setting_schedule_id
 
-        self.seam.make_request(
-            "POST", "/thermostats/climate_setting_schedules/delete", json=json_payload
+        self.seam.client.post(
+            "/thermostats/climate_setting_schedules/delete",
+            json=json_payload,
         )
 
         return None
@@ -86,8 +88,9 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.make_request(
-            "POST", "/thermostats/climate_setting_schedules/get", json=json_payload
+        res = self.seam.client.post(
+            "/thermostats/climate_setting_schedules/get",
+            json=json_payload,
         )
 
         return ClimateSettingSchedule.from_dict(res["climate_setting_schedule"])
@@ -102,8 +105,9 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.make_request(
-            "POST", "/thermostats/climate_setting_schedules/list", json=json_payload
+        res = self.seam.client.post(
+            "/thermostats/climate_setting_schedules/list",
+            json=json_payload,
         )
 
         return [
@@ -157,8 +161,9 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if schedule_type is not None:
             json_payload["schedule_type"] = schedule_type
 
-        self.seam.make_request(
-            "POST", "/thermostats/climate_setting_schedules/update", json=json_payload
+        self.seam.client.post(
+            "/thermostats/climate_setting_schedules/update",
+            json=json_payload,
         )
 
         return None
