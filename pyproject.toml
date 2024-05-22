@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "seam"
-version = "0.8.0"
+version = "0.9.0"
 description = "SDK for the Seam API written in Python."
 authors = ["Seam Labs, Inc. <engineering@getseam.com>"]
 license = "MIT"
