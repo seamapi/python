@@ -219,33 +219,33 @@ Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/i
 .. code-block:: python
 
   import os
-  from flask import Flask, request, jsonify
+
+  from flask import Flask, request
   from seam import SeamWebhook
-  from .store_event import store_event
 
   app = Flask(__name__)
 
-  webhook_secret = os.getenv('SEAM_WEBHOOK_SECRET')
-  webhook = SeamWebhook(webhook_secret)
+  webhook = SeamWebhook(os.getenv('SEAM_WEBHOOK_SECRET'))
 
   @app.route('/webhook', methods=['POST'])
   def handle_webhook():
-      headers = request.headers
-      payload = request.get_data()
+      try:
+          data = webhook.verify(request.get_data(), request.headers)
+      except Exception:
+          return 'Bad Request', 400
 
       try:
-          data = webhook.verify(payload, headers)
+          store_event(data)
       except Exception:
-          return jsonify({"error": "Invalid payload"}), 400
-
-      error = store_event(data)
-      if error:
-          return jsonify({"error": "Failed to store event"}), 500
+            return 'Internal Server Error', 500
 
       return '', 204
 
+  def store_event(data):
+      print(data)
+
   if __name__ == '__main__':
-      app.run(port=5000)
+      app.run(port=8080)
 
 
 Advanced Usage
