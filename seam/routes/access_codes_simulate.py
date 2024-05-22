@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAccessCodesSimulate, UnmanagedAccessCode
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractAccessCodesSimulate, UnmanagedAccessCode
 
 
 class AccessCodesSimulate(AbstractAccessCodesSimulate):
@@ -22,8 +22,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             json_payload["name"] = name
 
         res = self.seam.client.post(
-            "/access_codes/simulate/create_unmanaged_access_code",
-            json=json_payload,
+            "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )
 
         return UnmanagedAccessCode.from_dict(res["access_code"])

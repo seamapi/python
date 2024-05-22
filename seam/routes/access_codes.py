@@ -1,8 +1,8 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAccessCodes, AccessCode
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.access_codes_simulate import AccessCodesSimulate
-from seam.routes.access_codes_unmanaged import AccessCodesUnmanaged
+from ..models import AbstractSeam as Seam
+from .models import AbstractAccessCodes, AccessCode
+from .access_codes_simulate import AccessCodesSimulate
+from .access_codes_unmanaged import AccessCodesUnmanaged
 
 
 class AccessCodes(AbstractAccessCodes):
@@ -222,8 +222,7 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["access_code_id"] = access_code_id
 
         res = self.seam.client.post(
-            "/access_codes/pull_backup_access_code",
-            json=json_payload,
+            "/access_codes/pull_backup_access_code", json=json_payload
         )
 
         return AccessCode.from_dict(res["backup_access_code"])

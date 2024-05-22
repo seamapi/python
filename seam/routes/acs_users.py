@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcsUsers, AcsUser, AcsEntrance
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractAcsUsers, AcsUser, AcsEntrance
 
 
 class AcsUsers(AbstractAcsUsers):
@@ -108,8 +108,7 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
 
         res = self.seam.client.post(
-            "/acs/users/list_accessible_entrances",
-            json=json_payload,
+            "/acs/users/list_accessible_entrances", json=json_payload
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -124,10 +123,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.client.post(
-            "/acs/users/remove_from_access_group",
-            json=json_payload,
-        )
+        self.seam.client.post("/acs/users/remove_from_access_group", json=json_payload)
 
         return None
 
@@ -138,8 +134,7 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
 
         self.seam.client.post(
-            "/acs/users/revoke_access_to_all_entrances",
-            json=json_payload,
+            "/acs/users/revoke_access_to_all_entrances", json=json_payload
         )
 
         return None

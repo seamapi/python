@@ -1,9 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
-    AbstractThermostatsClimateSettingSchedules,
-    ClimateSettingSchedule,
-)
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractThermostatsClimateSettingSchedules, ClimateSettingSchedule
 
 
 class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedules):
@@ -59,8 +56,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["schedule_type"] = schedule_type
 
         res = self.seam.client.post(
-            "/thermostats/climate_setting_schedules/create",
-            json=json_payload,
+            "/thermostats/climate_setting_schedules/create", json=json_payload
         )
 
         return ClimateSettingSchedule.from_dict(res["climate_setting_schedule"])
@@ -72,8 +68,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["climate_setting_schedule_id"] = climate_setting_schedule_id
 
         self.seam.client.post(
-            "/thermostats/climate_setting_schedules/delete",
-            json=json_payload,
+            "/thermostats/climate_setting_schedules/delete", json=json_payload
         )
 
         return None
@@ -92,8 +87,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["device_id"] = device_id
 
         res = self.seam.client.post(
-            "/thermostats/climate_setting_schedules/get",
-            json=json_payload,
+            "/thermostats/climate_setting_schedules/get", json=json_payload
         )
 
         return ClimateSettingSchedule.from_dict(res["climate_setting_schedule"])
@@ -109,8 +103,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.seam.client.post(
-            "/thermostats/climate_setting_schedules/list",
-            json=json_payload,
+            "/thermostats/climate_setting_schedules/list", json=json_payload
         )
 
         return [
@@ -165,8 +158,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["schedule_type"] = schedule_type
 
         self.seam.client.post(
-            "/thermostats/climate_setting_schedules/update",
-            json=json_payload,
+            "/thermostats/climate_setting_schedules/update", json=json_payload
         )
 
         return None

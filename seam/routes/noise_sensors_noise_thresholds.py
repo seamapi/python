@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractNoiseSensorsNoiseThresholds, NoiseThreshold
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractNoiseSensorsNoiseThresholds, NoiseThreshold
 
 
 class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
@@ -38,8 +38,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         res = self.seam.client.post(
-            "/noise_sensors/noise_thresholds/create",
-            json=json_payload,
+            "/noise_sensors/noise_thresholds/create", json=json_payload
         )
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
@@ -57,8 +56,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            "/noise_sensors/noise_thresholds/delete",
-            json=json_payload,
+            "/noise_sensors/noise_thresholds/delete", json=json_payload
         )
 
         return None
@@ -70,8 +68,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_id"] = noise_threshold_id
 
         res = self.seam.client.post(
-            "/noise_sensors/noise_thresholds/get",
-            json=json_payload,
+            "/noise_sensors/noise_thresholds/get", json=json_payload
         )
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
@@ -87,8 +84,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["is_programmed"] = is_programmed
 
         res = self.seam.client.post(
-            "/noise_sensors/noise_thresholds/list",
-            json=json_payload,
+            "/noise_sensors/noise_thresholds/list", json=json_payload
         )
 
         return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
@@ -125,8 +121,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            "/noise_sensors/noise_thresholds/update",
-            json=json_payload,
+            "/noise_sensors/noise_thresholds/update", json=json_payload
         )
 
         return None

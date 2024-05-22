@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 from dataclasses import dataclass
-from seam.routes.utils.deep_attr_dict import DeepAttrDict
+from ..utils.deep_attr_dict import DeepAttrDict
 
 
 @dataclass

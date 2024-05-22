@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAccessCodesUnmanaged, UnmanagedAccessCode
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractAccessCodesUnmanaged, UnmanagedAccessCode
 
 
 class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
@@ -34,8 +34,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["sync"] = sync
 
         self.seam.client.post(
-            "/access_codes/unmanaged/convert_to_managed",
-            json=json_payload,
+            "/access_codes/unmanaged/convert_to_managed", json=json_payload
         )
 
         return None

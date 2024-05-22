@@ -1,15 +1,7 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
-    AbstractUserIdentities,
-    UserIdentity,
-    Device,
-    AcsSystem,
-    AcsUser,
-)
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.user_identities_enrollment_automations import (
-    UserIdentitiesEnrollmentAutomations,
-)
+from ..models import AbstractSeam as Seam
+from .models import AbstractUserIdentities, UserIdentity, Device, AcsSystem, AcsUser
+from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
 class UserIdentities(AbstractUserIdentities):
@@ -94,8 +86,7 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
 
         self.seam.client.post(
-            "/user_identities/grant_access_to_device",
-            json=json_payload,
+            "/user_identities/grant_access_to_device", json=json_payload
         )
 
         return None
@@ -121,8 +112,7 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
 
         res = self.seam.client.post(
-            "/user_identities/list_accessible_devices",
-            json=json_payload,
+            "/user_identities/list_accessible_devices", json=json_payload
         )
 
         return [Device.from_dict(item) for item in res["devices"]]
@@ -172,8 +162,7 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
 
         self.seam.client.post(
-            "/user_identities/revoke_access_to_device",
-            json=json_payload,
+            "/user_identities/revoke_access_to_device", json=json_payload
         )
 
         return None

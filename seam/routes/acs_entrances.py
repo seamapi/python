@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcsEntrances, AcsEntrance, AcsCredential
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential
 
 
 class AcsEntrances(AbstractAcsEntrances):
@@ -59,8 +59,7 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["include_if"] = include_if
 
         res = self.seam.client.post(
-            "/acs/entrances/list_credentials_with_access",
-            json=json_payload,
+            "/acs/entrances/list_credentials_with_access", json=json_payload
         )
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]

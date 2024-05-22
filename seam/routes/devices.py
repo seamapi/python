@@ -1,8 +1,8 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractDevices, Device, DeviceProvider
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.devices_simulate import DevicesSimulate
-from seam.routes.devices_unmanaged import DevicesUnmanaged
+from ..models import AbstractSeam as Seam
+from .models import AbstractDevices, Device, DeviceProvider
+from .devices_simulate import DevicesSimulate
+from .devices_unmanaged import DevicesUnmanaged
 
 
 class Devices(AbstractDevices):
