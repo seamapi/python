@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 
-from ..lib.action_attempts import resolve_action_attempt
+from ..modules.action_attempts import resolve_action_attempt
 from ..request import SeamHttpClient
 
 from .models import AbstractLocks, Device, ActionAttempt
