@@ -1,6 +1,6 @@
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import AbstractConnectedAccounts, ConnectedAccount
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import AbstractConnectedAccounts, ConnectedAccount
 
 
 class ConnectedAccounts(AbstractConnectedAccounts):

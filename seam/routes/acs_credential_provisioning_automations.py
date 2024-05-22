@@ -1,9 +1,9 @@
-from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import (
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import (
     AbstractAcsCredentialProvisioningAutomations,
     AcsCredentialProvisioningAutomation,
 )
+from typing import Optional, Any, List, Dict, Union
 
 
 class AcsCredentialProvisioningAutomations(

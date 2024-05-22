@@ -1,7 +1,7 @@
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import AbstractPhones, Phone
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import AbstractPhones, Phone
-from .phones_simulate import PhonesSimulate
+from seam.routes.phones_simulate import PhonesSimulate
 
 
 class Phones(AbstractPhones):

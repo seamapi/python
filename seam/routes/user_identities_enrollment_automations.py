@@ -1,6 +1,9 @@
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import (
+    AbstractUserIdentitiesEnrollmentAutomations,
+    EnrollmentAutomation,
+)
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import AbstractUserIdentitiesEnrollmentAutomations, EnrollmentAutomation
 
 
 class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutomations):

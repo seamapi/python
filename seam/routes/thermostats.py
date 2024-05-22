@@ -1,7 +1,9 @@
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import AbstractThermostats, ActionAttempt, Device
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import AbstractThermostats, ActionAttempt, Device
-from .thermostats_climate_setting_schedules import ThermostatsClimateSettingSchedules
+from seam.routes.thermostats_climate_setting_schedules import (
+    ThermostatsClimateSettingSchedules,
+)
 
 
 class Thermostats(AbstractThermostats):

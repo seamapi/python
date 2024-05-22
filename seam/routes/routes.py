@@ -1,4 +1,4 @@
-from .models import AbstractRoutes
+from .types import AbstractRoutes
 from .access_codes import AccessCodes
 from .acs import Acs
 from .action_attempts import ActionAttempts

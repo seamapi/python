@@ -1,6 +1,6 @@
+from seam.types import AbstractSeam as Seam
+from seam.routes.types import AbstractAcsUsers, AcsUser, AcsEntrance
 from typing import Optional, Any, List, Dict, Union
-from ..models import AbstractSeam as Seam
-from .models import AbstractAcsUsers, AcsUser, AcsEntrance
 
 
 class AcsUsers(AbstractAcsUsers):
