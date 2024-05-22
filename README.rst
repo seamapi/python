@@ -209,6 +209,45 @@ A Personal Access Token is scoped to a Seam Console user. Obtain one from the Se
   # List workspaces authorized for this Personal Access Token
   workspaces = seam.workspaces.list()
 
+Webhooks
+~~~~~~~~
+
+The Seam API implements webhooks using `Svix <https://www.svix.com>`_. This SDK exports a thin wrapper ``SeamWebhook`` around the svix package. Use it to parse and validate Seam webhook events.
+
+Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/introduction>`_ for an in-depth guide on best-practices for handling webhooks in your application.
+
+.. code-block:: python
+
+  import os
+
+  from flask import Flask, request
+  from seam import SeamWebhook
+
+  app = Flask(__name__)
+
+  webhook = SeamWebhook(os.getenv('SEAM_WEBHOOK_SECRET'))
+
+  @app.route('/webhook', methods=['POST'])
+  def handle_webhook():
+      try:
+          data = webhook.verify(request.get_data(), request.headers)
+      except Exception:
+          return 'Bad Request', 400
+
+      try:
+          store_event(data)
+      except Exception:
+            return 'Internal Server Error', 500
+
+      return '', 204
+
+  def store_event(data):
+      print(data)
+
+  if __name__ == '__main__':
+      app.run(port=8080)
+
+
 Advanced Usage
 ~~~~~~~~~~~~~~
 
