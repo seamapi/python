@@ -43,7 +43,7 @@ class ActionAttempts(AbstractActionAttempts):
         if action_attempt_id is not None:
             json_payload["action_attempt_id"] = action_attempt_id
 
-        res = self.seam.make_request("POST", "/action_attempts/get", json=json_payload)
+        res = self.seam.client.post("/action_attempts/get", json=json_payload)
 
         return self.seam.action_attempts.decide_and_wait(
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
@@ -56,7 +56,7 @@ class ActionAttempts(AbstractActionAttempts):
         if action_attempt_ids is not None:
             json_payload["action_attempt_ids"] = action_attempt_ids
 
-        res = self.seam.make_request("POST", "/action_attempts/list", json=json_payload)
+        res = self.seam.client.post("/action_attempts/list", json=json_payload)
 
         return [ActionAttempt.from_dict(item) for item in res["action_attempts"]]
 

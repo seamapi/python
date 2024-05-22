@@ -19,9 +19,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request(
-            "POST", "/acs/users/add_to_access_group", json=json_payload
-        )
+        self.seam.client.post("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
@@ -56,7 +54,7 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.make_request("POST", "/acs/users/create", json=json_payload)
+        res = self.seam.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(res["acs_user"])
 
@@ -66,7 +64,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/users/delete", json=json_payload)
+        self.seam.client.post("/acs/users/delete", json=json_payload)
 
         return None
 
@@ -76,7 +74,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.seam.make_request("POST", "/acs/users/get", json=json_payload)
+        res = self.seam.client.post("/acs/users/get", json=json_payload)
 
         return AcsUser.from_dict(res["acs_user"])
 
@@ -99,7 +97,7 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_phone_number is not None:
             json_payload["user_identity_phone_number"] = user_identity_phone_number
 
-        res = self.seam.make_request("POST", "/acs/users/list", json=json_payload)
+        res = self.seam.client.post("/acs/users/list", json=json_payload)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -109,8 +107,8 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.seam.make_request(
-            "POST", "/acs/users/list_accessible_entrances", json=json_payload
+        res = self.seam.client.post(
+            "/acs/users/list_accessible_entrances", json=json_payload
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -125,9 +123,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request(
-            "POST", "/acs/users/remove_from_access_group", json=json_payload
-        )
+        self.seam.client.post("/acs/users/remove_from_access_group", json=json_payload)
 
         return None
 
@@ -137,8 +133,8 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request(
-            "POST", "/acs/users/revoke_access_to_all_entrances", json=json_payload
+        self.seam.client.post(
+            "/acs/users/revoke_access_to_all_entrances", json=json_payload
         )
 
         return None
@@ -149,7 +145,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/users/suspend", json=json_payload)
+        self.seam.client.post("/acs/users/suspend", json=json_payload)
 
         return None
 
@@ -159,7 +155,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.seam.make_request("POST", "/acs/users/unsuspend", json=json_payload)
+        self.seam.client.post("/acs/users/unsuspend", json=json_payload)
 
         return None
 
@@ -191,6 +187,6 @@ class AcsUsers(AbstractAcsUsers):
         if phone_number is not None:
             json_payload["phone_number"] = phone_number
 
-        self.seam.make_request("POST", "/acs/users/update", json=json_payload)
+        self.seam.client.post("/acs/users/update", json=json_payload)
 
         return None

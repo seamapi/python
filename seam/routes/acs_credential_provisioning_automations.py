@@ -42,8 +42,8 @@ class AcsCredentialProvisioningAutomations(
                 credential_manager_acs_user_id
             )
 
-        res = self.seam.make_request(
-            "POST", "/acs/credential_provisioning_automations/launch", json=json_payload
+        res = self.seam.client.post(
+            "/acs/credential_provisioning_automations/launch", json=json_payload
         )
 
         return AcsCredentialProvisioningAutomation.from_dict(

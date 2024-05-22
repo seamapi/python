@@ -1,14 +1,15 @@
-from typing import Optional, Union, Dict
+from typing import Any, Optional, Union, Dict
+import niquests as requests
 from typing_extensions import Self
 
 from .constants import LTS_VERSION
 from .parse_options import parse_options
-from .request import RequestMixin
+from .client import SeamHttpClient
 from .routes.routes import Routes
 from .types import AbstractSeam
 
 
-class Seam(AbstractSeam, RequestMixin):
+class Seam(AbstractSeam):
     """
     Initial Seam class used to interact with Seam API
     """
@@ -49,8 +50,8 @@ class Seam(AbstractSeam, RequestMixin):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self._auth_headers = auth_headers
-        self._endpoint = endpoint
+
+        self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
 
     @classmethod
     def from_api_key(

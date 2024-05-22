@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Union
+import niquests as requests
 from typing_extensions import Self
 import abc
 
@@ -23,13 +24,21 @@ class SeamHttpApiError(Exception):
         )
 
 
-class AbstractRequestMixin(abc.ABC):
+class AbstractSeamHttpClient(abc.ABC):
     @abc.abstractmethod
-    def make_request(self, method: str, path: str, **kwargs):
+    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def request(self, method: str, url: str, *args, **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _handle_response(self, response: requests.Response):
         raise NotImplementedError
 
 
-class AbstractSeam(AbstractRoutes, AbstractRequestMixin):
+class AbstractSeam(AbstractRoutes):
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
@@ -89,7 +98,7 @@ class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamMultiWorkspace(AbstractRequestMixin):
+class AbstractSeamMultiWorkspace:
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
