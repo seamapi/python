@@ -1,8 +1,8 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractNoiseSensors
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.noise_sensors_noise_thresholds import NoiseSensorsNoiseThresholds
-from seam.routes.noise_sensors_simulate import NoiseSensorsSimulate
+from ..models import AbstractSeam as Seam
+from .models import AbstractNoiseSensors
+from .noise_sensors_noise_thresholds import NoiseSensorsNoiseThresholds
+from .noise_sensors_simulate import NoiseSensorsSimulate
 
 
 class NoiseSensors(AbstractNoiseSensors):

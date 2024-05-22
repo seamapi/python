@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 from dataclasses import dataclass
-from seam.routes.utils.deep_attr_dict import DeepAttrDict
+from ..utils.deep_attr_dict import DeepAttrDict
 
 
 @dataclass
@@ -966,6 +966,10 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
         raise NotImplementedError()
 
@@ -1235,6 +1239,7 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         raise NotImplementedError()
