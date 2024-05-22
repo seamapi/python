@@ -57,16 +57,7 @@ class Seam(AbstractSeam):
             endpoint=endpoint,
         )
 
-        if client_options is None:
-            client_options = {}
-
-        self.client = client or SeamHttpClient(
-            base_url=endpoint, auth_headers=auth_headers, **client_options
-        )
-
-        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
-
-        Routes.__init__(self, client=self.client, defaults=defaults)
+        self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
 
     @classmethod
     def from_api_key(

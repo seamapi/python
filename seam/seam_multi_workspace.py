@@ -61,6 +61,11 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         )
         endpoint = get_endpoint(endpoint)
 
+        self.client = SeamHttpClient(
+            base_url=endpoint,
+            auth_headers=auth_headers,
+        )
+
         if client_options is None:
             client_options = {}
 
