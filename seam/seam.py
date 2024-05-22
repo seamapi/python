@@ -56,8 +56,11 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
         self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
+
+        Routes.__init__(self, client=self.client, defaults=defaults)
 
     @classmethod
     def from_api_key(

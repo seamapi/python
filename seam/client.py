@@ -4,7 +4,8 @@ import niquests as requests
 from importlib.metadata import version
 
 from seam.constants import LTS_VERSION
-from seam.types import AbstractSeamHttpClient, SeamHttpApiError
+from seam.exceptions import SeamHttpApiError
+from seam.models import AbstractSeamHttpClient
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
