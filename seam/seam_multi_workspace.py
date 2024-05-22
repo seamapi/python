@@ -5,7 +5,7 @@ from typing_extensions import Self
 from .auth import get_auth_headers_for_multi_workspace_personal_access_token
 from .constants import LTS_VERSION
 from .options import get_endpoint
-from .request import SeamHttpClient
+from .client import SeamHttpClient
 from .types import AbstractSeamMultiWorkspace
 from .routes.workspaces import Workspaces
 
