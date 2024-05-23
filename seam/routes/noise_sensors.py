@@ -1,13 +1,11 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractNoiseSensors
 from .noise_sensors_noise_thresholds import NoiseSensorsNoiseThresholds
 from .noise_sensors_simulate import NoiseSensorsSimulate
 
 
 class NoiseSensors(AbstractNoiseSensors):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

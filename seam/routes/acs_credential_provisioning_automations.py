@@ -1,6 +1,5 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import (
     AbstractAcsCredentialProvisioningAutomations,
     AcsCredentialProvisioningAutomation,
@@ -10,7 +9,6 @@ from .models import (
 class AcsCredentialProvisioningAutomations(
     AbstractAcsCredentialProvisioningAutomations
 ):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -44,8 +42,7 @@ class AcsCredentialProvisioningAutomations(
             )
 
         res = self.client.post(
-            "/acs/credential_provisioning_automations/launch",
-            json=json_payload,
+            "/acs/credential_provisioning_automations/launch", json=json_payload
         )
 
         return AcsCredentialProvisioningAutomation.from_dict(

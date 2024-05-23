@@ -1976,7 +1976,6 @@ class AbstractDevices(abc.ABC):
 
 
 class AbstractNoiseSensors(abc.ABC):
-    pass
 
     @property
     @abc.abstractmethod
@@ -1990,7 +1989,6 @@ class AbstractNoiseSensors(abc.ABC):
 
 
 class AbstractAcs(abc.ABC):
-    pass
 
     @property
     @abc.abstractmethod

@@ -1,12 +1,10 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractUserIdentities, UserIdentity, Device, AcsSystem, AcsUser
 from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
 class UserIdentities(AbstractUserIdentities):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -88,10 +86,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post(
-            "/user_identities/grant_access_to_device",
-            json=json_payload,
-        )
+        self.client.post("/user_identities/grant_access_to_device", json=json_payload)
 
         return None
 
@@ -116,8 +111,7 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post(
-            "/user_identities/list_accessible_devices",
-            json=json_payload,
+            "/user_identities/list_accessible_devices", json=json_payload
         )
 
         return [Device.from_dict(item) for item in res["devices"]]
@@ -162,10 +156,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post(
-            "/user_identities/revoke_access_to_device",
-            json=json_payload,
-        )
+        self.client.post("/user_identities/revoke_access_to_device", json=json_payload)
 
         return None
 

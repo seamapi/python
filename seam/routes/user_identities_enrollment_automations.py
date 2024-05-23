@@ -1,11 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractUserIdentitiesEnrollmentAutomations, EnrollmentAutomation
 
 
 class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutomations):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -17,8 +15,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
         self.client.post(
-            "/user_identities/enrollment_automations/delete",
-            json=json_payload,
+            "/user_identities/enrollment_automations/delete", json=json_payload
         )
 
         return None
@@ -30,8 +27,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["enrollment_automation_id"] = enrollment_automation_id
 
         res = self.client.post(
-            "/user_identities/enrollment_automations/get",
-            json=json_payload,
+            "/user_identities/enrollment_automations/get", json=json_payload
         )
 
         return EnrollmentAutomation.from_dict(res["enrollment_automation"])
@@ -65,8 +61,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             )
 
         self.client.post(
-            "/user_identities/enrollment_automations/launch",
-            json=json_payload,
+            "/user_identities/enrollment_automations/launch", json=json_payload
         )
 
         return None
@@ -78,8 +73,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
             json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post(
-            "/user_identities/enrollment_automations/list",
-            json=json_payload,
+            "/user_identities/enrollment_automations/list", json=json_payload
         )
 
         return [

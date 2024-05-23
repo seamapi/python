@@ -1,11 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractAcsUsers, AcsUser, AcsEntrance
 
 
 class AcsUsers(AbstractAcsUsers):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -109,8 +107,7 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
 
         res = self.client.post(
-            "/acs/users/list_accessible_entrances",
-            json=json_payload,
+            "/acs/users/list_accessible_entrances", json=json_payload
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -125,10 +122,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.client.post(
-            "/acs/users/remove_from_access_group",
-            json=json_payload,
-        )
+        self.client.post("/acs/users/remove_from_access_group", json=json_payload)
 
         return None
 
@@ -138,10 +132,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.client.post(
-            "/acs/users/revoke_access_to_all_entrances",
-            json=json_payload,
-        )
+        self.client.post("/acs/users/revoke_access_to_all_entrances", json=json_payload)
 
         return None
 

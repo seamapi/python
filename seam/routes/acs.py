@@ -1,6 +1,5 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractAcs
 from .acs_access_groups import AcsAccessGroups
 from .acs_credential_pools import AcsCredentialPools
@@ -14,7 +13,6 @@ from .acs_users import AcsUsers
 
 
 class Acs(AbstractAcs):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

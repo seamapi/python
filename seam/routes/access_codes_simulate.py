@@ -1,12 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
-
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractAccessCodesSimulate, UnmanagedAccessCode
 
 
 class AccessCodesSimulate(AbstractAccessCodesSimulate):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -24,8 +21,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             json_payload["name"] = name
 
         res = self.client.post(
-            "/access_codes/simulate/create_unmanaged_access_code",
-            json=json_payload,
+            "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )
 
         return UnmanagedAccessCode.from_dict(res["access_code"])

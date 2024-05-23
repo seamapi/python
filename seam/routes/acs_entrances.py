@@ -1,11 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential
 
 
 class AcsEntrances(AbstractAcsEntrances):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -60,8 +58,7 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["include_if"] = include_if
 
         res = self.client.post(
-            "/acs/entrances/list_credentials_with_access",
-            json=json_payload,
+            "/acs/entrances/list_credentials_with_access", json=json_payload
         )
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]

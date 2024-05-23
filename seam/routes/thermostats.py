@@ -1,14 +1,11 @@
 from typing import Optional, Any, List, Dict, Union
-
-from ..modules.action_attempts import resolve_action_attempt
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractThermostats, ActionAttempt, Device
 from .thermostats_climate_setting_schedules import ThermostatsClimateSettingSchedules
+from ..modules.action_attempts import resolve_action_attempt
 
 
 class Thermostats(AbstractThermostats):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

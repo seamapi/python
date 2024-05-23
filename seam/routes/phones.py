@@ -1,12 +1,10 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractPhones, Phone
 from .phones_simulate import PhonesSimulate
 
 
 class Phones(AbstractPhones):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

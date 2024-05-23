@@ -1,11 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
-from ..request import SeamHttpClient
-
+from ..client import SeamHttpClient
 from .models import AbstractPhonesSimulate, Phone
 
 
 class PhonesSimulate(AbstractPhonesSimulate):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -30,8 +28,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
             json_payload["phone_metadata"] = phone_metadata
 
         res = self.client.post(
-            "/phones/simulate/create_sandbox_phone",
-            json=json_payload,
+            "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 
         return Phone.from_dict(res["phone"])

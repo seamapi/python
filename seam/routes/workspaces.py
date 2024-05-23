@@ -1,13 +1,11 @@
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractWorkspaces, Workspace, ActionAttempt
 
 from ..modules.action_attempts import resolve_action_attempt
-from ..request import SeamHttpClient
-
-from .models import AbstractWorkspaces, Workspace, ActionAttempt
 
 
 class Workspaces(AbstractWorkspaces):
-
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

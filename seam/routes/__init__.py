@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from ..request import SeamHttpClient
+from ..client import SeamHttpClient
 from .models import AbstractRoutes
 from .access_codes import AccessCodes
 from .acs import Acs
