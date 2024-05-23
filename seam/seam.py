@@ -7,7 +7,6 @@ from .parse_options import parse_options
 from .routes import Routes
 from .models import AbstractSeam
 from .client import SeamHttpClient
-from .routes import Routes
 
 
 class Seam(AbstractSeam):
