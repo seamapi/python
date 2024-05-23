@@ -66,7 +66,7 @@ Unlock a door
 
   seam = Seam()
   lock = seam.locks.get(name="Front Door")
-  seam.locks.unlock_door(device_id="lock.device_id")
+  seam.locks.unlock_door(device_id=lock.device_id)
 
 Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~
