@@ -1,13 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractNetworks, Network
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractNetworks, Network
 
 
 class Networks(AbstractNetworks):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def get(self, *, network_id: str) -> Network:
         json_payload = {}
@@ -15,7 +14,7 @@ class Networks(AbstractNetworks):
         if network_id is not None:
             json_payload["network_id"] = network_id
 
-        res = self.seam.client.post("/networks/get", json=json_payload)
+        res = self.client.post("/networks/get", json=json_payload)
 
         return Network.from_dict(res["network"])
 
@@ -24,6 +23,6 @@ class Networks(AbstractNetworks):
     ) -> List[Network]:
         json_payload = {}
 
-        res = self.seam.client.post("/networks/list", json=json_payload)
+        res = self.client.post("/networks/list", json=json_payload)
 
         return [Network.from_dict(item) for item in res["networks"]]

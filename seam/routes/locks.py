@@ -1,13 +1,14 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractLocks, Device, ActionAttempt
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractLocks, Device, ActionAttempt
+
+from ..modules.action_attempts import resolve_action_attempt
 
 
 class Locks(AbstractLocks):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -19,7 +20,7 @@ class Locks(AbstractLocks):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.client.post("/locks/get", json=json_payload)
+        res = self.client.post("/locks/get", json=json_payload)
 
         return Device.from_dict(res["device"])
 
@@ -69,7 +70,7 @@ class Locks(AbstractLocks):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post("/locks/list", json=json_payload)
+        res = self.client.post("/locks/list", json=json_payload)
 
         return [Device.from_dict(item) for item in res["devices"]]
 
@@ -87,9 +88,16 @@ class Locks(AbstractLocks):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.client.post("/locks/lock_door", json=json_payload)
+        res = self.client.post("/locks/lock_door", json=json_payload)
 
-        return self.seam.action_attempts.decide_and_wait(
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
@@ -108,9 +116,16 @@ class Locks(AbstractLocks):
         if sync is not None:
             json_payload["sync"] = sync
 
-        res = self.seam.client.post("/locks/unlock_door", json=json_payload)
+        res = self.client.post("/locks/unlock_door", json=json_payload)
 
-        return self.seam.action_attempts.decide_and_wait(
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )

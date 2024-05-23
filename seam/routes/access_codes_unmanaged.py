@@ -1,13 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAccessCodesUnmanaged, UnmanagedAccessCode
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractAccessCodesUnmanaged, UnmanagedAccessCode
 
 
 class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def convert_to_managed(
         self,
@@ -33,7 +32,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post(
+        self.client.post(
             "/access_codes/unmanaged/convert_to_managed", json=json_payload
         )
 
@@ -47,7 +46,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if sync is not None:
             json_payload["sync"] = sync
 
-        self.seam.client.post("/access_codes/unmanaged/delete", json=json_payload)
+        self.client.post("/access_codes/unmanaged/delete", json=json_payload)
 
         return None
 
@@ -67,7 +66,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.client.post("/access_codes/unmanaged/get", json=json_payload)
+        res = self.client.post("/access_codes/unmanaged/get", json=json_payload)
 
         return UnmanagedAccessCode.from_dict(res["access_code"])
 
@@ -81,7 +80,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post("/access_codes/unmanaged/list", json=json_payload)
+        res = self.client.post("/access_codes/unmanaged/list", json=json_payload)
 
         return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -109,6 +108,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
                 is_external_modification_allowed
             )
 
-        self.seam.client.post("/access_codes/unmanaged/update", json=json_payload)
+        self.client.post("/access_codes/unmanaged/update", json=json_payload)
 
         return None

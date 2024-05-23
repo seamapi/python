@@ -1,17 +1,16 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractDevices, Device, DeviceProvider
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.devices_simulate import DevicesSimulate
-from seam.routes.devices_unmanaged import DevicesUnmanaged
+from ..client import SeamHttpClient
+from .models import AbstractDevices, Device, DeviceProvider
+from .devices_simulate import DevicesSimulate
+from .devices_unmanaged import DevicesUnmanaged
 
 
 class Devices(AbstractDevices):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
-        self._simulate = DevicesSimulate(seam=seam)
-        self._unmanaged = DevicesUnmanaged(seam=seam)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._simulate = DevicesSimulate(client=client, defaults=defaults)
+        self._unmanaged = DevicesUnmanaged(client=client, defaults=defaults)
 
     @property
     def simulate(self) -> DevicesSimulate:
@@ -27,7 +26,7 @@ class Devices(AbstractDevices):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.client.post("/devices/delete", json=json_payload)
+        self.client.post("/devices/delete", json=json_payload)
 
         return None
 
@@ -41,7 +40,7 @@ class Devices(AbstractDevices):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.client.post("/devices/get", json=json_payload)
+        res = self.client.post("/devices/get", json=json_payload)
 
         return Device.from_dict(res["device"])
 
@@ -91,7 +90,7 @@ class Devices(AbstractDevices):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post("/devices/list", json=json_payload)
+        res = self.client.post("/devices/list", json=json_payload)
 
         return [Device.from_dict(item) for item in res["devices"]]
 
@@ -103,7 +102,7 @@ class Devices(AbstractDevices):
         if provider_category is not None:
             json_payload["provider_category"] = provider_category
 
-        res = self.seam.client.post("/devices/list_device_providers", json=json_payload)
+        res = self.client.post("/devices/list_device_providers", json=json_payload)
 
         return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
@@ -129,6 +128,6 @@ class Devices(AbstractDevices):
         if properties is not None:
             json_payload["properties"] = properties
 
-        self.seam.client.post("/devices/update", json=json_payload)
+        self.client.post("/devices/update", json=json_payload)
 
         return None

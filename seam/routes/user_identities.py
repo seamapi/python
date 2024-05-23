@@ -1,23 +1,16 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
-    AbstractUserIdentities,
-    UserIdentity,
-    Device,
-    AcsSystem,
-    AcsUser,
-)
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.user_identities_enrollment_automations import (
-    UserIdentitiesEnrollmentAutomations,
-)
+from ..client import SeamHttpClient
+from .models import AbstractUserIdentities, UserIdentity, Device, AcsSystem, AcsUser
+from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
 class UserIdentities(AbstractUserIdentities):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
-        self._enrollment_automations = UserIdentitiesEnrollmentAutomations(seam=seam)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._enrollment_automations = UserIdentitiesEnrollmentAutomations(
+            client=client, defaults=defaults
+        )
 
     @property
     def enrollment_automations(self) -> UserIdentitiesEnrollmentAutomations:
@@ -31,7 +24,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.client.post("/user_identities/add_acs_user", json=json_payload)
+        self.client.post("/user_identities/add_acs_user", json=json_payload)
 
         return None
 
@@ -54,7 +47,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        res = self.seam.client.post("/user_identities/create", json=json_payload)
+        res = self.client.post("/user_identities/create", json=json_payload)
 
         return UserIdentity.from_dict(res["user_identity"])
 
@@ -64,7 +57,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.client.post("/user_identities/delete", json=json_payload)
+        self.client.post("/user_identities/delete", json=json_payload)
 
         return None
 
@@ -81,7 +74,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        res = self.seam.client.post("/user_identities/get", json=json_payload)
+        res = self.client.post("/user_identities/get", json=json_payload)
 
         return UserIdentity.from_dict(res["user_identity"])
 
@@ -93,9 +86,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.client.post(
-            "/user_identities/grant_access_to_device", json=json_payload
-        )
+        self.client.post("/user_identities/grant_access_to_device", json=json_payload)
 
         return None
 
@@ -109,7 +100,7 @@ class UserIdentities(AbstractUserIdentities):
                 credential_manager_acs_system_id
             )
 
-        res = self.seam.client.post("/user_identities/list", json=json_payload)
+        res = self.client.post("/user_identities/list", json=json_payload)
 
         return [UserIdentity.from_dict(item) for item in res["user_identities"]]
 
@@ -119,7 +110,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/user_identities/list_accessible_devices", json=json_payload
         )
 
@@ -131,9 +122,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.client.post(
-            "/user_identities/list_acs_systems", json=json_payload
-        )
+        res = self.client.post("/user_identities/list_acs_systems", json=json_payload)
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
@@ -143,9 +132,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        res = self.seam.client.post(
-            "/user_identities/list_acs_users", json=json_payload
-        )
+        res = self.client.post("/user_identities/list_acs_users", json=json_payload)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -157,7 +144,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.client.post("/user_identities/remove_acs_user", json=json_payload)
+        self.client.post("/user_identities/remove_acs_user", json=json_payload)
 
         return None
 
@@ -169,9 +156,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.seam.client.post(
-            "/user_identities/revoke_access_to_device", json=json_payload
-        )
+        self.client.post("/user_identities/revoke_access_to_device", json=json_payload)
 
         return None
 
@@ -197,6 +182,6 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        self.seam.client.post("/user_identities/update", json=json_payload)
+        self.client.post("/user_identities/update", json=json_payload)
 
         return None

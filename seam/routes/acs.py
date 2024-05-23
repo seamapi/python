@@ -1,31 +1,30 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractAcs
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.acs_access_groups import AcsAccessGroups
-from seam.routes.acs_credential_pools import AcsCredentialPools
-from seam.routes.acs_credential_provisioning_automations import (
+from ..client import SeamHttpClient
+from .models import AbstractAcs
+from .acs_access_groups import AcsAccessGroups
+from .acs_credential_pools import AcsCredentialPools
+from .acs_credential_provisioning_automations import (
     AcsCredentialProvisioningAutomations,
 )
-from seam.routes.acs_credentials import AcsCredentials
-from seam.routes.acs_entrances import AcsEntrances
-from seam.routes.acs_systems import AcsSystems
-from seam.routes.acs_users import AcsUsers
+from .acs_credentials import AcsCredentials
+from .acs_entrances import AcsEntrances
+from .acs_systems import AcsSystems
+from .acs_users import AcsUsers
 
 
 class Acs(AbstractAcs):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
-        self._access_groups = AcsAccessGroups(seam=seam)
-        self._credential_pools = AcsCredentialPools(seam=seam)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._access_groups = AcsAccessGroups(client=client, defaults=defaults)
+        self._credential_pools = AcsCredentialPools(client=client, defaults=defaults)
         self._credential_provisioning_automations = (
-            AcsCredentialProvisioningAutomations(seam=seam)
+            AcsCredentialProvisioningAutomations(client=client, defaults=defaults)
         )
-        self._credentials = AcsCredentials(seam=seam)
-        self._entrances = AcsEntrances(seam=seam)
-        self._systems = AcsSystems(seam=seam)
-        self._users = AcsUsers(seam=seam)
+        self._credentials = AcsCredentials(client=client, defaults=defaults)
+        self._entrances = AcsEntrances(client=client, defaults=defaults)
+        self._systems = AcsSystems(client=client, defaults=defaults)
+        self._users = AcsUsers(client=client, defaults=defaults)
 
     @property
     def access_groups(self) -> AcsAccessGroups:

@@ -1,16 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
-    AbstractThermostatsClimateSettingSchedules,
-    ClimateSettingSchedule,
-)
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractThermostatsClimateSettingSchedules, ClimateSettingSchedule
 
 
 class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedules):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def create(
         self,
@@ -58,7 +54,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if schedule_type is not None:
             json_payload["schedule_type"] = schedule_type
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/thermostats/climate_setting_schedules/create", json=json_payload
         )
 
@@ -70,7 +66,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if climate_setting_schedule_id is not None:
             json_payload["climate_setting_schedule_id"] = climate_setting_schedule_id
 
-        self.seam.client.post(
+        self.client.post(
             "/thermostats/climate_setting_schedules/delete", json=json_payload
         )
 
@@ -89,7 +85,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/thermostats/climate_setting_schedules/get", json=json_payload
         )
 
@@ -105,7 +101,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/thermostats/climate_setting_schedules/list", json=json_payload
         )
 
@@ -160,7 +156,7 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         if schedule_type is not None:
             json_payload["schedule_type"] = schedule_type
 
-        self.seam.client.post(
+        self.client.post(
             "/thermostats/climate_setting_schedules/update", json=json_payload
         )
 

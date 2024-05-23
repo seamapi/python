@@ -1,15 +1,14 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractPhones, Phone
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.phones_simulate import PhonesSimulate
+from ..client import SeamHttpClient
+from .models import AbstractPhones, Phone
+from .phones_simulate import PhonesSimulate
 
 
 class Phones(AbstractPhones):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
-        self._simulate = PhonesSimulate(seam=seam)
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._simulate = PhonesSimulate(client=client, defaults=defaults)
 
     @property
     def simulate(self) -> PhonesSimulate:
@@ -21,7 +20,7 @@ class Phones(AbstractPhones):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.client.post("/phones/deactivate", json=json_payload)
+        self.client.post("/phones/deactivate", json=json_payload)
 
         return None
 
@@ -31,6 +30,6 @@ class Phones(AbstractPhones):
         if owner_user_identity_id is not None:
             json_payload["owner_user_identity_id"] = owner_user_identity_id
 
-        res = self.seam.client.post("/phones/list", json=json_payload)
+        res = self.client.post("/phones/list", json=json_payload)
 
         return [Phone.from_dict(item) for item in res["phones"]]

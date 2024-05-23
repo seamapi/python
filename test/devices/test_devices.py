@@ -1,5 +1,4 @@
-from seam import Seam
-from seam.types import SeamHttpApiError
+from seam import Seam, SeamHttpApiError
 
 
 def test_devices(seam: Seam):

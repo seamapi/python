@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Self
 import abc
 from dataclasses import dataclass
-from seam.routes.utils.deep_attr_dict import DeepAttrDict
+from ..utils.deep_attr_dict import DeepAttrDict
 
 
 @dataclass
@@ -1117,25 +1117,6 @@ class AbstractActionAttempts(abc.ABC):
     def list(self, *, action_attempt_ids: List[str]) -> List[ActionAttempt]:
         raise NotImplementedError()
 
-    @abc.abstractmethod
-    def poll_until_ready(
-        self,
-        *,
-        action_attempt_id: str,
-        timeout: Optional[float] = 5.0,
-        polling_interval: Optional[float] = 0.5
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def decide_and_wait(
-        self,
-        *,
-        action_attempt: ActionAttempt,
-        wait_for_action_attempt: Union[bool, Dict[str, float]]
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
 
 class AbstractClientSessions(abc.ABC):
 
@@ -1995,7 +1976,6 @@ class AbstractDevices(abc.ABC):
 
 
 class AbstractNoiseSensors(abc.ABC):
-    pass
 
     @property
     @abc.abstractmethod
@@ -2009,7 +1989,6 @@ class AbstractNoiseSensors(abc.ABC):
 
 
 class AbstractAcs(abc.ABC):
-    pass
 
     @property
     @abc.abstractmethod

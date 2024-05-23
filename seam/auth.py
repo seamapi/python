@@ -1,10 +1,10 @@
 from typing import Optional
-from seam.options import (
+from .options import (
     SeamHttpInvalidOptionsError,
     is_seam_http_options_with_api_key,
     is_seam_http_options_with_personal_access_token,
 )
-from seam.token import (
+from .token import (
     is_jwt,
     is_access_token,
     is_client_session_token,

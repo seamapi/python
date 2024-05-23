@@ -4,9 +4,9 @@ from typing_extensions import Self
 
 from .constants import LTS_VERSION
 from .parse_options import parse_options
+from .routes import Routes
+from .models import AbstractSeam
 from .client import SeamHttpClient
-from .routes.routes import Routes
-from .types import AbstractSeam
 
 
 class Seam(AbstractSeam):
@@ -15,6 +15,7 @@ class Seam(AbstractSeam):
     """
 
     lts_version: str = LTS_VERSION
+    defaults: Dict[str, Any]
 
     def __init__(
         self,
@@ -40,8 +41,6 @@ class Seam(AbstractSeam):
           Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
         """
 
-        Routes.__init__(self)
-
         self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_options(
@@ -50,8 +49,11 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
         self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
+
+        Routes.__init__(self, client=self.client, defaults=defaults)
 
     @classmethod
     def from_api_key(

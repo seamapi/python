@@ -1,18 +1,17 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
+from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import (
     AbstractAcsCredentialProvisioningAutomations,
     AcsCredentialProvisioningAutomation,
 )
-from typing import Optional, Any, List, Dict, Union
 
 
 class AcsCredentialProvisioningAutomations(
     AbstractAcsCredentialProvisioningAutomations
 ):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def launch(
         self,
@@ -42,7 +41,7 @@ class AcsCredentialProvisioningAutomations(
                 credential_manager_acs_user_id
             )
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/acs/credential_provisioning_automations/launch", json=json_payload
         )
 

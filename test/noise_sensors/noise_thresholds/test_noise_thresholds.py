@@ -1,7 +1,4 @@
-import time
 from seam import Seam
-from seam.types import SeamHttpApiError
-import pytest
 
 
 def test_noise_thresholds(seam: Seam):

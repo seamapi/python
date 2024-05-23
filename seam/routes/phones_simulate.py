@@ -1,13 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractPhonesSimulate, Phone
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractPhonesSimulate, Phone
 
 
 class PhonesSimulate(AbstractPhonesSimulate):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def create_sandbox_phone(
         self,
@@ -28,7 +27,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
 
-        res = self.seam.client.post(
+        res = self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 

@@ -1,4 +1,4 @@
-from seam.routes.utils.deep_attr_dict import DeepAttrDict
+from seam.utils.deep_attr_dict import DeepAttrDict
 
 
 def test_deep_attr_dict():

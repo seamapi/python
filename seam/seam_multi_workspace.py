@@ -6,7 +6,7 @@ from .auth import get_auth_headers_for_multi_workspace_personal_access_token
 from .constants import LTS_VERSION
 from .options import get_endpoint
 from .client import SeamHttpClient
-from .types import AbstractSeamMultiWorkspace
+from .models import AbstractSeamMultiWorkspace
 from .routes.workspaces import Workspaces
 
 
@@ -60,7 +60,14 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
             auth_headers=auth_headers,
         )
 
-        self._workspaces = Workspaces(seam=self)
+        self.client = SeamHttpClient(
+            base_url=endpoint,
+            auth_headers=auth_headers,
+        )
+
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+
+        self._workspaces = Workspaces(client=self.client, defaults=defaults)
         self.workspaces = WorkspacesProxy(self._workspaces)
 
     @classmethod

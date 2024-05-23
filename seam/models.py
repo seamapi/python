@@ -3,25 +3,7 @@ import niquests as requests
 from typing_extensions import Self
 import abc
 
-from seam.routes.types import AbstractRoutes, Workspace
-
-
-class SeamHttpApiError(Exception):
-    def __init__(
-        self,
-        response,
-    ):
-        self.status_code = response.status_code
-        self.request_id = response.headers.get("seam-request-id", None)
-
-        self.metadata = None
-        if "application/json" in response.headers["content-type"]:
-            parsed_response = response.json()
-            self.metadata = parsed_response.get("error", None)
-
-        super().__init__(
-            f"SeamHttpApiError: status={self.status_code}, request_id={self.request_id}, metadata={self.metadata}"
-        )
+from .routes.models import AbstractRoutes, Workspace
 
 
 class AbstractSeamHttpClient(abc.ABC):
@@ -40,7 +22,7 @@ class AbstractSeamHttpClient(abc.ABC):
 
 class AbstractSeam(AbstractRoutes):
     lts_version: str
-    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+    defaults: Dict[str, Any]
 
     @abc.abstractmethod
     def __init__(

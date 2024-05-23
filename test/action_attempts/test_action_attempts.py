@@ -44,8 +44,9 @@ def test_action_attempts(seam: Seam):
     unlock_door = seam.locks.unlock_door(device_id=some_device.device_id)
 
     # Poll until the ActionAttempt is ready
-    action_attempt = seam.action_attempts.poll_until_ready(
-        action_attempt_id=unlock_door.action_attempt_id
+    action_attempt = seam.action_attempts.get(
+        action_attempt_id=unlock_door.action_attempt_id,
+        wait_for_action_attempt=True,
     )
 
     # Check that the ActionAttempt is not pending

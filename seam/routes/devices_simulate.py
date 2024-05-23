@@ -1,13 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractDevicesSimulate
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractDevicesSimulate
 
 
 class DevicesSimulate(AbstractDevicesSimulate):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def remove(self, *, device_id: str) -> None:
         json_payload = {}
@@ -15,6 +14,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        self.seam.client.post("/devices/simulate/remove", json=json_payload)
+        self.client.post("/devices/simulate/remove", json=json_payload)
 
         return None

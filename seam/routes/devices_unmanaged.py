@@ -1,13 +1,12 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractDevicesUnmanaged, UnmanagedDevice
 from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import AbstractDevicesUnmanaged, UnmanagedDevice
 
 
 class DevicesUnmanaged(AbstractDevicesUnmanaged):
-    seam: Seam
-
-    def __init__(self, seam: Seam):
-        self.seam = seam
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -19,7 +18,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.seam.client.post("/devices/unmanaged/get", json=json_payload)
+        res = self.client.post("/devices/unmanaged/get", json=json_payload)
 
         return UnmanagedDevice.from_dict(res["device"])
 
@@ -69,7 +68,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.seam.client.post("/devices/unmanaged/list", json=json_payload)
+        res = self.client.post("/devices/unmanaged/list", json=json_payload)
 
         return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
 
@@ -81,6 +80,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
 
-        self.seam.client.post("/devices/unmanaged/update", json=json_payload)
+        self.client.post("/devices/unmanaged/update", json=json_payload)
 
         return None
