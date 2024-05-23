@@ -1,15 +1,7 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import (
-    AbstractUserIdentities,
-    UserIdentity,
-    Device,
-    AcsSystem,
-    AcsUser,
-)
 from typing import Optional, Any, List, Dict, Union
-from seam.routes.user_identities_enrollment_automations import (
-    UserIdentitiesEnrollmentAutomations,
-)
+from ..models import AbstractSeam as Seam
+from .models import AbstractUserIdentities, UserIdentity, Device, AcsSystem, AcsUser
+from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
 class UserIdentities(AbstractUserIdentities):

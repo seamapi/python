@@ -1,29 +1,9 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractActionAttempts, ActionAttempt
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractActionAttempts, ActionAttempt
 
 import time
-
-
-class SeamActionAttemptError(Exception):
-    def __init__(self, message: str, action_attempt: ActionAttempt):
-        super().__init__(message)
-        self.name = self.__class__.__name__
-        self.action_attempt = action_attempt
-
-
-class SeamActionAttemptFailedError(SeamActionAttemptError):
-    def __init__(self, action_attempt: ActionAttempt):
-        super().__init__(action_attempt.error.message, action_attempt)
-        self.name = self.__class__.__name__
-        self.code = action_attempt.error.type
-
-
-class SeamActionAttemptTimeoutError(SeamActionAttemptError):
-    def __init__(self, action_attempt: ActionAttempt, timeout: str):
-        message = f"Timed out waiting for action attempt after {timeout}s"
-        super().__init__(message, action_attempt)
-        self.name = self.__class__.__name__
+from ..exceptions import SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
 
 
 class ActionAttempts(AbstractActionAttempts):
@@ -36,7 +16,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
@@ -65,7 +45,7 @@ class ActionAttempts(AbstractActionAttempts):
         *,
         action_attempt_id: str,
         timeout: Optional[float] = 5.0,
-        polling_interval: Optional[float] = 0.5,
+        polling_interval: Optional[float] = 0.5
     ) -> ActionAttempt:
         seam = self.seam
         time_waiting = 0.0
@@ -95,7 +75,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt: ActionAttempt,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         wait_decision = (
             self.seam.wait_for_action_attempt

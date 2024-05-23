@@ -1,6 +1,6 @@
-from seam.types import AbstractSeam as Seam
-from seam.routes.types import AbstractConnectWebviews, ConnectWebview
 from typing import Optional, Any, List, Dict, Union
+from ..models import AbstractSeam as Seam
+from .models import AbstractConnectWebviews, ConnectWebview
 
 
 class ConnectWebviews(AbstractConnectWebviews):
@@ -70,12 +70,15 @@ class ConnectWebviews(AbstractConnectWebviews):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         json_payload = {}
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if limit is not None:
+            json_payload["limit"] = limit
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
