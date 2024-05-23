@@ -6,7 +6,7 @@ from .constants import LTS_VERSION
 from .parse_options import parse_options
 from .routes import Routes
 from .models import AbstractSeam
-from .request import SeamHttpClient
+from .client import SeamHttpClient
 from .routes import Routes
 
 
