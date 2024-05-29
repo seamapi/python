@@ -5,7 +5,7 @@ import os
 from seam import Seam
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function")
 def fake_seam_server():
     script_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "start-fake-seam-server.js")
