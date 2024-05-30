@@ -29,7 +29,7 @@ def test_seam_http_constructor_interprets_single_string_argument_as_api_key():
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     endpoint = f"https://{r}.fakeseamconnect.seam.vc"
 
-    seam = Seam(api_key="seam_apikey1_token", endpoint=endpoint)
+    seam = Seam("seam_apikey1_token", endpoint=endpoint)
 
     assert seam is not None
 
