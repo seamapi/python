@@ -3,7 +3,21 @@ import subprocess
 import time
 import os
 from seam import Seam
-from contextlib import ExitStack
+from contextlib import contextmanager
+
+
+# Create a custom context manager to ensure the subprocess is terminated correctly
+@contextmanager
+def subprocess_popen(*args, **kwargs):
+    process = subprocess.Popen(*args, **kwargs)
+    try:
+        yield process
+    finally:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
 
 
 @pytest.fixture(scope="function")
@@ -12,17 +26,9 @@ def fake_seam_server():
         os.path.join(os.path.dirname(__file__), "start-fake-seam-server.js")
     )
 
-    with ExitStack() as stack:
-        # Start the fake-seam-connect server
-        process = stack.enter_context(
-            subprocess.Popen(
-                ["node", script_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-        )
-
+    with subprocess_popen(
+        ["node", script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    ) as process:
         # Allow some time for the server to start
         time.sleep(0.5)
 
@@ -36,13 +42,6 @@ def fake_seam_server():
             )
 
         yield endpoint
-
-        # Stop the server after the tests
-        process.terminate()
-        try:
-            process.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            process.kill()
 
 
 @pytest.fixture(scope="function")
