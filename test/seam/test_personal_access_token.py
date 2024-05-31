@@ -20,7 +20,7 @@ def test_seam_client_checks_personal_access_token_format():
         Seam.from_personal_access_token("ey", workspace_id)
 
 
-def test_seam_client_multi_workspace_checks_personal_access_token_format():
+def test_seam_multi_workspace_client_checks_personal_access_token_format():
     with pytest.raises(SeamHttpInvalidTokenError, match=r"Unknown"):
         SeamMultiWorkspace.from_personal_access_token("some-invalid-key-format")
 
