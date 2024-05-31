@@ -13,10 +13,10 @@ def find_free_port():
         return s.getsockname()[1]
 
 
-# Create a custom context manager to ensure the subprocess is terminated correctly
+# Create a custom context manager to ensure the fake server subprocess is terminated correctly
 @contextmanager
-def subprocess_popen(*args, **kwargs):
-    process = subprocess.Popen(*args, **kwargs)
+def subprocess_popen(*args):
+    process = subprocess.Popen(*args)
     try:
         yield process
     finally:
@@ -28,15 +28,11 @@ def subprocess_popen(*args, **kwargs):
 
 
 @pytest.fixture(scope="function")
-def fake_seam_server():
+def fake_seam_connect_server():
     port = find_free_port()
     os.environ["PORT"] = str(port)
 
-    with subprocess_popen(
-        ["npm", "run", "start:fake-seam-connect"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    ):
+    with subprocess_popen(["npm", "run", "start:fake-seam-connect"]):
         # Allow some time for the server to start
         time.sleep(0.5)
 
@@ -46,6 +42,6 @@ def fake_seam_server():
 
 
 @pytest.fixture(scope="function")
-def seam(fake_seam_server):
-    seam = Seam(endpoint=fake_seam_server, api_key="seam_apikey1_token")
+def seam(fake_seam_connect_server):
+    seam = Seam(endpoint=fake_seam_connect_server, api_key="seam_apikey1_token")
     yield seam
