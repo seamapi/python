@@ -3,7 +3,7 @@ import random
 import string
 from seam import Seam
 from seam.auth import SeamHttpInvalidTokenError
-from ..constants import TEST_API_KEY
+from test.constants import TEST_API_KEY
 
 
 def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(seam: Seam):

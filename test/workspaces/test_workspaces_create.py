@@ -1,7 +1,7 @@
 import random
 import string
 from seam import Seam, SeamMultiWorkspace
-from ..constants import TEST_PAT
+from test.constants import TEST_PAT
 
 
 def test_workspaces_create(seam: Seam):
