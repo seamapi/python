@@ -3,30 +3,31 @@ import random
 import string
 from seam import Seam
 from seam.auth import SeamHttpInvalidTokenError
+from ..constants import TEST_API_KEY
 
 
-def test_seam_http_from_api_key_returns_instance_authorized_with_api_key(seam: Seam):
+def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(seam: Seam):
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     endpoint = f"https://{r}.fakeseamconnect.seam.vc"
 
-    seam = Seam.from_api_key("seam_apikey1_token", endpoint=endpoint)
+    seam = Seam.from_api_key(TEST_API_KEY, endpoint=endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
 
 
-def test_seam_http_constructor_returns_instance_authorized_with_api_key():
+def test_seam_client_constructor_returns_instance_authorized_with_api_key():
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     endpoint = f"https://{r}.fakeseamconnect.seam.vc"
 
-    seam = Seam(api_key="seam_apikey1_token", endpoint=endpoint)
+    seam = Seam(api_key=TEST_API_KEY, endpoint=endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
 
 
-def test_seam_http_constructor_interprets_single_string_argument_as_api_key():
-    seam = Seam("seam_apikey1_token")
+def test_seam_client_constructor_interprets_single_string_argument_as_api_key():
+    seam = Seam(TEST_API_KEY)
 
     assert seam is not None
 
@@ -34,7 +35,7 @@ def test_seam_http_constructor_interprets_single_string_argument_as_api_key():
         Seam(api_key="some-invalid-key-format")
 
 
-def test_seam_http_checks_api_key_format():
+def test_seam_client_checks_api_key_format():
     with pytest.raises(SeamHttpInvalidTokenError, match=r"Unknown"):
         Seam.from_api_key("some-invalid-key-format")
 
