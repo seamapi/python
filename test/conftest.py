@@ -7,7 +7,13 @@ from .constants import TEST_API_KEY
 
 
 @pytest.fixture(scope="function")
-def seam():
+def test_endpoint():
     r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
-    seam = Seam(endpoint=f"https://{r}.fakeseamconnect.seam.vc", api_key=TEST_API_KEY)
+    endpoint = f"https://{r}.fakeseamconnect.seam.vc"
+    yield endpoint
+
+
+@pytest.fixture(scope="function")
+def seam(test_endpoint):
+    seam = Seam(endpoint=test_endpoint, api_key=TEST_API_KEY)
     yield seam

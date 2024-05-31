@@ -4,10 +4,9 @@ from seam import Seam, SeamMultiWorkspace
 from test.constants import TEST_PAT
 
 
-def test_workspaces_create(seam: Seam):
-    r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+def test_workspaces_create(test_endpoint):
     seam = SeamMultiWorkspace(
-        endpoint=f"https://{r}.fakeseamconnect.seam.vc",
+        endpoint=test_endpoint,
         personal_access_token=TEST_PAT,
     )
 

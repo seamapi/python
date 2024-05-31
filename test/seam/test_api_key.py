@@ -6,21 +6,19 @@ from seam.auth import SeamHttpInvalidTokenError
 from test.constants import TEST_API_KEY
 
 
-def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(seam: Seam):
-    r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
-    endpoint = f"https://{r}.fakeseamconnect.seam.vc"
-
-    seam = Seam.from_api_key(TEST_API_KEY, endpoint=endpoint)
+def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(
+    test_endpoint,
+):
+    seam = Seam.from_api_key(TEST_API_KEY, endpoint=test_endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
 
 
-def test_seam_client_constructor_returns_instance_authorized_with_api_key():
-    r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
-    endpoint = f"https://{r}.fakeseamconnect.seam.vc"
-
-    seam = Seam(api_key=TEST_API_KEY, endpoint=endpoint)
+def test_seam_client_constructor_returns_instance_authorized_with_api_key(
+    test_endpoint,
+):
+    seam = Seam(api_key=TEST_API_KEY, endpoint=test_endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
