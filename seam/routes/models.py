@@ -216,6 +216,7 @@ class AcsSystem:
     can_remove_acs_users_from_acs_access_groups: bool
     connected_account_ids: List[str]
     created_at: str
+    errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
     image_alt_text: str
@@ -223,6 +224,7 @@ class AcsSystem:
     name: str
     system_type: str
     system_type_display_name: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -239,6 +241,7 @@ class AcsSystem:
             ),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
+            errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             image_alt_text=d.get("image_alt_text", None),
@@ -246,6 +249,7 @@ class AcsSystem:
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -966,6 +970,10 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
         raise NotImplementedError()
 
@@ -1216,6 +1224,7 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         raise NotImplementedError()
