@@ -34,6 +34,8 @@ jobs:
         uses: ./.github/actions/setup
         with:
           python_version: ${{ matrix.python }}
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
       - name: Test
         run: make test
   lint:

@@ -5,9 +5,11 @@
   "scripts": {
     "generate": "node generate-routes.js",
     "postgenerate": "make format",
-    "format": "prettier --write --ignore-path .gitignore ."
+    "format": "prettier --write --ignore-path .gitignore .",
+    "start": "fake-seam-connect --seed"
   },
   "devDependencies": {
+    "@seamapi/fake-seam-connect": "1.65.5",
     "@seamapi/nextlove-sdk-generator": "1.13.1",
     "@seamapi/types": "1.178.0",
     "del": "^7.1.0",
