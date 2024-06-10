@@ -7,7 +7,7 @@ from seam import Seam
 from contextlib import contextmanager
 
 
-def find_free_port():
+def get_port():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("", 0))
         return s.getsockname()[1]
@@ -29,7 +29,7 @@ def subprocess_popen(*args):
 
 @pytest.fixture(scope="function")
 def fake_seam_connect_server():
-    port = find_free_port()
+    port = get_port()
     os.environ["PORT"] = str(port)
 
     with subprocess_popen(["npm", "run", "start:fake-seam-connect"]):
