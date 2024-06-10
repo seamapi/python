@@ -810,6 +810,7 @@ class Webhook:
 
 @dataclass
 class Workspace:
+    company_name: str
     connect_partner_name: str
     is_sandbox: bool
     name: str
@@ -818,6 +819,7 @@ class Workspace:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Workspace(
+            company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
             is_sandbox=d.get("is_sandbox", None),
             name=d.get("name", None),
@@ -1580,8 +1582,9 @@ class AbstractWorkspaces(abc.ABC):
     def create(
         self,
         *,
-        connect_partner_name: str,
         name: str,
+        company_name: Optional[str] = None,
+        connect_partner_name: Optional[str] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None
