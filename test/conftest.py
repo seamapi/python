@@ -32,7 +32,7 @@ def fake_seam_connect_server():
     port = get_port()
     os.environ["PORT"] = str(port)
 
-    with subprocess_popen(["npm", "run", "start:fake-seam-connect"]):
+    with subprocess_popen(["npm", "run", "start"]):
         # Allow some time for the server to start
         time.sleep(0.5)
 
