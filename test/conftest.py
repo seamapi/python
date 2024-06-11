@@ -53,5 +53,5 @@ def subprocess_popen(*args):
 
 
 def get_seed(endpoint):
-    seed_url = urljoin(endpoint, '/_fake/default_seed')
+    seed_url = urljoin(endpoint, "/_fake/default_seed")
     return requests.get(seed_url).json()
