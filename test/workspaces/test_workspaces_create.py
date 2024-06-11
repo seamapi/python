@@ -5,7 +5,7 @@ def test_workspaces_create(server):
     endpoint, seed = server
     seam = SeamMultiWorkspace(
         endpoint=endpoint,
-        personal_access_token=seed["seam_at1_shorttoken_longtoken"],
+        personal_access_token=seed["seam_at1_token"],
     )
 
     workspace = seam.workspaces.create(

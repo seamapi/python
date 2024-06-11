@@ -96,7 +96,7 @@ def test_seam_client_seam_api_key_env_variable_is_ignored_with_personal_access_t
     os.environ["SEAM_API_KEY"] = seed["seam_apikey1_token"]
 
     seam = Seam.from_personal_access_token(
-        seed["seam_at1_shorttoken_longtoken"],
+        seed["seam_at1_token"],
         seed["seed_workspace_1"],
         endpoint=endpoint,
     )
