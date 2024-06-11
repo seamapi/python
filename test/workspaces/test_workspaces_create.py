@@ -1,13 +1,11 @@
-import random
-import string
-from seam import Seam, SeamMultiWorkspace
-from test.constants import TEST_PAT
+from seam import SeamMultiWorkspace
 
 
-def test_workspaces_create(test_endpoint):
+def test_workspaces_create(server):
+    endpoint, seed = server
     seam = SeamMultiWorkspace(
-        endpoint=test_endpoint,
-        personal_access_token=TEST_PAT,
+        endpoint=endpoint,
+        personal_access_token=seed["seam_at1_shorttoken_longtoken"],
     )
 
     workspace = seam.workspaces.create(

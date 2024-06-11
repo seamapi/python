@@ -1,31 +1,31 @@
 import pytest
-import random
-import string
 from seam import Seam
 from seam.auth import SeamHttpInvalidTokenError
-from test.constants import TEST_API_KEY
 
 
 def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(
-    test_endpoint,
+    server,
 ):
-    seam = Seam.from_api_key(TEST_API_KEY, endpoint=test_endpoint)
+    endpoint, seed = server
+    seam = Seam.from_api_key(seed["seam_apikey1_token"], endpoint=endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
 
 
 def test_seam_client_constructor_returns_instance_authorized_with_api_key(
-    test_endpoint,
+    server,
 ):
-    seam = Seam(api_key=TEST_API_KEY, endpoint=test_endpoint)
+    endpoint, seed = server
+    seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
     devices = seam.devices.list()
 
     assert len(devices) > 0
 
 
-def test_seam_client_constructor_interprets_single_string_argument_as_api_key():
-    seam = Seam(TEST_API_KEY)
+def test_seam_client_constructor_interprets_single_string_argument_as_api_key(server):
+    _, seed = server
+    seam = Seam(seed["seam_apikey1_token"])
 
     assert seam is not None
 

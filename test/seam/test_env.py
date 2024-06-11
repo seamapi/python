@@ -1,10 +1,7 @@
 import os
 import pytest
-import random
-import string
 from seam import Seam
 from seam.options import SeamHttpInvalidOptionsError
-from test.constants import TEST_API_KEY, TEST_PAT
 
 
 # Cleanup environment variables before and after each test
@@ -21,17 +18,19 @@ def run_around_tests():
     cleanup_env()
 
 
-def test_seam_client_constructor_uses_seam_api_key_env_variable(test_endpoint):
-    os.environ["SEAM_API_KEY"] = TEST_API_KEY
-    seam = Seam(endpoint=test_endpoint)
+def test_seam_client_constructor_uses_seam_api_key_env_variable(server):
+    endpoint, seed = server
+    os.environ["SEAM_API_KEY"] = seed["seam_apikey1_token"]
+    seam = Seam(endpoint=endpoint)
 
     devices = seam.devices.list()
     assert len(devices) > 0
 
 
-def test_seam_client_api_key_option_overrides_env_variables(test_endpoint):
+def test_seam_client_api_key_option_overrides_env_variables(server):
+    endpoint, seed = server
     os.environ["SEAM_API_KEY"] = "some-invalid-api-key-1"
-    seam = Seam(api_key=TEST_API_KEY, endpoint=test_endpoint)
+    seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
 
     devices = seam.devices.list()
     assert len(devices) > 0
@@ -48,38 +47,42 @@ def test_seam_client_constructor_requires_seam_api_key_when_passed_no_argument()
         Seam()
 
 
-def test_seam_client_seam_endpoint_env_variable_is_used_first(test_endpoint):
+def test_seam_client_seam_endpoint_env_variable_is_used_first(server):
+    endpoint, seed = server
     os.environ["SEAM_API_URL"] = "https://example.com"
-    os.environ["SEAM_ENDPOINT"] = test_endpoint
-    seam = Seam(api_key=TEST_API_KEY)
+    os.environ["SEAM_ENDPOINT"] = endpoint
+    seam = Seam(api_key=seed["seam_apikey1_token"])
 
     devices = seam.devices.list()
     assert len(devices) > 0
 
 
-def test_seam_client_seam_api_url_env_variable_is_used_as_fallback(test_endpoint):
-    os.environ["SEAM_API_URL"] = test_endpoint
-    seam = Seam(api_key=TEST_API_KEY)
+def test_seam_client_seam_api_url_env_variable_is_used_as_fallback(server):
+    endpoint, seed = server
+    os.environ["SEAM_API_URL"] = endpoint
+    seam = Seam(api_key=seed["seam_apikey1_token"])
 
     devices = seam.devices.list()
     assert len(devices) > 0
 
 
-def test_seam_client_endpoint_option_overrides_env_variables(test_endpoint):
+def test_seam_client_endpoint_option_overrides_env_variables(server):
+    endpoint, seed = server
     os.environ["SEAM_API_URL"] = "https://example.com"
     os.environ["SEAM_ENDPOINT"] = "https://example.com"
-    seam = Seam(api_key=TEST_API_KEY, endpoint=test_endpoint)
+    seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
 
     devices = seam.devices.list()
     assert len(devices) > 0
 
 
 def test_seam_client_seam_endpoint_env_variable_is_used_with_from_api_key(
-    test_endpoint,
+    server,
 ):
+    endpoint, seed = server
     os.environ["SEAM_API_URL"] = "https://example.com"
-    os.environ["SEAM_ENDPOINT"] = test_endpoint
-    seam = Seam.from_api_key(TEST_API_KEY)
+    os.environ["SEAM_ENDPOINT"] = endpoint
+    seam = Seam.from_api_key(seed["seam_apikey1_token"])
 
     devices = seam.devices.list()
     assert len(devices) > 0
@@ -87,12 +90,15 @@ def test_seam_client_seam_endpoint_env_variable_is_used_with_from_api_key(
 
 @pytest.mark.xfail(reason="Fake does not support personal access token.")
 def test_seam_client_seam_api_key_env_variable_is_ignored_with_personal_access_token(
-    test_endpoint,
+    server,
 ):
-    os.environ["SEAM_API_KEY"] = TEST_API_KEY
+    endpoint, seed = server
+    os.environ["SEAM_API_KEY"] = seed["seam_apikey1_token"]
 
     seam = Seam.from_personal_access_token(
-        TEST_PAT, "e4203e37-e569-4a5a-bfb7-e3e8de66161d", endpoint=test_endpoint
+        seed["seam_at1_shorttoken_longtoken"],
+        seed["seed_workspace_1"],
+        endpoint=endpoint,
     )
 
     devices = seam.devices.list()
