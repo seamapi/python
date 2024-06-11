@@ -40,6 +40,7 @@ def fake_seam_connect_server():
 
         yield endpoint
 
+
 from .constants import TEST_API_KEY
 
 
