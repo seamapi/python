@@ -1,10 +1,35 @@
 import socket
+from urllib.parse import urljoin
 import pytest
 import subprocess
 import time
 import os
-from seam import Seam
 from contextlib import contextmanager
+import niquests as requests
+from seam import Seam
+
+
+@pytest.fixture(scope="function")
+def server():
+    port = get_port()
+    os.environ["PORT"] = str(port)
+
+    with subprocess_popen(["npm", "run", "start"]):
+        # Allow some time for the server to start
+        time.sleep(0.5)
+
+        endpoint = f"http://localhost:{port}"
+        seed = get_seed(endpoint)
+
+        yield endpoint, seed
+
+
+@pytest.fixture(scope="function")
+def seam(server):
+    endpoint, seed = server
+    seam = Seam(endpoint=endpoint, api_key=seed["seam_apikey1_token"])
+
+    yield seam
 
 
 def get_port():
@@ -27,21 +52,6 @@ def subprocess_popen(*args):
             process.kill()
 
 
-@pytest.fixture(scope="function")
-def fake_seam_connect_server():
-    port = get_port()
-    os.environ["PORT"] = str(port)
-
-    with subprocess_popen(["npm", "run", "start"]):
-        # Allow some time for the server to start
-        time.sleep(0.5)
-
-        endpoint = f"http://localhost:{port}"
-
-        yield endpoint
-
-
-@pytest.fixture(scope="function")
-def seam(fake_seam_connect_server):
-    seam = Seam(endpoint=fake_seam_connect_server, api_key="seam_apikey1_token")
-    yield seam
+def get_seed(endpoint):
+    seed_url = urljoin(endpoint, "/_fake/default_seed")
+    return requests.get(seed_url).json()

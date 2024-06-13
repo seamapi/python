@@ -1,13 +1,11 @@
-import random
-import string
-from seam import Seam, SeamMultiWorkspace
+from seam import SeamMultiWorkspace
 
 
-def test_workspaces_create(seam: Seam):
-    r = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+def test_workspaces_create(server):
+    endpoint, seed = server
     seam = SeamMultiWorkspace(
-        endpoint=f"https://{r}.fakeseamconnect.seam.vc",
-        personal_access_token="seam_at1_shorttoken_longtoken",
+        endpoint=endpoint,
+        personal_access_token=seed["seam_at1_token"],
     )
 
     workspace = seam.workspaces.create(
