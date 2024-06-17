@@ -13,18 +13,21 @@ class Workspaces(AbstractWorkspaces):
     def create(
         self,
         *,
-        connect_partner_name: str,
         name: str,
+        company_name: Optional[str] = None,
+        connect_partner_name: Optional[str] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None
     ) -> Workspace:
         json_payload = {}
 
-        if connect_partner_name is not None:
-            json_payload["connect_partner_name"] = connect_partner_name
         if name is not None:
             json_payload["name"] = name
+        if company_name is not None:
+            json_payload["company_name"] = company_name
+        if connect_partner_name is not None:
+            json_payload["connect_partner_name"] = connect_partner_name
         if is_sandbox is not None:
             json_payload["is_sandbox"] = is_sandbox
         if webview_logo_shape is not None:
