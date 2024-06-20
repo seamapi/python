@@ -69,6 +69,7 @@ class AcsAccessGroup:
     acs_access_group_id: str
     acs_system_id: str
     created_at: str
+    display_name: str
     external_type: str
     external_type_display_name: str
     name: str
@@ -84,6 +85,7 @@ class AcsAccessGroup:
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
             created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             name=d.get("name", None),
@@ -105,7 +107,9 @@ class AcsCredential:
     errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
+    is_latest_desired_state_synced_with_provider: bool
     is_multi_phone_sync_credential: bool
+    latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
     starts_at: str
     visionline_metadata: Dict[str, Any]
@@ -127,8 +131,14 @@ class AcsCredential:
             errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
+            is_latest_desired_state_synced_with_provider=d.get(
+                "is_latest_desired_state_synced_with_provider", None
+            ),
             is_multi_phone_sync_credential=d.get(
                 "is_multi_phone_sync_credential", None
+            ),
+            latest_desired_state_synced_with_provider_at=d.get(
+                "latest_desired_state_synced_with_provider_at", None
             ),
             parent_acs_credential_id=d.get("parent_acs_credential_id", None),
             starts_at=d.get("starts_at", None),
@@ -810,6 +820,7 @@ class Webhook:
 
 @dataclass
 class Workspace:
+    company_name: str
     connect_partner_name: str
     is_sandbox: bool
     name: str
@@ -818,6 +829,7 @@ class Workspace:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Workspace(
+            company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
             is_sandbox=d.get("is_sandbox", None),
             name=d.get("name", None),
@@ -1580,8 +1592,9 @@ class AbstractWorkspaces(abc.ABC):
     def create(
         self,
         *,
-        connect_partner_name: str,
         name: str,
+        company_name: Optional[str] = None,
+        connect_partner_name: Optional[str] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None
