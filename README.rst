@@ -6,8 +6,8 @@ Seam Python SDK
 .. |PyPI| image:: https://img.shields.io/pypi/v/seam.svg
    :target: https://pypi.python.org/pypi/seam
    :alt: PyPI
-.. |GitHub Actions| image:: https://github.com/seamapi/python-next/actions/workflows/check.yml/badge.svg
-   :target: https://github.com/seamapi/python-next/actions/workflows/check.yml
+.. |GitHub Actions| image:: https://github.com/seamapi/python/actions/workflows/check.yml/badge.svg
+   :target: https://github.com/seamapi/python/actions/workflows/check.yml
    :alt: GitHub Actions
 
 SDK for the Seam API written in Python.
@@ -267,7 +267,7 @@ Quickstart
 
 ::
 
-    $ git clone https://github.com/seamapi/python-next.git
+    $ git clone https://github.com/seamapi/python.git
     $ cd pypackage
     $ poetry install
 
@@ -287,9 +287,9 @@ Clone the project with
 
 ::
 
-    $ git clone https://github.com/seamapi/python-next.git
+    $ git clone https://github.com/seamapi/python.git
 
-.. __: https://github.com/seamapi/python-next
+.. __: https://github.com/seamapi/python
 
 Requirements
 ~~~~~~~~~~~~
@@ -358,7 +358,7 @@ This may be done on the web or using the `GitHub CLI`_ with
 
 .. _Poetry version: https://python-poetry.org/docs/cli/#version
 .. _GitHub CLI: https://cli.github.com/
-.. _version workflow_dispatch on GitHub Actions: https://github.com/seamapi/python-next/actions?query=workflow%3Aversion
+.. _version workflow_dispatch on GitHub Actions: https://github.com/seamapi/python/actions?query=workflow%3Aversion
 
 GitHub Actions
 --------------
@@ -394,7 +394,7 @@ Please submit and comment on bug reports and feature requests.
 
 To submit a patch:
 
-1. Fork it (https://github.com/seamapi/python-next/fork).
+1. Fork it (https://github.com/seamapi/python/fork).
 2. Create your feature branch (`git checkout -b my-new-feature`).
 3. Make changes.
 4. Commit your changes (`git commit -am 'Add some feature'`).

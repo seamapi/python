@@ -5,8 +5,8 @@ description = "SDK for the Seam API written in Python."
 authors = ["Seam Labs, Inc. <engineering@getseam.com>"]
 license = "MIT"
 readme = "README.rst"
-homepage = "https://github.com/seamapi/python-next"
-repository = "https://github.com/seamapi/python-next"
+homepage = "https://github.com/seamapi/python"
+repository = "https://github.com/seamapi/python"
 
 [tool.poetry.dependencies]
 python = "^3.9.0"
