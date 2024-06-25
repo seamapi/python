@@ -1,7 +1,7 @@
 import os
 import pytest
 from seam import Seam
-from seam.options import SeamHttpInvalidOptionsError
+from seam.options import SeamInvalidOptionsError
 
 
 # Cleanup environment variables before and after each test
@@ -43,7 +43,7 @@ def test_seam_client_api_key_option_as_first_argument_overrides_env_variables():
 
 
 def test_seam_client_constructor_requires_seam_api_key_when_passed_no_argument():
-    with pytest.raises(SeamHttpInvalidOptionsError, match=r"api_key"):
+    with pytest.raises(SeamInvalidOptionsError, match=r"api_key"):
         Seam()
 
 
