@@ -60,9 +60,7 @@ def get_auth_headers_for_api_key(api_key: str) -> dict:
         raise SeamInvalidTokenError("An Access Token cannot be used as an api_key")
 
     if is_publishable_key(api_key):
-        raise SeamInvalidTokenError(
-            "A Publishable Key cannot be used as an api_key"
-        )
+        raise SeamInvalidTokenError("A Publishable Key cannot be used as an api_key")
 
     if not is_seam_token(api_key):
         raise SeamInvalidTokenError(
@@ -76,9 +74,7 @@ def get_auth_headers_for_personal_access_token(
     personal_access_token: str, workspace_id: str
 ) -> dict:
     if is_jwt(personal_access_token):
-        raise SeamInvalidTokenError(
-            "A JWT cannot be used as a personal_access_token"
-        )
+        raise SeamInvalidTokenError("A JWT cannot be used as a personal_access_token")
 
     if is_client_session_token(personal_access_token):
         raise SeamInvalidTokenError(
@@ -105,9 +101,7 @@ def get_auth_headers_for_multi_workspace_personal_access_token(
     personal_access_token: str,
 ) -> dict:
     if is_jwt(personal_access_token):
-        raise SeamInvalidTokenError(
-            "A JWT cannot be used as a personal_access_token"
-        )
+        raise SeamInvalidTokenError("A JWT cannot be used as a personal_access_token")
 
     if is_client_session_token(personal_access_token):
         raise SeamInvalidTokenError(
