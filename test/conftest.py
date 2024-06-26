@@ -5,7 +5,6 @@ import pytest
 import subprocess
 import os
 from contextlib import contextmanager
-import niquests as requests
 from niquests import Session
 from seam import Seam
 
