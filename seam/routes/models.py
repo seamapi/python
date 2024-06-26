@@ -2059,7 +2059,7 @@ class AbstractRoutes(abc.ABC):
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
     devices: AbstractDevices
-    events: AbstractEvents
+    events: AbstractSeamEvents
     locks: AbstractLocks
     networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
