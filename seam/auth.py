@@ -1,8 +1,8 @@
 from typing import Optional
 from .options import (
-    SeamHttpInvalidOptionsError,
-    is_seam_http_options_with_api_key,
-    is_seam_http_options_with_personal_access_token,
+    SeamInvalidOptionsError,
+    is_seam_options_with_api_key,
+    is_seam_options_with_personal_access_token,
 )
 from .token import (
     is_jwt,
@@ -15,9 +15,9 @@ from .token import (
 )
 
 
-class SeamHttpInvalidTokenError(Exception):
+class SeamInvalidTokenError(Exception):
     def __init__(self, message):
-        super().__init__(f"SeamHttp received an invalid token: {message}")
+        super().__init__(f"Seam received an invalid token: {message}")
 
 
 def get_auth_headers(
@@ -25,13 +25,13 @@ def get_auth_headers(
     personal_access_token: Optional[str] = None,
     workspace_id: Optional[str] = None,
 ):
-    if is_seam_http_options_with_api_key(
+    if is_seam_options_with_api_key(
         api_key=api_key,
         personal_access_token=personal_access_token,
     ):
         return get_auth_headers_for_api_key(api_key)
 
-    if is_seam_http_options_with_personal_access_token(
+    if is_seam_options_with_personal_access_token(
         personal_access_token=personal_access_token,
         api_key=api_key,
         workspace_id=workspace_id,
@@ -40,7 +40,7 @@ def get_auth_headers(
             personal_access_token, workspace_id
         )
 
-    raise SeamHttpInvalidOptionsError(
+    raise SeamInvalidOptionsError(
         "Must specify an api_key or personal_access_token. "
         "Attempted reading configuration from the environment, "
         "but the environment variable SEAM_API_KEY is not set."
@@ -49,23 +49,21 @@ def get_auth_headers(
 
 def get_auth_headers_for_api_key(api_key: str) -> dict:
     if is_client_session_token(api_key):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             "A Client Session Token cannot be used as an api_key"
         )
 
     if is_jwt(api_key):
-        raise SeamHttpInvalidTokenError("A JWT cannot be used as an api_key")
+        raise SeamInvalidTokenError("A JWT cannot be used as an api_key")
 
     if is_access_token(api_key):
-        raise SeamHttpInvalidTokenError("An Access Token cannot be used as an api_key")
+        raise SeamInvalidTokenError("An Access Token cannot be used as an api_key")
 
     if is_publishable_key(api_key):
-        raise SeamHttpInvalidTokenError(
-            "A Publishable Key cannot be used as an api_key"
-        )
+        raise SeamInvalidTokenError("A Publishable Key cannot be used as an api_key")
 
     if not is_seam_token(api_key):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             f"Unknown or invalid api_key format, expected token to start with {TOKEN_PREFIX}"
         )
 
@@ -76,22 +74,20 @@ def get_auth_headers_for_personal_access_token(
     personal_access_token: str, workspace_id: str
 ) -> dict:
     if is_jwt(personal_access_token):
-        raise SeamHttpInvalidTokenError(
-            "A JWT cannot be used as a personal_access_token"
-        )
+        raise SeamInvalidTokenError("A JWT cannot be used as a personal_access_token")
 
     if is_client_session_token(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             "A Client Session Token cannot be used as a personal_access_token"
         )
 
     if is_publishable_key(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             "A Publishable Key cannot be used as a personal_access_token"
         )
 
     if not is_access_token(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             f"Unknown or invalid personal_access_token format, expected token to start with {ACCESS_TOKEN_PREFIX}"
         )
 
@@ -105,22 +101,20 @@ def get_auth_headers_for_multi_workspace_personal_access_token(
     personal_access_token: str,
 ) -> dict:
     if is_jwt(personal_access_token):
-        raise SeamHttpInvalidTokenError(
-            "A JWT cannot be used as a personal_access_token"
-        )
+        raise SeamInvalidTokenError("A JWT cannot be used as a personal_access_token")
 
     if is_client_session_token(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             "A Client Session Token cannot be used as a personal_access_token"
         )
 
     if is_publishable_key(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             "A Publishable Key cannot be used as a personal_access_token"
         )
 
     if not is_access_token(personal_access_token):
-        raise SeamHttpInvalidTokenError(
+        raise SeamInvalidTokenError(
             f"Unknown or invalid personal_access_token format, expected token to start with {ACCESS_TOKEN_PREFIX}"
         )
 
