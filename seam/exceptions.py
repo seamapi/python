@@ -15,7 +15,9 @@ class SeamHttpApiError(Exception):
 
 class SeamHttpUnauthorizedError(SeamHttpApiError):
     def __init__(self, request_id: str):
-        super().__init__({"type": "unauthorized", "message": "Unauthorized"}, 401, request_id)
+        super().__init__(
+            {"type": "unauthorized", "message": "Unauthorized"}, 401, request_id
+        )
 
 
 class SeamHttpInvalidInputError(SeamHttpApiError):
