@@ -1,9 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractEvents, Event
+from .models import AbstractSeamEvents, SeamEvent
 
 
-class Events(AbstractEvents):
+class SeamEvents(AbstractSeamEvents):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -14,7 +14,7 @@ class Events(AbstractEvents):
         device_id: Optional[str] = None,
         event_id: Optional[str] = None,
         event_type: Optional[str] = None
-    ) -> Event:
+    ) -> SeamEvent:
         json_payload = {}
 
         if device_id is not None:
@@ -26,7 +26,7 @@ class Events(AbstractEvents):
 
         res = self.client.post("/events/get", json=json_payload)
 
-        return Event.from_dict(res["event"])
+        return SeamEvent.from_dict(res["event"])
 
     def list(
         self,
@@ -41,7 +41,7 @@ class Events(AbstractEvents):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None
-    ) -> List[Event]:
+    ) -> List[SeamEvent]:
         json_payload = {}
 
         if access_code_id is not None:
@@ -67,4 +67,4 @@ class Events(AbstractEvents):
 
         res = self.client.post("/events/list", json=json_payload)
 
-        return [Event.from_dict(item) for item in res["events"]]
+        return [SeamEvent.from_dict(item) for item in res["events"]]
