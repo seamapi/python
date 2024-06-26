@@ -16,7 +16,7 @@ def server():
 
     with subprocess_popen(["npm", "run", "start"]):
         # Allow some time for the server to start
-        time.sleep(0.5)
+        time.sleep(1)
 
         endpoint = f"http://localhost:{port}"
         seed = get_seed(endpoint)
