@@ -8,7 +8,7 @@ from .client_sessions import ClientSessions
 from .connect_webviews import ConnectWebviews
 from .connected_accounts import ConnectedAccounts
 from .devices import Devices
-from .events import Events
+from .events import SeamEvents
 from .locks import Locks
 from .networks import Networks
 from .noise_sensors import NoiseSensors
@@ -28,7 +28,7 @@ class Routes(AbstractRoutes):
         self.connect_webviews = ConnectWebviews(client=client, defaults=defaults)
         self.connected_accounts = ConnectedAccounts(client=client, defaults=defaults)
         self.devices = Devices(client=client, defaults=defaults)
-        self.events = Events(client=client, defaults=defaults)
+        self.events = SeamEvents(client=client, defaults=defaults)
         self.locks = Locks(client=client, defaults=defaults)
         self.networks = Networks(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)

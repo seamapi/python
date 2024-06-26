@@ -564,7 +564,7 @@ class EnrollmentAutomation:
 
 
 @dataclass
-class Event:
+class SeamEvent:
     acs_credential_id: str
     acs_system_id: str
     acs_user_id: str
@@ -580,7 +580,7 @@ class Event:
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
-        return Event(
+        return SeamEvent(
             acs_credential_id=d.get("acs_credential_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
@@ -1311,7 +1311,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractEvents(abc.ABC):
+class AbstractSeamEvents(abc.ABC):
 
     @abc.abstractmethod
     def get(
@@ -1320,7 +1320,7 @@ class AbstractEvents(abc.ABC):
         device_id: Optional[str] = None,
         event_id: Optional[str] = None,
         event_type: Optional[str] = None
-    ) -> Event:
+    ) -> SeamEvent:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1337,7 +1337,7 @@ class AbstractEvents(abc.ABC):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None
-    ) -> List[Event]:
+    ) -> List[SeamEvent]:
         raise NotImplementedError()
 
 
@@ -2059,7 +2059,7 @@ class AbstractRoutes(abc.ABC):
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
     devices: AbstractDevices
-    events: AbstractEvents
+    events: AbstractSeamEvents
     locks: AbstractLocks
     networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
