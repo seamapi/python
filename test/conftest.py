@@ -51,11 +51,7 @@ def subprocess_popen(*args):
 
 
 def get_seed(endpoint):
-    retries = Retry(
-        connect=5,
-        total=none,
-        backoff_factor=0.1
-    )
+    retries = Retry(connect=5, total=none, backoff_factor=0.1)
     session = Session(retries=retries)
     seed_url = urljoin(endpoint, "/_fake/default_seed")
     return session.get(seed_url).json()
