@@ -1,6 +1,6 @@
 import pytest
 from seam import Seam
-from seam.auth import SeamHttpInvalidTokenError
+from seam.auth import SeamInvalidTokenError
 
 
 def test_seam_client_from_api_key_returns_instance_authorized_with_api_key(
@@ -29,19 +29,19 @@ def test_seam_client_constructor_interprets_single_string_argument_as_api_key(se
 
     assert seam is not None
 
-    with pytest.raises(SeamHttpInvalidTokenError, match=r"api_key"):
+    with pytest.raises(SeamInvalidTokenError, match=r"api_key"):
         Seam(api_key="some-invalid-key-format")
 
 
 def test_seam_client_checks_api_key_format():
-    with pytest.raises(SeamHttpInvalidTokenError, match=r"Unknown"):
+    with pytest.raises(SeamInvalidTokenError, match=r"Unknown"):
         Seam.from_api_key("some-invalid-key-format")
 
-    with pytest.raises(SeamHttpInvalidTokenError, match=r"JWT"):
+    with pytest.raises(SeamInvalidTokenError, match=r"JWT"):
         Seam.from_api_key("ey")
 
-    with pytest.raises(SeamHttpInvalidTokenError, match=r"Client Session Token"):
+    with pytest.raises(SeamInvalidTokenError, match=r"Client Session Token"):
         Seam.from_api_key("seam_cst_token")
 
-    with pytest.raises(SeamHttpInvalidTokenError, match=r"Access Token"):
+    with pytest.raises(SeamInvalidTokenError, match=r"Access Token"):
         Seam.from_api_key("seam_at")
