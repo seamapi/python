@@ -35,7 +35,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         personal_access_token: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ):
         """
         Parameters
@@ -76,7 +76,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         personal_access_token: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         return cls(
             personal_access_token=personal_access_token,

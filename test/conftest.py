@@ -1,11 +1,11 @@
 import socket
 from urllib.parse import urljoin
+from urllib3.util import Retry
 import pytest
 import subprocess
-import time
 import os
 from contextlib import contextmanager
-import niquests as requests
+from niquests import Session
 from seam import Seam
 
 
@@ -15,12 +15,8 @@ def server():
     os.environ["PORT"] = str(port)
 
     with subprocess_popen(["npm", "run", "start"]):
-        # Allow some time for the server to start
-        time.sleep(0.5)
-
         endpoint = f"http://localhost:{port}"
         seed = get_seed(endpoint)
-
         yield endpoint, seed
 
 
@@ -53,5 +49,7 @@ def subprocess_popen(*args):
 
 
 def get_seed(endpoint):
+    retries = Retry(connect=5, total=None, backoff_factor=0.1)
+    session = Session(retries=retries)
     seed_url = urljoin(endpoint, "/_fake/default_seed")
-    return requests.get(seed_url).json()
+    return session.get(seed_url).json()
