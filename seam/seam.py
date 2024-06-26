@@ -24,7 +24,7 @@ class Seam(AbstractSeam):
         personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ):
         """
         Parameters
@@ -61,7 +61,7 @@ class Seam(AbstractSeam):
         api_key: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         return cls(
             api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
@@ -74,7 +74,7 @@ class Seam(AbstractSeam):
         workspace_id: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         return cls(
             personal_access_token=personal_access_token,
