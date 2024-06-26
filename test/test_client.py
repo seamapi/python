@@ -39,7 +39,7 @@ def test_seam_http_throws_invalid_input_error(server):
     seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
 
     with pytest.raises(SeamHttpInvalidInputError) as exc_info:
-        seam.devices.client.post("/devices/list", json={"device_ids": 4242})
+        seam.devices.get(device_id=4242)
     err = exc_info.value
     assert err.status_code == 400
     assert err.code == "invalid_input"

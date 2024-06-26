@@ -34,12 +34,13 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         return self._handle_response(response)
 
     def _handle_response(self, response: requests.Response):
-        if 200 <= response.status_code < 300:
-            if "application/json" in response.headers.get("content-type", ""):
-                return response.json()
-            return response.text
+        if not 200 <= response.status_code < 300:
+            self._handle_error_response(response)
 
-        self._handle_error_response(response)
+        if "application/json" in response.headers.get("content-type", ""):
+            return response.json()
+
+        return response.text
 
     def _handle_error_response(self, response: requests.Response):
         status_code = response.status_code
