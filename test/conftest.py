@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 from urllib3.util import Retry
 import pytest
 import subprocess
-import time
 import os
 from contextlib import contextmanager
 import niquests as requests
