@@ -19,6 +19,10 @@ class AbstractSeamHttpClient(abc.ABC):
     def _handle_response(self, response: requests.Response):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def _handle_error_response(self, response: requests.Response):
+        raise NotImplementedError
+
 
 class AbstractSeam(AbstractRoutes):
     lts_version: str
