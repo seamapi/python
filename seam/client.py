@@ -49,19 +49,18 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         if status_code == 401:
             raise SeamHttpUnauthorizedError(request_id)
 
-        if status_code != 200:
-            error = response.json().get("error", {})
-            error_type = error.get("type", "unknown_error")
-            error_message = error.get("message", "Unknown error")
-            error_data = error.get("data", None)
+        error = response.json().get("error", {})
+        error_type = error.get("type", "unknown_error")
+        error_message = error.get("message", "Unknown error")
+        error_data = error.get("data", None)
 
-            error_details = {
-                "type": error_type,
-                "message": error_message,
-                "data": error_data,
-            }
+        error_details = {
+            "type": error_type,
+            "message": error_message,
+            "data": error_data,
+        }
 
-            if error_type == "invalid_input":
-                raise SeamHttpInvalidInputError(error_details, status_code, request_id)
+        if error_type == "invalid_input":
+            raise SeamHttpInvalidInputError(error_details, status_code, request_id)
 
-            raise SeamHttpApiError(error_details, status_code, request_id)
+        raise SeamHttpApiError(error_details, status_code, request_id)
