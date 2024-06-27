@@ -480,6 +480,8 @@ class Device:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_simulate_connection: bool
+    can_simulate_disconnection: bool
     can_simulate_removal: bool
     capabilities_supported: List[str]
     connected_account_id: str
@@ -507,6 +509,8 @@ class Device:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_simulate_connection=d.get("can_simulate_connection", None),
+            can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -642,6 +646,8 @@ class Phone:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_simulate_connection: bool
+    can_simulate_disconnection: bool
     can_simulate_removal: bool
     capabilities_supported: List[str]
     created_at: str
@@ -668,6 +674,8 @@ class Phone:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_simulate_connection=d.get("can_simulate_connection", None),
+            can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             capabilities_supported=d.get("capabilities_supported", None),
             created_at=d.get("created_at", None),
@@ -739,6 +747,8 @@ class UnmanagedDevice:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_simulate_connection: bool
+    can_simulate_disconnection: bool
     can_simulate_removal: bool
     capabilities_supported: List[str]
     connected_account_id: str
@@ -762,6 +772,8 @@ class UnmanagedDevice:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_simulate_connection=d.get("can_simulate_connection", None),
+            can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -1272,6 +1284,14 @@ class AbstractConnectedAccounts(abc.ABC):
 
 
 class AbstractDevicesSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def connect(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def disconnect(self, *, device_id: str) -> None:
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def remove(self, *, device_id: str) -> None:
