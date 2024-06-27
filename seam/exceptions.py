@@ -1,24 +1,29 @@
+from typing import Any, Dict
 from niquests import Response
 from .routes.models import ActionAttempt
 
 
 # HTTP
 class SeamHttpApiError(Exception):
-    def __init__(
-        self,
-        response: Response,
-    ):
-        self.status_code = response.status_code
-        self.request_id = response.headers.get("seam-request-id", None)
+    def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+        super().__init__(error["message"])
+        self.code = error["type"]
+        self.status_code = status_code
+        self.request_id = request_id
+        self.data = error.get("data")
 
-        self.metadata = None
-        if "application/json" in response.headers["content-type"]:
-            parsed_response = response.json()
-            self.metadata = parsed_response.get("error", None)
 
+class SeamHttpUnauthorizedError(SeamHttpApiError):
+    def __init__(self, request_id: str):
         super().__init__(
-            f"SeamApiException: status={self.status_code}, request_id={self.request_id}, metadata={self.metadata}"
+            {"type": "unauthorized", "message": "Unauthorized"}, 401, request_id
         )
+
+
+class SeamHttpInvalidInputError(SeamHttpApiError):
+    def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+        super().__init__(error, status_code, request_id)
+        self.code = "invalid_input"
 
 
 # Action Attempt

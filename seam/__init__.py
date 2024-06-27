@@ -7,6 +7,8 @@ from .options import SeamInvalidOptionsError
 from .auth import SeamInvalidTokenError
 from .exceptions import (
     SeamHttpApiError,
+    SeamHttpUnauthorizedError,
+    SeamHttpInvalidInputError,
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,
