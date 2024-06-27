@@ -19,6 +19,10 @@ class AbstractSeamHttpClient(abc.ABC):
     def _handle_response(self, response: requests.Response):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def _handle_error_response(self, response: requests.Response):
+        raise NotImplementedError
+
 
 class AbstractSeam(AbstractRoutes):
     lts_version: str
@@ -32,7 +36,7 @@ class AbstractSeam(AbstractRoutes):
         personal_access_token: Optional[str] = None,
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ):
         raise NotImplementedError
 
@@ -43,7 +47,7 @@ class AbstractSeam(AbstractRoutes):
         api_key: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         raise NotImplementedError
 
@@ -55,7 +59,7 @@ class AbstractSeam(AbstractRoutes):
         workspace_id: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         raise NotImplementedError
 
@@ -90,7 +94,7 @@ class AbstractSeamMultiWorkspace:
         personal_access_token: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ):
         raise NotImplementedError
 
@@ -101,6 +105,6 @@ class AbstractSeamMultiWorkspace:
         personal_access_token: str,
         *,
         endpoint: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = False,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
         raise NotImplementedError

@@ -3,10 +3,12 @@
 
 from .seam import Seam
 from .seam_multi_workspace import SeamMultiWorkspace
-from .options import SeamHttpInvalidOptionsError
-from .auth import SeamHttpInvalidTokenError
+from .options import SeamInvalidOptionsError
+from .auth import SeamInvalidTokenError
 from .exceptions import (
     SeamHttpApiError,
+    SeamHttpUnauthorizedError,
+    SeamHttpInvalidInputError,
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,

@@ -99,7 +99,7 @@ Personal Access Token
 
 A Personal Access Token is scoped to a Seam Console user.
 Obtain one from the Seam Console.
-A workspace id must be provided when using this method and all requests will be scoped to that workspace.
+A workspace ID must be provided when using this method and all requests will be scoped to that workspace.
 
 .. code-block:: python
 
@@ -118,43 +118,15 @@ A workspace id must be provided when using this method and all requests will be 
 Action Attempts
 ~~~~~~~~~~~~~~~
 
-Some asynchronous operations, e.g., unlocking a door, return an `action attempt <https://docs.seam.co/latest/core-concepts/action-attempts>`_.
-Seam tracks the progress of requested operation and updates the action attempt.
+Some asynchronous operations, e.g., unlocking a door, return an
+`action attempt <https://docs.seam.co/latest/core-concepts/action-attempts>`_.
+Seam tracks the progress of the requested operation and updates the action attempt
+when it succeeds or fails.
 
 To make working with action attempts more convenient for applications,
-this library provides the ``wait_for_action_attempt`` option.
+this library provides the ``wait_for_action_attempt`` option and enables it by default.
 
-Pass the option per-request,
-
-.. code-block:: python
-
-  seam.locks.unlock_door(
-      device_id=device_id,
-      wait_for_action_attempt=True,
-  )
-
-or set the default option for the client:
-
-.. code-block:: python
-
-  seam = Seam(
-      api_key="your-api-key",
-      wait_for_action_attempt=True,
-  )
-
-  seam.locks.unlock_door(device_id=device_id)
-
-If you already have an action attempt id
-and want to wait for it to resolve, simply use
-
-.. code-block:: python
-
-  seam.action_attempts.get(
-      action_attempt_id=action_attempt_id,
-      wait_for_action_attempt=True,
-  )
-
-Using the ``wait_for_action_attempt`` option:
+When the ``wait_for_action_attempt`` option is enable, the SDK:
 
 - Polls the action attempt up to the ``timeout``
   at the ``polling_interval`` (both in seconds).
@@ -162,6 +134,44 @@ Using the ``wait_for_action_attempt`` option:
 - Raises a ``SeamActionAttemptFailedError`` if the action attempt is unsuccessful.
 - Raises a ``SeamActionAttemptTimeoutError`` if the action attempt is still pending when the ``timeout`` is reached.
 - Both errors expose an ``action_attempt`` property.
+
+If you already have an action attempt ID
+and want to wait for it to resolve, simply use
+
+.. code-block:: python
+
+  seam.action_attempts.get(action_attempt_id=action_attempt_id)
+
+Or, to get the current state of an action attempt by ID without waiting,
+
+.. code-block:: python
+
+  seam.action_attempts.get(
+      action_attempt_id=action_attempt_id,
+      wait_for_action_attempt=False,
+  )
+
+To disable this behavior, set the default option for the client,
+
+.. code-block:: python
+
+  seam = Seam(
+      api_key="your-api-key",
+      wait_for_action_attempt=False,
+  )
+
+  seam.locks.unlock_door(device_id=device_id)
+
+or the behavior may be configured per-request,
+
+.. code-block:: python
+
+  seam.locks.unlock_door(
+      device_id=device_id,
+      wait_for_action_attempt=False,
+  )
+
+The ``polling_interval`` and ``timeout`` may be configured for the client or per-request, for example
 
 .. code-block:: python
 
