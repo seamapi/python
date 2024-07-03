@@ -4,7 +4,6 @@ from seam.client import SeamHttpClient, SDK_HEADERS
 from importlib.metadata import version
 
 
-
 @pytest.fixture
 def mock_requests_session():
     with patch("seam.client.requests.Session") as mock_session:
