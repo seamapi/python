@@ -8,7 +8,7 @@ from .models import AbstractSeam
 from .client import SeamHttpClient
 
 
-class Seam(AbstractSeam, Routes):
+class Seam(AbstractSeam):
     """
     Initial Seam class used to interact with Seam API
     """
