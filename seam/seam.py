@@ -54,7 +54,9 @@ class Seam(AbstractSeam):
         )
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
-        self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers, retry_config=retry_config)
+        self.client = SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, retry_config=retry_config
+        )
 
         Routes.__init__(self, client=self.client, defaults=defaults)
 
@@ -68,7 +70,10 @@ class Seam(AbstractSeam):
         retry_config: Optional[Retry] = None,
     ) -> Self:
         return cls(
-            api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt, retry_config=retry_config
+            api_key,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retry_config=retry_config,
         )
 
     @classmethod
