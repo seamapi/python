@@ -1,7 +1,8 @@
-from typing import Dict
+from typing import Dict, Optional
 from urllib.parse import urljoin
 import niquests as requests
 from importlib.metadata import version
+from urllib3.util import Retry
 
 from .constants import LTS_VERSION
 from .exceptions import (
@@ -19,8 +20,14 @@ SDK_HEADERS = {
 
 
 class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
-    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
-        super().__init__(**kwargs)
+    def __init__(
+        self,
+        base_url: str,
+        auth_headers: Dict[str, str],
+        retry_config: Optional[Retry] = None,
+        **kwargs
+    ):
+        super().__init__(retries=retry_config, **kwargs)
 
         self.base_url = base_url
         headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
