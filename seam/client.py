@@ -29,6 +29,7 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
 
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)
+        kwargs["headers"] = {**self.headers, **kwargs.get("headers", {})}
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)

@@ -1,38 +1,41 @@
-import pytest
-from unittest.mock import patch, MagicMock
-from seam.client import SeamHttpClient, SDK_HEADERS
+from unittest.mock import patch, Mock
+from seam.client import SeamHttpClient
+import niquests
+import uuid
 from importlib.metadata import version
+from seam.constants import LTS_VERSION
 
 
-@pytest.fixture
-def mock_requests_session():
-    with patch("seam.client.requests.Session") as mock_session:
-        yield mock_session
-
-
-def test_sdk_headers_attached(server, mock_requests_session):
-    endpoint = server
-    # Create a SeamHttpClient instance
+def test_seam_http_client_request(server):
+    endpoint, seed = server
     client = SeamHttpClient(
         base_url=endpoint,
-        auth_headers={"Authorization": "Bearer seam_test_token"},
+        auth_headers={"Authorization": f"Bearer {seed['seam_apikey1_token']}"},
     )
+    device_id = str(uuid.uuid4())
 
-    # Mock the request method
-    mock_response = MagicMock()
+    mock_response = Mock()
     mock_response.status_code = 200
     mock_response.headers = {"content-type": "application/json"}
-    mock_response.json.return_value = {"data": "test"}
+    mock_response_data = {"device": {"device_id": device_id}}
+    mock_response.json.return_value = mock_response_data
 
-    mock_requests_session.return_value.request.return_value = mock_response
+    with patch.object(
+        niquests.Session, "request", return_value=mock_response
+    ) as mock_request:
+        response = client.request("POST", "/devices/get", json={"device_id": device_id})
 
-    # Make a request using the client
-    client.post("/devices/list")
+        mock_request.assert_called_once()
+        args, _ = mock_request.call_args
 
-    # Check if the request was made with the correct headers
-    _, kwargs = mock_requests_session.return_value.request.call_args
-    headers = kwargs.get("headers", {})
+        assert args[0] == "POST"
+        assert args[1] == f"{endpoint}/devices/get"
 
-    assert headers.get("seam-sdk-name") == SDK_HEADERS["seam-sdk-name"]
-    assert headers.get("seam-sdk-version") == version("seam")
-    assert headers.get("seam-lts-version") == SDK_HEADERS["seam-lts-version"]
+        assert "headers" in mock_request.call_args.kwargs
+        passed_headers = mock_request.call_args.kwargs["headers"]
+
+        assert passed_headers["seam-sdk-name"] == "seamapi/python"
+        assert passed_headers["seam-sdk-version"] == version("seam")
+        assert passed_headers["seam-lts-version"] == LTS_VERSION
+
+        assert response == mock_response_data
