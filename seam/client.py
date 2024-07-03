@@ -27,12 +27,17 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         retry_config: Optional[Retry] = None,
         **kwargs
     ):
-        super().__init__(retries=retry_config, **kwargs)
+        super().__init__(**kwargs)
 
         self.base_url = base_url
         headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
 
         self.headers.update(headers)
+
+        if retry_config is not None:
+            adapter = requests.adapters.HTTPAdapter(max_retries=retry_config)
+            self.mount("http://", adapter)
+            self.mount("https://", adapter)
 
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)
