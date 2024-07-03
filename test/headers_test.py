@@ -1,7 +1,7 @@
-from unittest.mock import patch, Mock
-from seam.client import SeamHttpClient
 import niquests
 import uuid
+from unittest.mock import patch, Mock
+from seam.client import SeamHttpClient
 from importlib.metadata import version
 from seam.constants import LTS_VERSION
 
