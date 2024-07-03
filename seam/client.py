@@ -33,11 +33,7 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
 
         self.headers.update(headers)
-
-        if retry_config is not None:
-            adapter = requests.adapters.HTTPAdapter(max_retries=retry_config)
-            self.mount("http://", adapter)
-            self.mount("https://", adapter)
+        self.retries = retry_config
 
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)
