@@ -42,7 +42,6 @@ class Seam(AbstractSeam, Routes):
 
         self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        self.api_key = api_key
         auth_headers, endpoint = parse_options(
             api_key=api_key,
             personal_access_token=personal_access_token,
