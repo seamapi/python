@@ -1,17 +1,14 @@
 import niquests
 import uuid
 from unittest.mock import patch, Mock
-from seam.client import SeamHttpClient
+from seam import Seam
 from importlib.metadata import version
 from seam.constants import LTS_VERSION
 
 
 def test_seam_http_client_request(server):
     endpoint, seed = server
-    client = SeamHttpClient(
-        base_url=endpoint,
-        auth_headers={"Authorization": f"Bearer {seed['seam_apikey1_token']}"},
-    )
+    seam = Seam.from_api_key(seed["seam_apikey1_token"], endpoint=endpoint)
     device_id = str(uuid.uuid4())
 
     mock_response = Mock()
@@ -23,7 +20,7 @@ def test_seam_http_client_request(server):
     with patch.object(
         niquests.Session, "request", return_value=mock_response
     ) as mock_request:
-        response = client.request("POST", "/devices/get", json={"device_id": device_id})
+        response = seam.client.post("/devices/get", json={"device_id": device_id})
 
         mock_request.assert_called_once()
         args, _ = mock_request.call_args
