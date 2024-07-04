@@ -60,11 +60,6 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
             auth_headers=auth_headers,
         )
 
-        self.client = SeamHttpClient(
-            base_url=endpoint,
-            auth_headers=auth_headers,
-        )
-
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
         self._workspaces = Workspaces(client=self.client, defaults=defaults)
