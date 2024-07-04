@@ -314,7 +314,7 @@ class ActionAttempt:
     action_attempt_id: str
     action_type: str
     error: Dict[str, Any]
-    result: str
+    result: Any
     status: str
 
     @staticmethod
