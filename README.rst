@@ -171,7 +171,8 @@ or the behavior may be configured per-request:
       wait_for_action_attempt=False,
   )
 
-The ``polling_interval`` and ``timeout`` may be configured for the client or per-request. For example:
+The ``polling_interval`` and ``timeout`` may be configured for the client or per-request.
+For example:
 
 .. code-block:: python
 
