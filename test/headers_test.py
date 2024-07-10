@@ -28,11 +28,14 @@ def test_seam_http_client_request(server):
         assert args[0] == "POST"
         assert args[1] == f"{endpoint}/devices/get"
 
-        assert "headers" in mock_request.call_args.kwargs
-        passed_headers = mock_request.call_args.kwargs["headers"]
+        passed_headers = mock_request.call_args.kwargs["headers"] or {}
+        request_headers = {
+            **seam.client.headers,
+            **passed_headers,
+        }
 
-        assert passed_headers["seam-sdk-name"] == "seamapi/python"
-        assert passed_headers["seam-sdk-version"] == version("seam")
-        assert passed_headers["seam-lts-version"] == LTS_VERSION
+        assert request_headers["seam-sdk-name"] == "seamapi/python"
+        assert request_headers["seam-sdk-version"] == version("seam")
+        assert request_headers["seam-lts-version"] == LTS_VERSION
 
         assert response == mock_response_data
