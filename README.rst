@@ -103,7 +103,7 @@ A workspace ID must be provided when using this method and all requests will be 
 
 .. code-block:: python
 
-  # Pass as an option the constructor
+  # Pass as an option to the constructor
   seam = Seam(
       personal_access_token="your-personal-access-token",
       workspace_id="your-workspace-id",
@@ -126,7 +126,7 @@ when it succeeds or fails.
 To make working with action attempts more convenient for applications,
 this library provides the ``wait_for_action_attempt`` option and enables it by default.
 
-When the ``wait_for_action_attempt`` option is enable, the SDK:
+When the ``wait_for_action_attempt`` option is enabled, the SDK:
 
 - Polls the action attempt up to the ``timeout``
   at the ``polling_interval`` (both in seconds).
@@ -151,7 +151,7 @@ Or, to get the current state of an action attempt by ID without waiting,
       wait_for_action_attempt=False,
   )
 
-To disable this behavior, set the default option for the client,
+To disable this behavior, set the default option for the client:
 
 .. code-block:: python
 
@@ -162,7 +162,7 @@ To disable this behavior, set the default option for the client,
 
   seam.locks.unlock_door(device_id=device_id)
 
-or the behavior may be configured per-request,
+or the behavior may be configured per-request:
 
 .. code-block:: python
 
@@ -171,7 +171,8 @@ or the behavior may be configured per-request,
       wait_for_action_attempt=False,
   )
 
-The ``polling_interval`` and ``timeout`` may be configured for the client or per-request, for example
+The ``polling_interval`` and ``timeout`` may be configured for the client or per-request.
+For example:
 
 .. code-block:: python
 
@@ -210,7 +211,7 @@ A Personal Access Token is scoped to a Seam Console user. Obtain one from the Se
 
 .. code-block:: python
 
-  # Pass as an option the constructor
+  # Pass as an option to the constructor
   seam = SeamMultiWorkspace(personal_access_token="your-personal-access-token")
 
   # Use the factory method
