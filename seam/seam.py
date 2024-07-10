@@ -13,13 +13,33 @@ class Seam(AbstractSeam):
     Main class for interacting with the Seam API.
 
     This class provides methods to authenticate and interact with various Seam API endpoints,
-    including devices, access codes, action_attempts, and more.
+    including devices, access codes, action_attempts, and more. It supports authentication via API key or personal access token.
 
     Attributes:
     ----------
         lts_version (str): The long-term support (LTS) version of the Seam Python SDK.
         defaults (Dict[str, Any]): Default settings for API requests.
         client (SeamHttpClient): The HTTP client used for making API requests.
+        wait_for_action_attempt (Union[bool, Dict[str, float]]): Controls whether to wait for an action attempt to complete.
+
+    Inherited Attributes from Routes class:
+    --------------------------------
+        access_codes (AccessCodes): Interface for access code-related operations.
+        acs (Acs): Interface for access control system operations.
+        action_attempts (ActionAttempts): Interface for action attempt operations.
+        client_sessions (ClientSessions): Interface for client session operations.
+        connect_webviews (ConnectWebviews): Interface for connect webview operations.
+        connected_accounts (ConnectedAccounts): Interface for connected account operations.
+        devices (Devices): Interface for device-related operations.
+        events (SeamEvents): Interface for event-related operations.
+        locks (Locks): Interface for lock-related operations.
+        networks (Networks): Interface for network-related operations.
+        noise_sensors (NoiseSensors): Interface for noise sensor operations.
+        phones (Phones): Interface for phone-related operations.
+        thermostats (Thermostats): Interface for thermostat operations.
+        user_identities (UserIdentities): Interface for user identity operations.
+        webhooks (Webhooks): Interface for webhook operations.
+        workspaces (Workspaces): Interface for workspace operations.
 
     For more information about the Seam API, visit https://docs.seam.co/
     """
@@ -65,6 +85,9 @@ class Seam(AbstractSeam):
             automatically determined based on which parameter is provided.
             If neither api_key nor personal_access_token is provided, the client
             will attempt to read the SEAM_API_KEY environment variable.
+
+            This constructor also initializes the Routes class, which provides
+            specific API route implementations for various Seam API endpoints.
         """
 
         self.lts_version = Seam.lts_version
