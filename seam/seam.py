@@ -10,7 +10,18 @@ from .client import SeamHttpClient
 
 class Seam(AbstractSeam):
     """
-    Initial Seam class used to interact with Seam API
+    Main class for interacting with the Seam API.
+
+    This class provides methods to authenticate and interact with various Seam API endpoints,
+    including devices, access codes, action_attempts, and more.
+
+    Attributes:
+    ----------
+        lts_version (str): The long-term support (LTS) version of the Seam Python SDK.
+        defaults (Dict[str, Any]): Default settings for API requests.
+        client (SeamHttpClient): The HTTP client used for making API requests.
+
+    For more information about the Seam API, visit https://docs.seam.co/
     """
 
     lts_version: str = LTS_VERSION
@@ -26,18 +37,34 @@ class Seam(AbstractSeam):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ):
         """
-        Parameters
+        Initialize a Seam client instance.
+
+        This method sets up the Seam client with the provided authentication credentials and configuration options. It supports two authentication methods: API key or personal access token.
+
+        Parameters:
         ----------
-        api_key : str, optional
-          API key.
-        personal_access_token : str, optional
-          Personal access token.
-        workspace_id : str, optional
-          Workspace id.
-        endpoint : str, optional
-          The API endpoint to which the request should be sent.
-        wait_for_action_attempt : bool or dict, optional
-          Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
+            api_key (Optional[str]): The API key for authenticating with Seam. Mutually exclusive with personal_access_token.
+            personal_access_token (Optional[str]): A personal access token for authenticating with Seam. Mutually exclusive with api_key.
+            workspace_id (Optional[str]): The ID of the workspace to interact with. Required when using a personal access token.
+            endpoint (Optional[str]): The custom API endpoint URL. If not provided, the default Seam API endpoint will be used.
+            wait_for_action_attempt (Optional[Union[bool, Dict[str, float]]]): Controls whether to wait for an action attempt to complete. Can be a boolean or a dictionary with 'timeout' and 'poll_interval' keys. Defaults to True.
+
+        Raises:
+        ------
+            SeamInvalidOptionsError: If neither api_key nor personal_access_token is provided, or if workspace_id is missing when using a personal access token.
+            SeamInvalidTokenError: If the provided API key or personal access token format is invalid.
+            SeamHttpApiError: For general API errors, including unexpected server responses.
+            SeamHttpUnauthorizedError: When the provided authentication credentials (api_key or personal_access_token) are invalid.
+            SeamHttpInvalidInputError: When the API request contains invalid input data.
+            SeamActionAttemptFailedError: When an action attempt fails to complete successfully (only when wait_for_action_attempt is enabled).
+            SeamActionAttemptTimeoutError: When an action attempt exceeds the specified timeout duration (only when wait_for_action_attempt is enabled).
+
+        Note:
+        -----
+            The authentication method (api_key or personal_access_token) is
+            automatically determined based on which parameter is provided.
+            If neither api_key nor personal_access_token is provided, the client
+            will attempt to read the SEAM_API_KEY environment variable.
         """
 
         self.lts_version = Seam.lts_version
@@ -62,6 +89,25 @@ class Seam(AbstractSeam):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
+        """
+        Create a Seam instance using an API key.
+
+        This class method is a convenience constructor for creating a Seam instance authenticated with an API key.
+
+        Parameters:
+        ----------
+            api_key (str): The API key for authenticating with Seam. Mutually exclusive with personal_access_token.
+            endpoint (Optional[str]): The custom API endpoint URL. If not provided, the default Seam API endpoint will be used.
+            wait_for_action_attempt (Optional[Union[bool, Dict[str, float]]]): Controls whether to wait for an action attempt to complete. Can be a boolean or a dictionary with 'timeout' and 'poll_interval' keys. Defaults to True.
+
+        Returns:
+        --------
+            Self: A new instance of the Seam class authenticated with the provided API key.
+
+        Example:
+        --------
+            seam = Seam.from_api_key("your-api-key-here")
+        """
         return cls(
             api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
         )
@@ -75,6 +121,27 @@ class Seam(AbstractSeam):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
     ) -> Self:
+        """
+        Create a Seam instance using a personal access token.
+
+        This class method is a convenience constructor for creating a Seam
+        instance authenticated with a personal access token.
+
+        Parameters:
+        ----------
+            personal_access_token (str): The personal access token for authenticating with Seam.
+            workspace_id (str): The ID of the workspace to interact with.
+            endpoint (Optional[str]): The custom API endpoint URL. If not provided, the default Seam API endpoint will be used.
+            wait_for_action_attempt (Optional[Union[bool, Dict[str, float]]]): Controls whether to wait for an action attempt to complete. Can be a boolean or a dictionary with 'timeout' and 'poll_interval' keys. Defaults to True.
+
+        Returns:
+        --------
+            Self: A new instance of the Seam class authenticated with the provided personal access token.
+
+        Example:
+        --------
+            seam = Seam.from_personal_access_token("your-token-here", "workspace-id")
+        """
         return cls(
             personal_access_token=personal_access_token,
             workspace_id=workspace_id,
