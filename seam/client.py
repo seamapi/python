@@ -18,13 +18,15 @@ SDK_HEADERS = {
     "seam-lts-version": LTS_VERSION,
 }
 
+DEFAULT_RETRIES = Retry()
+
 
 class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
     def __init__(
         self,
         base_url: str,
         auth_headers: Dict[str, str],
-        retries: Optional[Retry] = None,
+        retries: Optional[Retry] = DEFAULT_RETRIES,
         **kwargs
     ):
         super().__init__(**kwargs)
