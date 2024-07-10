@@ -8,6 +8,7 @@ class SeamWebhook:
         self._webhook = Webhook(secret)
 
     def verify(self, payload: str, headers: Dict[str, str]) -> SeamEvent:
-        res = self._webhook.verify(payload, headers)
+        normalized_headers = {k.lower(): v for k, v in headers.items()}
+        res = self._webhook.verify(payload, normalized_headers)
 
         return SeamEvent.from_dict(res)
