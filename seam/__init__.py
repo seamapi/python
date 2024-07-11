@@ -14,3 +14,4 @@ from .exceptions import (
     SeamActionAttemptTimeoutError,
 )
 from .seam_webhook import SeamWebhook
+from svix.webhooks import WebhookVerificationError
