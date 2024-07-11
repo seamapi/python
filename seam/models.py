@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union
 import niquests as requests
 from typing_extensions import Self
 import abc
@@ -26,7 +26,6 @@ class AbstractSeamHttpClient(abc.ABC):
 
 class AbstractSeam(AbstractRoutes):
     lts_version: str
-    defaults: Dict[str, Any]
 
     @abc.abstractmethod
     def __init__(

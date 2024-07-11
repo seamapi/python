@@ -18,9 +18,9 @@ class Seam(AbstractSeam):
     :cvar lts_version: The long-term support (LTS) version of the Seam
         Python SDK
     :vartype lts_version: str
-    :cvar defaults: Default settings for API requests
+    :ivar defaults: Default settings for API requests
     :vartype defaults: Dict[str, Any]
-    :cvar client: The HTTP client used for making API requests
+    :ivar client: The HTTP client used for making API requests
     :vartype client: SeamHttpClient
     :ivar wait_for_action_attempt: Controls whether to wait for an action
         attempt to complete
@@ -30,7 +30,6 @@ class Seam(AbstractSeam):
     """
 
     lts_version: str = LTS_VERSION
-    defaults: Dict[str, Any]
 
     def __init__(
         self,
@@ -90,11 +89,11 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+        self.defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
         self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
 
-        Routes.__init__(self, client=self.client, defaults=defaults)
+        Routes.__init__(self, client=self.client, defaults=self.defaults)
 
     @classmethod
     def from_api_key(
