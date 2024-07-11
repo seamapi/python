@@ -4,14 +4,13 @@ from .routes.models import SeamEvent
 
 
 class SeamWebhook:
-    """Verifies and parses incoming Seam webhook events using the Svix library.
-
-    :param secret: The secret key used for webhook verification
-    :type secret: str
-    """
+    """Verifies and parses incoming Seam webhook events using the Svix library."""
 
     def __init__(self, secret: str):
-        """Constructor method"""
+        """
+        :param secret: The secret key used for webhook verification
+        :type secret: str
+        """
         self._webhook = Webhook(secret)
 
     def verify(self, payload: str, headers: Dict[str, str]) -> SeamEvent:
