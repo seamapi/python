@@ -5,10 +5,7 @@ from .routes.models import SeamEvent
 
 class SeamWebhook:
     """
-    A class to handle Seam webhook verification.
-
-    This class provides functionality to verify incoming webhook payloads
-    using the Svix library.
+    Verifies and parses incoming Seam webhook events using the Svix library.
     """
 
     def __init__(self, secret: str):
