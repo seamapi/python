@@ -8,7 +8,7 @@ class SeamWebhook:
 
     def __init__(self, secret: str):
         """
-        :param secret: The secret key used for webhook verification
+        :param secret: The secret key used for webhook verification.
         :type secret: str
         """
         self._webhook = Webhook(secret)
