@@ -19,13 +19,13 @@ class SeamWebhook:
         This method normalizes the headers, verifies the payload using the Svix
         Webhook instance, and returns a SeamEvent object.
 
-        :param payload: The webhook event payload
+        :param payload: The raw HTTP request body.
         :type payload: str
-        :param headers: A dictionary of HTTP headers
+        :param headers: The TTP request headers.
         :type headers: Dict[str, str]
-        :return: An instance of SeamEvent created from the verified payload
+        :return: The SeamEvent object created from the verified payload.
         :rtype: SeamEvent
-        :raises WebhookVerificationError: If the webhook signature verification fails
+        :raises WebhookVerificationError: If the webhook signature verification fails.
         """
         normalized_headers = {k.lower(): v for k, v in headers.items()}
         res = self._webhook.verify(payload, normalized_headers)
