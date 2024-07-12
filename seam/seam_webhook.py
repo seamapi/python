@@ -14,9 +14,9 @@ class SeamWebhook:
         self._webhook = Webhook(secret)
 
     def verify(self, payload: str, headers: Dict[str, str]) -> SeamEvent:
-        """Verify the incoming headers and webhook event payload.
+        """Verify and parse an incoming HTTP webhook request.
 
-        This method normalizes the headers, verifies the payload using the Svix
+        Normalizes the headers, verifies the payload using the Svix
         Webhook instance, and returns a SeamEvent object.
 
         :param payload: The raw HTTP request body.
