@@ -67,18 +67,6 @@ class Seam(AbstractSeam):
             when using a personal access token
         :raises SeamInvalidTokenError: If the provided API key or personal
             access token format is invalid
-        :raises SeamHttpApiError: For general API errors, including
-            unexpected server responses
-        :raises SeamHttpUnauthorizedError: When the provided authentication
-            credentials (api_key or personal_access_token) are invalid
-        :raises SeamHttpInvalidInputError: When the API request contains
-            invalid input data
-        :raises SeamActionAttemptFailedError: When an action attempt fails to
-            complete successfully (only when wait_for_action_attempt is
-            enabled)
-        :raises SeamActionAttemptTimeoutError: When an action attempt exceeds
-            the specified timeout duration (only when wait_for_action_attempt
-            is enabled)
         """
 
         self.lts_version = Seam.lts_version
