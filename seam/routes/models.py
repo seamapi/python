@@ -13,7 +13,7 @@ class AccessCode:
     created_at: str
     device_id: str
     ends_at: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     is_backup: bool
     is_backup_access_code_available: bool
     is_external_modification_allowed: bool
@@ -27,7 +27,7 @@ class AccessCode:
     starts_at: str
     status: str
     type: str
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -453,9 +453,9 @@ class ConnectedAccount:
     connected_account_id: str
     created_at: str
     custom_metadata: Dict[str, Any]
-    errors: Any
+    errors: List[Dict[str, Any]]
     user_identifier: Dict[str, Any]
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -715,13 +715,13 @@ class UnmanagedAccessCode:
     created_at: str
     device_id: str
     ends_at: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     is_managed: bool
     name: str
     starts_at: str
     status: str
     type: str
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
