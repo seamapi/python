@@ -21,7 +21,7 @@ class SeamWebhook:
 
         :param payload: The raw HTTP request body.
         :type payload: str
-        :param headers: The TTP request headers.
+        :param headers: The HTTP request headers.
         :type headers: Dict[str, str]
         :return: The SeamEvent object created from the verified payload.
         :rtype: SeamEvent
