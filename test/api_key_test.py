@@ -30,7 +30,7 @@ def test_seam_client_constructor_interprets_single_string_argument_as_api_key(se
     assert seam is not None
 
     with pytest.raises(SeamInvalidTokenError, match=r"api_key"):
-        Seam(api_key="some-invalid-key-format")
+        Seam("some-invalid-key-format")
 
 
 def test_seam_client_checks_api_key_format():
