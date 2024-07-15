@@ -88,7 +88,9 @@ class AcsCredentials(AbstractAcsCredentials):
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        is_multi_phone_sync_credential: Optional[bool] = None
+        created_before: Optional[str] = None,
+        is_multi_phone_sync_credential: Optional[bool] = None,
+        limit: Optional[float] = None
     ) -> List[AcsCredential]:
         json_payload = {}
 
@@ -98,10 +100,14 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+        if created_before is not None:
+            json_payload["created_before"] = created_before
         if is_multi_phone_sync_credential is not None:
             json_payload["is_multi_phone_sync_credential"] = (
                 is_multi_phone_sync_credential
             )
+        if limit is not None:
+            json_payload["limit"] = limit
 
         res = self.client.post("/acs/credentials/list", json=json_payload)
 
