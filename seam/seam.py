@@ -1,5 +1,6 @@
 from typing import Any, Optional, Union, Dict
 from typing_extensions import Self
+from urllib3.util.retry import Retry
 
 from .constants import LTS_VERSION
 from .parse_options import parse_options
@@ -24,6 +25,7 @@ class Seam(AbstractSeam):
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ):
         """
         Parameters
@@ -38,6 +40,8 @@ class Seam(AbstractSeam):
           The API endpoint to which the request should be sent.
         wait_for_action_attempt : bool or dict, optional
           Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
+        retries : urllib3.util.Retry, optional
+          Configuration for retry behavior on failed requests.
         """
 
         self.lts_version = Seam.lts_version
@@ -50,7 +54,9 @@ class Seam(AbstractSeam):
         )
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
-        self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
+        self.client = SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, retries=retries
+        )
 
         Routes.__init__(self, client=self.client, defaults=defaults)
 
@@ -61,9 +67,13 @@ class Seam(AbstractSeam):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ) -> Self:
         return cls(
-            api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
+            api_key,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
         )
 
     @classmethod
@@ -74,10 +84,12 @@ class Seam(AbstractSeam):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ) -> Self:
         return cls(
             personal_access_token=personal_access_token,
             workspace_id=workspace_id,
             endpoint=endpoint,
             wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
         )
