@@ -270,6 +270,30 @@ e.g., testing or proxy setups.
 
 Either pass the ``api_url`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
 
+Configuring retry behavior
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can configure the retry behavior of the Seam client by passing a ``urllib3.util.Retry`` object to the constructor.
+
+By default, the Seam client uses urllib3's default retry behavior configuration ``Retry()``.
+
+To set custom retry logic:
+
+.. code-block:: python
+
+    from urllib3.util import Retry
+    from seam import Seam
+
+    custom_retries = Retry(
+        total=5,
+        backoff_factor=0.2,
+        status_forcelist=[500, 502, 503, 504, 429]
+    )
+
+    seam = Seam(api_key="your-api-key", retries=custom_retries)
+
+Adjust these parameters based on your specific needs. The client will automatically handle retries for failed requests according to the provided configuration.
+
 Development and Testing
 -----------------------
 
