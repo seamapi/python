@@ -277,7 +277,9 @@ class AcsUser:
     external_type_display_name: str
     full_name: str
     hid_acs_system_id: str
+    is_latest_desired_state_synced_with_provider: bool
     is_suspended: bool
+    latest_desired_state_synced_with_provider_at: str
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
@@ -299,7 +301,13 @@ class AcsUser:
             external_type_display_name=d.get("external_type_display_name", None),
             full_name=d.get("full_name", None),
             hid_acs_system_id=d.get("hid_acs_system_id", None),
+            is_latest_desired_state_synced_with_provider=d.get(
+                "is_latest_desired_state_synced_with_provider", None
+            ),
             is_suspended=d.get("is_suspended", None),
+            latest_desired_state_synced_with_provider_at=d.get(
+                "latest_desired_state_synced_with_provider_at", None
+            ),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
