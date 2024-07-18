@@ -765,6 +765,7 @@ class UnmanagedDevice:
     device_type: Any
     errors: List[Dict[str, Any]]
     is_managed: bool
+    location: Dict[str, Any]
     properties: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -790,6 +791,7 @@ class UnmanagedDevice:
             device_type=d.get("device_type", None),
             errors=d.get("errors", None),
             is_managed=d.get("is_managed", None),
+            location=DeepAttrDict(d.get("location", None)),
             properties=DeepAttrDict(d.get("properties", None)),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
@@ -1278,7 +1280,10 @@ class AbstractConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     def list(
-        self, *, custom_metadata_has: Optional[Dict[str, Any]] = None
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
 
