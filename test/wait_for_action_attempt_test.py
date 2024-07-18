@@ -140,7 +140,7 @@ def test_wait_for_action_attempt_times_out(server):
     with pytest.raises(SeamActionAttemptTimeoutError) as exc_info:
         seam.action_attempts.get(
             action_attempt_id=action_attempt.action_attempt_id,
-            wait_for_action_attempt={"timeout": 100},
+            wait_for_action_attempt={"timeout": 0.1},
         )
 
     assert exc_info.value.action_attempt == action_attempt
@@ -200,7 +200,7 @@ def test_wait_for_action_attempt_times_out_if_waiting_for_polling_interval(serve
     with pytest.raises(SeamActionAttemptTimeoutError) as exc_info:
         seam.action_attempts.get(
             action_attempt_id=action_attempt.action_attempt_id,
-            wait_for_action_attempt={"timeout": 500, "polling_interval": 10000},
+            wait_for_action_attempt={"timeout": 0.5, "polling_interval": 5},
         )
 
     assert exc_info.value.action_attempt == action_attempt
