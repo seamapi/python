@@ -1,5 +1,6 @@
 import pytest
 from threading import Timer
+from seam.exceptions import SeamActionAttemptTimeoutError
 from seam import Seam
 
 
@@ -116,3 +117,30 @@ def test_wait_for_action_attempt_returns_successful_action_attempt(server):
     )
 
     assert resolved_action_attempt == successful_action_attempt
+
+
+def test_wait_for_action_attempt_times_out(server):
+    endpoint, seed = server
+    seam = Seam.from_api_key(
+        seed["seam_apikey1_token"], endpoint=endpoint, wait_for_action_attempt=False
+    )
+
+    action_attempt = seam.locks.unlock_door(device_id=seed["august_device_1"])
+
+    assert action_attempt.status == "pending"
+
+    seam.client.post(
+        "/_fake/update_action_attempt",
+        json={
+            "action_attempt_id": action_attempt.action_attempt_id,
+            "status": "pending",
+        },
+    )
+
+    with pytest.raises(SeamActionAttemptTimeoutError) as exc_info:
+        seam.action_attempts.get(
+            action_attempt_id=action_attempt.action_attempt_id,
+            wait_for_action_attempt={"timeout": 100},
+        )
+
+    assert exc_info.value.action_attempt == action_attempt
