@@ -37,7 +37,7 @@ def poll_until_ready(
 
         action_attempt = get_action_attempt(client, action_attempt_id)
 
-    if action_attempt.status == "failed":
+    if action_attempt.status == "error":
         raise SeamActionAttemptFailedError(action_attempt)
 
     return action_attempt
