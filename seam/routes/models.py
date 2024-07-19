@@ -539,6 +539,13 @@ class Device:
 
 @dataclass
 class DeviceProvider:
+    can_program_offline_access_codes: bool
+    can_program_online_access_codes: bool
+    can_remotely_lock: bool
+    can_remotely_unlock: bool
+    can_simulate_connection: bool
+    can_simulate_disconnection: bool
+    can_simulate_removal: bool
     device_provider_name: str
     display_name: str
     image_url: str
@@ -547,6 +554,17 @@ class DeviceProvider:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return DeviceProvider(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
+            can_program_online_access_codes=d.get(
+                "can_program_online_access_codes", None
+            ),
+            can_remotely_lock=d.get("can_remotely_lock", None),
+            can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_simulate_connection=d.get("can_simulate_connection", None),
+            can_simulate_disconnection=d.get("can_simulate_disconnection", None),
+            can_simulate_removal=d.get("can_simulate_removal", None),
             device_provider_name=d.get("device_provider_name", None),
             display_name=d.get("display_name", None),
             image_url=d.get("image_url", None),
