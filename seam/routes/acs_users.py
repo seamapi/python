@@ -81,6 +81,8 @@ class AcsUsers(AbstractAcsUsers):
         self,
         *,
         acs_system_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
@@ -89,6 +91,10 @@ class AcsUsers(AbstractAcsUsers):
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if created_before is not None:
+            json_payload["created_before"] = created_before
+        if limit is not None:
+            json_payload["limit"] = limit
         if user_identity_email_address is not None:
             json_payload["user_identity_email_address"] = user_identity_email_address
         if user_identity_id is not None:
