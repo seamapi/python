@@ -1121,6 +1121,8 @@ class AbstractAcsUsers(abc.ABC):
         self,
         *,
         acs_system_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
