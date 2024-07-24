@@ -285,6 +285,7 @@ class AcsUser:
     user_identity_full_name: str
     user_identity_id: str
     user_identity_phone_number: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -313,6 +314,7 @@ class AcsUser:
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
