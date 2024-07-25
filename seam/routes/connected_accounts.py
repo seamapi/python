@@ -35,12 +35,17 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         return ConnectedAccount.from_dict(res["connected_account"])
 
     def list(
-        self, *, custom_metadata_has: Optional[Dict[str, Any]] = None
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         json_payload = {}
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if user_identifier_key is not None:
+            json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.client.post("/connected_accounts/list", json=json_payload)
 

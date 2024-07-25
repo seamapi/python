@@ -1,5 +1,6 @@
 from typing import Any, Optional, Union, Dict
 from typing_extensions import Self
+from urllib3.util.retry import Retry
 
 from .constants import LTS_VERSION
 from .parse_options import parse_options
@@ -39,6 +40,7 @@ class Seam(AbstractSeam):
         workspace_id: Optional[str] = None,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ):
         """Initialize a Seam client instance.
 
@@ -61,6 +63,8 @@ class Seam(AbstractSeam):
             action attempt to complete. Can be a boolean or a dictionary with
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[urllib3.util.Retry]
 
         :raises SeamInvalidOptionsError: If neither api_key nor
             personal_access_token is provided, or if workspace_id is missing
@@ -79,7 +83,9 @@ class Seam(AbstractSeam):
         )
         self.defaults = {"wait_for_action_attempt": wait_for_action_attempt}
 
-        self.client = SeamHttpClient(base_url=endpoint, auth_headers=auth_headers)
+        self.client = SeamHttpClient(
+            base_url=endpoint, auth_headers=auth_headers, retries=retries
+        )
 
         Routes.__init__(self, client=self.client, defaults=self.defaults)
 
@@ -90,6 +96,7 @@ class Seam(AbstractSeam):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ) -> Self:
         """Create a Seam instance using an API key.
 
@@ -114,7 +121,10 @@ class Seam(AbstractSeam):
         >>> seam = Seam.from_api_key("your-api-key-here")
         """
         return cls(
-            api_key, endpoint=endpoint, wait_for_action_attempt=wait_for_action_attempt
+            api_key,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
         )
 
     @classmethod
@@ -125,6 +135,7 @@ class Seam(AbstractSeam):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ) -> Self:
         """Create a Seam instance using a personal access token.
 
@@ -156,4 +167,5 @@ class Seam(AbstractSeam):
             workspace_id=workspace_id,
             endpoint=endpoint,
             wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
         )

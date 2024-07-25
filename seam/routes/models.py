@@ -13,7 +13,7 @@ class AccessCode:
     created_at: str
     device_id: str
     ends_at: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     is_backup: bool
     is_backup_access_code_available: bool
     is_external_modification_allowed: bool
@@ -27,7 +27,7 @@ class AccessCode:
     starts_at: str
     status: str
     type: str
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -277,12 +277,15 @@ class AcsUser:
     external_type_display_name: str
     full_name: str
     hid_acs_system_id: str
+    is_latest_desired_state_synced_with_provider: bool
     is_suspended: bool
+    latest_desired_state_synced_with_provider_at: str
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
     user_identity_id: str
     user_identity_phone_number: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -299,12 +302,19 @@ class AcsUser:
             external_type_display_name=d.get("external_type_display_name", None),
             full_name=d.get("full_name", None),
             hid_acs_system_id=d.get("hid_acs_system_id", None),
+            is_latest_desired_state_synced_with_provider=d.get(
+                "is_latest_desired_state_synced_with_provider", None
+            ),
             is_suspended=d.get("is_suspended", None),
+            latest_desired_state_synced_with_provider_at=d.get(
+                "latest_desired_state_synced_with_provider_at", None
+            ),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -453,9 +463,9 @@ class ConnectedAccount:
     connected_account_id: str
     created_at: str
     custom_metadata: Dict[str, Any]
-    errors: Any
+    errors: List[Dict[str, Any]]
     user_identifier: Dict[str, Any]
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -531,6 +541,13 @@ class Device:
 
 @dataclass
 class DeviceProvider:
+    can_program_offline_access_codes: bool
+    can_program_online_access_codes: bool
+    can_remotely_lock: bool
+    can_remotely_unlock: bool
+    can_simulate_connection: bool
+    can_simulate_disconnection: bool
+    can_simulate_removal: bool
     device_provider_name: str
     display_name: str
     image_url: str
@@ -539,6 +556,17 @@ class DeviceProvider:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return DeviceProvider(
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
+            can_program_online_access_codes=d.get(
+                "can_program_online_access_codes", None
+            ),
+            can_remotely_lock=d.get("can_remotely_lock", None),
+            can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_simulate_connection=d.get("can_simulate_connection", None),
+            can_simulate_disconnection=d.get("can_simulate_disconnection", None),
+            can_simulate_removal=d.get("can_simulate_removal", None),
             device_provider_name=d.get("device_provider_name", None),
             display_name=d.get("display_name", None),
             image_url=d.get("image_url", None),
@@ -715,13 +743,13 @@ class UnmanagedAccessCode:
     created_at: str
     device_id: str
     ends_at: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     is_managed: bool
     name: str
     starts_at: str
     status: str
     type: str
-    warnings: Any
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -757,6 +785,7 @@ class UnmanagedDevice:
     device_type: Any
     errors: List[Dict[str, Any]]
     is_managed: bool
+    location: Dict[str, Any]
     properties: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -782,6 +811,7 @@ class UnmanagedDevice:
             device_type=d.get("device_type", None),
             errors=d.get("errors", None),
             is_managed=d.get("is_managed", None),
+            location=DeepAttrDict(d.get("location", None)),
             properties=DeepAttrDict(d.get("properties", None)),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
@@ -989,7 +1019,9 @@ class AbstractAcsCredentials(abc.ABC):
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        is_multi_phone_sync_credential: Optional[bool] = None
+        created_before: Optional[str] = None,
+        is_multi_phone_sync_credential: Optional[bool] = None,
+        limit: Optional[float] = None
     ) -> List[AcsCredential]:
         raise NotImplementedError()
 
@@ -1091,6 +1123,8 @@ class AbstractAcsUsers(abc.ABC):
         self,
         *,
         acs_system_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
@@ -1268,7 +1302,10 @@ class AbstractConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     def list(
-        self, *, custom_metadata_has: Optional[Dict[str, Any]] = None
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
 
@@ -2027,6 +2064,26 @@ class AbstractNoiseSensors(abc.ABC):
     @property
     @abc.abstractmethod
     def simulate(self) -> AbstractNoiseSensorsSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None,
+        include_if: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
         raise NotImplementedError()
 
 

@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional, Union
 import niquests as requests
 from typing_extensions import Self
+from urllib3.util import Retry
 
 from .auth import get_auth_headers_for_multi_workspace_personal_access_token
 from .constants import LTS_VERSION
@@ -36,6 +37,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ):
         """
         Parameters
@@ -46,6 +48,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
           The API endpoint to which the request should be sent.
         wait_for_action_attempt : bool or dict, optional
           Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
+        retries : urllib3.util.Retry, optional
+          Configuration for retry behavior on failed requests.
         """
 
         self.lts_version = SeamMultiWorkspace.lts_version
@@ -58,6 +62,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         self.client = SeamHttpClient(
             base_url=endpoint,
             auth_headers=auth_headers,
+            retries=retries,
         )
 
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
@@ -72,9 +77,11 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
     ) -> Self:
         return cls(
             personal_access_token=personal_access_token,
             endpoint=endpoint,
             wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
         )
