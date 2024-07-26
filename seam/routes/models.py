@@ -234,6 +234,7 @@ class AcsSystem:
     name: str
     system_type: str
     system_type_display_name: str
+    visionline_metadata: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
 
@@ -259,6 +260,7 @@ class AcsSystem:
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
+            visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
