@@ -16,7 +16,21 @@ from .token import (
 
 
 class SeamInvalidTokenError(Exception):
+    """
+    Exception raised when an invalid token is provided to the Seam client.
+
+    This error occurs when a token of incorrect type or format is used for
+    authentication. It can be raised in various scenarios, such as using a
+    client session token as an API key, or providing a token with an incorrect
+    prefix.
+    """
+
     def __init__(self, message):
+        """
+        :param message: Detailed description of the invalid token
+        :type message: str
+        """
+
         super().__init__(f"Seam received an invalid token: {message}")
 
 
