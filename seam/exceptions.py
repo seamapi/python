@@ -1,13 +1,12 @@
 from typing import Any, Dict
-from niquests import Response
 from .routes.models import ActionAttempt
 
 
 # HTTP
 class SeamHttpApiError(Exception):
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
-        super().__init__(error["message"])
-        self.code = error["type"]
+        super().__init__(error.get("message"))
+        self.code = error.get("type")
         self.status_code = status_code
         self.request_id = request_id
         self.data = error.get("data")
