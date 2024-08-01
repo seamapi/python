@@ -69,6 +69,18 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
 
 # Action Attempt
 class SeamActionAttemptError(Exception):
+    """
+    Base exception for Seam Action Attempt errors.
+
+    :param message: Error message
+    :type message: str
+    :param action_attempt: The ActionAttempt object associated with this error
+    :type action_attempt: ActionAttempt
+
+    :ivar name: Name of the exception class
+    :ivar action_attempt: The ActionAttempt object associated with this error
+    """
+
     def __init__(self, message: str, action_attempt: ActionAttempt):
         super().__init__(message)
         self.name = self.__class__.__name__
