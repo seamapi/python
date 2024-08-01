@@ -36,7 +36,7 @@ class SeamInvalidOptionsError(Exception):
     Exception raised when invalid options are provided to Seam client.
 
     This error occurs when incompatible or incomplete options are provided
-    when initializing or using Seam SDK components, such as using both API key
+    when initializing or using Seam client components, such as using both API key
     and personal access token simultaneously, or using a personal access token
     without specifying a workspace ID.
     """
