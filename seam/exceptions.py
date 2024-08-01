@@ -88,6 +88,16 @@ class SeamActionAttemptError(Exception):
 
 
 class SeamActionAttemptFailedError(SeamActionAttemptError):
+    """
+    Exception raised when a Seam Action Attempt fails.
+
+    :param action_attempt: The ActionAttempt object associated with this error
+    :type action_attempt: ActionAttempt
+
+    :ivar name: Name of the exception class
+    :ivar code: The error type from the action attempt
+    """
+
     def __init__(self, action_attempt: ActionAttempt):
         super().__init__(action_attempt.error.message, action_attempt)
         self.name = self.__class__.__name__
