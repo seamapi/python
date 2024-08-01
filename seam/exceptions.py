@@ -11,13 +11,6 @@ class SeamHttpApiError(Exception):
     including the error message, error code, HTTP status code, request ID, and any
     additional error data.
 
-    :param error: Dictionary containing error details from the API response
-    :type error: Dict[str, Any]
-    :param status_code: HTTP status code of the error response
-    :type status_code: int
-    :param request_id: Unique identifier for the API request
-    :type request_id: str
-
     :ivar code: The error type returned by the API
     :ivar status_code: The HTTP status code of the error response
     :ivar request_id: The unique identifier for the API request
@@ -25,6 +18,15 @@ class SeamHttpApiError(Exception):
     """
 
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+        """
+        :param error: Dictionary containing error details from the API response
+        :type error: Dict[str, Any]
+        :param status_code: HTTP status code of the error response
+        :type status_code: int
+        :param request_id: Unique identifier for the API request
+        :type request_id: str
+        """
+
         super().__init__(error.get("message"))
         self.code = error.get("type")
         self.status_code = status_code
@@ -37,12 +39,14 @@ class SeamHttpUnauthorizedError(SeamHttpApiError):
     Exception raised when the API request is unauthorized.
 
     This exception is a specific type of SeamHttpApiError for 401 Unauthorized errors.
-
-    :param request_id: Unique identifier for the API request
-    :type request_id: str
     """
 
     def __init__(self, request_id: str):
+        """
+        :param request_id: Unique identifier for the API request
+        :type request_id: str
+        """
+
         super().__init__(
             {"type": "unauthorized", "message": "Unauthorized"}, 401, request_id
         )
@@ -54,15 +58,19 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
 
     This exception is a specific type of SeamHttpApiError for invalid input param errors.
 
-    :param error: Dictionary containing error details from the API response
-    :type error: Dict[str, Any]
-    :param status_code: HTTP status code of the error response
-    :type status_code: int
-    :param request_id: Unique identifier for the API request
-    :type request_id: str
+    :ivar code: "invalid_input" error type
     """
 
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+        """
+        :param error: Dictionary containing error details from the API response
+        :type error: Dict[str, Any]
+        :param status_code: HTTP status code of the error response
+        :type status_code: int
+        :param request_id: Unique identifier for the API request
+        :type request_id: str
+        """
+
         super().__init__(error, status_code, request_id)
         self.code = "invalid_input"
 
@@ -72,16 +80,18 @@ class SeamActionAttemptError(Exception):
     """
     Base exception for Seam Action Attempt errors.
 
-    :param message: Error message
-    :type message: str
-    :param action_attempt: The ActionAttempt object associated with this error
-    :type action_attempt: ActionAttempt
-
     :ivar name: Name of the exception class
     :ivar action_attempt: The ActionAttempt object associated with this error
     """
 
     def __init__(self, message: str, action_attempt: ActionAttempt):
+        """
+        :param message: Error message
+        :type message: str
+        :param action_attempt: The ActionAttempt object associated with this error
+        :type action_attempt: ActionAttempt
+        """
+
         super().__init__(message)
         self.name = self.__class__.__name__
         self.action_attempt = action_attempt
@@ -91,14 +101,16 @@ class SeamActionAttemptFailedError(SeamActionAttemptError):
     """
     Exception raised when a Seam Action Attempt fails.
 
-    :param action_attempt: The ActionAttempt object associated with this error
-    :type action_attempt: ActionAttempt
-
     :ivar name: Name of the exception class
     :ivar code: The error type from the action attempt
     """
 
     def __init__(self, action_attempt: ActionAttempt):
+        """
+        :param action_attempt: The ActionAttempt object associated with this error
+        :type action_attempt: ActionAttempt
+        """
+
         super().__init__(action_attempt.error.message, action_attempt)
         self.name = self.__class__.__name__
         self.code = action_attempt.error.type
@@ -111,15 +123,17 @@ class SeamActionAttemptTimeoutError(SeamActionAttemptError):
     This error occurs when the system has waited for the specified timeout period, but the action
     attempt has not reached either a success or failed state within that time.
 
-    :param action_attempt: The ActionAttempt object associated with this error
-    :type action_attempt: ActionAttempt
-    :param timeout: The timeout duration in seconds
-    :type timeout: str
-
     :ivar name: Name of the exception class
     """
 
     def __init__(self, action_attempt: ActionAttempt, timeout: str):
+        """
+        :param action_attempt: The ActionAttempt object associated with this error
+        :type action_attempt: ActionAttempt
+        :param timeout: The timeout duration in seconds
+        :type timeout: str
+        """
+
         message = f"Timed out waiting for action attempt after {timeout}s"
         super().__init__(message, action_attempt)
         self.name = self.__class__.__name__
