@@ -49,6 +49,19 @@ class SeamHttpUnauthorizedError(SeamHttpApiError):
 
 
 class SeamHttpInvalidInputError(SeamHttpApiError):
+    """
+    Exception raised when the API request contains invalid input params.
+
+    This exception is a specific type of SeamHttpApiError for invalid input param errors.
+
+    :param error: Dictionary containing error details from the API response
+    :type error: Dict[str, Any]
+    :param status_code: HTTP status code of the error response
+    :type status_code: int
+    :param request_id: Unique identifier for the API request
+    :type request_id: str
+    """
+
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
         super().__init__(error, status_code, request_id)
         self.code = "invalid_input"
