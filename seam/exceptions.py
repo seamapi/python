@@ -12,9 +12,13 @@ class SeamHttpApiError(Exception):
     additional error data.
 
     :ivar code: The error type returned by the API
+    :vartype code: str
     :ivar status_code: The HTTP status code of the error response
+    :vartype status_code: int
     :ivar request_id: The unique identifier for the API request
+    :vartype request_id: str
     :ivar data: Additional error data, if provided by the API
+    :vartype data: Dict[str, Any]
     """
 
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
@@ -59,6 +63,7 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
     This exception is a specific type of SeamHttpApiError for invalid input param errors.
 
     :ivar code: "invalid_input" error type
+    :vartype code: str
     """
 
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
@@ -81,7 +86,9 @@ class SeamActionAttemptError(Exception):
     Base exception for Seam Action Attempt errors.
 
     :ivar name: Name of the exception class
+    :vartype name: str
     :ivar action_attempt: The ActionAttempt object associated with this error
+    :vartype action_attempt: ActionAttempt
     """
 
     def __init__(self, message: str, action_attempt: ActionAttempt):
@@ -102,7 +109,9 @@ class SeamActionAttemptFailedError(SeamActionAttemptError):
     Exception raised when a Seam Action Attempt fails.
 
     :ivar name: Name of the exception class
+    :vartype name: str
     :ivar code: The error type from the action attempt
+    :vartype code: str
     """
 
     def __init__(self, action_attempt: ActionAttempt):
@@ -124,6 +133,7 @@ class SeamActionAttemptTimeoutError(SeamActionAttemptError):
     attempt has not reached either a success or failed state within that time.
 
     :ivar name: Name of the exception class
+    :vartype name: str
     """
 
     def __init__(self, action_attempt: ActionAttempt, timeout: str):
