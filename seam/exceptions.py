@@ -105,6 +105,20 @@ class SeamActionAttemptFailedError(SeamActionAttemptError):
 
 
 class SeamActionAttemptTimeoutError(SeamActionAttemptError):
+    """
+    Exception raised when a Seam Action Attempt times out while waiting for the action attempt to reach a resolved state.
+
+    This error occurs when the system has waited for the specified timeout period, but the action
+    attempt has not reached either a success or failed state within that time.
+
+    :param action_attempt: The ActionAttempt object associated with this error
+    :type action_attempt: ActionAttempt
+    :param timeout: The timeout duration in seconds
+    :type timeout: str
+
+    :ivar name: Name of the exception class
+    """
+
     def __init__(self, action_attempt: ActionAttempt, timeout: str):
         message = f"Timed out waiting for action attempt after {timeout}s"
         super().__init__(message, action_attempt)
