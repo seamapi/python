@@ -62,7 +62,7 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         :param personal_access_token: A personal access token for
             authenticating with Seam
         :type personal_access_token: str
-        :param endpoint: The custom API endpoint URL. If not provided, 
+        :param endpoint: The custom API endpoint URL. If not provided,
             the default Seam API endpoint will be used
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
