@@ -33,6 +33,15 @@ class SeamHttpApiError(Exception):
 
 
 class SeamHttpUnauthorizedError(SeamHttpApiError):
+    """
+    Exception raised when the API request is unauthorized.
+
+    This exception is a specific type of SeamHttpApiError for 401 Unauthorized errors.
+
+    :param request_id: Unique identifier for the API request
+    :type request_id: str
+    """
+
     def __init__(self, request_id: str):
         super().__init__(
             {"type": "unauthorized", "message": "Unauthorized"}, 401, request_id
