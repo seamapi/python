@@ -4,6 +4,26 @@ from .routes.models import ActionAttempt
 
 # HTTP
 class SeamHttpApiError(Exception):
+    """
+    Base exception for Seam HTTP API errors.
+
+    This exception encapsulates details about HTTP errors returned by the Seam API,
+    including the error message, error code, HTTP status code, request ID, and any
+    additional error data.
+
+    :param error: Dictionary containing error details from the API response
+    :type error: Dict[str, Any]
+    :param status_code: HTTP status code of the error response
+    :type status_code: int
+    :param request_id: Unique identifier for the API request
+    :type request_id: str
+
+    :ivar code: The error type returned by the API
+    :ivar status_code: The HTTP status code of the error response
+    :ivar request_id: The unique identifier for the API request
+    :ivar data: Additional error data, if provided by the API
+    """
+
     def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
         super().__init__(error.get("message"))
         self.code = error.get("type")
