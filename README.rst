@@ -26,6 +26,61 @@ accurate and fully typed.
 
 .. _seam_home: https://www.seam.co
 
+Contents
+--------
+
+* `Installation <Installation_>`_
+
+* `Usage <Usage_>`_
+
+  * `Examples <Examples_>`_
+
+    * `List devices <List devices_>`_
+
+    * `Unlock a door <Unlock a door_>`_
+
+  * `Authentication Method <Authentication Method_>`_
+
+    * `API Key <API Key_>`_
+
+    * `Personal Access Token <Personal Access Token_>`_
+
+  * `Action Attempts <Action Attempts_>`_
+
+  * `Interacting with Multiple Workspaces <Interacting with Multiple Workspaces_>`_
+
+  * `Webhooks <Webhooks_>`_
+
+  * `Advanced Usage <Advanced Usage_>`_
+
+    * `Setting the endpoint <Setting the endpoint_>`_
+
+* `Development and Testing <Development and Testing_>`_
+
+  * `Quickstart <Quickstart_>`_
+
+  * `Source Code <Source Code_>`_
+
+  * `Requirements <Requirements_>`_
+
+  * `Tests <Tests_>`_
+
+  * `Publishing <Publishing_>`_
+
+    * `Automatic <Automatic_>`_
+
+    * `Manual <Manual_>`_
+
+* `GitHub Actions <GitHub Actions_>`_
+
+  * `Secrets for Optional GitHub Actions <Secrets for Optional GitHub Actions_>`_
+
+* `Contributing <Contributing_>`_
+
+* `License <License_>`_
+
+* `Warranty <Warranty_>`_
+
 Installation
 ------------
 

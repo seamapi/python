@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "generate": "node generate-routes.js",
+    "pregenerate": "node generate-readme-toc.js",
     "postgenerate": "make format",
     "format": "prettier --write --ignore-path .gitignore .",
     "start": "fake-seam-connect --seed"
