@@ -1,9 +1,9 @@
 import fs from 'fs/promises'
 
-async function generateTOC(content) {
+async function generateTableOfContents(content) {
   const lines = content.split('\n')
   const headings = []
-  let contentsIndex = -1
+  let contentsHeadingIndex = -1
   let parsingHeadings = false
 
   for (let i = 0; i < lines.length; i++) {
@@ -11,8 +11,8 @@ async function generateTOC(content) {
     const nextLine = lines[i + 1]?.trim() || ''
 
     if (line === 'Contents' && nextLine.startsWith('--------')) {
-      contentsIndex = i
-      parsingHeadings = true
+      contentsHeadingIndex = i
+      parsingHeadings = true // Start parsing headings after the "Contents" section
       i++ // Skip the underline
       continue
     }
@@ -33,38 +33,39 @@ async function generateTOC(content) {
     }
   }
 
+  // Generate table of contents
   const toc = [''] // Start with an empty line after the "Contents" section
   headings.forEach((heading) => {
     const indent = '  '.repeat(heading.level - 1)
     toc.push(`${indent}* \`${heading.text} <${heading.text}_>\`_`)
-    toc.push('') // Add a newline after each item, including the last one
+    toc.push('') // Add a newline after each item
   })
 
-  return { toc, contentsIndex }
+  return { toc, contentsHeadingIndex }
 }
 
 async function updateReadme() {
   try {
     const content = await fs.readFile('README.rst', 'utf8')
-    const { toc, contentsIndex } = await generateTOC(content)
+    const { toc, contentsHeadingIndex } = await generateTableOfContents(content)
 
-    if (contentsIndex === -1) {
-      console.error('Contents heading not found in the file.')
+    if (contentsHeadingIndex === -1) {
+      console.error('Contents heading not found in the README.')
       process.exit(1)
     }
 
     const lines = content.split('\n')
-    const contentStartIndex = lines.findIndex(
+    const tocTableEndIndex = lines.findIndex(
       (line, index) =>
-        index > contentsIndex + 2 &&
+        index > contentsHeadingIndex + 2 &&
         !line.trim().startsWith('*') &&
         line.trim() !== '',
     )
 
     const newContent = [
-      ...lines.slice(0, contentsIndex + 2), // Include "Contents" and its underline
+      ...lines.slice(0, contentsHeadingIndex + 2), // Include readme content before "Contents" heading, the heading itself and its underline
       ...toc,
-      ...lines.slice(contentStartIndex),
+      ...lines.slice(tocTableEndIndex), // Include all content after the previous TOC
     ].join('\n')
 
     await fs.writeFile('README.rst', newContent)
