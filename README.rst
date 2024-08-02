@@ -30,7 +30,9 @@ Contents
 --------
 
 `Seam <Installation_>`
+
 Usage `usage_`
+
 `Usage Usage_`
 
 .. _Installation:
