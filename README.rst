@@ -50,7 +50,7 @@ Install it with::
 .. _seam: https://pypi.python.org/pypi/seam
 .. _Python Package Index (PyPI): https://pypi.python.org/
 
-.. _usage:
+.. _usage section:
 Usage
 -----
 
