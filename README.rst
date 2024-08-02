@@ -29,10 +29,11 @@ accurate and fully typed.
 Contents
 --------
 `Seam <Installation_>`
-Usage `Usage_`
+Usage `usage_`
 `Usage Usage_`
 
 .. _Installation:
+
 Installation
 ------------
 
@@ -46,6 +47,7 @@ Install it with::
 .. _seam: https://pypi.python.org/pypi/seam
 .. _Python Package Index (PyPI): https://pypi.python.org/
 
+.. _usage:
 Usage
 -----
 
