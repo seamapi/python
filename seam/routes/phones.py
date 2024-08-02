@@ -24,9 +24,16 @@ class Phones(AbstractPhones):
 
         return None
 
-    def list(self, *, owner_user_identity_id: Optional[str] = None) -> List[Phone]:
+    def list(
+        self,
+        *,
+        acs_credential_id: Optional[str] = None,
+        owner_user_identity_id: Optional[str] = None
+    ) -> List[Phone]:
         json_payload = {}
 
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
         if owner_user_identity_id is not None:
             json_payload["owner_user_identity_id"] = owner_user_identity_id
 
