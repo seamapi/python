@@ -29,14 +29,13 @@ accurate and fully typed.
 Contents
 --------
 
-`Seam <Installation_>`_
+`Installation <Installation_>`_
 
-Usage `<usage_>`_
+`Usage <Usage_>`_
 
-`Examples <Examples_>`_
-`Examples <examples_>`_
+    `Examples <Examples_>`_
 
-.. _Installation:
+        `List devices <List devices_>`_
 
 Installation
 ------------
