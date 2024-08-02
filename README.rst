@@ -35,13 +35,51 @@ Contents
 
   * `Examples <Examples_>`_
 
-    * `List devices <List devices_>`_
+    * `List devices <List_devices_>`_
 
-    * `Unlock a door <Unlock a door_>`_
+    * `Unlock a door <Unlock_a_door_>`_
 
-  * `Authentication Method <Authentication Method_>`_
+  * `Authentication Method <Authentication_Method_>`_
 
-    * `API Key <API Key_>`_
+    * `API Key <API_Key_>`_
+
+    * `Personal Access Token <Personal_Access_Token_>`_
+
+  * `Action Attempts <Action_Attempts_>`_
+
+  * `Interacting with Multiple Workspaces <Interacting_with_Multiple_Workspaces_>`_
+
+  * `Webhooks <Webhooks_>`_
+
+  * `Advanced Usage <Advanced_Usage_>`_
+
+    * `Setting the endpoint <Setting_the_endpoint_>`_
+
+* `Development and Testing <Development_and_Testing_>`_
+
+  * `Quickstart <Quickstart_>`_
+
+  * `Source Code <Source_Code_>`_
+
+  * `Requirements <Requirements_>`_
+
+  * `Tests <Tests_>`_
+
+  * `Publishing <Publishing_>`_
+
+    * `Automatic <Automatic_>`_
+
+    * `Manual <Manual_>`_
+
+* `GitHub Actions <GitHub_Actions_>`_
+
+  * `Secrets for Optional GitHub Actions <Secrets_for_Optional_GitHub_Actions_>`_
+
+* `Contributing <Contributing_>`_
+
+* `License <License_>`_
+
+* `Warranty <Warranty_>`_
 
 Installation
 ------------
