@@ -31,9 +31,9 @@ Contents
 
 `Seam <Installation_>`
 
-Usage `usage_`
+Usage `<usage_>`
 
-`Usage Usage_`
+`Examples <Examples_>`
 
 .. _Installation:
 
