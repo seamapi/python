@@ -29,13 +29,13 @@ accurate and fully typed.
 Contents
 --------
 
-`Installation <Installation_>`_
+* `Installation <Installation_>`_
 
-`Usage <Usage_>`_
+* `Usage <Usage_>`_
 
-    `Examples <Examples_>`_
+  * `Examples <Examples_>`_
 
-        `List devices <List devices_>`_
+    * `List devices <List devices_>`_
 
 Installation
 ------------
@@ -50,7 +50,6 @@ Install it with::
 .. _seam: https://pypi.python.org/pypi/seam
 .. _Python Package Index (PyPI): https://pypi.python.org/
 
-.. _usage:
 Usage
 -----
 
