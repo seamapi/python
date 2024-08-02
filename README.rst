@@ -36,6 +36,7 @@ Contents
   * `Examples <Examples_>`_
 
     * `List devices <List devices_>`_
+    * `Unlock a door <Unlock a door_>`_
 
 Installation
 ------------
