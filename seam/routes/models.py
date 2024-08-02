@@ -1691,7 +1691,12 @@ class AbstractPhones(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, owner_user_identity_id: Optional[str] = None) -> List[Phone]:
+    def list(
+        self,
+        *,
+        acs_credential_id: Optional[str] = None,
+        owner_user_identity_id: Optional[str] = None
+    ) -> List[Phone]:
         raise NotImplementedError()
 
 
