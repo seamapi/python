@@ -26,6 +26,13 @@ accurate and fully typed.
 
 .. _seam_home: https://www.seam.co
 
+Contents
+--------
+`Seam <Installation_>`
+Usage `Usage_`
+`Usage Usage_`
+
+.. _Installation:
 Installation
 ------------
 
