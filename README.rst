@@ -34,6 +34,7 @@ Contents
 Usage `<usage_>`_
 
 `Examples <Examples_>`_
+`Examples <examples_>`_
 
 .. _Installation:
 
