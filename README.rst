@@ -35,31 +35,31 @@ Contents
 
   * `Examples <Examples_>`_
 
-    * `List devices <List_devices_>`_
+    * `List devices <List devices_>`_
 
-    * `Unlock a door <Unlock_a_door_>`_
+    * `Unlock a door <Unlock a door_>`_
 
-  * `Authentication Method <Authentication_Method_>`_
+  * `Authentication Method <Authentication Method_>`_
 
-    * `API Key <API_Key_>`_
+    * `API Key <API Key_>`_
 
-    * `Personal Access Token <Personal_Access_Token_>`_
+    * `Personal Access Token <Personal Access Token_>`_
 
-  * `Action Attempts <Action_Attempts_>`_
+  * `Action Attempts <Action Attempts_>`_
 
-  * `Interacting with Multiple Workspaces <Interacting_with_Multiple_Workspaces_>`_
+  * `Interacting with Multiple Workspaces <Interacting with Multiple Workspaces_>`_
 
   * `Webhooks <Webhooks_>`_
 
-  * `Advanced Usage <Advanced_Usage_>`_
+  * `Advanced Usage <Advanced Usage_>`_
 
-    * `Setting the endpoint <Setting_the_endpoint_>`_
+    * `Setting the endpoint <Setting the endpoint_>`_
 
-* `Development and Testing <Development_and_Testing_>`_
+* `Development and Testing <Development and Testing_>`_
 
   * `Quickstart <Quickstart_>`_
 
-  * `Source Code <Source_Code_>`_
+  * `Source Code <Source Code_>`_
 
   * `Requirements <Requirements_>`_
 
@@ -71,9 +71,9 @@ Contents
 
     * `Manual <Manual_>`_
 
-* `GitHub Actions <GitHub_Actions_>`_
+* `GitHub Actions <GitHub Actions_>`_
 
-  * `Secrets for Optional GitHub Actions <Secrets_for_Optional_GitHub_Actions_>`_
+  * `Secrets for Optional GitHub Actions <Secrets for Optional GitHub Actions_>`_
 
 * `Contributing <Contributing_>`_
 

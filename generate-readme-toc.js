@@ -36,8 +36,7 @@ async function generateTOC(content) {
   const toc = [''] // Start with an empty line after the "Contents" section
   headings.forEach((heading) => {
     const indent = '  '.repeat(heading.level - 1)
-    const link = heading.text.replace(/ /g, '_')
-    toc.push(`${indent}* \`${heading.text} <${link}_>\`_`)
+    toc.push(`${indent}* \`${heading.text} <${heading.text}_>\`_`)
     toc.push('') // Add a newline after each item, including the last one
   })
 
