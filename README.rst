@@ -30,13 +30,12 @@ Contents
 --------
 
 * `Installation <Installation_>`_
-
 * `Usage <Usage_>`_
-
   * `Examples <Examples_>`_
-
     * `List devices <List devices_>`_
     * `Unlock a door <Unlock a door_>`_
+  * `Authentication Method <Authentication Method_>`_
+    * `API Key <API Key_>`_
 
 Installation
 ------------
