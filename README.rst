@@ -28,6 +28,7 @@ accurate and fully typed.
 
 Contents
 --------
+
 `Seam <Installation_>`
 Usage `usage_`
 `Usage Usage_`
