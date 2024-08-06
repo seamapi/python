@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "generate": "node generate-routes.js",
+    "pregenerate": "node generate-readme-toc.js",
     "postgenerate": "make format",
     "format": "prettier --write --ignore-path .gitignore .",
     "start": "fake-seam-connect --seed"
@@ -11,7 +12,7 @@
   "devDependencies": {
     "@seamapi/fake-seam-connect": "1.71.0",
     "@seamapi/nextlove-sdk-generator": "1.14.0",
-    "@seamapi/types": "1.210.0",
+    "@seamapi/types": "1.213.0",
     "del": "^7.1.0",
     "prettier": "^3.2.5"
   }
