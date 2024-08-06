@@ -26,7 +26,21 @@ class WorkspacesProxy:
 
 class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
     """
-    Seam class used to interact with Seam API without being scoped to any specific workspace.
+    Seam class used to interact with Seam API without being scoped to a specific workspace.
+
+    This class provides methods to authenticate and interact with Seam API endpoints
+    that can operate without being tied to a specific workspace. It supports operations such as creating and listing workspaces.
+
+    :cvar lts_version: The long-term support (LTS) version of the Seam
+        Python SDK
+    :vartype lts_version: str
+    :ivar wait_for_action_attempt: Controls whether to wait for an action
+        attempt to complete
+    :vartype wait_for_action_attempt: Union[bool, Dict[str, float]]
+    :ivar client: The HTTP client used for making API requests
+    :vartype client: SeamHttpClient
+    :ivar workspaces: Proxy to access workspace-related operations
+    :vartype workspaces: WorkspacesProxy
     """
 
     lts_version: str = LTS_VERSION
@@ -40,16 +54,25 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         retries: Optional[Retry] = None,
     ):
         """
-        Parameters
-        ----------
-        personal_access_token : str, optional
-          Personal access token.
-        endpoint : str, optional
-          The API endpoint to which the request should be sent.
-        wait_for_action_attempt : bool or dict, optional
-          Controls whether to wait for an action attempt to complete, either as a boolean or as a dictionary specifying `timeout` and `poll_interval`. Defaults to `False`.
-        retries : urllib3.util.Retry, optional
-          Configuration for retry behavior on failed requests.
+        Initialize a SeamMultiWorkspace client instance.
+
+        This method sets up the SeamMultiWorkspace client with the provided personal access token
+        and configuration options.
+
+        :param personal_access_token: A personal access token for
+            authenticating with Seam
+        :type personal_access_token: str
+        :param endpoint: The custom API endpoint URL. If not provided,
+            the default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[urllib3.util.Retry]
+
+        :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
         self.lts_version = SeamMultiWorkspace.lts_version
@@ -79,6 +102,31 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
     ) -> Self:
+        """
+        Create a SeamMultiWorkspace instance using a personal access token.
+
+        This class method is a convenience constructor for creating a SeamMultiWorkspace instance
+        authenticated with a personal access token.
+
+        :param personal_access_token: The personal access token for authenticating with Seam
+        :type personal_access_token: str
+        :param endpoint: The custom API endpoint URL. If not provided, the default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[urllib3.util.Retry]
+        :return: A new instance of the SeamMultiWorkspace class
+            authenticated with the provided personal access token
+        :rtype: Self
+
+        :Example:
+
+        >>> seam = SeamMultiWorkspace.from_personal_access_token("your-personal-access-token-here")
+        """
+
         return cls(
             personal_access_token=personal_access_token,
             endpoint=endpoint,
