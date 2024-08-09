@@ -607,6 +607,7 @@ class SeamEvent:
     created_at: str
     device_id: str
     enrollment_automation_id: str
+    event_description: str
     event_id: str
     event_type: str
     occurred_at: str
@@ -623,6 +624,7 @@ class SeamEvent:
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
+            event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
