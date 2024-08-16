@@ -956,6 +956,12 @@ class AbstractAcsAccessGroups(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def list_accessible_entrances(
+        self, *, acs_access_group_id: str
+    ) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
         raise NotImplementedError()
 
@@ -1391,6 +1397,7 @@ class AbstractSeamEvents(abc.ABC):
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
         between: Optional[List[str]] = None,
+        connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,

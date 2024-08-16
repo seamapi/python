@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsAccessGroups, AcsAccessGroup, AcsUser
+from .models import AbstractAcsAccessGroups, AcsAccessGroup, AcsEntrance, AcsUser
 
 
 class AcsAccessGroups(AbstractAcsAccessGroups):
@@ -43,6 +43,20 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         res = self.client.post("/acs/access_groups/list", json=json_payload)
 
         return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+
+    def list_accessible_entrances(
+        self, *, acs_access_group_id: str
+    ) -> List[AcsEntrance]:
+        json_payload = {}
+
+        if acs_access_group_id is not None:
+            json_payload["acs_access_group_id"] = acs_access_group_id
+
+        res = self.client.post(
+            "/acs/access_groups/list_accessible_entrances", json=json_payload
+        )
+
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
         json_payload = {}
