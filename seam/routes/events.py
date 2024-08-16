@@ -34,6 +34,7 @@ class SeamEvents(AbstractSeamEvents):
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
         between: Optional[List[str]] = None,
+        connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
@@ -50,6 +51,8 @@ class SeamEvents(AbstractSeamEvents):
             json_payload["access_code_ids"] = access_code_ids
         if between is not None:
             json_payload["between"] = between
+        if connect_webview_id is not None:
+            json_payload["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
         if device_id is not None:
