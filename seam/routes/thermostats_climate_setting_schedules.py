@@ -14,8 +14,6 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         device_id: str,
         schedule_ends_at: str,
         schedule_starts_at: str,
-        automatic_cooling_enabled: Optional[bool] = None,
-        automatic_heating_enabled: Optional[bool] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -33,10 +31,6 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
             json_payload["schedule_ends_at"] = schedule_ends_at
         if schedule_starts_at is not None:
             json_payload["schedule_starts_at"] = schedule_starts_at
-        if automatic_cooling_enabled is not None:
-            json_payload["automatic_cooling_enabled"] = automatic_cooling_enabled
-        if automatic_heating_enabled is not None:
-            json_payload["automatic_heating_enabled"] = automatic_heating_enabled
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
@@ -114,8 +108,6 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
         self,
         *,
         climate_setting_schedule_id: str,
-        automatic_cooling_enabled: Optional[bool] = None,
-        automatic_heating_enabled: Optional[bool] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -131,10 +123,6 @@ class ThermostatsClimateSettingSchedules(AbstractThermostatsClimateSettingSchedu
 
         if climate_setting_schedule_id is not None:
             json_payload["climate_setting_schedule_id"] = climate_setting_schedule_id
-        if automatic_cooling_enabled is not None:
-            json_payload["automatic_cooling_enabled"] = automatic_cooling_enabled
-        if automatic_heating_enabled is not None:
-            json_payload["automatic_heating_enabled"] = automatic_heating_enabled
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
