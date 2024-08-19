@@ -369,8 +369,6 @@ class ClientSession:
 
 @dataclass
 class ClimateSettingSchedule:
-    automatic_cooling_enabled: bool
-    automatic_heating_enabled: bool
     climate_setting_schedule_id: str
     cooling_set_point_celsius: float
     cooling_set_point_fahrenheit: float
@@ -389,8 +387,6 @@ class ClimateSettingSchedule:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return ClimateSettingSchedule(
-            automatic_cooling_enabled=d.get("automatic_cooling_enabled", None),
-            automatic_heating_enabled=d.get("automatic_heating_enabled", None),
             climate_setting_schedule_id=d.get("climate_setting_schedule_id", None),
             cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
             cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
@@ -1549,8 +1545,6 @@ class AbstractThermostatsClimateSettingSchedules(abc.ABC):
         device_id: str,
         schedule_ends_at: str,
         schedule_starts_at: str,
-        automatic_cooling_enabled: Optional[bool] = None,
-        automatic_heating_enabled: Optional[bool] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -1586,8 +1580,6 @@ class AbstractThermostatsClimateSettingSchedules(abc.ABC):
         self,
         *,
         climate_setting_schedule_id: str,
-        automatic_cooling_enabled: Optional[bool] = None,
-        automatic_heating_enabled: Optional[bool] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
