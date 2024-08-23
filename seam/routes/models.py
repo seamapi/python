@@ -1174,6 +1174,13 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractAcsUsersUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, acs_user_id: str) -> AcsUser:
+        raise NotImplementedError()
+
+
 class AbstractActionAttempts(abc.ABC):
 
     @abc.abstractmethod
