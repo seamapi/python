@@ -17,3 +17,13 @@ class AcsUsersUnmanaged(AbstractAcsUsersUnmanaged):
         res = self.client.post("/acs/users/unmanaged/get", json=json_payload)
 
         return AcsUser.from_dict(res["acs_user"])
+
+    def list(self, *, acs_system_id: str) -> List[AcsUser]:
+        json_payload = {}
+
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
+
+        res = self.client.post("/acs/users/unmanaged/list", json=json_payload)
+
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
