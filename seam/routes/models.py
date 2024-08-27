@@ -484,6 +484,9 @@ class ConnectedAccount:
 
 @dataclass
 class Device:
+    can_hvac_cool: bool
+    can_hvac_heat: bool
+    can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
@@ -491,6 +494,7 @@ class Device:
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
+    can_turn_off_hvac: bool
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
@@ -509,6 +513,9 @@ class Device:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Device(
+            can_hvac_cool=d.get("can_hvac_cool", None),
+            can_hvac_heat=d.get("can_hvac_heat", None),
+            can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -520,6 +527,7 @@ class Device:
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
@@ -539,6 +547,9 @@ class Device:
 
 @dataclass
 class DeviceProvider:
+    can_hvac_cool: bool
+    can_hvac_heat: bool
+    can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
@@ -546,6 +557,7 @@ class DeviceProvider:
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
+    can_turn_off_hvac: bool
     device_provider_name: str
     display_name: str
     image_url: str
@@ -554,6 +566,9 @@ class DeviceProvider:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return DeviceProvider(
+            can_hvac_cool=d.get("can_hvac_cool", None),
+            can_hvac_heat=d.get("can_hvac_heat", None),
+            can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -565,6 +580,7 @@ class DeviceProvider:
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             device_provider_name=d.get("device_provider_name", None),
             display_name=d.get("display_name", None),
             image_url=d.get("image_url", None),
@@ -670,6 +686,9 @@ class NoiseThreshold:
 
 @dataclass
 class Phone:
+    can_hvac_cool: bool
+    can_hvac_heat: bool
+    can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
@@ -677,6 +696,7 @@ class Phone:
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
+    can_turn_off_hvac: bool
     capabilities_supported: List[str]
     created_at: str
     custom_metadata: Dict[str, Any]
@@ -694,6 +714,9 @@ class Phone:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Phone(
+            can_hvac_cool=d.get("can_hvac_cool", None),
+            can_hvac_heat=d.get("can_hvac_heat", None),
+            can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -705,6 +728,7 @@ class Phone:
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             capabilities_supported=d.get("capabilities_supported", None),
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
@@ -771,6 +795,9 @@ class UnmanagedAccessCode:
 
 @dataclass
 class UnmanagedDevice:
+    can_hvac_cool: bool
+    can_hvac_heat: bool
+    can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
     can_remotely_lock: bool
@@ -778,6 +805,7 @@ class UnmanagedDevice:
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
+    can_turn_off_hvac: bool
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
@@ -793,6 +821,9 @@ class UnmanagedDevice:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return UnmanagedDevice(
+            can_hvac_cool=d.get("can_hvac_cool", None),
+            can_hvac_heat=d.get("can_hvac_heat", None),
+            can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -804,6 +835,7 @@ class UnmanagedDevice:
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
