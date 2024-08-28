@@ -72,6 +72,7 @@ class AcsAccessGroup:
     display_name: str
     external_type: str
     external_type_display_name: str
+    is_managed: bool
     name: str
     workspace_id: str
 
@@ -88,6 +89,7 @@ class AcsAccessGroup:
             display_name=d.get("display_name", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
+            is_managed=d.get("is_managed", None),
             name=d.get("name", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -108,6 +110,7 @@ class AcsCredential:
     external_type: str
     external_type_display_name: str
     is_latest_desired_state_synced_with_provider: bool
+    is_managed: bool
     is_multi_phone_sync_credential: bool
     latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
@@ -134,6 +137,7 @@ class AcsCredential:
             is_latest_desired_state_synced_with_provider=d.get(
                 "is_latest_desired_state_synced_with_provider", None
             ),
+            is_managed=d.get("is_managed", None),
             is_multi_phone_sync_credential=d.get(
                 "is_multi_phone_sync_credential", None
             ),
@@ -280,6 +284,7 @@ class AcsUser:
     full_name: str
     hid_acs_system_id: str
     is_latest_desired_state_synced_with_provider: bool
+    is_managed: bool
     is_suspended: bool
     latest_desired_state_synced_with_provider_at: str
     phone_number: str
@@ -307,6 +312,7 @@ class AcsUser:
             is_latest_desired_state_synced_with_provider=d.get(
                 "is_latest_desired_state_synced_with_provider", None
             ),
+            is_managed=d.get("is_managed", None),
             is_suspended=d.get("is_suspended", None),
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
@@ -998,6 +1004,19 @@ class AbstractAcsAccessGroups(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractAcsAccessGroupsUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, acs_access_group_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
 class AbstractAcsCredentialPools(abc.ABC):
 
     @abc.abstractmethod
@@ -1078,6 +1097,23 @@ class AbstractAcsCredentials(abc.ABC):
         acs_credential_id: str,
         code: Optional[str] = None,
         ends_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
+class AbstractAcsCredentialsUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, acs_credential_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_user_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -1213,7 +1249,15 @@ class AbstractAcsUsersUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, acs_system_id: str) -> List[AcsUser]:
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        user_identity_email_address: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_phone_number: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
