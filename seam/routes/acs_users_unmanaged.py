@@ -18,12 +18,28 @@ class AcsUsersUnmanaged(AbstractAcsUsersUnmanaged):
 
         return AcsUser.from_dict(res["acs_user"])
 
-    def list(self, *, acs_system_id: str) -> List[AcsUser]:
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        user_identity_email_address: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_phone_number: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if user_identity_email_address is not None:
+            json_payload["user_identity_email_address"] = user_identity_email_address
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if user_identity_phone_number is not None:
+            json_payload["user_identity_phone_number"] = user_identity_phone_number
 
-        res = self.client.post("/acs/users/unmanaged/list", json=json_payload)
+        self.client.post("/acs/users/unmanaged/list", json=json_payload)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return None
