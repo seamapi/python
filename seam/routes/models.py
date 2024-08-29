@@ -1245,7 +1245,7 @@ class AbstractAcsUsers(abc.ABC):
 class AbstractAcsUsersUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_user_id: str) -> AcsUser:
+    def get(self, *, acs_user_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
