@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsUsersUnmanaged, AcsUser
+from .models import AbstractAcsUsersUnmanaged
 
 
 class AcsUsersUnmanaged(AbstractAcsUsersUnmanaged):
@@ -8,15 +8,15 @@ class AcsUsersUnmanaged(AbstractAcsUsersUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, acs_user_id: str) -> AcsUser:
+    def get(self, *, acs_user_id: str) -> None:
         json_payload = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        res = self.client.post("/acs/users/unmanaged/get", json=json_payload)
+        self.client.post("/acs/users/unmanaged/get", json=json_payload)
 
-        return AcsUser.from_dict(res["acs_user"])
+        return None
 
     def list(
         self,
