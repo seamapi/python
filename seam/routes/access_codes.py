@@ -35,6 +35,7 @@ class AccessCodes(AbstractAccessCodes):
         max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
+        preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         sync: Optional[bool] = None,
         use_backup_access_code_pool: Optional[bool] = None,
@@ -68,6 +69,8 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if prefer_native_scheduling is not None:
             json_payload["prefer_native_scheduling"] = prefer_native_scheduling
+        if preferred_code_length is not None:
+            json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
         if sync is not None:
@@ -242,6 +245,7 @@ class AccessCodes(AbstractAccessCodes):
         max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
+        preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         sync: Optional[bool] = None,
         type: Optional[str] = None,
@@ -278,6 +282,8 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if prefer_native_scheduling is not None:
             json_payload["prefer_native_scheduling"] = prefer_native_scheduling
+        if preferred_code_length is not None:
+            json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
         if sync is not None:
