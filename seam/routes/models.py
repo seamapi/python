@@ -279,6 +279,7 @@ class AcsUser:
     display_name: str
     email: str
     email_address: str
+    errors: Any
     external_type: str
     external_type_display_name: str
     full_name: str
@@ -305,6 +306,7 @@ class AcsUser:
             display_name=d.get("display_name", None),
             email=d.get("email", None),
             email_address=d.get("email_address", None),
+            errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             full_name=d.get("full_name", None),
