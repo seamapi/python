@@ -1,7 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractThermostats, ActionAttempt, Device
-from .thermostats_climate_setting_schedules import ThermostatsClimateSettingSchedules
+from .thermostats_schedules import ThermostatsSchedules
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -9,13 +9,41 @@ class Thermostats(AbstractThermostats):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
-        self._climate_setting_schedules = ThermostatsClimateSettingSchedules(
-            client=client, defaults=defaults
-        )
+        self._schedules = ThermostatsSchedules(client=client, defaults=defaults)
 
     @property
-    def climate_setting_schedules(self) -> ThermostatsClimateSettingSchedules:
-        return self._climate_setting_schedules
+    def schedules(self) -> ThermostatsSchedules:
+        return self._schedules
+
+    def activate_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        res = self.client.post(
+            "/thermostats/activate_climate_preset", json=json_payload
+        )
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def cool(
         self,
@@ -50,6 +78,59 @@ class Thermostats(AbstractThermostats):
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
+
+    def create_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        manual_override_allowed: bool,
+        name: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None
+    ) -> None:
+        json_payload = {}
+
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if manual_override_allowed is not None:
+            json_payload["manual_override_allowed"] = manual_override_allowed
+        if name is not None:
+            json_payload["name"] = name
+        if cooling_set_point_celsius is not None:
+            json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
+        if cooling_set_point_fahrenheit is not None:
+            json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if fan_mode_setting is not None:
+            json_payload["fan_mode_setting"] = fan_mode_setting
+        if heating_set_point_celsius is not None:
+            json_payload["heating_set_point_celsius"] = heating_set_point_celsius
+        if heating_set_point_fahrenheit is not None:
+            json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+        if hvac_mode_setting is not None:
+            json_payload["hvac_mode_setting"] = hvac_mode_setting
+
+        self.client.post("/thermostats/create_climate_preset", json=json_payload)
+
+        return None
+
+    def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
+        json_payload = {}
+
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        self.client.post("/thermostats/delete_climate_preset", json=json_payload)
+
+        return None
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -217,6 +298,20 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    def set_fallback_climate_preset(
+        self, *, climate_preset_key: str, device_id: str
+    ) -> None:
+        json_payload = {}
+
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        self.client.post("/thermostats/set_fallback_climate_preset", json=json_payload)
+
+        return None
+
     def set_fan_mode(
         self,
         *,
@@ -251,16 +346,43 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
-    def update(
-        self, *, default_climate_setting: Dict[str, Any], device_id: str
+    def update_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        manual_override_allowed: bool,
+        name: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None
     ) -> None:
         json_payload = {}
 
-        if default_climate_setting is not None:
-            json_payload["default_climate_setting"] = default_climate_setting
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if manual_override_allowed is not None:
+            json_payload["manual_override_allowed"] = manual_override_allowed
+        if name is not None:
+            json_payload["name"] = name
+        if cooling_set_point_celsius is not None:
+            json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
+        if cooling_set_point_fahrenheit is not None:
+            json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if fan_mode_setting is not None:
+            json_payload["fan_mode_setting"] = fan_mode_setting
+        if heating_set_point_celsius is not None:
+            json_payload["heating_set_point_celsius"] = heating_set_point_celsius
+        if heating_set_point_fahrenheit is not None:
+            json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+        if hvac_mode_setting is not None:
+            json_payload["hvac_mode_setting"] = hvac_mode_setting
 
-        self.client.post("/thermostats/update", json=json_payload)
+        self.client.post("/thermostats/update_climate_preset", json=json_payload)
 
         return None
