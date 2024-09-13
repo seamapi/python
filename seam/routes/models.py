@@ -279,7 +279,7 @@ class AcsUser:
     display_name: str
     email: str
     email_address: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
     full_name: str
@@ -372,43 +372,6 @@ class ClientSession:
             user_identifier_key=d.get("user_identifier_key", None),
             user_identity_ids=d.get("user_identity_ids", None),
             workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class ClimateSettingSchedule:
-    climate_setting_schedule_id: str
-    cooling_set_point_celsius: float
-    cooling_set_point_fahrenheit: float
-    created_at: str
-    device_id: str
-    errors: Any
-    heating_set_point_celsius: float
-    heating_set_point_fahrenheit: float
-    hvac_mode_setting: str
-    manual_override_allowed: bool
-    name: str
-    schedule_ends_at: str
-    schedule_starts_at: str
-    schedule_type: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ClimateSettingSchedule(
-            climate_setting_schedule_id=d.get("climate_setting_schedule_id", None),
-            cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-            cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
-            created_at=d.get("created_at", None),
-            device_id=d.get("device_id", None),
-            errors=d.get("errors", None),
-            heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-            heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
-            hvac_mode_setting=d.get("hvac_mode_setting", None),
-            manual_override_allowed=d.get("manual_override_allowed", None),
-            name=d.get("name", None),
-            schedule_ends_at=d.get("schedule_ends_at", None),
-            schedule_starts_at=d.get("schedule_starts_at", None),
-            schedule_type=d.get("schedule_type", None),
         )
 
 
@@ -765,6 +728,33 @@ class ServiceHealth:
             description=d.get("description", None),
             service=d.get("service", None),
             status=d.get("status", None),
+        )
+
+
+@dataclass
+class ThermostatSchedule:
+    climate_preset_key: str
+    created_at: str
+    device_id: str
+    ends_at: str
+    errors: Any
+    max_override_period_minutes: int
+    name: str
+    starts_at: str
+    thermostat_schedule_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return ThermostatSchedule(
+            climate_preset_key=d.get("climate_preset_key", None),
+            created_at=d.get("created_at", None),
+            device_id=d.get("device_id", None),
+            ends_at=d.get("ends_at", None),
+            errors=d.get("errors", None),
+            max_override_period_minutes=d.get("max_override_period_minutes", None),
+            name=d.get("name", None),
+            starts_at=d.get("starts_at", None),
+            thermostat_schedule_id=d.get("thermostat_schedule_id", None),
         )
 
 
@@ -1625,60 +1615,45 @@ class AbstractPhonesSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractThermostatsClimateSettingSchedules(abc.ABC):
+class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
     def create(
         self,
         *,
+        climate_preset_key: str,
         device_id: str,
-        schedule_ends_at: str,
-        schedule_starts_at: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
-        manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None,
-        schedule_type: Optional[str] = None
-    ) -> ClimateSettingSchedule:
+        ends_at: str,
+        starts_at: str,
+        max_override_period_minutes: Optional[int] = None,
+        name: Optional[str] = None
+    ) -> ThermostatSchedule:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, climate_setting_schedule_id: str) -> None:
+    def delete(self, *, thermostat_schedule_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(
-        self,
-        *,
-        climate_setting_schedule_id: Optional[str] = None,
-        device_id: Optional[str] = None
-    ) -> ClimateSettingSchedule:
+    def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
-    ) -> List[ClimateSettingSchedule]:
+    ) -> List[ThermostatSchedule]:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def update(
         self,
         *,
-        climate_setting_schedule_id: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
-        manual_override_allowed: Optional[bool] = None,
+        thermostat_schedule_id: str,
+        climate_preset_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
-        schedule_ends_at: Optional[str] = None,
-        schedule_starts_at: Optional[str] = None,
-        schedule_type: Optional[str] = None
+        starts_at: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -1794,7 +1769,17 @@ class AbstractThermostats(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def climate_setting_schedules(self) -> AbstractThermostatsClimateSettingSchedules:
+    def schedules(self) -> AbstractThermostatsSchedules:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def activate_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1807,6 +1792,27 @@ class AbstractThermostats(abc.ABC):
         sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        manual_override_allowed: bool,
+        name: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1872,6 +1878,12 @@ class AbstractThermostats(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def set_fallback_climate_preset(
+        self, *, climate_preset_key: str, device_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def set_fan_mode(
         self,
         *,
@@ -1884,8 +1896,19 @@ class AbstractThermostats(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(
-        self, *, default_climate_setting: Dict[str, Any], device_id: str
+    def update_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        manual_override_allowed: bool,
+        name: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
