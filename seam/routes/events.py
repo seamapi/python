@@ -1,9 +1,9 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractSeamEvents, SeamEvent
+from .models import AbstractEvents, SeamEvent
 
 
-class SeamEvents(AbstractSeamEvents):
+class Events(AbstractEvents):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
