@@ -1453,7 +1453,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamEvents(abc.ABC):
+class AbstractEvents(abc.ABC):
 
     @abc.abstractmethod
     def get(
@@ -2258,7 +2258,7 @@ class AbstractRoutes(abc.ABC):
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
     devices: AbstractDevices
-    events: AbstractSeamEvents
+    events: AbstractEvents
     locks: AbstractLocks
     networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
