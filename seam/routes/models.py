@@ -376,6 +376,39 @@ class ClientSession:
 
 
 @dataclass
+class ClimatePreset:
+    can_delete: bool
+    can_edit: bool
+    climate_preset_key: str
+    cooling_set_point_celsius: float
+    cooling_set_point_fahrenheit: float
+    display_name: str
+    fan_mode_setting: str
+    heating_set_point_celsius: float
+    heating_set_point_fahrenheit: float
+    hvac_mode_setting: str
+    manual_override_allowed: bool
+    name: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return ClimatePreset(
+            can_delete=d.get("can_delete", None),
+            can_edit=d.get("can_edit", None),
+            climate_preset_key=d.get("climate_preset_key", None),
+            cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
+            cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
+            display_name=d.get("display_name", None),
+            fan_mode_setting=d.get("fan_mode_setting", None),
+            heating_set_point_celsius=d.get("heating_set_point_celsius", None),
+            heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
+            hvac_mode_setting=d.get("hvac_mode_setting", None),
+            manual_override_allowed=d.get("manual_override_allowed", None),
+            name=d.get("name", None),
+        )
+
+
+@dataclass
 class ConnectWebview:
     accepted_devices: List[str]
     accepted_providers: List[str]
@@ -1909,7 +1942,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         name: Optional[str] = None
-    ) -> None:
+    ) -> ClimatePreset:
         raise NotImplementedError()
 
 
