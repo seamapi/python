@@ -102,13 +102,16 @@ class AcsCredential:
     acs_credential_pool_id: str
     acs_system_id: str
     acs_user_id: str
+    card_number: str
     code: str
     created_at: str
     display_name: str
+    encoded_at: str
     ends_at: str
     errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
+    is_encoded: bool
     is_latest_desired_state_synced_with_provider: bool
     is_managed: bool
     is_multi_phone_sync_credential: bool
@@ -127,13 +130,16 @@ class AcsCredential:
             acs_credential_pool_id=d.get("acs_credential_pool_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
+            card_number=d.get("card_number", None),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            encoded_at=d.get("encoded_at", None),
             ends_at=d.get("ends_at", None),
             errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
+            is_encoded=d.get("is_encoded", None),
             is_latest_desired_state_synced_with_provider=d.get(
                 "is_latest_desired_state_synced_with_provider", None
             ),
@@ -1942,7 +1948,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         name: Optional[str] = None
-    ) -> ClimatePreset:
+    ) -> None:
         raise NotImplementedError()
 
 
