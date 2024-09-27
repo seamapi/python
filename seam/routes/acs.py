@@ -7,6 +7,7 @@ from .acs_credential_provisioning_automations import (
     AcsCredentialProvisioningAutomations,
 )
 from .acs_credentials import AcsCredentials
+from .acs_encoders import AcsEncoders
 from .acs_entrances import AcsEntrances
 from .acs_systems import AcsSystems
 from .acs_users import AcsUsers
@@ -22,6 +23,7 @@ class Acs(AbstractAcs):
             AcsCredentialProvisioningAutomations(client=client, defaults=defaults)
         )
         self._credentials = AcsCredentials(client=client, defaults=defaults)
+        self._encoders = AcsEncoders(client=client, defaults=defaults)
         self._entrances = AcsEntrances(client=client, defaults=defaults)
         self._systems = AcsSystems(client=client, defaults=defaults)
         self._users = AcsUsers(client=client, defaults=defaults)
@@ -43,6 +45,10 @@ class Acs(AbstractAcs):
     @property
     def credentials(self) -> AcsCredentials:
         return self._credentials
+
+    @property
+    def encoders(self) -> AcsEncoders:
+        return self._encoders
 
     @property
     def entrances(self) -> AcsEntrances:

@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractThermostats, ActionAttempt, Device
+from .models import AbstractThermostats, ActionAttempt, ClimatePreset, Device
 from .thermostats_schedules import ThermostatsSchedules
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -92,7 +92,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         name: Optional[str] = None
-    ) -> None:
+    ) -> ClimatePreset:
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -116,9 +116,9 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        self.client.post("/thermostats/create_climate_preset", json=json_payload)
+        res = self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
-        return None
+        return ClimatePreset.from_dict(res["climate_preset"])
 
     def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
         json_payload = {}

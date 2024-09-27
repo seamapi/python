@@ -1149,6 +1149,20 @@ class AbstractAcsCredentialsUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractAcsEncoders(abc.ABC):
+
+    @abc.abstractmethod
+    def read_card(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        device_name: Optional[str] = None,
+        device_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
 class AbstractAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
@@ -1847,7 +1861,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         name: Optional[str] = None
-    ) -> None:
+    ) -> ClimatePreset:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2270,6 +2284,11 @@ class AbstractAcs(abc.ABC):
     @property
     @abc.abstractmethod
     def credentials(self) -> AbstractAcsCredentials:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
+    def encoders(self) -> AbstractAcsEncoders:
         raise NotImplementedError()
 
     @property
