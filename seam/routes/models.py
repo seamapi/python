@@ -212,6 +212,7 @@ class AcsEntrance:
     display_name: str
     errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
+    salto_ks_metadata: Dict[str, Any]
     visionline_metadata: Dict[str, Any]
 
     @staticmethod
@@ -223,6 +224,7 @@ class AcsEntrance:
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
+            salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
         )
 
@@ -378,39 +380,6 @@ class ClientSession:
             user_identifier_key=d.get("user_identifier_key", None),
             user_identity_ids=d.get("user_identity_ids", None),
             workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class ClimatePreset:
-    can_delete: bool
-    can_edit: bool
-    climate_preset_key: str
-    cooling_set_point_celsius: float
-    cooling_set_point_fahrenheit: float
-    display_name: str
-    fan_mode_setting: str
-    heating_set_point_celsius: float
-    heating_set_point_fahrenheit: float
-    hvac_mode_setting: str
-    manual_override_allowed: bool
-    name: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ClimatePreset(
-            can_delete=d.get("can_delete", None),
-            can_edit=d.get("can_edit", None),
-            climate_preset_key=d.get("climate_preset_key", None),
-            cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-            cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
-            display_name=d.get("display_name", None),
-            fan_mode_setting=d.get("fan_mode_setting", None),
-            heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-            heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
-            hvac_mode_setting=d.get("hvac_mode_setting", None),
-            manual_override_allowed=d.get("manual_override_allowed", None),
-            name=d.get("name", None),
         )
 
 
@@ -626,13 +595,22 @@ class SeamEvent:
     acs_user_id: str
     action_attempt_id: str
     client_session_id: str
+    climate_preset_key: str
+    cooling_set_point_celsius: float
+    cooling_set_point_fahrenheit: float
     created_at: str
     device_id: str
     enrollment_automation_id: str
     event_description: str
     event_id: str
     event_type: str
+    fan_mode_setting: str
+    heating_set_point_celsius: float
+    heating_set_point_fahrenheit: float
+    hvac_mode_setting: str
+    is_fallback_climate_preset: bool
     occurred_at: str
+    thermostat_schedule_id: str
     workspace_id: str
 
     @staticmethod
@@ -643,13 +621,22 @@ class SeamEvent:
             acs_user_id=d.get("acs_user_id", None),
             action_attempt_id=d.get("action_attempt_id", None),
             client_session_id=d.get("client_session_id", None),
+            climate_preset_key=d.get("climate_preset_key", None),
+            cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
+            cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
+            fan_mode_setting=d.get("fan_mode_setting", None),
+            heating_set_point_celsius=d.get("heating_set_point_celsius", None),
+            heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
+            hvac_mode_setting=d.get("hvac_mode_setting", None),
+            is_fallback_climate_preset=d.get("is_fallback_climate_preset", None),
             occurred_at=d.get("occurred_at", None),
+            thermostat_schedule_id=d.get("thermostat_schedule_id", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1150,6 +1137,27 @@ class AbstractAcsCredentialsUnmanaged(abc.ABC):
 
 
 class AbstractAcsEncoders(abc.ABC):
+
+    @abc.abstractmethod
+    def encode_card(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        device_name: Optional[str] = None,
+        device_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_system_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def read_card(
@@ -1861,7 +1869,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         name: Optional[str] = None
-    ) -> ClimatePreset:
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
