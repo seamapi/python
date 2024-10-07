@@ -64,7 +64,7 @@ class AcsEncoders(AbstractAcsEncoders):
     def read_card(
         self,
         *,
-        acs_system_id: Optional[str] = None,
+        acs_system_id: str,
         device_name: Optional[str] = None,
         device_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None

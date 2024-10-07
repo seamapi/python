@@ -57,7 +57,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         connected_account_id: str,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None
-    ) -> ConnectedAccount:
+    ) -> None:
         json_payload = {}
 
         if connected_account_id is not None:
@@ -69,6 +69,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
 
-        res = self.client.post("/connected_accounts/update", json=json_payload)
+        self.client.post("/connected_accounts/update", json=json_payload)
 
-        return ConnectedAccount.from_dict(res["connected_account"])
+        return None
