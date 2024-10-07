@@ -106,15 +106,15 @@ class AcsCredential:
     code: str
     created_at: str
     display_name: str
-    encoded_at: str
     ends_at: str
     errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
-    is_encoded: bool
+    is_issued: bool
     is_latest_desired_state_synced_with_provider: bool
     is_managed: bool
     is_multi_phone_sync_credential: bool
+    issued_at: str
     latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
     starts_at: str
@@ -134,12 +134,11 @@ class AcsCredential:
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            encoded_at=d.get("encoded_at", None),
             ends_at=d.get("ends_at", None),
             errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
-            is_encoded=d.get("is_encoded", None),
+            is_issued=d.get("is_issued", None),
             is_latest_desired_state_synced_with_provider=d.get(
                 "is_latest_desired_state_synced_with_provider", None
             ),
@@ -147,6 +146,7 @@ class AcsCredential:
             is_multi_phone_sync_credential=d.get(
                 "is_multi_phone_sync_credential", None
             ),
+            issued_at=d.get("issued_at", None),
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
             ),
@@ -1163,7 +1163,7 @@ class AbstractAcsEncoders(abc.ABC):
     def read_card(
         self,
         *,
-        acs_system_id: Optional[str] = None,
+        acs_system_id: str,
         device_name: Optional[str] = None,
         device_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
@@ -1462,7 +1462,7 @@ class AbstractConnectedAccounts(abc.ABC):
         connected_account_id: str,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None
-    ) -> ConnectedAccount:
+    ) -> None:
         raise NotImplementedError()
 
 
