@@ -2175,6 +2175,21 @@ class AbstractAccessCodes(abc.ABC):
     ) -> None:
         raise NotImplementedError()
 
+    @abc.abstractmethod
+    def update_multiple(
+        self,
+        *,
+        common_code_key: str,
+        allow_external_modification: Optional[bool] = None,
+        code: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_external_modification_allowed: Optional[bool] = None,
+        name: Optional[str] = None,
+        prefer_native_scheduling: Optional[bool] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
 
 class AbstractDevices(abc.ABC):
 
