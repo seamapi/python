@@ -268,7 +268,7 @@ class Thermostats(AbstractThermostats):
 
         res = self.client.post("/thermostats/list", json=json_payload)
 
-        return [Device.from_dict(item) for item in res["thermostats"]]
+        return [Device.from_dict(item) for item in res["devices"]]
 
     def off(
         self,
