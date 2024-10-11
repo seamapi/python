@@ -61,7 +61,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
-    def read_card(
+    def scan_card(
         self,
         *,
         acs_system_id: str,
@@ -78,7 +78,7 @@ class AcsEncoders(AbstractAcsEncoders):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.client.post("/acs/encoders/read_card", json=json_payload)
+        res = self.client.post("/acs/encoders/scan_card", json=json_payload)
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")

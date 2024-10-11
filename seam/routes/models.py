@@ -1160,7 +1160,7 @@ class AbstractAcsEncoders(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def read_card(
+    def scan_card(
         self,
         *,
         acs_system_id: str,
