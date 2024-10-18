@@ -238,11 +238,13 @@ class AcsSystem:
     can_remove_acs_users_from_acs_access_groups: bool
     connected_account_ids: List[str]
     created_at: str
+    default_credential_manager_acs_system_id: str
     errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
     image_alt_text: str
     image_url: str
+    is_credential_manager: bool
     name: str
     system_type: str
     system_type_display_name: str
@@ -264,11 +266,15 @@ class AcsSystem:
             ),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
+            default_credential_manager_acs_system_id=d.get(
+                "default_credential_manager_acs_system_id", None
+            ),
             errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             image_alt_text=d.get("image_alt_text", None),
             image_url=d.get("image_url", None),
+            is_credential_manager=d.get("is_credential_manager", None),
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
