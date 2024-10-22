@@ -615,6 +615,7 @@ class SeamEvent:
     heating_set_point_fahrenheit: float
     hvac_mode_setting: str
     is_fallback_climate_preset: bool
+    method: str
     occurred_at: str
     thermostat_schedule_id: str
     workspace_id: str
@@ -641,6 +642,7 @@ class SeamEvent:
             heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
             hvac_mode_setting=d.get("hvac_mode_setting", None),
             is_fallback_climate_preset=d.get("is_fallback_climate_preset", None),
+            method=d.get("method", None),
             occurred_at=d.get("occurred_at", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
             workspace_id=d.get("workspace_id", None),
