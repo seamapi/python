@@ -323,7 +323,7 @@ Setting the endpoint
 Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
-Either pass the ``api_url`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
+Either pass the ``endpoint`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
 
 Development and Testing
 -----------------------
