@@ -278,7 +278,8 @@ A Personal Access Token is scoped to a Seam Console user. Obtain one from the Se
 Webhooks
 ~~~~~~~~
 
-The Seam API implements webhooks using `Svix <https://www.svix.com>`_. This SDK exports a thin wrapper ``SeamWebhook`` around the svix package.
+The Seam API implements webhooks using `Svix <https://www.svix.com>`_.
+This SDK exports a thin wrapper ``SeamWebhook`` around the svix package.
 Use it to parse and validate Seam webhook events.
 Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/introduction>`_ for an in-depth guide on best-practices for handling webhooks in your application.
 
