@@ -280,7 +280,8 @@ Webhooks
 
 The Seam API implements webhooks using `Svix <https://www.svix.com>`_.
 This SDK exports a thin wrapper ``SeamWebhook`` around the svix package.
-Use it to parse and validate Seam webhook events.
+Use it to parse and validate `Seam webhook events <https://docs.seam.co/latest/developer-tools/webhooks>`_.
+
 Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/introduction>`_ for an in-depth guide on best-practices for handling webhooks in your application.
 
 This example is for `Flask <https://flask.palletsprojects.com/>`_,
