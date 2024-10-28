@@ -13,17 +13,14 @@ class AcsEncoders(AbstractAcsEncoders):
     def encode_card(
         self,
         *,
-        acs_system_id: Optional[str] = None,
-        device_name: Optional[str] = None,
-        device_id: Optional[str] = None,
+        acs_credential_id: str,
+        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
-        if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
-        if device_name is not None:
-            json_payload["device_name"] = device_name
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
         if device_id is not None:
             json_payload["device_id"] = device_id
 
@@ -65,16 +62,13 @@ class AcsEncoders(AbstractAcsEncoders):
         self,
         *,
         acs_system_id: str,
-        device_name: Optional[str] = None,
-        device_id: Optional[str] = None,
+        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
-        if device_name is not None:
-            json_payload["device_name"] = device_name
         if device_id is not None:
             json_payload["device_id"] = device_id
 

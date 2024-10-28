@@ -346,6 +346,32 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    def set_temperature_threshold(
+        self,
+        *,
+        device_id: str,
+        lower_limit_celsius: Optional[float] = None,
+        lower_limit_fahrenheit: Optional[float] = None,
+        upper_limit_celsius: Optional[float] = None,
+        upper_limit_fahrenheit: Optional[float] = None
+    ) -> None:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if lower_limit_celsius is not None:
+            json_payload["lower_limit_celsius"] = lower_limit_celsius
+        if lower_limit_fahrenheit is not None:
+            json_payload["lower_limit_fahrenheit"] = lower_limit_fahrenheit
+        if upper_limit_celsius is not None:
+            json_payload["upper_limit_celsius"] = upper_limit_celsius
+        if upper_limit_fahrenheit is not None:
+            json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
+
+        self.client.post("/thermostats/set_temperature_threshold", json=json_payload)
+
+        return None
+
     def update_climate_preset(
         self,
         *,
