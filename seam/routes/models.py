@@ -1150,9 +1150,8 @@ class AbstractAcsEncoders(abc.ABC):
     def encode_card(
         self,
         *,
-        acs_system_id: Optional[str] = None,
-        device_name: Optional[str] = None,
-        device_id: Optional[str] = None,
+        acs_credential_id: str,
+        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -1172,8 +1171,7 @@ class AbstractAcsEncoders(abc.ABC):
         self,
         *,
         acs_system_id: str,
-        device_name: Optional[str] = None,
-        device_id: Optional[str] = None,
+        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -1962,6 +1960,18 @@ class AbstractThermostats(abc.ABC):
         sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def set_temperature_threshold(
+        self,
+        *,
+        device_id: str,
+        lower_limit_celsius: Optional[float] = None,
+        lower_limit_fahrenheit: Optional[float] = None,
+        upper_limit_celsius: Optional[float] = None,
+        upper_limit_fahrenheit: Optional[float] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
