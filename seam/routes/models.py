@@ -210,6 +210,7 @@ class AcsEntrance:
     acs_system_id: str
     created_at: str
     display_name: str
+    dormakaba_community_metadata: Dict[str, Any]
     errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
     salto_ks_metadata: Dict[str, Any]
@@ -222,6 +223,9 @@ class AcsEntrance:
             acs_system_id=d.get("acs_system_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            dormakaba_community_metadata=DeepAttrDict(
+                d.get("dormakaba_community_metadata", None)
+            ),
             errors=d.get("errors", None),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
@@ -1546,7 +1550,8 @@ class AbstractEvents(abc.ABC):
         event_type: Optional[str] = None,
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        since: Optional[str] = None
+        since: Optional[str] = None,
+        unstable_offset: Optional[float] = None
     ) -> List[SeamEvent]:
         raise NotImplementedError()
 

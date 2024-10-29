@@ -41,7 +41,8 @@ class Events(AbstractEvents):
         event_type: Optional[str] = None,
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        since: Optional[str] = None
+        since: Optional[str] = None,
+        unstable_offset: Optional[float] = None
     ) -> List[SeamEvent]:
         json_payload = {}
 
@@ -67,6 +68,8 @@ class Events(AbstractEvents):
             json_payload["limit"] = limit
         if since is not None:
             json_payload["since"] = since
+        if unstable_offset is not None:
+            json_payload["unstable_offset"] = unstable_offset
 
         res = self.client.post("/events/list", json=json_payload)
 
