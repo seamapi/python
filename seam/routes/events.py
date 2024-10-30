@@ -33,6 +33,8 @@ class Events(AbstractEvents):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        acs_system_id: Optional[str] = None,
+        acs_system_ids: Optional[List[str]] = None,
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
@@ -50,6 +52,10 @@ class Events(AbstractEvents):
             json_payload["access_code_id"] = access_code_id
         if access_code_ids is not None:
             json_payload["access_code_ids"] = access_code_ids
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
+        if acs_system_ids is not None:
+            json_payload["acs_system_ids"] = acs_system_ids
         if between is not None:
             json_payload["between"] = between
         if connect_webview_id is not None:

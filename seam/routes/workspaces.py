@@ -18,7 +18,8 @@ class Workspaces(AbstractWorkspaces):
         connect_partner_name: Optional[str] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
-        webview_primary_button_color: Optional[str] = None
+        webview_primary_button_color: Optional[str] = None,
+        webview_primary_button_text_color: Optional[str] = None
     ) -> Workspace:
         json_payload = {}
 
@@ -34,6 +35,10 @@ class Workspaces(AbstractWorkspaces):
             json_payload["webview_logo_shape"] = webview_logo_shape
         if webview_primary_button_color is not None:
             json_payload["webview_primary_button_color"] = webview_primary_button_color
+        if webview_primary_button_text_color is not None:
+            json_payload["webview_primary_button_text_color"] = (
+                webview_primary_button_text_color
+            )
 
         res = self.client.post("/workspaces/create", json=json_payload)
 
