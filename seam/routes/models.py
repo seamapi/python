@@ -1542,6 +1542,8 @@ class AbstractEvents(abc.ABC):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        acs_system_id: Optional[str] = None,
+        acs_system_ids: Optional[List[str]] = None,
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
@@ -1793,7 +1795,8 @@ class AbstractWorkspaces(abc.ABC):
         connect_partner_name: Optional[str] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
-        webview_primary_button_color: Optional[str] = None
+        webview_primary_button_color: Optional[str] = None,
+        webview_primary_button_text_color: Optional[str] = None
     ) -> Workspace:
         raise NotImplementedError()
 
