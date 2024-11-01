@@ -1155,7 +1155,7 @@ class AbstractAcsCredentialsUnmanaged(abc.ABC):
 class AbstractAcsEncoders(abc.ABC):
 
     @abc.abstractmethod
-    def encode_card(
+    def encode_credential(
         self,
         *,
         acs_credential_id: str,
@@ -1175,7 +1175,7 @@ class AbstractAcsEncoders(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def scan_card(
+    def scan_credential(
         self,
         *,
         acs_system_id: str,
