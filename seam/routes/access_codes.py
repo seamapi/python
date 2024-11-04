@@ -303,32 +303,18 @@ class AccessCodes(AbstractAccessCodes):
         self,
         *,
         common_code_key: str,
-        allow_external_modification: Optional[bool] = None,
-        code: Optional[str] = None,
         ends_at: Optional[str] = None,
-        is_external_modification_allowed: Optional[bool] = None,
         name: Optional[str] = None,
-        prefer_native_scheduling: Optional[bool] = None,
         starts_at: Optional[str] = None
     ) -> None:
         json_payload = {}
 
         if common_code_key is not None:
             json_payload["common_code_key"] = common_code_key
-        if allow_external_modification is not None:
-            json_payload["allow_external_modification"] = allow_external_modification
-        if code is not None:
-            json_payload["code"] = code
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-        if is_external_modification_allowed is not None:
-            json_payload["is_external_modification_allowed"] = (
-                is_external_modification_allowed
-            )
         if name is not None:
             json_payload["name"] = name
-        if prefer_native_scheduling is not None:
-            json_payload["prefer_native_scheduling"] = prefer_native_scheduling
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
