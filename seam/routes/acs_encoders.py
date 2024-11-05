@@ -10,7 +10,7 @@ class AcsEncoders(AbstractAcsEncoders):
         self.client = client
         self.defaults = defaults
 
-    def encode_credential(
+    def encode_card(
         self,
         *,
         acs_credential_id: str,
@@ -24,7 +24,7 @@ class AcsEncoders(AbstractAcsEncoders):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
+        res = self.client.post("/acs/encoders/encode_card", json=json_payload)
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")
@@ -58,7 +58,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
-    def scan_credential(
+    def scan_card(
         self,
         *,
         acs_system_id: str,
@@ -72,7 +72,7 @@ class AcsEncoders(AbstractAcsEncoders):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
+        res = self.client.post("/acs/encoders/scan_card", json=json_payload)
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")

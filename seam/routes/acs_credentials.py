@@ -26,6 +26,7 @@ class AcsCredentials(AbstractAcsCredentials):
         access_method: str,
         acs_user_id: str,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
+        assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
         code: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
@@ -41,6 +42,8 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if allowed_acs_entrance_ids is not None:
             json_payload["allowed_acs_entrance_ids"] = allowed_acs_entrance_ids
+        if assa_abloy_vostio_metadata is not None:
+            json_payload["assa_abloy_vostio_metadata"] = assa_abloy_vostio_metadata
         if code is not None:
             json_payload["code"] = code
         if credential_manager_acs_system_id is not None:

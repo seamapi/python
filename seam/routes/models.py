@@ -1086,6 +1086,7 @@ class AbstractAcsCredentials(abc.ABC):
         access_method: str,
         acs_user_id: str,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
+        assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
         code: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
@@ -1155,7 +1156,7 @@ class AbstractAcsCredentialsUnmanaged(abc.ABC):
 class AbstractAcsEncoders(abc.ABC):
 
     @abc.abstractmethod
-    def encode_credential(
+    def encode_card(
         self,
         *,
         acs_credential_id: str,
@@ -1175,7 +1176,7 @@ class AbstractAcsEncoders(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def scan_credential(
+    def scan_card(
         self,
         *,
         acs_system_id: str,
