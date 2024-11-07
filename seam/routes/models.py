@@ -253,6 +253,7 @@ class AcsSystem:
     image_alt_text: str
     image_url: str
     is_credential_manager: bool
+    location: Dict[str, Any]
     name: str
     system_type: str
     system_type_display_name: str
@@ -283,6 +284,7 @@ class AcsSystem:
             image_alt_text=d.get("image_alt_text", None),
             image_url=d.get("image_url", None),
             is_credential_manager=d.get("is_credential_manager", None),
+            location=DeepAttrDict(d.get("location", None)),
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
