@@ -11,8 +11,8 @@
   },
   "devDependencies": {
     "@seamapi/fake-seam-connect": "1.72.1",
-    "@seamapi/nextlove-sdk-generator": "1.14.10",
-    "@seamapi/types": "1.289.1",
+    "@seamapi/nextlove-sdk-generator": "1.14.11",
+    "@seamapi/types": "1.292.0",
     "del": "^7.1.0",
     "prettier": "^3.2.5"
   }
