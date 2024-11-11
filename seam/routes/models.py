@@ -1162,7 +1162,7 @@ class AbstractAcsEncoders(abc.ABC):
         self,
         *,
         acs_credential_id: str,
-        device_id: str,
+        acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -1171,18 +1171,18 @@ class AbstractAcsEncoders(abc.ABC):
     def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None,
         limit: Optional[float] = None
-    ) -> List[Device]:
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def scan_credential(
         self,
         *,
+        acs_encoder_id: str,
         acs_system_id: str,
-        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
