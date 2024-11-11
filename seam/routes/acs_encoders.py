@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsEncoders, ActionAttempt, Device
+from .models import AbstractAcsEncoders, ActionAttempt
 
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -14,15 +14,15 @@ class AcsEncoders(AbstractAcsEncoders):
         self,
         *,
         acs_credential_id: str,
-        device_id: str,
+        acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-        if device_id is not None:
-            json_payload["device_id"] = device_id
+        if acs_encoder_id is not None:
+            json_payload["acs_encoder_id"] = acs_encoder_id
 
         res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
 
@@ -41,36 +41,36 @@ class AcsEncoders(AbstractAcsEncoders):
     def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None,
         limit: Optional[float] = None
-    ) -> List[Device]:
+    ) -> None:
         json_payload = {}
 
+        if acs_encoder_ids is not None:
+            json_payload["acs_encoder_ids"] = acs_encoder_ids
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
-        if device_ids is not None:
-            json_payload["device_ids"] = device_ids
         if limit is not None:
             json_payload["limit"] = limit
 
-        res = self.client.post("/acs/encoders/list", json=json_payload)
+        self.client.post("/acs/encoders/list", json=json_payload)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return None
 
     def scan_credential(
         self,
         *,
+        acs_encoder_id: str,
         acs_system_id: str,
-        device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
+        if acs_encoder_id is not None:
+            json_payload["acs_encoder_id"] = acs_encoder_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
-        if device_id is not None:
-            json_payload["device_id"] = device_id
 
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
