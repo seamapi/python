@@ -786,6 +786,7 @@ class ThermostatSchedule:
     name: str
     starts_at: str
     thermostat_schedule_id: str
+    unstable_is_override_allowed: bool
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -799,6 +800,7 @@ class ThermostatSchedule:
             name=d.get("name", None),
             starts_at=d.get("starts_at", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
+            unstable_is_override_allowed=d.get("unstable_is_override_allowed", None),
         )
 
 
@@ -1706,6 +1708,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         device_id: str,
         ends_at: str,
         starts_at: str,
+        is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None
     ) -> ThermostatSchedule:
@@ -1732,6 +1735,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         thermostat_schedule_id: str,
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
@@ -1882,13 +1886,13 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        manual_override_allowed: bool,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
+        manual_override_allowed: Optional[bool] = None,
         name: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
