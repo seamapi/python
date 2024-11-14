@@ -15,6 +15,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         device_id: str,
         ends_at: str,
         starts_at: str,
+        is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None
     ) -> ThermostatSchedule:
@@ -28,6 +29,8 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["ends_at"] = ends_at
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+        if is_override_allowed is not None:
+            json_payload["is_override_allowed"] = is_override_allowed
         if max_override_period_minutes is not None:
             json_payload["max_override_period_minutes"] = max_override_period_minutes
         if name is not None:
@@ -79,6 +82,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         thermostat_schedule_id: str,
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
@@ -91,6 +95,8 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["climate_preset_key"] = climate_preset_key
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
+        if is_override_allowed is not None:
+            json_payload["is_override_allowed"] = is_override_allowed
         if max_override_period_minutes is not None:
             json_payload["max_override_period_minutes"] = max_override_period_minutes
         if name is not None:

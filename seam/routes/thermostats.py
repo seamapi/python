@@ -84,13 +84,13 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        manual_override_allowed: bool,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
+        manual_override_allowed: Optional[bool] = None,
         name: Optional[str] = None
     ) -> None:
         json_payload = {}
@@ -99,8 +99,6 @@ class Thermostats(AbstractThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if manual_override_allowed is not None:
-            json_payload["manual_override_allowed"] = manual_override_allowed
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
@@ -113,6 +111,8 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if hvac_mode_setting is not None:
             json_payload["hvac_mode_setting"] = hvac_mode_setting
+        if manual_override_allowed is not None:
+            json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
 
