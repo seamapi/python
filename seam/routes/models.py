@@ -1982,6 +1982,20 @@ class AbstractThermostats(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def set_hvac_mode(
+        self,
+        *,
+        device_id: str,
+        hvac_mode_setting: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def set_temperature_threshold(
         self,
         *,

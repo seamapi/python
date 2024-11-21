@@ -346,6 +346,46 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    def set_hvac_mode(
+        self,
+        *,
+        device_id: str,
+        hvac_mode_setting: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if hvac_mode_setting is not None:
+            json_payload["hvac_mode_setting"] = hvac_mode_setting
+        if cooling_set_point_celsius is not None:
+            json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
+        if cooling_set_point_fahrenheit is not None:
+            json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if heating_set_point_celsius is not None:
+            json_payload["heating_set_point_celsius"] = heating_set_point_celsius
+        if heating_set_point_fahrenheit is not None:
+            json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+
+        res = self.client.post("/thermostats/set_hvac_mode", json=json_payload)
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
+
     def set_temperature_threshold(
         self,
         *,
