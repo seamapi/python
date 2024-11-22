@@ -1173,9 +1173,10 @@ class AbstractAcsEncoders(abc.ABC):
     def list(
         self,
         *,
-        acs_encoder_ids: Optional[List[str]] = None,
+        acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
         acs_system_ids: Optional[List[str]] = None,
-        limit: Optional[float] = None
+        acs_encoder_ids: Optional[List[str]] = None
     ) -> None:
         raise NotImplementedError()
 
