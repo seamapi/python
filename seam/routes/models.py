@@ -1101,6 +1101,18 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def create_offline_code(
+        self,
+        *,
+        acs_user_id: str,
+        allowed_acs_entrance_id: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_one_time_use: Optional[bool] = None,
+        starts_at: Optional[str] = None
+    ) -> AcsCredential:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def delete(self, *, acs_credential_id: str) -> None:
         raise NotImplementedError()
 
