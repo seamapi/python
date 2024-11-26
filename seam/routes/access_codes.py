@@ -227,7 +227,7 @@ class AccessCodes(AbstractAccessCodes):
             "/access_codes/pull_backup_access_code", json=json_payload
         )
 
-        return AccessCode.from_dict(res["backup_access_code"])
+        return AccessCode.from_dict(res["access_code"])
 
     def update(
         self,
