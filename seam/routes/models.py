@@ -114,6 +114,7 @@ class AcsCredential:
     is_latest_desired_state_synced_with_provider: bool
     is_managed: bool
     is_multi_phone_sync_credential: bool
+    is_one_time_use: bool
     issued_at: str
     latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
@@ -146,6 +147,7 @@ class AcsCredential:
             is_multi_phone_sync_credential=d.get(
                 "is_multi_phone_sync_credential", None
             ),
+            is_one_time_use=d.get("is_one_time_use", None),
             issued_at=d.get("issued_at", None),
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
@@ -1105,7 +1107,7 @@ class AbstractAcsCredentials(abc.ABC):
         self,
         *,
         acs_user_id: str,
-        allowed_acs_entrance_id: Optional[str] = None,
+        allowed_acs_entrance_id: str,
         ends_at: Optional[str] = None,
         is_one_time_use: Optional[bool] = None,
         starts_at: Optional[str] = None
