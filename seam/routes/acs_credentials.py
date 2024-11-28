@@ -69,7 +69,7 @@ class AcsCredentials(AbstractAcsCredentials):
         self,
         *,
         acs_user_id: str,
-        allowed_acs_entrance_id: Optional[str] = None,
+        allowed_acs_entrance_id: str,
         ends_at: Optional[str] = None,
         is_one_time_use: Optional[bool] = None,
         starts_at: Optional[str] = None
