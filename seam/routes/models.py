@@ -381,6 +381,7 @@ class ClientSession:
     connected_account_ids: List[str]
     created_at: str
     device_count: float
+    expires_at: str
     token: str
     user_identifier_key: str
     user_identity_ids: List[str]
@@ -394,6 +395,7 @@ class ClientSession:
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
             device_count=d.get("device_count", None),
+            expires_at=d.get("expires_at", None),
             token=d.get("token", None),
             user_identifier_key=d.get("user_identifier_key", None),
             user_identity_ids=d.get("user_identity_ids", None),
