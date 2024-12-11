@@ -217,6 +217,7 @@ class AcsEntrance:
     errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
     salto_ks_metadata: Dict[str, Any]
+    salto_space_metadata: Dict[str, Any]
     visionline_metadata: Dict[str, Any]
 
     @staticmethod
@@ -235,6 +236,7 @@ class AcsEntrance:
             errors=d.get("errors", None),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
+            salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
         )
 
