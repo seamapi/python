@@ -26,11 +26,11 @@ class AcsUsers(AbstractAcsUsers):
         self,
         *,
         acs_system_id: str,
+        full_name: str,
         access_schedule: Optional[Dict[str, Any]] = None,
         acs_access_group_ids: Optional[List[str]] = None,
         email: Optional[str] = None,
         email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
@@ -38,6 +38,8 @@ class AcsUsers(AbstractAcsUsers):
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if full_name is not None:
+            json_payload["full_name"] = full_name
         if access_schedule is not None:
             json_payload["access_schedule"] = access_schedule
         if acs_access_group_ids is not None:
@@ -46,8 +48,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["email"] = email
         if email_address is not None:
             json_payload["email_address"] = email_address
-        if full_name is not None:
-            json_payload["full_name"] = full_name
         if phone_number is not None:
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:

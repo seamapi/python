@@ -65,15 +65,12 @@ class AcsEncoders(AbstractAcsEncoders):
         self,
         *,
         acs_encoder_id: str,
-        acs_system_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-        if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
 
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
