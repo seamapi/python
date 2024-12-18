@@ -248,6 +248,7 @@ class AcsSystem:
     can_automate_enrollment: bool
     can_create_acs_access_groups: bool
     can_remove_acs_users_from_acs_access_groups: bool
+    connected_account_id: str
     connected_account_ids: List[str]
     created_at: str
     default_credential_manager_acs_system_id: str
@@ -277,6 +278,7 @@ class AcsSystem:
             can_remove_acs_users_from_acs_access_groups=d.get(
                 "can_remove_acs_users_from_acs_access_groups", None
             ),
+            connected_account_id=d.get("connected_account_id", None),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
             default_credential_manager_acs_system_id=d.get(
