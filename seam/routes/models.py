@@ -74,6 +74,7 @@ class AcsAccessGroup:
     external_type_display_name: str
     is_managed: bool
     name: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -91,6 +92,7 @@ class AcsAccessGroup:
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
