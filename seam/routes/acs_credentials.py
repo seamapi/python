@@ -31,6 +31,7 @@ class AcsCredentials(AbstractAcsCredentials):
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
+        salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None
     ) -> AcsCredential:
@@ -56,6 +57,8 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["is_multi_phone_sync_credential"] = (
                 is_multi_phone_sync_credential
             )
+        if salto_space_metadata is not None:
+            json_payload["salto_space_metadata"] = salto_space_metadata
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
         if visionline_metadata is not None:

@@ -1149,6 +1149,7 @@ class AbstractAcsCredentials(abc.ABC):
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
+        salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None
     ) -> AcsCredential:
