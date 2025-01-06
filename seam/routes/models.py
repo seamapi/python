@@ -835,7 +835,7 @@ class ThermostatSchedule:
     created_at: str
     device_id: str
     ends_at: str
-    errors: Any
+    errors: List[Dict[str, Any]]
     max_override_period_minutes: int
     name: str
     starts_at: str
