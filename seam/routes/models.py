@@ -630,6 +630,7 @@ class SeamEvent:
     acs_credential_id: str
     acs_user_id: str
     acs_encoder_id: str
+    acs_access_group_id: str
     client_session_id: str
     connect_webview_id: str
     action_attempt_id: str
@@ -660,6 +661,8 @@ class SeamEvent:
     temperature_fahrenheit: float
     upper_limit_celsius: float
     upper_limit_fahrenheit: float
+    desired_temperature_celsius: float
+    desired_temperature_fahrenheit: float
     enrollment_automation_id: str
 
     @staticmethod
@@ -679,6 +682,7 @@ class SeamEvent:
             acs_credential_id=d.get("acs_credential_id", None),
             acs_user_id=d.get("acs_user_id", None),
             acs_encoder_id=d.get("acs_encoder_id", None),
+            acs_access_group_id=d.get("acs_access_group_id", None),
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
             action_attempt_id=d.get("action_attempt_id", None),
@@ -709,6 +713,10 @@ class SeamEvent:
             temperature_fahrenheit=d.get("temperature_fahrenheit", None),
             upper_limit_celsius=d.get("upper_limit_celsius", None),
             upper_limit_fahrenheit=d.get("upper_limit_fahrenheit", None),
+            desired_temperature_celsius=d.get("desired_temperature_celsius", None),
+            desired_temperature_fahrenheit=d.get(
+                "desired_temperature_fahrenheit", None
+            ),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
         )
 
