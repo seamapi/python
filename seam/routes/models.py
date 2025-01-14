@@ -104,6 +104,7 @@ class AcsCredential:
     acs_credential_pool_id: str
     acs_system_id: str
     acs_user_id: str
+    assa_abloy_vostio_metadata: Dict[str, Any]
     card_number: str
     code: str
     created_at: str
@@ -133,6 +134,9 @@ class AcsCredential:
             acs_credential_pool_id=d.get("acs_credential_pool_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
+            assa_abloy_vostio_metadata=DeepAttrDict(
+                d.get("assa_abloy_vostio_metadata", None)
+            ),
             card_number=d.get("card_number", None),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
