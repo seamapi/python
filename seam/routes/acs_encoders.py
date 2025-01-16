@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsEncoders, ActionAttempt
+from .models import AbstractAcsEncoders, ActionAttempt, AcsEncoder
 
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -45,7 +45,7 @@ class AcsEncoders(AbstractAcsEncoders):
         limit: Optional[float] = None,
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None
-    ) -> None:
+    ) -> List[AcsEncoder]:
         json_payload = {}
 
         if acs_system_id is not None:
@@ -57,9 +57,9 @@ class AcsEncoders(AbstractAcsEncoders):
         if acs_encoder_ids is not None:
             json_payload["acs_encoder_ids"] = acs_encoder_ids
 
-        self.client.post("/acs/encoders/list", json=json_payload)
+        res = self.client.post("/acs/encoders/list", json=json_payload)
 
-        return None
+        return [AcsEncoder.from_dict(item) for item in res["acs_encoders"]]
 
     def scan_credential(
         self,

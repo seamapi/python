@@ -213,6 +213,27 @@ class AcsCredentialProvisioningAutomation:
 
 
 @dataclass
+class AcsEncoder:
+    acs_encoder_id: str
+    acs_system_id: str
+    created_at: str
+    display_name: str
+    errors: List[Dict[str, Any]]
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AcsEncoder(
+            acs_encoder_id=d.get("acs_encoder_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
@@ -904,6 +925,169 @@ class UnmanagedAccessCode:
 
 
 @dataclass
+class UnmanagedAcsAccessGroup:
+    access_group_type: str
+    access_group_type_display_name: str
+    acs_access_group_id: str
+    acs_system_id: str
+    created_at: str
+    display_name: str
+    external_type: str
+    external_type_display_name: str
+    is_managed: bool
+    name: str
+    warnings: List[Dict[str, Any]]
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return UnmanagedAcsAccessGroup(
+            access_group_type=d.get("access_group_type", None),
+            access_group_type_display_name=d.get(
+                "access_group_type_display_name", None
+            ),
+            acs_access_group_id=d.get("acs_access_group_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            external_type=d.get("external_type", None),
+            external_type_display_name=d.get("external_type_display_name", None),
+            is_managed=d.get("is_managed", None),
+            name=d.get("name", None),
+            warnings=d.get("warnings", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class UnmanagedAcsCredential:
+    access_method: str
+    acs_credential_id: str
+    acs_credential_pool_id: str
+    acs_system_id: str
+    acs_user_id: str
+    assa_abloy_vostio_metadata: Dict[str, Any]
+    card_number: str
+    code: str
+    created_at: str
+    display_name: str
+    ends_at: str
+    errors: List[Dict[str, Any]]
+    external_type: str
+    external_type_display_name: str
+    is_issued: bool
+    is_latest_desired_state_synced_with_provider: bool
+    is_managed: bool
+    is_multi_phone_sync_credential: bool
+    is_one_time_use: bool
+    issued_at: str
+    latest_desired_state_synced_with_provider_at: str
+    parent_acs_credential_id: str
+    starts_at: str
+    visionline_metadata: Dict[str, Any]
+    warnings: List[Dict[str, Any]]
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return UnmanagedAcsCredential(
+            access_method=d.get("access_method", None),
+            acs_credential_id=d.get("acs_credential_id", None),
+            acs_credential_pool_id=d.get("acs_credential_pool_id", None),
+            acs_system_id=d.get("acs_system_id", None),
+            acs_user_id=d.get("acs_user_id", None),
+            assa_abloy_vostio_metadata=DeepAttrDict(
+                d.get("assa_abloy_vostio_metadata", None)
+            ),
+            card_number=d.get("card_number", None),
+            code=d.get("code", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            ends_at=d.get("ends_at", None),
+            errors=d.get("errors", None),
+            external_type=d.get("external_type", None),
+            external_type_display_name=d.get("external_type_display_name", None),
+            is_issued=d.get("is_issued", None),
+            is_latest_desired_state_synced_with_provider=d.get(
+                "is_latest_desired_state_synced_with_provider", None
+            ),
+            is_managed=d.get("is_managed", None),
+            is_multi_phone_sync_credential=d.get(
+                "is_multi_phone_sync_credential", None
+            ),
+            is_one_time_use=d.get("is_one_time_use", None),
+            issued_at=d.get("issued_at", None),
+            latest_desired_state_synced_with_provider_at=d.get(
+                "latest_desired_state_synced_with_provider_at", None
+            ),
+            parent_acs_credential_id=d.get("parent_acs_credential_id", None),
+            starts_at=d.get("starts_at", None),
+            visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
+            warnings=d.get("warnings", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class UnmanagedAcsUser:
+    access_schedule: Dict[str, Any]
+    acs_system_id: str
+    acs_user_id: str
+    created_at: str
+    display_name: str
+    email: str
+    email_address: str
+    errors: List[Dict[str, Any]]
+    external_type: str
+    external_type_display_name: str
+    full_name: str
+    hid_acs_system_id: str
+    is_latest_desired_state_synced_with_provider: bool
+    is_managed: bool
+    is_suspended: bool
+    latest_desired_state_synced_with_provider_at: str
+    phone_number: str
+    user_identity_email_address: str
+    user_identity_full_name: str
+    user_identity_id: str
+    user_identity_phone_number: str
+    warnings: List[Dict[str, Any]]
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return UnmanagedAcsUser(
+            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
+            acs_system_id=d.get("acs_system_id", None),
+            acs_user_id=d.get("acs_user_id", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            email=d.get("email", None),
+            email_address=d.get("email_address", None),
+            errors=d.get("errors", None),
+            external_type=d.get("external_type", None),
+            external_type_display_name=d.get("external_type_display_name", None),
+            full_name=d.get("full_name", None),
+            hid_acs_system_id=d.get("hid_acs_system_id", None),
+            is_latest_desired_state_synced_with_provider=d.get(
+                "is_latest_desired_state_synced_with_provider", None
+            ),
+            is_managed=d.get("is_managed", None),
+            is_suspended=d.get("is_suspended", None),
+            latest_desired_state_synced_with_provider_at=d.get(
+                "latest_desired_state_synced_with_provider_at", None
+            ),
+            phone_number=d.get("phone_number", None),
+            user_identity_email_address=d.get("user_identity_email_address", None),
+            user_identity_full_name=d.get("user_identity_full_name", None),
+            user_identity_id=d.get("user_identity_id", None),
+            user_identity_phone_number=d.get("user_identity_phone_number", None),
+            warnings=d.get("warnings", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class UnmanagedDevice:
     can_hvac_cool: bool
     can_hvac_heat: bool
@@ -1111,13 +1295,13 @@ class AbstractAcsAccessGroups(abc.ABC):
 class AbstractAcsAccessGroupsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_access_group_id: str) -> None:
+    def get(self, *, acs_access_group_id: str) -> UnmanagedAcsAccessGroup:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAcsAccessGroup]:
         raise NotImplementedError()
 
 
@@ -1222,7 +1406,7 @@ class AbstractAcsCredentials(abc.ABC):
 class AbstractAcsCredentialsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_credential_id: str) -> None:
+    def get(self, *, acs_credential_id: str) -> UnmanagedAcsCredential:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1232,7 +1416,7 @@ class AbstractAcsCredentialsUnmanaged(abc.ABC):
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAcsCredential]:
         raise NotImplementedError()
 
 
@@ -1256,7 +1440,7 @@ class AbstractAcsEncoders(abc.ABC):
         limit: Optional[float] = None,
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None
-    ) -> None:
+    ) -> List[AcsEncoder]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1435,7 +1619,7 @@ class AbstractAcsUsers(abc.ABC):
 class AbstractAcsUsersUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, acs_user_id: str) -> None:
+    def get(self, *, acs_user_id: str) -> UnmanagedAcsUser:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1447,7 +1631,7 @@ class AbstractAcsUsersUnmanaged(abc.ABC):
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAcsUser]:
         raise NotImplementedError()
 
 
