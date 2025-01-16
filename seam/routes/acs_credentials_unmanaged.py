@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsCredentialsUnmanaged
+from .models import AbstractAcsCredentialsUnmanaged, UnmanagedAcsCredential
 
 
 class AcsCredentialsUnmanaged(AbstractAcsCredentialsUnmanaged):
@@ -8,15 +8,15 @@ class AcsCredentialsUnmanaged(AbstractAcsCredentialsUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, acs_credential_id: str) -> None:
+    def get(self, *, acs_credential_id: str) -> UnmanagedAcsCredential:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        self.client.post("/acs/credentials/unmanaged/get", json=json_payload)
+        res = self.client.post("/acs/credentials/unmanaged/get", json=json_payload)
 
-        return None
+        return UnmanagedAcsCredential.from_dict(res["acs_credential"])
 
     def list(
         self,
@@ -24,7 +24,7 @@ class AcsCredentialsUnmanaged(AbstractAcsCredentialsUnmanaged):
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAcsCredential]:
         json_payload = {}
 
         if acs_user_id is not None:
@@ -34,6 +34,8 @@ class AcsCredentialsUnmanaged(AbstractAcsCredentialsUnmanaged):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/credentials/unmanaged/list", json=json_payload)
+        res = self.client.post("/acs/credentials/unmanaged/list", json=json_payload)
 
-        return None
+        return [
+            UnmanagedAcsCredential.from_dict(item) for item in res["acs_credentials"]
+        ]
