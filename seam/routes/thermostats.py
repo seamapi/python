@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractThermostats, ActionAttempt, Device
 from .thermostats_schedules import ThermostatsSchedules
+from .thermostats_simulate import ThermostatsSimulate
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -10,10 +11,15 @@ class Thermostats(AbstractThermostats):
         self.client = client
         self.defaults = defaults
         self._schedules = ThermostatsSchedules(client=client, defaults=defaults)
+        self._simulate = ThermostatsSimulate(client=client, defaults=defaults)
 
     @property
     def schedules(self) -> ThermostatsSchedules:
         return self._schedules
+
+    @property
+    def simulate(self) -> ThermostatsSimulate:
+        return self._simulate
 
     def activate_climate_preset(
         self,

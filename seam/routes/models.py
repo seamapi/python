@@ -2045,6 +2045,19 @@ class AbstractThermostatsSchedules(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractThermostatsSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def temperature_reached(
+        self,
+        *,
+        device_id: str,
+        temperature_celsius: Optional[float] = None,
+        temperature_fahrenheit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
 class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
 
     @abc.abstractmethod
@@ -2150,180 +2163,6 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
-        raise NotImplementedError()
-
-
-class AbstractThermostats(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def schedules(self) -> AbstractThermostatsSchedules:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def activate_climate_preset(
-        self,
-        *,
-        climate_preset_key: str,
-        device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def cool(
-        self,
-        *,
-        device_id: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def create_climate_preset(
-        self,
-        *,
-        climate_preset_key: str,
-        device_id: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        fan_mode_setting: Optional[str] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
-        manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def heat(
-        self,
-        *,
-        device_id: str,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def heat_cool(
-        self,
-        *,
-        device_id: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        device_ids: Optional[List[str]] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        manufacturer: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
-    ) -> List[Device]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def off(
-        self,
-        *,
-        device_id: str,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def set_fallback_climate_preset(
-        self, *, climate_preset_key: str, device_id: str
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def set_fan_mode(
-        self,
-        *,
-        device_id: str,
-        fan_mode: Optional[str] = None,
-        fan_mode_setting: Optional[str] = None,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def set_hvac_mode(
-        self,
-        *,
-        device_id: str,
-        hvac_mode_setting: str,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def set_temperature_threshold(
-        self,
-        *,
-        device_id: str,
-        lower_limit_celsius: Optional[float] = None,
-        lower_limit_fahrenheit: Optional[float] = None,
-        upper_limit_celsius: Optional[float] = None,
-        upper_limit_fahrenheit: Optional[float] = None
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update_climate_preset(
-        self,
-        *,
-        climate_preset_key: str,
-        device_id: str,
-        manual_override_allowed: bool,
-        cooling_set_point_celsius: Optional[float] = None,
-        cooling_set_point_fahrenheit: Optional[float] = None,
-        fan_mode_setting: Optional[str] = None,
-        heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
-        name: Optional[str] = None
-    ) -> None:
         raise NotImplementedError()
 
 
@@ -2631,6 +2470,185 @@ class AbstractNoiseSensors(abc.ABC):
         manufacturer: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
+        raise NotImplementedError()
+
+
+class AbstractThermostats(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def schedules(self) -> AbstractThermostatsSchedules:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractThermostatsSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def activate_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def cool(
+        self,
+        *,
+        device_id: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None,
+        manual_override_allowed: Optional[bool] = None,
+        name: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def heat(
+        self,
+        *,
+        device_id: str,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def heat_cool(
+        self,
+        *,
+        device_id: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None,
+        include_if: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def off(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def set_fallback_climate_preset(
+        self, *, climate_preset_key: str, device_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def set_fan_mode(
+        self,
+        *,
+        device_id: str,
+        fan_mode: Optional[str] = None,
+        fan_mode_setting: Optional[str] = None,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def set_hvac_mode(
+        self,
+        *,
+        device_id: str,
+        hvac_mode_setting: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def set_temperature_threshold(
+        self,
+        *,
+        device_id: str,
+        lower_limit_celsius: Optional[float] = None,
+        lower_limit_fahrenheit: Optional[float] = None,
+        upper_limit_celsius: Optional[float] = None,
+        upper_limit_fahrenheit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update_climate_preset(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        manual_override_allowed: bool,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        fan_mode_setting: Optional[str] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None,
+        hvac_mode_setting: Optional[str] = None,
+        name: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
