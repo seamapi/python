@@ -2048,6 +2048,19 @@ class AbstractThermostatsSchedules(abc.ABC):
 class AbstractThermostatsSimulate(abc.ABC):
 
     @abc.abstractmethod
+    def hvac_mode_adjusted(
+        self,
+        *,
+        device_id: str,
+        hvac_mode: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def temperature_reached(
         self,
         *,
