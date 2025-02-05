@@ -848,21 +848,6 @@ class Phone:
 
 
 @dataclass
-class ServiceHealth:
-    description: str
-    service: str
-    status: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ServiceHealth(
-            description=d.get("description", None),
-            service=d.get("service", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
 class ThermostatSchedule:
     climate_preset_key: str
     created_at: str
