@@ -1604,6 +1604,13 @@ class AbstractActionAttempts(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractBridges(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, bridge_id: str) -> None:
+        raise NotImplementedError()
+
+
 class AbstractClientSessions(abc.ABC):
 
     @abc.abstractmethod
@@ -2668,6 +2675,7 @@ class AbstractRoutes(abc.ABC):
     access_codes: AbstractAccessCodes
     acs: AbstractAcs
     action_attempts: AbstractActionAttempts
+    bridges: AbstractBridges
     client_sessions: AbstractClientSessions
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
