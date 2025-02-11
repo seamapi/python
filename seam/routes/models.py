@@ -1960,6 +1960,25 @@ class AbstractPhonesSimulate(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractSeamBridgeV1BridgeClientSessions(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        bridge_client_machine_identifier_key: str,
+        bridge_client_name: str,
+        bridge_client_time_zone: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+    ) -> None:
+        raise NotImplementedError()
+
+
 class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
@@ -2136,6 +2155,14 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
+        raise NotImplementedError()
+
+
+class AbstractSeam(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def bridge(self) -> AbstractSeamBridge:
         raise NotImplementedError()
 
 
@@ -2685,6 +2712,7 @@ class AbstractRoutes(abc.ABC):
     networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
+    seam: AbstractSeam
     thermostats: AbstractThermostats
     user_identities: AbstractUserIdentities
     webhooks: AbstractWebhooks
