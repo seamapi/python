@@ -88,12 +88,9 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
                 "application/json"
             ):
                 return False
-        except ValueError:
-            return False
 
-        try:
             data = response.json()
-        except requests.exceptions.JSONDecodeError:
+        except (ValueError, requests.exceptions.JSONDecodeError):
             return False
 
         if not isinstance(data, dict):
