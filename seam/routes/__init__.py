@@ -14,6 +14,7 @@ from .locks import Locks
 from .networks import Networks
 from .noise_sensors import NoiseSensors
 from .phones import Phones
+from .seam import Seam
 from .thermostats import Thermostats
 from .user_identities import UserIdentities
 from .webhooks import Webhooks
@@ -35,6 +36,7 @@ class Routes(AbstractRoutes):
         self.networks = Networks(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)
+        self.seam = Seam(client=client, defaults=defaults)
         self.thermostats = Thermostats(client=client, defaults=defaults)
         self.user_identities = UserIdentities(client=client, defaults=defaults)
         self.webhooks = Webhooks(client=client, defaults=defaults)
