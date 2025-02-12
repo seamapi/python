@@ -83,13 +83,17 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
     def _is_api_error_response(self, response: requests.Response) -> bool:
         try:
             content_type = response.headers.get("content-type", "")
+
             if not isinstance(content_type, str) or not content_type.startswith(
                 "application/json"
             ):
                 return False
+        except ValueError:
+            return False
 
+        try:
             data = response.json()
-        except Exception:
+        except requests.exceptions.JSONDecodeError:
             return False
 
         if not isinstance(data, dict):
