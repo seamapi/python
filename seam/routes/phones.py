@@ -24,6 +24,16 @@ class Phones(AbstractPhones):
 
         return None
 
+    def get(self, *, device_id: str) -> Phone:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        res = self.client.post("/phones/get", json=json_payload)
+
+        return Phone.from_dict(res["phone"])
+
     def list(
         self,
         *,
