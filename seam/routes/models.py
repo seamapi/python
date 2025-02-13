@@ -1610,6 +1610,12 @@ class AbstractBridges(abc.ABC):
     def get(self, *, bridge_id: str) -> None:
         raise NotImplementedError()
 
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> None:
+        raise NotImplementedError()
+
 
 class AbstractClientSessions(abc.ABC):
 
@@ -2127,6 +2133,10 @@ class AbstractPhones(abc.ABC):
 
     @abc.abstractmethod
     def deactivate(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, device_id: str) -> Phone:
         raise NotImplementedError()
 
     @abc.abstractmethod

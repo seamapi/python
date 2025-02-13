@@ -17,3 +17,12 @@ class Bridges(AbstractBridges):
         self.client.post("/bridges/get", json=json_payload)
 
         return None
+
+    def list(
+        self,
+    ) -> None:
+        json_payload = {}
+
+        self.client.post("/bridges/list", json=json_payload)
+
+        return None
