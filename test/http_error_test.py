@@ -1,4 +1,5 @@
 import pytest
+import niquests
 from seam import Seam
 from seam.exceptions import (
     SeamHttpApiError,
@@ -44,3 +45,18 @@ def test_seam_http_throws_invalid_input_error(server):
     assert err.status_code == 400
     assert err.code == "invalid_input"
     assert err.request_id.startswith("request")
+
+
+def test_seam_http_throws_http_error_on_non_standard_response(server):
+    endpoint, seed = server
+    seam = Seam.from_api_key(seed["seam_apikey1_token"], endpoint=endpoint)
+
+    seam.client.post(
+        "/_fake/simulate_workspace_outage",
+        json={"workspace_id": seed["seed_workspace_1"], "routes": ["/devices/list"]},
+    )
+
+    with pytest.raises(niquests.HTTPError) as exc_info:
+        seam.devices.list()
+
+    assert exc_info.value.response.status_code == 503

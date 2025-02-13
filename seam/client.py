@@ -61,6 +61,9 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         if status_code == 401:
             raise SeamHttpUnauthorizedError(request_id)
 
+        if not is_api_error_response(response):
+            response.raise_for_status()
+
         error = response.json().get("error", {})
         error_type = error.get("type", "unknown_error")
         error_message = error.get("message", "Unknown error")
@@ -76,3 +79,32 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
             raise SeamHttpInvalidInputError(error_details, status_code, request_id)
 
         raise SeamHttpApiError(error_details, status_code, request_id)
+
+
+def is_api_error_response(response: requests.Response) -> bool:
+    try:
+        content_type = response.headers.get("content-type", "")
+
+        if not isinstance(content_type, str) or not content_type.startswith(
+            "application/json"
+        ):
+            return False
+
+        data = response.json()
+    except (ValueError, requests.exceptions.JSONDecodeError):
+        return False
+
+    if not isinstance(data, dict):
+        return False
+
+    error = data.get("error")
+
+    if not isinstance(error, dict):
+        return False
+
+    if not isinstance(error.get("type"), str) or not isinstance(
+        error.get("message"), str
+    ):
+        return False
+
+    return True
