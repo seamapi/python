@@ -40,6 +40,7 @@ class Events(AbstractEvents):
         connected_account_id: Optional[str] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
+        event_ids: Optional[List[str]] = None,
         event_type: Optional[str] = None,
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
@@ -66,6 +67,8 @@ class Events(AbstractEvents):
             json_payload["device_id"] = device_id
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
+        if event_ids is not None:
+            json_payload["event_ids"] = event_ids
         if event_type is not None:
             json_payload["event_type"] = event_type
         if event_types is not None:

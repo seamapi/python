@@ -68,34 +68,6 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return AcsCredential.from_dict(res["acs_credential"])
 
-    def create_offline_code(
-        self,
-        *,
-        acs_user_id: str,
-        allowed_acs_entrance_id: str,
-        ends_at: Optional[str] = None,
-        is_one_time_use: Optional[bool] = None,
-        starts_at: Optional[str] = None
-    ) -> AcsCredential:
-        json_payload = {}
-
-        if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
-        if allowed_acs_entrance_id is not None:
-            json_payload["allowed_acs_entrance_id"] = allowed_acs_entrance_id
-        if ends_at is not None:
-            json_payload["ends_at"] = ends_at
-        if is_one_time_use is not None:
-            json_payload["is_one_time_use"] = is_one_time_use
-        if starts_at is not None:
-            json_payload["starts_at"] = starts_at
-
-        res = self.client.post(
-            "/acs/credentials/create_offline_code", json=json_payload
-        )
-
-        return AcsCredential.from_dict(res["acs_credential"])
-
     def delete(self, *, acs_credential_id: str) -> None:
         json_payload = {}
 

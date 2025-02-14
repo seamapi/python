@@ -1245,41 +1245,6 @@ class AbstractAcsAccessGroups(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractAcsAccessGroupsUnmanaged(abc.ABC):
-
-    @abc.abstractmethod
-    def get(self, *, acs_access_group_id: str) -> UnmanagedAcsAccessGroup:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
-    ) -> List[UnmanagedAcsAccessGroup]:
-        raise NotImplementedError()
-
-
-class AbstractAcsCredentialPools(abc.ABC):
-
-    @abc.abstractmethod
-    def list(self, *, acs_system_id: str) -> List[AcsCredentialPool]:
-        raise NotImplementedError()
-
-
-class AbstractAcsCredentialProvisioningAutomations(abc.ABC):
-
-    @abc.abstractmethod
-    def launch(
-        self,
-        *,
-        credential_manager_acs_system_id: str,
-        user_identity_id: str,
-        acs_credential_pool_id: Optional[str] = None,
-        create_credential_manager_user: Optional[bool] = None,
-        credential_manager_acs_user_id: Optional[str] = None
-    ) -> AcsCredentialProvisioningAutomation:
-        raise NotImplementedError()
-
-
 class AbstractAcsCredentials(abc.ABC):
 
     @abc.abstractmethod
@@ -1301,18 +1266,6 @@ class AbstractAcsCredentials(abc.ABC):
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None
-    ) -> AcsCredential:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def create_offline_code(
-        self,
-        *,
-        acs_user_id: str,
-        allowed_acs_entrance_id: str,
-        ends_at: Optional[str] = None,
-        is_one_time_use: Optional[bool] = None,
-        starts_at: Optional[str] = None
     ) -> AcsCredential:
         raise NotImplementedError()
 
@@ -1353,23 +1306,6 @@ class AbstractAcsCredentials(abc.ABC):
         code: Optional[str] = None,
         ends_at: Optional[str] = None
     ) -> None:
-        raise NotImplementedError()
-
-
-class AbstractAcsCredentialsUnmanaged(abc.ABC):
-
-    @abc.abstractmethod
-    def get(self, *, acs_credential_id: str) -> UnmanagedAcsCredential:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_user_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
-    ) -> List[UnmanagedAcsCredential]:
         raise NotImplementedError()
 
 
@@ -1525,7 +1461,8 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
@@ -1566,25 +1503,6 @@ class AbstractAcsUsers(abc.ABC):
         hid_acs_system_id: Optional[str] = None,
         phone_number: Optional[str] = None
     ) -> None:
-        raise NotImplementedError()
-
-
-class AbstractAcsUsersUnmanaged(abc.ABC):
-
-    @abc.abstractmethod
-    def get(self, *, acs_user_id: str) -> UnmanagedAcsUser:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
-        user_identity_email_address: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None
-    ) -> List[UnmanagedAcsUser]:
         raise NotImplementedError()
 
 
@@ -1826,6 +1744,7 @@ class AbstractEvents(abc.ABC):
         connected_account_id: Optional[str] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
+        event_ids: Optional[List[str]] = None,
         event_type: Optional[str] = None,
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
@@ -2375,10 +2294,6 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
@@ -2512,12 +2427,6 @@ class AbstractThermostats(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def heat(
         self,
         *,
@@ -2640,18 +2549,6 @@ class AbstractAcs(abc.ABC):
     @property
     @abc.abstractmethod
     def access_groups(self) -> AbstractAcsAccessGroups:
-        raise NotImplementedError()
-
-    @property
-    @abc.abstractmethod
-    def credential_pools(self) -> AbstractAcsCredentialPools:
-        raise NotImplementedError()
-
-    @property
-    @abc.abstractmethod
-    def credential_provisioning_automations(
-        self,
-    ) -> AbstractAcsCredentialProvisioningAutomations:
         raise NotImplementedError()
 
     @property

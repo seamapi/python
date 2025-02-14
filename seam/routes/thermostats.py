@@ -138,20 +138,6 @@ class Thermostats(AbstractThermostats):
 
         return None
 
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
-        json_payload = {}
-
-        if device_id is not None:
-            json_payload["device_id"] = device_id
-        if name is not None:
-            json_payload["name"] = name
-
-        res = self.client.post("/thermostats/get", json=json_payload)
-
-        return Device.from_dict(res["thermostat"])
-
     def heat(
         self,
         *,
