@@ -1,24 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractDevices, Device, DeviceProvider
-from .devices_simulate import DevicesSimulate
-from .devices_unmanaged import DevicesUnmanaged
+from .models import AbstractLocks, Device, ActionAttempt
+
+from ..modules.action_attempts import resolve_action_attempt
 
 
-class Devices(AbstractDevices):
+class Locks(AbstractLocks):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
-        self._simulate = DevicesSimulate(client=client, defaults=defaults)
-        self._unmanaged = DevicesUnmanaged(client=client, defaults=defaults)
-
-    @property
-    def simulate(self) -> DevicesSimulate:
-        return self._simulate
-
-    @property
-    def unmanaged(self) -> DevicesUnmanaged:
-        return self._unmanaged
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -30,7 +20,7 @@ class Devices(AbstractDevices):
         if name is not None:
             json_payload["name"] = name
 
-        res = self.client.post("/devices/get", json=json_payload)
+        res = self.client.post("/locks/get", json=json_payload)
 
         return Device.from_dict(res["device"])
 
@@ -80,44 +70,62 @@ class Devices(AbstractDevices):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/devices/list", json=json_payload)
+        res = self.client.post("/locks/list", json=json_payload)
 
         return [Device.from_dict(item) for item in res["devices"]]
 
-    def list_device_providers(
-        self, *, provider_category: Optional[str] = None
-    ) -> List[DeviceProvider]:
-        json_payload = {}
-
-        if provider_category is not None:
-            json_payload["provider_category"] = provider_category
-
-        res = self.client.post("/devices/list_device_providers", json=json_payload)
-
-        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
-
-    def update(
+    def lock_door(
         self,
         *,
         device_id: str,
-        custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None,
-        name: Optional[str] = None,
-        properties: Optional[Dict[str, Any]] = None
-    ) -> None:
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         json_payload = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if custom_metadata is not None:
-            json_payload["custom_metadata"] = custom_metadata
-        if is_managed is not None:
-            json_payload["is_managed"] = is_managed
-        if name is not None:
-            json_payload["name"] = name
-        if properties is not None:
-            json_payload["properties"] = properties
+        if sync is not None:
+            json_payload["sync"] = sync
 
-        self.client.post("/devices/update", json=json_payload)
+        res = self.client.post("/locks/lock_door", json=json_payload)
 
-        return None
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
+
+    def unlock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if sync is not None:
+            json_payload["sync"] = sync
+
+        res = self.client.post("/locks/unlock_door", json=json_payload)
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
