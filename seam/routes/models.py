@@ -1144,6 +1144,7 @@ class Workspace:
     company_name: str
     connect_partner_name: str
     is_sandbox: bool
+    is_suspended: bool
     name: str
     workspace_id: str
 
@@ -1153,6 +1154,7 @@ class Workspace:
             company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
             is_sandbox=d.get("is_sandbox", None),
+            is_suspended=d.get("is_suspended", None),
             name=d.get("name", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -1463,6 +1465,7 @@ class AbstractAcsUsers(abc.ABC):
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
