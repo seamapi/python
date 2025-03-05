@@ -787,6 +787,21 @@ class NoiseThreshold:
 
 
 @dataclass
+class Pagination:
+    has_next_page: bool
+    next_page_cursor: str
+    next_page_url: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Pagination(
+            has_next_page=d.get("has_next_page", None),
+            next_page_cursor=d.get("next_page_cursor", None),
+            next_page_url=d.get("next_page_url", None),
+        )
+
+
+@dataclass
 class Phone:
     created_at: str
     custom_metadata: Dict[str, Any]
