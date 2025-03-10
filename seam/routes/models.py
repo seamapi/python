@@ -688,7 +688,7 @@ class SeamEvent:
     upper_limit_fahrenheit: float
     desired_temperature_celsius: float
     desired_temperature_fahrenheit: float
-    new_name: str
+    device_name: str
     enrollment_automation_id: str
 
     @staticmethod
@@ -743,7 +743,7 @@ class SeamEvent:
             desired_temperature_fahrenheit=d.get(
                 "desired_temperature_fahrenheit", None
             ),
-            new_name=d.get("new_name", None),
+            device_name=d.get("device_name", None),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
         )
 
