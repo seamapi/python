@@ -37,6 +37,7 @@ class NoiseSensors(AbstractNoiseSensors):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         json_payload = {}
@@ -65,6 +66,8 @@ class NoiseSensors(AbstractNoiseSensors):
             json_payload["limit"] = limit
         if manufacturer is not None:
             json_payload["manufacturer"] = manufacturer
+        if unstable_location_id is not None:
+            json_payload["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 

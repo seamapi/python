@@ -1732,6 +1732,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedDevice]:
         raise NotImplementedError()
@@ -1800,6 +1801,7 @@ class AbstractLocks(abc.ABC):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         raise NotImplementedError()
@@ -2337,6 +2339,7 @@ class AbstractDevices(abc.ABC):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         raise NotImplementedError()
@@ -2388,6 +2391,7 @@ class AbstractNoiseSensors(abc.ABC):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         raise NotImplementedError()
@@ -2490,6 +2494,7 @@ class AbstractThermostats(abc.ABC):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
         raise NotImplementedError()
