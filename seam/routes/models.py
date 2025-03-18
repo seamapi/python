@@ -345,6 +345,7 @@ class AcsUser:
     is_managed: bool
     is_suspended: bool
     latest_desired_state_synced_with_provider_at: str
+    pending_modifications: List[Dict[str, Any]]
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
@@ -376,6 +377,7 @@ class AcsUser:
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
             ),
+            pending_modifications=d.get("pending_modifications", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
@@ -1018,6 +1020,7 @@ class UnmanagedAcsUser:
     is_managed: bool
     is_suspended: bool
     latest_desired_state_synced_with_provider_at: str
+    pending_modifications: List[Dict[str, Any]]
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
@@ -1049,6 +1052,7 @@ class UnmanagedAcsUser:
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
             ),
+            pending_modifications=d.get("pending_modifications", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
