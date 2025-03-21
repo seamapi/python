@@ -3,8 +3,8 @@ name: Generate
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+    - no-branch-will-match-this-pattern
   workflow_dispatch: {}
 
 jobs:

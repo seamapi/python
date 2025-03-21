@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential
 
 
-class AcsEntrances(AbstractAcsEntrances):
+class AcsEntrances(AbstractAcsEntrances, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -14,9 +19,16 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
 
-        res = self.client.post("/acs/entrances/get", json=json_payload)
-
-        return AcsEntrance.from_dict(res["acs_entrance"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/entrances/get",
+                method="POST",
+                body=json_payload,
+                response_key="acs_entrance",
+                model_type=AcsEntrance,
+            ),
+        )
 
     def grant_access(self, *, acs_entrance_id: str, acs_user_id: str) -> None:
         json_payload = {}
@@ -26,26 +38,31 @@ class AcsEntrances(AbstractAcsEntrances):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.client.post("/acs/entrances/grant_access", json=json_payload)
-
         return None
 
     def list(
         self,
         *,
-        acs_credential_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None
+        acs_system_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         json_payload = {}
 
-        if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
 
-        res = self.client.post("/acs/entrances/list", json=json_payload)
-
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/entrances/list",
+                method="POST",
+                body=json_payload,
+                response_key="acs_entrances",
+                model_type=List[AcsEntrance],
+            ),
+        )
 
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
@@ -57,8 +74,13 @@ class AcsEntrances(AbstractAcsEntrances):
         if include_if is not None:
             json_payload["include_if"] = include_if
 
-        res = self.client.post(
-            "/acs/entrances/list_credentials_with_access", json=json_payload
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/entrances/list_credentials_with_access",
+                method="POST",
+                body=json_payload,
+                response_key="acs_credentials",
+                model_type=List[AcsCredential],
+            ),
         )
-
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]

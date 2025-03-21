@@ -2,7 +2,6 @@ from typing import Any, Dict
 from ..client import SeamHttpClient
 from .models import AbstractRoutes
 from .access_codes import AccessCodes
-from .acs import Acs
 from .action_attempts import ActionAttempts
 from .bridges import Bridges
 from .client_sessions import ClientSessions
@@ -18,12 +17,12 @@ from .thermostats import Thermostats
 from .user_identities import UserIdentities
 from .webhooks import Webhooks
 from .workspaces import Workspaces
+from .acs import Acs
 
 
 class Routes(AbstractRoutes):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.access_codes = AccessCodes(client=client, defaults=defaults)
-        self.acs = Acs(client=client, defaults=defaults)
         self.action_attempts = ActionAttempts(client=client, defaults=defaults)
         self.bridges = Bridges(client=client, defaults=defaults)
         self.client_sessions = ClientSessions(client=client, defaults=defaults)
@@ -39,3 +38,4 @@ class Routes(AbstractRoutes):
         self.user_identities = UserIdentities(client=client, defaults=defaults)
         self.webhooks = Webhooks(client=client, defaults=defaults)
         self.workspaces = Workspaces(client=client, defaults=defaults)
+        self.acs = Acs(client=client, defaults=defaults)

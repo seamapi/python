@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractThermostatsSchedules, ThermostatSchedule
 
 
-class ThermostatsSchedules(AbstractThermostatsSchedules):
+class ThermostatsSchedules(AbstractThermostatsSchedules, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -11,42 +16,47 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
     def create(
         self,
         *,
-        climate_preset_key: str,
         device_id: str,
-        ends_at: str,
+        climate_preset_key: str,
         starts_at: str,
-        is_override_allowed: Optional[bool] = None,
+        ends_at: str,
+        name: Optional[str] = None,
         max_override_period_minutes: Optional[int] = None,
-        name: Optional[str] = None
+        is_override_allowed: Optional[bool] = None
     ) -> ThermostatSchedule:
         json_payload = {}
 
-        if climate_preset_key is not None:
-            json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if ends_at is not None:
-            json_payload["ends_at"] = ends_at
+        if climate_preset_key is not None:
+            json_payload["climate_preset_key"] = climate_preset_key
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-        if is_override_allowed is not None:
-            json_payload["is_override_allowed"] = is_override_allowed
-        if max_override_period_minutes is not None:
-            json_payload["max_override_period_minutes"] = max_override_period_minutes
+        if ends_at is not None:
+            json_payload["ends_at"] = ends_at
         if name is not None:
             json_payload["name"] = name
+        if max_override_period_minutes is not None:
+            json_payload["max_override_period_minutes"] = max_override_period_minutes
+        if is_override_allowed is not None:
+            json_payload["is_override_allowed"] = is_override_allowed
 
-        res = self.client.post("/thermostats/schedules/create", json=json_payload)
-
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/thermostats/schedules/create",
+                method="POST",
+                body=json_payload,
+                response_key="thermostat_schedule",
+                model_type=ThermostatSchedule,
+            ),
+        )
 
     def delete(self, *, thermostat_schedule_id: str) -> None:
         json_payload = {}
 
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id
-
-        self.client.post("/thermostats/schedules/delete", json=json_payload)
 
         return None
 
@@ -56,9 +66,16 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id
 
-        res = self.client.post("/thermostats/schedules/get", json=json_payload)
-
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/thermostats/schedules/get",
+                method="POST",
+                body=json_payload,
+                response_key="thermostat_schedule",
+                model_type=ThermostatSchedule,
+            ),
+        )
 
     def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
@@ -70,40 +87,43 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/thermostats/schedules/list", json=json_payload)
-
-        return [
-            ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
-        ]
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/thermostats/schedules/list",
+                method="POST",
+                body=json_payload,
+                response_key="thermostat_schedules",
+                model_type=List[ThermostatSchedule],
+            ),
+        )
 
     def update(
         self,
         *,
         thermostat_schedule_id: str,
-        climate_preset_key: Optional[str] = None,
-        ends_at: Optional[str] = None,
-        is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        climate_preset_key: Optional[str] = None,
+        max_override_period_minutes: Optional[int] = None,
+        starts_at: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None
     ) -> None:
         json_payload = {}
 
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id
+        if name is not None:
+            json_payload["name"] = name
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
+        if max_override_period_minutes is not None:
+            json_payload["max_override_period_minutes"] = max_override_period_minutes
+        if starts_at is not None:
+            json_payload["starts_at"] = starts_at
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
         if is_override_allowed is not None:
             json_payload["is_override_allowed"] = is_override_allowed
-        if max_override_period_minutes is not None:
-            json_payload["max_override_period_minutes"] = max_override_period_minutes
-        if name is not None:
-            json_payload["name"] = name
-        if starts_at is not None:
-            json_payload["starts_at"] = starts_at
-
-        self.client.post("/thermostats/schedules/update", json=json_payload)
 
         return None

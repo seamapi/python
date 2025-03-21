@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractNoiseSensorsSimulate
 
 
-class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
+class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -13,9 +18,5 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        self.client.post(
-            "/noise_sensors/simulate/trigger_noise_threshold", json=json_payload
-        )
 
         return None

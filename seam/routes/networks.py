@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractNetworks, Network
 
 
-class Networks(AbstractNetworks):
+class Networks(AbstractNetworks, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -14,15 +19,29 @@ class Networks(AbstractNetworks):
         if network_id is not None:
             json_payload["network_id"] = network_id
 
-        res = self.client.post("/networks/get", json=json_payload)
-
-        return Network.from_dict(res["network"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/networks/get",
+                method="POST",
+                body=json_payload,
+                response_key="network",
+                model_type=Network,
+            ),
+        )
 
     def list(
         self,
     ) -> List[Network]:
         json_payload = {}
 
-        res = self.client.post("/networks/list", json=json_payload)
-
-        return [Network.from_dict(item) for item in res["networks"]]
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/networks/list",
+                method="POST",
+                body=json_payload,
+                response_key="networks",
+                model_type=List[Network],
+            ),
+        )

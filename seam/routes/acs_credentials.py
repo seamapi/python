@@ -1,108 +1,88 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractAcsCredentials, AcsCredential, AcsEntrance
 
 
-class AcsCredentials(AbstractAcsCredentials):
+class AcsCredentials(AbstractAcsCredentials, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
 
-    def assign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
+    def assign(self, *, acs_user_id: str, acs_credential_id: str) -> None:
         json_payload = {}
 
-        if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-
-        self.client.post("/acs/credentials/assign", json=json_payload)
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
 
         return None
 
     def create(
         self,
         *,
-        access_method: str,
         acs_user_id: str,
-        allowed_acs_entrance_ids: Optional[List[str]] = None,
-        assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
-        code: Optional[str] = None,
+        access_method: str,
         credential_manager_acs_system_id: Optional[str] = None,
-        ends_at: Optional[str] = None,
+        code: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
+        allowed_acs_entrance_ids: Optional[List[str]] = None,
+        visionline_metadata: Optional[Dict[str, Any]] = None,
+        assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
-        visionline_metadata: Optional[Dict[str, Any]] = None
+        ends_at: Optional[str] = None
     ) -> AcsCredential:
         json_payload = {}
 
-        if access_method is not None:
-            json_payload["access_method"] = access_method
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-        if allowed_acs_entrance_ids is not None:
-            json_payload["allowed_acs_entrance_ids"] = allowed_acs_entrance_ids
-        if assa_abloy_vostio_metadata is not None:
-            json_payload["assa_abloy_vostio_metadata"] = assa_abloy_vostio_metadata
-        if code is not None:
-            json_payload["code"] = code
+        if access_method is not None:
+            json_payload["access_method"] = access_method
         if credential_manager_acs_system_id is not None:
             json_payload["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
-        if ends_at is not None:
-            json_payload["ends_at"] = ends_at
+        if code is not None:
+            json_payload["code"] = code
         if is_multi_phone_sync_credential is not None:
             json_payload["is_multi_phone_sync_credential"] = (
                 is_multi_phone_sync_credential
             )
+        if allowed_acs_entrance_ids is not None:
+            json_payload["allowed_acs_entrance_ids"] = allowed_acs_entrance_ids
+        if visionline_metadata is not None:
+            json_payload["visionline_metadata"] = visionline_metadata
+        if assa_abloy_vostio_metadata is not None:
+            json_payload["assa_abloy_vostio_metadata"] = assa_abloy_vostio_metadata
         if salto_space_metadata is not None:
             json_payload["salto_space_metadata"] = salto_space_metadata
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-        if visionline_metadata is not None:
-            json_payload["visionline_metadata"] = visionline_metadata
-
-        res = self.client.post("/acs/credentials/create", json=json_payload)
-
-        return AcsCredential.from_dict(res["acs_credential"])
-
-    def create_offline_code(
-        self,
-        *,
-        acs_user_id: str,
-        allowed_acs_entrance_id: str,
-        ends_at: Optional[str] = None,
-        is_one_time_use: Optional[bool] = None,
-        starts_at: Optional[str] = None
-    ) -> AcsCredential:
-        json_payload = {}
-
-        if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
-        if allowed_acs_entrance_id is not None:
-            json_payload["allowed_acs_entrance_id"] = allowed_acs_entrance_id
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-        if is_one_time_use is not None:
-            json_payload["is_one_time_use"] = is_one_time_use
-        if starts_at is not None:
-            json_payload["starts_at"] = starts_at
 
-        res = self.client.post(
-            "/acs/credentials/create_offline_code", json=json_payload
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/credentials/create",
+                method="POST",
+                body=json_payload,
+                response_key="acs_credential",
+                model_type=AcsCredential,
+            ),
         )
-
-        return AcsCredential.from_dict(res["acs_credential"])
 
     def delete(self, *, acs_credential_id: str) -> None:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-
-        self.client.post("/acs/credentials/delete", json=json_payload)
 
         return None
 
@@ -112,9 +92,16 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        res = self.client.post("/acs/credentials/get", json=json_payload)
-
-        return AcsCredential.from_dict(res["acs_credential"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/credentials/get",
+                method="POST",
+                body=json_payload,
+                response_key="acs_credential",
+                model_type=AcsCredential,
+            ),
+        )
 
     def list(
         self,
@@ -122,9 +109,9 @@ class AcsCredentials(AbstractAcsCredentials):
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
+        limit: Optional[float] = None,
         created_before: Optional[str] = None,
-        is_multi_phone_sync_credential: Optional[bool] = None,
-        limit: Optional[float] = None
+        is_multi_phone_sync_credential: Optional[bool] = None
     ) -> List[AcsCredential]:
         json_payload = {}
 
@@ -134,18 +121,25 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+        if limit is not None:
+            json_payload["limit"] = limit
         if created_before is not None:
             json_payload["created_before"] = created_before
         if is_multi_phone_sync_credential is not None:
             json_payload["is_multi_phone_sync_credential"] = (
                 is_multi_phone_sync_credential
             )
-        if limit is not None:
-            json_payload["limit"] = limit
 
-        res = self.client.post("/acs/credentials/list", json=json_payload)
-
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/credentials/list",
+                method="POST",
+                body=json_payload,
+                response_key="acs_credentials",
+                model_type=List[AcsCredential],
+            ),
+        )
 
     def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
         json_payload = {}
@@ -153,21 +147,24 @@ class AcsCredentials(AbstractAcsCredentials):
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
 
-        res = self.client.post(
-            "/acs/credentials/list_accessible_entrances", json=json_payload
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/acs/credentials/list_accessible_entrances",
+                method="POST",
+                body=json_payload,
+                response_key="acs_entrances",
+                model_type=List[AcsEntrance],
+            ),
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
-
-    def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
+    def unassign(self, *, acs_user_id: str, acs_credential_id: str) -> None:
         json_payload = {}
 
-        if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-
-        self.client.post("/acs/credentials/unassign", json=json_payload)
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
 
         return None
 
@@ -186,7 +183,5 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["code"] = code
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-
-        self.client.post("/acs/credentials/update", json=json_payload)
 
         return None

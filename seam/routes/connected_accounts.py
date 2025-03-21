@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractConnectedAccounts, ConnectedAccount
 
 
-class ConnectedAccounts(AbstractConnectedAccounts):
+class ConnectedAccounts(AbstractConnectedAccounts, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -15,8 +20,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["connected_account_id"] = connected_account_id
         if sync is not None:
             json_payload["sync"] = sync
-
-        self.client.post("/connected_accounts/delete", json=json_payload)
 
         return None
 
@@ -30,26 +33,40 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if email is not None:
             json_payload["email"] = email
 
-        res = self.client.post("/connected_accounts/get", json=json_payload)
-
-        return ConnectedAccount.from_dict(res["connected_account"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/connected_accounts/get",
+                method="POST",
+                body=json_payload,
+                response_key="connected_account",
+                model_type=ConnectedAccount,
+            ),
+        )
 
     def list(
         self,
         *,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None
     ) -> List[ConnectedAccount]:
         json_payload = {}
 
-        if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
+        if custom_metadata_has is not None:
+            json_payload["custom_metadata_has"] = custom_metadata_has
 
-        res = self.client.post("/connected_accounts/list", json=json_payload)
-
-        return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/connected_accounts/list",
+                method="POST",
+                body=json_payload,
+                response_key="connected_accounts",
+                model_type=List[ConnectedAccount],
+            ),
+        )
 
     def update(
         self,
@@ -68,7 +85,5 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             )
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
-
-        self.client.post("/connected_accounts/update", json=json_payload)
 
         return None

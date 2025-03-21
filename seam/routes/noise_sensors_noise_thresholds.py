@@ -1,9 +1,16 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractNoiseSensorsNoiseThresholds, NoiseThreshold
 
 
-class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
+class NoiseSensorsNoiseThresholds(
+    AbstractNoiseSensorsNoiseThresholds, SeamHttpRequestParent
+):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -12,49 +19,52 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         self,
         *,
         device_id: str,
-        ends_daily_at: str,
         starts_daily_at: str,
+        ends_daily_at: str,
+        sync: Optional[bool] = None,
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-        sync: Optional[bool] = None
+        noise_threshold_nrs: Optional[float] = None
     ) -> NoiseThreshold:
         json_payload = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if ends_daily_at is not None:
-            json_payload["ends_daily_at"] = ends_daily_at
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
+        if ends_daily_at is not None:
+            json_payload["ends_daily_at"] = ends_daily_at
+        if sync is not None:
+            json_payload["sync"] = sync
         if name is not None:
             json_payload["name"] = name
         if noise_threshold_decibels is not None:
             json_payload["noise_threshold_decibels"] = noise_threshold_decibels
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
-        if sync is not None:
-            json_payload["sync"] = sync
 
-        res = self.client.post(
-            "/noise_sensors/noise_thresholds/create", json=json_payload
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/noise_sensors/noise_thresholds/create",
+                method="POST",
+                body=json_payload,
+                response_key="noise_threshold",
+                model_type=NoiseThreshold,
+            ),
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
-
     def delete(
-        self, *, device_id: str, noise_threshold_id: str, sync: Optional[bool] = None
+        self, *, noise_threshold_id: str, device_id: str, sync: Optional[bool] = None
     ) -> None:
         json_payload = {}
 
-        if device_id is not None:
-            json_payload["device_id"] = device_id
         if noise_threshold_id is not None:
             json_payload["noise_threshold_id"] = noise_threshold_id
+        if device_id is not None:
+            json_payload["device_id"] = device_id
         if sync is not None:
             json_payload["sync"] = sync
-
-        self.client.post("/noise_sensors/noise_thresholds/delete", json=json_payload)
 
         return None
 
@@ -64,9 +74,16 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if noise_threshold_id is not None:
             json_payload["noise_threshold_id"] = noise_threshold_id
 
-        res = self.client.post("/noise_sensors/noise_thresholds/get", json=json_payload)
-
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/noise_sensors/noise_thresholds/get",
+                method="POST",
+                body=json_payload,
+                response_key="noise_threshold",
+                model_type=NoiseThreshold,
+            ),
+        )
 
     def list(
         self, *, device_id: str, is_programmed: Optional[bool] = None
@@ -78,43 +95,46 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if is_programmed is not None:
             json_payload["is_programmed"] = is_programmed
 
-        res = self.client.post(
-            "/noise_sensors/noise_thresholds/list", json=json_payload
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/noise_sensors/noise_thresholds/list",
+                method="POST",
+                body=json_payload,
+                response_key="noise_thresholds",
+                model_type=List[NoiseThreshold],
+            ),
         )
-
-        return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
 
     def update(
         self,
         *,
-        device_id: str,
         noise_threshold_id: str,
-        ends_daily_at: Optional[str] = None,
+        device_id: str,
+        sync: Optional[bool] = None,
         name: Optional[str] = None,
-        noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
         starts_daily_at: Optional[str] = None,
-        sync: Optional[bool] = None
+        ends_daily_at: Optional[str] = None,
+        noise_threshold_decibels: Optional[float] = None,
+        noise_threshold_nrs: Optional[float] = None
     ) -> None:
         json_payload = {}
 
-        if device_id is not None:
-            json_payload["device_id"] = device_id
         if noise_threshold_id is not None:
             json_payload["noise_threshold_id"] = noise_threshold_id
-        if ends_daily_at is not None:
-            json_payload["ends_daily_at"] = ends_daily_at
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if sync is not None:
+            json_payload["sync"] = sync
         if name is not None:
             json_payload["name"] = name
+        if starts_daily_at is not None:
+            json_payload["starts_daily_at"] = starts_daily_at
+        if ends_daily_at is not None:
+            json_payload["ends_daily_at"] = ends_daily_at
         if noise_threshold_decibels is not None:
             json_payload["noise_threshold_decibels"] = noise_threshold_decibels
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
-        if starts_daily_at is not None:
-            json_payload["starts_daily_at"] = starts_daily_at
-        if sync is not None:
-            json_payload["sync"] = sync
-
-        self.client.post("/noise_sensors/noise_thresholds/update", json=json_payload)
 
         return None

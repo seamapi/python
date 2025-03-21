@@ -1,9 +1,14 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
+from ..seam_http_request import (
+    SeamHttpRequest,
+    SeamHttpRequestConfig,
+    SeamHttpRequestParent,
+)
 from .models import AbstractWebhooks, Webhook
 
 
-class Webhooks(AbstractWebhooks):
+class Webhooks(AbstractWebhooks, SeamHttpRequestParent):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
@@ -16,17 +21,22 @@ class Webhooks(AbstractWebhooks):
         if event_types is not None:
             json_payload["event_types"] = event_types
 
-        res = self.client.post("/webhooks/create", json=json_payload)
-
-        return Webhook.from_dict(res["webhook"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/webhooks/create",
+                method="POST",
+                body=json_payload,
+                response_key="webhook",
+                model_type=Webhook,
+            ),
+        )
 
     def delete(self, *, webhook_id: str) -> None:
         json_payload = {}
 
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
-
-        self.client.post("/webhooks/delete", json=json_payload)
 
         return None
 
@@ -36,27 +46,39 @@ class Webhooks(AbstractWebhooks):
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
 
-        res = self.client.post("/webhooks/get", json=json_payload)
-
-        return Webhook.from_dict(res["webhook"])
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/webhooks/get",
+                method="POST",
+                body=json_payload,
+                response_key="webhook",
+                model_type=Webhook,
+            ),
+        )
 
     def list(
         self,
     ) -> List[Webhook]:
         json_payload = {}
 
-        res = self.client.post("/webhooks/list", json=json_payload)
+        return SeamHttpRequest(
+            parent=self,
+            config=SeamHttpRequestConfig(
+                pathname="/webhooks/list",
+                method="POST",
+                body=json_payload,
+                response_key="webhooks",
+                model_type=List[Webhook],
+            ),
+        )
 
-        return [Webhook.from_dict(item) for item in res["webhooks"]]
-
-    def update(self, *, event_types: List[str], webhook_id: str) -> None:
+    def update(self, *, webhook_id: str, event_types: List[str]) -> None:
         json_payload = {}
 
-        if event_types is not None:
-            json_payload["event_types"] = event_types
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
-
-        self.client.post("/webhooks/update", json=json_payload)
+        if event_types is not None:
+            json_payload["event_types"] = event_types
 
         return None
