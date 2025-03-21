@@ -188,7 +188,9 @@ async def test_wait_for_action_attempt_rejects_when_action_attempt_fails(server)
 
 
 @pytest.mark.asyncio
-async def test_wait_for_action_attempt_times_out_if_waiting_for_polling_interval(server):
+async def test_wait_for_action_attempt_times_out_if_waiting_for_polling_interval(
+    server,
+):
     endpoint, seed = server
     seam = Seam.from_api_key(
         seed["seam_apikey1_token"], endpoint=endpoint, wait_for_action_attempt=False
