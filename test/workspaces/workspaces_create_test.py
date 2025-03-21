@@ -1,5 +1,5 @@
 from seam import SeamMultiWorkspace
-
+import pytest
 
 @pytest.mark.asyncio
 async def test_workspaces_create(server):

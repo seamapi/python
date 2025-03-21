@@ -1,4 +1,5 @@
 from seam import Seam
+import pytest
 
 
 @pytest.mark.asyncio
