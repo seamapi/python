@@ -1700,14 +1700,6 @@ class AbstractConnectedAccounts(abc.ABC):
 class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
-    def access_code_lock(self, *, access_code_id: str, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def access_code_unlock(self, *, access_code_id: str, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def connect(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
