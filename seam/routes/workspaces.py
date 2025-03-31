@@ -19,7 +19,8 @@ class Workspaces(AbstractWorkspaces):
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None
+        webview_primary_button_text_color: Optional[str] = None,
+        webview_success_message: Optional[str] = None
     ) -> Workspace:
         json_payload = {}
 
@@ -39,6 +40,8 @@ class Workspaces(AbstractWorkspaces):
             json_payload["webview_primary_button_text_color"] = (
                 webview_primary_button_text_color
             )
+        if webview_success_message is not None:
+            json_payload["webview_success_message"] = webview_success_message
 
         res = self.client.post("/workspaces/create", json=json_payload)
 

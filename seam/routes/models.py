@@ -1700,14 +1700,6 @@ class AbstractConnectedAccounts(abc.ABC):
 class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
-    def access_code_lock(self, *, access_code_id: str, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def access_code_unlock(self, *, access_code_id: str, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def connect(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
@@ -2056,7 +2048,8 @@ class AbstractWorkspaces(abc.ABC):
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None
+        webview_primary_button_text_color: Optional[str] = None,
+        webview_success_message: Optional[str] = None
     ) -> Workspace:
         raise NotImplementedError()
 
