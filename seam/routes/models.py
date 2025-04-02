@@ -1682,6 +1682,8 @@ class AbstractConnectedAccounts(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
