@@ -38,12 +38,18 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         json_payload = {}
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
