@@ -270,7 +270,9 @@ class AcsEntrance:
 
 @dataclass
 class AcsSystem:
+    acs_access_group_count: float
     acs_system_id: str
+    acs_user_count: float
     can_add_acs_users_to_acs_access_groups: bool
     can_automate_enrollment: bool
     can_create_acs_access_groups: bool
@@ -296,7 +298,9 @@ class AcsSystem:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return AcsSystem(
+            acs_access_group_count=d.get("acs_access_group_count", None),
             acs_system_id=d.get("acs_system_id", None),
+            acs_user_count=d.get("acs_user_count", None),
             can_add_acs_users_to_acs_access_groups=d.get(
                 "can_add_acs_users_to_acs_access_groups", None
             ),
@@ -345,7 +349,7 @@ class AcsUser:
     is_managed: bool
     is_suspended: bool
     latest_desired_state_synced_with_provider_at: str
-    pending_modifications: List[Dict[str, Any]]
+    pending_mutations: List[Dict[str, Any]]
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
@@ -377,7 +381,7 @@ class AcsUser:
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
             ),
-            pending_modifications=d.get("pending_modifications", None),
+            pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
@@ -1020,7 +1024,7 @@ class UnmanagedAcsUser:
     is_managed: bool
     is_suspended: bool
     latest_desired_state_synced_with_provider_at: str
-    pending_modifications: List[Dict[str, Any]]
+    pending_mutations: List[Dict[str, Any]]
     phone_number: str
     user_identity_email_address: str
     user_identity_full_name: str
@@ -1052,7 +1056,7 @@ class UnmanagedAcsUser:
             latest_desired_state_synced_with_provider_at=d.get(
                 "latest_desired_state_synced_with_provider_at", None
             ),
-            pending_modifications=d.get("pending_modifications", None),
+            pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
@@ -1682,6 +1686,8 @@ class AbstractConnectedAccounts(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
