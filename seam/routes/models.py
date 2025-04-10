@@ -1351,6 +1351,10 @@ class AbstractAcsEncoders(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def get(self, *, acs_encoder_id: str) -> AcsEncoder:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def list(
         self,
         *,

@@ -38,6 +38,16 @@ class AcsEncoders(AbstractAcsEncoders):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    def get(self, *, acs_encoder_id: str) -> AcsEncoder:
+        json_payload = {}
+
+        if acs_encoder_id is not None:
+            json_payload["acs_encoder_id"] = acs_encoder_id
+
+        res = self.client.post("/acs/encoders/get", json=json_payload)
+
+        return AcsEncoder.from_dict(res["acs_encoder"])
+
     def list(
         self,
         *,
