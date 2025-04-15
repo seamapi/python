@@ -1,4 +1,4 @@
-from typing import Optional, Any, List, Dict, Union
+from typing import Optional, Any, List, Dict, Union, Callable
 from ..client import SeamHttpClient
 from .models import AbstractConnectedAccounts, ConnectedAccount
 
@@ -40,7 +40,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
+        on_response: Optional[Callable] = None
     ) -> List[ConnectedAccount]:
         json_payload = {}
 
@@ -54,6 +55,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.client.post("/connected_accounts/list", json=json_payload)
+
+        if on_response is not None:
+            on_response(res)
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
 

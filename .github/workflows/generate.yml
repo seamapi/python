@@ -3,9 +3,8 @@ name: Generate
 
 on:
   push:
-    branches-ignore:
-      - main
-  workflow_dispatch: {}
+    branches:
+      - nonexistent-branch
 
 jobs:
   commit:
