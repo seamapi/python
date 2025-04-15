@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union, Dict
+from typing import Any, Optional, Union, Dict, Callable
 from typing_extensions import Self
 from urllib3.util.retry import Retry
 
@@ -7,6 +7,7 @@ from .parse_options import parse_options
 from .routes import Routes
 from .models import AbstractSeam
 from .client import SeamHttpClient
+from .paginator import Paginator
 
 
 class Seam(AbstractSeam):
@@ -88,6 +89,31 @@ class Seam(AbstractSeam):
         )
 
         Routes.__init__(self, client=self.client, defaults=self.defaults)
+
+    def create_paginator(
+        self, request: Callable[..., Any], params: Optional[Dict[str, Any]] = None
+    ) -> Paginator:
+        """
+        Creates a Paginator instance for iterating through list endpoints.
+
+        This is a helper method to simplify the process of paginating through
+        API results.
+
+        Args:
+            request: The API route method function to call for fetching pages
+                (e.g., connected_accounts.list).
+            params: Optional dictionary of initial parameters to pass to the request
+                function.
+
+        Returns:
+            An initialized Paginator object ready to fetch pages.
+
+        Example:
+            >>> connected_accounts_paginator = seam.create_paginator(seam.connected_accounts.list)
+            >>> for connected_account in connected_accounts_paginator.flatten():
+            >>>     print(connected_account.account_type_display_name)
+        """
+        return Paginator(request, params)
 
     @classmethod
     def from_api_key(
