@@ -757,6 +757,29 @@ class SeamEvent:
 
 
 @dataclass
+class InstantKey:
+    client_session_id: str
+    created_at: str
+    expires_at: str
+    instant_key_id: str
+    instant_key_url: str
+    user_identity_id: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return InstantKey(
+            client_session_id=d.get("client_session_id", None),
+            created_at=d.get("created_at", None),
+            expires_at=d.get("expires_at", None),
+            instant_key_id=d.get("instant_key_id", None),
+            instant_key_url=d.get("instant_key_url", None),
+            user_identity_id=d.get("user_identity_id", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class Network:
     created_at: str
     display_name: str
@@ -2131,6 +2154,10 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def generate_instant_key(self, *, user_identity_id: str) -> InstantKey:
         raise NotImplementedError()
 
     @abc.abstractmethod
