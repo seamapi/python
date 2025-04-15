@@ -91,7 +91,7 @@ class Seam(AbstractSeam):
         Routes.__init__(self, client=self.client, defaults=self.defaults)
 
     def create_paginator(
-        self, request: Callable[..., Any], params: Optional[Dict[str, Any]] = None
+        self, request: Callable, params: Optional[Dict[str, Any]] = None
     ) -> Paginator:
         """
         Creates a Paginator instance for iterating through list endpoints.
