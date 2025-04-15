@@ -1,6 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractUserIdentities, UserIdentity, Device, AcsSystem, AcsUser
+from .models import (
+    AbstractUserIdentities,
+    UserIdentity,
+    InstantKey,
+    Device,
+    AcsSystem,
+    AcsUser,
+)
 from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
@@ -60,6 +67,18 @@ class UserIdentities(AbstractUserIdentities):
         self.client.post("/user_identities/delete", json=json_payload)
 
         return None
+
+    def generate_instant_key(self, *, user_identity_id: str) -> InstantKey:
+        json_payload = {}
+
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+
+        res = self.client.post(
+            "/user_identities/generate_instant_key", json=json_payload
+        )
+
+        return InstantKey.from_dict(res["instant_key"])
 
     def get(
         self,
