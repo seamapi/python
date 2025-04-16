@@ -34,17 +34,6 @@ class Paginator:
         self._params = params or {}
         self._pagination_cache: Dict[str, Pagination] = {}
 
-    def _cache_pagination(self, response: Dict[str, Any], page_key: str) -> None:
-        """Extracts pagination dict from response, creates Pagination object, and caches it."""
-        pagination = response.get("pagination", {})
-
-        if isinstance(pagination, dict):
-            self._pagination_cache[page_key] = Pagination(
-                has_next_page=pagination.get("has_next_page", False),
-                next_page_cursor=pagination.get("next_page_cursor"),
-                next_page_url=pagination.get("next_page_url"),
-            )
-
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
         params = {
@@ -102,3 +91,14 @@ class Paginator:
             current_items, pagination = self.next_page(pagination.next_page_cursor)
             if current_items:
                 yield from current_items
+
+    def _cache_pagination(self, response: Dict[str, Any], page_key: str) -> None:
+        """Extracts pagination dict from response, creates Pagination object, and caches it."""
+        pagination = response.get("pagination", {})
+
+        if isinstance(pagination, dict):
+            self._pagination_cache[page_key] = Pagination(
+                has_next_page=pagination.get("has_next_page", False),
+                next_page_cursor=pagination.get("next_page_cursor"),
+                next_page_url=pagination.get("next_page_url"),
+            )
