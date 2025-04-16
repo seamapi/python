@@ -14,7 +14,7 @@ def test_paginator_first_page(seam: Seam):
 
 
 def test_paginator_next_page(seam: Seam):
-    paginator = seam.create_paginator(seam.connected_accounts.list, params={"limit": 2})
+    paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 2})
     first_page_accounts, first_pagination = paginator.first_page()
 
     assert len(first_page_accounts) == 2
@@ -29,7 +29,7 @@ def test_paginator_next_page(seam: Seam):
 def test_paginator_flatten_to_list(seam: Seam):
     all_connected_accounts = seam.connected_accounts.list()
 
-    paginator = seam.create_paginator(seam.connected_accounts.list, params={"limit": 1})
+    paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 1})
     paginated_accounts = paginator.flatten_to_list()
 
     assert len(paginated_accounts) > 1
@@ -39,7 +39,7 @@ def test_paginator_flatten_to_list(seam: Seam):
 def test_paginator_flatten(seam: Seam):
     all_connected_accounts = seam.connected_accounts.list()
 
-    paginator = seam.create_paginator(seam.connected_accounts.list, params={"limit": 1})
+    paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 1})
 
     collected_accounts = []
     for account in paginator.flatten():
