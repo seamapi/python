@@ -35,7 +35,7 @@ class Paginator:
 
         Args:
             request: The function to call to fetch a page of data.
-            http_client: The HTTP client used in the request.
+            http_client: The Seam HTTP client used in the request.
             params: Initial parameters to pass to the callable function.
         """
         self._request = request
