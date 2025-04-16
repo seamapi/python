@@ -39,12 +39,11 @@ class Paginator:
         pagination_dict = response.get("pagination", {})
 
         if isinstance(pagination_dict, dict):
-            pagination_obj = Pagination(
-                has_next_page=pagination_dict.get("has_next_page", False),
-                next_page_cursor=pagination_dict.get("next_page_cursor"),
-                next_page_url=pagination_dict.get("next_page_url"),
+            self._pagination_cache[page_key] = Pagination(
+                has_next_page=pagination.get("has_next_page", False),
+                next_page_cursor=pagination.get("next_page_cursor"),
+                next_page_url=pagination.get("next_page_url"),
             )
-            self._pagination_cache[page_key] = pagination_obj
 
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
