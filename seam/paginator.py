@@ -1,4 +1,6 @@
 from typing import Callable, Dict, Any, Tuple, Generator, List
+from .client import SeamHttpClient
+from niquests import Response, JSONDecodeError
 
 
 class Pagination:
@@ -22,28 +24,33 @@ class Paginator:
 
     _FIRST_PAGE = "FIRST_PAGE"
 
-    def __init__(self, request: Callable, params: Dict[str, Any] = None):
+    def __init__(
+        self,
+        request: Callable,
+        http_client: SeamHttpClient,
+        params: Dict[str, Any] = None,
+    ):
         """
         Initializes the Paginator.
 
         Args:
             request: The function to call to fetch a page of data.
+            http_client: The HTTP client used in the request.
             params: Initial parameters to pass to the callable function.
         """
         self._request = request
+        self._http_client = http_client
         self._params = params or {}
         self._pagination_cache: Dict[str, Pagination] = {}
 
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
-        params = {
-            **self._params,
-            "on_response": lambda response: self._cache_pagination(
-                response, self._FIRST_PAGE
-            ),
-        }
+        self._http_client.hooks["response"].append(
+            lambda response: self._cache_pagination(response, self._FIRST_PAGE)
+        )
+        data = self._request(**self._params)
+        self._http_client.hooks["response"].pop()
 
-        data = self._request(**params)
         pagination = self._pagination_cache.get(self._FIRST_PAGE)
 
         return data, pagination
@@ -56,12 +63,14 @@ class Paginator:
         params = {
             **self._params,
             "page_cursor": next_page_cursor,
-            "on_response": lambda response: self._cache_pagination(
-                response, next_page_cursor
-            ),
         }
 
+        self._http_client.hooks["response"].append(
+            lambda response: self._cache_pagination(response, next_page_cursor)
+        )
         data = self._request(**params)
+        self._http_client.hooks["response"].pop()
+
         pagination = self._pagination_cache.get(next_page_cursor)
 
         return data, pagination
@@ -92,9 +101,13 @@ class Paginator:
             if current_items:
                 yield from current_items
 
-    def _cache_pagination(self, response: Dict[str, Any], page_key: str) -> None:
+    def _cache_pagination(self, response: Response, page_key: str) -> None:
         """Extracts pagination dict from response, creates Pagination object, and caches it."""
-        pagination = response.get("pagination", {})
+        try:
+            response_json = response.json()
+            pagination = response_json.get("pagination", {})
+        except JSONDecodeError:
+            pagination = {}
 
         if isinstance(pagination, dict):
             self._pagination_cache[page_key] = Pagination(

@@ -113,7 +113,7 @@ class Seam(AbstractSeam):
             >>> for connected_account in connected_accounts_paginator.flatten():
             >>>     print(connected_account.account_type_display_name)
         """
-        return Paginator(request, params)
+        return Paginator(request, self.client, params)
 
     @classmethod
     def from_api_key(
