@@ -48,11 +48,12 @@ class Paginator:
 
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
-        params = self._params.copy()
-
-        params["on_response"] = lambda response: self._cache_pagination(
-            response, self._FIRST_PAGE
-        )
+        params = {
+            **self._params,
+            "on_response": lambda response: self._cache_pagination(
+                response, self._FIRST_PAGE
+            ),
+        }
 
         data = self._request(**params)
         pagination = self._pagination_cache.get(self._FIRST_PAGE)
@@ -62,15 +63,15 @@ class Paginator:
     def next_page(self, next_page_cursor: str) -> Tuple[List[Any], Pagination | None]:
         """Fetches the next page of results using a cursor."""
         if not next_page_cursor:
-            raise ValueError(
-                "Cannot get the next page with a null next_page_cursor."
-            )
+            raise ValueError("Cannot get the next page with a null next_page_cursor.")
 
-        params = self._params.copy()
-        params["page_cursor"] = next_page_cursor
-        params["on_response"] = lambda response: self._cache_pagination(
-            response, next_page_cursor
-        )
+        params = {
+            **self._params,
+            "page_cursor": next_page_cursor,
+            "on_response": lambda response: self._cache_pagination(
+                response, next_page_cursor
+            ),
+        }
 
         data = self._request(**params)
         pagination = self._pagination_cache.get(next_page_cursor)
