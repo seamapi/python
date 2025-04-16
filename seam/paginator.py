@@ -22,15 +22,15 @@ class Paginator:
 
     _FIRST_PAGE = "FIRST_PAGE"
 
-    def __init__(self, callable_func: Callable, params: Dict[str, Any] = None):
+    def __init__(self, request: Callable, params: Dict[str, Any] = None):
         """
         Initializes the Paginator.
 
         Args:
-            callable_func: The function to call to fetch a page of data.
+            request: The function to call to fetch a page of data.
             params: Initial parameters to pass to the callable function.
         """
-        self._callable_func = callable_func
+        self._request = request
         self._params = params or {}
         self._pagination_cache: Dict[str, Pagination] = {}
 
@@ -54,7 +54,7 @@ class Paginator:
             response, self._FIRST_PAGE
         )
 
-        data = self._callable_func(**params)
+        data = self._request(**params)
         pagination = self._pagination_cache.get(self._FIRST_PAGE)
 
         return data, pagination
@@ -70,7 +70,7 @@ class Paginator:
             response, next_page_cursor
         )
 
-        data = self._callable_func(**params)
+        data = self._request(**params)
         pagination = self._pagination_cache.get(next_page_cursor)
 
         return data, pagination
