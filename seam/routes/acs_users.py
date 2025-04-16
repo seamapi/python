@@ -1,4 +1,4 @@
-from typing import Optional, Any, List, Dict, Union, Callable
+from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractAcsUsers, AcsUser, AcsEntrance
 
@@ -87,8 +87,7 @@ class AcsUsers(AbstractAcsUsers):
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
-        on_response: Optional[Callable] = None
+        user_identity_phone_number: Optional[str] = None
     ) -> List[AcsUser]:
         json_payload = {}
 
@@ -110,9 +109,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["user_identity_phone_number"] = user_identity_phone_number
 
         res = self.client.post("/acs/users/list", json=json_payload)
-
-        if on_response is not None:
-            on_response(res)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
