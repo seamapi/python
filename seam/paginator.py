@@ -36,7 +36,7 @@ class Paginator:
 
     def _cache_pagination(self, response: Dict[str, Any], page_key: str) -> None:
         """Extracts pagination dict from response, creates Pagination object, and caches it."""
-        pagination_dict = response.get("pagination")
+        pagination_dict = response.get("pagination", {})
 
         if isinstance(pagination_dict, dict):
             pagination_obj = Pagination(
@@ -83,7 +83,7 @@ class Paginator:
         if current_items:
             all_items.extend(current_items)
 
-        while pagination and pagination.has_next_page and pagination.next_page_cursor:
+        while pagination.has_next_page:
             current_items, pagination = self.next_page(pagination.next_page_cursor)
             if current_items:
                 all_items.extend(current_items)
