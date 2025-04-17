@@ -7,7 +7,7 @@ from .parse_options import parse_options
 from .routes import Routes
 from .models import AbstractSeam
 from .client import SeamHttpClient
-from .paginator import Paginator
+from .paginator import SeamPaginator
 
 
 class Seam(AbstractSeam):
@@ -92,7 +92,7 @@ class Seam(AbstractSeam):
 
     def create_paginator(
         self, request: Callable, params: Optional[Dict[str, Any]] = None, /
-    ) -> Paginator:
+    ) -> SeamPaginator:
         """
         Creates a Paginator instance for iterating through list endpoints.
 
@@ -113,7 +113,7 @@ class Seam(AbstractSeam):
             >>> for connected_account in connected_accounts_paginator.flatten():
             >>>     print(connected_account.account_type_display_name)
         """
-        return Paginator(self.client, request, params)
+        return SeamPaginator(self.client, request, params)
 
     @classmethod
     def from_api_key(

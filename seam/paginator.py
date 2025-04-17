@@ -4,7 +4,7 @@ from niquests import Response, JSONDecodeError
 from .pagination import Pagination
 
 
-class Paginator:
+class SeamPaginator:
     """
     Handles pagination for API list endpoints.
 
