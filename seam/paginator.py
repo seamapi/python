@@ -15,8 +15,8 @@ class Paginator:
 
     def __init__(
         self,
+        client: SeamHttpClient,
         request: Callable,
-        http_client: SeamHttpClient,
         params: Dict[str, Any] = None,
     ):
         """
@@ -28,17 +28,17 @@ class Paginator:
             params: Initial parameters to pass to the callable function.
         """
         self._request = request
-        self._http_client = http_client
+        self.client = client
         self._params = params or {}
         self._pagination_cache: Dict[str, Pagination] = {}
 
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
-        self._http_client.hooks["response"].append(
+        self.client.hooks["response"].append(
             lambda response: self._cache_pagination(response, self._FIRST_PAGE)
         )
         data = self._request(**self._params)
-        self._http_client.hooks["response"].pop()
+        self.client.hooks["response"].pop()
 
         pagination = self._pagination_cache.get(self._FIRST_PAGE)
 
@@ -54,11 +54,11 @@ class Paginator:
             "page_cursor": next_page_cursor,
         }
 
-        self._http_client.hooks["response"].append(
+        self.client.hooks["response"].append(
             lambda response: self._cache_pagination(response, next_page_cursor)
         )
         data = self._request(**params)
-        self._http_client.hooks["response"].pop()
+        self.client.hooks["response"].pop()
 
         pagination = self._pagination_cache.get(next_page_cursor)
 
