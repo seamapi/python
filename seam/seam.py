@@ -91,7 +91,7 @@ class Seam(AbstractSeam):
         Routes.__init__(self, client=self.client, defaults=self.defaults)
 
     def create_paginator(
-        self, request: Callable, params: Optional[Dict[str, Any]] = None
+        self, request: Callable, params: Optional[Dict[str, Any]] = None, /
     ) -> Paginator:
         """
         Creates a Paginator instance for iterating through list endpoints.
@@ -113,7 +113,7 @@ class Seam(AbstractSeam):
             >>> for connected_account in connected_accounts_paginator.flatten():
             >>>     print(connected_account.account_type_display_name)
         """
-        return Paginator(request, self.client, params)
+        return Paginator(self.client, request, params)
 
     @classmethod
     def from_api_key(
