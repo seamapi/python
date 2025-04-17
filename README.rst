@@ -312,9 +312,8 @@ Get the first page on initial load and store the state (e.g., in memory or a fil
       "next_page_cursor": pagination.next_page_cursor,
       "has_next_page": pagination.has_next_page,
   }
-  # with open("pagination_state.json", "w") as f:
-  # with open("/tmp/seam_connected_accounts_list.json", "w") as f:
-  #     json.dump(pagination_state, f)
+  with open("/tmp/seam_connected_accounts_list.json", "w") as f:
+      json.dump(pagination_state, f)
 
 Get the next page at a later time using the stored state:
 
@@ -326,15 +325,8 @@ Get the next page at a later time using the stored state:
   seam = Seam()
 
   # Example: Load state from where it was stored
-  # with open("/tmp/seam_connected_accounts_list.json", "r") as f:
-  #     pagination_state = json.load(f)
-  # Placeholder for loaded state:
-  pagination_state = {
-      "params": {"limit": 20},
-      "next_page_cursor": "some_cursor_value",
-      "has_next_page": True,
-  }
-
+  with open("/tmp/seam_connected_accounts_list.json", "r") as f:
+      pagination_state = json.load(f)
 
   if pagination_state.get("has_next_page"):
       paginator = seam.create_paginator(
