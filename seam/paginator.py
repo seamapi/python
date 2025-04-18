@@ -44,7 +44,7 @@ class SeamPaginator:
 
         return data, pagination
 
-    def next_page(self, next_page_cursor: str) -> Tuple[List[Any], Pagination | None]:
+    def next_page(self, next_page_cursor: str, /) -> Tuple[List[Any], Pagination | None]:
         """Fetches the next page of results using a cursor."""
         if not next_page_cursor:
             raise ValueError("Cannot get the next page with a null next_page_cursor.")
