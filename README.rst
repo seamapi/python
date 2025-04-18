@@ -47,6 +47,16 @@ Contents
 
   * `Action Attempts <Action Attempts_>`_
 
+  * `Pagination <Pagination_>`_
+
+    * `Manually fetch pages with the nextPageCursor <Manually fetch pages with the nextPageCursor_>`_
+
+    * `Resume pagination <Resume pagination_>`_
+
+    * `Iterate over all resources <Iterate over all resources_>`_
+
+    * `Return all resources across all pages as a list <Return all resources across all pages as a list_>`_
+
   * `Interacting with Multiple Workspaces <Interacting with Multiple Workspaces_>`_
 
   * `Webhooks <Webhooks_>`_
@@ -256,6 +266,102 @@ For example:
       print("Could not unlock the door")
   except SeamActionAttemptTimeoutError as e:
       print("Door took too long to unlock")
+
+Pagination
+~~~~~~~~~~
+
+Some Seam API endpoints that return lists of resources support pagination.
+Use the ``SeamPaginator`` class to fetch and process resources across multiple pages.
+
+Manually fetch pages with the nextPageCursor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+  from seam import Seam
+
+  seam = Seam()
+
+  paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 20})
+
+  connected_accounts, pagination = paginator.first_page()
+
+  if pagination.has_next_page:
+      more_connected_accounts, _ = paginator.next_page(pagination.next_page_cursor)
+
+Resume pagination
+^^^^^^^^^^^^^^^^^
+
+Get the first page on initial load and store the state (e.g., in memory or a file):
+
+.. code-block:: python
+
+  import json
+  from seam import Seam
+
+  seam = Seam()
+
+  params = {"limit": 20}
+  paginator = seam.create_paginator(seam.connected_accounts.list, params)
+
+  connected_accounts, pagination = paginator.first_page()
+
+  # Example: Store state for later use (e.g., in a file or database)
+  pagination_state = {
+      "params": params,
+      "next_page_cursor": pagination.next_page_cursor,
+      "has_next_page": pagination.has_next_page,
+  }
+  with open("/tmp/seam_connected_accounts_list.json", "w") as f:
+      json.dump(pagination_state, f)
+
+Get the next page at a later time using the stored state:
+
+.. code-block:: python
+
+  import json
+  from seam import Seam
+
+  seam = Seam()
+
+  # Example: Load state from where it was stored
+  with open("/tmp/seam_connected_accounts_list.json", "r") as f:
+      pagination_state = json.load(f)
+
+  if pagination_state.get("has_next_page"):
+      paginator = seam.create_paginator(
+          seam.connected_accounts.list, pagination_state["params"]
+      )
+      more_connected_accounts, _ = paginator.next_page(
+          pagination_state["next_page_cursor"]
+      )
+
+Iterate over all resources
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+  from seam import Seam
+
+  seam = Seam()
+
+  paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 20})
+
+  for account in paginator.flatten():
+      print(account.account_type_display_name)
+
+Return all resources across all pages as a list
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+  from seam import Seam
+
+  seam = Seam()
+
+  paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 20})
+
+  all_connected_accounts = paginator.flatten_to_list()
 
 Interacting with Multiple Workspaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
