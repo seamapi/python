@@ -1946,6 +1946,13 @@ class AbstractPhonesSimulate(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractSeamInstantKeyV1ClientSessions(abc.ABC):
+
+    @abc.abstractmethod
+    def exchange_short_code(self, *, short_code: str) -> ClientSession:
+        raise NotImplementedError()
+
+
 class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
@@ -2127,6 +2134,14 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
+        raise NotImplementedError()
+
+
+class AbstractSeam(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def instant_key(self) -> AbstractSeamInstantKey:
         raise NotImplementedError()
 
 
@@ -2661,6 +2676,7 @@ class AbstractRoutes(abc.ABC):
     networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
+    seam: AbstractSeam
     thermostats: AbstractThermostats
     user_identities: AbstractUserIdentities
     webhooks: AbstractWebhooks
