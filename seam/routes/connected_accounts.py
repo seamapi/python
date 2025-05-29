@@ -38,6 +38,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_ids: Optional[List[str]] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -46,6 +47,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if customer_ids is not None:
+            json_payload["customer_ids"] = customer_ids
         if limit is not None:
             json_payload["limit"] = limit
         if page_cursor is not None:

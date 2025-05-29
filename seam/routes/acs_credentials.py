@@ -8,13 +8,21 @@ class AcsCredentials(AbstractAcsCredentials):
         self.client = client
         self.defaults = defaults
 
-    def assign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
+    def assign(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/credentials/assign", json=json_payload)
 
@@ -24,7 +32,8 @@ class AcsCredentials(AbstractAcsCredentials):
         self,
         *,
         access_method: str,
-        acs_user_id: str,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
         assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
         code: Optional[str] = None,
@@ -33,12 +42,15 @@ class AcsCredentials(AbstractAcsCredentials):
         is_multi_phone_sync_credential: Optional[bool] = None,
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None
     ) -> AcsCredential:
         json_payload = {}
 
         if access_method is not None:
             json_payload["access_method"] = access_method
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
         if allowed_acs_entrance_ids is not None:
@@ -61,6 +73,8 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["salto_space_metadata"] = salto_space_metadata
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if visionline_metadata is not None:
             json_payload["visionline_metadata"] = visionline_metadata
 
@@ -131,13 +145,21 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
-    def unassign(self, *, acs_credential_id: str, acs_user_id: str) -> None:
+    def unassign(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/credentials/unassign", json=json_payload)
 

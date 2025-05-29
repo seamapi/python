@@ -38,6 +38,7 @@ class UserIdentities(AbstractUserIdentities):
     def create(
         self,
         *,
+        acs_system_ids: Optional[List[str]] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
@@ -45,6 +46,8 @@ class UserIdentities(AbstractUserIdentities):
     ) -> UserIdentity:
         json_payload = {}
 
+        if acs_system_ids is not None:
+            json_payload["acs_system_ids"] = acs_system_ids
         if email_address is not None:
             json_payload["email_address"] = email_address
         if full_name is not None:
@@ -68,11 +71,15 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
-    def generate_instant_key(self, *, user_identity_id: str) -> InstantKey:
+    def generate_instant_key(
+        self, *, user_identity_id: str, max_use_count: Optional[float] = None
+    ) -> InstantKey:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+        if max_use_count is not None:
+            json_payload["max_use_count"] = max_use_count
 
         res = self.client.post(
             "/user_identities/generate_instant_key", json=json_payload

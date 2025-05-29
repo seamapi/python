@@ -30,6 +30,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         connected_account_ids: Optional[List[str]] = None,
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_ids: Optional[List[str]] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -37,6 +38,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedDevice]:
@@ -52,6 +54,8 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["created_before"] = created_before
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if customer_ids is not None:
+            json_payload["customer_ids"] = customer_ids
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if device_type is not None:
@@ -66,6 +70,8 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["limit"] = limit
         if manufacturer is not None:
             json_payload["manufacturer"] = manufacturer
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if unstable_location_id is not None:
             json_payload["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:

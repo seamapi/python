@@ -202,6 +202,8 @@ class AccessCodes(AbstractAccessCodes):
         *,
         access_code_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[AccessCode]:
         json_payload = {}
@@ -210,6 +212,10 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["access_code_ids"] = access_code_ids
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 
@@ -228,6 +234,29 @@ class AccessCodes(AbstractAccessCodes):
         )
 
         return AccessCode.from_dict(res["access_code"])
+
+    def report_device_constraints(
+        self,
+        *,
+        device_id: str,
+        max_code_length: Optional[int] = None,
+        min_code_length: Optional[int] = None,
+        supported_code_lengths: Optional[List[int]] = None
+    ) -> None:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if max_code_length is not None:
+            json_payload["max_code_length"] = max_code_length
+        if min_code_length is not None:
+            json_payload["min_code_length"] = min_code_length
+        if supported_code_lengths is not None:
+            json_payload["supported_code_lengths"] = supported_code_lengths
+
+        self.client.post("/access_codes/report_device_constraints", json=json_payload)
+
+        return None
 
     def update(
         self,
