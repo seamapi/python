@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractThermostats, ActionAttempt, Device
+from .thermostats_daily_programs import ThermostatsDailyPrograms
 from .thermostats_schedules import ThermostatsSchedules
 from .thermostats_simulate import ThermostatsSimulate
 from ..modules.action_attempts import resolve_action_attempt
@@ -10,8 +11,15 @@ class Thermostats(AbstractThermostats):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._daily_programs = ThermostatsDailyPrograms(
+            client=client, defaults=defaults
+        )
         self._schedules = ThermostatsSchedules(client=client, defaults=defaults)
         self._simulate = ThermostatsSimulate(client=client, defaults=defaults)
+
+    @property
+    def daily_programs(self) -> ThermostatsDailyPrograms:
+        return self._daily_programs
 
     @property
     def schedules(self) -> ThermostatsSchedules:
@@ -220,6 +228,7 @@ class Thermostats(AbstractThermostats):
         connected_account_ids: Optional[List[str]] = None,
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_ids: Optional[List[str]] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -227,6 +236,7 @@ class Thermostats(AbstractThermostats):
         include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -242,6 +252,8 @@ class Thermostats(AbstractThermostats):
             json_payload["created_before"] = created_before
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if customer_ids is not None:
+            json_payload["customer_ids"] = customer_ids
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if device_type is not None:
@@ -256,6 +268,8 @@ class Thermostats(AbstractThermostats):
             json_payload["limit"] = limit
         if manufacturer is not None:
             json_payload["manufacturer"] = manufacturer
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if unstable_location_id is not None:
             json_payload["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
@@ -447,3 +461,49 @@ class Thermostats(AbstractThermostats):
         self.client.post("/thermostats/update_climate_preset", json=json_payload)
 
         return None
+
+    def update_weekly_program(
+        self,
+        *,
+        device_id: str,
+        friday_program_id: Optional[str] = None,
+        monday_program_id: Optional[str] = None,
+        saturday_program_id: Optional[str] = None,
+        sunday_program_id: Optional[str] = None,
+        thursday_program_id: Optional[str] = None,
+        tuesday_program_id: Optional[str] = None,
+        wednesday_program_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if friday_program_id is not None:
+            json_payload["friday_program_id"] = friday_program_id
+        if monday_program_id is not None:
+            json_payload["monday_program_id"] = monday_program_id
+        if saturday_program_id is not None:
+            json_payload["saturday_program_id"] = saturday_program_id
+        if sunday_program_id is not None:
+            json_payload["sunday_program_id"] = sunday_program_id
+        if thursday_program_id is not None:
+            json_payload["thursday_program_id"] = thursday_program_id
+        if tuesday_program_id is not None:
+            json_payload["tuesday_program_id"] = tuesday_program_id
+        if wednesday_program_id is not None:
+            json_payload["wednesday_program_id"] = wednesday_program_id
+
+        res = self.client.post("/thermostats/update_weekly_program", json=json_payload)
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )

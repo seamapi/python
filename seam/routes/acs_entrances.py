@@ -18,13 +18,21 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return AcsEntrance.from_dict(res["acs_entrance"])
 
-    def grant_access(self, *, acs_entrance_id: str, acs_user_id: str) -> None:
+    def grant_access(
+        self,
+        *,
+        acs_entrance_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/entrances/grant_access", json=json_payload)
 
@@ -34,7 +42,8 @@ class AcsEntrances(AbstractAcsEntrances):
         self,
         *,
         acs_credential_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None
+        acs_system_id: Optional[str] = None,
+        location_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         json_payload = {}
 
@@ -42,6 +51,8 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if location_id is not None:
+            json_payload["location_id"] = location_id
 
         res = self.client.post("/acs/entrances/list", json=json_payload)
 

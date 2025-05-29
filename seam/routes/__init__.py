@@ -4,7 +4,6 @@ from .models import AbstractRoutes
 from .access_codes import AccessCodes
 from .acs import Acs
 from .action_attempts import ActionAttempts
-from .bridges import Bridges
 from .client_sessions import ClientSessions
 from .connect_webviews import ConnectWebviews
 from .connected_accounts import ConnectedAccounts
@@ -25,7 +24,6 @@ class Routes(AbstractRoutes):
         self.access_codes = AccessCodes(client=client, defaults=defaults)
         self.acs = Acs(client=client, defaults=defaults)
         self.action_attempts = ActionAttempts(client=client, defaults=defaults)
-        self.bridges = Bridges(client=client, defaults=defaults)
         self.client_sessions = ClientSessions(client=client, defaults=defaults)
         self.connect_webviews = ConnectWebviews(client=client, defaults=defaults)
         self.connected_accounts = ConnectedAccounts(client=client, defaults=defaults)

@@ -38,6 +38,7 @@ class Events(AbstractEvents):
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
+        customer_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         event_ids: Optional[List[str]] = None,
@@ -63,6 +64,8 @@ class Events(AbstractEvents):
             json_payload["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if customer_ids is not None:
+            json_payload["customer_ids"] = customer_ids
         if device_id is not None:
             json_payload["device_id"] = device_id
         if device_ids is not None:

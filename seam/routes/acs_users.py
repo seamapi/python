@@ -57,21 +57,41 @@ class AcsUsers(AbstractAcsUsers):
 
         return AcsUser.from_dict(res["acs_user"])
 
-    def delete(self, *, acs_user_id: str) -> None:
+    def delete(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/delete", json=json_payload)
 
         return None
 
-    def get(self, *, acs_user_id: str) -> AcsUser:
+    def get(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> AcsUser:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post("/acs/users/get", json=json_payload)
 
@@ -112,11 +132,21 @@ class AcsUsers(AbstractAcsUsers):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
-    def list_accessible_entrances(self, *, acs_user_id: str) -> List[AcsEntrance]:
+    def list_accessible_entrances(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[AcsEntrance]:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post(
             "/acs/users/list_accessible_entrances", json=json_payload
@@ -125,7 +155,11 @@ class AcsUsers(AbstractAcsUsers):
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def remove_from_access_group(
-        self, *, acs_access_group_id: str, acs_user_id: str
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
     ) -> None:
         json_payload = {}
 
@@ -133,36 +167,68 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/remove_from_access_group", json=json_payload)
 
         return None
 
-    def revoke_access_to_all_entrances(self, *, acs_user_id: str) -> None:
+    def revoke_access_to_all_entrances(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/revoke_access_to_all_entrances", json=json_payload)
 
         return None
 
-    def suspend(self, *, acs_user_id: str) -> None:
+    def suspend(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/suspend", json=json_payload)
 
         return None
 
-    def unsuspend(self, *, acs_user_id: str) -> None:
+    def unsuspend(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/unsuspend", json=json_payload)
 
@@ -171,20 +237,24 @@ class AcsUsers(AbstractAcsUsers):
     def update(
         self,
         *,
-        acs_user_id: str,
         access_schedule: Optional[Dict[str, Any]] = None,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         email: Optional[str] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
-        phone_number: Optional[str] = None
+        phone_number: Optional[str] = None,
+        user_identity_id: Optional[str] = None
     ) -> None:
         json_payload = {}
 
-        if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
         if access_schedule is not None:
             json_payload["access_schedule"] = access_schedule
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
+        if acs_user_id is not None:
+            json_payload["acs_user_id"] = acs_user_id
         if email is not None:
             json_payload["email"] = email
         if email_address is not None:
@@ -195,6 +265,8 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["hid_acs_system_id"] = hid_acs_system_id
         if phone_number is not None:
             json_payload["phone_number"] = phone_number
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/users/update", json=json_payload)
 

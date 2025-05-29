@@ -16,6 +16,7 @@ class Workspaces(AbstractWorkspaces):
         name: str,
         company_name: Optional[str] = None,
         connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
@@ -30,6 +31,10 @@ class Workspaces(AbstractWorkspaces):
             json_payload["company_name"] = company_name
         if connect_partner_name is not None:
             json_payload["connect_partner_name"] = connect_partner_name
+        if connect_webview_customization is not None:
+            json_payload["connect_webview_customization"] = (
+                connect_webview_customization
+            )
         if is_sandbox is not None:
             json_payload["is_sandbox"] = is_sandbox
         if webview_logo_shape is not None:

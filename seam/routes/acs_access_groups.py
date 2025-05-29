@@ -8,13 +8,21 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         self.client = client
         self.defaults = defaults
 
-    def add_user(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
+    def add_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/access_groups/add_user", json=json_payload)
 
@@ -31,7 +39,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         return AcsAccessGroup.from_dict(res["acs_access_group"])
 
     def list(
-        self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
     ) -> List[AcsAccessGroup]:
         json_payload = {}
 
@@ -39,6 +51,8 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post("/acs/access_groups/list", json=json_payload)
 
@@ -68,13 +82,21 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
-    def remove_user(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
+    def remove_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         self.client.post("/acs/access_groups/remove_user", json=json_payload)
 
