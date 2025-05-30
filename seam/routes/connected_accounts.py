@@ -60,6 +60,16 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
 
+    def sync(self, *, connected_account_id: str) -> None:
+        json_payload = {}
+
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
+
+        self.client.post("/connected_accounts/sync", json=json_payload)
+
+        return None
+
     def update(
         self,
         *,
