@@ -1815,6 +1815,10 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def sync(self, *, connected_account_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def update(
         self,
         *,
