@@ -16,6 +16,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         custom_metadata: Optional[Dict[str, Any]] = None,
         custom_redirect_failure_url: Optional[str] = None,
         custom_redirect_url: Optional[str] = None,
+        customer_id: Optional[str] = None,
         device_selection_mode: Optional[str] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
@@ -34,6 +35,8 @@ class ConnectWebviews(AbstractConnectWebviews):
             json_payload["custom_redirect_failure_url"] = custom_redirect_failure_url
         if custom_redirect_url is not None:
             json_payload["custom_redirect_url"] = custom_redirect_url
+        if customer_id is not None:
+            json_payload["customer_id"] = customer_id
         if device_selection_mode is not None:
             json_payload["device_selection_mode"] = device_selection_mode
         if provider_category is not None:
@@ -69,6 +72,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_id: Optional[str] = None,
         limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
@@ -76,6 +80,8 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if customer_id is not None:
+            json_payload["customer_id"] = customer_id
         if limit is not None:
             json_payload["limit"] = limit
         if user_identifier_key is not None:

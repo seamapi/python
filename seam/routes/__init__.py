@@ -14,6 +14,7 @@ from .networks import Networks
 from .noise_sensors import NoiseSensors
 from .phones import Phones
 from .thermostats import Thermostats
+from .unstable_partner import UnstablePartner
 from .user_identities import UserIdentities
 from .webhooks import Webhooks
 from .workspaces import Workspaces
@@ -34,6 +35,7 @@ class Routes(AbstractRoutes):
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)
         self.thermostats = Thermostats(client=client, defaults=defaults)
+        self.unstable_partner = UnstablePartner(client=client, defaults=defaults)
         self.user_identities = UserIdentities(client=client, defaults=defaults)
         self.webhooks = Webhooks(client=client, defaults=defaults)
         self.workspaces = Workspaces(client=client, defaults=defaults)
