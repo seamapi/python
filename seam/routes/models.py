@@ -1694,6 +1694,8 @@ class AbstractClientSessions(abc.ABC):
         *,
         connect_webview_ids: Optional[List[str]] = None,
         connected_account_ids: Optional[List[str]] = None,
+        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
@@ -1765,6 +1767,7 @@ class AbstractConnectWebviews(abc.ABC):
         custom_metadata: Optional[Dict[str, Any]] = None,
         custom_redirect_failure_url: Optional[str] = None,
         custom_redirect_url: Optional[str] = None,
+        customer_id: Optional[str] = None,
         device_selection_mode: Optional[str] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
@@ -1784,6 +1787,7 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_id: Optional[str] = None,
         limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
@@ -2145,6 +2149,19 @@ class AbstractThermostatsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractUnstablePartnerBuildingBlocks(abc.ABC):
+
+    @abc.abstractmethod
+    def generate_link(
+        self,
+        *,
+        bridge_client_machine_identifier_key: str,
+        bridge_client_name: str,
+        bridge_client_time_zone: str
+    ) -> None:
+        raise NotImplementedError()
+
+
 class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
 
     @abc.abstractmethod
@@ -2256,6 +2273,14 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
+        raise NotImplementedError()
+
+
+class AbstractUnstablePartner(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def building_blocks(self) -> AbstractUnstablePartnerBuildingBlocks:
         raise NotImplementedError()
 
 
@@ -2833,6 +2858,7 @@ class AbstractRoutes(abc.ABC):
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
     thermostats: AbstractThermostats
+    unstable_partner: AbstractUnstablePartner
     user_identities: AbstractUserIdentities
     webhooks: AbstractWebhooks
     workspaces: AbstractWorkspaces

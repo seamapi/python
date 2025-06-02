@@ -13,6 +13,8 @@ class ClientSessions(AbstractClientSessions):
         *,
         connect_webview_ids: Optional[List[str]] = None,
         connected_account_ids: Optional[List[str]] = None,
+        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
@@ -23,6 +25,10 @@ class ClientSessions(AbstractClientSessions):
             json_payload["connect_webview_ids"] = connect_webview_ids
         if connected_account_ids is not None:
             json_payload["connected_account_ids"] = connected_account_ids
+        if customer_id is not None:
+            json_payload["customer_id"] = customer_id
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if expires_at is not None:
             json_payload["expires_at"] = expires_at
         if user_identifier_key is not None:
