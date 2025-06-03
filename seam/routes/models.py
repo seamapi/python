@@ -1972,19 +1972,6 @@ class AbstractLocks(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractNetworks(abc.ABC):
-
-    @abc.abstractmethod
-    def get(self, *, network_id: str) -> Network:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Network]:
-        raise NotImplementedError()
-
-
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
     @abc.abstractmethod
@@ -2149,19 +2136,6 @@ class AbstractThermostatsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractUnstablePartnerBuildingBlocks(abc.ABC):
-
-    @abc.abstractmethod
-    def generate_link(
-        self,
-        *,
-        bridge_client_machine_identifier_key: str,
-        bridge_client_name: str,
-        bridge_client_time_zone: str
-    ) -> None:
-        raise NotImplementedError()
-
-
 class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
 
     @abc.abstractmethod
@@ -2273,14 +2247,6 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
-        raise NotImplementedError()
-
-
-class AbstractUnstablePartner(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def building_blocks(self) -> AbstractUnstablePartnerBuildingBlocks:
         raise NotImplementedError()
 
 
@@ -2854,11 +2820,9 @@ class AbstractRoutes(abc.ABC):
     devices: AbstractDevices
     events: AbstractEvents
     locks: AbstractLocks
-    networks: AbstractNetworks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
     thermostats: AbstractThermostats
-    unstable_partner: AbstractUnstablePartner
     user_identities: AbstractUserIdentities
     webhooks: AbstractWebhooks
     workspaces: AbstractWorkspaces
