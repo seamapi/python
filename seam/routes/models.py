@@ -401,6 +401,7 @@ class ClientSession:
     connect_webview_ids: List[str]
     connected_account_ids: List[str]
     created_at: str
+    customer_id: str
     device_count: float
     expires_at: str
     token: str
@@ -415,6 +416,7 @@ class ClientSession:
             connect_webview_ids=d.get("connect_webview_ids", None),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
+            customer_id=d.get("customer_id", None),
             device_count=d.get("device_count", None),
             expires_at=d.get("expires_at", None),
             token=d.get("token", None),
@@ -763,6 +765,29 @@ class InstantKey:
             instant_key_id=d.get("instant_key_id", None),
             instant_key_url=d.get("instant_key_url", None),
             user_identity_id=d.get("user_identity_id", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class MagicLink:
+    building_block_type: str
+    created_at: str
+    customer_id: str
+    customer_key: str
+    expires_at: str
+    url: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return MagicLink(
+            building_block_type=d.get("building_block_type", None),
+            created_at=d.get("created_at", None),
+            customer_id=d.get("customer_id", None),
+            customer_key=d.get("customer_key", None),
+            expires_at=d.get("expires_at", None),
+            url=d.get("url", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1787,7 +1812,7 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_id: Optional[str] = None,
+        customer_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
