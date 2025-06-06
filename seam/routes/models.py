@@ -68,6 +68,7 @@ class AcsAccessGroup:
     access_group_type_display_name: str
     acs_access_group_id: str
     acs_system_id: str
+    connected_account_id: str
     created_at: str
     display_name: str
     external_type: str
@@ -86,6 +87,7 @@ class AcsAccessGroup:
             ),
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             external_type=d.get("external_type", None),
@@ -216,6 +218,7 @@ class AcsCredentialProvisioningAutomation:
 class AcsEncoder:
     acs_encoder_id: str
     acs_system_id: str
+    connected_account_id: str
     created_at: str
     display_name: str
     errors: List[Dict[str, Any]]
@@ -226,6 +229,7 @@ class AcsEncoder:
         return AcsEncoder(
             acs_encoder_id=d.get("acs_encoder_id", None),
             acs_system_id=d.get("acs_system_id", None),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
@@ -773,7 +777,6 @@ class InstantKey:
 class MagicLink:
     building_block_type: str
     created_at: str
-    customer_id: str
     customer_key: str
     expires_at: str
     url: str
@@ -784,7 +787,6 @@ class MagicLink:
         return MagicLink(
             building_block_type=d.get("building_block_type", None),
             created_at=d.get("created_at", None),
-            customer_id=d.get("customer_id", None),
             customer_key=d.get("customer_key", None),
             expires_at=d.get("expires_at", None),
             url=d.get("url", None),
@@ -974,6 +976,7 @@ class UnmanagedAcsAccessGroup:
     access_group_type_display_name: str
     acs_access_group_id: str
     acs_system_id: str
+    connected_account_id: str
     created_at: str
     display_name: str
     external_type: str
@@ -992,6 +995,7 @@ class UnmanagedAcsAccessGroup:
             ),
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             external_type=d.get("external_type", None),
@@ -2448,6 +2452,7 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         access_code_ids: Optional[List[str]] = None,
+        customer_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
