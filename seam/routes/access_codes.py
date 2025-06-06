@@ -201,6 +201,7 @@ class AccessCodes(AbstractAccessCodes):
         self,
         *,
         access_code_ids: Optional[List[str]] = None,
+        customer_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
@@ -210,6 +211,8 @@ class AccessCodes(AbstractAccessCodes):
 
         if access_code_ids is not None:
             json_payload["access_code_ids"] = access_code_ids
+        if customer_ids is not None:
+            json_payload["customer_ids"] = customer_ids
         if device_id is not None:
             json_payload["device_id"] = device_id
         if limit is not None:
