@@ -432,6 +432,7 @@ class ClientSession:
 
 @dataclass
 class ConnectWebview:
+    accepted_capabilities: List[str]
     accepted_devices: List[str]
     accepted_providers: List[str]
     any_device_allowed: bool
@@ -455,6 +456,7 @@ class ConnectWebview:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return ConnectWebview(
+            accepted_capabilities=d.get("accepted_capabilities", None),
             accepted_devices=d.get("accepted_devices", None),
             accepted_providers=d.get("accepted_providers", None),
             any_device_allowed=d.get("any_device_allowed", None),
@@ -795,23 +797,6 @@ class MagicLink:
 
 
 @dataclass
-class Network:
-    created_at: str
-    display_name: str
-    network_id: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Network(
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            network_id=d.get("network_id", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class NoiseThreshold:
     device_id: str
     ends_daily_at: str
@@ -903,6 +888,25 @@ class PhoneSession:
     def from_dict(d: Dict[str, Any]):
         return PhoneSession(
             provider_sessions=d.get("provider_sessions", None),
+        )
+
+
+@dataclass
+class Space:
+    created_at: str
+    display_name: str
+    name: str
+    space_id: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Space(
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            name=d.get("name", None),
+            space_id=d.get("space_id", None),
+            workspace_id=d.get("workspace_id", None),
         )
 
 
@@ -1313,6 +1317,61 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractAccessGrants(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        requested_access_methods: List[Dict[str, Any]],
+        user_identity_id: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None,
+        ends_at: Optional[str] = None,
+        location: Optional[Dict[str, Any]] = None,
+        location_ids: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_entrance_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        location_id: Optional[str] = None,
+        space_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
+class AbstractAccessMethods(abc.ABC):
+
+    @abc.abstractmethod
+    def delete(self, *, access_method_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, access_method_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+
 class AbstractAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
@@ -1546,7 +1605,8 @@ class AbstractAcsEntrances(abc.ABC):
         *,
         acs_credential_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        location_id: Optional[str] = None
+        location_id: Optional[str] = None,
+        space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         raise NotImplementedError()
 
@@ -1791,6 +1851,7 @@ class AbstractConnectWebviews(abc.ABC):
     def create(
         self,
         *,
+        accepted_capabilities: Optional[List[str]] = None,
         accepted_providers: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
@@ -1903,6 +1964,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedDevice]:
@@ -1975,6 +2037,7 @@ class AbstractLocks(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -2067,6 +2130,55 @@ class AbstractPhonesSimulate(abc.ABC):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
+        raise NotImplementedError()
+
+
+class AbstractSpaces(abc.ABC):
+
+    @abc.abstractmethod
+    def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        name: str,
+        acs_entrance_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None
+    ) -> Space:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, space_id: str) -> Space:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Space]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_acs_entrances(
+        self, *, acs_entrance_ids: List[str], space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(self, *, space_id: str, name: Optional[str] = None) -> Space:
         raise NotImplementedError()
 
 
@@ -2549,6 +2661,7 @@ class AbstractDevices(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -2603,6 +2716,7 @@ class AbstractNoiseSensors(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -2713,6 +2827,7 @@ class AbstractThermostats(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -2842,6 +2957,8 @@ class AbstractAcs(abc.ABC):
 @dataclass
 class AbstractRoutes(abc.ABC):
     access_codes: AbstractAccessCodes
+    access_grants: AbstractAccessGrants
+    access_methods: AbstractAccessMethods
     acs: AbstractAcs
     action_attempts: AbstractActionAttempts
     client_sessions: AbstractClientSessions
@@ -2852,6 +2969,7 @@ class AbstractRoutes(abc.ABC):
     locks: AbstractLocks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
+    spaces: AbstractSpaces
     thermostats: AbstractThermostats
     user_identities: AbstractUserIdentities
     webhooks: AbstractWebhooks
