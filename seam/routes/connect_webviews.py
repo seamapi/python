@@ -11,6 +11,7 @@ class ConnectWebviews(AbstractConnectWebviews):
     def create(
         self,
         *,
+        accepted_capabilities: Optional[List[str]] = None,
         accepted_providers: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
@@ -23,6 +24,8 @@ class ConnectWebviews(AbstractConnectWebviews):
     ) -> ConnectWebview:
         json_payload = {}
 
+        if accepted_capabilities is not None:
+            json_payload["accepted_capabilities"] = accepted_capabilities
         if accepted_providers is not None:
             json_payload["accepted_providers"] = accepted_providers
         if automatically_manage_new_devices is not None:

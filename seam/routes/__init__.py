@@ -2,6 +2,8 @@ from typing import Any, Dict
 from ..client import SeamHttpClient
 from .models import AbstractRoutes
 from .access_codes import AccessCodes
+from .access_grants import AccessGrants
+from .access_methods import AccessMethods
 from .acs import Acs
 from .action_attempts import ActionAttempts
 from .client_sessions import ClientSessions
@@ -12,6 +14,7 @@ from .events import Events
 from .locks import Locks
 from .noise_sensors import NoiseSensors
 from .phones import Phones
+from .spaces import Spaces
 from .thermostats import Thermostats
 from .user_identities import UserIdentities
 from .webhooks import Webhooks
@@ -21,6 +24,8 @@ from .workspaces import Workspaces
 class Routes(AbstractRoutes):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.access_codes = AccessCodes(client=client, defaults=defaults)
+        self.access_grants = AccessGrants(client=client, defaults=defaults)
+        self.access_methods = AccessMethods(client=client, defaults=defaults)
         self.acs = Acs(client=client, defaults=defaults)
         self.action_attempts = ActionAttempts(client=client, defaults=defaults)
         self.client_sessions = ClientSessions(client=client, defaults=defaults)
@@ -31,6 +36,7 @@ class Routes(AbstractRoutes):
         self.locks = Locks(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)
+        self.spaces = Spaces(client=client, defaults=defaults)
         self.thermostats = Thermostats(client=client, defaults=defaults)
         self.user_identities = UserIdentities(client=client, defaults=defaults)
         self.webhooks = Webhooks(client=client, defaults=defaults)

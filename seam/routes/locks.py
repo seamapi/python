@@ -41,6 +41,7 @@ class Locks(AbstractLocks):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
@@ -74,6 +75,8 @@ class Locks(AbstractLocks):
             json_payload["manufacturer"] = manufacturer
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if space_id is not None:
+            json_payload["space_id"] = space_id
         if unstable_location_id is not None:
             json_payload["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:

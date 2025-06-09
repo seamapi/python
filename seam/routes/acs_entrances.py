@@ -43,7 +43,8 @@ class AcsEntrances(AbstractAcsEntrances):
         *,
         acs_credential_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        location_id: Optional[str] = None
+        location_id: Optional[str] = None,
+        space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         json_payload = {}
 
@@ -53,6 +54,8 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_system_id"] = acs_system_id
         if location_id is not None:
             json_payload["location_id"] = location_id
+        if space_id is not None:
+            json_payload["space_id"] = space_id
 
         res = self.client.post("/acs/entrances/list", json=json_payload)
 
