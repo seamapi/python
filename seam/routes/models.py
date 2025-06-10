@@ -2893,13 +2893,13 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        manual_override_allowed: bool,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
+        manual_override_allowed: Optional[bool] = None,
         name: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
