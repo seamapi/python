@@ -63,6 +63,58 @@ class AccessCode:
 
 
 @dataclass
+class AccessGrant:
+    access_grant_id: str
+    access_method_ids: List[str]
+    created_at: str
+    display_name: str
+    location_ids: List[str]
+    requested_access_methods: List[Dict[str, Any]]
+    space_ids: List[str]
+    user_identity_id: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AccessGrant(
+            access_grant_id=d.get("access_grant_id", None),
+            access_method_ids=d.get("access_method_ids", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            location_ids=d.get("location_ids", None),
+            requested_access_methods=d.get("requested_access_methods", None),
+            space_ids=d.get("space_ids", None),
+            user_identity_id=d.get("user_identity_id", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class AccessMethod:
+    access_method_id: str
+    created_at: str
+    display_name: str
+    instant_key_url: str
+    is_card_encoding_required: bool
+    issued_at: str
+    mode: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return AccessMethod(
+            access_method_id=d.get("access_method_id", None),
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            instant_key_url=d.get("instant_key_url", None),
+            is_card_encoding_required=d.get("is_card_encoding_required", None),
+            issued_at=d.get("issued_at", None),
+            mode=d.get("mode", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class AcsAccessGroup:
     access_group_type: str
     access_group_type_display_name: str
@@ -1333,7 +1385,7 @@ class AbstractAccessGrants(abc.ABC):
         location_ids: Optional[List[str]] = None,
         space_ids: Optional[List[str]] = None,
         starts_at: Optional[str] = None
-    ) -> None:
+    ) -> AccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1341,7 +1393,7 @@ class AbstractAccessGrants(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, access_grant_id: str) -> None:
+    def get(self, *, access_grant_id: str) -> AccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1353,7 +1405,7 @@ class AbstractAccessGrants(abc.ABC):
         location_id: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
+    ) -> List[AccessGrant]:
         raise NotImplementedError()
 
 
@@ -1364,11 +1416,11 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, access_method_id: str) -> None:
+    def get(self, *, access_method_id: str) -> AccessMethod:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, access_grant_id: str) -> None:
+    def list(self, *, access_grant_id: str) -> List[AccessMethod]:
         raise NotImplementedError()
 
 
