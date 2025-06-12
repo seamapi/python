@@ -17,6 +17,7 @@ class ClientSessions(AbstractClientSessions):
         customer_key: Optional[str] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> ClientSession:
         json_payload = {}
@@ -33,6 +34,8 @@ class ClientSessions(AbstractClientSessions):
             json_payload["expires_at"] = expires_at
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
@@ -74,6 +77,7 @@ class ClientSessions(AbstractClientSessions):
         connected_account_ids: Optional[List[str]] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> ClientSession:
         json_payload = {}
@@ -86,6 +90,8 @@ class ClientSessions(AbstractClientSessions):
             json_payload["expires_at"] = expires_at
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
@@ -100,6 +106,7 @@ class ClientSessions(AbstractClientSessions):
         connect_webview_ids: Optional[List[str]] = None,
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> None:
         json_payload = {}
@@ -112,6 +119,8 @@ class ClientSessions(AbstractClientSessions):
             json_payload["connected_account_ids"] = connected_account_ids
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 

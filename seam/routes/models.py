@@ -462,6 +462,7 @@ class ClientSession:
     expires_at: str
     token: str
     user_identifier_key: str
+    user_identity_id: str
     user_identity_ids: List[str]
     workspace_id: str
 
@@ -477,6 +478,7 @@ class ClientSession:
             expires_at=d.get("expires_at", None),
             token=d.get("token", None),
             user_identifier_key=d.get("user_identifier_key", None),
+            user_identity_id=d.get("user_identity_id", None),
             user_identity_ids=d.get("user_identity_ids", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -1839,6 +1841,7 @@ class AbstractClientSessions(abc.ABC):
         customer_key: Optional[str] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> ClientSession:
         raise NotImplementedError()
@@ -1864,6 +1867,7 @@ class AbstractClientSessions(abc.ABC):
         connected_account_ids: Optional[List[str]] = None,
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> ClientSession:
         raise NotImplementedError()
@@ -1876,6 +1880,7 @@ class AbstractClientSessions(abc.ABC):
         connect_webview_ids: Optional[List[str]] = None,
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
     ) -> None:
         raise NotImplementedError()
