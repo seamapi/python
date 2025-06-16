@@ -1,6 +1,10 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractThermostatsDailyPrograms, ActionAttempt
+from .models import (
+    AbstractThermostatsDailyPrograms,
+    ThermostatDailyProgram,
+    ActionAttempt,
+)
 
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -12,7 +16,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
     def create(
         self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
-    ) -> None:
+    ) -> ThermostatDailyProgram:
         json_payload = {}
 
         if device_id is not None:
@@ -22,9 +26,9 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         if periods is not None:
             json_payload["periods"] = periods
 
-        self.client.post("/thermostats/daily_programs/create", json=json_payload)
+        res = self.client.post("/thermostats/daily_programs/create", json=json_payload)
 
-        return None
+        return ThermostatDailyProgram.from_dict(res["thermostat_daily_program"])
 
     def delete(self, *, thermostat_daily_program_id: str) -> None:
         json_payload = {}

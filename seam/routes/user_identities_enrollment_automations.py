@@ -40,7 +40,7 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
         acs_credential_pool_id: Optional[str] = None,
         create_credential_manager_user: Optional[bool] = None,
         credential_manager_acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> EnrollmentAutomation:
         json_payload = {}
 
         if credential_manager_acs_system_id is not None:
@@ -60,11 +60,11 @@ class UserIdentitiesEnrollmentAutomations(AbstractUserIdentitiesEnrollmentAutoma
                 credential_manager_acs_user_id
             )
 
-        self.client.post(
+        res = self.client.post(
             "/user_identities/enrollment_automations/launch", json=json_payload
         )
 
-        return None
+        return EnrollmentAutomation.from_dict(res["enrollment_automation"])
 
     def list(self, *, user_identity_id: str) -> List[EnrollmentAutomation]:
         json_payload = {}

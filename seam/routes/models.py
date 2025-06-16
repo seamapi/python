@@ -452,6 +452,70 @@ class ActionAttempt:
 
 
 @dataclass
+class BridgeClientSession:
+    bridge_client_machine_identifier_key: str
+    bridge_client_name: str
+    bridge_client_session_id: str
+    bridge_client_session_token: str
+    bridge_client_time_zone: str
+    created_at: str
+    errors: List[Dict[str, Any]]
+    pairing_code: str
+    pairing_code_expires_at: str
+    tailscale_auth_key: str
+    tailscale_hostname: str
+    telemetry_token: str
+    telemetry_token_expires_at: str
+    telemetry_url: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return BridgeClientSession(
+            bridge_client_machine_identifier_key=d.get(
+                "bridge_client_machine_identifier_key", None
+            ),
+            bridge_client_name=d.get("bridge_client_name", None),
+            bridge_client_session_id=d.get("bridge_client_session_id", None),
+            bridge_client_session_token=d.get("bridge_client_session_token", None),
+            bridge_client_time_zone=d.get("bridge_client_time_zone", None),
+            created_at=d.get("created_at", None),
+            errors=d.get("errors", None),
+            pairing_code=d.get("pairing_code", None),
+            pairing_code_expires_at=d.get("pairing_code_expires_at", None),
+            tailscale_auth_key=d.get("tailscale_auth_key", None),
+            tailscale_hostname=d.get("tailscale_hostname", None),
+            telemetry_token=d.get("telemetry_token", None),
+            telemetry_token_expires_at=d.get("telemetry_token_expires_at", None),
+            telemetry_url=d.get("telemetry_url", None),
+        )
+
+
+@dataclass
+class BridgeConnectedSystems:
+    acs_system_display_name: str
+    acs_system_id: str
+    bridge_created_at: str
+    bridge_id: str
+    connected_account_created_at: str
+    connected_account_id: str
+    workspace_display_name: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return BridgeConnectedSystems(
+            acs_system_display_name=d.get("acs_system_display_name", None),
+            acs_system_id=d.get("acs_system_id", None),
+            bridge_created_at=d.get("bridge_created_at", None),
+            bridge_id=d.get("bridge_id", None),
+            connected_account_created_at=d.get("connected_account_created_at", None),
+            connected_account_id=d.get("connected_account_id", None),
+            workspace_display_name=d.get("workspace_display_name", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class ClientSession:
     client_session_id: str
     connect_webview_ids: List[str]
@@ -830,6 +894,29 @@ class InstantKey:
 
 
 @dataclass
+class Location:
+    created_at: str
+    display_name: str
+    geolocation: Dict[str, Any]
+    location_id: str
+    name: str
+    time_zone: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Location(
+            created_at=d.get("created_at", None),
+            display_name=d.get("display_name", None),
+            geolocation=DeepAttrDict(d.get("geolocation", None)),
+            location_id=d.get("location_id", None),
+            name=d.get("name", None),
+            time_zone=d.get("time_zone", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class MagicLink:
     building_block_type: str
     created_at: str
@@ -885,6 +972,39 @@ class Pagination:
             has_next_page=d.get("has_next_page", None),
             next_page_cursor=d.get("next_page_cursor", None),
             next_page_url=d.get("next_page_url", None),
+        )
+
+
+@dataclass
+class PartnerResource:
+    custom_metadata: Dict[str, Any]
+    customer_key: str
+    description: str
+    email_address: str
+    ends_at: str
+    location_keys: List[str]
+    name: str
+    partner_resource_key: str
+    partner_resource_type: str
+    phone_number: str
+    starts_at: str
+    user_identity_key: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return PartnerResource(
+            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
+            customer_key=d.get("customer_key", None),
+            description=d.get("description", None),
+            email_address=d.get("email_address", None),
+            ends_at=d.get("ends_at", None),
+            location_keys=d.get("location_keys", None),
+            name=d.get("name", None),
+            partner_resource_key=d.get("partner_resource_key", None),
+            partner_resource_type=d.get("partner_resource_type", None),
+            phone_number=d.get("phone_number", None),
+            starts_at=d.get("starts_at", None),
+            user_identity_key=d.get("user_identity_key", None),
         )
 
 
@@ -960,6 +1080,27 @@ class Space:
             display_name=d.get("display_name", None),
             name=d.get("name", None),
             space_id=d.get("space_id", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class ThermostatDailyProgram:
+    created_at: str
+    device_id: str
+    name: str
+    periods: List[Dict[str, Any]]
+    thermostat_daily_program_id: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return ThermostatDailyProgram(
+            created_at=d.get("created_at", None),
+            device_id=d.get("device_id", None),
+            name=d.get("name", None),
+            periods=d.get("periods", None),
+            thermostat_daily_program_id=d.get("thermostat_daily_program_id", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1253,10 +1394,12 @@ class UserIdentity:
     created_at: str
     display_name: str
     email_address: str
+    errors: List[Dict[str, Any]]
     full_name: str
     phone_number: str
     user_identity_id: str
     user_identity_key: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -1265,10 +1408,12 @@ class UserIdentity:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             email_address=d.get("email_address", None),
+            errors=d.get("errors", None),
             full_name=d.get("full_name", None),
             phone_number=d.get("phone_number", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_key=d.get("user_identity_key", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1657,6 +1802,8 @@ class AbstractAcsEntrances(abc.ABC):
     def list(
         self,
         *,
+        access_grant_id: Optional[str] = None,
+        access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -2244,7 +2391,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
     @abc.abstractmethod
     def create(
         self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
-    ) -> None:
+    ) -> ThermostatDailyProgram:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2353,7 +2500,7 @@ class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
         acs_credential_pool_id: Optional[str] = None,
         create_credential_manager_user: Optional[bool] = None,
         credential_manager_acs_user_id: Optional[str] = None
-    ) -> None:
+    ) -> EnrollmentAutomation:
         raise NotImplementedError()
 
     @abc.abstractmethod
