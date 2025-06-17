@@ -607,6 +607,7 @@ class ConnectedAccount:
     connected_account_id: str
     created_at: str
     custom_metadata: Dict[str, Any]
+    customer_key: str
     errors: List[Dict[str, Any]]
     user_identifier: Dict[str, Any]
     warnings: List[Dict[str, Any]]
@@ -622,6 +623,7 @@ class ConnectedAccount:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
+            customer_key=d.get("customer_key", None),
             errors=d.get("errors", None),
             user_identifier=DeepAttrDict(d.get("user_identifier", None)),
             warnings=d.get("warnings", None),
@@ -2083,6 +2085,7 @@ class AbstractConnectWebviews(abc.ABC):
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         raise NotImplementedError()
