@@ -294,6 +294,7 @@ class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
     assa_abloy_vostio_metadata: Dict[str, Any]
+    connected_account_id: str
     created_at: str
     display_name: str
     dormakaba_community_metadata: Dict[str, Any]
@@ -311,6 +312,7 @@ class AcsEntrance:
             assa_abloy_vostio_metadata=DeepAttrDict(
                 d.get("assa_abloy_vostio_metadata", None)
             ),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             dormakaba_community_metadata=DeepAttrDict(
