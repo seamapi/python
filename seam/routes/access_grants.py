@@ -94,3 +94,23 @@ class AccessGrants(AbstractAccessGrants):
         res = self.client.post("/access_grants/list", json=json_payload)
 
         return [AccessGrant.from_dict(item) for item in res["access_grants"]]
+
+    def update(
+        self,
+        *,
+        access_grant_id: str,
+        ends_at: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        json_payload = {}
+
+        if access_grant_id is not None:
+            json_payload["access_grant_id"] = access_grant_id
+        if ends_at is not None:
+            json_payload["ends_at"] = ends_at
+        if starts_at is not None:
+            json_payload["starts_at"] = starts_at
+
+        self.client.post("/access_grants/update", json=json_payload)
+
+        return None

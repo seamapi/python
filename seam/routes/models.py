@@ -68,9 +68,11 @@ class AccessGrant:
     access_method_ids: List[str]
     created_at: str
     display_name: str
+    ends_at: str
     location_ids: List[str]
     requested_access_methods: List[Dict[str, Any]]
     space_ids: List[str]
+    starts_at: str
     user_identity_id: str
     workspace_id: str
 
@@ -81,9 +83,11 @@ class AccessGrant:
             access_method_ids=d.get("access_method_ids", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            ends_at=d.get("ends_at", None),
             location_ids=d.get("location_ids", None),
             requested_access_methods=d.get("requested_access_methods", None),
             space_ids=d.get("space_ids", None),
+            starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -1557,6 +1561,16 @@ class AbstractAccessGrants(abc.ABC):
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AccessGrant]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_grant_id: str,
+        ends_at: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
