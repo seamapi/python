@@ -9,6 +9,7 @@ from .action_attempts import ActionAttempts
 from .client_sessions import ClientSessions
 from .connect_webviews import ConnectWebviews
 from .connected_accounts import ConnectedAccounts
+from .customers import Customers
 from .devices import Devices
 from .events import Events
 from .locks import Locks
@@ -31,6 +32,7 @@ class Routes(AbstractRoutes):
         self.client_sessions = ClientSessions(client=client, defaults=defaults)
         self.connect_webviews = ConnectWebviews(client=client, defaults=defaults)
         self.connected_accounts = ConnectedAccounts(client=client, defaults=defaults)
+        self.customers = Customers(client=client, defaults=defaults)
         self.devices = Devices(client=client, defaults=defaults)
         self.events = Events(client=client, defaults=defaults)
         self.locks = Locks(client=client, defaults=defaults)
