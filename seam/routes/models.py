@@ -984,39 +984,6 @@ class Pagination:
 
 
 @dataclass
-class PartnerResource:
-    custom_metadata: Dict[str, Any]
-    customer_key: str
-    description: str
-    email_address: str
-    ends_at: str
-    location_keys: List[str]
-    name: str
-    partner_resource_key: str
-    partner_resource_type: str
-    phone_number: str
-    starts_at: str
-    user_identity_key: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return PartnerResource(
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
-            customer_key=d.get("customer_key", None),
-            description=d.get("description", None),
-            email_address=d.get("email_address", None),
-            ends_at=d.get("ends_at", None),
-            location_keys=d.get("location_keys", None),
-            name=d.get("name", None),
-            partner_resource_key=d.get("partner_resource_key", None),
-            partner_resource_type=d.get("partner_resource_type", None),
-            phone_number=d.get("phone_number", None),
-            starts_at=d.get("starts_at", None),
-            user_identity_key=d.get("user_identity_key", None),
-        )
-
-
-@dataclass
 class Phone:
     created_at: str
     custom_metadata: Dict[str, Any]
@@ -2146,6 +2113,42 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractCustomers(abc.ABC):
+
+    @abc.abstractmethod
+    def create_portal(
+        self,
+        *,
+        features: Optional[Dict[str, Any]] = None,
+        customer_data: Optional[Dict[str, Any]] = None
+    ) -> MagicLink:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
 class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
@@ -3187,6 +3190,7 @@ class AbstractRoutes(abc.ABC):
     client_sessions: AbstractClientSessions
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
+    customers: AbstractCustomers
     devices: AbstractDevices
     events: AbstractEvents
     locks: AbstractLocks
