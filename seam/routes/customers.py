@@ -12,12 +12,15 @@ class Customers(AbstractCustomers):
         self,
         *,
         features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         json_payload = {}
 
         if features is not None:
             json_payload["features"] = features
+        if is_embedded is not None:
+            json_payload["is_embedded"] = is_embedded
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 
@@ -37,6 +40,7 @@ class Customers(AbstractCustomers):
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
         residents: Optional[List[Dict[str, Any]]] = None,
         rooms: Optional[List[Dict[str, Any]]] = None,
@@ -66,6 +70,8 @@ class Customers(AbstractCustomers):
             json_payload["listings"] = listings
         if properties is not None:
             json_payload["properties"] = properties
+        if property_listings is not None:
+            json_payload["property_listings"] = property_listings
         if reservations is not None:
             json_payload["reservations"] = reservations
         if residents is not None:
