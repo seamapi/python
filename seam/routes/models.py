@@ -2120,6 +2120,7 @@ class AbstractCustomers(abc.ABC):
         self,
         *,
         features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         raise NotImplementedError()
@@ -2137,6 +2138,7 @@ class AbstractCustomers(abc.ABC):
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
         residents: Optional[List[Dict[str, Any]]] = None,
         rooms: Optional[List[Dict[str, Any]]] = None,
