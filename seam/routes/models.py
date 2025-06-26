@@ -607,6 +607,7 @@ class ConnectWebview:
 
 @dataclass
 class ConnectedAccount:
+    accepted_capabilities: List[str]
     account_type: str
     account_type_display_name: str
     automatically_manage_new_devices: bool
@@ -621,6 +622,7 @@ class ConnectedAccount:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return ConnectedAccount(
+            accepted_capabilities=d.get("accepted_capabilities", None),
             account_type=d.get("account_type", None),
             account_type_display_name=d.get("account_type_display_name", None),
             automatically_manage_new_devices=d.get(
