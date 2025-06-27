@@ -117,7 +117,10 @@ class UserIdentities(AbstractUserIdentities):
         return None
 
     def list(
-        self, *, credential_manager_acs_system_id: Optional[str] = None
+        self,
+        *,
+        credential_manager_acs_system_id: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[UserIdentity]:
         json_payload = {}
 
@@ -125,6 +128,8 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if search is not None:
+            json_payload["search"] = search
 
         res = self.client.post("/user_identities/list", json=json_payload)
 

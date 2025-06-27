@@ -165,6 +165,7 @@ class AcsCredential:
     assa_abloy_vostio_metadata: Dict[str, Any]
     card_number: str
     code: str
+    connected_account_id: str
     created_at: str
     display_name: str
     ends_at: str
@@ -197,6 +198,7 @@ class AcsCredential:
             ),
             card_number=d.get("card_number", None),
             code=d.get("code", None),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
@@ -298,6 +300,9 @@ class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
     assa_abloy_vostio_metadata: Dict[str, Any]
+    can_unlock_with_card: bool
+    can_unlock_with_code: bool
+    can_unlock_with_mobile_key: bool
     connected_account_id: str
     created_at: str
     display_name: str
@@ -316,6 +321,9 @@ class AcsEntrance:
             assa_abloy_vostio_metadata=DeepAttrDict(
                 d.get("assa_abloy_vostio_metadata", None)
             ),
+            can_unlock_with_card=d.get("can_unlock_with_card", None),
+            can_unlock_with_code=d.get("can_unlock_with_code", None),
+            can_unlock_with_mobile_key=d.get("can_unlock_with_mobile_key", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
@@ -1193,6 +1201,7 @@ class UnmanagedAcsCredential:
     assa_abloy_vostio_metadata: Dict[str, Any]
     card_number: str
     code: str
+    connected_account_id: str
     created_at: str
     display_name: str
     ends_at: str
@@ -1225,6 +1234,7 @@ class UnmanagedAcsCredential:
             ),
             card_number=d.get("card_number", None),
             code=d.get("code", None),
+            connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
@@ -2194,6 +2204,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -2267,6 +2278,7 @@ class AbstractLocks(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -2669,7 +2681,10 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def list(
-        self, *, credential_manager_acs_system_id: Optional[str] = None
+        self,
+        *,
+        credential_manager_acs_system_id: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[UserIdentity]:
         raise NotImplementedError()
 
@@ -2891,6 +2906,7 @@ class AbstractDevices(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -2946,6 +2962,7 @@ class AbstractNoiseSensors(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -3057,6 +3074,7 @@ class AbstractThermostats(abc.ABC):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None

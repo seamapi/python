@@ -39,6 +39,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -73,6 +74,8 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["manufacturer"] = manufacturer
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if search is not None:
+            json_payload["search"] = search
         if space_id is not None:
             json_payload["space_id"] = space_id
         if unstable_location_id is not None:
