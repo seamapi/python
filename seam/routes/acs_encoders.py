@@ -10,47 +10,22 @@ class AcsEncoders(AbstractAcsEncoders):
         self.client = client
         self.defaults = defaults
 
-    def encode_access_method(
-        self,
-        *,
-        access_method_id: str,
-        acs_encoder_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        json_payload = {}
-
-        if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
-        if acs_encoder_id is not None:
-            json_payload["acs_encoder_id"] = acs_encoder_id
-
-        res = self.client.post("/acs/encoders/encode_access_method", json=json_payload)
-
-        wait_for_action_attempt = (
-            self.defaults.get("wait_for_action_attempt")
-            if wait_for_action_attempt is None
-            else wait_for_action_attempt
-        )
-
-        return resolve_action_attempt(
-            client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
-            wait_for_action_attempt=wait_for_action_attempt,
-        )
-
     def encode_credential(
         self,
         *,
-        acs_credential_id: str,
         acs_encoder_id: str,
+        access_method_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
-        if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
+        if access_method_id is not None:
+            json_payload["access_method_id"] = access_method_id
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
 
         res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
 
