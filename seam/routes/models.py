@@ -69,6 +69,7 @@ class AccessGrant:
     created_at: str
     display_name: str
     ends_at: str
+    instant_key_url: str
     location_ids: List[str]
     requested_access_methods: List[Dict[str, Any]]
     space_ids: List[str]
@@ -84,6 +85,7 @@ class AccessGrant:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
+            instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
             requested_access_methods=d.get("requested_access_methods", None),
             space_ids=d.get("space_ids", None),
@@ -99,7 +101,7 @@ class AccessMethod:
     created_at: str
     display_name: str
     instant_key_url: str
-    is_card_encoding_required: bool
+    is_encoding_required: bool
     issued_at: str
     mode: str
     workspace_id: str
@@ -111,7 +113,7 @@ class AccessMethod:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             instant_key_url=d.get("instant_key_url", None),
-            is_card_encoding_required=d.get("is_card_encoding_required", None),
+            is_encoding_required=d.get("is_encoding_required", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
             workspace_id=d.get("workspace_id", None),
@@ -659,6 +661,7 @@ class Device:
     can_simulate_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
+    can_unlock_with_code: bool
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
@@ -692,6 +695,7 @@ class Device:
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
+            can_unlock_with_code=d.get("can_unlock_with_code", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
@@ -722,6 +726,7 @@ class DeviceProvider:
     can_simulate_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
+    can_unlock_with_code: bool
     device_provider_name: str
     display_name: str
     image_url: str
@@ -745,6 +750,7 @@ class DeviceProvider:
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
+            can_unlock_with_code=d.get("can_unlock_with_code", None),
             device_provider_name=d.get("device_provider_name", None),
             display_name=d.get("display_name", None),
             image_url=d.get("image_url", None),
@@ -1332,6 +1338,7 @@ class UnmanagedDevice:
     can_simulate_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
+    can_unlock_with_code: bool
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
@@ -1362,6 +1369,7 @@ class UnmanagedDevice:
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
+            can_unlock_with_code=d.get("can_unlock_with_code", None),
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
@@ -1560,6 +1568,16 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def encode(
+        self,
+        *,
+        access_method_id: str,
+        acs_encoder_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def get(self, *, access_method_id: str) -> AccessMethod:
         raise NotImplementedError()
 
@@ -1696,21 +1714,12 @@ class AbstractAcsCredentials(abc.ABC):
 class AbstractAcsEncoders(abc.ABC):
 
     @abc.abstractmethod
-    def encode_access_method(
-        self,
-        *,
-        access_method_id: str,
-        acs_encoder_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def encode_credential(
         self,
         *,
-        acs_credential_id: str,
         acs_encoder_id: str,
+        access_method_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -2106,6 +2115,7 @@ class AbstractConnectedAccounts(abc.ABC):
         customer_ids: Optional[List[str]] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
