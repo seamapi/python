@@ -183,6 +183,7 @@ class AcsCredential:
     latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
     starts_at: str
+    user_identity_id: str
     visionline_metadata: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -222,6 +223,7 @@ class AcsCredential:
             ),
             parent_acs_credential_id=d.get("parent_acs_credential_id", None),
             starts_at=d.get("starts_at", None),
+            user_identity_id=d.get("user_identity_id", None),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
@@ -1223,6 +1225,7 @@ class UnmanagedAcsCredential:
     latest_desired_state_synced_with_provider_at: str
     parent_acs_credential_id: str
     starts_at: str
+    user_identity_id: str
     visionline_metadata: Dict[str, Any]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -1262,6 +1265,7 @@ class UnmanagedAcsCredential:
             ),
             parent_acs_credential_id=d.get("parent_acs_credential_id", None),
             starts_at=d.get("starts_at", None),
+            user_identity_id=d.get("user_identity_id", None),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
@@ -3025,6 +3029,7 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
+        climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
@@ -3151,6 +3156,7 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
+        climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,

@@ -98,6 +98,7 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
+        climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
@@ -113,6 +114,8 @@ class Thermostats(AbstractThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if climate_preset_mode is not None:
+            json_payload["climate_preset_mode"] = climate_preset_mode
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
@@ -432,6 +435,7 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
+        climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         fan_mode_setting: Optional[str] = None,
@@ -447,6 +451,8 @@ class Thermostats(AbstractThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if climate_preset_mode is not None:
+            json_payload["climate_preset_mode"] = climate_preset_mode
         if cooling_set_point_celsius is not None:
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
