@@ -1816,6 +1816,7 @@ class AbstractAcsEntrances(abc.ABC):
         access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
         location_id: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
