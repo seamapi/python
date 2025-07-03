@@ -101,6 +101,7 @@ class Thermostats(AbstractThermostats):
         climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
+        ecobee_metadata: Optional[Dict[str, Any]] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
@@ -120,6 +121,8 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if ecobee_metadata is not None:
+            json_payload["ecobee_metadata"] = ecobee_metadata
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
         if heating_set_point_celsius is not None:
@@ -438,6 +441,7 @@ class Thermostats(AbstractThermostats):
         climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
+        ecobee_metadata: Optional[Dict[str, Any]] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
@@ -457,6 +461,8 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+        if ecobee_metadata is not None:
+            json_payload["ecobee_metadata"] = ecobee_metadata
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
         if heating_set_point_celsius is not None:

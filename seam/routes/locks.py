@@ -1,7 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractLocks, Device, ActionAttempt
-
+from .locks_simulate import LocksSimulate
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -9,6 +9,11 @@ class Locks(AbstractLocks):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._simulate = LocksSimulate(client=client, defaults=defaults)
+
+    @property
+    def simulate(self) -> LocksSimulate:
+        return self._simulate
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
