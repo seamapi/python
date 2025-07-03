@@ -2267,55 +2267,23 @@ class AbstractEvents(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractLocks(abc.ABC):
+class AbstractLocksSimulate(abc.ABC):
 
     @abc.abstractmethod
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
+    def keypad_code_entry(
         self,
         *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
-    ) -> List[Device]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def lock_door(
-        self,
-        *,
+        code: str,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def unlock_door(
+    def manual_lock_via_keypad(
         self,
         *,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -2619,6 +2587,65 @@ class AbstractWorkspaces(abc.ABC):
     @abc.abstractmethod
     def reset_sandbox(
         self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
+class AbstractLocks(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractLocksSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None,
+        include_if: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def lock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
 
@@ -3033,6 +3060,7 @@ class AbstractThermostats(abc.ABC):
         climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
+        ecobee_metadata: Optional[Dict[str, Any]] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
@@ -3160,6 +3188,7 @@ class AbstractThermostats(abc.ABC):
         climate_preset_mode: Optional[str] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
+        ecobee_metadata: Optional[Dict[str, Any]] = None,
         fan_mode_setting: Optional[str] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
