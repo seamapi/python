@@ -18,6 +18,16 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    def connect_to_hub(self, *, device_id: str) -> None:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        self.client.post("/devices/simulate/connect_to_hub", json=json_payload)
+
+        return None
+
     def disconnect(self, *, device_id: str) -> None:
         json_payload = {}
 
@@ -25,6 +35,16 @@ class DevicesSimulate(AbstractDevicesSimulate):
             json_payload["device_id"] = device_id
 
         self.client.post("/devices/simulate/disconnect", json=json_payload)
+
+        return None
+
+    def disconnect_from_hub(self, *, device_id: str) -> None:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+
+        self.client.post("/devices/simulate/disconnect_from_hub", json=json_payload)
 
         return None
 

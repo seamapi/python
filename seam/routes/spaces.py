@@ -72,6 +72,26 @@ class Spaces(AbstractSpaces):
 
         return Space.from_dict(res["space"])
 
+    def get_related(
+        self,
+        *,
+        space_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
+        json_payload = {}
+
+        if space_ids is not None:
+            json_payload["space_ids"] = space_ids
+        if exclude is not None:
+            json_payload["exclude"] = exclude
+        if include is not None:
+            json_payload["include"] = include
+
+        self.client.post("/spaces/get_related", json=json_payload)
+
+        return None
+
     def list(
         self,
     ) -> List[Space]:

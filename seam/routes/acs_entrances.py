@@ -44,6 +44,7 @@ class AcsEntrances(AbstractAcsEntrances):
         access_grant_id: Optional[str] = None,
         access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -57,6 +58,8 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
+        if acs_entrance_ids is not None:
+            json_payload["acs_entrance_ids"] = acs_entrance_ids
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
         if connected_account_id is not None:
