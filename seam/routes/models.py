@@ -784,8 +784,10 @@ class EnrollmentAutomation:
 @dataclass
 class SeamEvent:
     access_code_id: str
+    connected_account_custom_metadata: Dict[str, Any]
     connected_account_id: str
     created_at: str
+    device_custom_metadata: Dict[str, Any]
     device_id: str
     event_id: str
     event_type: str
@@ -840,8 +842,12 @@ class SeamEvent:
     def from_dict(d: Dict[str, Any]):
         return SeamEvent(
             access_code_id=d.get("access_code_id", None),
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -1390,6 +1396,7 @@ class UnmanagedDevice:
 
 @dataclass
 class UserIdentity:
+    acs_user_ids: List[str]
     created_at: str
     display_name: str
     email_address: str
@@ -1404,6 +1411,7 @@ class UserIdentity:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return UserIdentity(
+            acs_user_ids=d.get("acs_user_ids", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             email_address=d.get("email_address", None),
@@ -1815,6 +1823,7 @@ class AbstractAcsEntrances(abc.ABC):
         access_grant_id: Optional[str] = None,
         access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -2185,7 +2194,15 @@ class AbstractDevicesSimulate(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def connect_to_hub(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def disconnect(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def disconnect_from_hub(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2384,6 +2401,16 @@ class AbstractSpaces(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, space_id: str) -> Space:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        space_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
