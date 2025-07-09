@@ -92,10 +92,11 @@ class Spaces(AbstractSpaces):
 
         return None
 
-    def list(
-        self,
-    ) -> List[Space]:
+    def list(self, *, search: Optional[str] = None) -> List[Space]:
         json_payload = {}
+
+        if search is not None:
+            json_payload["search"] = search
 
         res = self.client.post("/spaces/list", json=json_payload)
 
