@@ -48,6 +48,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         location_id: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         json_payload = {}
@@ -66,6 +67,8 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["connected_account_id"] = connected_account_id
         if location_id is not None:
             json_payload["location_id"] = location_id
+        if search is not None:
+            json_payload["search"] = search
         if space_id is not None:
             json_payload["space_id"] = space_id
 

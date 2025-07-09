@@ -98,6 +98,7 @@ class AccessGrant:
 @dataclass
 class AccessMethod:
     access_method_id: str
+    code: str
     created_at: str
     display_name: str
     instant_key_url: str
@@ -110,6 +111,7 @@ class AccessMethod:
     def from_dict(d: Dict[str, Any]):
         return AccessMethod(
             access_method_id=d.get("access_method_id", None),
+            code=d.get("code", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             instant_key_url=d.get("instant_key_url", None),
@@ -1827,6 +1829,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         location_id: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
         raise NotImplementedError()
@@ -2414,9 +2417,7 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Space]:
+    def list(self, *, search: Optional[str] = None) -> List[Space]:
         raise NotImplementedError()
 
     @abc.abstractmethod
