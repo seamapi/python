@@ -1068,7 +1068,9 @@ class PhoneSession:
 
 @dataclass
 class Space:
+    acs_entrance_count: float
     created_at: str
+    device_count: float
     display_name: str
     name: str
     space_id: str
@@ -1077,7 +1079,9 @@ class Space:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Space(
+            acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),
+            device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
             name=d.get("name", None),
             space_id=d.get("space_id", None),
@@ -1596,7 +1600,14 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, access_grant_id: str) -> List[AccessMethod]:
+    def list(
+        self,
+        *,
+        access_grant_id: str,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        space_id: Optional[str] = None
+    ) -> List[AccessMethod]:
         raise NotImplementedError()
 
 
@@ -2225,6 +2236,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
     def list(
         self,
         *,
+        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -2636,6 +2648,7 @@ class AbstractLocks(abc.ABC):
     def list(
         self,
         *,
+        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -2962,6 +2975,7 @@ class AbstractDevices(abc.ABC):
     def list(
         self,
         *,
+        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -3018,6 +3032,7 @@ class AbstractNoiseSensors(abc.ABC):
     def list(
         self,
         *,
+        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -3132,6 +3147,7 @@ class AbstractThermostats(abc.ABC):
     def list(
         self,
         *,
+        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
