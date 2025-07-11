@@ -14,6 +14,7 @@ class AccessGrants(AbstractAccessGrants):
         requested_access_methods: List[Dict[str, Any]],
         user_identity_id: Optional[str] = None,
         user_identity: Optional[Dict[str, Any]] = None,
+        access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[str] = None,
@@ -30,6 +31,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity is not None:
             json_payload["user_identity"] = user_identity
+        if access_grant_key is not None:
+            json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_ids is not None:
             json_payload["acs_entrance_ids"] = acs_entrance_ids
         if device_ids is not None:
@@ -59,11 +62,18 @@ class AccessGrants(AbstractAccessGrants):
 
         return None
 
-    def get(self, *, access_grant_id: str) -> AccessGrant:
+    def get(
+        self,
+        *,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None
+    ) -> AccessGrant:
         json_payload = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
+        if access_grant_key is not None:
+            json_payload["access_grant_key"] = access_grant_key
 
         res = self.client.post("/access_grants/get", json=json_payload)
 
@@ -72,6 +82,7 @@ class AccessGrants(AbstractAccessGrants):
     def list(
         self,
         *,
+        access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -80,6 +91,8 @@ class AccessGrants(AbstractAccessGrants):
     ) -> List[AccessGrant]:
         json_payload = {}
 
+        if access_grant_key is not None:
+            json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:

@@ -65,6 +65,7 @@ class AccessCode:
 @dataclass
 class AccessGrant:
     access_grant_id: str
+    access_grant_key: str
     access_method_ids: List[str]
     created_at: str
     display_name: str
@@ -81,6 +82,7 @@ class AccessGrant:
     def from_dict(d: Dict[str, Any]):
         return AccessGrant(
             access_grant_id=d.get("access_grant_id", None),
+            access_grant_key=d.get("access_grant_key", None),
             access_method_ids=d.get("access_method_ids", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
@@ -583,6 +585,7 @@ class ConnectWebview:
     custom_metadata: Dict[str, Any]
     custom_redirect_failure_url: str
     custom_redirect_url: str
+    customer_key: str
     device_selection_mode: str
     login_successful: bool
     selected_provider: str
@@ -609,6 +612,7 @@ class ConnectWebview:
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             custom_redirect_failure_url=d.get("custom_redirect_failure_url", None),
             custom_redirect_url=d.get("custom_redirect_url", None),
+            customer_key=d.get("customer_key", None),
             device_selection_mode=d.get("device_selection_mode", None),
             login_successful=d.get("login_successful", None),
             selected_provider=d.get("selected_provider", None),
@@ -1074,6 +1078,7 @@ class Space:
     display_name: str
     name: str
     space_id: str
+    space_key: str
     workspace_id: str
 
     @staticmethod
@@ -1085,6 +1090,7 @@ class Space:
             display_name=d.get("display_name", None),
             name=d.get("name", None),
             space_id=d.get("space_id", None),
+            space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1538,6 +1544,7 @@ class AbstractAccessGrants(abc.ABC):
         requested_access_methods: List[Dict[str, Any]],
         user_identity_id: Optional[str] = None,
         user_identity: Optional[Dict[str, Any]] = None,
+        access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[str] = None,
@@ -1553,13 +1560,19 @@ class AbstractAccessGrants(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, access_grant_id: str) -> AccessGrant:
+    def get(
+        self,
+        *,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None
+    ) -> AccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self,
         *,
+        access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -2095,7 +2108,7 @@ class AbstractConnectWebviews(abc.ABC):
         custom_metadata: Optional[Dict[str, Any]] = None,
         custom_redirect_failure_url: Optional[str] = None,
         custom_redirect_url: Optional[str] = None,
-        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         device_selection_mode: Optional[str] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
@@ -2115,7 +2128,6 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -2406,7 +2418,8 @@ class AbstractSpaces(abc.ABC):
         *,
         name: str,
         acs_entrance_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None
+        device_ids: Optional[List[str]] = None,
+        space_key: Optional[str] = None
     ) -> Space:
         raise NotImplementedError()
 
@@ -2415,7 +2428,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, space_id: str) -> Space:
+    def get(
+        self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
+    ) -> Space:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2429,7 +2444,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, search: Optional[str] = None) -> List[Space]:
+    def list(
+        self, *, search: Optional[str] = None, space_key: Optional[str] = None
+    ) -> List[Space]:
         raise NotImplementedError()
 
     @abc.abstractmethod
