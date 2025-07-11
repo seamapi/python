@@ -37,7 +37,8 @@ class Spaces(AbstractSpaces):
         *,
         name: str,
         acs_entrance_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None
+        device_ids: Optional[List[str]] = None,
+        space_key: Optional[str] = None
     ) -> Space:
         json_payload = {}
 
@@ -47,6 +48,8 @@ class Spaces(AbstractSpaces):
             json_payload["acs_entrance_ids"] = acs_entrance_ids
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
+        if space_key is not None:
+            json_payload["space_key"] = space_key
 
         res = self.client.post("/spaces/create", json=json_payload)
 
@@ -62,11 +65,15 @@ class Spaces(AbstractSpaces):
 
         return None
 
-    def get(self, *, space_id: str) -> Space:
+    def get(
+        self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
+    ) -> Space:
         json_payload = {}
 
         if space_id is not None:
             json_payload["space_id"] = space_id
+        if space_key is not None:
+            json_payload["space_key"] = space_key
 
         res = self.client.post("/spaces/get", json=json_payload)
 
@@ -92,11 +99,15 @@ class Spaces(AbstractSpaces):
 
         return None
 
-    def list(self, *, search: Optional[str] = None) -> List[Space]:
+    def list(
+        self, *, search: Optional[str] = None, space_key: Optional[str] = None
+    ) -> List[Space]:
         json_payload = {}
 
         if search is not None:
             json_payload["search"] = search
+        if space_key is not None:
+            json_payload["space_key"] = space_key
 
         res = self.client.post("/spaces/list", json=json_payload)
 
