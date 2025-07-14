@@ -67,6 +67,7 @@ class AccessGrant:
     access_grant_id: str
     access_grant_key: str
     access_method_ids: List[str]
+    client_session_token: str
     created_at: str
     display_name: str
     ends_at: str
@@ -84,6 +85,7 @@ class AccessGrant:
             access_grant_id=d.get("access_grant_id", None),
             access_grant_key=d.get("access_grant_key", None),
             access_method_ids=d.get("access_method_ids", None),
+            client_session_token=d.get("client_session_token", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
@@ -100,6 +102,7 @@ class AccessGrant:
 @dataclass
 class AccessMethod:
     access_method_id: str
+    client_session_token: str
     code: str
     created_at: str
     display_name: str
@@ -113,6 +116,7 @@ class AccessMethod:
     def from_dict(d: Dict[str, Any]):
         return AccessMethod(
             access_method_id=d.get("access_method_id", None),
+            client_session_token=d.get("client_session_token", None),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
@@ -2152,7 +2156,7 @@ class AbstractConnectedAccounts(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
@@ -2169,6 +2173,7 @@ class AbstractConnectedAccounts(abc.ABC):
         self,
         *,
         connected_account_id: str,
+        accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None
     ) -> None:
@@ -2445,7 +2450,11 @@ class AbstractSpaces(abc.ABC):
 
     @abc.abstractmethod
     def list(
-        self, *, search: Optional[str] = None, space_key: Optional[str] = None
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        search: Optional[str] = None,
+        space_key: Optional[str] = None
     ) -> List[Space]:
         raise NotImplementedError()
 

@@ -38,7 +38,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
@@ -48,8 +48,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
-        if customer_ids is not None:
-            json_payload["customer_ids"] = customer_ids
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if limit is not None:
             json_payload["limit"] = limit
         if page_cursor is not None:
@@ -77,6 +77,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         self,
         *,
         connected_account_id: str,
+        accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None
     ) -> None:
@@ -84,6 +85,8 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if accepted_capabilities is not None:
+            json_payload["accepted_capabilities"] = accepted_capabilities
         if automatically_manage_new_devices is not None:
             json_payload["automatically_manage_new_devices"] = (
                 automatically_manage_new_devices

@@ -100,10 +100,16 @@ class Spaces(AbstractSpaces):
         return None
 
     def list(
-        self, *, search: Optional[str] = None, space_key: Optional[str] = None
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        search: Optional[str] = None,
+        space_key: Optional[str] = None
     ) -> List[Space]:
         json_payload = {}
 
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
         if search is not None:
             json_payload["search"] = search
         if space_key is not None:
