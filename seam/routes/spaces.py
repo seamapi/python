@@ -145,13 +145,27 @@ class Spaces(AbstractSpaces):
 
         return None
 
-    def update(self, *, space_id: str, name: Optional[str] = None) -> Space:
+    def update(
+        self,
+        *,
+        acs_entrance_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_key: Optional[str] = None
+    ) -> Space:
         json_payload = {}
 
-        if space_id is not None:
-            json_payload["space_id"] = space_id
+        if acs_entrance_ids is not None:
+            json_payload["acs_entrance_ids"] = acs_entrance_ids
+        if device_ids is not None:
+            json_payload["device_ids"] = device_ids
         if name is not None:
             json_payload["name"] = name
+        if space_id is not None:
+            json_payload["space_id"] = space_id
+        if space_key is not None:
+            json_payload["space_key"] = space_key
 
         res = self.client.post("/spaces/update", json=json_payload)
 

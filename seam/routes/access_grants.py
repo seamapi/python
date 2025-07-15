@@ -20,6 +20,7 @@ class AccessGrants(AbstractAccessGrants):
         ends_at: Optional[str] = None,
         location: Optional[Dict[str, Any]] = None,
         location_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
@@ -43,6 +44,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["location"] = location
         if location_ids is not None:
             json_payload["location_ids"] = location_ids
+        if name is not None:
+            json_payload["name"] = name
         if space_ids is not None:
             json_payload["space_ids"] = space_ids
         if starts_at is not None:
@@ -113,6 +116,7 @@ class AccessGrants(AbstractAccessGrants):
         *,
         access_grant_id: str,
         ends_at: Optional[str] = None,
+        name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
         json_payload = {}
@@ -121,6 +125,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["access_grant_id"] = access_grant_id
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
+        if name is not None:
+            json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
