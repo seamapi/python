@@ -73,6 +73,7 @@ class AccessGrant:
     ends_at: str
     instant_key_url: str
     location_ids: List[str]
+    name: str
     requested_access_methods: List[Dict[str, Any]]
     space_ids: List[str]
     starts_at: str
@@ -91,6 +92,7 @@ class AccessGrant:
             ends_at=d.get("ends_at", None),
             instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
+            name=d.get("name", None),
             requested_access_methods=d.get("requested_access_methods", None),
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),
@@ -1554,6 +1556,7 @@ class AbstractAccessGrants(abc.ABC):
         ends_at: Optional[str] = None,
         location: Optional[Dict[str, Any]] = None,
         location_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
@@ -1591,6 +1594,7 @@ class AbstractAccessGrants(abc.ABC):
         *,
         access_grant_id: str,
         ends_at: Optional[str] = None,
+        name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
@@ -2469,7 +2473,15 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, space_id: str, name: Optional[str] = None) -> Space:
+    def update(
+        self,
+        *,
+        acs_entrance_ids: Optional[List[str]] = None,
+        device_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_key: Optional[str] = None
+    ) -> Space:
         raise NotImplementedError()
 
 
