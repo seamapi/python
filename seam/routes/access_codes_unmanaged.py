@@ -71,12 +71,21 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         return UnmanagedAccessCode.from_dict(res["access_code"])
 
     def list(
-        self, *, device_id: str, user_identifier_key: Optional[str] = None
+        self,
+        *,
+        device_id: str,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
         json_payload = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 

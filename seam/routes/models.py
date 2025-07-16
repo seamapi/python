@@ -1524,7 +1524,12 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
 
     @abc.abstractmethod
     def list(
-        self, *, device_id: str, user_identifier_key: Optional[str] = None
+        self,
+        *,
+        device_id: str,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
         raise NotImplementedError()
 
@@ -1573,6 +1578,16 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None
     ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_grant_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
