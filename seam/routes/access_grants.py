@@ -82,6 +82,26 @@ class AccessGrants(AbstractAccessGrants):
 
         return AccessGrant.from_dict(res["access_grant"])
 
+    def get_related(
+        self,
+        *,
+        access_grant_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
+        json_payload = {}
+
+        if access_grant_ids is not None:
+            json_payload["access_grant_ids"] = access_grant_ids
+        if exclude is not None:
+            json_payload["exclude"] = exclude
+        if include is not None:
+            json_payload["include"] = include
+
+        self.client.post("/access_grants/get_related", json=json_payload)
+
+        return None
+
     def list(
         self,
         *,
