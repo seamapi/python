@@ -58,6 +58,26 @@ class AccessMethods(AbstractAccessMethods):
 
         return AccessMethod.from_dict(res["access_method"])
 
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
+        json_payload = {}
+
+        if access_method_ids is not None:
+            json_payload["access_method_ids"] = access_method_ids
+        if exclude is not None:
+            json_payload["exclude"] = exclude
+        if include is not None:
+            json_payload["include"] = include
+
+        self.client.post("/access_methods/get_related", json=json_payload)
+
+        return None
+
     def list(
         self,
         *,

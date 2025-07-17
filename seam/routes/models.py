@@ -110,6 +110,7 @@ class AccessMethod:
     display_name: str
     instant_key_url: str
     is_encoding_required: bool
+    is_issued: bool
     issued_at: str
     mode: str
     workspace_id: str
@@ -124,6 +125,7 @@ class AccessMethod:
             display_name=d.get("display_name", None),
             instant_key_url=d.get("instant_key_url", None),
             is_encoding_required=d.get("is_encoding_required", None),
+            is_issued=d.get("is_issued", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
             workspace_id=d.get("workspace_id", None),
@@ -1633,6 +1635,16 @@ class AbstractAccessMethods(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, access_method_id: str) -> AccessMethod:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
