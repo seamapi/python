@@ -12,6 +12,7 @@ from .connected_accounts import ConnectedAccounts
 from .customers import Customers
 from .devices import Devices
 from .events import Events
+from .instant_keys import InstantKeys
 from .locks import Locks
 from .noise_sensors import NoiseSensors
 from .phones import Phones
@@ -35,6 +36,7 @@ class Routes(AbstractRoutes):
         self.customers = Customers(client=client, defaults=defaults)
         self.devices = Devices(client=client, defaults=defaults)
         self.events = Events(client=client, defaults=defaults)
+        self.instant_keys = InstantKeys(client=client, defaults=defaults)
         self.locks = Locks(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)

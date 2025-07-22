@@ -22,6 +22,7 @@ class AccessGrants(AbstractAccessGrants):
         location_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
         json_payload = {}
@@ -48,6 +49,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["name"] = name
         if space_ids is not None:
             json_payload["space_ids"] = space_ids
+        if space_keys is not None:
+            json_payload["space_keys"] = space_keys
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
