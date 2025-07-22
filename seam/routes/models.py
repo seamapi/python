@@ -1070,11 +1070,15 @@ class PhoneRegistration:
 @dataclass
 class PhoneSession:
     provider_sessions: List[Dict[str, Any]]
+    user_identity: Dict[str, Any]
+    workspace_id: str
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return PhoneSession(
             provider_sessions=d.get("provider_sessions", None),
+            user_identity=DeepAttrDict(d.get("user_identity", None)),
+            workspace_id=d.get("workspace_id", None),
         )
 
 
@@ -1565,6 +1569,7 @@ class AbstractAccessGrants(abc.ABC):
         location_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
         raise NotImplementedError()
@@ -2344,6 +2349,13 @@ class AbstractEvents(abc.ABC):
         since: Optional[str] = None,
         unstable_offset: Optional[float] = None
     ) -> List[SeamEvent]:
+        raise NotImplementedError()
+
+
+class AbstractInstantKeys(abc.ABC):
+
+    @abc.abstractmethod
+    def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
         raise NotImplementedError()
 
 
@@ -3370,6 +3382,7 @@ class AbstractRoutes(abc.ABC):
     customers: AbstractCustomers
     devices: AbstractDevices
     events: AbstractEvents
+    instant_keys: AbstractInstantKeys
     locks: AbstractLocks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
