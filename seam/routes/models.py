@@ -2355,6 +2355,10 @@ class AbstractEvents(abc.ABC):
 class AbstractInstantKeys(abc.ABC):
 
     @abc.abstractmethod
+    def get(self, *, instant_key_id: str) -> InstantKey:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
         raise NotImplementedError()
 
