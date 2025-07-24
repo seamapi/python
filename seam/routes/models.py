@@ -2355,6 +2355,10 @@ class AbstractEvents(abc.ABC):
 class AbstractInstantKeys(abc.ABC):
 
     @abc.abstractmethod
+    def delete(self, *, instant_key_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def get(self, *, instant_key_id: str) -> InstantKey:
         raise NotImplementedError()
 
@@ -2528,30 +2532,6 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractThermostatsDailyPrograms(abc.ABC):
-
-    @abc.abstractmethod
-    def create(
-        self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
-    ) -> ThermostatDailyProgram:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, thermostat_daily_program_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        name: str,
-        periods: List[Dict[str, Any]],
-        thermostat_daily_program_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-
 class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
@@ -2623,30 +2603,86 @@ class AbstractThermostatsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractUserIdentitiesEnrollmentAutomations(abc.ABC):
+class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
-    def delete(self, *, enrollment_automation_id: str) -> None:
+    def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, enrollment_automation_id: str) -> EnrollmentAutomation:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def launch(
+    def create(
         self,
         *,
-        credential_manager_acs_system_id: str,
-        user_identity_id: str,
-        acs_credential_pool_id: Optional[str] = None,
-        create_credential_manager_user: Optional[bool] = None,
-        credential_manager_acs_user_id: Optional[str] = None
-    ) -> EnrollmentAutomation:
+        acs_system_ids: Optional[List[str]] = None,
+        email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> UserIdentity:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, user_identity_id: str) -> List[EnrollmentAutomation]:
+    def delete(self, *, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def generate_instant_key(
+        self, *, user_identity_id: str, max_use_count: Optional[float] = None
+    ) -> InstantKey:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> UserIdentity:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        credential_manager_acs_system_id: Optional[str] = None,
+        search: Optional[str] = None
+    ) -> List[UserIdentity]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        user_identity_id: str,
+        email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -2794,94 +2830,6 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
-        raise NotImplementedError()
-
-
-class AbstractUserIdentities(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def enrollment_automations(self) -> AbstractUserIdentitiesEnrollmentAutomations:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def create(
-        self,
-        *,
-        acs_system_ids: Optional[List[str]] = None,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
-    ) -> UserIdentity:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def generate_instant_key(
-        self, *, user_identity_id: str, max_use_count: Optional[float] = None
-    ) -> InstantKey:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self,
-        *,
-        user_identity_id: Optional[str] = None,
-        user_identity_key: Optional[str] = None
-    ) -> UserIdentity:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        credential_manager_acs_system_id: Optional[str] = None,
-        search: Optional[str] = None
-    ) -> List[UserIdentity]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        user_identity_id: str,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
-    ) -> None:
         raise NotImplementedError()
 
 
@@ -3140,11 +3088,6 @@ class AbstractThermostats(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def daily_programs(self) -> AbstractThermostatsDailyPrograms:
-        raise NotImplementedError()
-
-    @property
-    @abc.abstractmethod
     def schedules(self) -> AbstractThermostatsSchedules:
         raise NotImplementedError()
 
@@ -3321,22 +3264,6 @@ class AbstractThermostats(abc.ABC):
         manual_override_allowed: Optional[bool] = None,
         name: Optional[str] = None
     ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update_weekly_program(
-        self,
-        *,
-        device_id: str,
-        friday_program_id: Optional[str] = None,
-        monday_program_id: Optional[str] = None,
-        saturday_program_id: Optional[str] = None,
-        sunday_program_id: Optional[str] = None,
-        thursday_program_id: Optional[str] = None,
-        tuesday_program_id: Optional[str] = None,
-        wednesday_program_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
         raise NotImplementedError()
 
 
