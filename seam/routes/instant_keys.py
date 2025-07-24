@@ -8,6 +8,16 @@ class InstantKeys(AbstractInstantKeys):
         self.client = client
         self.defaults = defaults
 
+    def delete(self, *, instant_key_id: str) -> None:
+        json_payload = {}
+
+        if instant_key_id is not None:
+            json_payload["instant_key_id"] = instant_key_id
+
+        self.client.post("/instant_keys/delete", json=json_payload)
+
+        return None
+
     def get(self, *, instant_key_id: str) -> InstantKey:
         json_payload = {}
 

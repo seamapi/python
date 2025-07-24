@@ -8,20 +8,12 @@ from .models import (
     AcsSystem,
     AcsUser,
 )
-from .user_identities_enrollment_automations import UserIdentitiesEnrollmentAutomations
 
 
 class UserIdentities(AbstractUserIdentities):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
-        self._enrollment_automations = UserIdentitiesEnrollmentAutomations(
-            client=client, defaults=defaults
-        )
-
-    @property
-    def enrollment_automations(self) -> UserIdentitiesEnrollmentAutomations:
-        return self._enrollment_automations
 
     def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         json_payload = {}
