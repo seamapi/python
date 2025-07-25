@@ -673,6 +673,7 @@ class Device:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
@@ -707,6 +708,7 @@ class Device:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
@@ -738,6 +740,7 @@ class DeviceProvider:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
@@ -762,6 +765,7 @@ class DeviceProvider:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
@@ -1368,6 +1372,7 @@ class UnmanagedDevice:
     can_program_online_access_codes: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
+    can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
     can_simulate_removal: bool
@@ -1399,6 +1404,7 @@ class UnmanagedDevice:
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
+            can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
@@ -2532,6 +2538,30 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractThermostatsDailyPrograms(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
+    ) -> ThermostatDailyProgram:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, thermostat_daily_program_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        name: str,
+        periods: List[Dict[str, Any]],
+        thermostat_daily_program_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
 class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
@@ -3088,6 +3118,11 @@ class AbstractThermostats(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def daily_programs(self) -> AbstractThermostatsDailyPrograms:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
     def schedules(self) -> AbstractThermostatsSchedules:
         raise NotImplementedError()
 
@@ -3264,6 +3299,22 @@ class AbstractThermostats(abc.ABC):
         manual_override_allowed: Optional[bool] = None,
         name: Optional[str] = None
     ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update_weekly_program(
+        self,
+        *,
+        device_id: str,
+        friday_program_id: Optional[str] = None,
+        monday_program_id: Optional[str] = None,
+        saturday_program_id: Optional[str] = None,
+        sunday_program_id: Optional[str] = None,
+        thursday_program_id: Optional[str] = None,
+        tuesday_program_id: Optional[str] = None,
+        wednesday_program_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
 
