@@ -322,6 +322,7 @@ class AcsEntrance:
     connected_account_id: str
     created_at: str
     display_name: str
+    dormakaba_ambiance_metadata: Dict[str, Any]
     dormakaba_community_metadata: Dict[str, Any]
     errors: List[Dict[str, Any]]
     latch_metadata: Dict[str, Any]
@@ -343,6 +344,9 @@ class AcsEntrance:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            dormakaba_ambiance_metadata=DeepAttrDict(
+                d.get("dormakaba_ambiance_metadata", None)
+            ),
             dormakaba_community_metadata=DeepAttrDict(
                 d.get("dormakaba_community_metadata", None)
             ),
@@ -939,29 +943,6 @@ class InstantKey:
             instant_key_id=d.get("instant_key_id", None),
             instant_key_url=d.get("instant_key_url", None),
             user_identity_id=d.get("user_identity_id", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class Location:
-    created_at: str
-    display_name: str
-    geolocation: Dict[str, Any]
-    location_id: str
-    name: str
-    time_zone: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Location(
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            geolocation=DeepAttrDict(d.get("geolocation", None)),
-            location_id=d.get("location_id", None),
-            name=d.get("name", None),
-            time_zone=d.get("time_zone", None),
             workspace_id=d.get("workspace_id", None),
         )
 
