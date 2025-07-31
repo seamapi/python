@@ -1747,7 +1747,8 @@ class AbstractAcsCredentials(abc.ABC):
         user_identity_id: Optional[str] = None,
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
-        limit: Optional[float] = None
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None
     ) -> List[AcsCredential]:
         raise NotImplementedError()
 
