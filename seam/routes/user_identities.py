@@ -64,12 +64,18 @@ class UserIdentities(AbstractUserIdentities):
         return None
 
     def generate_instant_key(
-        self, *, user_identity_id: str, max_use_count: Optional[float] = None
+        self,
+        *,
+        user_identity_id: str,
+        customization_profile_id: Optional[str] = None,
+        max_use_count: Optional[float] = None
     ) -> InstantKey:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
 
