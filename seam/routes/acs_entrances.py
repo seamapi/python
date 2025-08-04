@@ -47,7 +47,9 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
+        limit: Optional[int] = None,
         location_id: Optional[str] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
@@ -65,8 +67,12 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_system_id"] = acs_system_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if limit is not None:
+            json_payload["limit"] = limit
         if location_id is not None:
             json_payload["location_id"] = location_id
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if search is not None:
             json_payload["search"] = search
         if space_id is not None:

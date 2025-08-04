@@ -28,6 +28,7 @@ class AccessCode:
     status: str
     type: str
     warnings: List[Dict[str, Any]]
+    workspace_id: str
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -59,6 +60,7 @@ class AccessCode:
             status=d.get("status", None),
             type=d.get("type", None),
             warnings=d.get("warnings", None),
+            workspace_id=d.get("workspace_id", None),
         )
 
 
@@ -669,6 +671,29 @@ class ConnectedAccount:
 
 
 @dataclass
+class CustomizationProfile:
+    created_at: str
+    customization_profile_id: str
+    logo_url: str
+    name: str
+    primary_color: str
+    secondary_color: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return CustomizationProfile(
+            created_at=d.get("created_at", None),
+            customization_profile_id=d.get("customization_profile_id", None),
+            logo_url=d.get("logo_url", None),
+            name=d.get("name", None),
+            primary_color=d.get("primary_color", None),
+            secondary_color=d.get("secondary_color", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class Device:
     can_hvac_cool: bool
     can_hvac_heat: bool
@@ -680,6 +705,8 @@ class Device:
     can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
+    can_simulate_hub_connection: bool
+    can_simulate_hub_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -715,6 +742,10 @@ class Device:
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
+            can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
+            can_simulate_hub_disconnection=d.get(
+                "can_simulate_hub_disconnection", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -747,6 +778,8 @@ class DeviceProvider:
     can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
+    can_simulate_hub_connection: bool
+    can_simulate_hub_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -772,6 +805,10 @@ class DeviceProvider:
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
+            can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
+            can_simulate_hub_disconnection=d.get(
+                "can_simulate_hub_disconnection", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -1162,6 +1199,7 @@ class UnmanagedAccessCode:
     status: str
     type: str
     warnings: List[Dict[str, Any]]
+    workspace_id: str
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -1178,6 +1216,7 @@ class UnmanagedAccessCode:
             status=d.get("status", None),
             type=d.get("type", None),
             warnings=d.get("warnings", None),
+            workspace_id=d.get("workspace_id", None),
         )
 
 
@@ -1360,6 +1399,8 @@ class UnmanagedDevice:
     can_run_thermostat_programs: bool
     can_simulate_connection: bool
     can_simulate_disconnection: bool
+    can_simulate_hub_connection: bool
+    can_simulate_hub_disconnection: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -1392,6 +1433,10 @@ class UnmanagedDevice:
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
+            can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
+            can_simulate_hub_disconnection=d.get(
+                "can_simulate_hub_disconnection", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -1884,7 +1929,9 @@ class AbstractAcsEntrances(abc.ABC):
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
+        limit: Optional[int] = None,
         location_id: Optional[str] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
