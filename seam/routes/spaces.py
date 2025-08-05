@@ -82,18 +82,21 @@ class Spaces(AbstractSpaces):
     def get_related(
         self,
         *,
-        space_ids: List[str],
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None
     ) -> None:
         json_payload = {}
 
-        if space_ids is not None:
-            json_payload["space_ids"] = space_ids
         if exclude is not None:
             json_payload["exclude"] = exclude
         if include is not None:
             json_payload["include"] = include
+        if space_ids is not None:
+            json_payload["space_ids"] = space_ids
+        if space_keys is not None:
+            json_payload["space_keys"] = space_keys
 
         self.client.post("/spaces/get_related", json=json_payload)
 
