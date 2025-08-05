@@ -2268,6 +2268,30 @@ class AbstractCustomers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def push_data(
         self,
         *,
@@ -2532,9 +2556,10 @@ class AbstractSpaces(abc.ABC):
     def get_related(
         self,
         *,
-        space_ids: List[str],
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None
     ) -> None:
         raise NotImplementedError()
 
