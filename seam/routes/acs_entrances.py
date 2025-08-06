@@ -47,6 +47,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -67,6 +68,8 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_system_id"] = acs_system_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if limit is not None:
             json_payload["limit"] = limit
         if location_id is not None:

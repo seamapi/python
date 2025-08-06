@@ -71,6 +71,7 @@ class AccessGrant:
     access_method_ids: List[str]
     client_session_token: str
     created_at: str
+    customization_profile_id: str
     display_name: str
     ends_at: str
     instant_key_url: str
@@ -90,6 +91,7 @@ class AccessGrant:
             access_method_ids=d.get("access_method_ids", None),
             client_session_token=d.get("client_session_token", None),
             created_at=d.get("created_at", None),
+            customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
             instant_key_url=d.get("instant_key_url", None),
@@ -109,6 +111,7 @@ class AccessMethod:
     client_session_token: str
     code: str
     created_at: str
+    customization_profile_id: str
     display_name: str
     instant_key_url: str
     is_encoding_required: bool
@@ -124,6 +127,7 @@ class AccessMethod:
             client_session_token=d.get("client_session_token", None),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
+            customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             instant_key_url=d.get("instant_key_url", None),
             is_encoding_required=d.get("is_encoding_required", None),
@@ -1599,6 +1603,7 @@ class AbstractAccessGrants(abc.ABC):
         user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
+        customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[str] = None,
         location: Optional[Dict[str, Any]] = None,
@@ -1929,6 +1934,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -1951,7 +1957,12 @@ class AbstractAcsSystems(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, connected_account_id: Optional[str] = None) -> List[AcsSystem]:
+    def list(
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None
+    ) -> List[AcsSystem]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2207,6 +2218,7 @@ class AbstractConnectWebviews(abc.ABC):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -2359,6 +2371,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -2422,7 +2435,12 @@ class AbstractInstantKeys(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, instant_key_id: str) -> InstantKey:
+    def get(
+        self,
+        *,
+        instant_key_id: Optional[str] = None,
+        instant_key_url: Optional[str] = None
+    ) -> InstantKey:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2864,6 +2882,7 @@ class AbstractLocks(abc.ABC):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -3103,6 +3122,7 @@ class AbstractDevices(abc.ABC):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -3160,6 +3180,7 @@ class AbstractNoiseSensors(abc.ABC):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -3275,6 +3296,7 @@ class AbstractThermostats(abc.ABC):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,

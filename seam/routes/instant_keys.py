@@ -18,11 +18,18 @@ class InstantKeys(AbstractInstantKeys):
 
         return None
 
-    def get(self, *, instant_key_id: str) -> InstantKey:
+    def get(
+        self,
+        *,
+        instant_key_id: Optional[str] = None,
+        instant_key_url: Optional[str] = None
+    ) -> InstantKey:
         json_payload = {}
 
         if instant_key_id is not None:
             json_payload["instant_key_id"] = instant_key_id
+        if instant_key_url is not None:
+            json_payload["instant_key_url"] = instant_key_url
 
         res = self.client.post("/instant_keys/get", json=json_payload)
 

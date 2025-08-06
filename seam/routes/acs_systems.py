@@ -18,11 +18,18 @@ class AcsSystems(AbstractAcsSystems):
 
         return AcsSystem.from_dict(res["acs_system"])
 
-    def list(self, *, connected_account_id: Optional[str] = None) -> List[AcsSystem]:
+    def list(
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None
+    ) -> List[AcsSystem]:
         json_payload = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
 
         res = self.client.post("/acs/systems/list", json=json_payload)
 
