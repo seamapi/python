@@ -16,6 +16,7 @@ class AccessGrants(AbstractAccessGrants):
         user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
+        customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[str] = None,
         location: Optional[Dict[str, Any]] = None,
@@ -37,6 +38,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_ids is not None:
             json_payload["acs_entrance_ids"] = acs_entrance_ids
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if ends_at is not None:

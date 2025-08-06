@@ -75,6 +75,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         self,
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         user_identifier_key: Optional[str] = None
@@ -83,6 +84,8 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if limit is not None:
             json_payload["limit"] = limit
         if page_cursor is not None:

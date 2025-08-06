@@ -39,6 +39,7 @@ class Locks(AbstractLocks):
         created_before: Optional[str] = None,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
@@ -68,6 +69,8 @@ class Locks(AbstractLocks):
             json_payload["custom_metadata_has"] = custom_metadata_has
         if customer_ids is not None:
             json_payload["customer_ids"] = customer_ids
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if device_type is not None:
