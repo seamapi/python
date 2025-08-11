@@ -106,6 +106,7 @@ class Spaces(AbstractSpaces):
         self,
         *,
         connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None
     ) -> List[Space]:
@@ -113,6 +114,8 @@ class Spaces(AbstractSpaces):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if search is not None:
             json_payload["search"] = search
         if space_key is not None:
