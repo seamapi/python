@@ -114,6 +114,7 @@ class AccessGrants(AbstractAccessGrants):
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         location_id: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
@@ -126,6 +127,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if location_id is not None:
             json_payload["location_id"] = location_id
         if space_id is not None:

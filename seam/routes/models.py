@@ -1645,6 +1645,7 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         location_id: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
@@ -2414,7 +2415,7 @@ class AbstractEvents(abc.ABC):
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
-        customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         event_ids: Optional[List[str]] = None,
@@ -2585,6 +2586,7 @@ class AbstractSpaces(abc.ABC):
         self,
         *,
         connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None
     ) -> List[Space]:
