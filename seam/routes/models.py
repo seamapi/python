@@ -860,6 +860,8 @@ class SeamEvent:
     backup_access_code_id: str
     access_grant_id: str
     acs_entrance_id: str
+    access_grant_ids: List[str]
+    access_grant_keys: List[str]
     access_method_id: str
     acs_system_id: str
     acs_credential_id: str
@@ -920,6 +922,8 @@ class SeamEvent:
             backup_access_code_id=d.get("backup_access_code_id", None),
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
+            access_grant_ids=d.get("access_grant_ids", None),
+            access_grant_keys=d.get("access_grant_keys", None),
             access_method_id=d.get("access_method_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_credential_id=d.get("acs_credential_id", None),
@@ -1803,7 +1807,8 @@ class AbstractAcsCredentials(abc.ABC):
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[AcsCredential]:
         raise NotImplementedError()
 
@@ -1854,9 +1859,10 @@ class AbstractAcsEncoders(abc.ABC):
         self,
         *,
         acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None
+        acs_encoder_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None
     ) -> List[AcsEncoder]:
         raise NotImplementedError()
 

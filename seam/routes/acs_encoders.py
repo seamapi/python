@@ -55,20 +55,23 @@ class AcsEncoders(AbstractAcsEncoders):
         self,
         *,
         acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None
+        acs_encoder_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None
     ) -> List[AcsEncoder]:
         json_payload = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
-        if limit is not None:
-            json_payload["limit"] = limit
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
         if acs_encoder_ids is not None:
             json_payload["acs_encoder_ids"] = acs_encoder_ids
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
 
         res = self.client.post("/acs/encoders/list", json=json_payload)
 

@@ -111,7 +111,8 @@ class AcsCredentials(AbstractAcsCredentials):
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[AcsCredential]:
         json_payload = {}
 
@@ -131,6 +132,8 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["limit"] = limit
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if search is not None:
+            json_payload["search"] = search
 
         res = self.client.post("/acs/credentials/list", json=json_payload)
 
