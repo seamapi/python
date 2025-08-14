@@ -711,6 +711,7 @@ class Device:
     can_simulate_disconnection: bool
     can_simulate_hub_connection: bool
     can_simulate_hub_disconnection: bool
+    can_simulate_paid_subscription: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -750,6 +751,9 @@ class Device:
             can_simulate_hub_disconnection=d.get(
                 "can_simulate_hub_disconnection", None
             ),
+            can_simulate_paid_subscription=d.get(
+                "can_simulate_paid_subscription", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -784,6 +788,7 @@ class DeviceProvider:
     can_simulate_disconnection: bool
     can_simulate_hub_connection: bool
     can_simulate_hub_disconnection: bool
+    can_simulate_paid_subscription: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -812,6 +817,9 @@ class DeviceProvider:
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
             can_simulate_hub_disconnection=d.get(
                 "can_simulate_hub_disconnection", None
+            ),
+            can_simulate_paid_subscription=d.get(
+                "can_simulate_paid_subscription", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
@@ -1409,6 +1417,7 @@ class UnmanagedDevice:
     can_simulate_disconnection: bool
     can_simulate_hub_connection: bool
     can_simulate_hub_disconnection: bool
+    can_simulate_paid_subscription: bool
     can_simulate_removal: bool
     can_turn_off_hvac: bool
     can_unlock_with_code: bool
@@ -1444,6 +1453,9 @@ class UnmanagedDevice:
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
             can_simulate_hub_disconnection=d.get(
                 "can_simulate_hub_disconnection", None
+            ),
+            can_simulate_paid_subscription=d.get(
+                "can_simulate_paid_subscription", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
@@ -2294,6 +2306,7 @@ class AbstractCustomers(abc.ABC):
         booking_keys: Optional[List[str]] = None,
         building_keys: Optional[List[str]] = None,
         common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
         facility_keys: Optional[List[str]] = None,
         guest_keys: Optional[List[str]] = None,
         listing_keys: Optional[List[str]] = None,

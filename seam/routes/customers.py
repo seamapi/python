@@ -35,6 +35,7 @@ class Customers(AbstractCustomers):
         booking_keys: Optional[List[str]] = None,
         building_keys: Optional[List[str]] = None,
         common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
         facility_keys: Optional[List[str]] = None,
         guest_keys: Optional[List[str]] = None,
         listing_keys: Optional[List[str]] = None,
@@ -59,6 +60,8 @@ class Customers(AbstractCustomers):
             json_payload["building_keys"] = building_keys
         if common_area_keys is not None:
             json_payload["common_area_keys"] = common_area_keys
+        if customer_keys is not None:
+            json_payload["customer_keys"] = customer_keys
         if facility_keys is not None:
             json_payload["facility_keys"] = facility_keys
         if guest_keys is not None:
