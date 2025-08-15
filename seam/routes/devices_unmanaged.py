@@ -90,11 +90,19 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
 
-    def update(self, *, device_id: str, is_managed: bool) -> None:
+    def update(
+        self,
+        *,
+        device_id: str,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        is_managed: Optional[bool] = None
+    ) -> None:
         json_payload = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if custom_metadata is not None:
+            json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
 
