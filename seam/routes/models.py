@@ -1424,6 +1424,7 @@ class UnmanagedDevice:
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
+    custom_metadata: Dict[str, Any]
     device_id: str
     device_type: Any
     errors: List[Dict[str, Any]]
@@ -1463,6 +1464,7 @@ class UnmanagedDevice:
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
+            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
             device_type=d.get("device_type", None),
             errors=d.get("errors", None),
@@ -2368,6 +2370,10 @@ class AbstractDevicesSimulate(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def paid_subscription(self, *, device_id: str, is_expired: bool) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def remove(self, *, device_id: str) -> None:
         raise NotImplementedError()
 
@@ -2407,7 +2413,13 @@ class AbstractDevicesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, device_id: str, is_managed: bool) -> None:
+    def update(
+        self,
+        *,
+        device_id: str,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        is_managed: Optional[bool] = None
+    ) -> None:
         raise NotImplementedError()
 
 

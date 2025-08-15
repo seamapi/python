@@ -48,6 +48,18 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    def paid_subscription(self, *, device_id: str, is_expired: bool) -> None:
+        json_payload = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if is_expired is not None:
+            json_payload["is_expired"] = is_expired
+
+        self.client.post("/devices/simulate/paid_subscription", json=json_payload)
+
+        return None
+
     def remove(self, *, device_id: str) -> None:
         json_payload = {}
 
