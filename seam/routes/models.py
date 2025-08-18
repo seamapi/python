@@ -331,6 +331,7 @@ class AcsEntrance:
     dormakaba_ambiance_metadata: Dict[str, Any]
     dormakaba_community_metadata: Dict[str, Any]
     errors: List[Dict[str, Any]]
+    hotek_metadata: Dict[str, Any]
     latch_metadata: Dict[str, Any]
     salto_ks_metadata: Dict[str, Any]
     salto_space_metadata: Dict[str, Any]
@@ -357,6 +358,7 @@ class AcsEntrance:
                 d.get("dormakaba_community_metadata", None)
             ),
             errors=d.get("errors", None),
+            hotek_metadata=DeepAttrDict(d.get("hotek_metadata", None)),
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
             salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
