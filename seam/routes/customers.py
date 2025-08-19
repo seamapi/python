@@ -13,6 +13,7 @@ class Customers(AbstractCustomers):
         *,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         json_payload = {}
@@ -21,6 +22,8 @@ class Customers(AbstractCustomers):
             json_payload["features"] = features
         if is_embedded is not None:
             json_payload["is_embedded"] = is_embedded
+        if landing_page is not None:
+            json_payload["landing_page"] = landing_page
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 

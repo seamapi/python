@@ -37,7 +37,6 @@ class Devices(AbstractDevices):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -59,8 +58,6 @@ class Devices(AbstractDevices):
     ) -> List[Device]:
         json_payload = {}
 
-        if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:

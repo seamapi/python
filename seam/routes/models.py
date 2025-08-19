@@ -1951,8 +1951,6 @@ class AbstractAcsEntrances(abc.ABC):
     def list(
         self,
         *,
-        access_grant_id: Optional[str] = None,
-        access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
@@ -2298,6 +2296,7 @@ class AbstractCustomers(abc.ABC):
         *,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         raise NotImplementedError()
@@ -2392,7 +2391,6 @@ class AbstractDevicesUnmanaged(abc.ABC):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -2909,7 +2907,6 @@ class AbstractLocks(abc.ABC):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -3148,7 +3145,6 @@ class AbstractDevices(abc.ABC):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -3205,7 +3201,6 @@ class AbstractNoiseSensors(abc.ABC):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,
@@ -3320,7 +3315,6 @@ class AbstractThermostats(abc.ABC):
     def list(
         self,
         *,
-        access_method_id: Optional[str] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         connected_account_ids: Optional[List[str]] = None,

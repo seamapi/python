@@ -41,8 +41,6 @@ class AcsEntrances(AbstractAcsEntrances):
     def list(
         self,
         *,
-        access_grant_id: Optional[str] = None,
-        access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
@@ -56,10 +54,6 @@ class AcsEntrances(AbstractAcsEntrances):
     ) -> List[AcsEntrance]:
         json_payload = {}
 
-        if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
-        if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_ids is not None:
