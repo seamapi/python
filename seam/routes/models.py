@@ -880,6 +880,7 @@ class SeamEvent:
     acs_access_group_id: str
     client_session_id: str
     connect_webview_id: str
+    customer_key: str
     action_attempt_id: str
     action_type: str
     status: str
@@ -942,6 +943,7 @@ class SeamEvent:
             acs_access_group_id=d.get("acs_access_group_id", None),
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
+            customer_key=d.get("customer_key", None),
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             status=d.get("status", None),
@@ -3062,7 +3064,7 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         access_code_ids: Optional[List[str]] = None,
-        customer_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
