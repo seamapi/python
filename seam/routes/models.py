@@ -563,7 +563,7 @@ class ClientSession:
     connect_webview_ids: List[str]
     connected_account_ids: List[str]
     created_at: str
-    customer_id: str
+    customer_key: str
     device_count: float
     expires_at: str
     token: str
@@ -579,7 +579,7 @@ class ClientSession:
             connect_webview_ids=d.get("connect_webview_ids", None),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
-            customer_id=d.get("customer_id", None),
+            customer_key=d.get("customer_key", None),
             device_count=d.get("device_count", None),
             expires_at=d.get("expires_at", None),
             token=d.get("token", None),
