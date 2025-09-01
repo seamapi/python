@@ -873,6 +873,7 @@ class SeamEvent:
     access_grant_ids: List[str]
     access_grant_keys: List[str]
     access_method_id: str
+    is_backup_code: bool
     acs_system_id: str
     acs_credential_id: str
     acs_user_id: str
@@ -936,6 +937,7 @@ class SeamEvent:
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
             access_method_id=d.get("access_method_id", None),
+            is_backup_code=d.get("is_backup_code", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_credential_id=d.get("acs_credential_id", None),
             acs_user_id=d.get("acs_user_id", None),
@@ -1799,6 +1801,7 @@ class AbstractAcsCredentials(abc.ABC):
         code: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
+        hotek_metadata: Optional[Dict[str, Any]] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,

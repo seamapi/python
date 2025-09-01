@@ -39,6 +39,7 @@ class AcsCredentials(AbstractAcsCredentials):
         code: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
+        hotek_metadata: Optional[Dict[str, Any]] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
@@ -65,6 +66,8 @@ class AcsCredentials(AbstractAcsCredentials):
             )
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
+        if hotek_metadata is not None:
+            json_payload["hotek_metadata"] = hotek_metadata
         if is_multi_phone_sync_credential is not None:
             json_payload["is_multi_phone_sync_credential"] = (
                 is_multi_phone_sync_credential
