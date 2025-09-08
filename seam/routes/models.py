@@ -81,6 +81,7 @@ class AccessGrant:
     space_ids: List[str]
     starts_at: str
     user_identity_id: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -101,6 +102,7 @@ class AccessGrant:
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -118,6 +120,7 @@ class AccessMethod:
     is_issued: bool
     issued_at: str
     mode: str
+    warnings: List[Dict[str, Any]]
     workspace_id: str
 
     @staticmethod
@@ -134,6 +137,7 @@ class AccessMethod:
             is_issued=d.get("is_issued", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
+            warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -870,6 +874,9 @@ class SeamEvent:
     backup_access_code_id: str
     access_grant_id: str
     acs_entrance_id: str
+    access_grant_key: str
+    ends_at: str
+    starts_at: str
     access_grant_ids: List[str]
     access_grant_keys: List[str]
     access_method_id: str
@@ -934,6 +941,9 @@ class SeamEvent:
             backup_access_code_id=d.get("backup_access_code_id", None),
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
+            access_grant_key=d.get("access_grant_key", None),
+            ends_at=d.get("ends_at", None),
+            starts_at=d.get("starts_at", None),
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
             access_method_id=d.get("access_method_id", None),
