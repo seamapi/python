@@ -339,6 +339,7 @@ class AcsEntrance:
     latch_metadata: Dict[str, Any]
     salto_ks_metadata: Dict[str, Any]
     salto_space_metadata: Dict[str, Any]
+    space_ids: List[str]
     visionline_metadata: Dict[str, Any]
 
     @staticmethod
@@ -366,6 +367,7 @@ class AcsEntrance:
             latch_metadata=DeepAttrDict(d.get("latch_metadata", None)),
             salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
             salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
+            space_ids=d.get("space_ids", None),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
         )
 
