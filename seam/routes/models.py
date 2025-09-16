@@ -735,6 +735,7 @@ class Device:
     location: Dict[str, Any]
     nickname: str
     properties: Any
+    space_ids: List[str]
     warnings: List[Dict[str, Any]]
     workspace_id: str
 
@@ -777,6 +778,7 @@ class Device:
             location=DeepAttrDict(d.get("location", None)),
             nickname=d.get("nickname", None),
             properties=DeepAttrDict(d.get("properties", None)),
+            space_ids=d.get("space_ids", None),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
