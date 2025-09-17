@@ -15,13 +15,21 @@ class UserIdentities(AbstractUserIdentities):
         self.client = client
         self.defaults = defaults
 
-    def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+    def add_acs_user(
+        self,
+        *,
+        acs_user_id: str,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
 
         self.client.post("/user_identities/add_acs_user", json=json_payload)
 

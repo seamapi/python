@@ -2769,7 +2769,13 @@ class AbstractThermostatsSimulate(abc.ABC):
 class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
-    def add_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+    def add_acs_user(
+        self,
+        *,
+        acs_user_id: str,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
