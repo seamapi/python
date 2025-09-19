@@ -2246,6 +2246,7 @@ class AbstractConnectWebviews(abc.ABC):
         custom_redirect_url: Optional[str] = None,
         customer_key: Optional[str] = None,
         device_selection_mode: Optional[str] = None,
+        excluded_providers: Optional[List[str]] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
     ) -> ConnectWebview:
