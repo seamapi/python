@@ -712,6 +712,9 @@ class Device:
     can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
+    can_program_thermostat_programs_as_different_each_day: bool
+    can_program_thermostat_programs_as_same_each_day: bool
+    can_program_thermostat_programs_as_weekday_weekend: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
     can_run_thermostat_programs: bool
@@ -750,6 +753,15 @@ class Device:
             ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
+            ),
+            can_program_thermostat_programs_as_different_each_day=d.get(
+                "can_program_thermostat_programs_as_different_each_day", None
+            ),
+            can_program_thermostat_programs_as_same_each_day=d.get(
+                "can_program_thermostat_programs_as_same_each_day", None
+            ),
+            can_program_thermostat_programs_as_weekday_weekend=d.get(
+                "can_program_thermostat_programs_as_weekday_weekend", None
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
@@ -791,6 +803,9 @@ class DeviceProvider:
     can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
+    can_program_thermostat_programs_as_different_each_day: bool
+    can_program_thermostat_programs_as_same_each_day: bool
+    can_program_thermostat_programs_as_weekday_weekend: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
     can_run_thermostat_programs: bool
@@ -818,6 +833,15 @@ class DeviceProvider:
             ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
+            ),
+            can_program_thermostat_programs_as_different_each_day=d.get(
+                "can_program_thermostat_programs_as_different_each_day", None
+            ),
+            can_program_thermostat_programs_as_same_each_day=d.get(
+                "can_program_thermostat_programs_as_same_each_day", None
+            ),
+            can_program_thermostat_programs_as_weekday_weekend=d.get(
+                "can_program_thermostat_programs_as_weekday_weekend", None
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
@@ -1430,6 +1454,9 @@ class UnmanagedDevice:
     can_hvac_heat_cool: bool
     can_program_offline_access_codes: bool
     can_program_online_access_codes: bool
+    can_program_thermostat_programs_as_different_each_day: bool
+    can_program_thermostat_programs_as_same_each_day: bool
+    can_program_thermostat_programs_as_weekday_weekend: bool
     can_remotely_lock: bool
     can_remotely_unlock: bool
     can_run_thermostat_programs: bool
@@ -1465,6 +1492,15 @@ class UnmanagedDevice:
             ),
             can_program_online_access_codes=d.get(
                 "can_program_online_access_codes", None
+            ),
+            can_program_thermostat_programs_as_different_each_day=d.get(
+                "can_program_thermostat_programs_as_different_each_day", None
+            ),
+            can_program_thermostat_programs_as_same_each_day=d.get(
+                "can_program_thermostat_programs_as_same_each_day", None
+            ),
+            can_program_thermostat_programs_as_weekday_weekend=d.get(
+                "can_program_thermostat_programs_as_weekday_weekend", None
             ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
