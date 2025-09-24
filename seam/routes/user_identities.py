@@ -8,12 +8,18 @@ from .models import (
     AcsSystem,
     AcsUser,
 )
+from .user_identities_unmanaged import UserIdentitiesUnmanaged
 
 
 class UserIdentities(AbstractUserIdentities):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._unmanaged = UserIdentitiesUnmanaged(client=client, defaults=defaults)
+
+    @property
+    def unmanaged(self) -> UserIdentitiesUnmanaged:
+        return self._unmanaged
 
     def add_acs_user(
         self,

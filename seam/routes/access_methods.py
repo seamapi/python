@@ -1,7 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractAccessMethods, ActionAttempt, AccessMethod
-
+from .access_methods_unmanaged import AccessMethodsUnmanaged
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -9,6 +9,11 @@ class AccessMethods(AbstractAccessMethods):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._unmanaged = AccessMethodsUnmanaged(client=client, defaults=defaults)
+
+    @property
+    def unmanaged(self) -> AccessMethodsUnmanaged:
+        return self._unmanaged
 
     def delete(self, *, access_method_id: str) -> None:
         json_payload = {}
