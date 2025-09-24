@@ -1672,106 +1672,27 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractAccessGrants(abc.ABC):
+class AbstractAccessGrantsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def create(
-        self,
-        *,
-        requested_access_methods: List[Dict[str, Any]],
-        user_identity_id: Optional[str] = None,
-        user_identity: Optional[Dict[str, Any]] = None,
-        access_grant_key: Optional[str] = None,
-        acs_entrance_ids: Optional[List[str]] = None,
-        customization_profile_id: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
-        ends_at: Optional[str] = None,
-        location: Optional[Dict[str, Any]] = None,
-        location_ids: Optional[List[str]] = None,
-        name: Optional[str] = None,
-        space_ids: Optional[List[str]] = None,
-        space_keys: Optional[List[str]] = None,
-        starts_at: Optional[str] = None
-    ) -> AccessGrant:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, access_grant_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self,
-        *,
-        access_grant_id: Optional[str] = None,
-        access_grant_key: Optional[str] = None
-    ) -> AccessGrant:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get_related(
-        self,
-        *,
-        access_grant_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
-    ) -> None:
+    def get(self, *, access_grant_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(
         self,
         *,
-        access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        customer_key: Optional[str] = None,
-        location_id: Optional[str] = None,
-        space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> List[AccessGrant]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        access_grant_id: str,
-        ends_at: Optional[str] = None,
-        name: Optional[str] = None,
-        starts_at: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
 
-class AbstractAccessMethods(abc.ABC):
+class AbstractAccessMethodsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def delete(self, *, access_method_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def encode(
-        self,
-        *,
-        access_method_id: str,
-        acs_encoder_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(self, *, access_method_id: str) -> AccessMethod:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get_related(
-        self,
-        *,
-        access_method_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
-    ) -> None:
+    def get(self, *, access_method_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -1782,7 +1703,7 @@ class AbstractAccessMethods(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
-    ) -> List[AccessMethod]:
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -2803,7 +2724,293 @@ class AbstractThermostatsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractUserIdentitiesUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(self, *, search: Optional[str] = None) -> None:
+        raise NotImplementedError()
+
+
+class AbstractWebhooks(abc.ABC):
+
+    @abc.abstractmethod
+    def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, webhook_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, webhook_id: str) -> Webhook:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Webhook]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(self, *, event_types: List[str], webhook_id: str) -> None:
+        raise NotImplementedError()
+
+
+class AbstractWorkspaces(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        name: str,
+        company_name: Optional[str] = None,
+        connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
+        is_sandbox: Optional[bool] = None,
+        webview_logo_shape: Optional[str] = None,
+        webview_primary_button_color: Optional[str] = None,
+        webview_primary_button_text_color: Optional[str] = None,
+        webview_success_message: Optional[str] = None
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Workspace]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def reset_sandbox(
+        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
+class AbstractAccessGrants(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAccessGrantsUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        requested_access_methods: List[Dict[str, Any]],
+        user_identity_id: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
+        customization_profile_id: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        ends_at: Optional[str] = None,
+        location: Optional[Dict[str, Any]] = None,
+        location_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        starts_at: Optional[str] = None
+    ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None
+    ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_grant_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        location_id: Optional[str] = None,
+        space_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[AccessGrant]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_grant_id: str,
+        ends_at: Optional[str] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
+class AbstractAccessMethods(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAccessMethodsUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_method_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def encode(
+        self,
+        *,
+        access_method_id: str,
+        acs_encoder_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, access_method_id: str) -> AccessMethod:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_grant_id: str,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        space_id: Optional[str] = None
+    ) -> List[AccessMethod]:
+        raise NotImplementedError()
+
+
+class AbstractLocks(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractLocksSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        exclude_if: Optional[List[str]] = None,
+        include_if: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def lock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock_door(
+        self,
+        *,
+        device_id: str,
+        sync: Optional[bool] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
+class AbstractPhones(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractPhonesSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def deactivate(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, device_id: str) -> Phone:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_credential_id: Optional[str] = None,
+        owner_user_identity_id: Optional[str] = None
+    ) -> List[Phone]:
+        raise NotImplementedError()
+
+
 class AbstractUserIdentities(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractUserIdentitiesUnmanaged:
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def add_acs_user(
@@ -2893,152 +3100,6 @@ class AbstractUserIdentities(abc.ABC):
         phone_number: Optional[str] = None,
         user_identity_key: Optional[str] = None
     ) -> None:
-        raise NotImplementedError()
-
-
-class AbstractWebhooks(abc.ABC):
-
-    @abc.abstractmethod
-    def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete(self, *, webhook_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(self, *, webhook_id: str) -> Webhook:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Webhook]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        raise NotImplementedError()
-
-
-class AbstractWorkspaces(abc.ABC):
-
-    @abc.abstractmethod
-    def create(
-        self,
-        *,
-        name: str,
-        company_name: Optional[str] = None,
-        connect_partner_name: Optional[str] = None,
-        connect_webview_customization: Optional[Dict[str, Any]] = None,
-        is_sandbox: Optional[bool] = None,
-        webview_logo_shape: Optional[str] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None
-    ) -> Workspace:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self,
-    ) -> Workspace:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Workspace]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def reset_sandbox(
-        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-
-class AbstractLocks(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def simulate(self) -> AbstractLocksSimulate:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
-    ) -> List[Device]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def lock_door(
-        self,
-        *,
-        device_id: str,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def unlock_door(
-        self,
-        *,
-        device_id: str,
-        sync: Optional[bool] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-
-class AbstractPhones(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def simulate(self) -> AbstractPhonesSimulate:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def deactivate(self, *, device_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(self, *, device_id: str) -> Phone:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_credential_id: Optional[str] = None,
-        owner_user_identity_id: Optional[str] = None
-    ) -> List[Phone]:
         raise NotImplementedError()
 
 

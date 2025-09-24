@@ -1,12 +1,18 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractAccessGrants, AccessGrant
+from .access_grants_unmanaged import AccessGrantsUnmanaged
 
 
 class AccessGrants(AbstractAccessGrants):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._unmanaged = AccessGrantsUnmanaged(client=client, defaults=defaults)
+
+    @property
+    def unmanaged(self) -> AccessGrantsUnmanaged:
+        return self._unmanaged
 
     def create(
         self,
