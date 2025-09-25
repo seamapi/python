@@ -2569,6 +2569,7 @@ class AbstractSpaces(abc.ABC):
         *,
         name: str,
         acs_entrance_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         space_key: Optional[str] = None
     ) -> Space:
@@ -2621,6 +2622,7 @@ class AbstractSpaces(abc.ABC):
         self,
         *,
         acs_entrance_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
