@@ -112,6 +112,7 @@ class Customers(AbstractCustomers):
         reservations: Optional[List[Dict[str, Any]]] = None,
         residents: Optional[List[Dict[str, Any]]] = None,
         rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
@@ -146,6 +147,8 @@ class Customers(AbstractCustomers):
             json_payload["residents"] = residents
         if rooms is not None:
             json_payload["rooms"] = rooms
+        if sites is not None:
+            json_payload["sites"] = sites
         if spaces is not None:
             json_payload["spaces"] = spaces
         if tenants is not None:
