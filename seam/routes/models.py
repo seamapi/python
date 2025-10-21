@@ -2559,22 +2559,6 @@ class AbstractPhonesSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamCustomerV1Spaces(abc.ABC):
-
-    @abc.abstractmethod
-    def create(
-        self,
-        *,
-        name: str,
-        acs_entrance_ids: Optional[List[str]] = None,
-        device_ids: Optional[List[str]] = None,
-        parent_space_key: Optional[str] = None,
-        parent_space_name: Optional[str] = None,
-        space_key: Optional[str] = None
-    ) -> Space:
-        raise NotImplementedError()
-
-
 class AbstractSpaces(abc.ABC):
 
     @abc.abstractmethod
@@ -3026,14 +3010,6 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None
     ) -> List[Phone]:
-        raise NotImplementedError()
-
-
-class AbstractSeam(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def customer(self) -> AbstractSeamCustomer:
         raise NotImplementedError()
 
 
@@ -3637,7 +3613,6 @@ class AbstractRoutes(abc.ABC):
     locks: AbstractLocks
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
-    seam: AbstractSeam
     spaces: AbstractSpaces
     thermostats: AbstractThermostats
     user_identities: AbstractUserIdentities

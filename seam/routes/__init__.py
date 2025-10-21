@@ -16,7 +16,6 @@ from .instant_keys import InstantKeys
 from .locks import Locks
 from .noise_sensors import NoiseSensors
 from .phones import Phones
-from .seam import Seam
 from .spaces import Spaces
 from .thermostats import Thermostats
 from .user_identities import UserIdentities
@@ -41,7 +40,6 @@ class Routes(AbstractRoutes):
         self.locks = Locks(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)
-        self.seam = Seam(client=client, defaults=defaults)
         self.spaces = Spaces(client=client, defaults=defaults)
         self.thermostats = Thermostats(client=client, defaults=defaults)
         self.user_identities = UserIdentities(client=client, defaults=defaults)
