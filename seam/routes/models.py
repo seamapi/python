@@ -1175,6 +1175,8 @@ class Space:
     device_count: float
     display_name: str
     name: str
+    parent_space_id: str
+    parent_space_key: str
     space_id: str
     space_key: str
     workspace_id: str
@@ -1187,6 +1189,8 @@ class Space:
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
             name=d.get("name", None),
+            parent_space_id=d.get("parent_space_id", None),
+            parent_space_key=d.get("parent_space_key", None),
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
@@ -2266,7 +2270,8 @@ class AbstractConnectedAccounts(abc.ABC):
         connected_account_id: str,
         accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -2326,6 +2331,7 @@ class AbstractCustomers(abc.ABC):
         reservations: Optional[List[Dict[str, Any]]] = None,
         residents: Optional[List[Dict[str, Any]]] = None,
         rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
