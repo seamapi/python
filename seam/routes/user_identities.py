@@ -131,15 +131,24 @@ class UserIdentities(AbstractUserIdentities):
     def list(
         self,
         *,
+        created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None
     ) -> List[UserIdentity]:
         json_payload = {}
 
+        if created_before is not None:
+            json_payload["created_before"] = created_before
         if credential_manager_acs_system_id is not None:
             json_payload["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if search is not None:
             json_payload["search"] = search
 

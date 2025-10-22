@@ -49,3 +49,23 @@ class AcsSystems(AbstractAcsSystems):
         )
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+
+    def report_devices(
+        self,
+        *,
+        acs_system_id: str,
+        acs_encoders: Optional[List[Dict[str, Any]]] = None,
+        acs_entrances: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
+        json_payload = {}
+
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
+        if acs_encoders is not None:
+            json_payload["acs_encoders"] = acs_encoders
+        if acs_entrances is not None:
+            json_payload["acs_entrances"] = acs_entrances
+
+        self.client.post("/acs/systems/report_devices", json=json_payload)
+
+        return None

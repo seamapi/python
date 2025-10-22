@@ -48,6 +48,7 @@ class Customers(AbstractCustomers):
         resident_keys: Optional[List[str]] = None,
         room_keys: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
         tenant_keys: Optional[List[str]] = None,
         unit_keys: Optional[List[str]] = None,
         user_identity_keys: Optional[List[str]] = None,
@@ -83,6 +84,8 @@ class Customers(AbstractCustomers):
             json_payload["room_keys"] = room_keys
         if space_keys is not None:
             json_payload["space_keys"] = space_keys
+        if staff_member_keys is not None:
+            json_payload["staff_member_keys"] = staff_member_keys
         if tenant_keys is not None:
             json_payload["tenant_keys"] = tenant_keys
         if unit_keys is not None:
@@ -114,6 +117,7 @@ class Customers(AbstractCustomers):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -151,6 +155,8 @@ class Customers(AbstractCustomers):
             json_payload["sites"] = sites
         if spaces is not None:
             json_payload["spaces"] = spaces
+        if staff_members is not None:
+            json_payload["staff_members"] = staff_members
         if tenants is not None:
             json_payload["tenants"] = tenants
         if units is not None:
