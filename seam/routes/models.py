@@ -78,6 +78,7 @@ class AccessGrant:
     location_ids: List[str]
     name: str
     requested_access_methods: List[Dict[str, Any]]
+    reservation_key: str
     space_ids: List[str]
     starts_at: str
     user_identity_id: str
@@ -99,6 +100,7 @@ class AccessGrant:
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
             requested_access_methods=d.get("requested_access_methods", None),
+            reservation_key=d.get("reservation_key", None),
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
@@ -326,6 +328,7 @@ class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
     assa_abloy_vostio_metadata: Dict[str, Any]
+    can_belong_to_reservation: bool
     can_unlock_with_card: bool
     can_unlock_with_code: bool
     can_unlock_with_mobile_key: bool
@@ -350,6 +353,7 @@ class AcsEntrance:
             assa_abloy_vostio_metadata=DeepAttrDict(
                 d.get("assa_abloy_vostio_metadata", None)
             ),
+            can_belong_to_reservation=d.get("can_belong_to_reservation", None),
             can_unlock_with_card=d.get("can_unlock_with_card", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             can_unlock_with_mobile_key=d.get("can_unlock_with_mobile_key", None),
@@ -949,6 +953,10 @@ class SeamEvent:
     desired_temperature_fahrenheit: float
     device_name: str
     enrollment_automation_id: str
+    acs_entrance_ids: List[str]
+    device_ids: List[str]
+    space_id: str
+    space_key: str
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -1018,6 +1026,10 @@ class SeamEvent:
             ),
             device_name=d.get("device_name", None),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
+            acs_entrance_ids=d.get("acs_entrance_ids", None),
+            device_ids=d.get("device_ids", None),
+            space_id=d.get("space_id", None),
+            space_key=d.get("space_key", None),
         )
 
 
@@ -1194,6 +1206,43 @@ class Space:
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class StaffMember:
+    building_keys: List[str]
+    common_area_keys: List[str]
+    email_address: str
+    facility_keys: List[str]
+    listing_keys: List[str]
+    name: str
+    phone_number: str
+    property_keys: List[str]
+    property_listing_keys: List[str]
+    room_keys: List[str]
+    site_keys: List[str]
+    space_keys: List[str]
+    staff_member_key: str
+    unit_keys: List[str]
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return StaffMember(
+            building_keys=d.get("building_keys", None),
+            common_area_keys=d.get("common_area_keys", None),
+            email_address=d.get("email_address", None),
+            facility_keys=d.get("facility_keys", None),
+            listing_keys=d.get("listing_keys", None),
+            name=d.get("name", None),
+            phone_number=d.get("phone_number", None),
+            property_keys=d.get("property_keys", None),
+            property_listing_keys=d.get("property_listing_keys", None),
+            room_keys=d.get("room_keys", None),
+            site_keys=d.get("site_keys", None),
+            space_keys=d.get("space_keys", None),
+            staff_member_key=d.get("staff_member_key", None),
+            unit_keys=d.get("unit_keys", None),
         )
 
 
@@ -1688,7 +1737,18 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_grant_id: str,
+        is_managed: bool,
+        access_grant_key: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -1976,6 +2036,16 @@ class AbstractAcsSystems(abc.ABC):
     def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def report_devices(
+        self,
+        *,
+        acs_system_id: str,
+        acs_encoders: Optional[List[Dict[str, Any]]] = None,
+        acs_entrances: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -2307,6 +2377,7 @@ class AbstractCustomers(abc.ABC):
         resident_keys: Optional[List[str]] = None,
         room_keys: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
         tenant_keys: Optional[List[str]] = None,
         unit_keys: Optional[List[str]] = None,
         user_identity_keys: Optional[List[str]] = None,
@@ -2333,6 +2404,7 @@ class AbstractCustomers(abc.ABC):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -2739,7 +2811,24 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, search: Optional[str] = None) -> None:
+    def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        is_managed: bool,
+        user_identity_id: str,
+        user_identity_key: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -2827,6 +2916,7 @@ class AbstractAccessGrants(abc.ABC):
         location: Optional[Dict[str, Any]] = None,
         location_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
+        reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
@@ -2865,9 +2955,16 @@ class AbstractAccessGrants(abc.ABC):
         acs_system_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         location_id: Optional[str] = None,
+        reservation_key: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AccessGrant]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def request_access_methods(
+        self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
+    ) -> AccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -3073,7 +3170,10 @@ class AbstractUserIdentities(abc.ABC):
     def list(
         self,
         *,
+        created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None
     ) -> List[UserIdentity]:
         raise NotImplementedError()

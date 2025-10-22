@@ -28,6 +28,7 @@ class AccessGrants(AbstractAccessGrants):
         location: Optional[Dict[str, Any]] = None,
         location_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
+        reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
@@ -56,6 +57,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["location_ids"] = location_ids
         if name is not None:
             json_payload["name"] = name
+        if reservation_key is not None:
+            json_payload["reservation_key"] = reservation_key
         if space_ids is not None:
             json_payload["space_ids"] = space_ids
         if space_keys is not None:
@@ -122,6 +125,7 @@ class AccessGrants(AbstractAccessGrants):
         acs_system_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         location_id: Optional[str] = None,
+        reservation_key: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AccessGrant]:
@@ -137,6 +141,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["customer_key"] = customer_key
         if location_id is not None:
             json_payload["location_id"] = location_id
+        if reservation_key is not None:
+            json_payload["reservation_key"] = reservation_key
         if space_id is not None:
             json_payload["space_id"] = space_id
         if user_identity_id is not None:
@@ -145,6 +151,22 @@ class AccessGrants(AbstractAccessGrants):
         res = self.client.post("/access_grants/list", json=json_payload)
 
         return [AccessGrant.from_dict(item) for item in res["access_grants"]]
+
+    def request_access_methods(
+        self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
+    ) -> AccessGrant:
+        json_payload = {}
+
+        if access_grant_id is not None:
+            json_payload["access_grant_id"] = access_grant_id
+        if requested_access_methods is not None:
+            json_payload["requested_access_methods"] = requested_access_methods
+
+        res = self.client.post(
+            "/access_grants/request_access_methods", json=json_payload
+        )
+
+        return AccessGrant.from_dict(res["access_grant"])
 
     def update(
         self,
