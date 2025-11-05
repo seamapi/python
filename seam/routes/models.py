@@ -689,6 +689,7 @@ class ConnectedAccount:
 @dataclass
 class CustomizationProfile:
     created_at: str
+    customer_portal_theme: Dict[str, Any]
     customization_profile_id: str
     logo_url: str
     name: str
@@ -700,6 +701,7 @@ class CustomizationProfile:
     def from_dict(d: Dict[str, Any]):
         return CustomizationProfile(
             created_at=d.get("created_at", None),
+            customer_portal_theme=DeepAttrDict(d.get("customer_portal_theme", None)),
             customization_profile_id=d.get("customization_profile_id", None),
             logo_url=d.get("logo_url", None),
             name=d.get("name", None),
@@ -1062,7 +1064,6 @@ class InstantKey:
 
 @dataclass
 class MagicLink:
-    building_block_type: str
     created_at: str
     customer_key: str
     expires_at: str
@@ -1072,7 +1073,6 @@ class MagicLink:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return MagicLink(
-            building_block_type=d.get("building_block_type", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
             expires_at=d.get("expires_at", None),
