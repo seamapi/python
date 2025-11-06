@@ -2304,45 +2304,10 @@ class AbstractConnectWebviews(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractConnectedAccounts(abc.ABC):
+class AbstractConnectedAccountsSimulate(abc.ABC):
 
     @abc.abstractmethod
-    def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(
-        self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
-    ) -> ConnectedAccount:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
-        limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
-    ) -> List[ConnectedAccount]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def sync(self, *, connected_account_id: str) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def update(
-        self,
-        *,
-        connected_account_id: str,
-        accepted_capabilities: Optional[List[str]] = None,
-        automatically_manage_new_devices: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None
-    ) -> None:
+    def disconnect(self, *, connected_account_id: str) -> None:
         raise NotImplementedError()
 
 
@@ -3023,6 +2988,53 @@ class AbstractAccessMethods(abc.ABC):
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AccessMethod]:
+        raise NotImplementedError()
+
+
+class AbstractConnectedAccounts(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractConnectedAccountsSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
+    ) -> ConnectedAccount:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[ConnectedAccount]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def sync(self, *, connected_account_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        connected_account_id: str,
+        accepted_capabilities: Optional[List[str]] = None,
+        automatically_manage_new_devices: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 

@@ -1,12 +1,18 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractConnectedAccounts, ConnectedAccount
+from .connected_accounts_simulate import ConnectedAccountsSimulate
 
 
 class ConnectedAccounts(AbstractConnectedAccounts):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._simulate = ConnectedAccountsSimulate(client=client, defaults=defaults)
+
+    @property
+    def simulate(self) -> ConnectedAccountsSimulate:
+        return self._simulate
 
     def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
         json_payload = {}
