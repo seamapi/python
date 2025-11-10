@@ -2317,9 +2317,11 @@ class AbstractCustomers(abc.ABC):
     def create_portal(
         self,
         *,
+        customization_profile_id: Optional[str] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         raise NotImplementedError()
