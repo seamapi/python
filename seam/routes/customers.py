@@ -11,19 +11,25 @@ class Customers(AbstractCustomers):
     def create_portal(
         self,
         *,
+        customization_profile_id: Optional[str] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         json_payload = {}
 
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
         if features is not None:
             json_payload["features"] = features
         if is_embedded is not None:
             json_payload["is_embedded"] = is_embedded
         if landing_page is not None:
             json_payload["landing_page"] = landing_page
+        if locale is not None:
+            json_payload["locale"] = locale
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 
