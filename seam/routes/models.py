@@ -447,6 +447,7 @@ class AcsUser:
     last_successful_sync_at: str
     pending_mutations: List[Dict[str, Any]]
     phone_number: str
+    salto_space_metadata: Dict[str, Any]
     user_identity_email_address: str
     user_identity_full_name: str
     user_identity_id: str
@@ -475,6 +476,7 @@ class AcsUser:
             last_successful_sync_at=d.get("last_successful_sync_at", None),
             pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
+            salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
@@ -500,6 +502,71 @@ class ActionAttempt:
             error=DeepAttrDict(d.get("error", None)),
             result=d.get("result", None),
             status=d.get("status", None),
+        )
+
+
+@dataclass
+class Batch:
+    access_codes: List[Any]
+    access_grants: List[Any]
+    access_methods: List[Any]
+    acs_access_groups: List[Any]
+    acs_credentials: List[Any]
+    acs_encoders: List[Any]
+    acs_entrances: List[Any]
+    acs_systems: List[Any]
+    acs_users: List[Any]
+    action_attempts: List[Any]
+    client_sessions: List[Any]
+    connect_webviews: List[Any]
+    connected_accounts: List[Any]
+    customization_profiles: List[Any]
+    devices: List[Any]
+    events: List[Any]
+    instant_keys: List[Any]
+    noise_thresholds: List[Any]
+    spaces: List[Any]
+    thermostat_daily_programs: List[Any]
+    thermostat_schedules: List[Any]
+    unmanaged_access_codes: List[Any]
+    unmanaged_acs_access_groups: List[Any]
+    unmanaged_acs_credentials: List[Any]
+    unmanaged_acs_users: List[Any]
+    unmanaged_devices: List[Any]
+    user_identities: List[Any]
+    workspaces: List[Any]
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Batch(
+            access_codes=d.get("access_codes", None),
+            access_grants=d.get("access_grants", None),
+            access_methods=d.get("access_methods", None),
+            acs_access_groups=d.get("acs_access_groups", None),
+            acs_credentials=d.get("acs_credentials", None),
+            acs_encoders=d.get("acs_encoders", None),
+            acs_entrances=d.get("acs_entrances", None),
+            acs_systems=d.get("acs_systems", None),
+            acs_users=d.get("acs_users", None),
+            action_attempts=d.get("action_attempts", None),
+            client_sessions=d.get("client_sessions", None),
+            connect_webviews=d.get("connect_webviews", None),
+            connected_accounts=d.get("connected_accounts", None),
+            customization_profiles=d.get("customization_profiles", None),
+            devices=d.get("devices", None),
+            events=d.get("events", None),
+            instant_keys=d.get("instant_keys", None),
+            noise_thresholds=d.get("noise_thresholds", None),
+            spaces=d.get("spaces", None),
+            thermostat_daily_programs=d.get("thermostat_daily_programs", None),
+            thermostat_schedules=d.get("thermostat_schedules", None),
+            unmanaged_access_codes=d.get("unmanaged_access_codes", None),
+            unmanaged_acs_access_groups=d.get("unmanaged_acs_access_groups", None),
+            unmanaged_acs_credentials=d.get("unmanaged_acs_credentials", None),
+            unmanaged_acs_users=d.get("unmanaged_acs_users", None),
+            unmanaged_devices=d.get("unmanaged_devices", None),
+            user_identities=d.get("user_identities", None),
+            workspaces=d.get("workspaces", None),
         )
 
 
@@ -1463,6 +1530,7 @@ class UnmanagedAcsUser:
     last_successful_sync_at: str
     pending_mutations: List[Dict[str, Any]]
     phone_number: str
+    salto_space_metadata: Dict[str, Any]
     user_identity_email_address: str
     user_identity_full_name: str
     user_identity_id: str
@@ -1491,6 +1559,7 @@ class UnmanagedAcsUser:
             last_successful_sync_at=d.get("last_successful_sync_at", None),
             pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
+            salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
