@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractSpaces, Space
+from .models import AbstractSpaces, Space, Batch
 
 
 class Spaces(AbstractSpaces):
@@ -89,7 +89,7 @@ class Spaces(AbstractSpaces):
         include: Optional[List[str]] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         json_payload = {}
 
         if exclude is not None:
@@ -101,9 +101,9 @@ class Spaces(AbstractSpaces):
         if space_keys is not None:
             json_payload["space_keys"] = space_keys
 
-        self.client.post("/spaces/get_related", json=json_payload)
+        res = self.client.post("/spaces/get_related", json=json_payload)
 
-        return None
+        return Batch.from_dict(res["batch"])
 
     def list(
         self,

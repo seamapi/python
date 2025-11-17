@@ -2707,7 +2707,7 @@ class AbstractSpaces(abc.ABC):
         include: Optional[List[str]] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2979,7 +2979,7 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_ids: List[str],
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -3047,7 +3047,7 @@ class AbstractAccessMethods(abc.ABC):
         access_method_ids: List[str],
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         raise NotImplementedError()
 
     @abc.abstractmethod
