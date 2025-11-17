@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAccessGrants, AccessGrant
+from .models import AbstractAccessGrants, AccessGrant, Batch
 from .access_grants_unmanaged import AccessGrantsUnmanaged
 
 
@@ -103,7 +103,7 @@ class AccessGrants(AbstractAccessGrants):
         access_grant_ids: List[str],
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         json_payload = {}
 
         if access_grant_ids is not None:
@@ -113,9 +113,9 @@ class AccessGrants(AbstractAccessGrants):
         if include is not None:
             json_payload["include"] = include
 
-        self.client.post("/access_grants/get_related", json=json_payload)
+        res = self.client.post("/access_grants/get_related", json=json_payload)
 
-        return None
+        return Batch.from_dict(res["batch"])
 
     def list(
         self,

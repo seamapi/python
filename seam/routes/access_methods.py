@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAccessMethods, ActionAttempt, AccessMethod
+from .models import AbstractAccessMethods, ActionAttempt, AccessMethod, Batch
 from .access_methods_unmanaged import AccessMethodsUnmanaged
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -69,7 +69,7 @@ class AccessMethods(AbstractAccessMethods):
         access_method_ids: List[str],
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
-    ) -> None:
+    ) -> Batch:
         json_payload = {}
 
         if access_method_ids is not None:
@@ -79,9 +79,9 @@ class AccessMethods(AbstractAccessMethods):
         if include is not None:
             json_payload["include"] = include
 
-        self.client.post("/access_methods/get_related", json=json_payload)
+        res = self.client.post("/access_methods/get_related", json=json_payload)
 
-        return None
+        return Batch.from_dict(res["batch"])
 
     def list(
         self,
