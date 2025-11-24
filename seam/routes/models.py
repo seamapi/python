@@ -1003,6 +1003,7 @@ class SeamEvent:
     noise_threshold_name: str
     noiseaware_metadata: Dict[str, Any]
     method: str
+    user_identity_id: str
     climate_preset_key: str
     is_fallback_climate_preset: bool
     thermostat_schedule_id: str
@@ -1074,6 +1075,7 @@ class SeamEvent:
             noise_threshold_name=d.get("noise_threshold_name", None),
             noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
             method=d.get("method", None),
+            user_identity_id=d.get("user_identity_id", None),
             climate_preset_key=d.get("climate_preset_key", None),
             is_fallback_climate_preset=d.get("is_fallback_climate_preset", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
