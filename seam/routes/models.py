@@ -990,6 +990,7 @@ class SeamEvent:
     client_session_id: str
     connect_webview_id: str
     customer_key: str
+    connected_account_type: str
     action_attempt_id: str
     action_type: str
     status: str
@@ -1062,6 +1063,7 @@ class SeamEvent:
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
             customer_key=d.get("customer_key", None),
+            connected_account_type=d.get("connected_account_type", None),
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             status=d.get("status", None),
