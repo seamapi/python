@@ -1238,6 +1238,7 @@ class PhoneRegistration:
 
 @dataclass
 class PhoneSession:
+    is_sandbox_workspace: bool
     provider_sessions: List[Dict[str, Any]]
     user_identity: Dict[str, Any]
     workspace_id: str
@@ -1245,6 +1246,7 @@ class PhoneSession:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return PhoneSession(
+            is_sandbox_workspace=d.get("is_sandbox_workspace", None),
             provider_sessions=d.get("provider_sessions", None),
             user_identity=DeepAttrDict(d.get("user_identity", None)),
             workspace_id=d.get("workspace_id", None),
