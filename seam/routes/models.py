@@ -2261,7 +2261,14 @@ class AbstractActionAttempts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, action_attempt_ids: List[str]) -> List[ActionAttempt]:
+    def list(
+        self,
+        *,
+        action_attempt_ids: Optional[List[str]] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None
+    ) -> List[ActionAttempt]:
         raise NotImplementedError()
 
 
@@ -2544,8 +2551,10 @@ class AbstractEvents(abc.ABC):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
+        acs_user_id: Optional[str] = None,
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
@@ -2557,7 +2566,8 @@ class AbstractEvents(abc.ABC):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None,
-        unstable_offset: Optional[float] = None
+        unstable_offset: Optional[float] = None,
+        user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:
         raise NotImplementedError()
 

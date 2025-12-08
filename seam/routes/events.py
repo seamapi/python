@@ -33,8 +33,10 @@ class Events(AbstractEvents):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
+        acs_user_id: Optional[str] = None,
         between: Optional[List[str]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
@@ -46,7 +48,8 @@ class Events(AbstractEvents):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None,
-        unstable_offset: Optional[float] = None
+        unstable_offset: Optional[float] = None,
+        user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:
         json_payload = {}
 
@@ -54,10 +57,14 @@ class Events(AbstractEvents):
             json_payload["access_code_id"] = access_code_id
         if access_code_ids is not None:
             json_payload["access_code_ids"] = access_code_ids
+        if acs_entrance_id is not None:
+            json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
+        if acs_user_id is not None:
+            json_payload["acs_user_id"] = acs_user_id
         if between is not None:
             json_payload["between"] = between
         if connect_webview_id is not None:
@@ -82,6 +89,8 @@ class Events(AbstractEvents):
             json_payload["since"] = since
         if unstable_offset is not None:
             json_payload["unstable_offset"] = unstable_offset
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         res = self.client.post("/events/list", json=json_payload)
 
