@@ -35,11 +35,24 @@ class ActionAttempts(AbstractActionAttempts):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
-    def list(self, *, action_attempt_ids: List[str]) -> List[ActionAttempt]:
+    def list(
+        self,
+        *,
+        action_attempt_ids: Optional[List[str]] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None
+    ) -> List[ActionAttempt]:
         json_payload = {}
 
         if action_attempt_ids is not None:
             json_payload["action_attempt_ids"] = action_attempt_ids
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
 
         res = self.client.post("/action_attempts/list", json=json_payload)
 
