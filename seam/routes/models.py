@@ -2404,6 +2404,7 @@ class AbstractCustomers(abc.ABC):
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
         locale: Optional[str] = None,
+        property_listing_filter: Optional[Dict[str, Any]] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         raise NotImplementedError()

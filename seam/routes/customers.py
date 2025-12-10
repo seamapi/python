@@ -16,6 +16,7 @@ class Customers(AbstractCustomers):
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
         locale: Optional[str] = None,
+        property_listing_filter: Optional[Dict[str, Any]] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         json_payload = {}
@@ -30,6 +31,8 @@ class Customers(AbstractCustomers):
             json_payload["landing_page"] = landing_page
         if locale is not None:
             json_payload["locale"] = locale
+        if property_listing_filter is not None:
+            json_payload["property_listing_filter"] = property_listing_filter
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 
