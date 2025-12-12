@@ -3510,6 +3510,10 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def update(
         self,
         *,
