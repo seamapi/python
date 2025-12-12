@@ -111,6 +111,16 @@ class Devices(AbstractDevices):
 
         return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
+    def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
+        json_payload = {}
+
+        if devices is not None:
+            json_payload["devices"] = devices
+
+        self.client.post("/devices/report_provider_metadata", json=json_payload)
+
+        return None
+
     def update(
         self,
         *,
