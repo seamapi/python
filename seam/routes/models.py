@@ -754,6 +754,21 @@ class ConnectedAccount:
 
 
 @dataclass
+class Customer:
+    created_at: str
+    customer_key: str
+    workspace_id: str
+
+    @staticmethod
+    def from_dict(d: Dict[str, Any]):
+        return Customer(
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class CustomizationProfile:
     created_at: str
     customer_portal_theme: Dict[str, Any]
