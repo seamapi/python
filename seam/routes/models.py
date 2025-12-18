@@ -1874,6 +1874,10 @@ class AbstractAcsAccessGroups(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def delete(self, *, acs_access_group_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
         raise NotImplementedError()
 
