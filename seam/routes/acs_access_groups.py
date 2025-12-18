@@ -28,6 +28,16 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return None
 
+    def delete(self, *, acs_access_group_id: str) -> None:
+        json_payload = {}
+
+        if acs_access_group_id is not None:
+            json_payload["acs_access_group_id"] = acs_access_group_id
+
+        self.client.post("/acs/access_groups/delete", json=json_payload)
+
+        return None
+
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
         json_payload = {}
 
