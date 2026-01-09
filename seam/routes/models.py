@@ -1020,6 +1020,7 @@ class SeamEvent:
     noise_threshold_id: str
     noise_threshold_name: str
     noiseaware_metadata: Dict[str, Any]
+    access_code_is_managed: bool
     method: str
     user_identity_id: str
     climate_preset_key: str
@@ -1093,6 +1094,7 @@ class SeamEvent:
             noise_threshold_id=d.get("noise_threshold_id", None),
             noise_threshold_name=d.get("noise_threshold_name", None),
             noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
+            access_code_is_managed=d.get("access_code_is_managed", None),
             method=d.get("method", None),
             user_identity_id=d.get("user_identity_id", None),
             climate_preset_key=d.get("climate_preset_key", None),
