@@ -74,6 +74,7 @@ class AccessGrant:
     customization_profile_id: str
     display_name: str
     ends_at: str
+    errors: List[Dict[str, Any]]
     instant_key_url: str
     location_ids: List[str]
     name: str
@@ -96,6 +97,7 @@ class AccessGrant:
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
+            errors=d.get("errors", None),
             instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
