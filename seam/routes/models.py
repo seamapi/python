@@ -997,6 +997,7 @@ class SeamEvent:
     access_grant_key: str
     ends_at: str
     starts_at: str
+    error_message: str
     access_grant_ids: List[str]
     access_grant_keys: List[str]
     access_method_id: str
@@ -1071,6 +1072,7 @@ class SeamEvent:
             access_grant_key=d.get("access_grant_key", None),
             ends_at=d.get("ends_at", None),
             starts_at=d.get("starts_at", None),
+            error_message=d.get("error_message", None),
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
             access_method_id=d.get("access_method_id", None),
@@ -3032,7 +3034,9 @@ class AbstractAccessGrants(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
         location_id: Optional[str] = None,
+        page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
