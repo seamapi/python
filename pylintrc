@@ -10,6 +10,7 @@ disable=
     missing-class-docstring,
     too-few-public-methods,
     too-many-branches,
+    too-many-statements,
     super-init-not-called,
     redefined-builtin,
     too-many-instance-attributes,
