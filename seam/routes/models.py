@@ -734,6 +734,7 @@ class ConnectedAccount:
     customer_key: str
     display_name: str
     errors: List[Dict[str, Any]]
+    image_url: str
     user_identifier: Dict[str, Any]
     warnings: List[Dict[str, Any]]
 
@@ -752,6 +753,7 @@ class ConnectedAccount:
             customer_key=d.get("customer_key", None),
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
+            image_url=d.get("image_url", None),
             user_identifier=DeepAttrDict(d.get("user_identifier", None)),
             warnings=d.get("warnings", None),
         )
@@ -823,6 +825,8 @@ class Device:
     created_at: str
     custom_metadata: Dict[str, Any]
     device_id: str
+    device_manufacturer: Dict[str, Any]
+    device_provider: Dict[str, Any]
     device_type: Any
     display_name: str
     errors: List[Dict[str, Any]]
@@ -875,6 +879,8 @@ class Device:
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
+            device_manufacturer=DeepAttrDict(d.get("device_manufacturer", None)),
+            device_provider=DeepAttrDict(d.get("device_provider", None)),
             device_type=d.get("device_type", None),
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
@@ -2579,6 +2585,13 @@ class AbstractEvents(abc.ABC):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
+        access_method_id: Optional[str] = None,
+        access_method_ids: Optional[List[str]] = None,
+        acs_access_group_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
+        acs_encoder_id: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
@@ -2594,6 +2607,8 @@ class AbstractEvents(abc.ABC):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_ids: Optional[List[str]] = None,
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:

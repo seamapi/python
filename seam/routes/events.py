@@ -33,6 +33,13 @@ class Events(AbstractEvents):
         *,
         access_code_id: Optional[str] = None,
         access_code_ids: Optional[List[str]] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
+        access_method_id: Optional[str] = None,
+        access_method_ids: Optional[List[str]] = None,
+        acs_access_group_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
+        acs_encoder_id: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
@@ -48,6 +55,8 @@ class Events(AbstractEvents):
         event_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         since: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_ids: Optional[List[str]] = None,
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:
@@ -57,6 +66,20 @@ class Events(AbstractEvents):
             json_payload["access_code_id"] = access_code_id
         if access_code_ids is not None:
             json_payload["access_code_ids"] = access_code_ids
+        if access_grant_id is not None:
+            json_payload["access_grant_id"] = access_grant_id
+        if access_grant_ids is not None:
+            json_payload["access_grant_ids"] = access_grant_ids
+        if access_method_id is not None:
+            json_payload["access_method_id"] = access_method_id
+        if access_method_ids is not None:
+            json_payload["access_method_ids"] = access_method_ids
+        if acs_access_group_id is not None:
+            json_payload["acs_access_group_id"] = acs_access_group_id
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
+        if acs_encoder_id is not None:
+            json_payload["acs_encoder_id"] = acs_encoder_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
@@ -87,6 +110,10 @@ class Events(AbstractEvents):
             json_payload["limit"] = limit
         if since is not None:
             json_payload["since"] = since
+        if space_id is not None:
+            json_payload["space_id"] = space_id
+        if space_ids is not None:
+            json_payload["space_ids"] = space_ids
         if unstable_offset is not None:
             json_payload["unstable_offset"] = unstable_offset
         if user_identity_id is not None:
