@@ -3045,6 +3045,7 @@ class AbstractAccessGrants(abc.ABC):
     def list(
         self,
         *,
+        access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
