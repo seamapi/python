@@ -94,15 +94,10 @@ class AccessCodes(AbstractAccessCodes):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
-        is_offline_access_code: Optional[bool] = None,
-        is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
-        starts_at: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        starts_at: Optional[str] = None
     ) -> List[AccessCode]:
         json_payload = {}
 
@@ -124,12 +119,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-        if is_offline_access_code is not None:
-            json_payload["is_offline_access_code"] = is_offline_access_code
-        if is_one_time_use is not None:
-            json_payload["is_one_time_use"] = is_one_time_use
-        if max_time_rounding is not None:
-            json_payload["max_time_rounding"] = max_time_rounding
         if name is not None:
             json_payload["name"] = name
         if prefer_native_scheduling is not None:
@@ -138,10 +127,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-        if use_backup_access_code_pool is not None:
-            json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-        if use_offline_access_code is not None:
-            json_payload["use_offline_access_code"] = use_offline_access_code
 
         res = self.client.post("/access_codes/create_multiple", json=json_payload)
 

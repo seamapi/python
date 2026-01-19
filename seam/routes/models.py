@@ -1016,6 +1016,7 @@ class SeamEvent:
     client_session_id: str
     connect_webview_id: str
     customer_key: str
+    connected_account_errors: List[Dict[str, Any]]
     connected_account_type: str
     action_attempt_id: str
     action_type: str
@@ -1091,6 +1092,7 @@ class SeamEvent:
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
             customer_key=d.get("customer_key", None),
+            connected_account_errors=d.get("connected_account_errors", None),
             connected_account_type=d.get("connected_account_type", None),
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3045,7 +3047,7 @@ class AbstractAccessGrants(abc.ABC):
     def list(
         self,
         *,
-        access_grant_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
@@ -3403,15 +3405,10 @@ class AbstractAccessCodes(abc.ABC):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
-        is_offline_access_code: Optional[bool] = None,
-        is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
-        starts_at: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        starts_at: Optional[str] = None
     ) -> List[AccessCode]:
         raise NotImplementedError()
 

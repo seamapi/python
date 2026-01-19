@@ -120,7 +120,7 @@ class AccessGrants(AbstractAccessGrants):
     def list(
         self,
         *,
-        access_grant_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
@@ -134,8 +134,8 @@ class AccessGrants(AbstractAccessGrants):
     ) -> List[AccessGrant]:
         json_payload = {}
 
-        if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+        if access_grant_ids is not None:
+            json_payload["access_grant_ids"] = access_grant_ids
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_id is not None:
