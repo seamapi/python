@@ -3321,7 +3321,8 @@ class AbstractUserIdentities(abc.ABC):
         credential_manager_acs_system_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
     ) -> List[UserIdentity]:
         raise NotImplementedError()
 

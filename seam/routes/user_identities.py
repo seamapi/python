@@ -135,7 +135,8 @@ class UserIdentities(AbstractUserIdentities):
         credential_manager_acs_system_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
     ) -> List[UserIdentity]:
         json_payload = {}
 
@@ -151,6 +152,8 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["page_cursor"] = page_cursor
         if search is not None:
             json_payload["search"] = search
+        if user_identity_ids is not None:
+            json_payload["user_identity_ids"] = user_identity_ids
 
         res = self.client.post("/user_identities/list", json=json_payload)
 
