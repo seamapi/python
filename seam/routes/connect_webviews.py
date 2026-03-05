@@ -81,6 +81,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         json_payload = {}
@@ -93,6 +94,8 @@ class ConnectWebviews(AbstractConnectWebviews):
             json_payload["limit"] = limit
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if search is not None:
+            json_payload["search"] = search
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 

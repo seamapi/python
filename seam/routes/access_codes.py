@@ -182,6 +182,32 @@ class AccessCodes(AbstractAccessCodes):
 
         return AccessCode.from_dict(res["access_code"])
 
+    def get_timeline(
+        self,
+        *,
+        access_code_id: str,
+        after: Optional[str] = None,
+        before: Optional[str] = None,
+        event_types: Optional[List[str]] = None,
+        limit: Optional[float] = None
+    ) -> None:
+        json_payload = {}
+
+        if access_code_id is not None:
+            json_payload["access_code_id"] = access_code_id
+        if after is not None:
+            json_payload["after"] = after
+        if before is not None:
+            json_payload["before"] = before
+        if event_types is not None:
+            json_payload["event_types"] = event_types
+        if limit is not None:
+            json_payload["limit"] = limit
+
+        self.client.post("/access_codes/get_timeline", json=json_payload)
+
+        return None
+
     def list(
         self,
         *,
@@ -190,6 +216,7 @@ class AccessCodes(AbstractAccessCodes):
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[AccessCode]:
         json_payload = {}
@@ -204,6 +231,8 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["limit"] = limit
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if search is not None:
+            json_payload["search"] = search
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 

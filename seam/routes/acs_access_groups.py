@@ -53,6 +53,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
+        search: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AcsAccessGroup]:
         json_payload = {}
@@ -61,6 +62,8 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if search is not None:
+            json_payload["search"] = search
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 

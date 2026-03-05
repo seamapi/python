@@ -1,28 +1,43 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractCustomers, MagicLink
+from .customers_reservations import CustomersReservations
 
 
 class Customers(AbstractCustomers):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._reservations = CustomersReservations(client=client, defaults=defaults)
+
+    @property
+    def reservations(self) -> CustomersReservations:
+        return self._reservations
 
     def create_portal(
         self,
         *,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
         locale: Optional[str] = None,
-        property_listing_filter: Optional[Dict[str, Any]] = None,
+        navigation_mode: Optional[str] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> MagicLink:
         json_payload = {}
 
+        if customer_resources_filters is not None:
+            json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
             json_payload["customization_profile_id"] = customization_profile_id
+        if deep_link is not None:
+            json_payload["deep_link"] = deep_link
+        if exclude_locale_picker is not None:
+            json_payload["exclude_locale_picker"] = exclude_locale_picker
         if features is not None:
             json_payload["features"] = features
         if is_embedded is not None:
@@ -31,8 +46,8 @@ class Customers(AbstractCustomers):
             json_payload["landing_page"] = landing_page
         if locale is not None:
             json_payload["locale"] = locale
-        if property_listing_filter is not None:
-            json_payload["property_listing_filter"] = property_listing_filter
+        if navigation_mode is not None:
+            json_payload["navigation_mode"] = navigation_mode
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 
