@@ -76,6 +76,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         device_id: str,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
         json_payload = {}
@@ -86,6 +87,8 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["limit"] = limit
         if page_cursor is not None:
             json_payload["page_cursor"] = page_cursor
+        if search is not None:
+            json_payload["search"] = search
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
 

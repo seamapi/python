@@ -22,7 +22,8 @@ class AcsSystems(AbstractAcsSystems):
         self,
         *,
         connected_account_id: Optional[str] = None,
-        customer_key: Optional[str] = None
+        customer_key: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[AcsSystem]:
         json_payload = {}
 
@@ -30,6 +31,8 @@ class AcsSystems(AbstractAcsSystems):
             json_payload["connected_account_id"] = connected_account_id
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
+        if search is not None:
+            json_payload["search"] = search
 
         res = self.client.post("/acs/systems/list", json=json_payload)
 

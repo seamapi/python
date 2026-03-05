@@ -12,6 +12,7 @@ class AccessCode:
     common_code_key: str
     created_at: str
     device_id: str
+    dormakaba_oracode_metadata: Dict[str, Any]
     ends_at: str
     errors: List[Dict[str, Any]]
     is_backup: bool
@@ -38,6 +39,9 @@ class AccessCode:
             common_code_key=d.get("common_code_key", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
+            dormakaba_oracode_metadata=DeepAttrDict(
+                d.get("dormakaba_oracode_metadata", None)
+            ),
             ends_at=d.get("ends_at", None),
             errors=d.get("errors", None),
             is_backup=d.get("is_backup", None),
@@ -78,6 +82,7 @@ class AccessGrant:
     instant_key_url: str
     location_ids: List[str]
     name: str
+    pending_mutations: List[Dict[str, Any]]
     requested_access_methods: List[Dict[str, Any]]
     reservation_key: str
     space_ids: List[str]
@@ -101,6 +106,7 @@ class AccessGrant:
             instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
+            pending_mutations=d.get("pending_mutations", None),
             requested_access_methods=d.get("requested_access_methods", None),
             reservation_key=d.get("reservation_key", None),
             space_ids=d.get("space_ids", None),
@@ -124,6 +130,7 @@ class AccessMethod:
     is_issued: bool
     issued_at: str
     mode: str
+    pending_mutations: List[Dict[str, Any]]
     warnings: List[Dict[str, Any]]
     workspace_id: str
 
@@ -141,6 +148,7 @@ class AccessMethod:
             is_issued=d.get("is_issued", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
+            pending_mutations=d.get("pending_mutations", None),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -997,6 +1005,12 @@ class SeamEvent:
     occurred_at: str
     workspace_id: str
     code: str
+    access_code_errors: List[Dict[str, Any]]
+    access_code_warnings: List[Dict[str, Any]]
+    connected_account_errors: List[Dict[str, Any]]
+    connected_account_warnings: List[Dict[str, Any]]
+    device_errors: List[Dict[str, Any]]
+    device_warnings: List[Dict[str, Any]]
     backup_access_code_id: str
     access_grant_id: str
     acs_entrance_id: str
@@ -1009,6 +1023,8 @@ class SeamEvent:
     access_method_id: str
     is_backup_code: bool
     acs_system_id: str
+    acs_system_errors: List[Dict[str, Any]]
+    acs_system_warnings: List[Dict[str, Any]]
     acs_credential_id: str
     acs_user_id: str
     acs_encoder_id: str
@@ -1016,7 +1032,6 @@ class SeamEvent:
     client_session_id: str
     connect_webview_id: str
     customer_key: str
-    connected_account_errors: List[Dict[str, Any]]
     connected_account_type: str
     action_attempt_id: str
     action_type: str
@@ -1073,6 +1088,12 @@ class SeamEvent:
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
             code=d.get("code", None),
+            access_code_errors=d.get("access_code_errors", None),
+            access_code_warnings=d.get("access_code_warnings", None),
+            connected_account_errors=d.get("connected_account_errors", None),
+            connected_account_warnings=d.get("connected_account_warnings", None),
+            device_errors=d.get("device_errors", None),
+            device_warnings=d.get("device_warnings", None),
             backup_access_code_id=d.get("backup_access_code_id", None),
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
@@ -1085,6 +1106,8 @@ class SeamEvent:
             access_method_id=d.get("access_method_id", None),
             is_backup_code=d.get("is_backup_code", None),
             acs_system_id=d.get("acs_system_id", None),
+            acs_system_errors=d.get("acs_system_errors", None),
+            acs_system_warnings=d.get("acs_system_warnings", None),
             acs_credential_id=d.get("acs_credential_id", None),
             acs_user_id=d.get("acs_user_id", None),
             acs_encoder_id=d.get("acs_encoder_id", None),
@@ -1092,7 +1115,6 @@ class SeamEvent:
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
             customer_key=d.get("customer_key", None),
-            connected_account_errors=d.get("connected_account_errors", None),
             connected_account_type=d.get("connected_account_type", None),
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -1408,6 +1430,7 @@ class UnmanagedAccessCode:
     code: str
     created_at: str
     device_id: str
+    dormakaba_oracode_metadata: Dict[str, Any]
     ends_at: str
     errors: List[Dict[str, Any]]
     is_managed: bool
@@ -1425,6 +1448,9 @@ class UnmanagedAccessCode:
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
+            dormakaba_oracode_metadata=DeepAttrDict(
+                d.get("dormakaba_oracode_metadata", None)
+            ),
             ends_at=d.get("ends_at", None),
             errors=d.get("errors", None),
             is_managed=d.get("is_managed", None),
@@ -1814,6 +1840,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         device_id: str,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
         raise NotImplementedError()
@@ -1903,6 +1930,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
+        search: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AcsAccessGroup]:
         raise NotImplementedError()
@@ -2138,7 +2166,8 @@ class AbstractAcsSystems(abc.ABC):
         self,
         *,
         connected_account_id: Optional[str] = None,
-        customer_key: Optional[str] = None
+        customer_key: Optional[str] = None,
+        search: Optional[str] = None
     ) -> List[AcsSystem]:
         raise NotImplementedError()
 
@@ -2416,6 +2445,7 @@ class AbstractConnectWebviews(abc.ABC):
         customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
         raise NotImplementedError()
@@ -2428,73 +2458,10 @@ class AbstractConnectedAccountsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractCustomers(abc.ABC):
+class AbstractCustomersReservations(abc.ABC):
 
     @abc.abstractmethod
-    def create_portal(
-        self,
-        *,
-        customization_profile_id: Optional[str] = None,
-        features: Optional[Dict[str, Any]] = None,
-        is_embedded: Optional[bool] = None,
-        landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        property_listing_filter: Optional[Dict[str, Any]] = None,
-        customer_data: Optional[Dict[str, Any]] = None
-    ) -> MagicLink:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete_data(
-        self,
-        *,
-        access_grant_keys: Optional[List[str]] = None,
-        booking_keys: Optional[List[str]] = None,
-        building_keys: Optional[List[str]] = None,
-        common_area_keys: Optional[List[str]] = None,
-        customer_keys: Optional[List[str]] = None,
-        facility_keys: Optional[List[str]] = None,
-        guest_keys: Optional[List[str]] = None,
-        listing_keys: Optional[List[str]] = None,
-        property_keys: Optional[List[str]] = None,
-        property_listing_keys: Optional[List[str]] = None,
-        reservation_keys: Optional[List[str]] = None,
-        resident_keys: Optional[List[str]] = None,
-        room_keys: Optional[List[str]] = None,
-        space_keys: Optional[List[str]] = None,
-        staff_member_keys: Optional[List[str]] = None,
-        tenant_keys: Optional[List[str]] = None,
-        unit_keys: Optional[List[str]] = None,
-        user_identity_keys: Optional[List[str]] = None,
-        user_keys: Optional[List[str]] = None
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def push_data(
-        self,
-        *,
-        customer_key: str,
-        access_grants: Optional[List[Dict[str, Any]]] = None,
-        bookings: Optional[List[Dict[str, Any]]] = None,
-        buildings: Optional[List[Dict[str, Any]]] = None,
-        common_areas: Optional[List[Dict[str, Any]]] = None,
-        facilities: Optional[List[Dict[str, Any]]] = None,
-        guests: Optional[List[Dict[str, Any]]] = None,
-        listings: Optional[List[Dict[str, Any]]] = None,
-        properties: Optional[List[Dict[str, Any]]] = None,
-        property_listings: Optional[List[Dict[str, Any]]] = None,
-        reservations: Optional[List[Dict[str, Any]]] = None,
-        residents: Optional[List[Dict[str, Any]]] = None,
-        rooms: Optional[List[Dict[str, Any]]] = None,
-        sites: Optional[List[Dict[str, Any]]] = None,
-        spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
-        tenants: Optional[List[Dict[str, Any]]] = None,
-        units: Optional[List[Dict[str, Any]]] = None,
-        user_identities: Optional[List[Dict[str, Any]]] = None,
-        users: Optional[List[Dict[str, Any]]] = None
-    ) -> None:
+    def create_deep_link(self, *, customer_key: str, reservation_key: str) -> None:
         raise NotImplementedError()
 
 
@@ -2965,6 +2932,7 @@ class AbstractWorkspaces(abc.ABC):
         connect_partner_name: Optional[str] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
+        organization_id: Optional[str] = None,
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
@@ -3037,7 +3005,8 @@ class AbstractAccessGrants(abc.ABC):
     def get_related(
         self,
         *,
-        access_grant_ids: List[str],
+        access_grant_ids: Optional[List[str]] = None,
+        access_grant_keys: Optional[List[str]] = None,
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
     ) -> Batch:
@@ -3169,6 +3138,84 @@ class AbstractConnectedAccounts(abc.ABC):
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+
+class AbstractCustomers(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def reservations(self) -> AbstractCustomersReservations:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create_portal(
+        self,
+        *,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
+        features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
+        navigation_mode: Optional[str] = None,
+        customer_data: Optional[Dict[str, Any]] = None
+    ) -> MagicLink:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -3438,6 +3485,18 @@ class AbstractAccessCodes(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def get_timeline(
+        self,
+        *,
+        access_code_id: str,
+        after: Optional[str] = None,
+        before: Optional[str] = None,
+        event_types: Optional[List[str]] = None,
+        limit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def list(
         self,
         *,
@@ -3446,6 +3505,7 @@ class AbstractAccessCodes(abc.ABC):
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[AccessCode]:
         raise NotImplementedError()

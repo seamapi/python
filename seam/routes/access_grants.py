@@ -100,7 +100,8 @@ class AccessGrants(AbstractAccessGrants):
     def get_related(
         self,
         *,
-        access_grant_ids: List[str],
+        access_grant_ids: Optional[List[str]] = None,
+        access_grant_keys: Optional[List[str]] = None,
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
     ) -> Batch:
@@ -108,6 +109,8 @@ class AccessGrants(AbstractAccessGrants):
 
         if access_grant_ids is not None:
             json_payload["access_grant_ids"] = access_grant_ids
+        if access_grant_keys is not None:
+            json_payload["access_grant_keys"] = access_grant_keys
         if exclude is not None:
             json_payload["exclude"] = exclude
         if include is not None:
