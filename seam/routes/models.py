@@ -158,6 +158,7 @@ class AccessMethod:
 class AcsAccessGroup:
     access_group_type: str
     access_group_type_display_name: str
+    access_schedule: Dict[str, Any]
     acs_access_group_id: str
     acs_system_id: str
     connected_account_id: str
@@ -177,6 +178,7 @@ class AcsAccessGroup:
             access_group_type_display_name=d.get(
                 "access_group_type_display_name", None
             ),
+            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -1467,6 +1469,7 @@ class UnmanagedAccessCode:
 class UnmanagedAcsAccessGroup:
     access_group_type: str
     access_group_type_display_name: str
+    access_schedule: Dict[str, Any]
     acs_access_group_id: str
     acs_system_id: str
     connected_account_id: str
@@ -1486,6 +1489,7 @@ class UnmanagedAcsAccessGroup:
             access_group_type_display_name=d.get(
                 "access_group_type_display_name", None
             ),
+            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
