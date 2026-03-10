@@ -3159,6 +3159,7 @@ class AbstractCustomers(abc.ABC):
     def create_portal(
         self,
         *,
+        _dev: Optional[bool] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
         deep_link: Optional[Dict[str, Any]] = None,
