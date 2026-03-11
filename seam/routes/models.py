@@ -168,6 +168,7 @@ class AcsAccessGroup:
     external_type_display_name: str
     is_managed: bool
     name: str
+    pending_mutations: List[Dict[str, Any]]
     warnings: List[Dict[str, Any]]
     workspace_id: str
 
@@ -188,6 +189,7 @@ class AcsAccessGroup:
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
+            pending_mutations=d.get("pending_mutations", None),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -1481,6 +1483,7 @@ class UnmanagedAcsAccessGroup:
     external_type_display_name: str
     is_managed: bool
     name: str
+    pending_mutations: List[Dict[str, Any]]
     warnings: List[Dict[str, Any]]
     workspace_id: str
 
@@ -1501,6 +1504,7 @@ class UnmanagedAcsAccessGroup:
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
+            pending_mutations=d.get("pending_mutations", None),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -3062,7 +3066,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, access_method_id: str) -> None:
+    def delete(
+        self,
+        *,
+        access_method_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        reservation_key: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
