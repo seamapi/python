@@ -15,11 +15,21 @@ class AccessMethods(AbstractAccessMethods):
     def unmanaged(self) -> AccessMethodsUnmanaged:
         return self._unmanaged
 
-    def delete(self, *, access_method_id: str) -> None:
+    def delete(
+        self,
+        *,
+        access_method_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        reservation_key: Optional[str] = None
+    ) -> None:
         json_payload = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
+        if access_grant_id is not None:
+            json_payload["access_grant_id"] = access_grant_id
+        if reservation_key is not None:
+            json_payload["reservation_key"] = reservation_key
 
         self.client.post("/access_methods/delete", json=json_payload)
 
