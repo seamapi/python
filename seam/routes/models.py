@@ -1073,7 +1073,9 @@ class SeamEvent:
     desired_temperature_fahrenheit: float
     device_name: str
     activation_reason: str
+    image_url: str
     motion_sub_type: str
+    video_url: str
     enrollment_automation_id: str
     acs_entrance_ids: List[str]
     device_ids: List[str]
@@ -1160,7 +1162,9 @@ class SeamEvent:
             ),
             device_name=d.get("device_name", None),
             activation_reason=d.get("activation_reason", None),
+            image_url=d.get("image_url", None),
             motion_sub_type=d.get("motion_sub_type", None),
+            video_url=d.get("video_url", None),
             enrollment_automation_id=d.get("enrollment_automation_id", None),
             acs_entrance_ids=d.get("acs_entrance_ids", None),
             device_ids=d.get("device_ids", None),
