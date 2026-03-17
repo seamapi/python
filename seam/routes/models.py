@@ -345,6 +345,7 @@ class AcsEntrance:
     brivo_metadata: Dict[str, Any]
     can_belong_to_reservation: bool
     can_unlock_with_card: bool
+    can_unlock_with_cloud_key: bool
     can_unlock_with_code: bool
     can_unlock_with_mobile_key: bool
     connected_account_id: str
@@ -371,6 +372,7 @@ class AcsEntrance:
             brivo_metadata=DeepAttrDict(d.get("brivo_metadata", None)),
             can_belong_to_reservation=d.get("can_belong_to_reservation", None),
             can_unlock_with_card=d.get("can_unlock_with_card", None),
+            can_unlock_with_cloud_key=d.get("can_unlock_with_cloud_key", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             can_unlock_with_mobile_key=d.get("can_unlock_with_mobile_key", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -2170,6 +2172,16 @@ class AbstractAcsEntrances(abc.ABC):
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
     ) -> List[AcsCredential]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
 
