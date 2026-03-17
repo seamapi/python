@@ -1,6 +1,8 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential
+from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential, ActionAttempt
+
+from ..modules.action_attempts import resolve_action_attempt
 
 
 class AcsEntrances(AbstractAcsEntrances):
@@ -94,3 +96,31 @@ class AcsEntrances(AbstractAcsEntrances):
         )
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+
+    def unlock(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if acs_credential_id is not None:
+            json_payload["acs_credential_id"] = acs_credential_id
+        if acs_entrance_id is not None:
+            json_payload["acs_entrance_id"] = acs_entrance_id
+
+        res = self.client.post("/acs/entrances/unlock", json=json_payload)
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
