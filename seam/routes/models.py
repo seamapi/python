@@ -128,6 +128,7 @@ class AccessMethod:
     instant_key_url: str
     is_encoding_required: bool
     is_issued: bool
+    is_ready_for_encoding: bool
     issued_at: str
     mode: str
     pending_mutations: List[Dict[str, Any]]
@@ -146,6 +147,7 @@ class AccessMethod:
             instant_key_url=d.get("instant_key_url", None),
             is_encoding_required=d.get("is_encoding_required", None),
             is_issued=d.get("is_issued", None),
+            is_ready_for_encoding=d.get("is_ready_for_encoding", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
             pending_mutations=d.get("pending_mutations", None),
@@ -3123,7 +3125,8 @@ class AbstractAccessMethods(abc.ABC):
     def list(
         self,
         *,
-        access_grant_id: str,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
@@ -3538,6 +3541,7 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         access_code_ids: Optional[List[str]] = None,
+        access_method_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
