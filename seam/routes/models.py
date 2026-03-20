@@ -1892,6 +1892,8 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
