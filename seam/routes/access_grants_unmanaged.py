@@ -23,6 +23,8 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
@@ -32,6 +34,10 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             json_payload["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if reservation_key is not None:
             json_payload["reservation_key"] = reservation_key
         if user_identity_id is not None:
