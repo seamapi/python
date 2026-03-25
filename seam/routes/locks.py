@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractLocks, Device, ActionAttempt
+from .models import AbstractLocks, ActionAttempt, Device
 from .locks_simulate import LocksSimulate
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -14,6 +14,37 @@ class Locks(AbstractLocks):
     @property
     def simulate(self) -> LocksSimulate:
         return self._simulate
+
+    def configure_auto_lock(
+        self,
+        *,
+        auto_lock_enabled: bool,
+        device_id: str,
+        auto_lock_delay_seconds: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if auto_lock_enabled is not None:
+            json_payload["auto_lock_enabled"] = auto_lock_enabled
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if auto_lock_delay_seconds is not None:
+            json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
+
+        res = self.client.post("/locks/configure_auto_lock", json=json_payload)
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None

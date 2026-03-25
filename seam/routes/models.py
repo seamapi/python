@@ -819,6 +819,7 @@ class CustomizationProfile:
 
 @dataclass
 class Device:
+    can_configure_auto_lock: bool
     can_hvac_cool: bool
     can_hvac_heat: bool
     can_hvac_heat_cool: bool
@@ -859,6 +860,7 @@ class Device:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return Device(
+            can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
@@ -914,6 +916,7 @@ class Device:
 
 @dataclass
 class DeviceProvider:
+    can_configure_auto_lock: bool
     can_hvac_cool: bool
     can_hvac_heat: bool
     can_hvac_heat_cool: bool
@@ -941,6 +944,7 @@ class DeviceProvider:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return DeviceProvider(
+            can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
@@ -1656,6 +1660,7 @@ class UnmanagedAcsUser:
 
 @dataclass
 class UnmanagedDevice:
+    can_configure_auto_lock: bool
     can_hvac_cool: bool
     can_hvac_heat: bool
     can_hvac_heat_cool: bool
@@ -1691,6 +1696,7 @@ class UnmanagedDevice:
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return UnmanagedDevice(
+            can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
@@ -2492,10 +2498,77 @@ class AbstractConnectedAccountsSimulate(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractCustomersReservations(abc.ABC):
+class AbstractCustomers(abc.ABC):
 
     @abc.abstractmethod
-    def create_deep_link(self, *, customer_key: str, reservation_key: str) -> None:
+    def create_portal(
+        self,
+        *,
+        _dev: Optional[bool] = None,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
+        features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
+        navigation_mode: Optional[str] = None,
+        customer_data: Optional[Dict[str, Any]] = None
+    ) -> MagicLink:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -3183,90 +3256,22 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractCustomers(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def reservations(self) -> AbstractCustomersReservations:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def create_portal(
-        self,
-        *,
-        _dev: Optional[bool] = None,
-        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
-        customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
-        exclude_locale_picker: Optional[bool] = None,
-        features: Optional[Dict[str, Any]] = None,
-        is_embedded: Optional[bool] = None,
-        landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        navigation_mode: Optional[str] = None,
-        customer_data: Optional[Dict[str, Any]] = None
-    ) -> MagicLink:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def delete_data(
-        self,
-        *,
-        access_grant_keys: Optional[List[str]] = None,
-        booking_keys: Optional[List[str]] = None,
-        building_keys: Optional[List[str]] = None,
-        common_area_keys: Optional[List[str]] = None,
-        customer_keys: Optional[List[str]] = None,
-        facility_keys: Optional[List[str]] = None,
-        guest_keys: Optional[List[str]] = None,
-        listing_keys: Optional[List[str]] = None,
-        property_keys: Optional[List[str]] = None,
-        property_listing_keys: Optional[List[str]] = None,
-        reservation_keys: Optional[List[str]] = None,
-        resident_keys: Optional[List[str]] = None,
-        room_keys: Optional[List[str]] = None,
-        space_keys: Optional[List[str]] = None,
-        staff_member_keys: Optional[List[str]] = None,
-        tenant_keys: Optional[List[str]] = None,
-        unit_keys: Optional[List[str]] = None,
-        user_identity_keys: Optional[List[str]] = None,
-        user_keys: Optional[List[str]] = None
-    ) -> None:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def push_data(
-        self,
-        *,
-        customer_key: str,
-        access_grants: Optional[List[Dict[str, Any]]] = None,
-        bookings: Optional[List[Dict[str, Any]]] = None,
-        buildings: Optional[List[Dict[str, Any]]] = None,
-        common_areas: Optional[List[Dict[str, Any]]] = None,
-        facilities: Optional[List[Dict[str, Any]]] = None,
-        guests: Optional[List[Dict[str, Any]]] = None,
-        listings: Optional[List[Dict[str, Any]]] = None,
-        properties: Optional[List[Dict[str, Any]]] = None,
-        property_listings: Optional[List[Dict[str, Any]]] = None,
-        reservations: Optional[List[Dict[str, Any]]] = None,
-        residents: Optional[List[Dict[str, Any]]] = None,
-        rooms: Optional[List[Dict[str, Any]]] = None,
-        sites: Optional[List[Dict[str, Any]]] = None,
-        spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
-        tenants: Optional[List[Dict[str, Any]]] = None,
-        units: Optional[List[Dict[str, Any]]] = None,
-        user_identities: Optional[List[Dict[str, Any]]] = None,
-        users: Optional[List[Dict[str, Any]]] = None
-    ) -> None:
-        raise NotImplementedError()
-
-
 class AbstractLocks(abc.ABC):
 
     @property
     @abc.abstractmethod
     def simulate(self) -> AbstractLocksSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def configure_auto_lock(
+        self,
+        *,
+        auto_lock_enabled: bool,
+        device_id: str,
+        auto_lock_delay_seconds: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -3524,18 +3529,6 @@ class AbstractAccessCodes(abc.ABC):
         code: Optional[str] = None,
         device_id: Optional[str] = None
     ) -> AccessCode:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get_timeline(
-        self,
-        *,
-        access_code_id: str,
-        after: Optional[str] = None,
-        before: Optional[str] = None,
-        event_types: Optional[List[str]] = None,
-        limit: Optional[float] = None
-    ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
