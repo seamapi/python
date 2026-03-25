@@ -1,18 +1,12 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractCustomers, MagicLink
-from .customers_reservations import CustomersReservations
 
 
 class Customers(AbstractCustomers):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
-        self._reservations = CustomersReservations(client=client, defaults=defaults)
-
-    @property
-    def reservations(self) -> CustomersReservations:
-        return self._reservations
 
     def create_portal(
         self,
