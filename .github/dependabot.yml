@@ -9,14 +9,13 @@ updates:
       prefix: feat
       include: scope
     allow:
-      - dependency-type: development
+      - dependency-name: '@seamapi/*'
     ignore:
       - dependency-name: '*'
         update-types:
           - 'version-update:semver-major'
     groups:
       seam:
-        dependency-type: development
         patterns:
           - '@seamapi/*'
         update-types:
