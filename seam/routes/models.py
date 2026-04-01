@@ -1842,13 +1842,12 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         access_code_id: str,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None,
-        sync: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None
     ) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, access_code_id: str, sync: Optional[bool] = None) -> None:
+    def delete(self, *, access_code_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2010,7 +2009,6 @@ class AbstractAcsCredentials(abc.ABC):
         code: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         ends_at: Optional[str] = None,
-        hotek_metadata: Optional[Dict[str, Any]] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
@@ -2462,7 +2460,6 @@ class AbstractConnectWebviews(abc.ABC):
         custom_redirect_failure_url: Optional[str] = None,
         custom_redirect_url: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_selection_mode: Optional[str] = None,
         excluded_providers: Optional[List[str]] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
@@ -2504,10 +2501,8 @@ class AbstractCustomers(abc.ABC):
     def create_portal(
         self,
         *,
-        _dev: Optional[bool] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -2620,8 +2615,6 @@ class AbstractDevicesUnmanaged(abc.ABC):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -2744,15 +2737,12 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         starts_daily_at: str,
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-        sync: Optional[bool] = None
+        noise_threshold_nrs: Optional[float] = None
     ) -> NoiseThreshold:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(
-        self, *, device_id: str, noise_threshold_id: str, sync: Optional[bool] = None
-    ) -> None:
+    def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2760,9 +2750,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self, *, device_id: str, is_programmed: Optional[bool] = None
-    ) -> List[NoiseThreshold]:
+    def list(self, *, device_id: str) -> List[NoiseThreshold]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -2775,8 +2763,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
         noise_threshold_nrs: Optional[float] = None,
-        starts_daily_at: Optional[str] = None,
-        sync: Optional[bool] = None
+        starts_daily_at: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 
@@ -2849,7 +2836,6 @@ class AbstractSpaces(abc.ABC):
     def list(
         self,
         *,
-        connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None
@@ -3217,7 +3203,7 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
+    def delete(self, *, connected_account_id: str) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -3293,8 +3279,6 @@ class AbstractLocks(abc.ABC):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -3310,7 +3294,6 @@ class AbstractLocks(abc.ABC):
         self,
         *,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3320,7 +3303,6 @@ class AbstractLocks(abc.ABC):
         self,
         *,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3483,7 +3465,6 @@ class AbstractAccessCodes(abc.ABC):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        sync: Optional[bool] = None,
         use_backup_access_code_pool: Optional[bool] = None,
         use_offline_access_code: Optional[bool] = None
     ) -> AccessCode:
@@ -3508,13 +3489,7 @@ class AbstractAccessCodes(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(
-        self,
-        *,
-        access_code_id: str,
-        device_id: Optional[str] = None,
-        sync: Optional[bool] = None
-    ) -> None:
+    def delete(self, *, access_code_id: str, device_id: Optional[str] = None) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -3580,7 +3555,6 @@ class AbstractAccessCodes(abc.ABC):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        sync: Optional[bool] = None,
         type: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
         use_offline_access_code: Optional[bool] = None
@@ -3630,8 +3604,6 @@ class AbstractDevices(abc.ABC):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -3690,8 +3662,6 @@ class AbstractNoiseSensors(abc.ABC):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -3737,7 +3707,6 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3772,7 +3741,6 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3786,7 +3754,6 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3804,8 +3771,6 @@ class AbstractThermostats(abc.ABC):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -3821,7 +3786,6 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -3839,7 +3803,6 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()

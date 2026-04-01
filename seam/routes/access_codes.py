@@ -37,7 +37,6 @@ class AccessCodes(AbstractAccessCodes):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        sync: Optional[bool] = None,
         use_backup_access_code_pool: Optional[bool] = None,
         use_offline_access_code: Optional[bool] = None
     ) -> AccessCode:
@@ -73,8 +72,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-        if sync is not None:
-            json_payload["sync"] = sync
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
@@ -132,21 +129,13 @@ class AccessCodes(AbstractAccessCodes):
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
-    def delete(
-        self,
-        *,
-        access_code_id: str,
-        device_id: Optional[str] = None,
-        sync: Optional[bool] = None
-    ) -> None:
+    def delete(self, *, access_code_id: str, device_id: Optional[str] = None) -> None:
         json_payload = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if sync is not None:
-            json_payload["sync"] = sync
 
         self.client.post("/access_codes/delete", json=json_payload)
 
@@ -270,7 +259,6 @@ class AccessCodes(AbstractAccessCodes):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        sync: Optional[bool] = None,
         type: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
         use_offline_access_code: Optional[bool] = None
@@ -309,8 +297,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-        if sync is not None:
-            json_payload["sync"] = sync
         if type is not None:
             json_payload["type"] = type
         if use_backup_access_code_pool is not None:

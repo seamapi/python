@@ -65,7 +65,6 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
@@ -76,8 +75,6 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
-        if sync is not None:
-            json_payload["sync"] = sync
 
         res = self.client.post("/thermostats/cool", json=json_payload)
 
@@ -158,7 +155,6 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
@@ -169,8 +165,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-        if sync is not None:
-            json_payload["sync"] = sync
 
         res = self.client.post("/thermostats/heat", json=json_payload)
 
@@ -194,7 +188,6 @@ class Thermostats(AbstractThermostats):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
@@ -209,8 +202,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-        if sync is not None:
-            json_payload["sync"] = sync
 
         res = self.client.post("/thermostats/heat_cool", json=json_payload)
 
@@ -238,8 +229,6 @@ class Thermostats(AbstractThermostats):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -268,10 +257,6 @@ class Thermostats(AbstractThermostats):
             json_payload["device_type"] = device_type
         if device_types is not None:
             json_payload["device_types"] = device_types
-        if exclude_if is not None:
-            json_payload["exclude_if"] = exclude_if
-        if include_if is not None:
-            json_payload["include_if"] = include_if
         if limit is not None:
             json_payload["limit"] = limit
         if manufacturer is not None:
@@ -295,15 +280,12 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-        if sync is not None:
-            json_payload["sync"] = sync
 
         res = self.client.post("/thermostats/off", json=json_payload)
 
@@ -339,7 +321,6 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
-        sync: Optional[bool] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
@@ -350,8 +331,6 @@ class Thermostats(AbstractThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
-        if sync is not None:
-            json_payload["sync"] = sync
 
         res = self.client.post("/thermostats/set_fan_mode", json=json_payload)
 

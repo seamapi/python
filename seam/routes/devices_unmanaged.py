@@ -34,8 +34,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        exclude_if: Optional[List[str]] = None,
-        include_if: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -64,10 +62,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["device_type"] = device_type
         if device_types is not None:
             json_payload["device_types"] = device_types
-        if exclude_if is not None:
-            json_payload["exclude_if"] = exclude_if
-        if include_if is not None:
-            json_payload["include_if"] = include_if
         if limit is not None:
             json_payload["limit"] = limit
         if manufacturer is not None:

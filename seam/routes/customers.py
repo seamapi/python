@@ -11,10 +11,8 @@ class Customers(AbstractCustomers):
     def create_portal(
         self,
         *,
-        _dev: Optional[bool] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -25,14 +23,10 @@ class Customers(AbstractCustomers):
     ) -> MagicLink:
         json_payload = {}
 
-        if _dev is not None:
-            json_payload["_dev"] = _dev
         if customer_resources_filters is not None:
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
             json_payload["customization_profile_id"] = customization_profile_id
-        if deep_link is not None:
-            json_payload["deep_link"] = deep_link
         if exclude_locale_picker is not None:
             json_payload["exclude_locale_picker"] = exclude_locale_picker
         if features is not None:
