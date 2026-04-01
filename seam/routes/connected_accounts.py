@@ -14,13 +14,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     def simulate(self) -> ConnectedAccountsSimulate:
         return self._simulate
 
-    def delete(self, *, connected_account_id: str, sync: Optional[bool] = None) -> None:
+    def delete(self, *, connected_account_id: str) -> None:
         json_payload = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-        if sync is not None:
-            json_payload["sync"] = sync
 
         self.client.post("/connected_accounts/delete", json=json_payload)
 

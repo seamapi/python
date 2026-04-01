@@ -14,8 +14,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         access_code_id: str,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None,
-        sync: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None
     ) -> None:
         json_payload = {}
 
@@ -29,8 +28,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-        if sync is not None:
-            json_payload["sync"] = sync
 
         self.client.post(
             "/access_codes/unmanaged/convert_to_managed", json=json_payload
@@ -38,13 +35,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         return None
 
-    def delete(self, *, access_code_id: str, sync: Optional[bool] = None) -> None:
+    def delete(self, *, access_code_id: str) -> None:
         json_payload = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-        if sync is not None:
-            json_payload["sync"] = sync
 
         self.client.post("/access_codes/unmanaged/delete", json=json_payload)
 

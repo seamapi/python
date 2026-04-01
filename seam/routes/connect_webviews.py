@@ -18,7 +18,6 @@ class ConnectWebviews(AbstractConnectWebviews):
         custom_redirect_failure_url: Optional[str] = None,
         custom_redirect_url: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_selection_mode: Optional[str] = None,
         excluded_providers: Optional[List[str]] = None,
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
@@ -41,8 +40,6 @@ class ConnectWebviews(AbstractConnectWebviews):
             json_payload["custom_redirect_url"] = custom_redirect_url
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
-        if device_selection_mode is not None:
-            json_payload["device_selection_mode"] = device_selection_mode
         if excluded_providers is not None:
             json_payload["excluded_providers"] = excluded_providers
         if provider_category is not None:
