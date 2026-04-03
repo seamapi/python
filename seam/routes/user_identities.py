@@ -5,6 +5,7 @@ from .models import (
     UserIdentity,
     InstantKey,
     Device,
+    AcsEntrance,
     AcsSystem,
     AcsUser,
 )
@@ -170,6 +171,18 @@ class UserIdentities(AbstractUserIdentities):
         )
 
         return [Device.from_dict(item) for item in res["devices"]]
+
+    def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
+        json_payload = {}
+
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+
+        res = self.client.post(
+            "/user_identities/list_accessible_entrances", json=json_payload
+        )
+
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
         json_payload = {}

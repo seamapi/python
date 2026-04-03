@@ -3407,6 +3407,10 @@ class AbstractUserIdentities(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
         raise NotImplementedError()
 
