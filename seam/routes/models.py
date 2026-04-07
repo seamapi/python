@@ -166,6 +166,7 @@ class AcsAccessGroup:
     connected_account_id: str
     created_at: str
     display_name: str
+    errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
     is_managed: bool
@@ -187,6 +188,7 @@ class AcsAccessGroup:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
@@ -1495,6 +1497,7 @@ class UnmanagedAcsAccessGroup:
     connected_account_id: str
     created_at: str
     display_name: str
+    errors: List[Dict[str, Any]]
     external_type: str
     external_type_display_name: str
     is_managed: bool
@@ -1516,6 +1519,7 @@ class UnmanagedAcsAccessGroup:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
