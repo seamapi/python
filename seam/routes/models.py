@@ -1334,6 +1334,7 @@ class PhoneSession:
 class Space:
     acs_entrance_count: float
     created_at: str
+    customer_key: str
     device_count: float
     display_name: str
     name: str
@@ -1348,6 +1349,7 @@ class Space:
         return Space(
             acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
             name=d.get("name", None),
@@ -2841,6 +2843,8 @@ class AbstractSpaces(abc.ABC):
         self,
         *,
         customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None
     ) -> List[Space]:

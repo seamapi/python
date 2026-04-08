@@ -109,6 +109,8 @@ class Spaces(AbstractSpaces):
         self,
         *,
         customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None
     ) -> List[Space]:
@@ -116,6 +118,10 @@ class Spaces(AbstractSpaces):
 
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if search is not None:
             json_payload["search"] = search
         if space_key is not None:
