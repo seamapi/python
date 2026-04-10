@@ -3117,6 +3117,7 @@ class AbstractAccessGrants(abc.ABC):
     def list(
         self,
         *,
+        access_code_id: Optional[str] = None,
         access_grant_ids: Optional[List[str]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
@@ -3194,6 +3195,7 @@ class AbstractAccessMethods(abc.ABC):
     def list(
         self,
         *,
+        access_code_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
@@ -3523,6 +3525,7 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         access_code_ids: Optional[List[str]] = None,
+        access_grant_id: Optional[str] = None,
         access_method_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
