@@ -96,6 +96,7 @@ class AccessMethods(AbstractAccessMethods):
     def list(
         self,
         *,
+        access_code_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
@@ -104,6 +105,8 @@ class AccessMethods(AbstractAccessMethods):
     ) -> List[AccessMethod]:
         json_payload = {}
 
+        if access_code_id is not None:
+            json_payload["access_code_id"] = access_code_id
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
