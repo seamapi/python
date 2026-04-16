@@ -24,6 +24,7 @@ class AccessCode:
     is_scheduled_on_device: bool
     is_waiting_for_code_assignment: bool
     name: str
+    pending_mutations: List[Dict[str, Any]]
     pulled_backup_access_code_id: str
     starts_at: str
     status: str
@@ -59,6 +60,7 @@ class AccessCode:
                 "is_waiting_for_code_assignment", None
             ),
             name=d.get("name", None),
+            pending_mutations=d.get("pending_mutations", None),
             pulled_backup_access_code_id=d.get("pulled_backup_access_code_id", None),
             starts_at=d.get("starts_at", None),
             status=d.get("status", None),
