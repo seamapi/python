@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractCustomers, MagicLink
+from .models import AbstractCustomers, CustomerPortal
 
 
 class Customers(AbstractCustomers):
@@ -20,7 +20,7 @@ class Customers(AbstractCustomers):
         locale: Optional[str] = None,
         navigation_mode: Optional[str] = None,
         customer_data: Optional[Dict[str, Any]] = None
-    ) -> MagicLink:
+    ) -> CustomerPortal:
         json_payload = {}
 
         if customer_resources_filters is not None:
@@ -44,7 +44,7 @@ class Customers(AbstractCustomers):
 
         res = self.client.post("/customers/create_portal", json=json_payload)
 
-        return MagicLink.from_dict(res["magic_link"])
+        return CustomerPortal.from_dict(res["customer_portal"])
 
     def delete_data(
         self,
