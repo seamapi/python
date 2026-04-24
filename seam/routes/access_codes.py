@@ -94,7 +94,8 @@ class AccessCodes(AbstractAccessCodes):
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
+        use_backup_access_code_pool: Optional[bool] = None
     ) -> List[AccessCode]:
         json_payload = {}
 
@@ -124,6 +125,8 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+        if use_backup_access_code_pool is not None:
+            json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
 
         res = self.client.post("/access_codes/create_multiple", json=json_payload)
 
