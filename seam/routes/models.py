@@ -1355,6 +1355,7 @@ class PhoneSession:
 class Space:
     acs_entrance_count: float
     created_at: str
+    customer_data: Dict[str, Any]
     customer_key: str
     device_count: float
     display_name: str
@@ -1370,6 +1371,7 @@ class Space:
         return Space(
             acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),
+            customer_data=DeepAttrDict(d.get("customer_data", None)),
             customer_key=d.get("customer_key", None),
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
@@ -2832,6 +2834,7 @@ class AbstractSpaces(abc.ABC):
         *,
         name: str,
         acs_entrance_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         space_key: Optional[str] = None
@@ -2886,6 +2889,7 @@ class AbstractSpaces(abc.ABC):
         self,
         *,
         acs_entrance_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
