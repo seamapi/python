@@ -20,6 +20,20 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    def add_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
+        json_payload = {}
+
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
+        if space_id is not None:
+            json_payload["space_id"] = space_id
+
+        self.client.post("/spaces/add_connected_account", json=json_payload)
+
+        return None
+
     def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         json_payload = {}
 
@@ -145,6 +159,20 @@ class Spaces(AbstractSpaces):
             json_payload["space_id"] = space_id
 
         self.client.post("/spaces/remove_acs_entrances", json=json_payload)
+
+        return None
+
+    def remove_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
+        json_payload = {}
+
+        if connected_account_id is not None:
+            json_payload["connected_account_id"] = connected_account_id
+        if space_id is not None:
+            json_payload["space_id"] = space_id
+
+        self.client.post("/spaces/remove_connected_account", json=json_payload)
 
         return None
 
