@@ -1083,6 +1083,7 @@ class SeamEvent:
     noise_threshold_name: str
     noiseaware_metadata: Dict[str, Any]
     access_code_is_managed: bool
+    is_bluetooth_action: bool
     method: str
     user_identity_id: str
     climate_preset_key: str
@@ -1170,6 +1171,7 @@ class SeamEvent:
             noise_threshold_name=d.get("noise_threshold_name", None),
             noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
             access_code_is_managed=d.get("access_code_is_managed", None),
+            is_bluetooth_action=d.get("is_bluetooth_action", None),
             method=d.get("method", None),
             user_identity_id=d.get("user_identity_id", None),
             climate_preset_key=d.get("climate_preset_key", None),
@@ -2825,6 +2827,12 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def add_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         raise NotImplementedError()
 
@@ -2877,6 +2885,12 @@ class AbstractSpaces(abc.ABC):
     @abc.abstractmethod
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_connected_account(
+        self, *, connected_account_id: str, space_id: str
     ) -> None:
         raise NotImplementedError()
 
@@ -3256,6 +3270,7 @@ class AbstractConnectedAccounts(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
+        space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectedAccount]:
         raise NotImplementedError()
