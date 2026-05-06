@@ -1083,7 +1083,8 @@ class SeamEvent:
     noise_threshold_name: str
     noiseaware_metadata: Dict[str, Any]
     access_code_is_managed: bool
-    is_bluetooth_action: bool
+    is_via_bluetooth: bool
+    is_via_nfc: bool
     method: str
     user_identity_id: str
     climate_preset_key: str
@@ -1171,7 +1172,8 @@ class SeamEvent:
             noise_threshold_name=d.get("noise_threshold_name", None),
             noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
             access_code_is_managed=d.get("access_code_is_managed", None),
-            is_bluetooth_action=d.get("is_bluetooth_action", None),
+            is_via_bluetooth=d.get("is_via_bluetooth", None),
+            is_via_nfc=d.get("is_via_nfc", None),
             method=d.get("method", None),
             user_identity_id=d.get("user_identity_id", None),
             climate_preset_key=d.get("climate_preset_key", None),
