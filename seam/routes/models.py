@@ -1055,6 +1055,7 @@ class SeamEvent:
     ends_at: str
     starts_at: str
     error_message: str
+    missing_device_ids: List[str]
     access_grant_ids: List[str]
     access_grant_keys: List[str]
     access_method_id: str
@@ -1144,6 +1145,7 @@ class SeamEvent:
             ends_at=d.get("ends_at", None),
             starts_at=d.get("starts_at", None),
             error_message=d.get("error_message", None),
+            missing_device_ids=d.get("missing_device_ids", None),
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
             access_method_id=d.get("access_method_id", None),
