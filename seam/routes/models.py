@@ -348,6 +348,7 @@ class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
     assa_abloy_vostio_metadata: Dict[str, Any]
+    avigilon_alta_metadata: Dict[str, Any]
     brivo_metadata: Dict[str, Any]
     can_belong_to_reservation: bool
     can_unlock_with_card: bool
@@ -375,6 +376,7 @@ class AcsEntrance:
             assa_abloy_vostio_metadata=DeepAttrDict(
                 d.get("assa_abloy_vostio_metadata", None)
             ),
+            avigilon_alta_metadata=DeepAttrDict(d.get("avigilon_alta_metadata", None)),
             brivo_metadata=DeepAttrDict(d.get("brivo_metadata", None)),
             can_belong_to_reservation=d.get("can_belong_to_reservation", None),
             can_unlock_with_card=d.get("can_unlock_with_card", None),
