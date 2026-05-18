@@ -2848,6 +2848,7 @@ class AbstractSpaces(abc.ABC):
         *,
         name: str,
         acs_entrance_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
