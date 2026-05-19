@@ -367,6 +367,7 @@ class AcsEntrance:
     salto_space_metadata: Dict[str, Any]
     space_ids: List[str]
     visionline_metadata: Dict[str, Any]
+    warnings: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -399,6 +400,7 @@ class AcsEntrance:
             salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             space_ids=d.get("space_ids", None),
             visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
+            warnings=d.get("warnings", None),
         )
 
 
@@ -756,9 +758,12 @@ class ConnectedAccount:
     created_at: str
     custom_metadata: Dict[str, Any]
     customer_key: str
+    default_checkin_time: str
+    default_checkout_time: str
     display_name: str
     errors: List[Dict[str, Any]]
     image_url: str
+    time_zone: str
     user_identifier: Dict[str, Any]
     warnings: List[Dict[str, Any]]
 
@@ -775,9 +780,12 @@ class ConnectedAccount:
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             customer_key=d.get("customer_key", None),
+            default_checkin_time=d.get("default_checkin_time", None),
+            default_checkout_time=d.get("default_checkout_time", None),
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
             image_url=d.get("image_url", None),
+            time_zone=d.get("time_zone", None),
             user_identifier=DeepAttrDict(d.get("user_identifier", None)),
             warnings=d.get("warnings", None),
         )
