@@ -445,7 +445,7 @@ Quickstart
 ::
 
     $ git clone https://github.com/seamapi/python.git
-    $ cd pypackage
+    $ cd python
     $ poetry install
 
 Run each command below in a separate terminal window:
