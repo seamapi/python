@@ -1492,6 +1492,8 @@ class ThermostatSchedule:
 @dataclass
 class UnmanagedAccessCode:
     access_code_id: str
+    cannot_be_managed: bool
+    cannot_delete_unmanaged_access_code: bool
     code: str
     created_at: str
     device_id: str
@@ -1510,6 +1512,10 @@ class UnmanagedAccessCode:
     def from_dict(d: Dict[str, Any]):
         return UnmanagedAccessCode(
             access_code_id=d.get("access_code_id", None),
+            cannot_be_managed=d.get("cannot_be_managed", None),
+            cannot_delete_unmanaged_access_code=d.get(
+                "cannot_delete_unmanaged_access_code", None
+            ),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
