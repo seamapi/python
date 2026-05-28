@@ -2154,6 +2154,17 @@ class AbstractAcsEncoders(abc.ABC):
     ) -> ActionAttempt:
         raise NotImplementedError()
 
+    @abc.abstractmethod
+    def scan_to_assign_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
 
 class AbstractAcsEncodersSimulate(abc.ABC):
 

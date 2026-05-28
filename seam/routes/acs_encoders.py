@@ -101,3 +101,36 @@ class AcsEncoders(AbstractAcsEncoders):
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
+
+    def scan_to_assign_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        json_payload = {}
+
+        if acs_encoder_id is not None:
+            json_payload["acs_encoder_id"] = acs_encoder_id
+        if acs_user_id is not None:
+            json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+
+        res = self.client.post(
+            "/acs/encoders/scan_to_assign_credential", json=json_payload
+        )
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
