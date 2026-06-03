@@ -762,6 +762,8 @@ class ConnectedAccount:
     default_checkout_time: str
     display_name: str
     errors: List[Dict[str, Any]]
+    ical_feed_origin: str
+    ical_url: str
     image_url: str
     time_zone: str
     user_identifier: Dict[str, Any]
@@ -784,6 +786,8 @@ class ConnectedAccount:
             default_checkout_time=d.get("default_checkout_time", None),
             display_name=d.get("display_name", None),
             errors=d.get("errors", None),
+            ical_feed_origin=d.get("ical_feed_origin", None),
+            ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
             time_zone=d.get("time_zone", None),
             user_identifier=DeepAttrDict(d.get("user_identifier", None)),
@@ -3194,6 +3198,7 @@ class AbstractAccessGrants(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         customer_key: Optional[str] = None,
+        device_id: Optional[str] = None,
         limit: Optional[float] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -3319,7 +3324,8 @@ class AbstractConnectedAccounts(abc.ABC):
         accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None
+        customer_key: Optional[str] = None,
+        display_name: Optional[str] = None
     ) -> None:
         raise NotImplementedError()
 

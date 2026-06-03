@@ -129,6 +129,7 @@ class AccessGrants(AbstractAccessGrants):
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         customer_key: Optional[str] = None,
+        device_id: Optional[str] = None,
         limit: Optional[float] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
@@ -150,6 +151,8 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["acs_system_id"] = acs_system_id
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
+        if device_id is not None:
+            json_payload["device_id"] = device_id
         if limit is not None:
             json_payload["limit"] = limit
         if location_id is not None:
