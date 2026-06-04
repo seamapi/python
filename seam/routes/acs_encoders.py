@@ -81,12 +81,15 @@ class AcsEncoders(AbstractAcsEncoders):
         self,
         *,
         acs_encoder_id: str,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         json_payload = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
+        if salto_ks_metadata is not None:
+            json_payload["salto_ks_metadata"] = salto_ks_metadata
 
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
@@ -107,6 +110,7 @@ class AcsEncoders(AbstractAcsEncoders):
         *,
         acs_encoder_id: str,
         acs_user_id: Optional[str] = None,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
@@ -116,6 +120,8 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["acs_encoder_id"] = acs_encoder_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if salto_ks_metadata is not None:
+            json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
