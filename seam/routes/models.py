@@ -2154,6 +2154,7 @@ class AbstractAcsEncoders(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         raise NotImplementedError()
@@ -2164,6 +2165,7 @@ class AbstractAcsEncoders(abc.ABC):
         *,
         acs_encoder_id: str,
         acs_user_id: Optional[str] = None,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
