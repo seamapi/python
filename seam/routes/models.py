@@ -128,8 +128,10 @@ class AccessMethod:
     customization_profile_id: str
     display_name: str
     instant_key_url: str
+    is_assignment_required: bool
     is_encoding_required: bool
     is_issued: bool
+    is_ready_for_assignment: bool
     is_ready_for_encoding: bool
     issued_at: str
     mode: str
@@ -147,8 +149,10 @@ class AccessMethod:
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             instant_key_url=d.get("instant_key_url", None),
+            is_assignment_required=d.get("is_assignment_required", None),
             is_encoding_required=d.get("is_encoding_required", None),
             is_issued=d.get("is_issued", None),
+            is_ready_for_assignment=d.get("is_ready_for_assignment", None),
             is_ready_for_encoding=d.get("is_ready_for_encoding", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
@@ -3238,6 +3242,10 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def assign_card(self, *, access_method_id: str, card_number: str) -> AccessMethod:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def delete(
         self,
         *,
@@ -3282,6 +3290,16 @@ class AbstractAccessMethods(abc.ABC):
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AccessMethod]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock_door(
+        self,
+        *,
+        access_method_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
 
