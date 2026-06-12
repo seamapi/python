@@ -2948,7 +2948,6 @@ class AbstractSpaces(abc.ABC):
         *,
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -3242,7 +3241,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def assign_card(self, *, access_method_id: str, card_number: str) -> AccessMethod:
+    def assign_card(
+        self,
+        *,
+        access_method_id: str,
+        card_number: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         raise NotImplementedError()
 
     @abc.abstractmethod

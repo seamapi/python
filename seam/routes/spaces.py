@@ -196,7 +196,6 @@ class Spaces(AbstractSpaces):
         *,
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -208,8 +207,6 @@ class Spaces(AbstractSpaces):
             json_payload["acs_entrance_ids"] = acs_entrance_ids
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
-        if customer_key is not None:
-            json_payload["customer_key"] = customer_key
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
         if name is not None:

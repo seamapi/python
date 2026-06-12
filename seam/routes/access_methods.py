@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
-from .models import AbstractAccessMethods, AccessMethod, ActionAttempt, Batch
+from .models import AbstractAccessMethods, ActionAttempt, AccessMethod, Batch
 from .access_methods_unmanaged import AccessMethodsUnmanaged
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -15,7 +15,13 @@ class AccessMethods(AbstractAccessMethods):
     def unmanaged(self) -> AccessMethodsUnmanaged:
         return self._unmanaged
 
-    def assign_card(self, *, access_method_id: str, card_number: str) -> AccessMethod:
+    def assign_card(
+        self,
+        *,
+        access_method_id: str,
+        card_number: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
         json_payload = {}
 
         if access_method_id is not None:
@@ -25,7 +31,17 @@ class AccessMethods(AbstractAccessMethods):
 
         res = self.client.post("/access_methods/assign_card", json=json_payload)
 
-        return AccessMethod.from_dict(res["access_method"])
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt,
+        )
 
     def delete(
         self,
