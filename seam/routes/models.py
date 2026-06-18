@@ -1061,6 +1061,8 @@ class SeamEvent:
     event_type: str
     occurred_at: str
     workspace_id: str
+    change_reason: str
+    changed_properties: List[Dict[str, Any]]
     code: str
     access_code_errors: List[Dict[str, Any]]
     access_code_warnings: List[Dict[str, Any]]
@@ -1151,6 +1153,8 @@ class SeamEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            change_reason=d.get("change_reason", None),
+            changed_properties=d.get("changed_properties", None),
             code=d.get("code", None),
             access_code_errors=d.get("access_code_errors", None),
             access_code_warnings=d.get("access_code_warnings", None),
