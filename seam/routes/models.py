@@ -1389,6 +1389,7 @@ class Space:
     customer_key: str
     device_count: float
     display_name: str
+    geolocation: Dict[str, Any]
     name: str
     parent_space_id: str
     parent_space_key: str
@@ -1405,6 +1406,7 @@ class Space:
             customer_key=d.get("customer_key", None),
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
+            geolocation=DeepAttrDict(d.get("geolocation", None)),
             name=d.get("name", None),
             parent_space_id=d.get("parent_space_id", None),
             parent_space_key=d.get("parent_space_key", None),
