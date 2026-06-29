@@ -1099,6 +1099,7 @@ class SeamEvent:
     error_code: str
     battery_level: float
     battery_status: str
+    device_name: str
     minut_metadata: Dict[str, Any]
     noise_level_decibels: float
     noise_level_nrs: float
@@ -1127,7 +1128,6 @@ class SeamEvent:
     upper_limit_fahrenheit: float
     desired_temperature_celsius: float
     desired_temperature_fahrenheit: float
-    device_name: str
     activation_reason: str
     image_url: str
     motion_sub_type: str
@@ -1191,6 +1191,7 @@ class SeamEvent:
             error_code=d.get("error_code", None),
             battery_level=d.get("battery_level", None),
             battery_status=d.get("battery_status", None),
+            device_name=d.get("device_name", None),
             minut_metadata=DeepAttrDict(d.get("minut_metadata", None)),
             noise_level_decibels=d.get("noise_level_decibels", None),
             noise_level_nrs=d.get("noise_level_nrs", None),
@@ -1221,7 +1222,6 @@ class SeamEvent:
             desired_temperature_fahrenheit=d.get(
                 "desired_temperature_fahrenheit", None
             ),
-            device_name=d.get("device_name", None),
             activation_reason=d.get("activation_reason", None),
             image_url=d.get("image_url", None),
             motion_sub_type=d.get("motion_sub_type", None),
