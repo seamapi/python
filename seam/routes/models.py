@@ -841,6 +841,7 @@ class CustomizationProfile:
     customer_portal_theme: Dict[str, Any]
     customization_profile_id: str
     logo_url: str
+    message_overrides: Dict[str, Any]
     name: str
     primary_color: str
     secondary_color: str
@@ -853,6 +854,7 @@ class CustomizationProfile:
             customer_portal_theme=DeepAttrDict(d.get("customer_portal_theme", None)),
             customization_profile_id=d.get("customization_profile_id", None),
             logo_url=d.get("logo_url", None),
+            message_overrides=DeepAttrDict(d.get("message_overrides", None)),
             name=d.get("name", None),
             primary_color=d.get("primary_color", None),
             secondary_color=d.get("secondary_color", None),
