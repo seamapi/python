@@ -1,0 +1,13 @@
+from typing import Any, Dict
+from ..client import SeamHttpClient
+from .models import AbstractRoutes
+{{#each namespaces}}
+from .{{namespace}} import {{className}}
+{{/each}}
+
+
+class Routes(AbstractRoutes):
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+{{#each namespaces}}
+        self.{{namespace}} = {{className}}(client=client, defaults=defaults)
+{{/each}}

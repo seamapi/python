@@ -1,0 +1,5 @@
+@dataclass
+class AbstractRoutes(abc.ABC):
+{{#each routesNamespaces}}
+    {{namespace}}: {{abstractClassName}}
+{{/each}}

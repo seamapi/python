@@ -325,3 +325,7 @@ dist
 # yalc
 .yalc/
 yalc.lock
+
+# Codegen
+!codegen/lib/
+CODEGEN.md

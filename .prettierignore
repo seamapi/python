@@ -1,0 +1,4 @@
+# Prettier exceptions
+
+*.hbs
+CODEGEN.md

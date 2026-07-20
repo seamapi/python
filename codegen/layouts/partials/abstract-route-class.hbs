@@ -1,0 +1,17 @@
+class {{className}}(abc.ABC):
+{{#if showPass}}
+    pass
+{{/if}}
+{{#each childProperties}}
+
+    @property
+    @abc.abstractmethod
+    def {{namespace}}(self) -> {{abstractClassName}}:
+        raise NotImplementedError()
+{{/each}}
+{{#each methods}}
+
+    @abc.abstractmethod
+    def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
+        raise NotImplementedError()
+{{/each}}

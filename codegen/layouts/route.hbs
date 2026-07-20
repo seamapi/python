@@ -1,0 +1,30 @@
+from typing import Optional, Any, List, Dict, Union
+from ..client import SeamHttpClient
+from .models import ({{modelImportList}})
+{{#each childClasses}}
+from .{{module}} import {{className}}
+{{else}}
+
+{{/each}}
+{{#if importResolveActionAttempt}}
+from ..modules.action_attempts import resolve_action_attempt
+{{/if}}
+
+
+class {{className}}({{abstractClassName}}):
+    def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+{{#each childClasses}}
+        self._{{namespace}} = {{className}}(client=client, defaults=defaults)
+{{/each}}
+{{#each childClasses}}
+
+    @property
+    def {{namespace}}(self) -> {{className}}:
+        return self._{{namespace}}
+{{/each}}
+{{#each methods}}
+
+{{> route-method}}
+{{/each}}
