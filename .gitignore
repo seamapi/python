@@ -31,7 +31,6 @@ downloads/
 eggs/
 .eggs/
 lib/
-# Negations must follow the pattern they negate, so this cannot move to the top
 !codegen/lib/
 lib64/
 parts/
