@@ -31,7 +31,6 @@ downloads/
 eggs/
 .eggs/
 lib/
-!codegen/lib/
 lib64/
 parts/
 sdist/
@@ -329,3 +328,6 @@ dist
 # yalc
 .yalc/
 yalc.lock
+
+# Codegen exceptions
+!codegen/lib/
