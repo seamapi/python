@@ -53,7 +53,7 @@ export const getMethodLayoutContext = (
 
   const signatureParams = sortedParameters
     .map(({ name, type, required }) =>
-      required ?? false
+      (required ?? false)
         ? `${name}: ${type}`
         : `${name}: Optional[${type}] = None`,
     )

@@ -44,6 +44,6 @@ export const sortClassMethodParameters = (
 ): ClassMethodParameter[] =>
   [...parameters].sort(
     (a, b) =>
-      (a.position ?? a.required ? 1000 : 9999) -
-      (b.position ?? b.required ? 1000 : 9999),
+      ((a.position ?? a.required) ? 1000 : 9999) -
+      ((b.position ?? b.required) ? 1000 : 9999),
   )

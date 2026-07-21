@@ -10,8 +10,8 @@ export const getParameterAndResponseSchema = (
   route: Route,
 ): {
   parameterSchema?: ObjSchema
-  responseObjType?: string
-  responseArrType?: string
+  responseObjType?: string | undefined
+  responseArrType?: string | undefined
 } => {
   const responseSchema =
     route.post.responses['200']?.content?.['application/json']?.schema

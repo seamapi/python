@@ -6,24 +6,16 @@
     "generate": "tsx codegen/smith.ts",
     "pregenerate": "node generate-readme-toc.js",
     "postgenerate": "make format",
+    "typecheck": "tsc",
     "format": "prettier --write --ignore-path .gitignore --ignore-path .prettierignore .",
     "start": "fake-seam-connect --seed"
   },
   "devDependencies": {
-    "@metalsmith/layouts": "^2.7.0",
     "@seamapi/blueprint": "0.55.0",
     "@seamapi/fake-seam-connect": "1.86.0",
     "@seamapi/smith": "^0.5.2",
     "@seamapi/types": "1.910.0",
     "change-case": "^5.4.4",
-    "del": "^8.0.0",
-    "eslint": "^9.31.0",
-    "jiti": "^2.4.2",
-    "jstransformer-handlebars": "^1.2.0",
-    "metalsmith": "^2.6.3",
-    "mkdirp": "^3.0.1",
-    "prettier": "^3.2.5",
-    "tsx": "^4.6.2",
-    "typescript": "^5.8.3"
+    "prettier": "^3.2.5"
   }
 }
