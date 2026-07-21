@@ -189,7 +189,8 @@ class AccessGrants(AbstractAccessGrants):
     def update(
         self,
         *,
-        access_grant_id: str,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
@@ -198,6 +199,8 @@ class AccessGrants(AbstractAccessGrants):
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
+        if access_grant_key is not None:
+            json_payload["access_grant_key"] = access_grant_key
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
         if name is not None:

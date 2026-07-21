@@ -179,6 +179,7 @@ class AccessCodes(AbstractAccessCodes):
         *,
         access_code_ids: Optional[List[str]] = None,
         access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
         access_method_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
@@ -193,6 +194,8 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["access_code_ids"] = access_code_ids
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
+        if access_grant_key is not None:
+            json_payload["access_grant_key"] = access_grant_key
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if customer_key is not None:
