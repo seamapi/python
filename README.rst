@@ -29,67 +29,67 @@ accurate and fully typed.
 Contents
 --------
 
-* `Installation <Installation_>`_
+* `Installation`_
 
-* `Usage <Usage_>`_
+* `Usage`_
 
-  * `Examples <Examples_>`_
+  * `Examples`_
 
-    * `List devices <List devices_>`_
+    * `List devices`_
 
-    * `Unlock a door <Unlock a door_>`_
+    * `Unlock a door`_
 
-  * `Authentication Method <Authentication Method_>`_
+  * `Authentication Method`_
 
-    * `API Key <API Key_>`_
+    * `API Key`_
 
-    * `Personal Access Token <Personal Access Token_>`_
+    * `Personal Access Token`_
 
-  * `Action Attempts <Action Attempts_>`_
+  * `Action Attempts`_
 
-  * `Pagination <Pagination_>`_
+  * `Pagination`_
 
-    * `Manually fetch pages with the nextPageCursor <Manually fetch pages with the nextPageCursor_>`_
+    * `Manually fetch pages with the nextPageCursor`_
 
-    * `Resume pagination <Resume pagination_>`_
+    * `Resume pagination`_
 
-    * `Iterate over all resources <Iterate over all resources_>`_
+    * `Iterate over all resources`_
 
-    * `Return all resources across all pages as a list <Return all resources across all pages as a list_>`_
+    * `Return all resources across all pages as a list`_
 
-  * `Interacting with Multiple Workspaces <Interacting with Multiple Workspaces_>`_
+  * `Interacting with Multiple Workspaces`_
 
-  * `Webhooks <Webhooks_>`_
+  * `Webhooks`_
 
-  * `Advanced Usage <Advanced Usage_>`_
+  * `Advanced Usage`_
 
-    * `Setting the endpoint <Setting the endpoint_>`_
+    * `Setting the endpoint`_
 
-* `Development and Testing <Development and Testing_>`_
+* `Development and Testing`_
 
-  * `Quickstart <Quickstart_>`_
+  * `Quickstart`_
 
-  * `Source Code <Source Code_>`_
+  * `Source Code`_
 
-  * `Requirements <Requirements_>`_
+  * `Requirements`_
 
-  * `Tests <Tests_>`_
+  * `Tests`_
 
-  * `Publishing <Publishing_>`_
+  * `Publishing`_
 
-    * `Automatic <Automatic_>`_
+    * `Automatic`_
 
-    * `Manual <Manual_>`_
+    * `Manual`_
 
-* `GitHub Actions <GitHub Actions_>`_
+* `GitHub Actions`_
 
-  * `Secrets for Optional GitHub Actions <Secrets for Optional GitHub Actions_>`_
+  * `Secrets for Optional GitHub Actions`_
 
-* `Contributing <Contributing_>`_
+* `Contributing`_
 
-* `License <License_>`_
+* `License`_
 
-* `Warranty <Warranty_>`_
+* `Warranty`_
 
 Installation
 ------------

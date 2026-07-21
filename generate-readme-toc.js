@@ -47,7 +47,7 @@ async function generateTableOfContents(content) {
   headings.forEach((heading) => {
     const indent = '  '.repeat(heading.level - 1)
 
-    toc.push(`${indent}* \`${heading.text} <${heading.text}_>\`_`)
+    toc.push(`${indent}* \`${heading.text}\`_`)
     toc.push('')
   })
 
