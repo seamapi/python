@@ -1,13 +1,13 @@
 @dataclass
 class {{className}}:
 {{#each properties}}
-    {{name}}: {{type}}
+    {{safeName}}: {{type}}
 {{/each}}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return {{className}}(
 {{#each properties}}
-            {{name}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
+            {{safeName}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
 {{/each}}
         )

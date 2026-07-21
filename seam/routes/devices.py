@@ -119,6 +119,7 @@ class Devices(AbstractDevices):
         self,
         *,
         device_id: str,
+        backup_access_code_pool_enabled: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
@@ -128,6 +129,10 @@ class Devices(AbstractDevices):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if backup_access_code_pool_enabled is not None:
+            json_payload["backup_access_code_pool_enabled"] = (
+                backup_access_code_pool_enabled
+            )
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
