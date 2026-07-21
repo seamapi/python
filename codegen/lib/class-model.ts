@@ -35,8 +35,10 @@ export interface ClassModel {
 // position 0 is falsy and lands in the 9999 tier together with the
 // optional parameters. Combined with a stable sort this yields: required
 // parameters first (in schema order), then everything else (in schema
-// order). Do not "fix" the operator precedence: the generated output
-// must stay identical.
+// order).
+// TODO: Fix the operator precedence so position sorts a parameter first
+// as originally intended, once generated output is allowed to change.
+// Until then, do not "fix" it: the generated output must stay identical.
 export const sortClassMethodParameters = (
   parameters: ClassMethodParameter[],
 ): ClassMethodParameter[] =>

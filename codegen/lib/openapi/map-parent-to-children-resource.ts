@@ -1,8 +1,10 @@
 // Ported from @seamapi/nextlove-sdk-generator lib/openapi/map-parent-to-children-resource.ts.
 // Only the first two segments of x-fern-sdk-group-name are considered, so
 // deeply nested namespaces (e.g. acs.encoders.simulate) are generated as
-// standalone classes but never wired to a parent property. Do not "fix" this:
-// the generated output must stay identical.
+// standalone classes but never wired to a parent property.
+// TODO: Wire deeply nested namespaces to a property on their parent class
+// once generated output is allowed to change. Until then, do not "fix"
+// this: the generated output must stay identical.
 // TODO: Use blueprint.namespaces parent/child relationships once generated
 // output is allowed to change.
 
