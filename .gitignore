@@ -5,6 +5,9 @@
 # For more details, visit the project page:
 # https://github.com/github/gitignore
 
+# Codegen
+CODEGEN.md
+
 # Temporary development files
 tmp
 
@@ -28,6 +31,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+# Negations must follow the pattern they negate, so this cannot move to the top
+!codegen/lib/
 lib64/
 parts/
 sdist/
@@ -325,7 +330,3 @@ dist
 # yalc
 .yalc/
 yalc.lock
-
-# Codegen
-!codegen/lib/
-CODEGEN.md
