@@ -7,7 +7,10 @@
     "pregenerate": "node generate-readme-toc.js",
     "postgenerate": "make format",
     "typecheck": "tsc",
+    "lint": "eslint .",
+    "postlint": "prettier --check --ignore-path .gitignore --ignore-path .prettierignore .",
     "format": "prettier --write --ignore-path .gitignore --ignore-path .prettierignore .",
+    "preformat": "eslint --fix .",
     "start": "fake-seam-connect --seed"
   },
   "devDependencies": {

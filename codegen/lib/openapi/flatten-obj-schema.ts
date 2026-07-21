@@ -1,9 +1,12 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/openapi/flatten-obj-schema.ts.
-// The lodash intersectionWith(isEqual) call was replaced with a plain
-// string-array intersection: required arrays only ever contain strings, so the
-// semantics are identical.
-// TODO: Use resource properties from @seamapi/blueprint once generated output
-// is allowed to change.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/openapi/flatten-obj-schema.ts (with the lodash intersectionWith(isEqual)
+// call replaced by a plain string-array intersection; required arrays only
+// ever contain strings, so the semantics are identical). This is a frozen
+// output-parity workaround: it exists only so the generated output stays
+// byte-identical to the previous generator. Do not review, refactor, or
+// improve it.
+// TODO: Delete this file and use resource properties from @seamapi/blueprint
+// once generated output is allowed to change.
 
 import type {
   AllOfSchema,

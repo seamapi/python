@@ -1,6 +1,10 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/openapi/deep-flatten-one-of-and-all-of-schema.ts.
-// TODO: Use parameter formats from @seamapi/blueprint once generated output is
-// allowed to change.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/openapi/deep-flatten-one-of-and-all-of-schema.ts. This OpenAPI parsing
+// is a frozen output-parity workaround: it exists only so the generated
+// output stays byte-identical to the previous generator. Do not review,
+// refactor, or improve it.
+// TODO: Delete this file and use parameter formats from @seamapi/blueprint
+// once generated output is allowed to change.
 
 import type {
   AllOfSchema,

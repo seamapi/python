@@ -6,7 +6,9 @@
 // route, endpoint, and namespace structure. The raw OpenAPI spec is still
 // consulted wherever the previous nextlove generator derived output from data
 // the blueprint normalizes differently; each of those spots is marked with a
-// TODO so they can migrate to the blueprint once output is allowed to change.
+// TODO so they can migrate to the blueprint once output is allowed to change,
+// and the supporting code lives in files marked TEMPORARY that will be
+// deleted with them.
 
 import type { Blueprint } from '@seamapi/blueprint'
 import * as types from '@seamapi/types/connect'
@@ -186,6 +188,11 @@ export const routes = (
   }
 }
 
+// TEMPORARY: Verbatim port of determineReturnResource from the nextlove
+// generate-python-sdk.ts. Frozen output-parity workaround; do not review,
+// refactor, or improve it.
+// TODO: Delete this function and derive the return resource from
+// endpoint.response once generated output is allowed to change.
 const determineReturnResource = ({
   routePath,
   responseObjType,

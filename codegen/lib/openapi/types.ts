@@ -1,5 +1,7 @@
-// Minimal OpenAPI types ported from @seamapi/nextlove-sdk-generator.
-// TODO: Delete this module and use @seamapi/blueprint types once generated
+// TEMPORARY: Minimal OpenAPI types ported from @seamapi/nextlove-sdk-generator.
+// These only support the frozen output-parity workarounds in this directory.
+// Do not review, refactor, or improve them.
+// TODO: Delete this file and use @seamapi/blueprint types once generated
 // output is allowed to change.
 
 export interface PrimitiveSchema {

@@ -1,8 +1,12 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/generate-python-sdk/map-python-type.ts.
-// TODO: Derive types from @seamapi/blueprint parameter and property formats
-// once generated output is allowed to change. Blueprint collapses the OpenAPI
-// integer type into its number format, but the generated output distinguishes
-// int from float, so the raw OpenAPI schema is used here instead.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/generate-python-sdk/map-python-type.ts. This is a frozen output-parity
+// workaround: it exists only so the generated output stays byte-identical to
+// the previous generator. Do not review, refactor, or improve it.
+// TODO: Delete this file and derive types from @seamapi/blueprint parameter
+// and property formats once generated output is allowed to change. Blueprint
+// collapses the OpenAPI integer type into its number format, but the
+// generated output distinguishes int from float, so the raw OpenAPI schema is
+// used here instead.
 
 import { deepFlattenOneOfAndAllOfSchema } from './openapi/deep-flatten-one-of-and-all-of-schema.js'
 import type { PrimitiveSchema, PropertySchema } from './openapi/types.js'

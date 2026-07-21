@@ -1,6 +1,9 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/openapi/get-filtered-routes.ts.
-// TODO: Use route.isUndocumented from @seamapi/blueprint once generated output
-// is allowed to change.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/openapi/get-filtered-routes.ts. This is a frozen output-parity
+// workaround: it exists only so the generated output stays byte-identical to
+// the previous generator. Do not review, refactor, or improve it.
+// TODO: Delete this file and use route.isUndocumented from @seamapi/blueprint
+// once generated output is allowed to change.
 
 import type { OpenapiSchema, Route } from './types.js'
 

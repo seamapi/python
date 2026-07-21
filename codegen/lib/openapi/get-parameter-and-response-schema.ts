@@ -1,6 +1,11 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/openapi/get-parameter-and-response-schema.ts.
-// TODO: Use endpoint.request.parameters and endpoint.response from
-// @seamapi/blueprint once generated output is allowed to change.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/openapi/get-parameter-and-response-schema.ts. This OpenAPI parsing is a
+// frozen output-parity workaround: it exists only so the generated output
+// stays byte-identical to the previous generator. Do not review, refactor, or
+// improve it.
+// TODO: Delete this file and use endpoint.request.parameters and
+// endpoint.response from @seamapi/blueprint once generated output is allowed
+// to change.
 
 import { deepFlattenOneOfAndAllOfSchema } from './deep-flatten-one-of-and-all-of-schema.js'
 import { flattenObjSchema } from './flatten-obj-schema.js'

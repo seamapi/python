@@ -1,14 +1,16 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/openapi/map-parent-to-children-resource.ts.
-// Only the first two segments of x-fern-sdk-group-name are considered, so
-// deeply nested namespaces (e.g. acs.encoders.simulate) are generated as
-// standalone classes but never wired to a parent property.
-// TODO: Wire deeply nested namespaces to a property on their parent class
-// once generated output is allowed to change. Until then, do not "fix"
-// this: the generated output must stay identical.
-// TODO: Use blueprint.namespaces parent/child relationships once generated
-// output is allowed to change.
+// TEMPORARY: Verbatim port of @seamapi/nextlove-sdk-generator
+// lib/openapi/map-parent-to-children-resource.ts. This is a frozen
+// output-parity workaround: it exists only so the generated output stays
+// byte-identical to the previous generator. Do not review, refactor, or
+// improve it. Only the first two segments of x-fern-sdk-group-name are
+// considered, so deeply nested namespaces (e.g. acs.encoders.simulate) are
+// generated as standalone classes but never wired to a parent property.
+// TODO: Delete this file and use blueprint.namespaces parent/child
+// relationships once generated output is allowed to change, wiring deeply
+// nested namespaces to a property on their parent class at the same time.
 
-import { ignoredEndpointPaths } from '../endpoint-rules.js'
+import { ignoredEndpointPaths } from 'lib/endpoint-rules.js'
+
 import type { Route } from './types.js'
 
 export const mapParentToChildResources = (
