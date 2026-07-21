@@ -9,8 +9,7 @@
 // relationships once generated output is allowed to change, wiring deeply
 // nested namespaces to a property on their parent class at the same time.
 
-import { ignoredEndpointPaths } from 'lib/endpoint-rules.js'
-
+import { ignoredEndpointPaths } from '../endpoint-rules.js'
 import type { Route } from './types.js'
 
 export const mapParentToChildResources = (

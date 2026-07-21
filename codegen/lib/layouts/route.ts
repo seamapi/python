@@ -5,7 +5,7 @@ import {
   type ClassMethod,
   type ClassModel,
   sortClassMethodParameters,
-} from 'lib/class-model.js'
+} from '../class-model.js'
 
 export interface MethodLayoutContext {
   name: string

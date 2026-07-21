@@ -4,12 +4,11 @@
 
 import { pascalCase } from 'change-case'
 
-import type { ClassModel } from 'lib/class-model.js'
-import { convertCustomResourceName } from 'lib/custom-resource-name-conversions.js'
-import { mapPythonType } from 'lib/map-python-type.js'
-import { flattenObjSchema } from 'lib/openapi/flatten-obj-schema.js'
-import type { ObjSchema, OpenapiSchema } from 'lib/openapi/types.js'
-
+import type { ClassModel } from '../class-model.js'
+import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
+import { mapPythonType } from '../map-python-type.js'
+import { flattenObjSchema } from '../openapi/flatten-obj-schema.js'
+import type { ObjSchema, OpenapiSchema } from '../openapi/types.js'
 import { getMethodLayoutContext } from './route.js'
 
 export interface ModelsLayoutContext {
