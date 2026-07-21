@@ -127,6 +127,7 @@ class AccessMethod:
     created_at: str
     customization_profile_id: str
     display_name: str
+    errors: List[Dict[str, Any]]
     instant_key_url: str
     is_assignment_required: bool
     is_encoding_required: bool
@@ -148,6 +149,7 @@ class AccessMethod:
             created_at=d.get("created_at", None),
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
+            errors=d.get("errors", None),
             instant_key_url=d.get("instant_key_url", None),
             is_assignment_required=d.get("is_assignment_required", None),
             is_encoding_required=d.get("is_encoding_required", None),
@@ -1059,12 +1061,17 @@ class SeamEvent:
     created_at: str
     device_custom_metadata: Dict[str, Any]
     device_id: str
+    event_description: str
     event_id: str
     event_type: str
     occurred_at: str
     workspace_id: str
     change_reason: str
     changed_properties: List[Dict[str, Any]]
+    description: str
+    from_: Dict[str, Any]
+    to: Dict[str, Any]
+    requested_mutations: List[Dict[str, Any]]
     code: str
     access_code_errors: List[Dict[str, Any]]
     access_code_warnings: List[Dict[str, Any]]
@@ -1113,6 +1120,7 @@ class SeamEvent:
     is_via_nfc: bool
     method: str
     user_identity_id: str
+    reason: Dict[str, Any]
     climate_preset_key: str
     is_fallback_climate_preset: bool
     thermostat_schedule_id: str
@@ -1151,12 +1159,17 @@ class SeamEvent:
             created_at=d.get("created_at", None),
             device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
+            event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
             change_reason=d.get("change_reason", None),
             changed_properties=d.get("changed_properties", None),
+            description=d.get("description", None),
+            from_=DeepAttrDict(d.get("from", None)),
+            to=DeepAttrDict(d.get("to", None)),
+            requested_mutations=d.get("requested_mutations", None),
             code=d.get("code", None),
             access_code_errors=d.get("access_code_errors", None),
             access_code_warnings=d.get("access_code_warnings", None),
@@ -1205,6 +1218,7 @@ class SeamEvent:
             is_via_nfc=d.get("is_via_nfc", None),
             method=d.get("method", None),
             user_identity_id=d.get("user_identity_id", None),
+            reason=DeepAttrDict(d.get("reason", None)),
             climate_preset_key=d.get("climate_preset_key", None),
             is_fallback_climate_preset=d.get("is_fallback_climate_preset", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
@@ -1871,6 +1885,7 @@ class Workspace:
     is_sandbox: bool
     is_suspended: bool
     name: str
+    organization_id: str
     publishable_key: str
     workspace_id: str
 
@@ -1888,6 +1903,7 @@ class Workspace:
             is_sandbox=d.get("is_sandbox", None),
             is_suspended=d.get("is_suspended", None),
             name=d.get("name", None),
+            organization_id=d.get("organization_id", None),
             publishable_key=d.get("publishable_key", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -3233,7 +3249,8 @@ class AbstractAccessGrants(abc.ABC):
     def update(
         self,
         *,
-        access_grant_id: str,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
@@ -3640,6 +3657,7 @@ class AbstractAccessCodes(abc.ABC):
         *,
         access_code_ids: Optional[List[str]] = None,
         access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
         access_method_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
@@ -3758,6 +3776,7 @@ class AbstractDevices(abc.ABC):
         self,
         *,
         device_id: str,
+        backup_access_code_pool_enabled: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,

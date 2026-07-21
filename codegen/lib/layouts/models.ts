@@ -11,10 +11,61 @@ import { flattenObjSchema } from '../openapi/flatten-obj-schema.js'
 import type { ObjSchema, OpenapiSchema } from '../openapi/types.js'
 import { getMethodLayoutContext } from './route.js'
 
+// Python hard keywords cannot be used as identifiers. When a property name
+// collides with one (e.g. "from"), the dataclass field and keyword argument
+// are suffixed with an underscore while the original name is preserved as the
+// dict key. No existing property name is a hard keyword, so this leaves all
+// other generated output unchanged.
+const PYTHON_KEYWORDS = new Set([
+  'False',
+  'None',
+  'True',
+  'and',
+  'as',
+  'assert',
+  'async',
+  'await',
+  'break',
+  'class',
+  'continue',
+  'def',
+  'del',
+  'elif',
+  'else',
+  'except',
+  'finally',
+  'for',
+  'from',
+  'global',
+  'if',
+  'import',
+  'in',
+  'is',
+  'lambda',
+  'nonlocal',
+  'not',
+  'or',
+  'pass',
+  'raise',
+  'return',
+  'try',
+  'while',
+  'with',
+  'yield',
+])
+
+const toSafeIdentifier = (name: string): string =>
+  PYTHON_KEYWORDS.has(name) ? `${name}_` : name
+
 export interface ModelsLayoutContext {
   resources: Array<{
     className: string
-    properties: Array<{ name: string; type: string; isDictParam: boolean }>
+    properties: Array<{
+      name: string
+      safeName: string
+      type: string
+      isDictParam: boolean
+    }>
   }>
   abstractClasses: Array<{
     className: string
@@ -55,6 +106,7 @@ export const setModelsLayoutContext = (
           const type = mapPythonType(propertySchema)
           return {
             name,
+            safeName: toSafeIdentifier(name),
             type,
             isDictParam: type.startsWith('Dict') || name === 'properties',
           }
