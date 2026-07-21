@@ -1,0 +1,32 @@
+    def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
+        json_payload = {}
+
+{{#each params}}
+        if {{name}} is not None:
+            json_payload["{{name}}"] = {{name}}
+{{/each}}
+
+        {{#unless returnsNone}}res = {{/unless}}self.client.post("{{path}}", json=json_payload)
+{{#if pollsActionAttempt}}
+
+        wait_for_action_attempt = (
+            self.defaults.get("wait_for_action_attempt")
+            if wait_for_action_attempt is None
+            else wait_for_action_attempt
+        )
+
+        return resolve_action_attempt(
+            client=self.client,
+            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            wait_for_action_attempt=wait_for_action_attempt
+        )
+{{else if returnsNone}}
+
+        return None
+{{else if isList}}
+
+        return [{{itemType}}.from_dict(item) for item in {{resAccessor}}]
+{{else}}
+
+        return {{returnType}}.from_dict({{resAccessor}})
+{{/if}}

@@ -5,6 +5,9 @@
 # For more details, visit the project page:
 # https://github.com/github/gitignore
 
+# Codegen
+CODEGEN.md
+
 # Temporary development files
 tmp
 
@@ -325,3 +328,6 @@ dist
 # yalc
 .yalc/
 yalc.lock
+
+# Codegen exceptions
+!codegen/lib/
