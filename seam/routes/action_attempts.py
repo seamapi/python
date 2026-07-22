@@ -40,7 +40,7 @@ class ActionAttempts(AbstractActionAttempts):
         *,
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None
     ) -> List[ActionAttempt]:
         json_payload = {}

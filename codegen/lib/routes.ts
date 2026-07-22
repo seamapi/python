@@ -1,35 +1,21 @@
 // The Metalsmith plugin that generates the Python SDK route files.
-// Ported from @seamapi/nextlove-sdk-generator lib/generate-python-sdk/generate-python-sdk.ts,
-// restructured to mirror the javascript-http codegen plugin (lib/connect.ts).
 //
-// The blueprint from @seamapi/blueprint drives the iteration order and the
-// route, endpoint, and namespace structure. The raw OpenAPI spec is still
-// consulted wherever the previous nextlove generator derived output from data
-// the blueprint normalizes differently; each of those spots is marked with a
-// TODO so they can migrate to the blueprint once output is allowed to change,
-// and the supporting code lives in files marked TEMPORARY that will be
-// deleted with them.
+// The generator is driven entirely by the Blueprint that the @seamapi/smith
+// blueprint plugin places in the Metalsmith metadata; no OpenAPI parsing
+// happens here. Documented blueprint routes and namespaces map to route
+// classes, endpoints to methods, and the blueprint resources, events, action
+// attempts, and pagination to the dataclasses in the models module.
 
-import type { Blueprint } from '@seamapi/blueprint'
-import * as types from '@seamapi/types/connect'
+import type { Blueprint, Response } from '@seamapi/blueprint'
 import { pascalCase } from 'change-case'
 import type Metalsmith from 'metalsmith'
 
 import type { ClassModel } from './class-model.js'
 import { convertCustomResourceName } from './custom-resource-name-conversions.js'
-import {
-  endpointsReturningDeprecatedActionAttempt,
-  ignoredEndpointPaths,
-} from './endpoint-rules.js'
 import { setModelsLayoutContext } from './layouts/models.js'
 import { setRouteLayoutContext } from './layouts/route.js'
 import { setRoutesIndexLayoutContext } from './layouts/routes-index.js'
-import { mapPythonType } from './map-python-type.js'
-import { deepFlattenOneOfAndAllOfSchema } from './openapi/deep-flatten-one-of-and-all-of-schema.js'
-import { getFilteredRoutes } from './openapi/get-filtered-routes.js'
-import { getParameterAndResponseSchema } from './openapi/get-parameter-and-response-schema.js'
-import { mapParentToChildResources } from './openapi/map-parent-to-children-resource.js'
-import type { OpenapiSchema, PropertySchema } from './openapi/types.js'
+import { mapParameterToPythonType } from './python-type.js'
 
 interface Metadata {
   blueprint: Blueprint
@@ -37,7 +23,7 @@ interface Metadata {
 
 const rootPath = 'seam/routes'
 
-const openapi = types.openapi as unknown as OpenapiSchema
+const toNamespace = (path: string): string => path.slice(1).replaceAll('/', '_')
 
 export const routes = (
   files: Metalsmith.Files,
@@ -46,125 +32,76 @@ export const routes = (
   const metadata = metalsmith.metadata() as Metadata
   const { blueprint } = metadata
 
-  // TODO: Derive the parent to child resource map from blueprint.namespaces
-  // once generated output is allowed to change.
-  const rawRoutes = getFilteredRoutes(openapi)
-  const parentToChildResourcesMap = mapParentToChildResources(rawRoutes)
+  const documentedRoutes = blueprint.routes.filter(
+    (route) => !route.isUndocumented,
+  )
+
+  // Namespaces group routes without endpoints of their own (e.g. /acs) but
+  // still produce a route class so their child classes are reachable.
+  const classEntries = [
+    ...blueprint.namespaces.filter((namespace) => !namespace.isUndocumented),
+    ...documentedRoutes,
+  ]
+    .map(({ path, parentPath }) => ({ path, parentPath }))
+    .sort((a, b) => (a.path < b.path ? -1 : 1))
 
   const classMap = new Map<string, ClassModel>()
-  const namespaces: string[][] = []
 
-  const processClass = (resourceName: string): void => {
-    const childClassIdentifiers = (
-      parentToChildResourcesMap[resourceName] ?? []
-    ).map((childResource) => ({
-      className: pascalCase(`${resourceName} ${childResource}`),
-      namespace: childResource,
-    }))
-    const className = pascalCase(resourceName)
+  for (const entry of classEntries) {
+    const namespace = toNamespace(entry.path)
+    const className = pascalCase(namespace)
+    if (classMap.has(className)) continue
 
     classMap.set(className, {
       name: className,
-      namespace: resourceName,
+      namespace,
       methods: [],
-      childClassIdentifiers,
+      childClassIdentifiers: classEntries
+        .filter((child) => child.parentPath === entry.path)
+        .map((child) => ({
+          className: pascalCase(toNamespace(child.path)),
+          // The property name on the parent class. The route layout derives
+          // the child module name as `${parent.namespace}_${namespace}`, so
+          // this must be the child path relative to the parent path.
+          namespace: child.path
+            .slice(entry.path.length + 1)
+            .replaceAll('/', '_'),
+        })),
     })
   }
 
-  for (const route of blueprint.routes) {
+  for (const route of documentedRoutes) {
+    const cls = classMap.get(pascalCase(toNamespace(route.path)))
+    if (cls == null) continue
+
     for (const endpoint of route.endpoints) {
-      const post = openapi.paths[endpoint.path]?.post
-      if (post == null) continue
+      if (endpoint.isUndocumented) continue
 
-      // TODO: Filter on endpoint.isUndocumented and route.isUndocumented from
-      // the blueprint once generated output is allowed to change. The raw
-      // OpenAPI extensions are used here to exclude exactly the same endpoint
-      // set as the previous nextlove generator.
-      if (post['x-undocumented'] != null) continue
-      if ((post.summary ?? '').startsWith('/seam/')) continue
-      if (post['x-fern-sdk-group-name'] == null) continue
-      if (ignoredEndpointPaths.includes(endpoint.path)) continue
-
-      const groupNames = [...post['x-fern-sdk-group-name']]
-      const [baseResource] = groupNames
-      const namespace = groupNames.join('_')
-      const className = pascalCase(namespace)
-
-      if (!classMap.has(className)) {
-        namespaces.push(post['x-fern-sdk-group-name'])
-
-        processClass(namespace)
-      }
-
-      /*
-        Special case when we don't have routes for a base resource
-        and thus a respective x-fern-sdk-group-name for ex. /noise_sensors
-      */
-      if (baseResource != null && !classMap.has(pascalCase(baseResource))) {
-        namespaces.push([baseResource])
-
-        processClass(baseResource)
-      }
-
-      const cls = classMap.get(className)
-
-      if (cls == null) {
-        // eslint-disable-next-line no-console
-        console.warn(`No class for "${endpoint.path}", skipping`)
-        continue
-      }
-
-      const { parameterSchema, responseObjType, responseArrType } =
-        getParameterAndResponseSchema({ path: endpoint.path, post })
-
-      if (parameterSchema == null) {
-        // eslint-disable-next-line no-console
-        console.warn(`No parameter schema for "${endpoint.path}", skipping`)
-        continue
-      }
+      const { response } = endpoint
+      const idParameterName =
+        endpoint.name === 'get' && response.responseType !== 'void'
+          ? `${response.responseKey}_id`
+          : null
 
       cls.methods.push({
         methodName: endpoint.name,
         path: endpoint.path,
-        // TODO: Use endpoint.request.parameters from the blueprint once
-        // generated output is allowed to change. The blueprint collapses
-        // integer to number and flattens unions differently, so parameters
-        // are derived from the raw OpenAPI schema for identical output.
-        parameters: Object.entries(parameterSchema.properties)
-          .filter(
-            ([, paramVal]) =>
-              'type' in paramVal ||
-              ('oneOf' in paramVal && 'type' in (paramVal.oneOf[0] ?? {})),
-          )
-          .map(([paramName, paramVal]) => ({
-            name: paramName,
-            type: mapPythonType(
-              'type' in paramVal
-                ? (paramVal as PropertySchema)
-                : deepFlattenOneOfAndAllOfSchema(paramVal as PropertySchema),
-            ),
-            position:
-              endpoint.name === 'get' &&
-              paramName === `${post['x-fern-sdk-return-value']}_id`
-                ? 0
-                : undefined,
-            required: parameterSchema.required?.includes(paramName),
+        parameters: endpoint.request.parameters
+          .filter((parameter) => !parameter.isUndocumented)
+          .map((parameter) => ({
+            name: parameter.name,
+            type: mapParameterToPythonType(parameter),
+            position: parameter.name === idParameterName ? 0 : undefined,
+            required: parameter.isRequired,
           })),
-        // TODO: Use endpoint.response.responseKey from the blueprint once
-        // generated output is allowed to change.
-        returnPath: [post['x-fern-sdk-return-value']],
-        returnResource: determineReturnResource({
-          routePath: endpoint.path,
-          responseObjType,
-          responseArrType,
-        }),
+        ...resolveResponse(response),
       })
     }
   }
 
-  const topLevelNamespaces = namespaces
-    .map((ns) => (ns.length === 1 ? ns[0] : null))
-    .filter((ns): ns is string => ns != null)
+  const topLevelNamespaces = classEntries
+    .filter((entry) => entry.parentPath == null)
+    .map((entry) => toNamespace(entry.path))
 
   for (const cls of classMap.values()) {
     const k = `${rootPath}/${cls.namespace}.py`
@@ -178,7 +115,7 @@ export const routes = (
   files[`${rootPath}/models.py`] = {
     contents: Buffer.from('\n'),
     layout: 'models.hbs',
-    ...setModelsLayoutContext(openapi, classMap, topLevelNamespaces),
+    ...setModelsLayoutContext(blueprint, classMap, topLevelNamespaces),
   }
 
   files[`${rootPath}/__init__.py`] = {
@@ -188,34 +125,42 @@ export const routes = (
   }
 }
 
-// TEMPORARY: Verbatim port of determineReturnResource from the nextlove
-// generate-python-sdk.ts. Frozen output-parity workaround; do not review,
-// refactor, or improve it.
-// TODO: Delete this function and derive the return resource from
-// endpoint.response once generated output is allowed to change.
-const determineReturnResource = ({
-  routePath,
-  responseObjType,
-  responseArrType,
-}: {
-  routePath: string
-  responseObjType?: string | undefined
-  responseArrType?: string | undefined
-}): string => {
-  if (endpointsReturningDeprecatedActionAttempt.includes(routePath)) {
-    return 'None'
+const resolveResponse = (
+  response: Response,
+): { returnPath: string[]; returnResource: string } => {
+  if (response.responseType === 'void') {
+    return { returnPath: [], returnResource: 'None' }
   }
 
-  const responseType = responseObjType ?? responseArrType
+  const returnPath = [response.responseKey]
 
-  if (responseType != null) {
-    const convertedResponseType = convertCustomResourceName(responseType)
-    const formattedResponseType = pascalCase(convertedResponseType)
+  if (response.responseType === 'resource') {
+    if (response.resourceType === 'action_attempt') {
+      return { returnPath, returnResource: 'ActionAttempt' }
+    }
 
-    return responseObjType != null
-      ? formattedResponseType
-      : `List[${formattedResponseType}]`
+    // Batch responses report resourceType as 'unknown'; the batch resource
+    // itself is named by the response key.
+    if (response.batchResourceTypes != null) {
+      return { returnPath, returnResource: pascalCase(response.responseKey) }
+    }
   }
 
-  return 'None'
+  // Some endpoints respond with a resource the blueprint has no schema for
+  // (e.g. unmanaged variants); there is no model class to deserialize into.
+  if (response.resourceType === 'unknown') {
+    return { returnPath: [], returnResource: 'None' }
+  }
+
+  const returnResource = pascalCase(
+    convertCustomResourceName(response.resourceType),
+  )
+
+  return {
+    returnPath,
+    returnResource:
+      response.responseType === 'resource_list'
+        ? `List[${returnResource}]`
+        : returnResource,
+  }
 }

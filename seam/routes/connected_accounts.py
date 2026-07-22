@@ -43,7 +43,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,

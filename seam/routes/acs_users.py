@@ -80,16 +80,16 @@ class AcsUsers(AbstractAcsUsers):
     def get(
         self,
         *,
-        acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
         json_payload = {}
 
-        if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+        if acs_system_id is not None:
+            json_payload["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
@@ -102,7 +102,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,

@@ -11,16 +11,16 @@ class Events(AbstractEvents):
     def get(
         self,
         *,
-        device_id: Optional[str] = None,
         event_id: Optional[str] = None,
+        device_id: Optional[str] = None,
         event_type: Optional[str] = None
     ) -> SeamEvent:
         json_payload = {}
 
-        if device_id is not None:
-            json_payload["device_id"] = device_id
         if event_id is not None:
             json_payload["event_id"] = event_id
+        if device_id is not None:
+            json_payload["device_id"] = device_id
         if event_type is not None:
             json_payload["event_type"] = event_type
 
@@ -44,7 +44,7 @@ class Events(AbstractEvents):
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
         acs_user_id: Optional[str] = None,
-        between: Optional[List[str]] = None,
+        between: Optional[List[Dict[str, Any]]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,

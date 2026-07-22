@@ -1,7 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 from ..client import SeamHttpClient
 from .models import AbstractAcsEncoders, ActionAttempt, AcsEncoder
-
+from .acs_encoders_simulate import AcsEncodersSimulate
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -9,6 +9,11 @@ class AcsEncoders(AbstractAcsEncoders):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
+        self._simulate = AcsEncodersSimulate(client=client, defaults=defaults)
+
+    @property
+    def simulate(self) -> AcsEncodersSimulate:
+        return self._simulate
 
     def encode_credential(
         self,

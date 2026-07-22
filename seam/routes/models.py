@@ -527,7 +527,7 @@ class ActionAttempt:
     action_attempt_id: str
     action_type: str
     error: Dict[str, Any]
-    result: Any
+    result: Dict[str, Any]
     status: str
 
     @staticmethod
@@ -536,41 +536,41 @@ class ActionAttempt:
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=DeepAttrDict(d.get("error", None)),
-            result=d.get("result", None),
+            result=DeepAttrDict(d.get("result", None)),
             status=d.get("status", None),
         )
 
 
 @dataclass
 class Batch:
-    access_codes: List[Any]
-    access_grants: List[Any]
-    access_methods: List[Any]
-    acs_access_groups: List[Any]
-    acs_credentials: List[Any]
-    acs_encoders: List[Any]
-    acs_entrances: List[Any]
-    acs_systems: List[Any]
-    acs_users: List[Any]
-    action_attempts: List[Any]
-    client_sessions: List[Any]
-    connect_webviews: List[Any]
-    connected_accounts: List[Any]
-    customization_profiles: List[Any]
-    devices: List[Any]
-    events: List[Any]
-    instant_keys: List[Any]
-    noise_thresholds: List[Any]
-    spaces: List[Any]
-    thermostat_daily_programs: List[Any]
-    thermostat_schedules: List[Any]
-    unmanaged_access_codes: List[Any]
-    unmanaged_acs_access_groups: List[Any]
-    unmanaged_acs_credentials: List[Any]
-    unmanaged_acs_users: List[Any]
-    unmanaged_devices: List[Any]
-    user_identities: List[Any]
-    workspaces: List[Any]
+    access_codes: List[Dict[str, Any]]
+    access_grants: List[Dict[str, Any]]
+    access_methods: List[Dict[str, Any]]
+    acs_access_groups: List[Dict[str, Any]]
+    acs_credentials: List[Dict[str, Any]]
+    acs_encoders: List[Dict[str, Any]]
+    acs_entrances: List[Dict[str, Any]]
+    acs_systems: List[Dict[str, Any]]
+    acs_users: List[Dict[str, Any]]
+    action_attempts: List[Dict[str, Any]]
+    client_sessions: List[Dict[str, Any]]
+    connect_webviews: List[Dict[str, Any]]
+    connected_accounts: List[Dict[str, Any]]
+    customization_profiles: List[Dict[str, Any]]
+    devices: List[Dict[str, Any]]
+    events: List[Dict[str, Any]]
+    instant_keys: List[Dict[str, Any]]
+    noise_thresholds: List[Dict[str, Any]]
+    spaces: List[Dict[str, Any]]
+    thermostat_daily_programs: List[Dict[str, Any]]
+    thermostat_schedules: List[Dict[str, Any]]
+    unmanaged_access_codes: List[Dict[str, Any]]
+    unmanaged_acs_access_groups: List[Dict[str, Any]]
+    unmanaged_acs_credentials: List[Dict[str, Any]]
+    unmanaged_acs_users: List[Dict[str, Any]]
+    unmanaged_devices: List[Dict[str, Any]]
+    user_identities: List[Dict[str, Any]]
+    workspaces: List[Dict[str, Any]]
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
@@ -893,13 +893,13 @@ class Device:
     device_id: str
     device_manufacturer: Dict[str, Any]
     device_provider: Dict[str, Any]
-    device_type: Any
+    device_type: str
     display_name: str
     errors: List[Dict[str, Any]]
     is_managed: bool
     location: Dict[str, Any]
     nickname: str
-    properties: Any
+    properties: Dict[str, Any]
     space_ids: List[str]
     warnings: List[Dict[str, Any]]
     workspace_id: str
@@ -1364,23 +1364,6 @@ class Phone:
 
 
 @dataclass
-class PhoneRegistration:
-    is_being_activated: bool
-    phone_registration_id: str
-    provider_name: str
-    provider_state: Any
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return PhoneRegistration(
-            is_being_activated=d.get("is_being_activated", None),
-            phone_registration_id=d.get("phone_registration_id", None),
-            provider_name=d.get("provider_name", None),
-            provider_state=d.get("provider_state", None),
-        )
-
-
-@dataclass
 class PhoneSession:
     is_sandbox_workspace: bool
     provider_sessions: List[Dict[str, Any]]
@@ -1498,7 +1481,7 @@ class ThermostatSchedule:
     ends_at: str
     errors: List[Dict[str, Any]]
     is_override_allowed: bool
-    max_override_period_minutes: int
+    max_override_period_minutes: float
     name: str
     starts_at: str
     thermostat_schedule_id: str
@@ -1768,7 +1751,7 @@ class UnmanagedDevice:
     created_at: str
     custom_metadata: Dict[str, Any]
     device_id: str
-    device_type: Any
+    device_type: str
     errors: List[Dict[str, Any]]
     is_managed: bool
     location: Dict[str, Any]
@@ -2150,58 +2133,6 @@ class AbstractAcsCredentials(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractAcsEncoders(abc.ABC):
-
-    @abc.abstractmethod
-    def encode_credential(
-        self,
-        *,
-        acs_encoder_id: str,
-        access_method_id: Optional[str] = None,
-        acs_credential_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def get(self, *, acs_encoder_id: str) -> AcsEncoder:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        page_cursor: Optional[str] = None
-    ) -> List[AcsEncoder]:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def scan_credential(
-        self,
-        *,
-        acs_encoder_id: str,
-        salto_ks_metadata: Optional[Dict[str, Any]] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-    @abc.abstractmethod
-    def scan_to_assign_credential(
-        self,
-        *,
-        acs_encoder_id: str,
-        acs_user_id: Optional[str] = None,
-        salto_ks_metadata: Optional[Dict[str, Any]] = None,
-        user_identity_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
-    ) -> ActionAttempt:
-        raise NotImplementedError()
-
-
 class AbstractAcsEncodersSimulate(abc.ABC):
 
     @abc.abstractmethod
@@ -2266,7 +2197,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
@@ -2361,8 +2292,8 @@ class AbstractAcsUsers(abc.ABC):
     def get(
         self,
         *,
-        acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
         raise NotImplementedError()
@@ -2373,7 +2304,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
@@ -2466,7 +2397,7 @@ class AbstractActionAttempts(abc.ABC):
         *,
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None
     ) -> List[ActionAttempt]:
         raise NotImplementedError()
@@ -2740,8 +2671,8 @@ class AbstractEvents(abc.ABC):
     def get(
         self,
         *,
-        device_id: Optional[str] = None,
         event_id: Optional[str] = None,
+        device_id: Optional[str] = None,
         event_type: Optional[str] = None
     ) -> SeamEvent:
         raise NotImplementedError()
@@ -2763,7 +2694,7 @@ class AbstractEvents(abc.ABC):
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
         acs_user_id: Optional[str] = None,
-        between: Optional[List[str]] = None,
+        between: Optional[List[Dict[str, Any]]] = None,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
@@ -3015,7 +2946,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         ends_at: str,
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[float] = None,
         name: Optional[str] = None
     ) -> ThermostatSchedule:
         raise NotImplementedError()
@@ -3042,7 +2973,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[float] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
@@ -3086,7 +3017,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         self,
         *,
         created_before: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None
     ) -> None:
@@ -3163,6 +3094,19 @@ class AbstractWorkspaces(abc.ABC):
     def reset_sandbox(
         self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
+        is_publishable_key_auth_enabled: Optional[bool] = None,
+        is_suspended: Optional[bool] = None,
+        name: Optional[str] = None,
+        organization_id: Optional[str] = None
+    ) -> None:
         raise NotImplementedError()
 
 
@@ -3333,6 +3277,63 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
 
+class AbstractAcsEncoders(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractAcsEncodersSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def encode_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        access_method_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, acs_encoder_id: str) -> AcsEncoder:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_system_ids: Optional[List[str]] = None,
+        acs_encoder_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None
+    ) -> List[AcsEncoder]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def scan_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def scan_to_assign_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        acs_user_id: Optional[str] = None,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+
 class AbstractConnectedAccounts(abc.ABC):
 
     @property
@@ -3356,7 +3357,7 @@ class AbstractConnectedAccounts(abc.ABC):
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -3535,7 +3536,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
@@ -3677,9 +3678,9 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         device_id: str,
-        max_code_length: Optional[int] = None,
-        min_code_length: Optional[int] = None,
-        supported_code_lengths: Optional[List[int]] = None
+        max_code_length: Optional[float] = None,
+        min_code_length: Optional[float] = None,
+        supported_code_lengths: Optional[List[float]] = None
     ) -> None:
         raise NotImplementedError()
 

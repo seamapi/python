@@ -1,21 +1,19 @@
 // Builds the template context for seam/routes/models.py.
-// Mirrors the models.py assembly in the nextlove generate-python-sdk.ts plus
-// ClassFile#serializeToAbstractClassWithoutImports.
+// Dataclasses come from the blueprint resources, events, action attempts, and
+// pagination; the abstract route classes mirror the generated route classes.
 
+import type { Blueprint, Property, Resource } from '@seamapi/blueprint'
 import { pascalCase } from 'change-case'
 
 import type { ClassModel } from '../class-model.js'
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
-import { mapPythonType } from '../map-python-type.js'
-import { flattenObjSchema } from '../openapi/flatten-obj-schema.js'
-import type { ObjSchema, OpenapiSchema } from '../openapi/types.js'
+import { mapPropertyToPythonType } from '../python-type.js'
 import { getMethodLayoutContext } from './route.js'
 
 // Python hard keywords cannot be used as identifiers. When a property name
 // collides with one (e.g. "from"), the dataclass field and keyword argument
 // are suffixed with an underscore while the original name is preserved as the
-// dict key. No existing property name is a hard keyword, so this leaves all
-// other generated output unchanged.
+// dict key.
 const PYTHON_KEYWORDS = new Set([
   'False',
   'None',
@@ -81,37 +79,56 @@ export interface ModelsLayoutContext {
   routesNamespaces: Array<{ namespace: string; abstractClassName: string }>
 }
 
+// The action attempt and event variants each generate a single dataclass with
+// the union of the variant properties. The first occurrence of a property
+// name wins.
+const mergeResourceProperties = (resources: Resource[]): Property[] => {
+  const merged = new Map<string, Property>()
+  for (const { properties } of resources) {
+    for (const property of properties) {
+      if (!merged.has(property.name)) merged.set(property.name, property)
+    }
+  }
+  return [...merged.values()]
+}
+
 export const setModelsLayoutContext = (
-  openapi: OpenapiSchema,
+  blueprint: Blueprint,
   classMap: Map<string, ClassModel>,
   topLevelNamespaces: string[],
 ): ModelsLayoutContext => {
-  // TODO: Use blueprint.resources, blueprint.events, and
-  // blueprint.actionAttempts once generated output is allowed to change.
-  // Blueprint currently omits some schemas (e.g. pagination and
-  // phone_registration), reorders others, and collapses integer to number,
-  // so the raw OpenAPI schemas are used to keep the output identical.
-  const resources = Object.entries(openapi.components.schemas)
-    .map(
-      ([schemaName, schema]) =>
-        [schemaName, flattenObjSchema(schema as ObjSchema)] as [
-          string,
-          ObjSchema,
-        ],
-    )
-    .map(([schemaName, schema]) => ({
-      className: pascalCase(convertCustomResourceName(schemaName)),
-      properties: Object.entries(schema.properties).map(
-        ([name, propertySchema]) => {
-          const type = mapPythonType(propertySchema)
-          return {
-            name,
-            safeName: toSafeIdentifier(name),
-            type,
-            isDictParam: type.startsWith('Dict') || name === 'properties',
-          }
-        },
-      ),
+  const models = new Map<string, Property[]>()
+
+  for (const resource of blueprint.resources) {
+    models.set(resource.resourceType, resource.properties)
+  }
+
+  // The event and action attempt variants merge into a single dataclass with
+  // the union of the variant properties, overriding the base resource schema.
+  models.set(
+    'action_attempt',
+    mergeResourceProperties(blueprint.actionAttempts),
+  )
+  models.set('event', mergeResourceProperties(blueprint.events))
+
+  if (blueprint.pagination != null) {
+    models.set('pagination', blueprint.pagination.properties)
+  }
+
+  const resources = [...models.entries()]
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+    .map(([name, properties]) => ({
+      className: pascalCase(convertCustomResourceName(name)),
+      properties: properties.map((property) => {
+        const type = mapPropertyToPythonType(property)
+        return {
+          name: property.name,
+          safeName: toSafeIdentifier(property.name),
+          type,
+          isDictParam:
+            type.startsWith('Dict') || property.name === 'properties',
+        }
+      }),
     }))
 
   const abstractClasses = [...classMap.values()]

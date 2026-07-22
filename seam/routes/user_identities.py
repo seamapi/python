@@ -134,7 +134,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
-        limit: Optional[int] = None,
+        limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None

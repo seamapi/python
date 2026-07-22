@@ -16,7 +16,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         ends_at: str,
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[float] = None,
         name: Optional[str] = None
     ) -> ThermostatSchedule:
         json_payload = {}
@@ -83,7 +83,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[float] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:

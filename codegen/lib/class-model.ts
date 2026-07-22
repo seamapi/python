@@ -1,6 +1,5 @@
-// Ported from @seamapi/nextlove-sdk-generator lib/generate-python-sdk/class-file.ts.
-// Holds the data previously carried by the nextlove ClassFile; all string
-// serialization moved to the Handlebars layouts and their context builders.
+// Holds the class and method data assembled by the routes plugin; all string
+// serialization lives in the Handlebars layouts and their context builders.
 
 export interface ClassMethodParameter {
   name: string
@@ -13,7 +12,7 @@ export interface ClassMethod {
   methodName: string
   path: string
   parameters: ClassMethodParameter[]
-  returnPath: Array<string | undefined>
+  returnPath: string[]
   returnResource: string
 }
 
@@ -29,21 +28,12 @@ export interface ClassModel {
   childClassIdentifiers: ChildClassIdentifier[]
 }
 
-// Verbatim port of the nextlove parameter comparator. The original
-// expression `(a.position ?? a.required ? 1000 : 9999)` parses as
-// `(a.position ?? a.required) ? 1000 : 9999`, so a parameter with
-// position 0 is falsy and lands in the 9999 tier together with the
-// optional parameters. Combined with a stable sort this yields: required
-// parameters first (in schema order), then everything else (in schema
-// order).
-// TODO: Fix the operator precedence so position sorts a parameter first
-// as originally intended, once generated output is allowed to change.
-// Until then, do not "fix" it: the generated output must stay identical.
+// Sort tiers: an explicit position first, then required parameters, then
+// optional parameters. Array#sort is stable, so ties keep schema order.
+const sortTier = ({ position, required }: ClassMethodParameter): number =>
+  position ?? ((required ?? false) ? 1000 : 9999)
+
 export const sortClassMethodParameters = (
   parameters: ClassMethodParameter[],
 ): ClassMethodParameter[] =>
-  [...parameters].sort(
-    (a, b) =>
-      ((a.position ?? a.required) ? 1000 : 9999) -
-      ((b.position ?? b.required) ? 1000 : 9999),
-  )
+  [...parameters].sort((a, b) => sortTier(a) - sortTier(b))
