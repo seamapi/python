@@ -22,7 +22,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         self,
         *,
         created_before: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None
     ) -> None:

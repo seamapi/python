@@ -48,7 +48,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,

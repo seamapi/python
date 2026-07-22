@@ -1481,7 +1481,7 @@ class ThermostatSchedule:
     ends_at: str
     errors: List[Dict[str, Any]]
     is_override_allowed: bool
-    max_override_period_minutes: float
+    max_override_period_minutes: int
     name: str
     starts_at: str
     thermostat_schedule_id: str
@@ -2197,7 +2197,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_system_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
@@ -2304,7 +2304,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
@@ -2397,7 +2397,7 @@ class AbstractActionAttempts(abc.ABC):
         *,
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None
     ) -> List[ActionAttempt]:
         raise NotImplementedError()
@@ -2946,7 +2946,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         ends_at: str,
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[float] = None,
+        max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None
     ) -> ThermostatSchedule:
         raise NotImplementedError()
@@ -2973,7 +2973,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[float] = None,
+        max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
@@ -3017,7 +3017,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         self,
         *,
         created_before: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None
     ) -> None:
@@ -3357,7 +3357,7 @@ class AbstractConnectedAccounts(abc.ABC):
         *,
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -3536,7 +3536,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
+        limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None
@@ -3678,8 +3678,8 @@ class AbstractAccessCodes(abc.ABC):
         self,
         *,
         device_id: str,
-        max_code_length: Optional[float] = None,
-        min_code_length: Optional[float] = None,
+        max_code_length: Optional[int] = None,
+        min_code_length: Optional[int] = None,
         supported_code_lengths: Optional[List[float]] = None
     ) -> None:
         raise NotImplementedError()
