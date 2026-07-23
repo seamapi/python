@@ -483,6 +483,7 @@ class AcsUser:
     last_successful_sync_at: str
     pending_mutations: List[Dict[str, Any]]
     phone_number: str
+    salto_ks_metadata: Dict[str, Any]
     salto_space_metadata: Dict[str, Any]
     user_identity_email_address: str
     user_identity_full_name: str
@@ -512,6 +513,7 @@ class AcsUser:
             last_successful_sync_at=d.get("last_successful_sync_at", None),
             pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
+            salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
             salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
@@ -1702,6 +1704,7 @@ class UnmanagedAcsUser:
     last_successful_sync_at: str
     pending_mutations: List[Dict[str, Any]]
     phone_number: str
+    salto_ks_metadata: Dict[str, Any]
     salto_space_metadata: Dict[str, Any]
     user_identity_email_address: str
     user_identity_full_name: str
@@ -1731,6 +1734,7 @@ class UnmanagedAcsUser:
             last_successful_sync_at=d.get("last_successful_sync_at", None),
             pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
+            salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
             salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
