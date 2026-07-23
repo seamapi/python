@@ -2,16 +2,13 @@
 
 import type { Parameter, Property } from '@seamapi/blueprint'
 
-type ScalarFormat = Exclude<(Parameter | Property)['format'], 'list'>
+type ScalarFormat = Exclude<(Parameter | Property)['format'], 'list' | 'number'>
 
-type ListItemFormat = Extract<
-  Parameter | Property,
-  { format: 'list' }
->['itemFormat']
+type ListItem = Extract<Parameter | Property, { format: 'list' }>
 
 export const mapParameterToPythonType = (parameter: Parameter): string => {
   if (parameter.format === 'list') {
-    return `List[${mapListItemFormatToPythonType(parameter.itemFormat)}]`
+    return `List[${mapListItemToPythonType(parameter)}]`
   }
 
   if (parameter.format === 'number') {
@@ -23,7 +20,7 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
 
 export const mapPropertyToPythonType = (property: Property): string => {
   if (property.format === 'list') {
-    return `List[${mapListItemFormatToPythonType(property.itemFormat)}]`
+    return `List[${mapListItemToPythonType(property)}]`
   }
 
   if (property.format === 'number') {
@@ -39,6 +36,18 @@ export const mapPropertyToPythonType = (property: Property): string => {
   return mapScalarFormatToPythonType(property.format)
 }
 
+const mapListItemToPythonType = (list: ListItem): string => {
+  if (list.itemFormat === 'number') {
+    return list.isItemInt ? 'int' : 'float'
+  }
+
+  if (list.itemFormat === 'discriminated_object') {
+    return 'Dict[str, Any]'
+  }
+
+  return mapScalarFormatToPythonType(list.itemFormat)
+}
+
 const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
   switch (format) {
     case 'string':
@@ -46,9 +55,6 @@ const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
     case 'id':
     case 'enum':
       return 'str'
-    // List items have no isInt flag, so numbers in lists stay floats.
-    case 'number':
-      return 'float'
     case 'boolean':
       return 'bool'
     case 'record':
@@ -56,8 +62,3 @@ const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
       return 'Dict[str, Any]'
   }
 }
-
-const mapListItemFormatToPythonType = (itemFormat: ListItemFormat): string =>
-  itemFormat === 'discriminated_object'
-    ? 'Dict[str, Any]'
-    : mapScalarFormatToPythonType(itemFormat)

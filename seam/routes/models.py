@@ -3684,7 +3684,7 @@ class AbstractAccessCodes(abc.ABC):
         device_id: str,
         max_code_length: Optional[int] = None,
         min_code_length: Optional[int] = None,
-        supported_code_lengths: Optional[List[float]] = None
+        supported_code_lengths: Optional[List[int]] = None
     ) -> None:
         raise NotImplementedError()
 
