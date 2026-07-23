@@ -71,7 +71,8 @@ export const getMethodLayoutContext = (
     pollsActionAttempt,
     isList,
     itemType: returnResourceItem,
-    resAccessor: `res["${returnPath.join('"]["')}"]`,
+    resAccessor:
+      returnPath.length > 0 ? `res["${returnPath.join('"]["')}"]` : '',
   }
 }
 

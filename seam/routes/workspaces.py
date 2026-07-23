@@ -91,3 +91,36 @@ class Workspaces(AbstractWorkspaces):
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
+
+    def update(
+        self,
+        *,
+        connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
+        is_publishable_key_auth_enabled: Optional[bool] = None,
+        is_suspended: Optional[bool] = None,
+        name: Optional[str] = None,
+        organization_id: Optional[str] = None
+    ) -> None:
+        json_payload = {}
+
+        if connect_partner_name is not None:
+            json_payload["connect_partner_name"] = connect_partner_name
+        if connect_webview_customization is not None:
+            json_payload["connect_webview_customization"] = (
+                connect_webview_customization
+            )
+        if is_publishable_key_auth_enabled is not None:
+            json_payload["is_publishable_key_auth_enabled"] = (
+                is_publishable_key_auth_enabled
+            )
+        if is_suspended is not None:
+            json_payload["is_suspended"] = is_suspended
+        if name is not None:
+            json_payload["name"] = name
+        if organization_id is not None:
+            json_payload["organization_id"] = organization_id
+
+        self.client.post("/workspaces/update", json=json_payload)
+
+        return None
