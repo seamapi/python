@@ -14,10 +14,10 @@
     "start": "fake-seam-connect --seed"
   },
   "devDependencies": {
-    "@seamapi/blueprint": "^0.56.0",
+    "@seamapi/blueprint": "^0.59.0",
     "@seamapi/fake-seam-connect": "1.86.0",
     "@seamapi/smith": "^0.5.2",
-    "@seamapi/types": "1.963.0",
+    "@seamapi/types": "1.970.0",
     "change-case": "^5.4.4",
     "prettier": "^3.2.5"
   }
