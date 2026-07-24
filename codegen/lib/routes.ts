@@ -32,16 +32,12 @@ export const routes = (
   const metadata = metalsmith.metadata() as Metadata
   const { blueprint } = metadata
 
-  const documentedRoutes = blueprint.routes.filter(
-    (route) => !route.isUndocumented,
-  )
+  // The blueprint is built with omitUndocumented, so undocumented routes,
+  // namespaces, endpoints, and parameters are already stripped out.
 
   // Namespaces group routes without endpoints of their own (e.g. /acs) but
   // still produce a route class so their child classes are reachable.
-  const classEntries = [
-    ...blueprint.namespaces.filter((namespace) => !namespace.isUndocumented),
-    ...documentedRoutes,
-  ]
+  const classEntries = [...blueprint.namespaces, ...blueprint.routes]
     .map(({ path, parentPath }) => ({ path, parentPath }))
     .sort((a, b) => (a.path < b.path ? -1 : 1))
 
@@ -70,13 +66,11 @@ export const routes = (
     })
   }
 
-  for (const route of documentedRoutes) {
+  for (const route of blueprint.routes) {
     const cls = classMap.get(pascalCase(toNamespace(route.path)))
     if (cls == null) continue
 
     for (const endpoint of route.endpoints) {
-      if (endpoint.isUndocumented) continue
-
       const { response } = endpoint
       const idParameterName =
         endpoint.name === 'get' && response.responseType !== 'void'
@@ -86,14 +80,12 @@ export const routes = (
       cls.methods.push({
         methodName: endpoint.name,
         path: endpoint.path,
-        parameters: endpoint.request.parameters
-          .filter((parameter) => !parameter.isUndocumented)
-          .map((parameter) => ({
-            name: parameter.name,
-            type: mapParameterToPythonType(parameter),
-            position: parameter.name === idParameterName ? 0 : undefined,
-            required: parameter.isRequired,
-          })),
+        parameters: endpoint.request.parameters.map((parameter) => ({
+          name: parameter.name,
+          type: mapParameterToPythonType(parameter),
+          position: parameter.name === idParameterName ? 0 : undefined,
+          required: parameter.isRequired,
+        })),
         ...resolveResponse(response),
       })
     }
