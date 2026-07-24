@@ -281,52 +281,6 @@ class AcsCredential:
 
 
 @dataclass
-class AcsCredentialPool:
-    acs_credential_pool_id: str
-    acs_system_id: str
-    created_at: str
-    display_name: str
-    external_type: str
-    external_type_display_name: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return AcsCredentialPool(
-            acs_credential_pool_id=d.get("acs_credential_pool_id", None),
-            acs_system_id=d.get("acs_system_id", None),
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            external_type=d.get("external_type", None),
-            external_type_display_name=d.get("external_type_display_name", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class AcsCredentialProvisioningAutomation:
-    acs_credential_provisioning_automation_id: str
-    created_at: str
-    credential_manager_acs_system_id: str
-    user_identity_id: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return AcsCredentialProvisioningAutomation(
-            acs_credential_provisioning_automation_id=d.get(
-                "acs_credential_provisioning_automation_id", None
-            ),
-            created_at=d.get("created_at", None),
-            credential_manager_acs_system_id=d.get(
-                "credential_manager_acs_system_id", None
-            ),
-            user_identity_id=d.get("user_identity_id", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class AcsEncoder:
     acs_encoder_id: str
     acs_system_id: str
@@ -480,7 +434,6 @@ class AcsUser:
     hid_acs_system_id: str
     is_managed: bool
     is_suspended: bool
-    last_successful_sync_at: str
     pending_mutations: List[Dict[str, Any]]
     phone_number: str
     salto_ks_metadata: Dict[str, Any]
@@ -510,7 +463,6 @@ class AcsUser:
             hid_acs_system_id=d.get("hid_acs_system_id", None),
             is_managed=d.get("is_managed", None),
             is_suspended=d.get("is_suspended", None),
-            last_successful_sync_at=d.get("last_successful_sync_at", None),
             pending_mutations=d.get("pending_mutations", None),
             phone_number=d.get("phone_number", None),
             salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
@@ -558,7 +510,6 @@ class Batch:
     client_sessions: List[Dict[str, Any]]
     connect_webviews: List[Dict[str, Any]]
     connected_accounts: List[Dict[str, Any]]
-    customization_profiles: List[Dict[str, Any]]
     devices: List[Dict[str, Any]]
     events: List[Dict[str, Any]]
     instant_keys: List[Dict[str, Any]]
@@ -567,9 +518,6 @@ class Batch:
     thermostat_daily_programs: List[Dict[str, Any]]
     thermostat_schedules: List[Dict[str, Any]]
     unmanaged_access_codes: List[Dict[str, Any]]
-    unmanaged_acs_access_groups: List[Dict[str, Any]]
-    unmanaged_acs_credentials: List[Dict[str, Any]]
-    unmanaged_acs_users: List[Dict[str, Any]]
     unmanaged_devices: List[Dict[str, Any]]
     user_identities: List[Dict[str, Any]]
     workspaces: List[Dict[str, Any]]
@@ -590,7 +538,6 @@ class Batch:
             client_sessions=d.get("client_sessions", None),
             connect_webviews=d.get("connect_webviews", None),
             connected_accounts=d.get("connected_accounts", None),
-            customization_profiles=d.get("customization_profiles", None),
             devices=d.get("devices", None),
             events=d.get("events", None),
             instant_keys=d.get("instant_keys", None),
@@ -599,76 +546,9 @@ class Batch:
             thermostat_daily_programs=d.get("thermostat_daily_programs", None),
             thermostat_schedules=d.get("thermostat_schedules", None),
             unmanaged_access_codes=d.get("unmanaged_access_codes", None),
-            unmanaged_acs_access_groups=d.get("unmanaged_acs_access_groups", None),
-            unmanaged_acs_credentials=d.get("unmanaged_acs_credentials", None),
-            unmanaged_acs_users=d.get("unmanaged_acs_users", None),
             unmanaged_devices=d.get("unmanaged_devices", None),
             user_identities=d.get("user_identities", None),
             workspaces=d.get("workspaces", None),
-        )
-
-
-@dataclass
-class BridgeClientSession:
-    bridge_client_machine_identifier_key: str
-    bridge_client_name: str
-    bridge_client_session_id: str
-    bridge_client_session_token: str
-    bridge_client_time_zone: str
-    created_at: str
-    errors: List[Dict[str, Any]]
-    pairing_code: str
-    pairing_code_expires_at: str
-    tailscale_auth_key: str
-    tailscale_hostname: str
-    telemetry_token: str
-    telemetry_token_expires_at: str
-    telemetry_url: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return BridgeClientSession(
-            bridge_client_machine_identifier_key=d.get(
-                "bridge_client_machine_identifier_key", None
-            ),
-            bridge_client_name=d.get("bridge_client_name", None),
-            bridge_client_session_id=d.get("bridge_client_session_id", None),
-            bridge_client_session_token=d.get("bridge_client_session_token", None),
-            bridge_client_time_zone=d.get("bridge_client_time_zone", None),
-            created_at=d.get("created_at", None),
-            errors=d.get("errors", None),
-            pairing_code=d.get("pairing_code", None),
-            pairing_code_expires_at=d.get("pairing_code_expires_at", None),
-            tailscale_auth_key=d.get("tailscale_auth_key", None),
-            tailscale_hostname=d.get("tailscale_hostname", None),
-            telemetry_token=d.get("telemetry_token", None),
-            telemetry_token_expires_at=d.get("telemetry_token_expires_at", None),
-            telemetry_url=d.get("telemetry_url", None),
-        )
-
-
-@dataclass
-class BridgeConnectedSystems:
-    acs_system_display_name: str
-    acs_system_id: str
-    bridge_created_at: str
-    bridge_id: str
-    connected_account_created_at: str
-    connected_account_id: str
-    workspace_display_name: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return BridgeConnectedSystems(
-            acs_system_display_name=d.get("acs_system_display_name", None),
-            acs_system_id=d.get("acs_system_id", None),
-            bridge_created_at=d.get("bridge_created_at", None),
-            bridge_id=d.get("bridge_id", None),
-            connected_account_created_at=d.get("connected_account_created_at", None),
-            connected_account_id=d.get("connected_account_id", None),
-            workspace_display_name=d.get("workspace_display_name", None),
-            workspace_id=d.get("workspace_id", None),
         )
 
 
@@ -708,9 +588,7 @@ class ClientSession:
 @dataclass
 class ConnectWebview:
     accepted_capabilities: List[str]
-    accepted_devices: List[str]
     accepted_providers: List[str]
-    any_device_allowed: bool
     any_provider_allowed: bool
     authorized_at: str
     automatically_manage_new_devices: bool
@@ -733,9 +611,7 @@ class ConnectWebview:
     def from_dict(d: Dict[str, Any]):
         return ConnectWebview(
             accepted_capabilities=d.get("accepted_capabilities", None),
-            accepted_devices=d.get("accepted_devices", None),
             accepted_providers=d.get("accepted_providers", None),
-            any_device_allowed=d.get("any_device_allowed", None),
             any_provider_allowed=d.get("any_provider_allowed", None),
             authorized_at=d.get("authorized_at", None),
             automatically_manage_new_devices=d.get(
@@ -806,21 +682,6 @@ class ConnectedAccount:
 
 
 @dataclass
-class Customer:
-    created_at: str
-    customer_key: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Customer(
-            created_at=d.get("created_at", None),
-            customer_key=d.get("customer_key", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class CustomerPortal:
     created_at: str
     customer_key: str
@@ -835,33 +696,6 @@ class CustomerPortal:
             customer_key=d.get("customer_key", None),
             expires_at=d.get("expires_at", None),
             url=d.get("url", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class CustomizationProfile:
-    created_at: str
-    customer_portal_theme: Dict[str, Any]
-    customization_profile_id: str
-    logo_url: str
-    message_overrides: Dict[str, Any]
-    name: str
-    primary_color: str
-    secondary_color: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return CustomizationProfile(
-            created_at=d.get("created_at", None),
-            customer_portal_theme=DeepAttrDict(d.get("customer_portal_theme", None)),
-            customization_profile_id=d.get("customization_profile_id", None),
-            logo_url=d.get("logo_url", None),
-            message_overrides=DeepAttrDict(d.get("message_overrides", None)),
-            name=d.get("name", None),
-            primary_color=d.get("primary_color", None),
-            secondary_color=d.get("secondary_color", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1035,27 +869,6 @@ class DeviceProvider:
 
 
 @dataclass
-class EnrollmentAutomation:
-    created_at: str
-    credential_manager_acs_system_id: str
-    enrollment_automation_id: str
-    user_identity_id: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return EnrollmentAutomation(
-            created_at=d.get("created_at", None),
-            credential_manager_acs_system_id=d.get(
-                "credential_manager_acs_system_id", None
-            ),
-            enrollment_automation_id=d.get("enrollment_automation_id", None),
-            user_identity_id=d.get("user_identity_id", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class SeamEvent:
     access_code_id: str
     connected_account_custom_metadata: Dict[str, Any]
@@ -1144,7 +957,6 @@ class SeamEvent:
     image_url: str
     motion_sub_type: str
     video_url: str
-    enrollment_automation_id: str
     acs_entrance_ids: List[str]
     device_ids: List[str]
     space_id: str
@@ -1244,7 +1056,6 @@ class SeamEvent:
             image_url=d.get("image_url", None),
             motion_sub_type=d.get("motion_sub_type", None),
             video_url=d.get("video_url", None),
-            enrollment_automation_id=d.get("enrollment_automation_id", None),
             acs_entrance_ids=d.get("acs_entrance_ids", None),
             device_ids=d.get("device_ids", None),
             space_id=d.get("space_id", None),
@@ -1275,25 +1086,6 @@ class InstantKey:
             instant_key_id=d.get("instant_key_id", None),
             instant_key_url=d.get("instant_key_url", None),
             user_identity_id=d.get("user_identity_id", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class MagicLink:
-    created_at: str
-    customer_key: str
-    expires_at: str
-    url: str
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return MagicLink(
-            created_at=d.get("created_at", None),
-            customer_key=d.get("customer_key", None),
-            expires_at=d.get("expires_at", None),
-            url=d.get("url", None),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -1366,23 +1158,6 @@ class Phone:
 
 
 @dataclass
-class PhoneSession:
-    is_sandbox_workspace: bool
-    provider_sessions: List[Dict[str, Any]]
-    user_identity: Dict[str, Any]
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return PhoneSession(
-            is_sandbox_workspace=d.get("is_sandbox_workspace", None),
-            provider_sessions=d.get("provider_sessions", None),
-            user_identity=DeepAttrDict(d.get("user_identity", None)),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class Space:
     acs_entrance_count: float
     created_at: str
@@ -1392,8 +1167,6 @@ class Space:
     display_name: str
     geolocation: Dict[str, Any]
     name: str
-    parent_space_id: str
-    parent_space_key: str
     space_id: str
     space_key: str
     workspace_id: str
@@ -1409,48 +1182,9 @@ class Space:
             display_name=d.get("display_name", None),
             geolocation=DeepAttrDict(d.get("geolocation", None)),
             name=d.get("name", None),
-            parent_space_id=d.get("parent_space_id", None),
-            parent_space_key=d.get("parent_space_key", None),
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class StaffMember:
-    building_keys: List[str]
-    common_area_keys: List[str]
-    email_address: str
-    facility_keys: List[str]
-    listing_keys: List[str]
-    name: str
-    phone_number: str
-    property_keys: List[str]
-    property_listing_keys: List[str]
-    room_keys: List[str]
-    site_keys: List[str]
-    space_keys: List[str]
-    staff_member_key: str
-    unit_keys: List[str]
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return StaffMember(
-            building_keys=d.get("building_keys", None),
-            common_area_keys=d.get("common_area_keys", None),
-            email_address=d.get("email_address", None),
-            facility_keys=d.get("facility_keys", None),
-            listing_keys=d.get("listing_keys", None),
-            name=d.get("name", None),
-            phone_number=d.get("phone_number", None),
-            property_keys=d.get("property_keys", None),
-            property_listing_keys=d.get("property_listing_keys", None),
-            room_keys=d.get("room_keys", None),
-            site_keys=d.get("site_keys", None),
-            space_keys=d.get("space_keys", None),
-            staff_member_key=d.get("staff_member_key", None),
-            unit_keys=d.get("unit_keys", None),
         )
 
 
@@ -1546,183 +1280,6 @@ class UnmanagedAccessCode:
             starts_at=d.get("starts_at", None),
             status=d.get("status", None),
             type=d.get("type", None),
-            warnings=d.get("warnings", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class UnmanagedAcsAccessGroup:
-    access_group_type: str
-    access_group_type_display_name: str
-    access_schedule: Dict[str, Any]
-    acs_access_group_id: str
-    acs_system_id: str
-    connected_account_id: str
-    created_at: str
-    display_name: str
-    errors: List[Dict[str, Any]]
-    external_type: str
-    external_type_display_name: str
-    is_managed: bool
-    name: str
-    pending_mutations: List[Dict[str, Any]]
-    warnings: List[Dict[str, Any]]
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return UnmanagedAcsAccessGroup(
-            access_group_type=d.get("access_group_type", None),
-            access_group_type_display_name=d.get(
-                "access_group_type_display_name", None
-            ),
-            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
-            acs_access_group_id=d.get("acs_access_group_id", None),
-            acs_system_id=d.get("acs_system_id", None),
-            connected_account_id=d.get("connected_account_id", None),
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            errors=d.get("errors", None),
-            external_type=d.get("external_type", None),
-            external_type_display_name=d.get("external_type_display_name", None),
-            is_managed=d.get("is_managed", None),
-            name=d.get("name", None),
-            pending_mutations=d.get("pending_mutations", None),
-            warnings=d.get("warnings", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class UnmanagedAcsCredential:
-    access_method: str
-    acs_credential_id: str
-    acs_credential_pool_id: str
-    acs_system_id: str
-    acs_user_id: str
-    assa_abloy_vostio_metadata: Dict[str, Any]
-    card_number: str
-    code: str
-    connected_account_id: str
-    created_at: str
-    display_name: str
-    ends_at: str
-    errors: List[Dict[str, Any]]
-    external_type: str
-    external_type_display_name: str
-    is_issued: bool
-    is_latest_desired_state_synced_with_provider: bool
-    is_managed: bool
-    is_multi_phone_sync_credential: bool
-    is_one_time_use: bool
-    issued_at: str
-    latest_desired_state_synced_with_provider_at: str
-    parent_acs_credential_id: str
-    starts_at: str
-    user_identity_id: str
-    visionline_metadata: Dict[str, Any]
-    warnings: List[Dict[str, Any]]
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return UnmanagedAcsCredential(
-            access_method=d.get("access_method", None),
-            acs_credential_id=d.get("acs_credential_id", None),
-            acs_credential_pool_id=d.get("acs_credential_pool_id", None),
-            acs_system_id=d.get("acs_system_id", None),
-            acs_user_id=d.get("acs_user_id", None),
-            assa_abloy_vostio_metadata=DeepAttrDict(
-                d.get("assa_abloy_vostio_metadata", None)
-            ),
-            card_number=d.get("card_number", None),
-            code=d.get("code", None),
-            connected_account_id=d.get("connected_account_id", None),
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            ends_at=d.get("ends_at", None),
-            errors=d.get("errors", None),
-            external_type=d.get("external_type", None),
-            external_type_display_name=d.get("external_type_display_name", None),
-            is_issued=d.get("is_issued", None),
-            is_latest_desired_state_synced_with_provider=d.get(
-                "is_latest_desired_state_synced_with_provider", None
-            ),
-            is_managed=d.get("is_managed", None),
-            is_multi_phone_sync_credential=d.get(
-                "is_multi_phone_sync_credential", None
-            ),
-            is_one_time_use=d.get("is_one_time_use", None),
-            issued_at=d.get("issued_at", None),
-            latest_desired_state_synced_with_provider_at=d.get(
-                "latest_desired_state_synced_with_provider_at", None
-            ),
-            parent_acs_credential_id=d.get("parent_acs_credential_id", None),
-            starts_at=d.get("starts_at", None),
-            user_identity_id=d.get("user_identity_id", None),
-            visionline_metadata=DeepAttrDict(d.get("visionline_metadata", None)),
-            warnings=d.get("warnings", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
-class UnmanagedAcsUser:
-    access_schedule: Dict[str, Any]
-    acs_system_id: str
-    acs_user_id: str
-    connected_account_id: str
-    created_at: str
-    display_name: str
-    email: str
-    email_address: str
-    errors: List[Dict[str, Any]]
-    external_type: str
-    external_type_display_name: str
-    full_name: str
-    hid_acs_system_id: str
-    is_managed: bool
-    is_suspended: bool
-    last_successful_sync_at: str
-    pending_mutations: List[Dict[str, Any]]
-    phone_number: str
-    salto_ks_metadata: Dict[str, Any]
-    salto_space_metadata: Dict[str, Any]
-    user_identity_email_address: str
-    user_identity_full_name: str
-    user_identity_id: str
-    user_identity_phone_number: str
-    warnings: List[Dict[str, Any]]
-    workspace_id: str
-
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return UnmanagedAcsUser(
-            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
-            acs_system_id=d.get("acs_system_id", None),
-            acs_user_id=d.get("acs_user_id", None),
-            connected_account_id=d.get("connected_account_id", None),
-            created_at=d.get("created_at", None),
-            display_name=d.get("display_name", None),
-            email=d.get("email", None),
-            email_address=d.get("email_address", None),
-            errors=d.get("errors", None),
-            external_type=d.get("external_type", None),
-            external_type_display_name=d.get("external_type_display_name", None),
-            full_name=d.get("full_name", None),
-            hid_acs_system_id=d.get("hid_acs_system_id", None),
-            is_managed=d.get("is_managed", None),
-            is_suspended=d.get("is_suspended", None),
-            last_successful_sync_at=d.get("last_successful_sync_at", None),
-            pending_mutations=d.get("pending_mutations", None),
-            phone_number=d.get("phone_number", None),
-            salto_ks_metadata=DeepAttrDict(d.get("salto_ks_metadata", None)),
-            salto_space_metadata=DeepAttrDict(d.get("salto_space_metadata", None)),
-            user_identity_email_address=d.get("user_identity_email_address", None),
-            user_identity_full_name=d.get("user_identity_full_name", None),
-            user_identity_id=d.get("user_identity_id", None),
-            user_identity_phone_number=d.get("user_identity_phone_number", None),
             warnings=d.get("warnings", None),
             workspace_id=d.get("workspace_id", None),
         )
