@@ -307,6 +307,7 @@ class AcsEncoder:
 class AcsEntrance:
     acs_entrance_id: str
     acs_system_id: str
+    akiles_metadata: Dict[str, Any]
     assa_abloy_vostio_metadata: Dict[str, Any]
     avigilon_alta_metadata: Dict[str, Any]
     brivo_metadata: Dict[str, Any]
@@ -335,6 +336,7 @@ class AcsEntrance:
         return AcsEntrance(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),
+            akiles_metadata=DeepAttrDict(d.get("akiles_metadata", None)),
             assa_abloy_vostio_metadata=DeepAttrDict(
                 d.get("assa_abloy_vostio_metadata", None)
             ),
@@ -2093,12 +2095,14 @@ class AbstractCustomers(abc.ABC):
         *,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
         locale: Optional[str] = None,
         navigation_mode: Optional[str] = None,
+        read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
         raise NotImplementedError()
