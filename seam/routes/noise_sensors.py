@@ -1,8 +1,48 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractNoiseSensors, Device
-from .noise_sensors_noise_thresholds import NoiseSensorsNoiseThresholds
-from .noise_sensors_simulate import NoiseSensorsSimulate
+from ..resources import Device
+from .noise_sensors_noise_thresholds import (
+    AbstractNoiseSensorsNoiseThresholds,
+    NoiseSensorsNoiseThresholds,
+)
+from .noise_sensors_simulate import AbstractNoiseSensorsSimulate, NoiseSensorsSimulate
+
+
+class AbstractNoiseSensors(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def noise_thresholds(self) -> AbstractNoiseSensorsNoiseThresholds:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractNoiseSensorsSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
 
 
 class NoiseSensors(AbstractNoiseSensors):

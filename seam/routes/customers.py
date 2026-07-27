@@ -1,6 +1,81 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractCustomers, CustomerPortal
+from ..resources import CustomerPortal
+
+
+class AbstractCustomers(abc.ABC):
+
+    @abc.abstractmethod
+    def create_portal(
+        self,
+        *,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
+        features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
+        navigation_mode: Optional[str] = None,
+        read_only: Optional[bool] = None,
+        customer_data: Optional[Dict[str, Any]] = None
+    ) -> CustomerPortal:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class Customers(AbstractCustomers):

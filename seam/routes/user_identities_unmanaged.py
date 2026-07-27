@@ -1,6 +1,34 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractUserIdentitiesUnmanaged
+
+
+class AbstractUserIdentitiesUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        is_managed: bool,
+        user_identity_id: str,
+        user_identity_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):

@@ -1,6 +1,40 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsSystems, AcsSystem
+from ..resources import AcsSystem
+
+
+class AbstractAcsSystems(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, acs_system_id: str) -> AcsSystem:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        search: Optional[str] = None
+    ) -> List[AcsSystem]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_compatible_credential_manager_acs_systems(
+        self, *, acs_system_id: str
+    ) -> List[AcsSystem]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def report_devices(
+        self,
+        *,
+        acs_system_id: str,
+        acs_encoders: Optional[List[Dict[str, Any]]] = None,
+        acs_entrances: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AcsSystems(AbstractAcsSystems):

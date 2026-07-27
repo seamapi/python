@@ -1,7 +1,103 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessGrants, AccessGrant, Batch
-from .access_grants_unmanaged import AccessGrantsUnmanaged
+from ..resources import AccessGrant, Batch
+from .access_grants_unmanaged import (
+    AbstractAccessGrantsUnmanaged,
+    AccessGrantsUnmanaged,
+)
+
+
+class AbstractAccessGrants(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAccessGrantsUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        requested_access_methods: List[Dict[str, Any]],
+        user_identity_id: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
+        customization_profile_id: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        ends_at: Optional[str] = None,
+        location: Optional[Dict[str, Any]] = None,
+        location_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        reservation_key: Optional[str] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        starts_at: Optional[str] = None
+    ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None
+    ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_grant_ids: Optional[List[str]] = None,
+        access_grant_keys: Optional[List[str]] = None,
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> Batch:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        location_id: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        reservation_key: Optional[str] = None,
+        space_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[AccessGrant]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def request_access_methods(
+        self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
+    ) -> AccessGrant:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AccessGrants(AbstractAccessGrants):

@@ -1,6 +1,49 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractNoiseSensorsNoiseThresholds, NoiseThreshold
+from ..resources import NoiseThreshold
+
+
+class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        device_id: str,
+        ends_daily_at: str,
+        starts_daily_at: str,
+        name: Optional[str] = None,
+        noise_threshold_decibels: Optional[float] = None,
+        noise_threshold_nrs: Optional[float] = None
+    ) -> NoiseThreshold:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, noise_threshold_id: str) -> NoiseThreshold:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(self, *, device_id: str) -> List[NoiseThreshold]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        device_id: str,
+        noise_threshold_id: str,
+        ends_daily_at: Optional[str] = None,
+        name: Optional[str] = None,
+        noise_threshold_decibels: Optional[float] = None,
+        noise_threshold_nrs: Optional[float] = None,
+        starts_daily_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):

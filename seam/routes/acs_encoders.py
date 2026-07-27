@@ -1,8 +1,66 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsEncoders, ActionAttempt, AcsEncoder
-from .acs_encoders_simulate import AcsEncodersSimulate
+from ..resources import ActionAttempt, AcsEncoder
+from .acs_encoders_simulate import AbstractAcsEncodersSimulate, AcsEncodersSimulate
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractAcsEncoders(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractAcsEncodersSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def encode_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        access_method_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, acs_encoder_id: str) -> AcsEncoder:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_system_ids: Optional[List[str]] = None,
+        acs_encoder_ids: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None
+    ) -> List[AcsEncoder]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def scan_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def scan_to_assign_credential(
+        self,
+        *,
+        acs_encoder_id: str,
+        acs_user_id: Optional[str] = None,
+        salto_ks_metadata: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class AcsEncoders(AbstractAcsEncoders):

@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 import niquests as requests
 from importlib.metadata import version
 from urllib3.util import Retry
+import abc
 
 from .constants import LTS_VERSION
 from .exceptions import (
@@ -10,7 +11,6 @@ from .exceptions import (
     SeamHttpInvalidInputError,
     SeamHttpUnauthorizedError,
 )
-from .models import AbstractSeamHttpClient
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
@@ -19,6 +19,24 @@ SDK_HEADERS = {
 }
 
 DEFAULT_RETRIES = Retry()
+
+
+class AbstractSeamHttpClient(abc.ABC):
+    @abc.abstractmethod
+    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def request(self, method: str, url: str, *args, **kwargs):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _handle_response(self, response: requests.Response):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _handle_error_response(self, response: requests.Response):
+        raise NotImplementedError
 
 
 class SeamHttpClient(requests.Session, AbstractSeamHttpClient):

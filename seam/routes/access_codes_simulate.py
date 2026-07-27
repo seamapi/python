@@ -1,6 +1,16 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessCodesSimulate, UnmanagedAccessCode
+from ..resources import UnmanagedAccessCode
+
+
+class AbstractAccessCodesSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def create_unmanaged_access_code(
+        self, *, code: str, device_id: str, name: str
+    ) -> UnmanagedAccessCode:
+        raise NotImplementedError()
 
 
 class AccessCodesSimulate(AbstractAccessCodesSimulate):

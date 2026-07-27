@@ -3,7 +3,7 @@ import time
 
 from ..client import SeamHttpClient
 from ..exceptions import SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
-from ..routes.models import ActionAttempt
+from ..resources import ActionAttempt
 
 TIMEOUT = 5.0
 POLLING_INTERVAL = 0.5

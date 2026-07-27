@@ -1,14 +1,18 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import ({{modelImportList}})
+{{#if resourceImportList}}
+from ..resources import ({{resourceImportList}})
+{{/if}}
 {{#each childClasses}}
-from .{{module}} import {{className}}
-{{else}}
-
+from .{{module}} import {{abstractClassName}}, {{className}}
 {{/each}}
 {{#if importResolveActionAttempt}}
 from ..modules.action_attempts import resolve_action_attempt
 {{/if}}
+
+
+{{> abstract-route-class abstractClass}}
 
 
 class {{className}}({{abstractClassName}}):

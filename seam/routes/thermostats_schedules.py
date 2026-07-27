@@ -1,6 +1,52 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractThermostatsSchedules, ThermostatSchedule
+from ..resources import ThermostatSchedule
+
+
+class AbstractThermostatsSchedules(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        ends_at: str,
+        starts_at: str,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[int] = None,
+        name: Optional[str] = None
+    ) -> ThermostatSchedule:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, thermostat_schedule_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self, *, device_id: str, user_identifier_key: Optional[str] = None
+    ) -> List[ThermostatSchedule]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        thermostat_schedule_id: str,
+        climate_preset_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[int] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class ThermostatsSchedules(AbstractThermostatsSchedules):

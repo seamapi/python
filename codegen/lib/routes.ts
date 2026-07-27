@@ -4,7 +4,7 @@
 // blueprint plugin places in the Metalsmith metadata; no OpenAPI parsing
 // happens here. Documented blueprint routes and namespaces map to route
 // classes, endpoints to methods, and the blueprint resources, events, action
-// attempts, and pagination to the dataclasses in the models module.
+// attempts, and pagination to one dataclass module each under seam/resources.
 
 import type { Blueprint, Response } from '@seamapi/blueprint'
 import { pascalCase } from 'change-case'
@@ -12,7 +12,10 @@ import type Metalsmith from 'metalsmith'
 
 import type { ClassModel } from './class-model.js'
 import { convertCustomResourceName } from './custom-resource-name-conversions.js'
-import { setModelsLayoutContext } from './layouts/models.js'
+import {
+  getResourceLayoutContexts,
+  setResourcesIndexLayoutContext,
+} from './layouts/resources.js'
 import { setRouteLayoutContext } from './layouts/route.js'
 import { setRoutesIndexLayoutContext } from './layouts/routes-index.js'
 import { mapParameterToPythonType } from './python-type.js'
@@ -21,7 +24,8 @@ interface Metadata {
   blueprint: Blueprint
 }
 
-const rootPath = 'seam/routes'
+const routesPath = 'seam/routes'
+const resourcesPath = 'seam/resources'
 
 const toNamespace = (path: string): string => path.slice(1).replaceAll('/', '_')
 
@@ -96,7 +100,7 @@ export const routes = (
     .map((entry) => toNamespace(entry.path))
 
   for (const cls of classMap.values()) {
-    const k = `${rootPath}/${cls.namespace}.py`
+    const k = `${routesPath}/${cls.namespace}.py`
     files[k] = {
       contents: Buffer.from('\n'),
       layout: 'route.hbs',
@@ -104,16 +108,26 @@ export const routes = (
     }
   }
 
-  files[`${rootPath}/models.py`] = {
-    contents: Buffer.from('\n'),
-    layout: 'models.hbs',
-    ...setModelsLayoutContext(blueprint, classMap, topLevelNamespaces),
-  }
-
-  files[`${rootPath}/__init__.py`] = {
+  files[`${routesPath}/__init__.py`] = {
     contents: Buffer.from('\n'),
     layout: 'routes-index.hbs',
     ...setRoutesIndexLayoutContext(topLevelNamespaces),
+  }
+
+  const resourceContexts = getResourceLayoutContexts(blueprint)
+
+  for (const resource of resourceContexts) {
+    files[`${resourcesPath}/${resource.moduleName}.py`] = {
+      contents: Buffer.from('\n'),
+      layout: 'resource.hbs',
+      ...resource,
+    }
+  }
+
+  files[`${resourcesPath}/__init__.py`] = {
+    contents: Buffer.from('\n'),
+    layout: 'resources-index.hbs',
+    ...setResourcesIndexLayoutContext(resourceContexts),
   }
 }
 

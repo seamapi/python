@@ -1,6 +1,45 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsEncodersSimulate
+
+
+class AbstractAcsEncodersSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def next_credential_encode_will_fail(
+        self,
+        *,
+        acs_encoder_id: str,
+        error_code: Optional[str] = None,
+        acs_credential_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def next_credential_encode_will_succeed(
+        self, *, acs_encoder_id: str, scenario: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def next_credential_scan_will_fail(
+        self,
+        *,
+        acs_encoder_id: str,
+        error_code: Optional[str] = None,
+        acs_credential_id_on_seam: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def next_credential_scan_will_succeed(
+        self,
+        *,
+        acs_encoder_id: str,
+        acs_credential_id_on_seam: Optional[str] = None,
+        scenario: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AcsEncodersSimulate(AbstractAcsEncodersSimulate):

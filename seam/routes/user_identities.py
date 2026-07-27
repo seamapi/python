@@ -1,7 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import (
-    AbstractUserIdentities,
+from ..resources import (
     UserIdentity,
     InstantKey,
     Device,
@@ -9,7 +9,116 @@ from .models import (
     AcsSystem,
     AcsUser,
 )
-from .user_identities_unmanaged import UserIdentitiesUnmanaged
+from .user_identities_unmanaged import (
+    AbstractUserIdentitiesUnmanaged,
+    UserIdentitiesUnmanaged,
+)
+
+
+class AbstractUserIdentities(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractUserIdentitiesUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def add_acs_user(
+        self,
+        *,
+        acs_user_id: str,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        acs_system_ids: Optional[List[str]] = None,
+        email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> UserIdentity:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def generate_instant_key(
+        self,
+        *,
+        user_identity_id: str,
+        customization_profile_id: Optional[str] = None,
+        max_use_count: Optional[float] = None
+    ) -> InstantKey:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> UserIdentity:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        credential_manager_acs_system_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
+    ) -> List[UserIdentity]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        user_identity_id: str,
+        email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class UserIdentities(AbstractUserIdentities):

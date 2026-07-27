@@ -1,8 +1,75 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractLocks, ActionAttempt, Device
-from .locks_simulate import LocksSimulate
+from ..resources import ActionAttempt, Device
+from .locks_simulate import AbstractLocksSimulate, LocksSimulate
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractLocks(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractLocksSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def configure_auto_lock(
+        self,
+        *,
+        auto_lock_enabled: bool,
+        device_id: str,
+        auto_lock_delay_seconds: Optional[float] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def lock_door(
+        self,
+        *,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock_door(
+        self,
+        *,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class Locks(AbstractLocks):

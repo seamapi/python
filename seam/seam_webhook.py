@@ -1,6 +1,6 @@
 from typing import Dict
 from svix.webhooks import Webhook
-from .routes.models import SeamEvent
+from .resources import SeamEvent
 
 
 class SeamWebhook:

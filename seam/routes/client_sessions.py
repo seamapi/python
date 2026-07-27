@@ -1,6 +1,80 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractClientSessions, ClientSession
+from ..resources import ClientSession
+
+
+class AbstractClientSessions(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
+    ) -> ClientSession:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, client_session_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> ClientSession:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_or_create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
+    ) -> ClientSession:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def grant_access(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        without_user_identifier_key: Optional[bool] = None
+    ) -> List[ClientSession]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def revoke(self, *, client_session_id: str) -> None:
+        raise NotImplementedError()
 
 
 class ClientSessions(AbstractClientSessions):

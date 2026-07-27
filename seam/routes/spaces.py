@@ -1,6 +1,100 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractSpaces, Space, Batch
+from ..resources import Space, Batch
+
+
+class AbstractSpaces(abc.ABC):
+
+    @abc.abstractmethod
+    def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def add_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        name: str,
+        acs_entrance_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        space_key: Optional[str] = None
+    ) -> Space:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
+    ) -> Space:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None
+    ) -> Batch:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_key: Optional[str] = None
+    ) -> List[Space]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_acs_entrances(
+        self, *, acs_entrance_ids: List[str], space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        acs_entrance_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_key: Optional[str] = None
+    ) -> Space:
+        raise NotImplementedError()
 
 
 class Spaces(AbstractSpaces):

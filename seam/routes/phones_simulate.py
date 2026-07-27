@@ -1,6 +1,21 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractPhonesSimulate, Phone
+from ..resources import Phone
+
+
+class AbstractPhonesSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def create_sandbox_phone(
+        self,
+        *,
+        user_identity_id: str,
+        assa_abloy_metadata: Optional[Dict[str, Any]] = None,
+        custom_sdk_installation_id: Optional[str] = None,
+        phone_metadata: Optional[Dict[str, Any]] = None
+    ) -> Phone:
+        raise NotImplementedError()
 
 
 class PhonesSimulate(AbstractPhonesSimulate):

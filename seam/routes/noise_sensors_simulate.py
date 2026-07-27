@@ -1,6 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractNoiseSensorsSimulate
+
+
+class AbstractNoiseSensorsSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def trigger_noise_threshold(self, *, device_id: str) -> None:
+        raise NotImplementedError()
 
 
 class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):

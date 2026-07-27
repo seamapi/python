@@ -1,27 +1,9 @@
 from typing import Dict, List, Optional, Union
-import niquests as requests
 from typing_extensions import Self
 import abc
 
-from .routes.models import AbstractRoutes, Workspace
-
-
-class AbstractSeamHttpClient(abc.ABC):
-    @abc.abstractmethod
-    def __init__(self, base_url: str, auth_headers: Dict[str, str], **kwargs):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def request(self, method: str, url: str, *args, **kwargs):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _handle_response(self, response: requests.Response):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _handle_error_response(self, response: requests.Response):
-        raise NotImplementedError
+from .routes import AbstractRoutes
+from .resources import Workspace
 
 
 class AbstractSeam(AbstractRoutes):
