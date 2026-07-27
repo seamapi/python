@@ -1,6 +1,33 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractDevicesSimulate
+
+
+class AbstractDevicesSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def connect(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def connect_to_hub(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def disconnect(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def disconnect_from_hub(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def paid_subscription(self, *, device_id: str, is_expired: bool) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove(self, *, device_id: str) -> None:
+        raise NotImplementedError()
 
 
 class DevicesSimulate(AbstractDevicesSimulate):

@@ -1,8 +1,30 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractLocksSimulate, ActionAttempt
-
+from ..resources import ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractLocksSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def keypad_code_entry(
+        self,
+        *,
+        code: str,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def manual_lock_via_keypad(
+        self,
+        *,
+        device_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class LocksSimulate(AbstractLocksSimulate):

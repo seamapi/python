@@ -1,6 +1,59 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsAccessGroups, AcsAccessGroup, AcsEntrance, AcsUser
+from ..resources import AcsAccessGroup, AcsEntrance, AcsUser
+
+
+class AbstractAcsAccessGroups(abc.ABC):
+
+    @abc.abstractmethod
+    def add_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, acs_access_group_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[AcsAccessGroup]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_entrances(
+        self, *, acs_access_group_id: str
+    ) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AcsAccessGroups(AbstractAcsAccessGroups):

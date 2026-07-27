@@ -1,6 +1,87 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsCredentials, AcsCredential, AcsEntrance
+from ..resources import AcsCredential, AcsEntrance
+
+
+class AbstractAcsCredentials(abc.ABC):
+
+    @abc.abstractmethod
+    def assign(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        access_method: str,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        allowed_acs_entrance_ids: Optional[List[str]] = None,
+        assa_abloy_vostio_metadata: Optional[Dict[str, Any]] = None,
+        code: Optional[str] = None,
+        credential_manager_acs_system_id: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_multi_phone_sync_credential: Optional[bool] = None,
+        salto_space_metadata: Optional[Dict[str, Any]] = None,
+        starts_at: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        visionline_metadata: Optional[Dict[str, Any]] = None
+    ) -> AcsCredential:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, acs_credential_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, acs_credential_id: str) -> AcsCredential:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_user_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        is_multi_phone_sync_credential: Optional[bool] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None
+    ) -> List[AcsCredential]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unassign(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        acs_credential_id: str,
+        code: Optional[str] = None,
+        ends_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AcsCredentials(AbstractAcsCredentials):

@@ -1,6 +1,32 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractThermostatsSimulate
+
+
+class AbstractThermostatsSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def hvac_mode_adjusted(
+        self,
+        *,
+        device_id: str,
+        hvac_mode: str,
+        cooling_set_point_celsius: Optional[float] = None,
+        cooling_set_point_fahrenheit: Optional[float] = None,
+        heating_set_point_celsius: Optional[float] = None,
+        heating_set_point_fahrenheit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def temperature_reached(
+        self,
+        *,
+        device_id: str,
+        temperature_celsius: Optional[float] = None,
+        temperature_fahrenheit: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class ThermostatsSimulate(AbstractThermostatsSimulate):

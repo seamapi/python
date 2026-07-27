@@ -1,6 +1,24 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessMethodsUnmanaged
+
+
+class AbstractAccessMethodsUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, access_method_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_grant_id: str,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        space_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):

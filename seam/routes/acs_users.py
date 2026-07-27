@@ -1,6 +1,132 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsUsers, AcsUser, AcsEntrance
+from ..resources import AcsUser, AcsEntrance
+
+
+class AbstractAcsUsers(abc.ABC):
+
+    @abc.abstractmethod
+    def add_to_access_group(
+        self, *, acs_access_group_id: str, acs_user_id: str
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        acs_system_id: str,
+        full_name: str,
+        access_schedule: Optional[Dict[str, Any]] = None,
+        acs_access_group_ids: Optional[List[str]] = None,
+        email: Optional[str] = None,
+        email_address: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> AcsUser:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        acs_user_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> AcsUser:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identity_email_address: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_phone_number: Optional[str] = None
+    ) -> List[AcsUser]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_accessible_entrances(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def remove_from_access_group(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def revoke_access_to_all_entrances(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def suspend(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unsuspend(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_schedule: Optional[Dict[str, Any]] = None,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        email: Optional[str] = None,
+        email_address: Optional[str] = None,
+        full_name: Optional[str] = None,
+        hid_acs_system_id: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AcsUsers(AbstractAcsUsers):

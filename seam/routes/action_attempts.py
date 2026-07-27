@@ -1,8 +1,31 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractActionAttempts, ActionAttempt
-
+from ..resources import ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractActionAttempts(abc.ABC):
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        action_attempt_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        action_attempt_ids: Optional[List[str]] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None
+    ) -> List[ActionAttempt]:
+        raise NotImplementedError()
 
 
 class ActionAttempts(AbstractActionAttempts):

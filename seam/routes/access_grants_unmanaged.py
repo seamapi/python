@@ -1,6 +1,36 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessGrantsUnmanaged
+
+
+class AbstractAccessGrantsUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, access_grant_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_entrance_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        reservation_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_grant_id: str,
+        is_managed: bool,
+        access_grant_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):

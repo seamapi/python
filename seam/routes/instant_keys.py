@@ -1,6 +1,27 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractInstantKeys, InstantKey
+from ..resources import InstantKey
+
+
+class AbstractInstantKeys(abc.ABC):
+
+    @abc.abstractmethod
+    def delete(self, *, instant_key_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        instant_key_id: Optional[str] = None,
+        instant_key_url: Optional[str] = None
+    ) -> InstantKey:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
+        raise NotImplementedError()
 
 
 class InstantKeys(AbstractInstantKeys):

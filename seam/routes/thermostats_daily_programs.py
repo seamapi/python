@@ -1,12 +1,32 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import (
-    AbstractThermostatsDailyPrograms,
-    ThermostatDailyProgram,
-    ActionAttempt,
-)
-
+from ..resources import ThermostatDailyProgram, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractThermostatsDailyPrograms(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
+    ) -> ThermostatDailyProgram:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, thermostat_daily_program_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        name: str,
+        periods: List[Dict[str, Any]],
+        thermostat_daily_program_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):

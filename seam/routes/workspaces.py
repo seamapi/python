@@ -1,8 +1,59 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractWorkspaces, Workspace, ActionAttempt
-
+from ..resources import Workspace, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractWorkspaces(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        name: str,
+        company_name: Optional[str] = None,
+        connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
+        is_sandbox: Optional[bool] = None,
+        organization_id: Optional[str] = None,
+        webview_logo_shape: Optional[str] = None,
+        webview_primary_button_color: Optional[str] = None,
+        webview_primary_button_text_color: Optional[str] = None,
+        webview_success_message: Optional[str] = None
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+    ) -> Workspace:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Workspace]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def reset_sandbox(
+        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        connect_partner_name: Optional[str] = None,
+        connect_webview_customization: Optional[Dict[str, Any]] = None,
+        is_publishable_key_auth_enabled: Optional[bool] = None,
+        is_suspended: Optional[bool] = None,
+        name: Optional[str] = None,
+        organization_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class Workspaces(AbstractWorkspaces):

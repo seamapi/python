@@ -1,6 +1,32 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractWebhooks, Webhook
+from ..resources import Webhook
+
+
+class AbstractWebhooks(abc.ABC):
+
+    @abc.abstractmethod
+    def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, webhook_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, webhook_id: str) -> Webhook:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+    ) -> List[Webhook]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(self, *, event_types: List[str], webhook_id: str) -> None:
+        raise NotImplementedError()
 
 
 class Webhooks(AbstractWebhooks):

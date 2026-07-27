@@ -1,6 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractConnectedAccountsSimulate
+
+
+class AbstractConnectedAccountsSimulate(abc.ABC):
+
+    @abc.abstractmethod
+    def disconnect(self, *, connected_account_id: str) -> None:
+        raise NotImplementedError()
 
 
 class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):

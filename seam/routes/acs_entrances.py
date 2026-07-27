@@ -1,8 +1,58 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAcsEntrances, AcsEntrance, AcsCredential, ActionAttempt
-
+from ..resources import AcsEntrance, AcsCredential, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractAcsEntrances(abc.ABC):
+
+    @abc.abstractmethod
+    def get(self, *, acs_entrance_id: str) -> AcsEntrance:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def grant_access(
+        self,
+        *,
+        acs_entrance_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_credential_id: Optional[str] = None,
+        acs_entrance_ids: Optional[List[str]] = None,
+        acs_system_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        location_id: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None
+    ) -> List[AcsEntrance]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_credentials_with_access(
+        self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
+    ) -> List[AcsCredential]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock(
+        self,
+        *,
+        acs_credential_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class AcsEntrances(AbstractAcsEntrances):

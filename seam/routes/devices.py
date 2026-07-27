@@ -1,8 +1,74 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractDevices, Device, DeviceProvider
-from .devices_simulate import DevicesSimulate
-from .devices_unmanaged import DevicesUnmanaged
+from ..resources import Device, DeviceProvider
+from .devices_simulate import AbstractDevicesSimulate, DevicesSimulate
+from .devices_unmanaged import AbstractDevicesUnmanaged, DevicesUnmanaged
+
+
+class AbstractDevices(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractDevicesSimulate:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractDevicesUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self, *, device_id: Optional[str] = None, name: Optional[str] = None
+    ) -> Device:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        created_before: Optional[str] = None,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        device_type: Optional[str] = None,
+        device_types: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        manufacturer: Optional[str] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        unstable_location_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[Device]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list_device_providers(
+        self, *, provider_category: Optional[str] = None
+    ) -> List[DeviceProvider]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        device_id: str,
+        backup_access_code_pool_enabled: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        is_managed: Optional[bool] = None,
+        name: Optional[str] = None,
+        properties: Optional[Dict[str, Any]] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class Devices(AbstractDevices):

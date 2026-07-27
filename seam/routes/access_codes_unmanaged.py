@@ -1,6 +1,59 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessCodesUnmanaged, UnmanagedAccessCode
+from ..resources import UnmanagedAccessCode
+
+
+class AbstractAccessCodesUnmanaged(abc.ABC):
+
+    @abc.abstractmethod
+    def convert_to_managed(
+        self,
+        *,
+        access_code_id: str,
+        allow_external_modification: Optional[bool] = None,
+        force: Optional[bool] = None,
+        is_external_modification_allowed: Optional[bool] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_code_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        code: Optional[str] = None,
+        device_id: Optional[str] = None
+    ) -> UnmanagedAccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        device_id: str,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[UnmanagedAccessCode]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_code_id: str,
+        is_managed: bool,
+        allow_external_modification: Optional[bool] = None,
+        force: Optional[bool] = None,
+        is_external_modification_allowed: Optional[bool] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):

@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from .routes.models import ActionAttempt
+from .resources import ActionAttempt
 
 
 # HTTP

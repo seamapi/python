@@ -1,7 +1,33 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractPhones, Phone
-from .phones_simulate import PhonesSimulate
+from ..resources import Phone
+from .phones_simulate import AbstractPhonesSimulate, PhonesSimulate
+
+
+class AbstractPhones(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractPhonesSimulate:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def deactivate(self, *, device_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, device_id: str) -> Phone:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        acs_credential_id: Optional[str] = None,
+        owner_user_identity_id: Optional[str] = None
+    ) -> List[Phone]:
+        raise NotImplementedError()
 
 
 class Phones(AbstractPhones):

@@ -1,9 +1,13 @@
 from typing import Any, Dict
+import abc
+from dataclasses import dataclass
 from ..client import SeamHttpClient
-from .models import AbstractRoutes
 {{#each namespaces}}
-from .{{namespace}} import {{className}}
+from .{{namespace}} import {{abstractClassName}}, {{className}}
 {{/each}}
+
+
+{{> abstract-routes}}
 
 
 class Routes(AbstractRoutes):

@@ -1,8 +1,87 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessMethods, ActionAttempt, AccessMethod, Batch
-from .access_methods_unmanaged import AccessMethodsUnmanaged
+from ..resources import ActionAttempt, AccessMethod, Batch
+from .access_methods_unmanaged import (
+    AbstractAccessMethodsUnmanaged,
+    AccessMethodsUnmanaged,
+)
 from ..modules.action_attempts import resolve_action_attempt
+
+
+class AbstractAccessMethods(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAccessMethodsUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def assign_card(
+        self,
+        *,
+        access_method_id: str,
+        card_number: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(
+        self,
+        *,
+        access_method_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        reservation_key: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def encode(
+        self,
+        *,
+        access_method_id: str,
+        acs_encoder_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, access_method_id: str) -> AccessMethod:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None
+    ) -> Batch:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        space_id: Optional[str] = None
+    ) -> List[AccessMethod]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def unlock_door(
+        self,
+        *,
+        access_method_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+    ) -> ActionAttempt:
+        raise NotImplementedError()
 
 
 class AccessMethods(AbstractAccessMethods):

@@ -1,6 +1,55 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractEvents, SeamEvent
+from ..resources import SeamEvent
+
+
+class AbstractEvents(abc.ABC):
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        event_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        event_type: Optional[str] = None
+    ) -> SeamEvent:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        access_code_ids: Optional[List[str]] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_ids: Optional[List[str]] = None,
+        access_method_id: Optional[str] = None,
+        access_method_ids: Optional[List[str]] = None,
+        acs_access_group_id: Optional[str] = None,
+        acs_credential_id: Optional[str] = None,
+        acs_encoder_id: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        acs_system_id: Optional[str] = None,
+        acs_system_ids: Optional[List[str]] = None,
+        acs_user_id: Optional[str] = None,
+        between: Optional[List[Dict[str, Any]]] = None,
+        connect_webview_id: Optional[str] = None,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        device_id: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        event_ids: Optional[List[str]] = None,
+        event_type: Optional[str] = None,
+        event_types: Optional[List[str]] = None,
+        limit: Optional[float] = None,
+        since: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_ids: Optional[List[str]] = None,
+        unstable_offset: Optional[float] = None,
+        user_identity_id: Optional[str] = None
+    ) -> List[SeamEvent]:
+        raise NotImplementedError()
 
 
 class Events(AbstractEvents):

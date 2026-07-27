@@ -1,8 +1,150 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractAccessCodes, AccessCode
-from .access_codes_simulate import AccessCodesSimulate
-from .access_codes_unmanaged import AccessCodesUnmanaged
+from ..resources import AccessCode
+from .access_codes_simulate import AbstractAccessCodesSimulate, AccessCodesSimulate
+from .access_codes_unmanaged import AbstractAccessCodesUnmanaged, AccessCodesUnmanaged
+
+
+class AbstractAccessCodes(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def simulate(self) -> AbstractAccessCodesSimulate:
+        raise NotImplementedError()
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAccessCodesUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        device_id: str,
+        allow_external_modification: Optional[bool] = None,
+        attempt_for_offline_device: Optional[bool] = None,
+        code: Optional[str] = None,
+        common_code_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_external_modification_allowed: Optional[bool] = None,
+        is_offline_access_code: Optional[bool] = None,
+        is_one_time_use: Optional[bool] = None,
+        max_time_rounding: Optional[str] = None,
+        name: Optional[str] = None,
+        prefer_native_scheduling: Optional[bool] = None,
+        preferred_code_length: Optional[float] = None,
+        starts_at: Optional[str] = None,
+        use_backup_access_code_pool: Optional[bool] = None,
+        use_offline_access_code: Optional[bool] = None
+    ) -> AccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create_multiple(
+        self,
+        *,
+        device_ids: List[str],
+        allow_external_modification: Optional[bool] = None,
+        attempt_for_offline_device: Optional[bool] = None,
+        behavior_when_code_cannot_be_shared: Optional[str] = None,
+        code: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_external_modification_allowed: Optional[bool] = None,
+        name: Optional[str] = None,
+        prefer_native_scheduling: Optional[bool] = None,
+        preferred_code_length: Optional[float] = None,
+        starts_at: Optional[str] = None,
+        use_backup_access_code_pool: Optional[bool] = None
+    ) -> List[AccessCode]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, access_code_id: str, device_id: Optional[str] = None) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def generate_code(self, *, device_id: str) -> AccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        code: Optional[str] = None,
+        device_id: Optional[str] = None
+    ) -> AccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        access_code_ids: Optional[List[str]] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
+        access_method_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[AccessCode]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def pull_backup_access_code(self, *, access_code_id: str) -> AccessCode:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def report_device_constraints(
+        self,
+        *,
+        device_id: str,
+        max_code_length: Optional[int] = None,
+        min_code_length: Optional[int] = None,
+        supported_code_lengths: Optional[List[float]] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(
+        self,
+        *,
+        access_code_id: str,
+        allow_external_modification: Optional[bool] = None,
+        attempt_for_offline_device: Optional[bool] = None,
+        code: Optional[str] = None,
+        device_id: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_external_modification_allowed: Optional[bool] = None,
+        is_managed: Optional[bool] = None,
+        is_offline_access_code: Optional[bool] = None,
+        is_one_time_use: Optional[bool] = None,
+        max_time_rounding: Optional[str] = None,
+        name: Optional[str] = None,
+        prefer_native_scheduling: Optional[bool] = None,
+        preferred_code_length: Optional[float] = None,
+        starts_at: Optional[str] = None,
+        type: Optional[str] = None,
+        use_backup_access_code_pool: Optional[bool] = None,
+        use_offline_access_code: Optional[bool] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update_multiple(
+        self,
+        *,
+        common_code_key: str,
+        ends_at: Optional[str] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None
+    ) -> None:
+        raise NotImplementedError()
 
 
 class AccessCodes(AbstractAccessCodes):

@@ -1,6 +1,48 @@
 from typing import Optional, Any, List, Dict, Union
+import abc
 from ..client import SeamHttpClient
-from .models import AbstractConnectWebviews, ConnectWebview
+from ..resources import ConnectWebview
+
+
+class AbstractConnectWebviews(abc.ABC):
+
+    @abc.abstractmethod
+    def create(
+        self,
+        *,
+        accepted_capabilities: Optional[List[str]] = None,
+        accepted_providers: Optional[List[str]] = None,
+        automatically_manage_new_devices: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_redirect_failure_url: Optional[str] = None,
+        custom_redirect_url: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        excluded_providers: Optional[List[str]] = None,
+        provider_category: Optional[str] = None,
+        wait_for_device_creation: Optional[bool] = None
+    ) -> ConnectWebview:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, *, connect_webview_id: str) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, *, connect_webview_id: str) -> ConnectWebview:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def list(
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identifier_key: Optional[str] = None
+    ) -> List[ConnectWebview]:
+        raise NotImplementedError()
 
 
 class ConnectWebviews(AbstractConnectWebviews):
