@@ -13,12 +13,14 @@ class Customers(AbstractCustomers):
         *,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
         locale: Optional[str] = None,
         navigation_mode: Optional[str] = None,
+        read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
         json_payload = {}
@@ -27,6 +29,8 @@ class Customers(AbstractCustomers):
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
             json_payload["customization_profile_id"] = customization_profile_id
+        if deep_link is not None:
+            json_payload["deep_link"] = deep_link
         if exclude_locale_picker is not None:
             json_payload["exclude_locale_picker"] = exclude_locale_picker
         if features is not None:
@@ -39,6 +43,8 @@ class Customers(AbstractCustomers):
             json_payload["locale"] = locale
         if navigation_mode is not None:
             json_payload["navigation_mode"] = navigation_mode
+        if read_only is not None:
+            json_payload["read_only"] = read_only
         if customer_data is not None:
             json_payload["customer_data"] = customer_data
 
