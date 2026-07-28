@@ -1,12 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..resources import UnmanagedUserIdentity
 
 
 class AbstractUserIdentitiesUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, user_identity_id: str) -> None:
+    def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -17,7 +18,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedUserIdentity]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -36,15 +37,15 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, user_identity_id: str) -> None:
+    def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
         json_payload = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/user_identities/unmanaged/get", json=json_payload)
+        res = self.client.post("/user_identities/unmanaged/get", json=json_payload)
 
-        return None
+        return UnmanagedUserIdentity.from_dict(res["user_identity"])
 
     def list(
         self,
@@ -53,7 +54,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedUserIdentity]:
         json_payload = {}
 
         if created_before is not None:
@@ -65,9 +66,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         if search is not None:
             json_payload["search"] = search
 
-        self.client.post("/user_identities/unmanaged/list", json=json_payload)
+        res = self.client.post("/user_identities/unmanaged/list", json=json_payload)
 
-        return None
+        return [
+            UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
+        ]
 
     def update(
         self,

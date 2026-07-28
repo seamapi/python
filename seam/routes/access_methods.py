@@ -69,6 +69,8 @@ class AbstractAccessMethods(abc.ABC):
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AccessMethod]:
         raise NotImplementedError()
@@ -208,6 +210,8 @@ class AccessMethods(AbstractAccessMethods):
         access_grant_key: Optional[str] = None,
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AccessMethod]:
         json_payload = {}
@@ -222,6 +226,10 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["acs_entrance_id"] = acs_entrance_id
         if device_id is not None:
             json_payload["device_id"] = device_id
+        if limit is not None:
+            json_payload["limit"] = limit
+        if page_cursor is not None:
+            json_payload["page_cursor"] = page_cursor
         if space_id is not None:
             json_payload["space_id"] = space_id
 
