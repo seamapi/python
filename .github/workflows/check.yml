@@ -28,7 +28,7 @@ jobs:
             os_name: Linux
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -49,7 +49,7 @@ jobs:
           - '3.12'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -98,12 +98,12 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ needs.build.outputs.artifact_name }}
           path: .
       - name: Find wheels
-        uses: tj-actions/glob@v21
+        uses: tj-actions/glob@v22
         id: wheels
         with:
           files: '*.whl'
