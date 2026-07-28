@@ -1,15 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..resources import UnmanagedAccessGrant
 
 
 class AbstractAccessGrantsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, access_grant_id: str) -> None:
-        """Get an unmanaged Access Grant (where is_managed = false).
-
-        :param access_grant_id: ID of unmanaged Access Grant to get."""
+    def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -22,21 +20,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
-        """Gets unmanaged Access Grants (where is_managed = false).
-
-        :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
-
-        :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
-
-        :param limit: Numerical limit on the number of unmanaged access grants to return.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param reservation_key: Filter unmanaged Access Grants by reservation_key.
-
-        :param user_identity_id: ID of user identity by which you want to filter the list of unmanaged Access Grants.
-        """
+    ) -> List[UnmanagedAccessGrant]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -47,18 +31,6 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         is_managed: bool,
         access_grant_key: Optional[str] = None
     ) -> None:
-        """Updates an unmanaged Access Grant to make it managed.
-
-        This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
-
-        When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
-
-        :param access_grant_id: ID of the unmanaged Access Grant to update.
-
-        :param is_managed: Must be set to true to convert the unmanaged access grant to managed.
-
-        :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
-        """
         raise NotImplementedError()
 
 
@@ -67,18 +39,15 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, access_grant_id: str) -> None:
-        """Get an unmanaged Access Grant (where is_managed = false).
-
-        :param access_grant_id: ID of unmanaged Access Grant to get."""
+    def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         json_payload = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
 
-        self.client.post("/access_grants/unmanaged/get", json=json_payload)
+        res = self.client.post("/access_grants/unmanaged/get", json=json_payload)
 
-        return None
+        return UnmanagedAccessGrant.from_dict(res["access_grant"])
 
     def list(
         self,
@@ -89,21 +58,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
-        """Gets unmanaged Access Grants (where is_managed = false).
-
-        :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
-
-        :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
-
-        :param limit: Numerical limit on the number of unmanaged access grants to return.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param reservation_key: Filter unmanaged Access Grants by reservation_key.
-
-        :param user_identity_id: ID of user identity by which you want to filter the list of unmanaged Access Grants.
-        """
+    ) -> List[UnmanagedAccessGrant]:
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -119,9 +74,9 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/access_grants/unmanaged/list", json=json_payload)
+        res = self.client.post("/access_grants/unmanaged/list", json=json_payload)
 
-        return None
+        return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
 
     def update(
         self,
@@ -130,18 +85,6 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         is_managed: bool,
         access_grant_key: Optional[str] = None
     ) -> None:
-        """Updates an unmanaged Access Grant to make it managed.
-
-        This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
-
-        When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
-
-        :param access_grant_id: ID of the unmanaged Access Grant to update.
-
-        :param is_managed: Must be set to true to convert the unmanaged access grant to managed.
-
-        :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
-        """
         json_payload = {}
 
         if access_grant_id is not None:

@@ -22,31 +22,6 @@ class AbstractCustomers(abc.ABC):
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
-        """Creates a new customer portal magic link with configurable features.
-
-        :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
-
-        :param customization_profile_id: The ID of the customization profile to use for the portal.
-
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
-
-        :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
-
-        :param features:
-
-        :param is_embedded: Whether the portal is embedded in another application.
-
-        :param landing_page: Configuration for the landing page when the portal loads.
-
-        :param locale: The locale to use for the portal.
-
-        :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
-
-        :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
-
-        :param customer_data:
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -73,46 +48,6 @@ class AbstractCustomers(abc.ABC):
         user_identity_keys: Optional[List[str]] = None,
         user_keys: Optional[List[str]] = None
     ) -> None:
-        """Deletes customer data including resources like spaces, properties, rooms, users, etc.
-        This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
-
-        :param access_grant_keys: List of access grant keys to delete.
-
-        :param booking_keys: List of booking keys to delete.
-
-        :param building_keys: List of building keys to delete.
-
-        :param common_area_keys: List of common area keys to delete.
-
-        :param customer_keys: List of customer keys to delete all data for.
-
-        :param facility_keys: List of facility keys to delete.
-
-        :param guest_keys: List of guest keys to delete.
-
-        :param listing_keys: List of listing keys to delete.
-
-        :param property_keys: List of property keys to delete.
-
-        :param property_listing_keys: List of property listing keys to delete.
-
-        :param reservation_keys: List of reservation keys to delete.
-
-        :param resident_keys: List of resident keys to delete.
-
-        :param room_keys: List of room keys to delete.
-
-        :param space_keys: List of space keys to delete.
-
-        :param staff_member_keys: List of staff member keys to delete.
-
-        :param tenant_keys: List of tenant keys to delete.
-
-        :param unit_keys: List of unit keys to delete.
-
-        :param user_identity_keys: List of user identity keys to delete.
-
-        :param user_keys: List of user keys to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -140,47 +75,6 @@ class AbstractCustomers(abc.ABC):
         user_identities: Optional[List[Dict[str, Any]]] = None,
         users: Optional[List[Dict[str, Any]]] = None
     ) -> None:
-        """Pushes customer data including resources like spaces, properties, rooms, users, etc.
-
-        :param customer_key: Your unique identifier for the customer.
-
-        :param access_grants: List of access grants.
-
-        :param bookings: List of bookings.
-
-        :param buildings: List of buildings.
-
-        :param common_areas: List of shared common areas.
-
-        :param facilities: List of gym or fitness facilities.
-
-        :param guests: List of guests.
-
-        :param listings: List of property listings.
-
-        :param properties: List of short-term rental properties.
-
-        :param property_listings: List of property listings.
-
-        :param reservations: List of reservations.
-
-        :param residents: List of residents.
-
-        :param rooms: List of hotel or hospitality rooms.
-
-        :param sites: List of general sites or areas.
-
-        :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
-
-        :param tenants: List of tenants.
-
-        :param units: List of multi-family residential units.
-
-        :param user_identities: List of user identities.
-
-        :param users: List of users."""
         raise NotImplementedError()
 
 
@@ -204,31 +98,6 @@ class Customers(AbstractCustomers):
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
-        """Creates a new customer portal magic link with configurable features.
-
-        :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
-
-        :param customization_profile_id: The ID of the customization profile to use for the portal.
-
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
-
-        :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
-
-        :param features:
-
-        :param is_embedded: Whether the portal is embedded in another application.
-
-        :param landing_page: Configuration for the landing page when the portal loads.
-
-        :param locale: The locale to use for the portal.
-
-        :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
-
-        :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
-
-        :param customer_data:
-
-        :returns: OK"""
         json_payload = {}
 
         if customer_resources_filters is not None:
@@ -281,46 +150,6 @@ class Customers(AbstractCustomers):
         user_identity_keys: Optional[List[str]] = None,
         user_keys: Optional[List[str]] = None
     ) -> None:
-        """Deletes customer data including resources like spaces, properties, rooms, users, etc.
-        This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
-
-        :param access_grant_keys: List of access grant keys to delete.
-
-        :param booking_keys: List of booking keys to delete.
-
-        :param building_keys: List of building keys to delete.
-
-        :param common_area_keys: List of common area keys to delete.
-
-        :param customer_keys: List of customer keys to delete all data for.
-
-        :param facility_keys: List of facility keys to delete.
-
-        :param guest_keys: List of guest keys to delete.
-
-        :param listing_keys: List of listing keys to delete.
-
-        :param property_keys: List of property keys to delete.
-
-        :param property_listing_keys: List of property listing keys to delete.
-
-        :param reservation_keys: List of reservation keys to delete.
-
-        :param resident_keys: List of resident keys to delete.
-
-        :param room_keys: List of room keys to delete.
-
-        :param space_keys: List of space keys to delete.
-
-        :param staff_member_keys: List of staff member keys to delete.
-
-        :param tenant_keys: List of tenant keys to delete.
-
-        :param unit_keys: List of unit keys to delete.
-
-        :param user_identity_keys: List of user identity keys to delete.
-
-        :param user_keys: List of user keys to delete."""
         json_payload = {}
 
         if access_grant_keys is not None:
@@ -390,47 +219,6 @@ class Customers(AbstractCustomers):
         user_identities: Optional[List[Dict[str, Any]]] = None,
         users: Optional[List[Dict[str, Any]]] = None
     ) -> None:
-        """Pushes customer data including resources like spaces, properties, rooms, users, etc.
-
-        :param customer_key: Your unique identifier for the customer.
-
-        :param access_grants: List of access grants.
-
-        :param bookings: List of bookings.
-
-        :param buildings: List of buildings.
-
-        :param common_areas: List of shared common areas.
-
-        :param facilities: List of gym or fitness facilities.
-
-        :param guests: List of guests.
-
-        :param listings: List of property listings.
-
-        :param properties: List of short-term rental properties.
-
-        :param property_listings: List of property listings.
-
-        :param reservations: List of reservations.
-
-        :param residents: List of residents.
-
-        :param rooms: List of hotel or hospitality rooms.
-
-        :param sites: List of general sites or areas.
-
-        :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
-
-        :param tenants: List of tenants.
-
-        :param units: List of multi-family residential units.
-
-        :param user_identities: List of user identities.
-
-        :param users: List of users."""
         json_payload = {}
 
         if customer_key is not None:

@@ -42,41 +42,6 @@ class AbstractNoiseSensors(abc.ABC):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
-
-        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-
-        :param connected_account_id: ID of the connected account for which you want to list devices.
-
-        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-
-        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-
-        :param customer_key: Customer key for which you want to list devices.
-
-        :param device_ids: Array of device IDs for which you want to list devices.
-
-        :param device_type: Device type of the noise sensors that you want to list.
-
-        :param device_types: Device types of the noise sensors that you want to list.
-
-        :param limit: Numerical limit on the number of devices to return.
-
-        :param manufacturer: Manufacturers of the noise sensors that you want to list.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-
-        :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
-
-        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-
-        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -117,41 +82,6 @@ class NoiseSensors(AbstractNoiseSensors):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
-
-        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-
-        :param connected_account_id: ID of the connected account for which you want to list devices.
-
-        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-
-        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-
-        :param customer_key: Customer key for which you want to list devices.
-
-        :param device_ids: Array of device IDs for which you want to list devices.
-
-        :param device_type: Device type of the noise sensors that you want to list.
-
-        :param device_types: Device types of the noise sensors that you want to list.
-
-        :param limit: Numerical limit on the number of devices to return.
-
-        :param manufacturer: Manufacturers of the noise sensors that you want to list.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-
-        :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
-
-        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-
-        :returns: OK"""
         json_payload = {}
 
         if connect_webview_id is not None:

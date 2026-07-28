@@ -15,15 +15,6 @@ class AbstractLocksSimulate(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Simulates the entry of a code on a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
-
-        :param code: Code that you want to simulate entering on a keypad.
-
-        :param device_id: ID of the device for which you want to simulate a keypad code entry.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -33,13 +24,6 @@ class AbstractLocksSimulate(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Simulates a manual lock action using a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
-
-        :param device_id: ID of the device for which you want to simulate a manual lock action using a keypad.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -55,15 +39,6 @@ class LocksSimulate(AbstractLocksSimulate):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Simulates the entry of a code on a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
-
-        :param code: Code that you want to simulate entering on a keypad.
-
-        :param device_id: ID of the device for which you want to simulate a keypad code entry.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if code is not None:
@@ -91,13 +66,6 @@ class LocksSimulate(AbstractLocksSimulate):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Simulates a manual lock action using a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
-
-        :param device_id: ID of the device for which you want to simulate a manual lock action using a keypad.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:

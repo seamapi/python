@@ -11,23 +11,10 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
     def create(
         self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
     ) -> ThermostatDailyProgram:
-        """Creates a new thermostat daily program. A daily program consists of a set of periods, where each period includes a start time and the key of a configured climate preset. Once you have defined a daily program, you can assign it to one or more days within a weekly program.
-
-        :param device_id: ID of the thermostat device for which you want to create a daily program.
-
-        :param name: Name of the thermostat daily program.
-
-        :param periods: Array of thermostat daily program periods.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, thermostat_daily_program_id: str) -> None:
-        """Deletes a thermostat daily program.
-
-        :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -39,17 +26,6 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         thermostat_daily_program_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
-
-        :param name: Name of the thermostat daily program that you want to update.
-
-        :param periods: Array of thermostat daily program periods. The periods that you specify overwrite any existing periods for the daily program.
-
-        :param thermostat_daily_program_id: ID of the thermostat daily program that you want to update.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -61,15 +37,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
     def create(
         self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
     ) -> ThermostatDailyProgram:
-        """Creates a new thermostat daily program. A daily program consists of a set of periods, where each period includes a start time and the key of a configured climate preset. Once you have defined a daily program, you can assign it to one or more days within a weekly program.
-
-        :param device_id: ID of the thermostat device for which you want to create a daily program.
-
-        :param name: Name of the thermostat daily program.
-
-        :param periods: Array of thermostat daily program periods.
-
-        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -84,10 +51,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         return ThermostatDailyProgram.from_dict(res["thermostat_daily_program"])
 
     def delete(self, *, thermostat_daily_program_id: str) -> None:
-        """Deletes a thermostat daily program.
-
-        :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        """
         json_payload = {}
 
         if thermostat_daily_program_id is not None:
@@ -105,17 +68,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         thermostat_daily_program_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
-
-        :param name: Name of the thermostat daily program that you want to update.
-
-        :param periods: Array of thermostat daily program periods. The periods that you specify overwrite any existing periods for the daily program.
-
-        :param thermostat_daily_program_id: ID of the thermostat daily program that you want to update.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if name is not None:

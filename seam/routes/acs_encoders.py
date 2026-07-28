@@ -22,26 +22,10 @@ class AbstractAcsEncoders(abc.ABC):
         acs_credential_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Encodes an existing `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_. Either provide an ``acs_credential_id`` or an ``access_method_id``
-
-        :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``acs_credential``.
-
-        :param access_method_id: ID of the ``access_method`` to encode onto a card.
-
-        :param acs_credential_id: ID of the ``acs_credential`` to encode onto a card.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(self, *, acs_encoder_id: str) -> AcsEncoder:
-        """Returns a specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_encoder_id: ID of the encoder that you want to get.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -54,19 +38,6 @@ class AbstractAcsEncoders(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None
     ) -> List[AcsEncoder]:
-        """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
-
-        :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
-
-        :param limit: Number of encoders to return.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -77,15 +48,6 @@ class AbstractAcsEncoders(abc.ABC):
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Scans an encoded `acs_credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_encoder_id: ID of the encoder to use for the scan.
-
-        :param salto_ks_metadata: Salto KS-specific metadata for the scan action.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -98,19 +60,6 @@ class AbstractAcsEncoders(abc.ABC):
         user_identity_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Scans a physical card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ and assigns the scanned credential to an ACS user. Provide either an ``acs_user_id`` or a ``user_identity_id``.
-
-        :param acs_encoder_id: ID of the ``acs_encoder`` to use to scan the credential.
-
-        :param acs_user_id: ID of the ``acs_user`` to assign the scanned credential to.
-
-        :param salto_ks_metadata: Salto KS-specific metadata for the scan action.
-
-        :param user_identity_id: ID of the ``user_identity`` to assign the scanned credential to. If the ACS system contains an ACS user linked to this user identity, it is used. Otherwise, one is created.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -132,17 +81,6 @@ class AcsEncoders(AbstractAcsEncoders):
         acs_credential_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Encodes an existing `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_. Either provide an ``acs_credential_id`` or an ``access_method_id``
-
-        :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``acs_credential``.
-
-        :param access_method_id: ID of the ``access_method`` to encode onto a card.
-
-        :param acs_credential_id: ID of the ``acs_credential`` to encode onto a card.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -167,11 +105,6 @@ class AcsEncoders(AbstractAcsEncoders):
         )
 
     def get(self, *, acs_encoder_id: str) -> AcsEncoder:
-        """Returns a specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_encoder_id: ID of the encoder that you want to get.
-
-        :returns: OK"""
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -190,19 +123,6 @@ class AcsEncoders(AbstractAcsEncoders):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None
     ) -> List[AcsEncoder]:
-        """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
-
-        :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
-
-        :param limit: Number of encoders to return.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -227,15 +147,6 @@ class AcsEncoders(AbstractAcsEncoders):
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Scans an encoded `acs_credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-        :param acs_encoder_id: ID of the encoder to use for the scan.
-
-        :param salto_ks_metadata: Salto KS-specific metadata for the scan action.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -266,19 +177,6 @@ class AcsEncoders(AbstractAcsEncoders):
         user_identity_id: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Scans a physical card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ and assigns the scanned credential to an ACS user. Provide either an ``acs_user_id`` or a ``user_identity_id``.
-
-        :param acs_encoder_id: ID of the ``acs_encoder`` to use to scan the credential.
-
-        :param acs_user_id: ID of the ``acs_user`` to assign the scanned credential to.
-
-        :param salto_ks_metadata: Salto KS-specific metadata for the scan action.
-
-        :param user_identity_id: ID of the ``user_identity`` to assign the scanned credential to. If the ACS system contains an ACS user linked to this user identity, it is used. Otherwise, one is created.
-
-        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-
-        :returns: OK"""
         json_payload = {}
 
         if acs_encoder_id is not None:

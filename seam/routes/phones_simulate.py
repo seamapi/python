@@ -15,17 +15,6 @@ class AbstractPhonesSimulate(abc.ABC):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
-        """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
-
-        :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
-
-        :param assa_abloy_metadata: ASSA ABLOY metadata that you want to associate with the simulated phone.
-
-        :param custom_sdk_installation_id: ID of the custom SDK installation that you want to use for the simulated phone.
-
-        :param phone_metadata: Metadata that you want to associate with the simulated phone.
-
-        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -42,17 +31,6 @@ class PhonesSimulate(AbstractPhonesSimulate):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
-        """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
-
-        :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
-
-        :param assa_abloy_metadata: ASSA ABLOY metadata that you want to associate with the simulated phone.
-
-        :param custom_sdk_installation_id: ID of the custom SDK installation that you want to use for the simulated phone.
-
-        :param phone_metadata: Metadata that you want to associate with the simulated phone.
-
-        :returns: OK"""
         json_payload = {}
 
         if user_identity_id is not None:
