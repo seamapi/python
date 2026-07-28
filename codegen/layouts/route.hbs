@@ -16,6 +16,9 @@ from ..modules.action_attempts import resolve_action_attempt
 
 
 class {{className}}({{abstractClassName}}):
+{{#if docstring}}
+    """{{{docstring}}}"""
+{{/if}}
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults

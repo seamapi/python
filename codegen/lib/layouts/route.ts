@@ -12,6 +12,7 @@ import {
 export interface MethodLayoutContext {
   name: string
   path: string
+  docstring: string
   hasParams: boolean
   signatureParams: string
   params: Array<{ name: string }>
@@ -25,6 +26,7 @@ export interface MethodLayoutContext {
 
 export interface AbstractClassLayoutContext {
   className: string
+  docstring: string
   showPass: boolean
   childProperties: Array<{ namespace: string; abstractClassName: string }>
   methods: Array<{
@@ -32,12 +34,14 @@ export interface AbstractClassLayoutContext {
     hasParams: boolean
     signatureParams: string
     returnType: string
+    docstring: string
   }>
 }
 
 export interface RouteLayoutContext {
   className: string
   abstractClassName: string
+  docstring: string
   abstractClass: AbstractClassLayoutContext
   resourceImportList: string
   childClasses: Array<{
@@ -52,6 +56,57 @@ export interface RouteLayoutContext {
 
 const waitForActionAttemptParameter =
   'wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None'
+
+const cleanDoc = (value: string): string =>
+  value.trim().replaceAll('"""', '\\"\\"\\"')
+
+const indentDoc = (value: string, spaces: number): string =>
+  value.replaceAll('\n', `\n${' '.repeat(spaces)}`)
+
+const methodDocstring = (
+  method: ClassMethod,
+  sortedParameters: ClassMethod['parameters'],
+): string => {
+  const lines = [cleanDoc(method.description)]
+
+  for (const parameter of sortedParameters) {
+    const deprecated = parameter.isDeprecated
+      ? `Deprecated${parameter.deprecationMessage === '' ? '.' : `: ${cleanDoc(parameter.deprecationMessage)}`}`
+      : ''
+    const description = cleanDoc(parameter.description)
+    lines.push(
+      '',
+      `:param ${parameter.name}: ${[deprecated, description].filter(Boolean).join(' ')}`,
+      `:type ${parameter.name}: ${parameter.type}`,
+    )
+  }
+
+  if (method.returnResource === 'ActionAttempt') {
+    lines.push(
+      '',
+      ':param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.',
+      ':type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]',
+    )
+  }
+
+  if (method.returnResource !== 'None') {
+    lines.push(
+      '',
+      `:returns: ${cleanDoc(method.responseDescription)}`,
+      `:rtype: ${method.returnResource}`,
+    )
+  }
+
+  if (method.isDeprecated) {
+    lines.push(
+      '',
+      '.. deprecated::',
+      `   ${cleanDoc(method.deprecationMessage) || 'This method is deprecated.'}`,
+    )
+  }
+
+  return lines.filter((line, index) => line !== '' || index !== 0).join('\n')
+}
 
 export const getMethodLayoutContext = (
   method: ClassMethod,
@@ -83,6 +138,7 @@ export const getMethodLayoutContext = (
   return {
     name: methodName,
     path,
+    docstring: indentDoc(methodDocstring(method, sortedParameters), 8),
     hasParams,
     signatureParams,
     params: sortedParameters.map(({ name }) => ({ name })),
@@ -110,12 +166,17 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   )
 
   const abstractClassName = `Abstract${cls.name}`
+  const classDocstring = cls.isDeprecated
+    ? indentDoc('.. deprecated::\n   This route is deprecated.', 4)
+    : ''
 
   return {
     className: cls.name,
     abstractClassName,
+    docstring: classDocstring,
     abstractClass: {
       className: abstractClassName,
+      docstring: classDocstring,
       showPass:
         cls.methods.length === 0 && cls.childClassIdentifiers.length === 0,
       childProperties: cls.childClassIdentifiers.map((i) => ({
@@ -123,9 +184,9 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
         abstractClassName: `Abstract${i.className}`,
       })),
       methods: cls.methods.map((method) => {
-        const { name, hasParams, signatureParams, returnType } =
+        const { name, hasParams, signatureParams, returnType, docstring } =
           getMethodLayoutContext(method)
-        return { name, hasParams, signatureParams, returnType }
+        return { name, hasParams, signatureParams, returnType, docstring }
       }),
     },
     resourceImportList: resourceClasses.join(','),

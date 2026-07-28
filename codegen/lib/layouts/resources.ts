@@ -56,12 +56,51 @@ const toSafeIdentifier = (name: string): string =>
 export interface ResourceLayoutContext {
   className: string
   moduleName: string
+  docstring: string
   properties: Array<{
     name: string
     safeName: string
     type: string
     isDictParam: boolean
   }>
+}
+
+const cleanDoc = (value: string): string =>
+  value.trim().replaceAll('"""', '\\"\\"\\"')
+
+const createResourceDocstring = (
+  description: string,
+  isDeprecated: boolean,
+  deprecationMessage: string,
+  properties: Property[],
+): string => {
+  const lines = [cleanDoc(description)]
+  for (const property of properties) {
+    const deprecated = property.isDeprecated
+      ? `Deprecated${property.deprecationMessage === '' ? '.' : `: ${cleanDoc(property.deprecationMessage)}`}`
+      : ''
+    lines.push(
+      '',
+      `:ivar ${toSafeIdentifier(property.name)}: ${[
+        deprecated,
+        cleanDoc(property.description),
+      ]
+        .filter(Boolean)
+        .join(' ')}`,
+      `:vartype ${toSafeIdentifier(property.name)}: ${mapPropertyToPythonType(property)}`,
+    )
+  }
+  if (isDeprecated) {
+    lines.push(
+      '',
+      '.. deprecated::',
+      `   ${cleanDoc(deprecationMessage) || 'This resource is deprecated.'}`,
+    )
+  }
+  return lines
+    .filter((line, index) => line !== '' || index !== 0)
+    .join('\n')
+    .replaceAll('\n', '\n    ')
 }
 
 export interface ResourcesIndexLayoutContext {
@@ -84,29 +123,61 @@ const mergeResourceProperties = (resources: Resource[]): Property[] => {
 export const getResourceLayoutContexts = (
   blueprint: Blueprint,
 ): ResourceLayoutContext[] => {
-  const models = new Map<string, Property[]>()
+  const models = new Map<
+    string,
+    {
+      properties: Property[]
+      description: string
+      isDeprecated: boolean
+      deprecationMessage: string
+    }
+  >()
 
   for (const resource of blueprint.resources) {
-    models.set(resource.resourceType, resource.properties)
+    models.set(resource.resourceType, resource)
   }
 
   // The event and action attempt variants merge into a single dataclass with
   // the union of the variant properties, overriding the base resource schema.
-  models.set(
-    'action_attempt',
-    mergeResourceProperties(blueprint.actionAttempts),
-  )
-  models.set('event', mergeResourceProperties(blueprint.events))
+  const actionAttemptModel = models.get('action_attempt')
+  models.set('action_attempt', {
+    properties: mergeResourceProperties(blueprint.actionAttempts),
+    description:
+      actionAttemptModel?.description ??
+      'An attempt to perform an action in the Seam API.',
+    isDeprecated: actionAttemptModel?.isDeprecated ?? false,
+    deprecationMessage: actionAttemptModel?.deprecationMessage ?? '',
+  })
+  const eventModel = models.get('event')
+  models.set('event', {
+    properties: mergeResourceProperties(blueprint.events),
+    description: eventModel?.description ?? 'An event emitted by the Seam API.',
+    isDeprecated: eventModel?.isDeprecated ?? false,
+    deprecationMessage: eventModel?.deprecationMessage ?? '',
+  })
 
   if (blueprint.pagination != null) {
-    models.set('pagination', blueprint.pagination.properties)
+    models.set('pagination', {
+      properties: blueprint.pagination.properties,
+      description: blueprint.pagination.description,
+      isDeprecated: false,
+      deprecationMessage: '',
+    })
   }
 
   return [...models.entries()]
-    .map(([name, properties]) => {
+    .map(([name, model]) => {
+      const { properties, description, isDeprecated, deprecationMessage } =
+        model
       const className = pascalCase(convertCustomResourceName(name))
       return {
         className,
+        docstring: createResourceDocstring(
+          description,
+          isDeprecated,
+          deprecationMessage,
+          properties,
+        ),
         // Derived from the class name rather than the resource type so the
         // module always matches the dataclass it exports (e.g. the "event"
         // resource becomes SeamEvent in seam_event.py).

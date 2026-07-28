@@ -42,7 +42,11 @@ export const routes = (
   // Namespaces group routes without endpoints of their own (e.g. /acs) but
   // still produce a route class so their child classes are reachable.
   const classEntries = [...blueprint.namespaces, ...blueprint.routes]
-    .map(({ path, parentPath }) => ({ path, parentPath }))
+    .map(({ path, parentPath, isDeprecated }) => ({
+      path,
+      parentPath,
+      isDeprecated,
+    }))
     .sort((a, b) => (a.path < b.path ? -1 : 1))
 
   const classMap = new Map<string, ClassModel>()
@@ -55,6 +59,7 @@ export const routes = (
     classMap.set(className, {
       name: className,
       namespace,
+      isDeprecated: entry.isDeprecated,
       methods: [],
       childClassIdentifiers: classEntries
         .filter((child) => child.parentPath === entry.path)
@@ -84,9 +89,16 @@ export const routes = (
       cls.methods.push({
         methodName: endpoint.name,
         path: endpoint.path,
+        description: endpoint.description,
+        responseDescription: endpoint.response.description,
+        isDeprecated: endpoint.isDeprecated,
+        deprecationMessage: endpoint.deprecationMessage,
         parameters: endpoint.request.parameters.map((parameter) => ({
           name: parameter.name,
           type: mapParameterToPythonType(parameter),
+          description: parameter.description,
+          isDeprecated: parameter.isDeprecated,
+          deprecationMessage: parameter.deprecationMessage,
           position: parameter.name === idParameterName ? 0 : undefined,
           required: parameter.isRequired,
         })),

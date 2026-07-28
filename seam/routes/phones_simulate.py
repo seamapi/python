@@ -15,6 +15,22 @@ class AbstractPhonesSimulate(abc.ABC):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
+        """Creates a new simulated phone in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Creating a Simulated Phone for a User Identity](https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity).
+
+        :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
+        :type user_identity_id: str
+
+        :param assa_abloy_metadata: ASSA ABLOY metadata that you want to associate with the simulated phone.
+        :type assa_abloy_metadata: Dict[str, Any]
+
+        :param custom_sdk_installation_id: ID of the custom SDK installation that you want to use for the simulated phone.
+        :type custom_sdk_installation_id: str
+
+        :param phone_metadata: Metadata that you want to associate with the simulated phone.
+        :type phone_metadata: Dict[str, Any]
+
+        :returns: OK
+        :rtype: Phone"""
         raise NotImplementedError()
 
 
@@ -31,6 +47,22 @@ class PhonesSimulate(AbstractPhonesSimulate):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
+        """Creates a new simulated phone in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Creating a Simulated Phone for a User Identity](https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity).
+
+        :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
+        :type user_identity_id: str
+
+        :param assa_abloy_metadata: ASSA ABLOY metadata that you want to associate with the simulated phone.
+        :type assa_abloy_metadata: Dict[str, Any]
+
+        :param custom_sdk_installation_id: ID of the custom SDK installation that you want to use for the simulated phone.
+        :type custom_sdk_installation_id: str
+
+        :param phone_metadata: Metadata that you want to associate with the simulated phone.
+        :type phone_metadata: Dict[str, Any]
+
+        :returns: OK
+        :rtype: Phone"""
         json_payload = {}
 
         if user_identity_id is not None:

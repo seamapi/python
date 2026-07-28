@@ -5,6 +5,85 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class AcsEntrance:
+    """Represents an [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) within an [access control system](https://docs.seam.co/low-level-apis/access-systems).
+
+    In an access control system, an entrance is a secured door, gate, zone, or other method of entry. You can list details for all the `acs_entrance` resources in your workspace or get these details for a specific `acs_entrance`. You can also list all entrances associated with a specific credential, and you can list all credentials associated with a specific entrance.
+
+    :ivar acs_entrance_id: ID of the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype acs_entrance_id: str
+
+    :ivar acs_system_id: ID of the [access control system](https://docs.seam.co/low-level-apis/access-systems) that contains the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype acs_system_id: str
+
+    :ivar akiles_metadata: Akiles-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype akiles_metadata: Dict[str, Any]
+
+    :ivar assa_abloy_vostio_metadata: ASSA ABLOY Vostio-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype assa_abloy_vostio_metadata: Dict[str, Any]
+
+    :ivar avigilon_alta_metadata: Avigilon Alta-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype avigilon_alta_metadata: Dict[str, Any]
+
+    :ivar brivo_metadata: Brivo-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype brivo_metadata: Dict[str, Any]
+
+    :ivar can_belong_to_reservation: Indicates whether the ACS entrance can belong to a reservation via an access_grant.reservation_key.
+    :vartype can_belong_to_reservation: bool
+
+    :ivar can_unlock_with_card: Indicates whether the ACS entrance can be unlocked with card credentials.
+    :vartype can_unlock_with_card: bool
+
+    :ivar can_unlock_with_cloud_key: Indicates whether the ACS entrance can be unlocked with cloud key credentials.
+    :vartype can_unlock_with_cloud_key: bool
+
+    :ivar can_unlock_with_code: Indicates whether the ACS entrance can be unlocked with pin codes.
+    :vartype can_unlock_with_code: bool
+
+    :ivar can_unlock_with_mobile_key: Indicates whether the ACS entrance can be unlocked with mobile key credentials.
+    :vartype can_unlock_with_mobile_key: bool
+
+    :ivar connected_account_id: ID of the [connected account](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype connected_account_id: str
+
+    :ivar created_at: Date and time at which the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) was created.
+    :vartype created_at: str
+
+    :ivar display_name: Display name for the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype display_name: str
+
+    :ivar dormakaba_ambiance_metadata: dormakaba Ambiance-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype dormakaba_ambiance_metadata: Dict[str, Any]
+
+    :ivar dormakaba_community_metadata: dormakaba Community-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype dormakaba_community_metadata: Dict[str, Any]
+
+    :ivar errors: Errors associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype errors: List[Dict[str, Any]]
+
+    :ivar hotek_metadata: Hotek-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype hotek_metadata: Dict[str, Any]
+
+    :ivar is_locked: Indicates whether the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) is currently locked.
+    :vartype is_locked: bool
+
+    :ivar latch_metadata: Latch-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype latch_metadata: Dict[str, Any]
+
+    :ivar salto_ks_metadata: Salto KS-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype salto_ks_metadata: Dict[str, Any]
+
+    :ivar salto_space_metadata: Salto Space-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype salto_space_metadata: Dict[str, Any]
+
+    :ivar space_ids: IDs of the spaces that the entrance is in.
+    :vartype space_ids: List[str]
+
+    :ivar visionline_metadata: Visionline-specific metadata associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype visionline_metadata: Dict[str, Any]
+
+    :ivar warnings: Warnings associated with the [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :vartype warnings: List[Dict[str, Any]]"""
+
     acs_entrance_id: str
     acs_system_id: str
     akiles_metadata: Dict[str, Any]

@@ -7,6 +7,10 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, access_method_id: str) -> None:
+        """Gets an unmanaged access method (where is_managed = false).
+
+        :param access_method_id: ID of unmanaged access method to get.
+        :type access_method_id: str"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -18,6 +22,19 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> None:
+        """Lists all unmanaged access methods (where is_managed = false), usually filtered by Access Grant.
+
+        :param access_grant_id: ID of Access Grant to list unmanaged access methods for.
+        :type access_grant_id: str
+
+        :param acs_entrance_id: ID of the entrance for which you want to retrieve all unmanaged access methods.
+        :type acs_entrance_id: str
+
+        :param device_id: ID of the device for which you want to retrieve all unmanaged access methods.
+        :type device_id: str
+
+        :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
+        :type space_id: str"""
         raise NotImplementedError()
 
 
@@ -27,6 +44,10 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         self.defaults = defaults
 
     def get(self, *, access_method_id: str) -> None:
+        """Gets an unmanaged access method (where is_managed = false).
+
+        :param access_method_id: ID of unmanaged access method to get.
+        :type access_method_id: str"""
         json_payload = {}
 
         if access_method_id is not None:
@@ -44,6 +65,19 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> None:
+        """Lists all unmanaged access methods (where is_managed = false), usually filtered by Access Grant.
+
+        :param access_grant_id: ID of Access Grant to list unmanaged access methods for.
+        :type access_grant_id: str
+
+        :param acs_entrance_id: ID of the entrance for which you want to retrieve all unmanaged access methods.
+        :type acs_entrance_id: str
+
+        :param device_id: ID of the device for which you want to retrieve all unmanaged access methods.
+        :type device_id: str
+
+        :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
+        :type space_id: str"""
         json_payload = {}
 
         if access_grant_id is not None:

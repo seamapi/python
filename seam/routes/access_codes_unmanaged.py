@@ -15,10 +15,31 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         force: Optional[bool] = None,
         is_external_modification_allowed: Optional[bool] = None
     ) -> None:
+        """Converts an [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) to an [access code managed through Seam](https://docs.seam.co/low-level-apis/smart-locks/access-codes).
+
+        An unmanaged access code has a limited set of operations that you can perform on it. Once you convert an unmanaged access code to a managed access code, the full set of access code operations and lifecycle events becomes available for it.
+
+        Note that not all device providers support converting an unmanaged access code to a managed access code.
+
+        :param access_code_id: ID of the unmanaged access code that you want to convert to a managed access code.
+        :type access_code_id: str
+
+        :param allow_external_modification: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the access code is allowed.
+        :type allow_external_modification: bool
+
+        :param force: Indicates whether to force the access code conversion. To switch management of an access code from one Seam workspace to another, set `force` to `true`.
+        :type force: bool
+
+        :param is_external_modification_allowed: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the access code is allowed.
+        :type is_external_modification_allowed: bool"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, access_code_id: str) -> None:
+        """Deletes an [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param access_code_id: ID of the unmanaged access code that you want to delete.
+        :type access_code_id: str"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -29,6 +50,21 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         code: Optional[str] = None,
         device_id: Optional[str] = None
     ) -> UnmanagedAccessCode:
+        """Returns a specified [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        You must specify either `access_code_id` or both `device_id` and `code`.
+
+        :param access_code_id: ID of the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type access_code_id: str
+
+        :param code: Code of the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type code: str
+
+        :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type device_id: str
+
+        :returns: OK
+        :rtype: UnmanagedAccessCode"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -41,6 +77,25 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
+        """Returns a list of all [unmanaged access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param device_id: ID of the device for which you want to list unmanaged access codes.
+        :type device_id: str
+
+        :param limit: Numerical limit on the number of unmanaged access codes to return.
+        :type limit: float
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned access codes to include all records that satisfy a partial match using `name`, `code` or `access_code_id`.
+        :type search: str
+
+        :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[UnmanagedAccessCode]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -53,6 +108,22 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         force: Optional[bool] = None,
         is_external_modification_allowed: Optional[bool] = None
     ) -> None:
+        """Updates a specified [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param access_code_id: ID of the unmanaged access code that you want to update.
+        :type access_code_id: str
+
+        :param is_managed:
+        :type is_managed: bool
+
+        :param allow_external_modification: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the code is allowed.
+        :type allow_external_modification: bool
+
+        :param force: Indicates whether to force the unmanaged access code update.
+        :type force: bool
+
+        :param is_external_modification_allowed: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the code is allowed.
+        :type is_external_modification_allowed: bool"""
         raise NotImplementedError()
 
 
@@ -69,6 +140,23 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         force: Optional[bool] = None,
         is_external_modification_allowed: Optional[bool] = None
     ) -> None:
+        """Converts an [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) to an [access code managed through Seam](https://docs.seam.co/low-level-apis/smart-locks/access-codes).
+
+        An unmanaged access code has a limited set of operations that you can perform on it. Once you convert an unmanaged access code to a managed access code, the full set of access code operations and lifecycle events becomes available for it.
+
+        Note that not all device providers support converting an unmanaged access code to a managed access code.
+
+        :param access_code_id: ID of the unmanaged access code that you want to convert to a managed access code.
+        :type access_code_id: str
+
+        :param allow_external_modification: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the access code is allowed.
+        :type allow_external_modification: bool
+
+        :param force: Indicates whether to force the access code conversion. To switch management of an access code from one Seam workspace to another, set `force` to `true`.
+        :type force: bool
+
+        :param is_external_modification_allowed: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the access code is allowed.
+        :type is_external_modification_allowed: bool"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -89,6 +177,10 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         return None
 
     def delete(self, *, access_code_id: str) -> None:
+        """Deletes an [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param access_code_id: ID of the unmanaged access code that you want to delete.
+        :type access_code_id: str"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -105,6 +197,21 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         code: Optional[str] = None,
         device_id: Optional[str] = None
     ) -> UnmanagedAccessCode:
+        """Returns a specified [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        You must specify either `access_code_id` or both `device_id` and `code`.
+
+        :param access_code_id: ID of the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type access_code_id: str
+
+        :param code: Code of the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type code: str
+
+        :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either `access_code_id` or both `device_id` and `code`.
+        :type device_id: str
+
+        :returns: OK
+        :rtype: UnmanagedAccessCode"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -127,6 +234,25 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedAccessCode]:
+        """Returns a list of all [unmanaged access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param device_id: ID of the device for which you want to list unmanaged access codes.
+        :type device_id: str
+
+        :param limit: Numerical limit on the number of unmanaged access codes to return.
+        :type limit: float
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned access codes to include all records that satisfy a partial match using `name`, `code` or `access_code_id`.
+        :type search: str
+
+        :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[UnmanagedAccessCode]"""
         json_payload = {}
 
         if device_id is not None:
@@ -153,6 +279,22 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         force: Optional[bool] = None,
         is_external_modification_allowed: Optional[bool] = None
     ) -> None:
+        """Updates a specified [unmanaged access code](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes).
+
+        :param access_code_id: ID of the unmanaged access code that you want to update.
+        :type access_code_id: str
+
+        :param is_managed:
+        :type is_managed: bool
+
+        :param allow_external_modification: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the code is allowed.
+        :type allow_external_modification: bool
+
+        :param force: Indicates whether to force the unmanaged access code update.
+        :type force: bool
+
+        :param is_external_modification_allowed: Indicates whether [external modification](https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification) of the code is allowed.
+        :type is_external_modification_allowed: bool"""
         json_payload = {}
 
         if access_code_id is not None:

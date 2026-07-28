@@ -5,6 +5,42 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class AcsEncoder:
+    """Represents a hardware device that encodes [credential](https://docs.seam.co/low-level-apis/access-systems/managing-credentials) data onto physical cards within an [access control system](https://docs.seam.co/low-level-apis/access-systems).
+
+    Some access control systems require credentials to be encoded onto plastic key cards using a card encoder. This process involves the following two key steps:
+
+    1. Credential creation
+       Configure the access parameters for the credential.
+    2. Card encoding
+       Write the credential data onto the card using a compatible card encoder.
+
+    Separately, the Seam API also supports card scanning, which enables you to scan and read the encoded data on a card. You can use this action to confirm consistency with access control system records or diagnose discrepancies if needed.
+
+    See [Working with Card Encoders and Scanners](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+
+    To verify if your access control system requires a card encoder, see the corresponding [system integration guide](https://docs.seam.co/device-and-system-integration-guides#access-control-systems).
+
+    :ivar acs_encoder_id: ID of the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype acs_encoder_id: str
+
+    :ivar acs_system_id: ID of the [access control system](https://docs.seam.co/low-level-apis/access-systems) that contains the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype acs_system_id: str
+
+    :ivar connected_account_id: ID of the connected account that contains the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype connected_account_id: str
+
+    :ivar created_at: Date and time at which the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners) was created.
+    :vartype created_at: str
+
+    :ivar display_name: Display name for the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype display_name: str
+
+    :ivar errors: Errors associated with the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype errors: List[Dict[str, Any]]
+
+    :ivar workspace_id: ID of the workspace that contains the [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+    :vartype workspace_id: str"""
+
     acs_encoder_id: str
     acs_system_id: str
     connected_account_id: str

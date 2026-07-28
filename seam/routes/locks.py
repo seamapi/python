@@ -22,12 +22,41 @@ class AbstractLocks(abc.ABC):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Configures the auto-lock setting for a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param auto_lock_enabled: Whether to enable or disable auto-lock.
+        :type auto_lock_enabled: bool
+
+        :param device_id: ID of the lock for which you want to configure the auto-lock.
+        :type device_id: str
+
+        :param auto_lock_delay_seconds: Delay in seconds before the lock automatically locks. Required when enabling auto-lock. Must be between 1 and 60.
+        :type auto_lock_delay_seconds: float
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
+        """Returns a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param device_id: ID of the lock that you want to get.
+        :type device_id: str
+
+        :param name: Name of the lock that you want to get.
+        :type name: str
+
+        :returns: OK
+        :rtype: Device
+
+        .. deprecated::
+           Use `/devices/get` instead."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -51,6 +80,58 @@ class AbstractLocks(abc.ABC):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
+        """Returns a list of all [locks](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
+        :type connect_webview_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to list devices.
+        :type connected_account_id: str
+
+        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
+        :type connected_account_ids: List[str]
+
+        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
+        :type created_before: str
+
+        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :type custom_metadata_has: Dict[str, Any]
+
+        :param customer_key: Customer key for which you want to list devices.
+        :type customer_key: str
+
+        :param device_ids: Array of device IDs for which you want to list devices.
+        :type device_ids: List[str]
+
+        :param device_type: Device type of the locks that you want to list.
+        :type device_type: str
+
+        :param device_types: Device types of the locks that you want to list.
+        :type device_types: List[str]
+
+        :param limit: Numerical limit on the number of devices to return.
+        :type limit: float
+
+        :param manufacturer: Manufacturer of the locks that you want to list.
+        :type manufacturer: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list devices.
+        :type space_id: str
+
+        :param unstable_location_id: Deprecated: Use `space_id`.
+        :type unstable_location_id: str
+
+        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[Device]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -60,6 +141,16 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Locks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+
+        :param device_id: ID of the lock that you want to lock.
+        :type device_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -69,6 +160,16 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Unlocks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+
+        :param device_id: ID of the lock that you want to unlock.
+        :type device_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         raise NotImplementedError()
 
 
@@ -90,6 +191,22 @@ class Locks(AbstractLocks):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Configures the auto-lock setting for a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param auto_lock_enabled: Whether to enable or disable auto-lock.
+        :type auto_lock_enabled: bool
+
+        :param device_id: ID of the lock for which you want to configure the auto-lock.
+        :type device_id: str
+
+        :param auto_lock_delay_seconds: Delay in seconds before the lock automatically locks. Required when enabling auto-lock. Must be between 1 and 60.
+        :type auto_lock_delay_seconds: float
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         json_payload = {}
 
         if auto_lock_enabled is not None:
@@ -116,6 +233,19 @@ class Locks(AbstractLocks):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
+        """Returns a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param device_id: ID of the lock that you want to get.
+        :type device_id: str
+
+        :param name: Name of the lock that you want to get.
+        :type name: str
+
+        :returns: OK
+        :rtype: Device
+
+        .. deprecated::
+           Use `/devices/get` instead."""
         json_payload = {}
 
         if device_id is not None:
@@ -147,6 +277,58 @@ class Locks(AbstractLocks):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
+        """Returns a list of all [locks](https://docs.seam.co/low-level-apis/smart-locks).
+
+        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
+        :type connect_webview_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to list devices.
+        :type connected_account_id: str
+
+        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
+        :type connected_account_ids: List[str]
+
+        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
+        :type created_before: str
+
+        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :type custom_metadata_has: Dict[str, Any]
+
+        :param customer_key: Customer key for which you want to list devices.
+        :type customer_key: str
+
+        :param device_ids: Array of device IDs for which you want to list devices.
+        :type device_ids: List[str]
+
+        :param device_type: Device type of the locks that you want to list.
+        :type device_type: str
+
+        :param device_types: Device types of the locks that you want to list.
+        :type device_types: List[str]
+
+        :param limit: Numerical limit on the number of devices to return.
+        :type limit: float
+
+        :param manufacturer: Manufacturer of the locks that you want to list.
+        :type manufacturer: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list devices.
+        :type space_id: str
+
+        :param unstable_location_id: Deprecated: Use `space_id`.
+        :type unstable_location_id: str
+
+        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[Device]"""
         json_payload = {}
 
         if connect_webview_id is not None:
@@ -192,6 +374,16 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Locks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+
+        :param device_id: ID of the lock that you want to lock.
+        :type device_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         json_payload = {}
 
         if device_id is not None:
@@ -217,6 +409,16 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Unlocks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+
+        :param device_id: ID of the lock that you want to unlock.
+        :type device_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         json_payload = {}
 
         if device_id is not None:

@@ -10,6 +10,20 @@ class AbstractDevicesUnmanaged(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
+        """Returns a specified [unmanaged device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        You must specify either `device_id` or `name`.
+
+        :param device_id: ID of the unmanaged device that you want to get.
+        :type device_id: str
+
+        :param name: Name of the unmanaged device that you want to get.
+        :type name: str
+
+        :returns: OK
+        :rtype: UnmanagedDevice"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -33,6 +47,60 @@ class AbstractDevicesUnmanaged(abc.ABC):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedDevice]:
+        """Returns a list of all [unmanaged devices](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
+        :type connect_webview_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to list devices.
+        :type connected_account_id: str
+
+        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
+        :type connected_account_ids: List[str]
+
+        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
+        :type created_before: str
+
+        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :type custom_metadata_has: Dict[str, Any]
+
+        :param customer_key: Customer key for which you want to list devices.
+        :type customer_key: str
+
+        :param device_ids: Array of device IDs for which you want to list devices.
+        :type device_ids: List[str]
+
+        :param device_type: Device type for which you want to list devices.
+        :type device_type: str
+
+        :param device_types: Array of device types for which you want to list devices.
+        :type device_types: List[str]
+
+        :param limit: Numerical limit on the number of devices to return.
+        :type limit: float
+
+        :param manufacturer: Manufacturer for which you want to list devices.
+        :type manufacturer: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list devices.
+        :type space_id: str
+
+        :param unstable_location_id: Deprecated: Use `space_id`.
+        :type unstable_location_id: str
+
+        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[UnmanagedDevice]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -43,6 +111,18 @@ class AbstractDevicesUnmanaged(abc.ABC):
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None
     ) -> None:
+        """Updates a specified [unmanaged device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices). To convert an unmanaged device to managed, set `is_managed` to `true`.
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        :param device_id: ID of the unmanaged device that you want to update.
+        :type device_id: str
+
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :type custom_metadata: Dict[str, Any]
+
+        :param is_managed: Indicates whether the device is managed. Set this parameter to `true` to convert an unmanaged device to managed.
+        :type is_managed: bool"""
         raise NotImplementedError()
 
 
@@ -54,6 +134,20 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
+        """Returns a specified [unmanaged device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        You must specify either `device_id` or `name`.
+
+        :param device_id: ID of the unmanaged device that you want to get.
+        :type device_id: str
+
+        :param name: Name of the unmanaged device that you want to get.
+        :type name: str
+
+        :returns: OK
+        :rtype: UnmanagedDevice"""
         json_payload = {}
 
         if device_id is not None:
@@ -85,6 +179,60 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[UnmanagedDevice]:
+        """Returns a list of all [unmanaged devices](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
+        :type connect_webview_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to list devices.
+        :type connected_account_id: str
+
+        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
+        :type connected_account_ids: List[str]
+
+        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
+        :type created_before: str
+
+        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :type custom_metadata_has: Dict[str, Any]
+
+        :param customer_key: Customer key for which you want to list devices.
+        :type customer_key: str
+
+        :param device_ids: Array of device IDs for which you want to list devices.
+        :type device_ids: List[str]
+
+        :param device_type: Device type for which you want to list devices.
+        :type device_type: str
+
+        :param device_types: Array of device types for which you want to list devices.
+        :type device_types: List[str]
+
+        :param limit: Numerical limit on the number of devices to return.
+        :type limit: float
+
+        :param manufacturer: Manufacturer for which you want to list devices.
+        :type manufacturer: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list devices.
+        :type space_id: str
+
+        :param unstable_location_id: Deprecated: Use `space_id`.
+        :type unstable_location_id: str
+
+        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
+        :type user_identifier_key: str
+
+        :returns: OK
+        :rtype: List[UnmanagedDevice]"""
         json_payload = {}
 
         if connect_webview_id is not None:
@@ -131,6 +279,18 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None
     ) -> None:
+        """Updates a specified [unmanaged device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices). To convert an unmanaged device to managed, set `is_managed` to `true`.
+
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any [access codes](https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes) on an unmanaged device are unmanaged. To control an unmanaged device with Seam, [convert it to a managed device](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed).
+
+        :param device_id: ID of the unmanaged device that you want to update.
+        :type device_id: str
+
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :type custom_metadata: Dict[str, Any]
+
+        :param is_managed: Indicates whether the device is managed. Set this parameter to `true` to convert an unmanaged device to managed.
+        :type is_managed: bool"""
         json_payload = {}
 
         if device_id is not None:

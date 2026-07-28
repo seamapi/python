@@ -9,6 +9,13 @@ class AbstractAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
+        """Returns a specified [access system entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance that you want to get.
+        :type acs_entrance_id: str
+
+        :returns: OK
+        :rtype: AcsEntrance"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -19,6 +26,16 @@ class AbstractAcsEntrances(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Grants a specified [access system user](https://docs.seam.co/low-level-apis/access-systems/user-management) access to a specified [access system entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
+        :type acs_entrance_id: str
+
+        :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
+        :type acs_user_id: str
+
+        :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same `email_address` or `phone_number` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
+        :type user_identity_id: str"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -36,12 +53,56 @@ class AbstractAcsEntrances(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
+        """Returns a list of all [access system entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_credential_id: ID of the credential for which you want to retrieve all entrances.
+        :type acs_credential_id: str
+
+        :param acs_entrance_ids: IDs of the entrances for which you want to retrieve all entrances.
+        :type acs_entrance_ids: List[str]
+
+        :param acs_system_id: ID of the access system for which you want to retrieve all entrances.
+        :type acs_system_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to retrieve all entrances.
+        :type connected_account_id: str
+
+        :param customer_key: Customer key for which you want to list entrances.
+        :type customer_key: str
+
+        :param limit: Maximum number of records to return per page.
+        :type limit: int
+
+        :param location_id: Deprecated: Use `space_id`.
+        :type location_id: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned entrances to include all records that satisfy a partial match using `display_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list entrances.
+        :type space_id: str
+
+        :returns: OK
+        :rtype: List[AcsEntrance]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
     ) -> List[AcsCredential]:
+        """Returns a list of all [credentials](https://docs.seam.co/low-level-apis/access-systems/managing-credentials) with access to a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
+        :type acs_entrance_id: str
+
+        :param include_if: Conditions that credentials must meet to be included in the returned list.
+        :type include_if: List[str]
+
+        :returns: OK
+        :rtype: List[AcsCredential]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -52,6 +113,19 @@ class AbstractAcsEntrances(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Remotely unlocks a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+
+        :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
+        :type acs_credential_id: str
+
+        :param acs_entrance_id: ID of the entrance to unlock.
+        :type acs_entrance_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         raise NotImplementedError()
 
 
@@ -61,6 +135,13 @@ class AcsEntrances(AbstractAcsEntrances):
         self.defaults = defaults
 
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
+        """Returns a specified [access system entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance that you want to get.
+        :type acs_entrance_id: str
+
+        :returns: OK
+        :rtype: AcsEntrance"""
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -77,6 +158,16 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Grants a specified [access system user](https://docs.seam.co/low-level-apis/access-systems/user-management) access to a specified [access system entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
+        :type acs_entrance_id: str
+
+        :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
+        :type acs_user_id: str
+
+        :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same `email_address` or `phone_number` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
+        :type user_identity_id: str"""
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -104,6 +195,40 @@ class AcsEntrances(AbstractAcsEntrances):
         search: Optional[str] = None,
         space_id: Optional[str] = None
     ) -> List[AcsEntrance]:
+        """Returns a list of all [access system entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_credential_id: ID of the credential for which you want to retrieve all entrances.
+        :type acs_credential_id: str
+
+        :param acs_entrance_ids: IDs of the entrances for which you want to retrieve all entrances.
+        :type acs_entrance_ids: List[str]
+
+        :param acs_system_id: ID of the access system for which you want to retrieve all entrances.
+        :type acs_system_id: str
+
+        :param connected_account_id: ID of the connected account for which you want to retrieve all entrances.
+        :type connected_account_id: str
+
+        :param customer_key: Customer key for which you want to list entrances.
+        :type customer_key: str
+
+        :param limit: Maximum number of records to return per page.
+        :type limit: int
+
+        :param location_id: Deprecated: Use `space_id`.
+        :type location_id: str
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :type page_cursor: str
+
+        :param search: String for which to search. Filters returned entrances to include all records that satisfy a partial match using `display_name`.
+        :type search: str
+
+        :param space_id: ID of the space for which you want to list entrances.
+        :type space_id: str
+
+        :returns: OK
+        :rtype: List[AcsEntrance]"""
         json_payload = {}
 
         if acs_credential_id is not None:
@@ -134,6 +259,16 @@ class AcsEntrances(AbstractAcsEntrances):
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
     ) -> List[AcsCredential]:
+        """Returns a list of all [credentials](https://docs.seam.co/low-level-apis/access-systems/managing-credentials) with access to a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+
+        :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
+        :type acs_entrance_id: str
+
+        :param include_if: Conditions that credentials must meet to be included in the returned list.
+        :type include_if: List[str]
+
+        :returns: OK
+        :rtype: List[AcsCredential]"""
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -154,6 +289,19 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
+        """Remotely unlocks a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+
+        :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
+        :type acs_credential_id: str
+
+        :param acs_entrance_id: ID of the entrance to unlock.
+        :type acs_entrance_id: str
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+
+        :returns: OK
+        :rtype: ActionAttempt"""
         json_payload = {}
 
         if acs_credential_id is not None:

@@ -22,6 +22,43 @@ class AbstractCustomers(abc.ABC):
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
+        """Creates a new customer portal magic link with configurable features.
+
+        :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
+        :type customer_resources_filters: List[Dict[str, Any]]
+
+        :param customization_profile_id: The ID of the customization profile to use for the portal.
+        :type customization_profile_id: str
+
+        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
+        :type deep_link: Dict[str, Any]
+
+        :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
+        :type exclude_locale_picker: bool
+
+        :param features:
+        :type features: Dict[str, Any]
+
+        :param is_embedded: Whether the portal is embedded in another application.
+        :type is_embedded: bool
+
+        :param landing_page: Configuration for the landing page when the portal loads.
+        :type landing_page: Dict[str, Any]
+
+        :param locale: The locale to use for the portal.
+        :type locale: str
+
+        :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
+        :type navigation_mode: str
+
+        :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
+        :type read_only: bool
+
+        :param customer_data:
+        :type customer_data: Dict[str, Any]
+
+        :returns: OK
+        :rtype: CustomerPortal"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -48,6 +85,65 @@ class AbstractCustomers(abc.ABC):
         user_identity_keys: Optional[List[str]] = None,
         user_keys: Optional[List[str]] = None
     ) -> None:
+        """Deletes customer data including resources like spaces, properties, rooms, users, etc.
+        This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+
+        :param access_grant_keys: List of access grant keys to delete.
+        :type access_grant_keys: List[str]
+
+        :param booking_keys: List of booking keys to delete.
+        :type booking_keys: List[str]
+
+        :param building_keys: List of building keys to delete.
+        :type building_keys: List[str]
+
+        :param common_area_keys: List of common area keys to delete.
+        :type common_area_keys: List[str]
+
+        :param customer_keys: List of customer keys to delete all data for.
+        :type customer_keys: List[str]
+
+        :param facility_keys: List of facility keys to delete.
+        :type facility_keys: List[str]
+
+        :param guest_keys: List of guest keys to delete.
+        :type guest_keys: List[str]
+
+        :param listing_keys: List of listing keys to delete.
+        :type listing_keys: List[str]
+
+        :param property_keys: List of property keys to delete.
+        :type property_keys: List[str]
+
+        :param property_listing_keys: List of property listing keys to delete.
+        :type property_listing_keys: List[str]
+
+        :param reservation_keys: List of reservation keys to delete.
+        :type reservation_keys: List[str]
+
+        :param resident_keys: List of resident keys to delete.
+        :type resident_keys: List[str]
+
+        :param room_keys: List of room keys to delete.
+        :type room_keys: List[str]
+
+        :param space_keys: List of space keys to delete.
+        :type space_keys: List[str]
+
+        :param staff_member_keys: List of staff member keys to delete.
+        :type staff_member_keys: List[str]
+
+        :param tenant_keys: List of tenant keys to delete.
+        :type tenant_keys: List[str]
+
+        :param unit_keys: List of unit keys to delete.
+        :type unit_keys: List[str]
+
+        :param user_identity_keys: List of user identity keys to delete.
+        :type user_identity_keys: List[str]
+
+        :param user_keys: List of user keys to delete.
+        :type user_keys: List[str]"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -75,6 +171,67 @@ class AbstractCustomers(abc.ABC):
         user_identities: Optional[List[Dict[str, Any]]] = None,
         users: Optional[List[Dict[str, Any]]] = None
     ) -> None:
+        """Pushes customer data including resources like spaces, properties, rooms, users, etc.
+
+        :param customer_key: Your unique identifier for the customer.
+        :type customer_key: str
+
+        :param access_grants: List of access grants.
+        :type access_grants: List[Dict[str, Any]]
+
+        :param bookings: List of bookings.
+        :type bookings: List[Dict[str, Any]]
+
+        :param buildings: List of buildings.
+        :type buildings: List[Dict[str, Any]]
+
+        :param common_areas: List of shared common areas.
+        :type common_areas: List[Dict[str, Any]]
+
+        :param facilities: List of gym or fitness facilities.
+        :type facilities: List[Dict[str, Any]]
+
+        :param guests: List of guests.
+        :type guests: List[Dict[str, Any]]
+
+        :param listings: List of property listings.
+        :type listings: List[Dict[str, Any]]
+
+        :param properties: List of short-term rental properties.
+        :type properties: List[Dict[str, Any]]
+
+        :param property_listings: List of property listings.
+        :type property_listings: List[Dict[str, Any]]
+
+        :param reservations: List of reservations.
+        :type reservations: List[Dict[str, Any]]
+
+        :param residents: List of residents.
+        :type residents: List[Dict[str, Any]]
+
+        :param rooms: List of hotel or hospitality rooms.
+        :type rooms: List[Dict[str, Any]]
+
+        :param sites: List of general sites or areas.
+        :type sites: List[Dict[str, Any]]
+
+        :param spaces: List of general spaces or areas.
+        :type spaces: List[Dict[str, Any]]
+
+        :param staff_members: List of staff members.
+        :type staff_members: List[Dict[str, Any]]
+
+        :param tenants: List of tenants.
+        :type tenants: List[Dict[str, Any]]
+
+        :param units: List of multi-family residential units.
+        :type units: List[Dict[str, Any]]
+
+        :param user_identities: List of user identities.
+        :type user_identities: List[Dict[str, Any]]
+
+        :param users: List of users.
+        :type users: List[Dict[str, Any]]"""
         raise NotImplementedError()
 
 
@@ -98,6 +255,43 @@ class Customers(AbstractCustomers):
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None
     ) -> CustomerPortal:
+        """Creates a new customer portal magic link with configurable features.
+
+        :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
+        :type customer_resources_filters: List[Dict[str, Any]]
+
+        :param customization_profile_id: The ID of the customization profile to use for the portal.
+        :type customization_profile_id: str
+
+        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
+        :type deep_link: Dict[str, Any]
+
+        :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
+        :type exclude_locale_picker: bool
+
+        :param features:
+        :type features: Dict[str, Any]
+
+        :param is_embedded: Whether the portal is embedded in another application.
+        :type is_embedded: bool
+
+        :param landing_page: Configuration for the landing page when the portal loads.
+        :type landing_page: Dict[str, Any]
+
+        :param locale: The locale to use for the portal.
+        :type locale: str
+
+        :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
+        :type navigation_mode: str
+
+        :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
+        :type read_only: bool
+
+        :param customer_data:
+        :type customer_data: Dict[str, Any]
+
+        :returns: OK
+        :rtype: CustomerPortal"""
         json_payload = {}
 
         if customer_resources_filters is not None:
@@ -150,6 +344,65 @@ class Customers(AbstractCustomers):
         user_identity_keys: Optional[List[str]] = None,
         user_keys: Optional[List[str]] = None
     ) -> None:
+        """Deletes customer data including resources like spaces, properties, rooms, users, etc.
+        This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+
+        :param access_grant_keys: List of access grant keys to delete.
+        :type access_grant_keys: List[str]
+
+        :param booking_keys: List of booking keys to delete.
+        :type booking_keys: List[str]
+
+        :param building_keys: List of building keys to delete.
+        :type building_keys: List[str]
+
+        :param common_area_keys: List of common area keys to delete.
+        :type common_area_keys: List[str]
+
+        :param customer_keys: List of customer keys to delete all data for.
+        :type customer_keys: List[str]
+
+        :param facility_keys: List of facility keys to delete.
+        :type facility_keys: List[str]
+
+        :param guest_keys: List of guest keys to delete.
+        :type guest_keys: List[str]
+
+        :param listing_keys: List of listing keys to delete.
+        :type listing_keys: List[str]
+
+        :param property_keys: List of property keys to delete.
+        :type property_keys: List[str]
+
+        :param property_listing_keys: List of property listing keys to delete.
+        :type property_listing_keys: List[str]
+
+        :param reservation_keys: List of reservation keys to delete.
+        :type reservation_keys: List[str]
+
+        :param resident_keys: List of resident keys to delete.
+        :type resident_keys: List[str]
+
+        :param room_keys: List of room keys to delete.
+        :type room_keys: List[str]
+
+        :param space_keys: List of space keys to delete.
+        :type space_keys: List[str]
+
+        :param staff_member_keys: List of staff member keys to delete.
+        :type staff_member_keys: List[str]
+
+        :param tenant_keys: List of tenant keys to delete.
+        :type tenant_keys: List[str]
+
+        :param unit_keys: List of unit keys to delete.
+        :type unit_keys: List[str]
+
+        :param user_identity_keys: List of user identity keys to delete.
+        :type user_identity_keys: List[str]
+
+        :param user_keys: List of user keys to delete.
+        :type user_keys: List[str]"""
         json_payload = {}
 
         if access_grant_keys is not None:
@@ -219,6 +472,67 @@ class Customers(AbstractCustomers):
         user_identities: Optional[List[Dict[str, Any]]] = None,
         users: Optional[List[Dict[str, Any]]] = None
     ) -> None:
+        """Pushes customer data including resources like spaces, properties, rooms, users, etc.
+
+        :param customer_key: Your unique identifier for the customer.
+        :type customer_key: str
+
+        :param access_grants: List of access grants.
+        :type access_grants: List[Dict[str, Any]]
+
+        :param bookings: List of bookings.
+        :type bookings: List[Dict[str, Any]]
+
+        :param buildings: List of buildings.
+        :type buildings: List[Dict[str, Any]]
+
+        :param common_areas: List of shared common areas.
+        :type common_areas: List[Dict[str, Any]]
+
+        :param facilities: List of gym or fitness facilities.
+        :type facilities: List[Dict[str, Any]]
+
+        :param guests: List of guests.
+        :type guests: List[Dict[str, Any]]
+
+        :param listings: List of property listings.
+        :type listings: List[Dict[str, Any]]
+
+        :param properties: List of short-term rental properties.
+        :type properties: List[Dict[str, Any]]
+
+        :param property_listings: List of property listings.
+        :type property_listings: List[Dict[str, Any]]
+
+        :param reservations: List of reservations.
+        :type reservations: List[Dict[str, Any]]
+
+        :param residents: List of residents.
+        :type residents: List[Dict[str, Any]]
+
+        :param rooms: List of hotel or hospitality rooms.
+        :type rooms: List[Dict[str, Any]]
+
+        :param sites: List of general sites or areas.
+        :type sites: List[Dict[str, Any]]
+
+        :param spaces: List of general spaces or areas.
+        :type spaces: List[Dict[str, Any]]
+
+        :param staff_members: List of staff members.
+        :type staff_members: List[Dict[str, Any]]
+
+        :param tenants: List of tenants.
+        :type tenants: List[Dict[str, Any]]
+
+        :param units: List of multi-family residential units.
+        :type units: List[Dict[str, Any]]
+
+        :param user_identities: List of user identities.
+        :type user_identities: List[Dict[str, Any]]
+
+        :param users: List of users.
+        :type users: List[Dict[str, Any]]"""
         json_payload = {}
 
         if customer_key is not None:

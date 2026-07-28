@@ -5,6 +5,20 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class Webhook:
+    """Represents a [webhook](https://docs.seam.co/developer-tools/webhooks) that enables you to receive notifications of events. When you create a webhook, specify the endpoint URL at which you want to receive events and the set of event types that you want to receive.
+
+    :ivar event_types: Types of events that the [webhook](https://docs.seam.co/developer-tools/webhooks) should receive.
+    :vartype event_types: List[str]
+
+    :ivar secret: Secret associated with the [webhook](https://docs.seam.co/developer-tools/webhooks).
+    :vartype secret: str
+
+    :ivar url: URL for the [webhook](https://docs.seam.co/developer-tools/webhooks).
+    :vartype url: str
+
+    :ivar webhook_id: ID of the webhook.
+    :vartype webhook_id: str"""
+
     event_types: List[str]
     secret: str
     url: str

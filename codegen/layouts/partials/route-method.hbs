@@ -1,4 +1,5 @@
     def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
+        """{{{docstring}}}"""
         json_payload = {}
 
 {{#each params}}

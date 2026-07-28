@@ -1,4 +1,7 @@
 class {{className}}(abc.ABC):
+{{#if docstring}}
+    """{{{docstring}}}"""
+{{/if}}
 {{#if showPass}}
     pass
 {{/if}}
@@ -13,5 +16,6 @@ class {{className}}(abc.ABC):
 
     @abc.abstractmethod
     def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
+        """{{{docstring}}}"""
         raise NotImplementedError()
 {{/each}}

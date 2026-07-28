@@ -16,6 +16,25 @@ class AbstractThermostatsSimulate(abc.ABC):
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None
     ) -> None:
+        """Simulates having adjusted the [HVAC mode](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode) for a [thermostat](https://docs.seam.co/capability-guides/thermostats). Only applicable for [sandbox devices](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Testing Your Thermostat App with Simulate Endpoints](https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints).
+
+        :param device_id: ID of the thermostat device for which you want to simulate having adjusted the HVAC mode.
+        :type device_id: str
+
+        :param hvac_mode: HVAC mode that you want to simulate.
+        :type hvac_mode: str
+
+        :param cooling_set_point_celsius: Cooling [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °C that you want to simulate. You must set `cooling_set_point_celsius` or `cooling_set_point_fahrenheit`.
+        :type cooling_set_point_celsius: float
+
+        :param cooling_set_point_fahrenheit: Cooling [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °F that you want to simulate. You must set `cooling_set_point_fahrenheit` or `cooling_set_point_celsius`.
+        :type cooling_set_point_fahrenheit: float
+
+        :param heating_set_point_celsius: Heating [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °C that you want to simulate. You must set `heating_set_point_celsius` or `heating_set_point_fahrenheit`.
+        :type heating_set_point_celsius: float
+
+        :param heating_set_point_fahrenheit: Heating [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °F that you want to simulate. You must set `heating_set_point_fahrenheit` or `heating_set_point_celsius`.
+        :type heating_set_point_fahrenheit: float"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -26,6 +45,16 @@ class AbstractThermostatsSimulate(abc.ABC):
         temperature_celsius: Optional[float] = None,
         temperature_fahrenheit: Optional[float] = None
     ) -> None:
+        """Simulates a [thermostat](https://docs.seam.co/capability-guides/thermostats) reaching a specified temperature. Only applicable for [sandbox devices](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Testing Your Thermostat App with Simulate Endpoints](https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints).
+
+        :param device_id: ID of the thermostat device that you want to simulate reaching a specified temperature.
+        :type device_id: str
+
+        :param temperature_celsius: Temperature in °C that you want simulate the thermostat reaching. You must set `temperature_celsius` or `temperature_fahrenheit`.
+        :type temperature_celsius: float
+
+        :param temperature_fahrenheit: Temperature in °F that you want simulate the thermostat reaching. You must set `temperature_fahrenheit` or `temperature_celsius`.
+        :type temperature_fahrenheit: float"""
         raise NotImplementedError()
 
 
@@ -44,6 +73,25 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None
     ) -> None:
+        """Simulates having adjusted the [HVAC mode](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode) for a [thermostat](https://docs.seam.co/capability-guides/thermostats). Only applicable for [sandbox devices](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Testing Your Thermostat App with Simulate Endpoints](https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints).
+
+        :param device_id: ID of the thermostat device for which you want to simulate having adjusted the HVAC mode.
+        :type device_id: str
+
+        :param hvac_mode: HVAC mode that you want to simulate.
+        :type hvac_mode: str
+
+        :param cooling_set_point_celsius: Cooling [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °C that you want to simulate. You must set `cooling_set_point_celsius` or `cooling_set_point_fahrenheit`.
+        :type cooling_set_point_celsius: float
+
+        :param cooling_set_point_fahrenheit: Cooling [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °F that you want to simulate. You must set `cooling_set_point_fahrenheit` or `cooling_set_point_celsius`.
+        :type cooling_set_point_fahrenheit: float
+
+        :param heating_set_point_celsius: Heating [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °C that you want to simulate. You must set `heating_set_point_celsius` or `heating_set_point_fahrenheit`.
+        :type heating_set_point_celsius: float
+
+        :param heating_set_point_fahrenheit: Heating [set point](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points) in °F that you want to simulate. You must set `heating_set_point_fahrenheit` or `heating_set_point_celsius`.
+        :type heating_set_point_fahrenheit: float"""
         json_payload = {}
 
         if device_id is not None:
@@ -70,6 +118,16 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         temperature_celsius: Optional[float] = None,
         temperature_fahrenheit: Optional[float] = None
     ) -> None:
+        """Simulates a [thermostat](https://docs.seam.co/capability-guides/thermostats) reaching a specified temperature. Only applicable for [sandbox devices](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Testing Your Thermostat App with Simulate Endpoints](https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints).
+
+        :param device_id: ID of the thermostat device that you want to simulate reaching a specified temperature.
+        :type device_id: str
+
+        :param temperature_celsius: Temperature in °C that you want simulate the thermostat reaching. You must set `temperature_celsius` or `temperature_fahrenheit`.
+        :type temperature_celsius: float
+
+        :param temperature_fahrenheit: Temperature in °F that you want simulate the thermostat reaching. You must set `temperature_fahrenheit` or `temperature_celsius`.
+        :type temperature_fahrenheit: float"""
         json_payload = {}
 
         if device_id is not None:
