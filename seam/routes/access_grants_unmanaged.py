@@ -1,12 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..resources import UnmanagedAccessGrant
 
 
 class AbstractAccessGrantsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, access_grant_id: str) -> None:
+    def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -19,7 +20,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAccessGrant]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -38,15 +39,15 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, access_grant_id: str) -> None:
+    def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         json_payload = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
 
-        self.client.post("/access_grants/unmanaged/get", json=json_payload)
+        res = self.client.post("/access_grants/unmanaged/get", json=json_payload)
 
-        return None
+        return UnmanagedAccessGrant.from_dict(res["access_grant"])
 
     def list(
         self,
@@ -57,7 +58,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAccessGrant]:
         json_payload = {}
 
         if acs_entrance_id is not None:
@@ -73,9 +74,9 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/access_grants/unmanaged/list", json=json_payload)
+        res = self.client.post("/access_grants/unmanaged/list", json=json_payload)
 
-        return None
+        return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
 
     def update(
         self,

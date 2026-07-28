@@ -24,7 +24,10 @@ from .space import Space
 from .thermostat_daily_program import ThermostatDailyProgram
 from .thermostat_schedule import ThermostatSchedule
 from .unmanaged_access_code import UnmanagedAccessCode
+from .unmanaged_access_grant import UnmanagedAccessGrant
+from .unmanaged_access_method import UnmanagedAccessMethod
 from .unmanaged_device import UnmanagedDevice
+from .unmanaged_user_identity import UnmanagedUserIdentity
 from .user_identity import UserIdentity
 from .webhook import Webhook
 from .workspace import Workspace

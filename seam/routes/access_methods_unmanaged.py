@@ -1,12 +1,13 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..resources import UnmanagedAccessMethod
 
 
 class AbstractAccessMethodsUnmanaged(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, *, access_method_id: str) -> None:
+    def get(self, *, access_method_id: str) -> UnmanagedAccessMethod:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -17,7 +18,7 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAccessMethod]:
         raise NotImplementedError()
 
 
@@ -26,15 +27,15 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    def get(self, *, access_method_id: str) -> None:
+    def get(self, *, access_method_id: str) -> UnmanagedAccessMethod:
         json_payload = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
 
-        self.client.post("/access_methods/unmanaged/get", json=json_payload)
+        res = self.client.post("/access_methods/unmanaged/get", json=json_payload)
 
-        return None
+        return UnmanagedAccessMethod.from_dict(res["access_method"])
 
     def list(
         self,
@@ -43,7 +44,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         space_id: Optional[str] = None
-    ) -> None:
+    ) -> List[UnmanagedAccessMethod]:
         json_payload = {}
 
         if access_grant_id is not None:
@@ -55,6 +56,6 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        self.client.post("/access_methods/unmanaged/list", json=json_payload)
+        res = self.client.post("/access_methods/unmanaged/list", json=json_payload)
 
-        return None
+        return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]
