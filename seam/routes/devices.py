@@ -27,13 +27,10 @@ class AbstractDevices(abc.ABC):
         You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
-        :type device_id: str
 
         :param name: Name of the device that you want to get.
-        :type name: str
 
-        :returns: OK
-        :rtype: Device"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -60,55 +57,38 @@ class AbstractDevices(abc.ABC):
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type for which you want to list devices.
-        :type device_type: str
 
         :param device_types: Array of device types for which you want to list devices.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturer for which you want to list devices.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -122,18 +102,15 @@ class AbstractDevices(abc.ABC):
         When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
-        :type provider_category: str
 
-        :returns: OK
-        :rtype: List[DeviceProvider]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-        :type devices: List[Dict[str, Any]]"""
+        :param devices: Array of devices with provider metadata to update"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -152,22 +129,16 @@ class AbstractDevices(abc.ABC):
         You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
-        :type device_id: str
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
-        :type backup_access_code_pool_enabled: bool
 
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
-        :type custom_metadata: Dict[str, Any]
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
-        :type is_managed: bool
 
         :param name: Name for the device.
-        :type name: str
 
-        :param properties:
-        :type properties: Dict[str, Any]"""
+        :param properties:"""
         raise NotImplementedError()
 
 
@@ -194,13 +165,10 @@ class Devices(AbstractDevices):
         You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
-        :type device_id: str
 
         :param name: Name of the device that you want to get.
-        :type name: str
 
-        :returns: OK
-        :rtype: Device"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -235,55 +203,38 @@ class Devices(AbstractDevices):
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type for which you want to list devices.
-        :type device_type: str
 
         :param device_types: Array of device types for which you want to list devices.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturer for which you want to list devices.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         json_payload = {}
 
         if connect_webview_id is not None:
@@ -333,10 +284,8 @@ class Devices(AbstractDevices):
         When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
-        :type provider_category: str
 
-        :returns: OK
-        :rtype: List[DeviceProvider]"""
+        :returns: OK"""
         json_payload = {}
 
         if provider_category is not None:
@@ -349,8 +298,7 @@ class Devices(AbstractDevices):
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-        :type devices: List[Dict[str, Any]]"""
+        :param devices: Array of devices with provider metadata to update"""
         json_payload = {}
 
         if devices is not None:
@@ -375,22 +323,16 @@ class Devices(AbstractDevices):
         You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
-        :type device_id: str
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
-        :type backup_access_code_pool_enabled: bool
 
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
-        :type custom_metadata: Dict[str, Any]
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
-        :type is_managed: bool
 
         :param name: Name for the device.
-        :type name: str
 
-        :param properties:
-        :type properties: Dict[str, Any]"""
+        :param properties:"""
         json_payload = {}
 
         if device_id is not None:

@@ -45,55 +45,38 @@ class AbstractNoiseSensors(abc.ABC):
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type of the noise sensors that you want to list.
-        :type device_type: str
 
         :param device_types: Device types of the noise sensors that you want to list.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturers of the noise sensors that you want to list.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -137,55 +120,38 @@ class NoiseSensors(AbstractNoiseSensors):
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type of the noise sensors that you want to list.
-        :type device_type: str
 
         :param device_types: Device types of the noise sensors that you want to list.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturers of the noise sensors that you want to list.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         json_payload = {}
 
         if connect_webview_id is not None:

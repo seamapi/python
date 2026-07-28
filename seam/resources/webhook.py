@@ -8,16 +8,12 @@ class Webhook:
     """Represents a `webhook <https://docs.seam.co/developer-tools/webhooks>`_ that enables you to receive notifications of events. When you create a webhook, specify the endpoint URL at which you want to receive events and the set of event types that you want to receive.
 
     :ivar event_types: Types of events that the `webhook <https://docs.seam.co/developer-tools/webhooks>`_ should receive.
-    :vartype event_types: List[str]
 
     :ivar secret: Secret associated with the `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
-    :vartype secret: str
 
     :ivar url: URL for the `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
-    :vartype url: str
 
-    :ivar webhook_id: ID of the webhook.
-    :vartype webhook_id: str"""
+    :ivar webhook_id: ID of the webhook."""
 
     event_types: List[str]
     secret: str

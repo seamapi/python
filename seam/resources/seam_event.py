@@ -7,279 +7,188 @@ from ..utils.deep_attr_dict import DeepAttrDict
 class SeamEvent:
     """
     :ivar access_code_id: ID of the affected access code.
-    :vartype access_code_id: str
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
-    :vartype connected_account_custom_metadata: Dict[str, Any]
 
     :ivar connected_account_id: ID of the connected account associated with the affected access code.
-    :vartype connected_account_id: str
 
     :ivar created_at: Date and time at which the event was created.
-    :vartype created_at: str
 
     :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
-    :vartype device_custom_metadata: Dict[str, Any]
 
     :ivar device_id: ID of the device associated with the affected access code.
-    :vartype device_id: str
 
     :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
-    :vartype event_description: str
 
     :ivar event_id: ID of the event.
-    :vartype event_id: str
 
     :ivar event_type:
-    :vartype event_type: str
 
     :ivar occurred_at: Date and time at which the event occurred.
-    :vartype occurred_at: str
 
     :ivar workspace_id: ID of the workspace associated with the event.
-    :vartype workspace_id: str
 
     :ivar change_reason: Human-readable reason for the change (e.g. ``ongoing code auto-renewed``).
-    :vartype change_reason: str
 
     :ivar changed_properties: List of properties that changed on the access code.
-    :vartype changed_properties: List[Dict[str, Any]]
 
     :ivar description: Human-readable description of the change and its source.
-    :vartype description: str
 
     :ivar from_: Previous access code name configuration.
-    :vartype from_: Dict[str, Any]
 
     :ivar to: New access code name configuration.
-    :vartype to: Dict[str, Any]
 
     :ivar requested_mutations: Array of mutations requested on the access code, each containing the mutation type and from/to values.
-    :vartype requested_mutations: List[Dict[str, Any]]
 
     :ivar code: Code for the affected access code.
-    :vartype code: str
 
     :ivar access_code_errors: Errors associated with the access code.
-    :vartype access_code_errors: List[Dict[str, Any]]
 
     :ivar access_code_warnings: Warnings associated with the access code.
-    :vartype access_code_warnings: List[Dict[str, Any]]
 
     :ivar connected_account_errors: Errors associated with the connected account.
-    :vartype connected_account_errors: List[Dict[str, Any]]
 
     :ivar connected_account_warnings: Warnings associated with the connected account.
-    :vartype connected_account_warnings: List[Dict[str, Any]]
 
     :ivar device_errors: Errors associated with the device.
-    :vartype device_errors: List[Dict[str, Any]]
 
     :ivar device_warnings: Warnings associated with the device.
-    :vartype device_warnings: List[Dict[str, Any]]
 
     :ivar backup_access_code_id: ID of the backup access code that was pulled from the pool.
-    :vartype backup_access_code_id: str
 
     :ivar access_grant_id: ID of the affected Access Grant.
-    :vartype access_grant_id: str
 
     :ivar acs_entrance_id: ID of the affected `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
-    :vartype acs_entrance_id: str
 
     :ivar access_grant_key: Key of the affected Access Grant (if present).
-    :vartype access_grant_key: str
 
     :ivar ends_at: The new end time for the access grant.
-    :vartype ends_at: str
 
     :ivar starts_at: The new start time for the access grant.
-    :vartype starts_at: str
 
     :ivar error_message: Description of why the access methods could not be created.
-    :vartype error_message: str
 
     :ivar missing_device_ids: IDs of the devices that did not receive a requested access method. Use these to identify which specific devices failed without having to fetch the Access Grant.
-    :vartype missing_device_ids: List[str]
 
     :ivar access_grant_ids: IDs of the access grants associated with this access method.
-    :vartype access_grant_ids: List[str]
 
     :ivar access_grant_keys: Keys of the access grants associated with this access method (if present).
-    :vartype access_grant_keys: List[str]
 
     :ivar access_method_id: ID of the affected access method.
-    :vartype access_method_id: str
 
     :ivar is_backup_code: Indicates whether the code is a backup code (only present when mode is 'code' and a backup code was used).
-    :vartype is_backup_code: bool
 
     :ivar acs_system_id: ID of the access system.
-    :vartype acs_system_id: str
 
     :ivar acs_system_errors: Errors associated with the access control system.
-    :vartype acs_system_errors: List[Dict[str, Any]]
 
     :ivar acs_system_warnings: Warnings associated with the access control system.
-    :vartype acs_system_warnings: List[Dict[str, Any]]
 
     :ivar acs_credential_id: ID of the affected credential.
-    :vartype acs_credential_id: str
 
     :ivar acs_user_id: ID of the affected access system user.
-    :vartype acs_user_id: str
 
     :ivar acs_encoder_id: ID of the affected encoder.
-    :vartype acs_encoder_id: str
 
     :ivar acs_access_group_id: ID of the affected access group.
-    :vartype acs_access_group_id: str
 
     :ivar client_session_id: ID of the affected client session.
-    :vartype client_session_id: str
 
     :ivar connect_webview_id: ID of the Connect Webview associated with the event.
-    :vartype connect_webview_id: str
 
     :ivar customer_key: The customer key associated with this connected account, if any.
-    :vartype customer_key: str
 
     :ivar connected_account_type: undocumented: Unreleased.
-    :vartype connected_account_type: str
 
     :ivar action_attempt_id: ID of the affected action attempt.
-    :vartype action_attempt_id: str
 
     :ivar action_type: Type of the action.
-    :vartype action_type: str
 
     :ivar status: Status of the action.
-    :vartype status: str
 
     :ivar error_code: Error code associated with the disconnection event, if any.
-    :vartype error_code: str
 
     :ivar battery_level: Number in the range 0 to 1.0 indicating the amount of battery in the affected device, as reported by the device.
-    :vartype battery_level: float
 
     :ivar battery_status: Battery status of the affected device, calculated from the numeric ``battery_level`` value.
-    :vartype battery_status: str
 
     :ivar device_name: Name of the deleted device, captured at deletion time. The device record no longer exists when this event fires, so the name is preserved here. Null when the device had no resolvable name.
-    :vartype device_name: str
 
     :ivar minut_metadata: Metadata from Minut.
-    :vartype minut_metadata: Dict[str, Any]
 
     :ivar noise_level_decibels: Detected noise level in decibels.
-    :vartype noise_level_decibels: float
 
     :ivar noise_level_nrs: Detected noise level in Noiseaware Noise Risk Score (NRS).
-    :vartype noise_level_nrs: float
 
     :ivar noise_threshold_id: ID of the noise threshold that was triggered.
-    :vartype noise_threshold_id: str
 
     :ivar noise_threshold_name: Name of the noise threshold that was triggered.
-    :vartype noise_threshold_name: str
 
     :ivar noiseaware_metadata: Metadata from Noiseaware.
-    :vartype noiseaware_metadata: Dict[str, Any]
 
     :ivar access_code_is_managed: Whether the access code is managed by Seam (true) or unmanaged (false). Only present when access_code_id is set.
-    :vartype access_code_is_managed: bool
 
     :ivar is_via_bluetooth: Whether the lock action was performed over Bluetooth by a remote client (such as the provider's mobile app), rather than a direct physical interaction or a Seam-initiated remote action.
-    :vartype is_via_bluetooth: bool
 
     :ivar is_via_nfc: Whether the lock action was performed by an NFC credential tap (such as an Apple Home Key or an NFC key fob) presented to the lock, rather than a direct physical interaction or a Seam-initiated remote action.
-    :vartype is_via_nfc: bool
 
     :ivar method: Method by which the lock was locked. ``keycode``: an access code was used (see ``access_code_id``). ``manual``: a physical action such as a thumbturn or button press. ``remote``: a remote action via an app, Bluetooth, or the Seam API (see ``action_attempt_id`` if Seam-initiated; see ``is_via_bluetooth`` or ``is_via_nfc`` for the transport). ``automatic``: triggered automatically, for example by an auto-relock timer. ``unknown``: could not be determined.
-    :vartype method: str
 
     :ivar user_identity_id: undocumented: Unreleased.
           ---
           ID of the user identity associated with the lock event.
-    :vartype user_identity_id: str
 
     :ivar reason: Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
-    :vartype reason: Dict[str, Any]
 
     :ivar climate_preset_key: Key of the climate preset that was activated.
-    :vartype climate_preset_key: str
 
     :ivar is_fallback_climate_preset: Indicates whether the climate preset that was activated is the fallback climate preset for the thermostat.
-    :vartype is_fallback_climate_preset: bool
 
     :ivar thermostat_schedule_id: ID of the thermostat schedule that prompted the affected climate preset to be activated.
-    :vartype thermostat_schedule_id: str
 
     :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-    :vartype cooling_set_point_celsius: float
 
     :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-    :vartype cooling_set_point_fahrenheit: float
 
     :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-    :vartype fan_mode_setting: str
 
     :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-    :vartype heating_set_point_celsius: float
 
     :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-    :vartype heating_set_point_fahrenheit: float
 
     :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-    :vartype hvac_mode_setting: str
 
     :ivar lower_limit_celsius: Lower temperature limit, in °C, defined by the set threshold.
-    :vartype lower_limit_celsius: float
 
     :ivar lower_limit_fahrenheit: Lower temperature limit, in °F, defined by the set threshold.
-    :vartype lower_limit_fahrenheit: float
 
     :ivar temperature_celsius: Temperature, in °C, reported by the affected thermostat.
-    :vartype temperature_celsius: float
 
     :ivar temperature_fahrenheit: Temperature, in °F, reported by the affected thermostat.
-    :vartype temperature_fahrenheit: float
 
     :ivar upper_limit_celsius: Upper temperature limit, in °C, defined by the set threshold.
-    :vartype upper_limit_celsius: float
 
     :ivar upper_limit_fahrenheit: Upper temperature limit, in °F, defined by the set threshold.
-    :vartype upper_limit_fahrenheit: float
 
     :ivar desired_temperature_celsius: Desired temperature, in °C, defined by the affected thermostat's cooling or heating set point.
-    :vartype desired_temperature_celsius: float
 
     :ivar desired_temperature_fahrenheit: Desired temperature, in °F, defined by the affected thermostat's cooling or heating set point.
-    :vartype desired_temperature_fahrenheit: float
 
     :ivar activation_reason: The reason the camera was activated.
-    :vartype activation_reason: str
 
     :ivar image_url: URL to a thumbnail image captured at the time of activation.
-    :vartype image_url: str
 
     :ivar motion_sub_type: Sub-type of motion detected, if available.
-    :vartype motion_sub_type: str
 
     :ivar video_url: URL to a short video clip captured at the time of activation.
-    :vartype video_url: str
 
     :ivar acs_entrance_ids: IDs of all ACS entrances currently attached to the space.
-    :vartype acs_entrance_ids: List[str]
 
     :ivar device_ids: IDs of all devices currently attached to the space.
-    :vartype device_ids: List[str]
 
     :ivar space_id: ID of the affected space.
-    :vartype space_id: str
 
-    :ivar space_key: Unique key for the space within the workspace.
-    :vartype space_key: str"""
+    :ivar space_key: Unique key for the space within the workspace."""
 
     access_code_id: str
     connected_account_custom_metadata: Dict[str, Any]

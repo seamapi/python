@@ -16,40 +16,28 @@ class ClientSession:
     See also `Get Started with React <https://docs.seam.co/ui-components/overview/getting-started-with-seam-components/get-started-with-react-components-and-client-session-tokens>`_.
 
     :ivar client_session_id: ID of the client session.
-    :vartype client_session_id: str
 
     :ivar connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype connect_webview_ids: List[str]
 
     :ivar connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype connected_account_ids: List[str]
 
     :ivar created_at: Date and time at which the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ was created.
-    :vartype created_at: str
 
     :ivar customer_key: Customer key associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype customer_key: str
 
     :ivar device_count: Number of devices associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype device_count: float
 
     :ivar expires_at: Date and time at which the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ expires.
-    :vartype expires_at: str
 
     :ivar token: Client session token associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype token: str
 
     :ivar user_identifier_key: Your user ID for the user associated with the `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-    :vartype user_identifier_key: str
 
     :ivar user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with the client session.
-    :vartype user_identity_id: str
 
     :ivar user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with the client session.
-    :vartype user_identity_ids: List[str]
 
-    :ivar workspace_id: ID of the workspace associated with the client session.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the workspace associated with the client session."""
 
     client_session_id: str
     connect_webview_ids: List[str]

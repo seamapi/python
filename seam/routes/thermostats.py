@@ -39,16 +39,12 @@ class AbstractThermostats(abc.ABC):
         """Activates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to activate.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to activate a climate preset.
-        :type device_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -63,19 +59,14 @@ class AbstractThermostats(abc.ABC):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `cool mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to cool mode.
-        :type device_id: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -98,40 +89,29 @@ class AbstractThermostats(abc.ABC):
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want create a climate preset.
-        :type device_id: str
 
         :param climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
-        :type climate_preset_mode: str
 
         :param cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_fahrenheit: float
 
         :param ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
-        :type ecobee_metadata: Dict[str, Any]
 
         :param fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-        :type fan_mode_setting: str
 
         :param heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_fahrenheit: float
 
         :param hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-        :type hvac_mode_setting: str
 
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
-        :type manual_override_allowed: bool
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type name: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -139,10 +119,9 @@ class AbstractThermostats(abc.ABC):
         """Deletes a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-        :type device_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -157,19 +136,14 @@ class AbstractThermostats(abc.ABC):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to heat mode.
-        :type device_id: str
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -186,25 +160,18 @@ class AbstractThermostats(abc.ABC):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat-cool ("auto") mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to heat-cool mode.
-        :type device_id: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -231,55 +198,38 @@ class AbstractThermostats(abc.ABC):
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type by which you want to filter thermostat devices.
-        :type device_type: str
 
         :param device_types: Array of device types by which you want to filter thermostat devices.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturer by which you want to filter thermostat devices.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -292,13 +242,10 @@ class AbstractThermostats(abc.ABC):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `"off" mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to off mode.
-        :type device_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -308,10 +255,9 @@ class AbstractThermostats(abc.ABC):
         """Sets a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ as the `"fallback" <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets/setting-the-fallback-climate-preset>`_ preset for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-        :type device_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -326,19 +272,14 @@ class AbstractThermostats(abc.ABC):
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to set the fan mode.
-        :type device_id: str
 
         :param fan_mode: Deprecated: Use ``fan_mode_setting`` instead. Fan mode setting for the thermostat, such as ``auto``, ``on``, or ``circulate``.
-        :type fan_mode: str
 
         :param fan_mode_setting: `Fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ that you want to set for the thermostat.
-        :type fan_mode_setting: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -356,28 +297,20 @@ class AbstractThermostats(abc.ABC):
         """Sets the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to set the HVAC mode.
-        :type device_id: str
 
         :param hvac_mode_setting:
-        :type hvac_mode_setting: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -393,19 +326,15 @@ class AbstractThermostats(abc.ABC):
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
         :param device_id: ID of the thermostat device for which you want to set a temperature threshold.
-        :type device_id: str
 
         :param lower_limit_celsius: Lower temperature limit in in °C. Seam alerts you if the reported temperature is lower than this value. You can specify either ``lower_limit`` but not both.
-        :type lower_limit_celsius: float
 
         :param lower_limit_fahrenheit: Lower temperature limit in in °F. Seam alerts you if the reported temperature is lower than this value. You can specify either ``lower_limit`` but not both.
-        :type lower_limit_fahrenheit: float
 
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        :type upper_limit_celsius: float
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        :type upper_limit_fahrenheit: float"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -428,40 +357,29 @@ class AbstractThermostats(abc.ABC):
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to update a climate preset.
-        :type device_id: str
 
         :param climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
-        :type climate_preset_mode: str
 
         :param cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_fahrenheit: float
 
         :param ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
-        :type ecobee_metadata: Dict[str, Any]
 
         :param fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-        :type fan_mode_setting: str
 
         :param heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_fahrenheit: float
 
         :param hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-        :type hvac_mode_setting: str
 
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
-        :type manual_override_allowed: bool
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type name: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -481,34 +399,24 @@ class AbstractThermostats(abc.ABC):
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.
 
         :param device_id: ID of the thermostat device for which you want to update the weekly program.
-        :type device_id: str
 
         :param friday_program_id: ID of the thermostat daily program to run on Fridays.
-        :type friday_program_id: str
 
         :param monday_program_id: ID of the thermostat daily program to run on Mondays.
-        :type monday_program_id: str
 
         :param saturday_program_id: ID of the thermostat daily program to run on Saturdays.
-        :type saturday_program_id: str
 
         :param sunday_program_id: ID of the thermostat daily program to run on Sundays.
-        :type sunday_program_id: str
 
         :param thursday_program_id: ID of the thermostat daily program to run on Thursdays.
-        :type thursday_program_id: str
 
         :param tuesday_program_id: ID of the thermostat daily program to run on Tuesdays.
-        :type tuesday_program_id: str
 
         :param wednesday_program_id: ID of the thermostat daily program to run on Wednesdays.
-        :type wednesday_program_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -544,16 +452,12 @@ class Thermostats(AbstractThermostats):
         """Activates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to activate.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to activate a climate preset.
-        :type device_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -588,19 +492,14 @@ class Thermostats(AbstractThermostats):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `cool mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to cool mode.
-        :type device_id: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -643,40 +542,29 @@ class Thermostats(AbstractThermostats):
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want create a climate preset.
-        :type device_id: str
 
         :param climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
-        :type climate_preset_mode: str
 
         :param cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_fahrenheit: float
 
         :param ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
-        :type ecobee_metadata: Dict[str, Any]
 
         :param fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-        :type fan_mode_setting: str
 
         :param heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_fahrenheit: float
 
         :param hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-        :type hvac_mode_setting: str
 
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
-        :type manual_override_allowed: bool
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type name: str"""
+        """
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -712,10 +600,9 @@ class Thermostats(AbstractThermostats):
         """Deletes a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-        :type device_id: str"""
+        """
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -738,19 +625,14 @@ class Thermostats(AbstractThermostats):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to heat mode.
-        :type device_id: str
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -787,25 +669,18 @@ class Thermostats(AbstractThermostats):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat-cool ("auto") mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to heat-cool mode.
-        :type device_id: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -856,55 +731,38 @@ class Thermostats(AbstractThermostats):
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
-        :type connected_account_id: str
 
         :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-        :type connected_account_ids: List[str]
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-        :type created_before: str
 
         :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
-        :type customer_key: str
 
         :param device_ids: Array of device IDs for which you want to list devices.
-        :type device_ids: List[str]
 
         :param device_type: Device type by which you want to filter thermostat devices.
-        :type device_type: str
 
         :param device_types: Array of device types by which you want to filter thermostat devices.
-        :type device_types: List[str]
 
         :param limit: Numerical limit on the number of devices to return.
-        :type limit: float
 
         :param manufacturer: Manufacturer by which you want to filter thermostat devices.
-        :type manufacturer: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-        :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
-        :type space_id: str
 
         :param unstable_location_id: Deprecated: Use ``space_id``.
-        :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[Device]"""
+        :returns: OK"""
         json_payload = {}
 
         if connect_webview_id is not None:
@@ -953,13 +811,10 @@ class Thermostats(AbstractThermostats):
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `"off" mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
         :param device_id: ID of the thermostat device that you want to set to off mode.
-        :type device_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -985,10 +840,9 @@ class Thermostats(AbstractThermostats):
         """Sets a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ as the `"fallback" <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets/setting-the-fallback-climate-preset>`_ preset for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-        :type device_id: str"""
+        """
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -1011,19 +865,14 @@ class Thermostats(AbstractThermostats):
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to set the fan mode.
-        :type device_id: str
 
         :param fan_mode: Deprecated: Use ``fan_mode_setting`` instead. Fan mode setting for the thermostat, such as ``auto``, ``on``, or ``circulate``.
-        :type fan_mode: str
 
         :param fan_mode_setting: `Fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ that you want to set for the thermostat.
-        :type fan_mode_setting: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -1061,28 +910,20 @@ class Thermostats(AbstractThermostats):
         """Sets the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to set the HVAC mode.
-        :type device_id: str
 
         :param hvac_mode_setting:
-        :type hvac_mode_setting: str
 
         :param cooling_set_point_celsius: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: `Cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``cooling_set_point`` parameters.
-        :type cooling_set_point_fahrenheit: float
 
         :param heating_set_point_celsius: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: `Heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to set for the thermostat. You must set one of the ``heating_set_point`` parameters.
-        :type heating_set_point_fahrenheit: float
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -1124,19 +965,15 @@ class Thermostats(AbstractThermostats):
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
         :param device_id: ID of the thermostat device for which you want to set a temperature threshold.
-        :type device_id: str
 
         :param lower_limit_celsius: Lower temperature limit in in °C. Seam alerts you if the reported temperature is lower than this value. You can specify either ``lower_limit`` but not both.
-        :type lower_limit_celsius: float
 
         :param lower_limit_fahrenheit: Lower temperature limit in in °F. Seam alerts you if the reported temperature is lower than this value. You can specify either ``lower_limit`` but not both.
-        :type lower_limit_fahrenheit: float
 
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        :type upper_limit_celsius: float
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        :type upper_limit_fahrenheit: float"""
+        """
         json_payload = {}
 
         if device_id is not None:
@@ -1173,40 +1010,29 @@ class Thermostats(AbstractThermostats):
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type climate_preset_key: str
 
         :param device_id: ID of the thermostat device for which you want to update a climate preset.
-        :type device_id: str
 
         :param climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
-        :type climate_preset_mode: str
 
         :param cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_celsius: float
 
         :param cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type cooling_set_point_fahrenheit: float
 
         :param ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
-        :type ecobee_metadata: Dict[str, Any]
 
         :param fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-        :type fan_mode_setting: str
 
         :param heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_celsius: float
 
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-        :type heating_set_point_fahrenheit: float
 
         :param hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-        :type hvac_mode_setting: str
 
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
-        :type manual_override_allowed: bool
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        :type name: str"""
+        """
         json_payload = {}
 
         if climate_preset_key is not None:
@@ -1254,34 +1080,24 @@ class Thermostats(AbstractThermostats):
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.
 
         :param device_id: ID of the thermostat device for which you want to update the weekly program.
-        :type device_id: str
 
         :param friday_program_id: ID of the thermostat daily program to run on Fridays.
-        :type friday_program_id: str
 
         :param monday_program_id: ID of the thermostat daily program to run on Mondays.
-        :type monday_program_id: str
 
         :param saturday_program_id: ID of the thermostat daily program to run on Saturdays.
-        :type saturday_program_id: str
 
         :param sunday_program_id: ID of the thermostat daily program to run on Sundays.
-        :type sunday_program_id: str
 
         :param thursday_program_id: ID of the thermostat daily program to run on Thursdays.
-        :type thursday_program_id: str
 
         :param tuesday_program_id: ID of the thermostat daily program to run on Tuesdays.
-        :type tuesday_program_id: str
 
         :param wednesday_program_id: ID of the thermostat daily program to run on Wednesdays.
-        :type wednesday_program_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:

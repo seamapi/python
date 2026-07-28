@@ -11,10 +11,8 @@ class AbstractSpaces(abc.ABC):
         """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
-        :type acs_entrance_ids: List[str]
 
-        :param space_id: ID of the space to which you want to add entrances.
-        :type space_id: str"""
+        :param space_id: ID of the space to which you want to add entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -24,10 +22,9 @@ class AbstractSpaces(abc.ABC):
         """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
-        :type connected_account_id: str
 
         :param space_id: ID of the space to which you want to add the connected account.
-        :type space_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -35,10 +32,8 @@ class AbstractSpaces(abc.ABC):
         """Adds devices to a specific space.
 
         :param device_ids: IDs of the devices that you want to add to the space.
-        :type device_ids: List[str]
 
-        :param space_id: ID of the space to which you want to add devices.
-        :type space_id: str"""
+        :param space_id: ID of the space to which you want to add devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -56,36 +51,27 @@ class AbstractSpaces(abc.ABC):
         """Creates a new space.
 
         :param name: Name of the space that you want to create.
-        :type name: str
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the new space.
-        :type acs_entrance_ids: List[str]
 
         :param connected_account_ids: IDs of connected accounts to associate with the new space. Persisted on seam.location_third_party_account so the UI can show which provider account(s) a space came from.
-        :type connected_account_ids: List[str]
 
         :param customer_data: Reservation/stay-related defaults for the space.
-        :type customer_data: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to create the space.
-        :type customer_key: str
 
         :param device_ids: IDs of the devices that you want to add to the new space.
-        :type device_ids: List[str]
 
         :param space_key: Unique key for the space within the workspace.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-        :type space_id: str"""
+        :param space_id: ID of the space that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -95,13 +81,10 @@ class AbstractSpaces(abc.ABC):
         """Gets a space.
 
         :param space_id: ID of the space that you want to get.
-        :type space_id: str
 
         :param space_key: Unique key of the space that you want to get.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -116,19 +99,14 @@ class AbstractSpaces(abc.ABC):
         """Gets all related resources for one or more Spaces.
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
         :param space_ids: IDs of the spaces that you want to get along with their related resources.
-        :type space_ids: List[str]
 
         :param space_keys: Keys of the spaces that you want to get along with their related resources.
-        :type space_keys: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -144,22 +122,16 @@ class AbstractSpaces(abc.ABC):
         """Returns a list of all spaces.
 
         :param customer_key: Customer key for which you want to list spaces.
-        :type customer_key: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: float
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using ``name``, ``space_key``, or ``customer_key``.
-        :type search: str
 
         :param space_key: Filter spaces by space_key.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: List[Space]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -169,10 +141,8 @@ class AbstractSpaces(abc.ABC):
         """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
-        :type acs_entrance_ids: List[str]
 
-        :param space_id: ID of the space from which you want to remove entrances.
-        :type space_id: str"""
+        :param space_id: ID of the space from which you want to remove entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -182,10 +152,9 @@ class AbstractSpaces(abc.ABC):
         """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
-        :type connected_account_id: str
 
         :param space_id: ID of the space from which you want to remove the connected account.
-        :type space_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -193,10 +162,8 @@ class AbstractSpaces(abc.ABC):
         """Removes devices from a specific space.
 
         :param device_ids: IDs of the devices that you want to remove from the space.
-        :type device_ids: List[str]
 
-        :param space_id: ID of the space from which you want to remove devices.
-        :type space_id: str"""
+        :param space_id: ID of the space from which you want to remove devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -213,25 +180,18 @@ class AbstractSpaces(abc.ABC):
         """Updates an existing space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to set for the space. If specified, this will replace all existing entrances.
-        :type acs_entrance_ids: List[str]
 
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
-        :type customer_data: Dict[str, Any]
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
-        :type device_ids: List[str]
 
         :param name: Name of the space.
-        :type name: str
 
         :param space_id: ID of the space that you want to update.
-        :type space_id: str
 
         :param space_key: Unique key of the space that you want to update.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -244,10 +204,8 @@ class Spaces(AbstractSpaces):
         """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
-        :type acs_entrance_ids: List[str]
 
-        :param space_id: ID of the space to which you want to add entrances.
-        :type space_id: str"""
+        :param space_id: ID of the space to which you want to add entrances."""
         json_payload = {}
 
         if acs_entrance_ids is not None:
@@ -265,10 +223,9 @@ class Spaces(AbstractSpaces):
         """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
-        :type connected_account_id: str
 
         :param space_id: ID of the space to which you want to add the connected account.
-        :type space_id: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:
@@ -284,10 +241,8 @@ class Spaces(AbstractSpaces):
         """Adds devices to a specific space.
 
         :param device_ids: IDs of the devices that you want to add to the space.
-        :type device_ids: List[str]
 
-        :param space_id: ID of the space to which you want to add devices.
-        :type space_id: str"""
+        :param space_id: ID of the space to which you want to add devices."""
         json_payload = {}
 
         if device_ids is not None:
@@ -313,28 +268,20 @@ class Spaces(AbstractSpaces):
         """Creates a new space.
 
         :param name: Name of the space that you want to create.
-        :type name: str
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the new space.
-        :type acs_entrance_ids: List[str]
 
         :param connected_account_ids: IDs of connected accounts to associate with the new space. Persisted on seam.location_third_party_account so the UI can show which provider account(s) a space came from.
-        :type connected_account_ids: List[str]
 
         :param customer_data: Reservation/stay-related defaults for the space.
-        :type customer_data: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to create the space.
-        :type customer_key: str
 
         :param device_ids: IDs of the devices that you want to add to the new space.
-        :type device_ids: List[str]
 
         :param space_key: Unique key for the space within the workspace.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         json_payload = {}
 
         if name is not None:
@@ -359,8 +306,7 @@ class Spaces(AbstractSpaces):
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-        :type space_id: str"""
+        :param space_id: ID of the space that you want to delete."""
         json_payload = {}
 
         if space_id is not None:
@@ -376,13 +322,10 @@ class Spaces(AbstractSpaces):
         """Gets a space.
 
         :param space_id: ID of the space that you want to get.
-        :type space_id: str
 
         :param space_key: Unique key of the space that you want to get.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         json_payload = {}
 
         if space_id is not None:
@@ -405,19 +348,14 @@ class Spaces(AbstractSpaces):
         """Gets all related resources for one or more Spaces.
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
         :param space_ids: IDs of the spaces that you want to get along with their related resources.
-        :type space_ids: List[str]
 
         :param space_keys: Keys of the spaces that you want to get along with their related resources.
-        :type space_keys: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         json_payload = {}
 
         if exclude is not None:
@@ -445,22 +383,16 @@ class Spaces(AbstractSpaces):
         """Returns a list of all spaces.
 
         :param customer_key: Customer key for which you want to list spaces.
-        :type customer_key: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: float
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using ``name``, ``space_key``, or ``customer_key``.
-        :type search: str
 
         :param space_key: Filter spaces by space_key.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: List[Space]"""
+        :returns: OK"""
         json_payload = {}
 
         if customer_key is not None:
@@ -484,10 +416,8 @@ class Spaces(AbstractSpaces):
         """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
-        :type acs_entrance_ids: List[str]
 
-        :param space_id: ID of the space from which you want to remove entrances.
-        :type space_id: str"""
+        :param space_id: ID of the space from which you want to remove entrances."""
         json_payload = {}
 
         if acs_entrance_ids is not None:
@@ -505,10 +435,9 @@ class Spaces(AbstractSpaces):
         """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
-        :type connected_account_id: str
 
         :param space_id: ID of the space from which you want to remove the connected account.
-        :type space_id: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:
@@ -524,10 +453,8 @@ class Spaces(AbstractSpaces):
         """Removes devices from a specific space.
 
         :param device_ids: IDs of the devices that you want to remove from the space.
-        :type device_ids: List[str]
 
-        :param space_id: ID of the space from which you want to remove devices.
-        :type space_id: str"""
+        :param space_id: ID of the space from which you want to remove devices."""
         json_payload = {}
 
         if device_ids is not None:
@@ -552,25 +479,18 @@ class Spaces(AbstractSpaces):
         """Updates an existing space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to set for the space. If specified, this will replace all existing entrances.
-        :type acs_entrance_ids: List[str]
 
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
-        :type customer_data: Dict[str, Any]
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
-        :type device_ids: List[str]
 
         :param name: Name of the space.
-        :type name: str
 
         :param space_id: ID of the space that you want to update.
-        :type space_id: str
 
         :param space_key: Unique key of the space that you want to update.
-        :type space_key: str
 
-        :returns: OK
-        :rtype: Space"""
+        :returns: OK"""
         json_payload = {}
 
         if acs_entrance_ids is not None:

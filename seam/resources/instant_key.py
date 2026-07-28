@@ -10,31 +10,22 @@ class InstantKey:
     There’s no app to install, nor account to create. Your user just taps a link and gets a lightweight, native-feeling experience using iOS App Clip or Instant Apps on Android. Further, Instant Keys work offline, so even in areas with poor cellular or Wi-Fi, like elevator banks or concrete-walled hallways, the Instant Keys still work.
 
     :ivar client_session_id: ID of the client session associated with the Instant Key.
-    :vartype client_session_id: str
 
     :ivar created_at: Date and time at which the Instant Key was created.
-    :vartype created_at: str
 
     :ivar customization: Customization applied to the Instant Key UI.
-    :vartype customization: Dict[str, Any]
 
     :ivar customization_profile_id: ID of the customization profile associated with the Instant Key.
-    :vartype customization_profile_id: str
 
     :ivar expires_at: Date and time at which the Instant Key expires.
-    :vartype expires_at: str
 
     :ivar instant_key_id: ID of the Instant Key.
-    :vartype instant_key_id: str
 
     :ivar instant_key_url: Shareable URL for the Instant Key. Use the URL to deliver the Instant Key to your user through a link in a text message or email or by embedding it in your web app.
-    :vartype instant_key_url: str
 
     :ivar user_identity_id: ID of the user identity associated with the Instant Key.
-    :vartype user_identity_id: str
 
-    :ivar workspace_id: ID of the workspace that contains the Instant Key.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the workspace that contains the Instant Key."""
 
     client_session_id: str
     created_at: str

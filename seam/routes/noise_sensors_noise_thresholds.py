@@ -20,25 +20,18 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
         :param device_id: ID of the device for which you want to create a noise threshold.
-        :type device_id: str
 
         :param ends_daily_at: Time at which the new noise threshold should become inactive daily.
-        :type ends_daily_at: str
 
         :param starts_daily_at: Time at which the new noise threshold should become active daily.
-        :type starts_daily_at: str
 
         :param name: Name of the new noise threshold.
-        :type name: str
 
         :param noise_threshold_decibels: Noise level in decibels for the new noise threshold.
-        :type noise_threshold_decibels: float
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
-        :type noise_threshold_nrs: float
 
-        :returns: OK
-        :rtype: NoiseThreshold"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -46,10 +39,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         """Deletes a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
-        :type device_id: str
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-        :type noise_threshold_id: str"""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -57,10 +48,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         """Returns a specified `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
-        :type noise_threshold_id: str
 
-        :returns: OK
-        :rtype: NoiseThreshold"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -68,10 +57,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         """Returns a list of all `noise thresholds <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device for which you want to list noise thresholds.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: List[NoiseThreshold]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -89,25 +76,19 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
-        :type device_id: str
 
         :param noise_threshold_id: ID of the noise threshold that you want to update.
-        :type noise_threshold_id: str
 
         :param ends_daily_at: Time at which the noise threshold should become inactive daily.
-        :type ends_daily_at: str
 
         :param name: Name of the noise threshold that you want to update.
-        :type name: str
 
         :param noise_threshold_decibels: Noise level in decibels for the noise threshold.
-        :type noise_threshold_decibels: float
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
-        :type noise_threshold_nrs: float
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-        :type starts_daily_at: str"""
+        """
         raise NotImplementedError()
 
 
@@ -129,25 +110,18 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
         :param device_id: ID of the device for which you want to create a noise threshold.
-        :type device_id: str
 
         :param ends_daily_at: Time at which the new noise threshold should become inactive daily.
-        :type ends_daily_at: str
 
         :param starts_daily_at: Time at which the new noise threshold should become active daily.
-        :type starts_daily_at: str
 
         :param name: Name of the new noise threshold.
-        :type name: str
 
         :param noise_threshold_decibels: Noise level in decibels for the new noise threshold.
-        :type noise_threshold_decibels: float
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
-        :type noise_threshold_nrs: float
 
-        :returns: OK
-        :rtype: NoiseThreshold"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -173,10 +147,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         """Deletes a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
-        :type device_id: str
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-        :type noise_threshold_id: str"""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         json_payload = {}
 
         if device_id is not None:
@@ -192,10 +164,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         """Returns a specified `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
-        :type noise_threshold_id: str
 
-        :returns: OK
-        :rtype: NoiseThreshold"""
+        :returns: OK"""
         json_payload = {}
 
         if noise_threshold_id is not None:
@@ -209,10 +179,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         """Returns a list of all `noise thresholds <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device for which you want to list noise thresholds.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: List[NoiseThreshold]"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -238,25 +206,19 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
-        :type device_id: str
 
         :param noise_threshold_id: ID of the noise threshold that you want to update.
-        :type noise_threshold_id: str
 
         :param ends_daily_at: Time at which the noise threshold should become inactive daily.
-        :type ends_daily_at: str
 
         :param name: Name of the noise threshold that you want to update.
-        :type name: str
 
         :param noise_threshold_decibels: Noise level in decibels for the noise threshold.
-        :type noise_threshold_decibels: float
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
-        :type noise_threshold_nrs: float
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-        :type starts_daily_at: str"""
+        """
         json_payload = {}
 
         if device_id is not None:

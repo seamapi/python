@@ -85,7 +85,6 @@ const createResourceDocstring = (
       ]
         .filter(Boolean)
         .join(' ')}`,
-      `:vartype ${toSafeIdentifier(property.name)}: ${mapPropertyToPythonType(property)}`,
     )
   }
   if (isDeprecated) {

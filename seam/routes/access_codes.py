@@ -42,34 +42,24 @@ class AbstractAccessCodes(abc.ABC):
         """Creates a new `access code <https://docs.seam.co/low-level-apis/access-codes>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
         :param device_id: ID of the device for which you want to create the new access code.
-        :type device_id: str
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param common_code_key: Key to identify access codes that should have the same code. Any two access codes with the same ``common_code_key`` are guaranteed to have the same ``code``. See also `Creating and Updating Multiple Linked Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/creating-and-updating-multiple-linked-access-codes>`_.
-        :type common_code_key: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-        :type is_offline_access_code: bool
 
         :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-        :type is_one_time_use: bool
 
         :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-        :type max_time_rounding: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -78,25 +68,18 @@ class AbstractAccessCodes(abc.ABC):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-        :type use_offline_access_code: bool
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -129,25 +112,18 @@ class AbstractAccessCodes(abc.ABC):
         For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach and work across both standalone smart locks and access systems. Use the lower-level Access Codes API directly only when you specifically need to manage individual PIN codes.
 
         :param device_ids: IDs of the devices for which you want to create the new access codes.
-        :type device_ids: List[str]
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param behavior_when_code_cannot_be_shared: Desired behavior if any device cannot share a code. If ``throw`` (default), no access codes will be created if any device cannot share a code. If ``create_random_code``, a random code will be created on devices that cannot share a code.
-        :type behavior_when_code_cannot_be_shared: str
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -156,22 +132,16 @@ class AbstractAccessCodes(abc.ABC):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. If the affected devices do not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
-        :returns: OK
-        :rtype: List[AccessCode]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -179,10 +149,9 @@ class AbstractAccessCodes(abc.ABC):
         """Deletes an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
         :param access_code_id: ID of the access code that you want to delete.
-        :type access_code_id: str
 
         :param device_id: ID of the device for which you want to delete the access code.
-        :type device_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -190,10 +159,8 @@ class AbstractAccessCodes(abc.ABC):
         """Generates a code for an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_, given a device ID.
 
         :param device_id: ID of the device for which you want to generate a code.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -209,16 +176,12 @@ class AbstractAccessCodes(abc.ABC):
         You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :param access_code_id: ID of the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type access_code_id: str
 
         :param code: Code of the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type code: str
 
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -241,37 +204,26 @@ class AbstractAccessCodes(abc.ABC):
         Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
 
         :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_code_ids: List[str]
 
         :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_grant_key: str
 
         :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_method_id: str
 
         :param customer_key: Customer key for which you want to list access codes.
-        :type customer_key: str
 
         :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type device_id: str
 
         :param limit: Numerical limit on the number of access codes to return.
-        :type limit: float
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned access codes to include all records that satisfy a partial match using ``name``, ``code`` or ``access_code_id``.
-        :type search: str
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[AccessCode]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -287,10 +239,8 @@ class AbstractAccessCodes(abc.ABC):
         Before pulling a backup access code, make sure that the device's ``properties.supports_backup_access_code_pool`` is ``true``. Then, to activate the backup pool, set ``use_backup_access_code_pool`` to ``true`` when creating an access code.
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
-        :type access_code_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -307,16 +257,13 @@ class AbstractAccessCodes(abc.ABC):
         Specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
 
         :param device_id: ID of the device for which you want to report constraints.
-        :type device_id: str
 
         :param max_code_length: Maximum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
-        :type max_code_length: int
 
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
-        :type min_code_length: int
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-        :type supported_code_lengths: List[float]"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -347,37 +294,26 @@ class AbstractAccessCodes(abc.ABC):
         See also `Modifying Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes>`_.
 
         :param access_code_id: ID of the access code that you want to update.
-        :type access_code_id: str
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param device_id: ID of the device containing the access code that you want to update.
-        :type device_id: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param is_managed: Indicates whether the access code is managed through Seam. Note that to convert an unmanaged access code into a managed access code, use ``/access_codes/unmanaged/convert_to_managed``.
-        :type is_managed: bool
 
         :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-        :type is_offline_access_code: bool
 
         :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-        :type is_one_time_use: bool
 
         :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-        :type max_time_rounding: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -386,25 +322,19 @@ class AbstractAccessCodes(abc.ABC):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-        :type type: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-        :type use_offline_access_code: bool"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -423,10 +353,8 @@ class AbstractAccessCodes(abc.ABC):
         See also `Update Linked Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/creating-and-updating-multiple-linked-access-codes#update-linked-access-codes>`_.
 
         :param common_code_key: Key that links the group of access codes, assigned on creation by ``/access_codes/create_multiple``.
-        :type common_code_key: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -435,10 +363,9 @@ class AbstractAccessCodes(abc.ABC):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str"""
+        """
         raise NotImplementedError()
 
 
@@ -480,34 +407,24 @@ class AccessCodes(AbstractAccessCodes):
         """Creates a new `access code <https://docs.seam.co/low-level-apis/access-codes>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
         :param device_id: ID of the device for which you want to create the new access code.
-        :type device_id: str
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param common_code_key: Key to identify access codes that should have the same code. Any two access codes with the same ``common_code_key`` are guaranteed to have the same ``code``. See also `Creating and Updating Multiple Linked Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/creating-and-updating-multiple-linked-access-codes>`_.
-        :type common_code_key: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-        :type is_offline_access_code: bool
 
         :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-        :type is_one_time_use: bool
 
         :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-        :type max_time_rounding: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -516,25 +433,18 @@ class AccessCodes(AbstractAccessCodes):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-        :type use_offline_access_code: bool
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -605,25 +515,18 @@ class AccessCodes(AbstractAccessCodes):
         For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach and work across both standalone smart locks and access systems. Use the lower-level Access Codes API directly only when you specifically need to manage individual PIN codes.
 
         :param device_ids: IDs of the devices for which you want to create the new access codes.
-        :type device_ids: List[str]
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param behavior_when_code_cannot_be_shared: Desired behavior if any device cannot share a code. If ``throw`` (default), no access codes will be created if any device cannot share a code. If ``create_random_code``, a random code will be created on devices that cannot share a code.
-        :type behavior_when_code_cannot_be_shared: str
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -632,22 +535,16 @@ class AccessCodes(AbstractAccessCodes):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. If the affected devices do not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
-        :returns: OK
-        :rtype: List[AccessCode]"""
+        :returns: OK"""
         json_payload = {}
 
         if device_ids is not None:
@@ -687,10 +584,9 @@ class AccessCodes(AbstractAccessCodes):
         """Deletes an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
         :param access_code_id: ID of the access code that you want to delete.
-        :type access_code_id: str
 
         :param device_id: ID of the device for which you want to delete the access code.
-        :type device_id: str"""
+        """
         json_payload = {}
 
         if access_code_id is not None:
@@ -706,10 +602,8 @@ class AccessCodes(AbstractAccessCodes):
         """Generates a code for an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_, given a device ID.
 
         :param device_id: ID of the device for which you want to generate a code.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -731,16 +625,12 @@ class AccessCodes(AbstractAccessCodes):
         You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :param access_code_id: ID of the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type access_code_id: str
 
         :param code: Code of the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type code: str
 
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
-        :type device_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -773,37 +663,26 @@ class AccessCodes(AbstractAccessCodes):
         Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
 
         :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_code_ids: List[str]
 
         :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_grant_key: str
 
         :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type access_method_id: str
 
         :param customer_key: Customer key for which you want to list access codes.
-        :type customer_key: str
 
         :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
-        :type device_id: str
 
         :param limit: Numerical limit on the number of access codes to return.
-        :type limit: float
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned access codes to include all records that satisfy a partial match using ``name``, ``code`` or ``access_code_id``.
-        :type search: str
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[AccessCode]"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_ids is not None:
@@ -843,10 +722,8 @@ class AccessCodes(AbstractAccessCodes):
         Before pulling a backup access code, make sure that the device's ``properties.supports_backup_access_code_pool`` is ``true``. Then, to activate the backup pool, set ``use_backup_access_code_pool`` to ``true`` when creating an access code.
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
-        :type access_code_id: str
 
-        :returns: OK
-        :rtype: AccessCode"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -871,16 +748,13 @@ class AccessCodes(AbstractAccessCodes):
         Specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
 
         :param device_id: ID of the device for which you want to report constraints.
-        :type device_id: str
 
         :param max_code_length: Maximum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
-        :type max_code_length: int
 
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
-        :type min_code_length: int
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-        :type supported_code_lengths: List[float]"""
+        """
         json_payload = {}
 
         if device_id is not None:
@@ -923,37 +797,26 @@ class AccessCodes(AbstractAccessCodes):
         See also `Modifying Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes>`_.
 
         :param access_code_id: ID of the access code that you want to update.
-        :type access_code_id: str
 
         :param allow_external_modification: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type allow_external_modification: bool
 
         :param attempt_for_offline_device:
-        :type attempt_for_offline_device: bool
 
         :param code: Code to be used for access.
-        :type code: str
 
         :param device_id: ID of the device containing the access code that you want to update.
-        :type device_id: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed. Default: ``false``.
-        :type is_external_modification_allowed: bool
 
         :param is_managed: Indicates whether the access code is managed through Seam. Note that to convert an unmanaged access code into a managed access code, use ``/access_codes/unmanaged/convert_to_managed``.
-        :type is_managed: bool
 
         :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-        :type is_offline_access_code: bool
 
         :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-        :type is_one_time_use: bool
 
         :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-        :type max_time_rounding: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -962,25 +825,19 @@ class AccessCodes(AbstractAccessCodes):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-        :type prefer_native_scheduling: bool
 
         :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-        :type preferred_code_length: float
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-        :type type: str
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-        :type use_backup_access_code_pool: bool
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-        :type use_offline_access_code: bool"""
+        """
         json_payload = {}
 
         if access_code_id is not None:
@@ -1041,10 +898,8 @@ class AccessCodes(AbstractAccessCodes):
         See also `Update Linked Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/creating-and-updating-multiple-linked-access-codes#update-linked-access-codes>`_.
 
         :param common_code_key: Key that links the group of access codes, assigned on creation by ``/access_codes/create_multiple``.
-        :type common_code_key: str
 
         :param ends_at: Date and time at which the validity of the new access code ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
@@ -1053,10 +908,9 @@ class AccessCodes(AbstractAccessCodes):
         To provide a consistent experience, Seam identifies the code on Seam by its name but may modify the name that appears on the lock provider's app or on the device. For example, Seam may add additional characters or truncate the name to meet provider constraints.
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
-        :type name: str
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str"""
+        """
         json_payload = {}
 
         if common_code_key is not None:

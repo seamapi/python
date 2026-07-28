@@ -27,16 +27,12 @@ class AbstractAccessMethods(abc.ABC):
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
         :param access_method_id: ID of the ``access_method`` to assign the credential to.
-        :type access_method_id: str
 
         :param card_number: Card number of the credential to assign.
-        :type card_number: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -50,13 +46,11 @@ class AbstractAccessMethods(abc.ABC):
         """Deletes an access method.
 
         :param access_method_id: ID of access method to delete.
-        :type access_method_id: str
 
         :param access_grant_id: ID of access grant whose access methods should be deleted.
-        :type access_grant_id: str
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
-        :type reservation_key: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,16 +64,12 @@ class AbstractAccessMethods(abc.ABC):
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
-        :type access_method_id: str
 
         :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``access_method``.
-        :type acs_encoder_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,10 +77,8 @@ class AbstractAccessMethods(abc.ABC):
         """Gets an access method.
 
         :param access_method_id: ID of access method to get.
-        :type access_method_id: str
 
-        :returns: OK
-        :rtype: AccessMethod"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -104,16 +92,12 @@ class AbstractAccessMethods(abc.ABC):
         """Gets all related resources for one or more Access Methods.
 
         :param access_method_ids: IDs of the access methods that you want to get along with their related resources.
-        :type access_method_ids: List[str]
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -130,25 +114,18 @@ class AbstractAccessMethods(abc.ABC):
         """Lists all access methods, usually filtered by Access Grant.
 
         :param access_code_id: ID of the access code for which you want to retrieve all access methods.
-        :type access_code_id: str
 
         :param access_grant_id: ID of Access Grant to list access methods for.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of Access Grant to list access methods for.
-        :type access_grant_key: str
 
         :param acs_entrance_id: ID of the entrance for which you want to retrieve all access methods.
-        :type acs_entrance_id: str
 
         :param device_id: ID of the device for which you want to retrieve all access methods.
-        :type device_id: str
 
         :param space_id: ID of the space for which you want to retrieve all access methods.
-        :type space_id: str
 
-        :returns: OK
-        :rtype: List[AccessMethod]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -162,16 +139,12 @@ class AbstractAccessMethods(abc.ABC):
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
-        :type access_method_id: str
 
         :param acs_entrance_id: ID of the entrance to unlock.
-        :type acs_entrance_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -195,16 +168,12 @@ class AccessMethods(AbstractAccessMethods):
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
         :param access_method_id: ID of the ``access_method`` to assign the credential to.
-        :type access_method_id: str
 
         :param card_number: Card number of the credential to assign.
-        :type card_number: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if access_method_id is not None:
@@ -236,13 +205,11 @@ class AccessMethods(AbstractAccessMethods):
         """Deletes an access method.
 
         :param access_method_id: ID of access method to delete.
-        :type access_method_id: str
 
         :param access_grant_id: ID of access grant whose access methods should be deleted.
-        :type access_grant_id: str
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
-        :type reservation_key: str"""
+        """
         json_payload = {}
 
         if access_method_id is not None:
@@ -266,16 +233,12 @@ class AccessMethods(AbstractAccessMethods):
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
-        :type access_method_id: str
 
         :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``access_method``.
-        :type acs_encoder_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if access_method_id is not None:
@@ -301,10 +264,8 @@ class AccessMethods(AbstractAccessMethods):
         """Gets an access method.
 
         :param access_method_id: ID of access method to get.
-        :type access_method_id: str
 
-        :returns: OK
-        :rtype: AccessMethod"""
+        :returns: OK"""
         json_payload = {}
 
         if access_method_id is not None:
@@ -324,16 +285,12 @@ class AccessMethods(AbstractAccessMethods):
         """Gets all related resources for one or more Access Methods.
 
         :param access_method_ids: IDs of the access methods that you want to get along with their related resources.
-        :type access_method_ids: List[str]
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         json_payload = {}
 
         if access_method_ids is not None:
@@ -360,25 +317,18 @@ class AccessMethods(AbstractAccessMethods):
         """Lists all access methods, usually filtered by Access Grant.
 
         :param access_code_id: ID of the access code for which you want to retrieve all access methods.
-        :type access_code_id: str
 
         :param access_grant_id: ID of Access Grant to list access methods for.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of Access Grant to list access methods for.
-        :type access_grant_key: str
 
         :param acs_entrance_id: ID of the entrance for which you want to retrieve all access methods.
-        :type acs_entrance_id: str
 
         :param device_id: ID of the device for which you want to retrieve all access methods.
-        :type device_id: str
 
         :param space_id: ID of the space for which you want to retrieve all access methods.
-        :type space_id: str
 
-        :returns: OK
-        :rtype: List[AccessMethod]"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -408,16 +358,12 @@ class AccessMethods(AbstractAccessMethods):
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
-        :type access_method_id: str
 
         :param acs_entrance_id: ID of the entrance to unlock.
-        :type acs_entrance_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if access_method_id is not None:

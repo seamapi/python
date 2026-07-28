@@ -12,19 +12,14 @@ class CustomerPortal:
     Seam hosts these flows, handling everything from account connection and device mapping to full-featured device control.
 
     :ivar created_at: Date and time at which the customer portal link was created.
-    :vartype created_at: str
 
     :ivar customer_key: Customer key for the customer portal.
-    :vartype customer_key: str
 
     :ivar expires_at: Date and time at which the customer portal link expires.
-    :vartype expires_at: str
 
     :ivar url: URL for the customer portal.
-    :vartype url: str
 
-    :ivar workspace_id: ID of the workspace associated with the customer portal.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the workspace associated with the customer portal."""
 
     created_at: str
     customer_key: str

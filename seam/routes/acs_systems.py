@@ -11,10 +11,8 @@ class AbstractAcsSystems(abc.ABC):
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
-        :type acs_system_id: str
 
-        :returns: OK
-        :rtype: AcsSystem"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -30,16 +28,12 @@ class AbstractAcsSystems(abc.ABC):
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
         :param connected_account_id: ID of the connected account by which you want to filter the list of access systems.
-        :type connected_account_id: str
 
         :param customer_key: Customer key for which you want to list access systems.
-        :type customer_key: str
 
         :param search: String for which to search. Filters returned access systems to include all records that satisfy a partial match using ``name`` or ``acs_system_id``.
-        :type search: str
 
-        :returns: OK
-        :rtype: List[AcsSystem]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -51,10 +45,8 @@ class AbstractAcsSystems(abc.ABC):
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
-        :type acs_system_id: str
 
-        :returns: OK
-        :rtype: List[AcsSystem]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -68,13 +60,10 @@ class AbstractAcsSystems(abc.ABC):
         """Reports ACS system device status including encoders and entrances.
 
         :param acs_system_id: ID of the ACS system to report resources for
-        :type acs_system_id: str
 
         :param acs_encoders: Array of ACS encoders to report
-        :type acs_encoders: List[Dict[str, Any]]
 
-        :param acs_entrances: Array of ACS entrances to report
-        :type acs_entrances: List[Dict[str, Any]]"""
+        :param acs_entrances: Array of ACS entrances to report"""
         raise NotImplementedError()
 
 
@@ -87,10 +76,8 @@ class AcsSystems(AbstractAcsSystems):
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
-        :type acs_system_id: str
 
-        :returns: OK
-        :rtype: AcsSystem"""
+        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -112,16 +99,12 @@ class AcsSystems(AbstractAcsSystems):
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
         :param connected_account_id: ID of the connected account by which you want to filter the list of access systems.
-        :type connected_account_id: str
 
         :param customer_key: Customer key for which you want to list access systems.
-        :type customer_key: str
 
         :param search: String for which to search. Filters returned access systems to include all records that satisfy a partial match using ``name`` or ``acs_system_id``.
-        :type search: str
 
-        :returns: OK
-        :rtype: List[AcsSystem]"""
+        :returns: OK"""
         json_payload = {}
 
         if connected_account_id is not None:
@@ -143,10 +126,8 @@ class AcsSystems(AbstractAcsSystems):
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
-        :type acs_system_id: str
 
-        :returns: OK
-        :rtype: List[AcsSystem]"""
+        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -169,13 +150,10 @@ class AcsSystems(AbstractAcsSystems):
         """Reports ACS system device status including encoders and entrances.
 
         :param acs_system_id: ID of the ACS system to report resources for
-        :type acs_system_id: str
 
         :param acs_encoders: Array of ACS encoders to report
-        :type acs_encoders: List[Dict[str, Any]]
 
-        :param acs_entrances: Array of ACS entrances to report
-        :type acs_entrances: List[Dict[str, Any]]"""
+        :param acs_entrances: Array of ACS entrances to report"""
         json_payload = {}
 
         if acs_system_id is not None:

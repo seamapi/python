@@ -10,7 +10,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         """Returns a specified unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
-        :type user_identity_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -25,16 +25,13 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param created_before: Timestamp by which to limit returned unmanaged user identities. Returns user identities created before this timestamp.
-        :type created_before: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned unmanaged user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``,  ``user_identity_id`` or ``acs_system_id``.
-        :type search: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -50,13 +47,11 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         This endpoint can only be used to convert unmanaged user identities to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed user identities back to unmanaged.
 
         :param is_managed: Must be set to true to convert the unmanaged user identity to managed.
-        :type is_managed: bool
 
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
-        :type user_identity_id: str
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-        :type user_identity_key: str"""
+        """
         raise NotImplementedError()
 
 
@@ -69,7 +64,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         """Returns a specified unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
-        :type user_identity_id: str"""
+        """
         json_payload = {}
 
         if user_identity_id is not None:
@@ -90,16 +85,13 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param created_before: Timestamp by which to limit returned unmanaged user identities. Returns user identities created before this timestamp.
-        :type created_before: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned unmanaged user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``,  ``user_identity_id`` or ``acs_system_id``.
-        :type search: str"""
+        """
         json_payload = {}
 
         if created_before is not None:
@@ -127,13 +119,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         This endpoint can only be used to convert unmanaged user identities to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed user identities back to unmanaged.
 
         :param is_managed: Must be set to true to convert the unmanaged user identity to managed.
-        :type is_managed: bool
 
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
-        :type user_identity_id: str
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-        :type user_identity_key: str"""
+        """
         json_payload = {}
 
         if is_managed is not None:

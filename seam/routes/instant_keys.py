@@ -10,8 +10,7 @@ class AbstractInstantKeys(abc.ABC):
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-        :type instant_key_id: str"""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -24,13 +23,10 @@ class AbstractInstantKeys(abc.ABC):
         """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
-        :type instant_key_id: str
 
         :param instant_key_url: URL of the instant key to get.
-        :type instant_key_url: str
 
-        :returns: OK
-        :rtype: InstantKey"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -38,10 +34,8 @@ class AbstractInstantKeys(abc.ABC):
         """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[InstantKey]"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -53,8 +47,7 @@ class InstantKeys(AbstractInstantKeys):
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-        :type instant_key_id: str"""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         json_payload = {}
 
         if instant_key_id is not None:
@@ -73,13 +66,10 @@ class InstantKeys(AbstractInstantKeys):
         """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
-        :type instant_key_id: str
 
         :param instant_key_url: URL of the instant key to get.
-        :type instant_key_url: str
 
-        :returns: OK
-        :rtype: InstantKey"""
+        :returns: OK"""
         json_payload = {}
 
         if instant_key_id is not None:
@@ -95,10 +85,8 @@ class InstantKeys(AbstractInstantKeys):
         """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[InstantKey]"""
+        :returns: OK"""
         json_payload = {}
 
         if user_identity_id is not None:

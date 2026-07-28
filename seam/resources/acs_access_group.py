@@ -12,52 +12,36 @@ class AcsAccessGroup:
     To learn whether your access control system supports access groups, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
 
     :ivar access_group_type: Deprecated: Use ``external_type``.
-    :vartype access_group_type: str
 
     :ivar access_group_type_display_name: Deprecated: Use ``external_type_display_name``.
-    :vartype access_group_type_display_name: str
 
     :ivar access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access group's access.
-    :vartype access_schedule: Dict[str, Any]
 
     :ivar acs_access_group_id: ID of the access group.
-    :vartype acs_access_group_id: str
 
     :ivar acs_system_id: ID of the access control system that contains the access group.
-    :vartype acs_system_id: str
 
     :ivar connected_account_id: ID of the connected account that contains the access group.
-    :vartype connected_account_id: str
 
     :ivar created_at: Date and time at which the access group was created.
-    :vartype created_at: str
 
     :ivar display_name: Display name for the access group.
-    :vartype display_name: str
 
     :ivar errors: Errors associated with the ``acs_access_group``.
-    :vartype errors: List[Dict[str, Any]]
 
     :ivar external_type: Brand-specific terminology for the access group type.
-    :vartype external_type: str
 
     :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the access group type.
-    :vartype external_type_display_name: str
 
     :ivar is_managed: Indicates whether Seam manages the access group.
-    :vartype is_managed: bool
 
     :ivar name: Name of the access group.
-    :vartype name: str
 
     :ivar pending_mutations: Collection of pending mutations for the access group. Represents operations that have been requested but not yet completed on the integrated access system.
-    :vartype pending_mutations: List[Dict[str, Any]]
 
     :ivar warnings: Warnings associated with the ``acs_access_group``.
-    :vartype warnings: List[Dict[str, Any]]
 
-    :ivar workspace_id: ID of the workspace that contains the access group.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the workspace that contains the access group."""
 
     access_group_type: str
     access_group_type_display_name: str

@@ -24,7 +24,7 @@ class AbstractConnectedAccounts(abc.ABC):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-        :type connected_account_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -34,13 +34,10 @@ class AbstractConnectedAccounts(abc.ABC):
         """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
-        :type connected_account_id: str
 
         :param email: Email address associated with the connected account that you want to get.
-        :type email: str
 
-        :returns: OK
-        :rtype: ConnectedAccount"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -58,28 +55,20 @@ class AbstractConnectedAccounts(abc.ABC):
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key by which you want to filter connected accounts.
-        :type customer_key: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned connected accounts to include all records that satisfy a partial match using ``connected_account_id``, ``account_type``, ``customer_key``, ``custom_metadata``, ``user_identifier.username``, ``user_identifier.email`` or ``user_identifier.phone``.
-        :type search: str
 
         :param space_id: ID of the space by which you want to filter connected accounts.
-        :type space_id: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter connected accounts.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[ConnectedAccount]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,7 +76,7 @@ class AbstractConnectedAccounts(abc.ABC):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-        :type connected_account_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -104,22 +93,17 @@ class AbstractConnectedAccounts(abc.ABC):
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
-        :type connected_account_id: str
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
-        :type accepted_capabilities: List[str]
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
-        :type automatically_manage_new_devices: bool
 
         :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
-        :type custom_metadata: Dict[str, Any]
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
-        :type customer_key: str
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-        :type display_name: str"""
+        """
         raise NotImplementedError()
 
 
@@ -141,7 +125,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-        :type connected_account_id: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:
@@ -157,13 +141,10 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
-        :type connected_account_id: str
 
         :param email: Email address associated with the connected account that you want to get.
-        :type email: str
 
-        :returns: OK
-        :rtype: ConnectedAccount"""
+        :returns: OK"""
         json_payload = {}
 
         if connected_account_id is not None:
@@ -189,28 +170,20 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
-        :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key by which you want to filter connected accounts.
-        :type customer_key: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param search: String for which to search. Filters returned connected accounts to include all records that satisfy a partial match using ``connected_account_id``, ``account_type``, ``customer_key``, ``custom_metadata``, ``user_identifier.username``, ``user_identifier.email`` or ``user_identifier.phone``.
-        :type search: str
 
         :param space_id: ID of the space by which you want to filter connected accounts.
-        :type space_id: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter connected accounts.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: List[ConnectedAccount]"""
+        :returns: OK"""
         json_payload = {}
 
         if custom_metadata_has is not None:
@@ -236,7 +209,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-        :type connected_account_id: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:
@@ -259,22 +232,17 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
-        :type connected_account_id: str
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
-        :type accepted_capabilities: List[str]
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
-        :type automatically_manage_new_devices: bool
 
         :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
-        :type custom_metadata: Dict[str, Any]
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
-        :type customer_key: str
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-        :type display_name: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:

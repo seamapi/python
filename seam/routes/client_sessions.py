@@ -22,39 +22,29 @@ class AbstractClientSessions(abc.ABC):
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to create a client session.
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ for which you want to create a client session.
-        :type connected_account_ids: List[str]
 
         :param customer_id: Customer ID that you want to associate with the new client session.
-        :type customer_id: str
 
         :param customer_key: Customer key that you want to associate with the new client session.
-        :type customer_key: str
 
         :param expires_at: Date and time at which the client session should expire, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type expires_at: str
 
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-        :type client_session_id: str"""
+        :param client_session_id: ID of the client session that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -67,13 +57,10 @@ class AbstractClientSessions(abc.ABC):
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to get.
-        :type client_session_id: str
 
         :param user_identifier_key: User identifier key associated with the client session that you want to get.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -90,25 +77,18 @@ class AbstractClientSessions(abc.ABC):
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/api/connected_accounts>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type connected_account_ids: List[str]
 
         :param expires_at: Date and time at which the client session should expire in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. If the client session already exists, this will update the expiration before returning it.
-        :type expires_at: str
 
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session (or that is already associated with the existing client session).
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -125,22 +105,17 @@ class AbstractClientSessions(abc.ABC):
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
         :param client_session_id: ID of the client session to which you want to grant access to resources.
-        :type client_session_id: str
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session.
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that you want to associate with the client session.
-        :type connected_account_ids: List[str]
 
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -156,22 +131,16 @@ class AbstractClientSessions(abc.ABC):
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
-        :type client_session_id: str
 
         :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
-        :type connect_webview_id: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
-        :type user_identity_id: str
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
-        :type without_user_identifier_key: bool
 
-        :returns: OK
-        :rtype: List[ClientSession]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -180,8 +149,7 @@ class AbstractClientSessions(abc.ABC):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-        :type client_session_id: str"""
+        :param client_session_id: ID of the client session that you want to revoke."""
         raise NotImplementedError()
 
 
@@ -205,31 +173,22 @@ class ClientSessions(AbstractClientSessions):
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to create a client session.
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ for which you want to create a client session.
-        :type connected_account_ids: List[str]
 
         :param customer_id: Customer ID that you want to associate with the new client session.
-        :type customer_id: str
 
         :param customer_key: Customer key that you want to associate with the new client session.
-        :type customer_key: str
 
         :param expires_at: Date and time at which the client session should expire, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type expires_at: str
 
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         json_payload = {}
 
         if connect_webview_ids is not None:
@@ -256,8 +215,7 @@ class ClientSessions(AbstractClientSessions):
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-        :type client_session_id: str"""
+        :param client_session_id: ID of the client session that you want to delete."""
         json_payload = {}
 
         if client_session_id is not None:
@@ -276,13 +234,10 @@ class ClientSessions(AbstractClientSessions):
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to get.
-        :type client_session_id: str
 
         :param user_identifier_key: User identifier key associated with the client session that you want to get.
-        :type user_identifier_key: str
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         json_payload = {}
 
         if client_session_id is not None:
@@ -307,25 +262,18 @@ class ClientSessions(AbstractClientSessions):
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/api/connected_accounts>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type connected_account_ids: List[str]
 
         :param expires_at: Date and time at which the client session should expire in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. If the client session already exists, this will update the expiration before returning it.
-        :type expires_at: str
 
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session (or that is already associated with the existing client session).
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]
 
-        :returns: OK
-        :rtype: ClientSession"""
+        :returns: OK"""
         json_payload = {}
 
         if connect_webview_ids is not None:
@@ -358,22 +306,17 @@ class ClientSessions(AbstractClientSessions):
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
         :param client_session_id: ID of the client session to which you want to grant access to resources.
-        :type client_session_id: str
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session.
-        :type connect_webview_ids: List[str]
 
         :param connected_account_ids: IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that you want to associate with the client session.
-        :type connected_account_ids: List[str]
 
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_id: str
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        :type user_identity_ids: List[str]"""
+        """
         json_payload = {}
 
         if client_session_id is not None:
@@ -405,22 +348,16 @@ class ClientSessions(AbstractClientSessions):
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
-        :type client_session_id: str
 
         :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
-        :type connect_webview_id: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
-        :type user_identifier_key: str
 
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
-        :type user_identity_id: str
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
-        :type without_user_identifier_key: bool
 
-        :returns: OK
-        :rtype: List[ClientSession]"""
+        :returns: OK"""
         json_payload = {}
 
         if client_session_id is not None:
@@ -443,8 +380,7 @@ class ClientSessions(AbstractClientSessions):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-        :type client_session_id: str"""
+        :param client_session_id: ID of the client session that you want to revoke."""
         json_payload = {}
 
         if client_session_id is not None:

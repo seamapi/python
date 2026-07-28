@@ -10,7 +10,7 @@ class AbstractConnectedAccountsSimulate(abc.ABC):
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-        :type connected_account_id: str"""
+        """
         raise NotImplementedError()
 
 
@@ -23,7 +23,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-        :type connected_account_id: str"""
+        """
         json_payload = {}
 
         if connected_account_id is not None:

@@ -75,7 +75,6 @@ const methodDocstring = (
     lines.push(
       '',
       `:param ${parameter.name}: ${[deprecated, description].filter(Boolean).join(' ')}`,
-      `:type ${parameter.name}: ${parameter.type}`,
     )
   }
 
@@ -83,16 +82,11 @@ const methodDocstring = (
     lines.push(
       '',
       ':param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.',
-      ':type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]',
     )
   }
 
   if (method.returnResource !== 'None') {
-    lines.push(
-      '',
-      `:returns: ${formatPythonDoc(method.responseDescription)}`,
-      `:rtype: ${method.returnResource}`,
-    )
+    lines.push('', `:returns: ${formatPythonDoc(method.responseDescription)}`)
   }
 
   if (method.isDeprecated) {

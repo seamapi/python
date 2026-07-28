@@ -38,60 +38,43 @@ class AbstractAccessGrants(abc.ABC):
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-        :type requested_access_methods: List[Dict[str, Any]]
 
         :param user_identity_id: ID of user identity for whom access is being granted.
-        :type user_identity_id: str
 
         :param user_identity: When used, creates a new user identity with the given details, and grants them access.
-        :type user_identity: Dict[str, Any]
 
         :param access_grant_key: Unique key for the access grant within the workspace.
-        :type access_grant_key: str
 
         :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
-        :type acs_entrance_ids: List[str]
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
-        :type customization_profile_id: str
 
         :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
-        :type device_ids: List[str]
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-        :type location: Dict[str, Any]
 
         :param location_ids: Deprecated: Use ``space_ids``.
-        :type location_ids: List[str]
 
         :param name: Name for the access grant.
-        :type name: str
 
         :param reservation_key: Reservation key for the access grant.
-        :type reservation_key: str
 
         :param space_ids: Set of IDs of existing spaces to which access is being granted.
-        :type space_ids: List[str]
 
         :param space_keys: Set of keys of existing spaces to which access is being granted.
-        :type space_keys: List[str]
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-        :type access_grant_id: str"""
+        :param access_grant_id: ID of Access Grant to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -104,13 +87,10 @@ class AbstractAccessGrants(abc.ABC):
         """Get an Access Grant.
 
         :param access_grant_id: ID of Access Grant to get.
-        :type access_grant_id: str
 
         :param access_grant_key: Unique key of Access Grant to get.
-        :type access_grant_key: str
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -125,19 +105,14 @@ class AbstractAccessGrants(abc.ABC):
         """Gets all related resources for one or more Access Grants.
 
         :param access_grant_ids: IDs of the access grants that you want to get along with their related resources.
-        :type access_grant_ids: List[str]
 
         :param access_grant_keys: Keys of the access grants that you want to get along with their related resources.
-        :type access_grant_keys: List[str]
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -161,46 +136,32 @@ class AbstractAccessGrants(abc.ABC):
         """Gets an Access Grant.
 
         :param access_code_id: ID of the access code by which you want to filter the list of Access Grants.
-        :type access_code_id: str
 
         :param access_grant_ids: IDs of the access grants to retrieve.
-        :type access_grant_ids: List[str]
 
         :param access_grant_key: Filter Access Grants by access_grant_key. Use null to filter for Access Grants without an access_grant_key.
-        :type access_grant_key: str
 
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of Access Grants.
-        :type acs_entrance_id: str
 
         :param acs_system_id: ID of the access system by which you want to filter the list of Access Grants.
-        :type acs_system_id: str
 
         :param customer_key: Customer key for which you want to list access grants.
-        :type customer_key: str
 
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
-        :type device_id: str
 
         :param limit: Numerical limit on the number of access grants to return.
-        :type limit: float
 
         :param location_id: Deprecated: Use ``space_id``.
-        :type location_id: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param reservation_key: Filter Access Grants by reservation_key.
-        :type reservation_key: str
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
-        :type space_id: str
 
         :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[AccessGrant]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -210,13 +171,10 @@ class AbstractAccessGrants(abc.ABC):
         """Adds additional requested access methods to an existing Access Grant.
 
         :param access_grant_id: ID of the Access Grant to add access methods to.
-        :type access_grant_id: str
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
-        :type requested_access_methods: List[Dict[str, Any]]
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -232,19 +190,15 @@ class AbstractAccessGrants(abc.ABC):
         """Updates an existing Access Grant's time window.
 
         :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
-        :type access_grant_key: str
 
         :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param name: Display name for the access grant.
-        :type name: str
 
         :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str"""
+        """
         raise NotImplementedError()
 
 
@@ -280,52 +234,36 @@ class AccessGrants(AbstractAccessGrants):
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-        :type requested_access_methods: List[Dict[str, Any]]
 
         :param user_identity_id: ID of user identity for whom access is being granted.
-        :type user_identity_id: str
 
         :param user_identity: When used, creates a new user identity with the given details, and grants them access.
-        :type user_identity: Dict[str, Any]
 
         :param access_grant_key: Unique key for the access grant within the workspace.
-        :type access_grant_key: str
 
         :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
-        :type acs_entrance_ids: List[str]
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
-        :type customization_profile_id: str
 
         :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
-        :type device_ids: List[str]
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-        :type location: Dict[str, Any]
 
         :param location_ids: Deprecated: Use ``space_ids``.
-        :type location_ids: List[str]
 
         :param name: Name for the access grant.
-        :type name: str
 
         :param reservation_key: Reservation key for the access grant.
-        :type reservation_key: str
 
         :param space_ids: Set of IDs of existing spaces to which access is being granted.
-        :type space_ids: List[str]
 
         :param space_keys: Set of keys of existing spaces to which access is being granted.
-        :type space_keys: List[str]
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         json_payload = {}
 
         if requested_access_methods is not None:
@@ -366,8 +304,7 @@ class AccessGrants(AbstractAccessGrants):
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-        :type access_grant_id: str"""
+        :param access_grant_id: ID of Access Grant to delete."""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -386,13 +323,10 @@ class AccessGrants(AbstractAccessGrants):
         """Get an Access Grant.
 
         :param access_grant_id: ID of Access Grant to get.
-        :type access_grant_id: str
 
         :param access_grant_key: Unique key of Access Grant to get.
-        :type access_grant_key: str
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -415,19 +349,14 @@ class AccessGrants(AbstractAccessGrants):
         """Gets all related resources for one or more Access Grants.
 
         :param access_grant_ids: IDs of the access grants that you want to get along with their related resources.
-        :type access_grant_ids: List[str]
 
         :param access_grant_keys: Keys of the access grants that you want to get along with their related resources.
-        :type access_grant_keys: List[str]
 
         :param exclude:
-        :type exclude: List[str]
 
         :param include:
-        :type include: List[str]
 
-        :returns: OK
-        :rtype: Batch"""
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_ids is not None:
@@ -463,46 +392,32 @@ class AccessGrants(AbstractAccessGrants):
         """Gets an Access Grant.
 
         :param access_code_id: ID of the access code by which you want to filter the list of Access Grants.
-        :type access_code_id: str
 
         :param access_grant_ids: IDs of the access grants to retrieve.
-        :type access_grant_ids: List[str]
 
         :param access_grant_key: Filter Access Grants by access_grant_key. Use null to filter for Access Grants without an access_grant_key.
-        :type access_grant_key: str
 
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of Access Grants.
-        :type acs_entrance_id: str
 
         :param acs_system_id: ID of the access system by which you want to filter the list of Access Grants.
-        :type acs_system_id: str
 
         :param customer_key: Customer key for which you want to list access grants.
-        :type customer_key: str
 
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
-        :type device_id: str
 
         :param limit: Numerical limit on the number of access grants to return.
-        :type limit: float
 
         :param location_id: Deprecated: Use ``space_id``.
-        :type location_id: str
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
         :param reservation_key: Filter Access Grants by reservation_key.
-        :type reservation_key: str
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
-        :type space_id: str
 
         :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[AccessGrant]"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -542,13 +457,10 @@ class AccessGrants(AbstractAccessGrants):
         """Adds additional requested access methods to an existing Access Grant.
 
         :param access_grant_id: ID of the Access Grant to add access methods to.
-        :type access_grant_id: str
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
-        :type requested_access_methods: List[Dict[str, Any]]
 
-        :returns: OK
-        :rtype: AccessGrant"""
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -574,19 +486,15 @@ class AccessGrants(AbstractAccessGrants):
         """Updates an existing Access Grant's time window.
 
         :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
-        :type access_grant_id: str
 
         :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
-        :type access_grant_key: str
 
         :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-        :type ends_at: str
 
         :param name: Display name for the access grant.
-        :type name: str
 
         :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        :type starts_at: str"""
+        """
         json_payload = {}
 
         if access_grant_id is not None:

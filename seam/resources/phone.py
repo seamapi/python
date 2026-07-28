@@ -8,34 +8,24 @@ class Phone:
     """Represents an app user's mobile phone.
 
     :ivar created_at: Date and time at which the phone was created.
-    :vartype created_at: str
 
     :ivar custom_metadata: Optional `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for the phone.
-    :vartype custom_metadata: Dict[str, Any]
 
     :ivar device_id: ID of the phone.
-    :vartype device_id: str
 
     :ivar device_type: Type of the phone device, such as ``ios_phone`` or ``android_phone``.
-    :vartype device_type: str
 
     :ivar display_name: Display name of the phone. Defaults to ``nickname`` (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the phone easily, especially when there are numerous phones.
-    :vartype display_name: str
 
     :ivar errors: Errors associated with the phone.
-    :vartype errors: List[Dict[str, Any]]
 
     :ivar nickname: Optional nickname to describe the phone, settable through Seam.
-    :vartype nickname: str
 
     :ivar properties: Properties of the phone.
-    :vartype properties: Dict[str, Any]
 
     :ivar warnings: Warnings associated with the phone.
-    :vartype warnings: List[Dict[str, Any]]
 
-    :ivar workspace_id: ID of the workspace that contains the phone.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the workspace that contains the phone."""
 
     created_at: str
     custom_metadata: Dict[str, Any]

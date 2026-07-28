@@ -8,58 +8,40 @@ class AccessMethod:
     """Represents an access method for an Access Grant. Access methods describe the modes of access, such as PIN codes, plastic cards, and mobile keys. For a mobile key, the access method also stores the URL for the associated Instant Key.
 
     :ivar access_method_id: ID of the access method.
-    :vartype access_method_id: str
 
     :ivar client_session_token: Token of the client session associated with the access method.
-    :vartype client_session_token: str
 
     :ivar code: The actual PIN code for code access methods.
-    :vartype code: str
 
     :ivar created_at: Date and time at which the access method was created.
-    :vartype created_at: str
 
     :ivar customization_profile_id: ID of the customization profile associated with the access method.
-    :vartype customization_profile_id: str
 
     :ivar display_name: Display name of the access method.
-    :vartype display_name: str
 
     :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
-    :vartype errors: List[Dict[str, Any]]
 
     :ivar instant_key_url: URL of the Instant Key for mobile key access methods.
-    :vartype instant_key_url: str
 
     :ivar is_assignment_required: Indicates whether an existing card credential must be assigned to this access method before it can be issued. Only applies to card-mode access methods on systems that support credential assignment.
-    :vartype is_assignment_required: bool
 
     :ivar is_encoding_required: Indicates whether encoding with an card encoder is required to issue or reissue the plastic card associated with the access method.
-    :vartype is_encoding_required: bool
 
     :ivar is_issued: Indicates whether the access method has been issued.
-    :vartype is_issued: bool
 
     :ivar is_ready_for_assignment: Indicates whether the access method is ready for card assignment. This is true when the access method is in card mode, has not yet been issued, and the system supports credential assignment.
-    :vartype is_ready_for_assignment: bool
 
     :ivar is_ready_for_encoding: Indicates whether the access method is ready to be encoded. This is true when the credential has been created and the card has not yet been issued.
-    :vartype is_ready_for_encoding: bool
 
     :ivar issued_at: Date and time at which the access method was issued.
-    :vartype issued_at: str
 
     :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
-    :vartype mode: str
 
     :ivar pending_mutations: Pending mutations for the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_. Indicates operations that are in progress.
-    :vartype pending_mutations: List[Dict[str, Any]]
 
     :ivar warnings: Warnings associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
-    :vartype warnings: List[Dict[str, Any]]
 
-    :ivar workspace_id: ID of the Seam workspace associated with the access method.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the Seam workspace associated with the access method."""
 
     access_method_id: str
     client_session_token: str

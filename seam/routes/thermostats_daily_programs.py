@@ -14,16 +14,12 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         """Creates a new thermostat daily program. A daily program consists of a set of periods, where each period includes a start time and the key of a configured climate preset. Once you have defined a daily program, you can assign it to one or more days within a weekly program.
 
         :param device_id: ID of the thermostat device for which you want to create a daily program.
-        :type device_id: str
 
         :param name: Name of the thermostat daily program.
-        :type name: str
 
         :param periods: Array of thermostat daily program periods.
-        :type periods: List[Dict[str, Any]]
 
-        :returns: OK
-        :rtype: ThermostatDailyProgram"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -31,7 +27,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        :type thermostat_daily_program_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -46,19 +42,14 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
 
         :param name: Name of the thermostat daily program that you want to update.
-        :type name: str
 
         :param periods: Array of thermostat daily program periods. The periods that you specify overwrite any existing periods for the daily program.
-        :type periods: List[Dict[str, Any]]
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to update.
-        :type thermostat_daily_program_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -73,16 +64,12 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         """Creates a new thermostat daily program. A daily program consists of a set of periods, where each period includes a start time and the key of a configured climate preset. Once you have defined a daily program, you can assign it to one or more days within a weekly program.
 
         :param device_id: ID of the thermostat device for which you want to create a daily program.
-        :type device_id: str
 
         :param name: Name of the thermostat daily program.
-        :type name: str
 
         :param periods: Array of thermostat daily program periods.
-        :type periods: List[Dict[str, Any]]
 
-        :returns: OK
-        :rtype: ThermostatDailyProgram"""
+        :returns: OK"""
         json_payload = {}
 
         if device_id is not None:
@@ -100,7 +87,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        :type thermostat_daily_program_id: str"""
+        """
         json_payload = {}
 
         if thermostat_daily_program_id is not None:
@@ -121,19 +108,14 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
 
         :param name: Name of the thermostat daily program that you want to update.
-        :type name: str
 
         :param periods: Array of thermostat daily program periods. The periods that you specify overwrite any existing periods for the daily program.
-        :type periods: List[Dict[str, Any]]
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to update.
-        :type thermostat_daily_program_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if name is not None:

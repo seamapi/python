@@ -17,13 +17,10 @@ class AbstractActionAttempts(abc.ABC):
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
-        :type action_attempt_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -38,19 +35,14 @@ class AbstractActionAttempts(abc.ABC):
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
-        :type action_attempt_ids: List[str]
 
         :param device_id: ID of the device to filter action attempts by.
-        :type device_id: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
-        :returns: OK
-        :rtype: List[ActionAttempt]"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -68,13 +60,10 @@ class ActionAttempts(AbstractActionAttempts):
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
-        :type action_attempt_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
-        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
-        :returns: OK
-        :rtype: ActionAttempt"""
+        :returns: OK"""
         json_payload = {}
 
         if action_attempt_id is not None:
@@ -105,19 +94,14 @@ class ActionAttempts(AbstractActionAttempts):
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
-        :type action_attempt_ids: List[str]
 
         :param device_id: ID of the device to filter action attempts by.
-        :type device_id: str
 
         :param limit: Maximum number of records to return per page.
-        :type limit: int
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-        :type page_cursor: str
 
-        :returns: OK
-        :rtype: List[ActionAttempt]"""
+        :returns: OK"""
         json_payload = {}
 
         if action_attempt_ids is not None:

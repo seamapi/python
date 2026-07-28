@@ -13,16 +13,12 @@ class AbstractAccessCodesSimulate(abc.ABC):
         """Simulates the creation of an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param code: Code of the simulated unmanaged access code.
-        :type code: str
 
         :param device_id: ID of the device for which you want to simulate the creation of an unmanaged access code.
-        :type device_id: str
 
         :param name: Name of the simulated unmanaged access code.
-        :type name: str
 
-        :returns: OK
-        :rtype: UnmanagedAccessCode"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -37,16 +33,12 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         """Simulates the creation of an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param code: Code of the simulated unmanaged access code.
-        :type code: str
 
         :param device_id: ID of the device for which you want to simulate the creation of an unmanaged access code.
-        :type device_id: str
 
         :param name: Name of the simulated unmanaged access code.
-        :type name: str
 
-        :returns: OK
-        :rtype: UnmanagedAccessCode"""
+        :returns: OK"""
         json_payload = {}
 
         if code is not None:

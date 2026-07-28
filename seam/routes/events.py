@@ -17,16 +17,12 @@ class AbstractEvents(abc.ABC):
         """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
-        :type event_id: str
 
         :param device_id: Unique identifier for the device that triggered the event that you want to get.
-        :type device_id: str
 
         :param event_type: Type of the event that you want to get.
-        :type event_type: str
 
-        :returns: OK
-        :rtype: SeamEvent"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -65,91 +61,62 @@ class AbstractEvents(abc.ABC):
         """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
-        :type access_code_id: str
 
         :param access_code_ids: IDs of the access codes for which you want to list events.
-        :type access_code_ids: List[str]
 
         :param access_grant_id: ID of the access grant for which you want to list events.
-        :type access_grant_id: str
 
         :param access_grant_ids: IDs of the access grants for which you want to list events.
-        :type access_grant_ids: List[str]
 
         :param access_method_id: ID of the access method for which you want to list events.
-        :type access_method_id: str
 
         :param access_method_ids: IDs of the access methods for which you want to list events.
-        :type access_method_ids: List[str]
 
         :param acs_access_group_id: ID of the ACS access group for which you want to list events.
-        :type acs_access_group_id: str
 
         :param acs_credential_id: ID of the ACS credential for which you want to list events.
-        :type acs_credential_id: str
 
         :param acs_encoder_id: ID of the ACS encoder for which you want to list events.
-        :type acs_encoder_id: str
 
         :param acs_entrance_id: ID of the ACS entrance for which you want to list events.
-        :type acs_entrance_id: str
 
         :param acs_system_id: ID of the access system for which you want to list events.
-        :type acs_system_id: str
 
         :param acs_system_ids: IDs of the access systems for which you want to list events.
-        :type acs_system_ids: List[str]
 
         :param acs_user_id: ID of the ACS user for which you want to list events.
-        :type acs_user_id: str
 
         :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include ``since`` or ``between``.
-        :type between: List[Dict[str, Any]]
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list events.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list events.
-        :type connected_account_id: str
 
         :param customer_key: Customer key for which you want to list events.
-        :type customer_key: str
 
         :param device_id: ID of the device for which you want to list events.
-        :type device_id: str
 
         :param device_ids: IDs of the devices for which you want to list events.
-        :type device_ids: List[str]
 
         :param event_ids: IDs of the events that you want to list.
-        :type event_ids: List[str]
 
         :param event_type: Type of the events that you want to list.
-        :type event_type: str
 
         :param event_types: Types of the events that you want to list.
-        :type event_types: List[str]
 
         :param limit: Numerical limit on the number of events to return.
-        :type limit: float
 
         :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include ``since`` or ``between``.
-        :type since: str
 
         :param space_id: ID of the space for which you want to list events.
-        :type space_id: str
 
         :param space_ids: IDs of the spaces for which you want to list events.
-        :type space_ids: List[str]
 
         :param unstable_offset: Offset for the events that you want to list.
-        :type unstable_offset: float
 
         :param user_identity_id: ID of the user identity for which you want to list events.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[SeamEvent]"""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -168,16 +135,12 @@ class Events(AbstractEvents):
         """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
-        :type event_id: str
 
         :param device_id: Unique identifier for the device that triggered the event that you want to get.
-        :type device_id: str
 
         :param event_type: Type of the event that you want to get.
-        :type event_type: str
 
-        :returns: OK
-        :rtype: SeamEvent"""
+        :returns: OK"""
         json_payload = {}
 
         if event_id is not None:
@@ -226,91 +189,62 @@ class Events(AbstractEvents):
         """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
-        :type access_code_id: str
 
         :param access_code_ids: IDs of the access codes for which you want to list events.
-        :type access_code_ids: List[str]
 
         :param access_grant_id: ID of the access grant for which you want to list events.
-        :type access_grant_id: str
 
         :param access_grant_ids: IDs of the access grants for which you want to list events.
-        :type access_grant_ids: List[str]
 
         :param access_method_id: ID of the access method for which you want to list events.
-        :type access_method_id: str
 
         :param access_method_ids: IDs of the access methods for which you want to list events.
-        :type access_method_ids: List[str]
 
         :param acs_access_group_id: ID of the ACS access group for which you want to list events.
-        :type acs_access_group_id: str
 
         :param acs_credential_id: ID of the ACS credential for which you want to list events.
-        :type acs_credential_id: str
 
         :param acs_encoder_id: ID of the ACS encoder for which you want to list events.
-        :type acs_encoder_id: str
 
         :param acs_entrance_id: ID of the ACS entrance for which you want to list events.
-        :type acs_entrance_id: str
 
         :param acs_system_id: ID of the access system for which you want to list events.
-        :type acs_system_id: str
 
         :param acs_system_ids: IDs of the access systems for which you want to list events.
-        :type acs_system_ids: List[str]
 
         :param acs_user_id: ID of the ACS user for which you want to list events.
-        :type acs_user_id: str
 
         :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include ``since`` or ``between``.
-        :type between: List[Dict[str, Any]]
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list events.
-        :type connect_webview_id: str
 
         :param connected_account_id: ID of the connected account for which you want to list events.
-        :type connected_account_id: str
 
         :param customer_key: Customer key for which you want to list events.
-        :type customer_key: str
 
         :param device_id: ID of the device for which you want to list events.
-        :type device_id: str
 
         :param device_ids: IDs of the devices for which you want to list events.
-        :type device_ids: List[str]
 
         :param event_ids: IDs of the events that you want to list.
-        :type event_ids: List[str]
 
         :param event_type: Type of the events that you want to list.
-        :type event_type: str
 
         :param event_types: Types of the events that you want to list.
-        :type event_types: List[str]
 
         :param limit: Numerical limit on the number of events to return.
-        :type limit: float
 
         :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include ``since`` or ``between``.
-        :type since: str
 
         :param space_id: ID of the space for which you want to list events.
-        :type space_id: str
 
         :param space_ids: IDs of the spaces for which you want to list events.
-        :type space_ids: List[str]
 
         :param unstable_offset: Offset for the events that you want to list.
-        :type unstable_offset: float
 
         :param user_identity_id: ID of the user identity for which you want to list events.
-        :type user_identity_id: str
 
-        :returns: OK
-        :rtype: List[SeamEvent]"""
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:

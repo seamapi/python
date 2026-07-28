@@ -8,64 +8,44 @@ class AccessGrant:
     """Represents an Access Grant. Access Grants enable you to grant a user identity access to spaces, entrances, and devices through one or more access methods, such as mobile keys, plastic cards, and PIN codes. You can create an Access Grant for an existing user identity, or you can create a new user identity *while* creating the new Access Grant.
 
     :ivar access_grant_id: ID of the Access Grant.
-    :vartype access_grant_id: str
 
     :ivar access_grant_key: Unique key for the access grant within the workspace.
-    :vartype access_grant_key: str
 
     :ivar access_method_ids: IDs of the access methods created for the Access Grant.
-    :vartype access_method_ids: List[str]
 
     :ivar client_session_token: Client Session Token. Only returned if the Access Grant has a mobile_key access method.
-    :vartype client_session_token: str
 
     :ivar created_at: Date and time at which the Access Grant was created.
-    :vartype created_at: str
 
     :ivar customization_profile_id: ID of the customization profile associated with the Access Grant.
-    :vartype customization_profile_id: str
 
     :ivar display_name: Display name of the Access Grant.
-    :vartype display_name: str
 
     :ivar ends_at: Date and time at which the Access Grant ends.
-    :vartype ends_at: str
 
     :ivar errors: Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
-    :vartype errors: List[Dict[str, Any]]
 
     :ivar instant_key_url: Instant Key URL. Only returned if the Access Grant has a single mobile_key access_method.
-    :vartype instant_key_url: str
 
     :ivar location_ids: Deprecated: Use ``space_ids``.
-    :vartype location_ids: List[str]
 
     :ivar name: Name of the Access Grant. If not provided, the display name will be computed.
-    :vartype name: str
 
     :ivar pending_mutations: List of pending mutations for the access grant. This shows updates that are in progress.
-    :vartype pending_mutations: List[Dict[str, Any]]
 
     :ivar requested_access_methods: Access methods that the user requested for the Access Grant.
-    :vartype requested_access_methods: List[Dict[str, Any]]
 
     :ivar reservation_key: Reservation key for the access grant.
-    :vartype reservation_key: str
 
     :ivar space_ids: IDs of the spaces to which the Access Grant gives access.
-    :vartype space_ids: List[str]
 
     :ivar starts_at: Date and time at which the Access Grant starts.
-    :vartype starts_at: str
 
     :ivar user_identity_id: ID of user identity to which the Access Grant gives access.
-    :vartype user_identity_id: str
 
     :ivar warnings: Warnings associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
-    :vartype warnings: List[Dict[str, Any]]
 
-    :ivar workspace_id: ID of the Seam workspace associated with the Access Grant.
-    :vartype workspace_id: str"""
+    :ivar workspace_id: ID of the Seam workspace associated with the Access Grant."""
 
     access_grant_id: str
     access_grant_key: str

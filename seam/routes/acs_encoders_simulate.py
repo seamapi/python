@@ -16,13 +16,11 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
-        :type acs_encoder_id: str
 
         :param error_code: Code of the error to simulate.
-        :type error_code: str
 
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
-        :type acs_credential_id: str"""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -32,10 +30,8 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
-        :type acs_encoder_id: str
 
-        :param scenario: Scenario to simulate.
-        :type scenario: str"""
+        :param scenario: Scenario to simulate."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -49,13 +45,10 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
-        :type acs_encoder_id: str
 
         :param error_code:
-        :type error_code: str
 
-        :param acs_credential_id_on_seam:
-        :type acs_credential_id_on_seam: str"""
+        :param acs_credential_id_on_seam:"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -69,13 +62,10 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
-        :type acs_encoder_id: str
 
         :param acs_credential_id_on_seam: ID of the Seam ``acs_credential`` that matches the ``acs_credential`` on the encoder in this simulation.
-        :type acs_credential_id_on_seam: str
 
-        :param scenario: Scenario to simulate.
-        :type scenario: str"""
+        :param scenario: Scenario to simulate."""
         raise NotImplementedError()
 
 
@@ -94,13 +84,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
-        :type acs_encoder_id: str
 
         :param error_code: Code of the error to simulate.
-        :type error_code: str
 
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
-        :type acs_credential_id: str"""
+        """
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -122,10 +110,8 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
-        :type acs_encoder_id: str
 
-        :param scenario: Scenario to simulate.
-        :type scenario: str"""
+        :param scenario: Scenario to simulate."""
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -150,13 +136,10 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
-        :type acs_encoder_id: str
 
         :param error_code:
-        :type error_code: str
 
-        :param acs_credential_id_on_seam:
-        :type acs_credential_id_on_seam: str"""
+        :param acs_credential_id_on_seam:"""
         json_payload = {}
 
         if acs_encoder_id is not None:
@@ -182,13 +165,10 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
-        :type acs_encoder_id: str
 
         :param acs_credential_id_on_seam: ID of the Seam ``acs_credential`` that matches the ``acs_credential`` on the encoder in this simulation.
-        :type acs_credential_id_on_seam: str
 
-        :param scenario: Scenario to simulate.
-        :type scenario: str"""
+        :param scenario: Scenario to simulate."""
         json_payload = {}
 
         if acs_encoder_id is not None:

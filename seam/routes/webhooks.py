@@ -11,21 +11,17 @@ class AbstractWebhooks(abc.ABC):
         """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
-        :type url: str
 
         :param event_types: Types of events that you want the new webhook to receive.
-        :type event_types: List[str]
 
-        :returns: OK
-        :rtype: Webhook"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, webhook_id: str) -> None:
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :param webhook_id: ID of the webhook that you want to delete.
-        :type webhook_id: str"""
+        :param webhook_id: ID of the webhook that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -33,10 +29,8 @@ class AbstractWebhooks(abc.ABC):
         """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
-        :type webhook_id: str
 
-        :returns: OK
-        :rtype: Webhook"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -45,8 +39,7 @@ class AbstractWebhooks(abc.ABC):
     ) -> List[Webhook]:
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :returns: OK
-        :rtype: List[Webhook]"""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -54,10 +47,8 @@ class AbstractWebhooks(abc.ABC):
         """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
-        :type event_types: List[str]
 
-        :param webhook_id: ID of the webhook that you want to update.
-        :type webhook_id: str"""
+        :param webhook_id: ID of the webhook that you want to update."""
         raise NotImplementedError()
 
 
@@ -70,13 +61,10 @@ class Webhooks(AbstractWebhooks):
         """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
-        :type url: str
 
         :param event_types: Types of events that you want the new webhook to receive.
-        :type event_types: List[str]
 
-        :returns: OK
-        :rtype: Webhook"""
+        :returns: OK"""
         json_payload = {}
 
         if url is not None:
@@ -91,8 +79,7 @@ class Webhooks(AbstractWebhooks):
     def delete(self, *, webhook_id: str) -> None:
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :param webhook_id: ID of the webhook that you want to delete.
-        :type webhook_id: str"""
+        :param webhook_id: ID of the webhook that you want to delete."""
         json_payload = {}
 
         if webhook_id is not None:
@@ -106,10 +93,8 @@ class Webhooks(AbstractWebhooks):
         """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
-        :type webhook_id: str
 
-        :returns: OK
-        :rtype: Webhook"""
+        :returns: OK"""
         json_payload = {}
 
         if webhook_id is not None:
@@ -124,8 +109,7 @@ class Webhooks(AbstractWebhooks):
     ) -> List[Webhook]:
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :returns: OK
-        :rtype: List[Webhook]"""
+        :returns: OK"""
         json_payload = {}
 
         res = self.client.post("/webhooks/list", json=json_payload)
@@ -136,10 +120,8 @@ class Webhooks(AbstractWebhooks):
         """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
-        :type event_types: List[str]
 
-        :param webhook_id: ID of the webhook that you want to update.
-        :type webhook_id: str"""
+        :param webhook_id: ID of the webhook that you want to update."""
         json_payload = {}
 
         if event_types is not None:

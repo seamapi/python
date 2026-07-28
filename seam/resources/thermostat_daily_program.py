@@ -8,22 +8,17 @@ class ThermostatDailyProgram:
     """Represents a thermostat daily program, consisting of a set of periods, each of which has a starting time and the key that identifies the climate preset to apply at the starting time.
 
     :ivar created_at: Date and time at which the thermostat daily program was created.
-    :vartype created_at: str
 
     :ivar device_id: ID of the thermostat device on which the thermostat daily program is configured.
-    :vartype device_id: str
 
     :ivar name: User-friendly name to identify the thermostat daily program.
-    :vartype name: str
 
     :ivar periods: Array of thermostat daily program periods.
-    :vartype periods: List[Dict[str, Any]]
 
     :ivar thermostat_daily_program_id: ID of the thermostat daily program.
-    :vartype thermostat_daily_program_id: str
 
     :ivar workspace_id: ID of the workspace that contains the thermostat daily program.
-    :vartype workspace_id: str"""
+    """
 
     created_at: str
     device_id: str
