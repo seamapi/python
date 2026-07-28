@@ -75,7 +75,7 @@ class DeviceProvider:
     :ivar image_url: Image URL for the device provider.
     :vartype image_url: str
 
-    :ivar provider_categories: List of provider categories to which the device provider belongs, such as `stable`, `consumer_smartlocks`, `thermostats`, and so on.
+    :ivar provider_categories: List of provider categories to which the device provider belongs, such as ``stable``, ``consumer_smartlocks``, ``thermostats``, and so on.
     :vartype provider_categories: List[str]"""
 
     can_configure_auto_lock: bool

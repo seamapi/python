@@ -14,7 +14,7 @@ class AbstractEvents(abc.ABC):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a [webhook](https://docs.seam.co/developer-tools/webhooks), but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
         :type event_id: str
@@ -62,7 +62,7 @@ class AbstractEvents(abc.ABC):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a [webhook](https://docs.seam.co/developer-tools/webhooks), but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
         :type access_code_id: str
@@ -103,7 +103,7 @@ class AbstractEvents(abc.ABC):
         :param acs_user_id: ID of the ACS user for which you want to list events.
         :type acs_user_id: str
 
-        :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include `since` or `between`.
+        :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include ``since`` or ``between``.
         :type between: List[Dict[str, Any]]
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list events.
@@ -133,7 +133,7 @@ class AbstractEvents(abc.ABC):
         :param limit: Numerical limit on the number of events to return.
         :type limit: float
 
-        :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include `since` or `between`.
+        :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include ``since`` or ``between``.
         :type since: str
 
         :param space_id: ID of the space for which you want to list events.
@@ -165,7 +165,7 @@ class Events(AbstractEvents):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a [webhook](https://docs.seam.co/developer-tools/webhooks), but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
         :type event_id: str
@@ -223,7 +223,7 @@ class Events(AbstractEvents):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a [webhook](https://docs.seam.co/developer-tools/webhooks), but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
         :type access_code_id: str
@@ -264,7 +264,7 @@ class Events(AbstractEvents):
         :param acs_user_id: ID of the ACS user for which you want to list events.
         :type acs_user_id: str
 
-        :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include `since` or `between`.
+        :param between: Lower and upper timestamps to define an exclusive interval containing the events that you want to list. You must include ``since`` or ``between``.
         :type between: List[Dict[str, Any]]
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list events.
@@ -294,7 +294,7 @@ class Events(AbstractEvents):
         :param limit: Numerical limit on the number of events to return.
         :type limit: float
 
-        :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include `since` or `between`.
+        :param since: Timestamp to indicate the beginning generation time for the events that you want to list. You must include ``since`` or ``between``.
         :type since: str
 
         :param space_id: ID of the space for which you want to list events.

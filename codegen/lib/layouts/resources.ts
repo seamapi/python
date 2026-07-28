@@ -6,6 +6,7 @@ import type { Blueprint, Property, Resource } from '@seamapi/blueprint'
 import { pascalCase, snakeCase } from 'change-case'
 
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
+import { formatPythonDoc } from '../python-docstring.js'
 import { mapPropertyToPythonType } from '../python-type.js'
 
 // Python hard keywords cannot be used as identifiers. When a property name
@@ -65,25 +66,22 @@ export interface ResourceLayoutContext {
   }>
 }
 
-const cleanDoc = (value: string): string =>
-  value.trim().replaceAll('"""', '\\"\\"\\"')
-
 const createResourceDocstring = (
   description: string,
   isDeprecated: boolean,
   deprecationMessage: string,
   properties: Property[],
 ): string => {
-  const lines = [cleanDoc(description)]
+  const lines = [formatPythonDoc(description)]
   for (const property of properties) {
     const deprecated = property.isDeprecated
-      ? `Deprecated${property.deprecationMessage === '' ? '.' : `: ${cleanDoc(property.deprecationMessage)}`}`
+      ? `Deprecated${property.deprecationMessage === '' ? '.' : `: ${formatPythonDoc(property.deprecationMessage)}`}`
       : ''
     lines.push(
       '',
       `:ivar ${toSafeIdentifier(property.name)}: ${[
         deprecated,
-        cleanDoc(property.description),
+        formatPythonDoc(property.description),
       ]
         .filter(Boolean)
         .join(' ')}`,
@@ -94,7 +92,7 @@ const createResourceDocstring = (
     lines.push(
       '',
       '.. deprecated::',
-      `   ${cleanDoc(deprecationMessage) || 'This resource is deprecated.'}`,
+      `   ${formatPythonDoc(deprecationMessage) || 'This resource is deprecated.'}`,
     )
   }
   return lines

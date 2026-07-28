@@ -21,27 +21,27 @@ class AbstractConnectWebviews(abc.ABC):
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
     ) -> ConnectWebview:
-        """Creates a new [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Creates a new `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        To enable a user to connect their devices or systems to Seam, they must sign in to their device or system account. To enable a user to sign in, you create a `connect_webview`. After creating the Connect Webview, you receive a URL that you can use to display the visual component of this Connect Webview for your user. You can open an iframe or new window to display the Connect Webview.
+        To enable a user to connect their devices or systems to Seam, they must sign in to their device or system account. To enable a user to sign in, you create a ``connect_webview``. After creating the Connect Webview, you receive a URL that you can use to display the visual component of this Connect Webview for your user. You can open an iframe or new window to display the Connect Webview.
 
-        You should make a new `connect_webview` for each unique login request. Each `connect_webview` tracks the user that signed in with it. You receive an error if you reuse a Connect Webview for the same user twice or if you use the same Connect Webview for multiple users.
+        You should make a new ``connect_webview`` for each unique login request. Each ``connect_webview`` tracks the user that signed in with it. You receive an error if you reuse a Connect Webview for the same user twice or if you use the same Connect Webview for multiple users.
 
-        See also: [Connect Webview Process](https://docs.seam.co/core-concepts/connect-webviews/connect-webview-process).
+        See also: `Connect Webview Process <https://docs.seam.co/core-concepts/connect-webviews/connect-webview-process>`_.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through the Connect Webview. If not provided, defaults will be determined based on the accepted providers.
         :type accepted_capabilities: List[str]
 
-        :param accepted_providers: Accepted device provider keys as an alternative to `provider_category`. Use this parameter to specify accepted providers explicitly. See [Customize the Brands to Display in Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews). To list all provider keys, use [`/devices/list_device_providers`](https://docs.seam.co/api/devices/list_device_providers) with no filters.
+        :param accepted_providers: Accepted device provider keys as an alternative to ``provider_category``. Use this parameter to specify accepted providers explicitly. See `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_. To list all provider keys, use ```/devices/list_device_providers`` <https://docs.seam.co/api/devices/list_device_providers>`_ with no filters.
         :type accepted_providers: List[str]
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as [managed devices](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices). See also: [Customize the Behavior Settings of Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews).
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
         :type automatically_manage_new_devices: bool
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. [Adding custom metadata to a Connect Webview](https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview) enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any [connected accounts](https://docs.seam.co/core-concepts/connected-accounts) that were connected using the Connect Webview, making it easy to find and filter these resources in your [workspace](https://docs.seam.co/core-concepts/workspaces). You can also [filter Connect Webviews by custom metadata](https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata).
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
         :type custom_metadata: Dict[str, Any]
 
-        :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the `custom_redirect_url`.
+        :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
         :type custom_redirect_failure_url: str
 
         :param custom_redirect_url: URL that you want to redirect the user to after the provider login is complete.
@@ -53,10 +53,10 @@ class AbstractConnectWebviews(abc.ABC):
         :param excluded_providers: List of provider keys to exclude from the Connect Webview. These providers will not be shown when the user tries to connect an account.
         :type excluded_providers: List[str]
 
-        :param provider_category: Specifies the category of providers that you want to include. To list all providers within a category, use [`/devices/list_device_providers`](https://docs.seam.co/api/devices/list_device_providers) with the desired `provider_category` filter.
+        :param provider_category: Specifies the category of providers that you want to include. To list all providers within a category, use ```/devices/list_device_providers`` <https://docs.seam.co/api/devices/list_device_providers>`_ with the desired ``provider_category`` filter.
         :type provider_category: str
 
-        :param wait_for_device_creation: Indicates whether Seam should finish syncing all devices in a newly-connected account before completing the associated Connect Webview. See also: [Customize the Behavior Settings of Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews).
+        :param wait_for_device_creation: Indicates whether Seam should finish syncing all devices in a newly-connected account before completing the associated Connect Webview. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
         :type wait_for_device_creation: bool
 
         :returns: OK
@@ -65,7 +65,7 @@ class AbstractConnectWebviews(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, connect_webview_id: str) -> None:
-        """Deletes a [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Deletes a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
@@ -75,9 +75,9 @@ class AbstractConnectWebviews(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, connect_webview_id: str) -> ConnectWebview:
-        """Returns a specified [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Returns a specified `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        Unless you're using a `custom_redirect_url`, you should poll a newly-created `connect_webview` to find out if the user has signed in or to get details about what devices they've connected.
+        Unless you're using a ``custom_redirect_url``, you should poll a newly-created ``connect_webview`` to find out if the user has signed in or to get details about what devices they've connected.
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
         :type connect_webview_id: str
@@ -97,9 +97,9 @@ class AbstractConnectWebviews(abc.ABC):
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
-        """Returns a list of all [Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews).
+        """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to [filter Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata). Returns Connect Webviews with `custom_metadata` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list connect webviews.
@@ -108,10 +108,10 @@ class AbstractConnectWebviews(abc.ABC):
         :param limit: Maximum number of records to return per page.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned Connect Webviews to include all records that satisfy a partial match using `connect_webview_id`, `accepted_providers`, `custom_metadata`, or `customer_key`.
+        :param search: String for which to search. Filters returned Connect Webviews to include all records that satisfy a partial match using ``connect_webview_id``, ``accepted_providers``, ``custom_metadata``, or ``customer_key``.
         :type search: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter Connect Webviews.
@@ -141,27 +141,27 @@ class ConnectWebviews(AbstractConnectWebviews):
         provider_category: Optional[str] = None,
         wait_for_device_creation: Optional[bool] = None
     ) -> ConnectWebview:
-        """Creates a new [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Creates a new `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        To enable a user to connect their devices or systems to Seam, they must sign in to their device or system account. To enable a user to sign in, you create a `connect_webview`. After creating the Connect Webview, you receive a URL that you can use to display the visual component of this Connect Webview for your user. You can open an iframe or new window to display the Connect Webview.
+        To enable a user to connect their devices or systems to Seam, they must sign in to their device or system account. To enable a user to sign in, you create a ``connect_webview``. After creating the Connect Webview, you receive a URL that you can use to display the visual component of this Connect Webview for your user. You can open an iframe or new window to display the Connect Webview.
 
-        You should make a new `connect_webview` for each unique login request. Each `connect_webview` tracks the user that signed in with it. You receive an error if you reuse a Connect Webview for the same user twice or if you use the same Connect Webview for multiple users.
+        You should make a new ``connect_webview`` for each unique login request. Each ``connect_webview`` tracks the user that signed in with it. You receive an error if you reuse a Connect Webview for the same user twice or if you use the same Connect Webview for multiple users.
 
-        See also: [Connect Webview Process](https://docs.seam.co/core-concepts/connect-webviews/connect-webview-process).
+        See also: `Connect Webview Process <https://docs.seam.co/core-concepts/connect-webviews/connect-webview-process>`_.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through the Connect Webview. If not provided, defaults will be determined based on the accepted providers.
         :type accepted_capabilities: List[str]
 
-        :param accepted_providers: Accepted device provider keys as an alternative to `provider_category`. Use this parameter to specify accepted providers explicitly. See [Customize the Brands to Display in Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews). To list all provider keys, use [`/devices/list_device_providers`](https://docs.seam.co/api/devices/list_device_providers) with no filters.
+        :param accepted_providers: Accepted device provider keys as an alternative to ``provider_category``. Use this parameter to specify accepted providers explicitly. See `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_. To list all provider keys, use ```/devices/list_device_providers`` <https://docs.seam.co/api/devices/list_device_providers>`_ with no filters.
         :type accepted_providers: List[str]
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as [managed devices](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices). See also: [Customize the Behavior Settings of Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews).
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
         :type automatically_manage_new_devices: bool
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. [Adding custom metadata to a Connect Webview](https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview) enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any [connected accounts](https://docs.seam.co/core-concepts/connected-accounts) that were connected using the Connect Webview, making it easy to find and filter these resources in your [workspace](https://docs.seam.co/core-concepts/workspaces). You can also [filter Connect Webviews by custom metadata](https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata).
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
         :type custom_metadata: Dict[str, Any]
 
-        :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the `custom_redirect_url`.
+        :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
         :type custom_redirect_failure_url: str
 
         :param custom_redirect_url: URL that you want to redirect the user to after the provider login is complete.
@@ -173,10 +173,10 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param excluded_providers: List of provider keys to exclude from the Connect Webview. These providers will not be shown when the user tries to connect an account.
         :type excluded_providers: List[str]
 
-        :param provider_category: Specifies the category of providers that you want to include. To list all providers within a category, use [`/devices/list_device_providers`](https://docs.seam.co/api/devices/list_device_providers) with the desired `provider_category` filter.
+        :param provider_category: Specifies the category of providers that you want to include. To list all providers within a category, use ```/devices/list_device_providers`` <https://docs.seam.co/api/devices/list_device_providers>`_ with the desired ``provider_category`` filter.
         :type provider_category: str
 
-        :param wait_for_device_creation: Indicates whether Seam should finish syncing all devices in a newly-connected account before completing the associated Connect Webview. See also: [Customize the Behavior Settings of Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews).
+        :param wait_for_device_creation: Indicates whether Seam should finish syncing all devices in a newly-connected account before completing the associated Connect Webview. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
         :type wait_for_device_creation: bool
 
         :returns: OK
@@ -211,7 +211,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         return ConnectWebview.from_dict(res["connect_webview"])
 
     def delete(self, *, connect_webview_id: str) -> None:
-        """Deletes a [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Deletes a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
@@ -227,9 +227,9 @@ class ConnectWebviews(AbstractConnectWebviews):
         return None
 
     def get(self, *, connect_webview_id: str) -> ConnectWebview:
-        """Returns a specified [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews).
+        """Returns a specified `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        Unless you're using a `custom_redirect_url`, you should poll a newly-created `connect_webview` to find out if the user has signed in or to get details about what devices they've connected.
+        Unless you're using a ``custom_redirect_url``, you should poll a newly-created ``connect_webview`` to find out if the user has signed in or to get details about what devices they've connected.
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
         :type connect_webview_id: str
@@ -255,9 +255,9 @@ class ConnectWebviews(AbstractConnectWebviews):
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[ConnectWebview]:
-        """Returns a list of all [Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews).
+        """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to [filter Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata). Returns Connect Webviews with `custom_metadata` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list connect webviews.
@@ -266,10 +266,10 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param limit: Maximum number of records to return per page.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned Connect Webviews to include all records that satisfy a partial match using `connect_webview_id`, `accepted_providers`, `custom_metadata`, or `customer_key`.
+        :param search: String for which to search. Filters returned Connect Webviews to include all records that satisfy a partial match using ``connect_webview_id``, ``accepted_providers``, ``custom_metadata``, or ``customer_key``.
         :type search: str
 
         :param user_identifier_key: Your user ID for the user by which you want to filter Connect Webviews.

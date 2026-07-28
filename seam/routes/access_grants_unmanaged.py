@@ -35,7 +35,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         :param limit: Numerical limit on the number of unmanaged access grants to return.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
         :param reservation_key: Filter unmanaged Access Grants by reservation_key.
@@ -55,7 +55,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.
 
-        This endpoint can only be used to convert unmanaged access grants to managed ones by setting `is_managed` to `true`. It cannot be used to convert managed access grants back to unmanaged.
+        This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
 
         When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
 
@@ -110,7 +110,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param limit: Numerical limit on the number of unmanaged access grants to return.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
         :param reservation_key: Filter unmanaged Access Grants by reservation_key.
@@ -146,7 +146,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.
 
-        This endpoint can only be used to convert unmanaged access grants to managed ones by setting `is_managed` to `true`. It cannot be used to convert managed access grants back to unmanaged.
+        This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
 
         When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
 

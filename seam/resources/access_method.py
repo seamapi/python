@@ -25,7 +25,7 @@ class AccessMethod:
     :ivar display_name: Display name of the access method.
     :vartype display_name: str
 
-    :ivar errors: Errors associated with the [access method](https://docs.seam.co/use-cases/granting-access/creating-an-access-grant).
+    :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
     :vartype errors: List[Dict[str, Any]]
 
     :ivar instant_key_url: URL of the Instant Key for mobile key access methods.
@@ -49,13 +49,13 @@ class AccessMethod:
     :ivar issued_at: Date and time at which the access method was issued.
     :vartype issued_at: str
 
-    :ivar mode: Access method mode. Supported values: `code`, `card`, `mobile_key`, `cloud_key`.
+    :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
     :vartype mode: str
 
-    :ivar pending_mutations: Pending mutations for the [access method](https://docs.seam.co/use-cases/granting-access/creating-an-access-grant). Indicates operations that are in progress.
+    :ivar pending_mutations: Pending mutations for the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_. Indicates operations that are in progress.
     :vartype pending_mutations: List[Dict[str, Any]]
 
-    :ivar warnings: Warnings associated with the [access method](https://docs.seam.co/use-cases/granting-access/creating-an-access-grant).
+    :ivar warnings: Warnings associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
     :vartype warnings: List[Dict[str, Any]]
 
     :ivar workspace_id: ID of the Seam workspace associated with the access method.

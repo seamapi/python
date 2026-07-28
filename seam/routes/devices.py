@@ -22,9 +22,9 @@ class AbstractDevices(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified [device](https://docs.seam.co/core-concepts/devices).
+        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
-        You must specify either `device_id` or `name`.
+        You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
         :type device_id: str
@@ -57,7 +57,7 @@ class AbstractDevices(abc.ABC):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all [devices](https://docs.seam.co/core-concepts/devices).
+        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
         :type connect_webview_id: str
@@ -71,7 +71,7 @@ class AbstractDevices(abc.ABC):
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
         :type created_before: str
 
-        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
@@ -92,16 +92,16 @@ class AbstractDevices(abc.ABC):
         :param manufacturer: Manufacturer for which you want to list devices.
         :type manufacturer: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
         :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
         :type space_id: str
 
-        :param unstable_location_id: Deprecated: Use `space_id`.
+        :param unstable_location_id: Deprecated: Use ``space_id``.
         :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
@@ -117,9 +117,9 @@ class AbstractDevices(abc.ABC):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of [capability flags](https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags), such as `device_provider.can_remotely_unlock`. If at least one supported device from a provider has a specific capability, the corresponding capability flag is `true`.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews), you can customize the providers—that is, the brands—that it displays. In the `/connect_webviews/create` request, include the desired set of device provider keys in the `accepted_providers` parameter. See also [Customize the Brands to Display in Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews).
+        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
         :type provider_category: str
@@ -147,20 +147,20 @@ class AbstractDevices(abc.ABC):
         name: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Updates a specified [device](https://docs.seam.co/core-concepts/devices).
+        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
-        You can add or change [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) for a device, change the device's name, or [convert a managed device to unmanaged](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
         :type device_id: str
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's [backup access code pool](https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes) is enabled. Set to `false` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
         :type backup_access_code_pool_enabled: bool
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. [Adding custom metadata to a device](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) enables you to store custom information, like customer details or internal IDs from your application. Then, you can [filter devices by the desired metadata](https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata).
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
         :type custom_metadata: Dict[str, Any]
 
-        :param is_managed: Indicates whether the device is managed. To unmanage a device, set `is_managed` to `false`.
+        :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
         :type is_managed: bool
 
         :param name: Name for the device.
@@ -189,9 +189,9 @@ class Devices(AbstractDevices):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified [device](https://docs.seam.co/core-concepts/devices).
+        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
-        You must specify either `device_id` or `name`.
+        You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
         :type device_id: str
@@ -232,7 +232,7 @@ class Devices(AbstractDevices):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all [devices](https://docs.seam.co/core-concepts/devices).
+        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
         :type connect_webview_id: str
@@ -246,7 +246,7 @@ class Devices(AbstractDevices):
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
         :type created_before: str
 
-        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
@@ -267,16 +267,16 @@ class Devices(AbstractDevices):
         :param manufacturer: Manufacturer for which you want to list devices.
         :type manufacturer: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
         :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
         :type space_id: str
 
-        :param unstable_location_id: Deprecated: Use `space_id`.
+        :param unstable_location_id: Deprecated: Use ``space_id``.
         :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
@@ -328,9 +328,9 @@ class Devices(AbstractDevices):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of [capability flags](https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags), such as `device_provider.can_remotely_unlock`. If at least one supported device from a provider has a specific capability, the corresponding capability flag is `true`.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews), you can customize the providers—that is, the brands—that it displays. In the `/connect_webviews/create` request, include the desired set of device provider keys in the `accepted_providers` parameter. See also [Customize the Brands to Display in Your Connect Webviews](https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews).
+        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
         :type provider_category: str
@@ -370,20 +370,20 @@ class Devices(AbstractDevices):
         name: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Updates a specified [device](https://docs.seam.co/core-concepts/devices).
+        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
-        You can add or change [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) for a device, change the device's name, or [convert a managed device to unmanaged](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
         :type device_id: str
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's [backup access code pool](https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes) is enabled. Set to `false` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
         :type backup_access_code_pool_enabled: bool
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. [Adding custom metadata to a device](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) enables you to store custom information, like customer details or internal IDs from your application. Then, you can [filter devices by the desired metadata](https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata).
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
         :type custom_metadata: Dict[str, Any]
 
-        :param is_managed: Indicates whether the device is managed. To unmanage a device, set `is_managed` to `false`.
+        :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
         :type is_managed: bool
 
         :param name: Name for the device.

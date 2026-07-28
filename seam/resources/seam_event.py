@@ -39,7 +39,7 @@ class SeamEvent:
     :ivar workspace_id: ID of the workspace associated with the event.
     :vartype workspace_id: str
 
-    :ivar change_reason: Human-readable reason for the change (e.g. `ongoing code auto-renewed`).
+    :ivar change_reason: Human-readable reason for the change (e.g. ``ongoing code auto-renewed``).
     :vartype change_reason: str
 
     :ivar changed_properties: List of properties that changed on the access code.
@@ -84,7 +84,7 @@ class SeamEvent:
     :ivar access_grant_id: ID of the affected Access Grant.
     :vartype access_grant_id: str
 
-    :ivar acs_entrance_id: ID of the affected [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details).
+    :ivar acs_entrance_id: ID of the affected `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
     :vartype acs_entrance_id: str
 
     :ivar access_grant_key: Key of the affected Access Grant (if present).
@@ -162,7 +162,7 @@ class SeamEvent:
     :ivar battery_level: Number in the range 0 to 1.0 indicating the amount of battery in the affected device, as reported by the device.
     :vartype battery_level: float
 
-    :ivar battery_status: Battery status of the affected device, calculated from the numeric `battery_level` value.
+    :ivar battery_status: Battery status of the affected device, calculated from the numeric ``battery_level`` value.
     :vartype battery_status: str
 
     :ivar device_name: Name of the deleted device, captured at deletion time. The device record no longer exists when this event fires, so the name is preserved here. Null when the device had no resolvable name.
@@ -195,7 +195,7 @@ class SeamEvent:
     :ivar is_via_nfc: Whether the lock action was performed by an NFC credential tap (such as an Apple Home Key or an NFC key fob) presented to the lock, rather than a direct physical interaction or a Seam-initiated remote action.
     :vartype is_via_nfc: bool
 
-    :ivar method: Method by which the lock was locked. `keycode`: an access code was used (see `access_code_id`). `manual`: a physical action such as a thumbturn or button press. `remote`: a remote action via an app, Bluetooth, or the Seam API (see `action_attempt_id` if Seam-initiated; see `is_via_bluetooth` or `is_via_nfc` for the transport). `automatic`: triggered automatically, for example by an auto-relock timer. `unknown`: could not be determined.
+    :ivar method: Method by which the lock was locked. ``keycode``: an access code was used (see ``access_code_id``). ``manual``: a physical action such as a thumbturn or button press. ``remote``: a remote action via an app, Bluetooth, or the Seam API (see ``action_attempt_id`` if Seam-initiated; see ``is_via_bluetooth`` or ``is_via_nfc`` for the transport). ``automatic``: triggered automatically, for example by an auto-relock timer. ``unknown``: could not be determined.
     :vartype method: str
 
     :ivar user_identity_id: undocumented: Unreleased.
@@ -215,22 +215,22 @@ class SeamEvent:
     :ivar thermostat_schedule_id: ID of the thermostat schedule that prompted the affected climate preset to be activated.
     :vartype thermostat_schedule_id: str
 
-    :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also [Set Points](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points).
+    :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
     :vartype cooling_set_point_celsius: float
 
-    :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also [Set Points](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points).
+    :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
     :vartype cooling_set_point_fahrenheit: float
 
-    :ivar fan_mode_setting: Desired [fan mode setting](https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings), such as `on`, `auto`, or `circulate`.
+    :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
     :vartype fan_mode_setting: str
 
-    :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also [Set Points](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points).
+    :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
     :vartype heating_set_point_celsius: float
 
-    :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also [Set Points](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points).
+    :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
     :vartype heating_set_point_fahrenheit: float
 
-    :ivar hvac_mode_setting: Desired [HVAC mode](https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode) setting, such as `heat`, `cool`, `heat_cool`, or `off`.
+    :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
     :vartype hvac_mode_setting: str
 
     :ivar lower_limit_celsius: Lower temperature limit, in °C, defined by the set threshold.

@@ -10,7 +10,7 @@ class Pagination:
     :ivar has_next_page: Indicates whether there is another page of results after this one.
     :vartype has_next_page: bool
 
-    :ivar next_page_cursor: Opaque value that can be used to select the next page of results via the `page_cursor` parameter.
+    :ivar next_page_cursor: Opaque value that can be used to select the next page of results via the ``page_cursor`` parameter.
     :vartype next_page_cursor: str
 
     :ivar next_page_url: URL to get the next page of results.

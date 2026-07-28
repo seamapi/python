@@ -22,7 +22,7 @@ class AbstractLocks(abc.ABC):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
         :type auto_lock_enabled: bool
@@ -44,7 +44,7 @@ class AbstractLocks(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
         :type device_id: str
@@ -56,7 +56,7 @@ class AbstractLocks(abc.ABC):
         :rtype: Device
 
         .. deprecated::
-           Use `/devices/get` instead."""
+           Use ``/devices/get`` instead."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -80,7 +80,7 @@ class AbstractLocks(abc.ABC):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all [locks](https://docs.seam.co/low-level-apis/smart-locks).
+        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
         :type connect_webview_id: str
@@ -94,7 +94,7 @@ class AbstractLocks(abc.ABC):
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
         :type created_before: str
 
-        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
@@ -115,16 +115,16 @@ class AbstractLocks(abc.ABC):
         :param manufacturer: Manufacturer of the locks that you want to list.
         :type manufacturer: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
         :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
         :type space_id: str
 
-        :param unstable_location_id: Deprecated: Use `space_id`.
+        :param unstable_location_id: Deprecated: Use ``space_id``.
         :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
@@ -141,7 +141,7 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Locks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
         :type device_id: str
@@ -160,7 +160,7 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Unlocks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
         :type device_id: str
@@ -191,7 +191,7 @@ class Locks(AbstractLocks):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
         :type auto_lock_enabled: bool
@@ -233,7 +233,7 @@ class Locks(AbstractLocks):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified [lock](https://docs.seam.co/low-level-apis/smart-locks).
+        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
         :type device_id: str
@@ -245,7 +245,7 @@ class Locks(AbstractLocks):
         :rtype: Device
 
         .. deprecated::
-           Use `/devices/get` instead."""
+           Use ``/devices/get`` instead."""
         json_payload = {}
 
         if device_id is not None:
@@ -277,7 +277,7 @@ class Locks(AbstractLocks):
         unstable_location_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None
     ) -> List[Device]:
-        """Returns a list of all [locks](https://docs.seam.co/low-level-apis/smart-locks).
+        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
         :type connect_webview_id: str
@@ -291,7 +291,7 @@ class Locks(AbstractLocks):
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
         :type created_before: str
 
-        :param custom_metadata_has: Set of key:value [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
         :type custom_metadata_has: Dict[str, Any]
 
         :param customer_key: Customer key for which you want to list devices.
@@ -312,16 +312,16 @@ class Locks(AbstractLocks):
         :param manufacturer: Manufacturer of the locks that you want to list.
         :type manufacturer: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using `device_id` (full or partial UUID prefix, minimum 4 characters), `connected_account_id`, `display_name`, `custom_metadata` or `location.location_name`.
+        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
         :type search: str
 
         :param space_id: ID of the space for which you want to list devices.
         :type space_id: str
 
-        :param unstable_location_id: Deprecated: Use `space_id`.
+        :param unstable_location_id: Deprecated: Use ``space_id``.
         :type unstable_location_id: str
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
@@ -374,7 +374,7 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Locks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
         :type device_id: str
@@ -409,7 +409,7 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Unlocks a [lock](https://docs.seam.co/low-level-apis/smart-locks). See also [Locking and Unlocking Smart Locks](https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock).
+        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
         :type device_id: str

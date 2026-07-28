@@ -5,7 +5,7 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class Device:
-    """Represents a [device](https://docs.seam.co/core-concepts/devices) that has been connected to Seam.
+    """Represents a `device <https://docs.seam.co/core-concepts/devices>`_ that has been connected to Seam.
 
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
     :vartype can_configure_auto_lock: bool
@@ -67,7 +67,7 @@ class Device:
     :ivar can_unlock_with_code: Indicates whether the lock supports unlocking with an access code.
     :vartype can_unlock_with_code: bool
 
-    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are `access_code`, which indicates that the device can manage and utilize digital PIN codes for secure access; `lock`, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; `noise_detection`, which indicates that the device supports monitoring and responding to ambient noise levels; `thermostat`, which indicates that the device can regulate and adjust indoor temperatures; `battery`, which indicates that the device can manage battery life and health; and `phone`, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by [capability flags](https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags).
+    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_.
     :vartype capabilities_supported: List[str]
 
     :ivar connected_account_id: Unique identifier for the account associated with the device.
@@ -76,7 +76,7 @@ class Device:
     :ivar created_at: Date and time at which the device object was created.
     :vartype created_at: str
 
-    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a [Connect Webview](https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview), [connected account](https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account), or [device](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device), enables you to store custom information, like customer details or internal IDs from your application.
+    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application.
     :vartype custom_metadata: Dict[str, Any]
 
     :ivar device_id: ID of the device.
@@ -91,13 +91,13 @@ class Device:
     :ivar device_type: Type of the device.
     :vartype device_type: str
 
-    :ivar display_name: Display name of the device, defaults to nickname (if it is set) or `properties.appearance.name`, otherwise. Enables administrators and users to identify the device easily, especially when there are numerous devices.
+    :ivar display_name: Display name of the device, defaults to nickname (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the device easily, especially when there are numerous devices.
     :vartype display_name: str
 
-    :ivar errors: Array of errors associated with the device. Each error object within the array contains two fields: `error_code` and `message`. `error_code` is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. `message` provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
+    :ivar errors: Array of errors associated with the device. Each error object within the array contains two fields: ``error_code`` and ``message``. ``error_code`` is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
     :vartype errors: List[Dict[str, Any]]
 
-    :ivar is_managed: Indicates whether Seam manages the device. See also [Managed and Unmanaged Devices](https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices).
+    :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
     :vartype is_managed: bool
 
     :ivar location: Location information for the device.
@@ -112,7 +112,7 @@ class Device:
     :ivar space_ids: IDs of the spaces the device is in.
     :vartype space_ids: List[str]
 
-    :ivar warnings: Array of warnings associated with the device. Each warning object within the array contains two fields: `warning_code` and `message`. `warning_code` is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. `message` provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
+    :ivar warnings: Array of warnings associated with the device. Each warning object within the array contains two fields: ``warning_code`` and ``message``. ``warning_code`` is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
     :vartype warnings: List[Dict[str, Any]]
 
     :ivar workspace_id: Unique identifier for the Seam workspace associated with the device.

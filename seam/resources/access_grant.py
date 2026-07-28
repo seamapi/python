@@ -31,13 +31,13 @@ class AccessGrant:
     :ivar ends_at: Date and time at which the Access Grant ends.
     :vartype ends_at: str
 
-    :ivar errors: Errors associated with the [access grant](https://docs.seam.co/use-cases/granting-access).
+    :ivar errors: Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
     :vartype errors: List[Dict[str, Any]]
 
     :ivar instant_key_url: Instant Key URL. Only returned if the Access Grant has a single mobile_key access_method.
     :vartype instant_key_url: str
 
-    :ivar location_ids: Deprecated: Use `space_ids`.
+    :ivar location_ids: Deprecated: Use ``space_ids``.
     :vartype location_ids: List[str]
 
     :ivar name: Name of the Access Grant. If not provided, the display name will be computed.
@@ -61,7 +61,7 @@ class AccessGrant:
     :ivar user_identity_id: ID of user identity to which the Access Grant gives access.
     :vartype user_identity_id: str
 
-    :ivar warnings: Warnings associated with the [access grant](https://docs.seam.co/use-cases/granting-access).
+    :ivar warnings: Warnings associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
     :vartype warnings: List[Dict[str, Any]]
 
     :ivar workspace_id: ID of the Seam workspace associated with the Access Grant.

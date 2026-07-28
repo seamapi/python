@@ -5,36 +5,36 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class ThermostatSchedule:
-    """Represents a [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules) that activates a configured [climate preset](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets) on a [thermostat](https://docs.seam.co/capability-guides/thermostats) at a specified starting time and deactivates the climate preset at a specified ending time.
+    """Represents a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ that activates a configured `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ on a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ at a specified starting time and deactivates the climate preset at a specified ending time.
 
-    :ivar climate_preset_key: Key of the [climate preset](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets) to use for the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules).
+    :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
     :vartype climate_preset_key: str
 
-    :ivar created_at: Date and time at which the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules) was created.
+    :ivar created_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ was created.
     :vartype created_at: str
 
-    :ivar device_id: ID of the desired [thermostat](https://docs.seam.co/capability-guides/thermostats) device.
+    :ivar device_id: ID of the desired `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ device.
     :vartype device_id: str
 
-    :ivar ends_at: Date and time at which the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules) ends, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+    :ivar ends_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
     :vartype ends_at: str
 
-    :ivar errors: Errors associated with the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules).
+    :ivar errors: Errors associated with the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
     :vartype errors: List[Dict[str, Any]]
 
-    :ivar is_override_allowed: Indicates whether a person at the thermostat can change the thermostat's settings after the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules) starts.
+    :ivar is_override_allowed: Indicates whether a person at the thermostat can change the thermostat's settings after the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts.
     :vartype is_override_allowed: bool
 
-    :ivar max_override_period_minutes: Number of minutes for which a person at the thermostat can change the thermostat's settings after the activation of the scheduled [climate preset](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets). See also [Specifying Manual Override Permissions](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions).
+    :ivar max_override_period_minutes: Number of minutes for which a person at the thermostat can change the thermostat's settings after the activation of the scheduled `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
     :vartype max_override_period_minutes: int
 
-    :ivar name: User-friendly name to identify the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules).
+    :ivar name: User-friendly name to identify the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
     :vartype name: str
 
-    :ivar starts_at: Date and time at which the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules) starts, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+    :ivar starts_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
     :vartype starts_at: str
 
-    :ivar thermostat_schedule_id: ID of the [thermostat schedule](https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules).
+    :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
     :vartype thermostat_schedule_id: str
 
     :ivar workspace_id: ID of the workspace that contains the thermostat schedule.

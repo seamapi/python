@@ -8,7 +8,7 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
-        """Creates a new [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
         :type url: str
@@ -22,7 +22,7 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete.
         :type webhook_id: str"""
@@ -30,7 +30,7 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
         :type webhook_id: str
@@ -43,7 +43,7 @@ class AbstractWebhooks(abc.ABC):
     def list(
         self,
     ) -> List[Webhook]:
-        """Returns a list of all [webhooks](https://docs.seam.co/developer-tools/webhooks).
+        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK
         :rtype: List[Webhook]"""
@@ -51,7 +51,7 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
         :type event_types: List[str]
@@ -67,7 +67,7 @@ class Webhooks(AbstractWebhooks):
         self.defaults = defaults
 
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
-        """Creates a new [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
         :type url: str
@@ -89,7 +89,7 @@ class Webhooks(AbstractWebhooks):
         return Webhook.from_dict(res["webhook"])
 
     def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete.
         :type webhook_id: str"""
@@ -103,7 +103,7 @@ class Webhooks(AbstractWebhooks):
         return None
 
     def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
         :type webhook_id: str
@@ -122,7 +122,7 @@ class Webhooks(AbstractWebhooks):
     def list(
         self,
     ) -> List[Webhook]:
-        """Returns a list of all [webhooks](https://docs.seam.co/developer-tools/webhooks).
+        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK
         :rtype: List[Webhook]"""
@@ -133,7 +133,7 @@ class Webhooks(AbstractWebhooks):
         return [Webhook.from_dict(item) for item in res["webhooks"]]
 
     def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified [webhook](https://docs.seam.co/developer-tools/webhooks).
+        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
         :type event_types: List[str]

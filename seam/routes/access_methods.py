@@ -24,9 +24,9 @@ class AbstractAccessMethods(abc.ABC):
         card_number: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Assigns a pre-registered card credential, identified by `card_number`, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
+        """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
-        :param access_method_id: ID of the `access_method` to assign the credential to.
+        :param access_method_id: ID of the ``access_method`` to assign the credential to.
         :type access_method_id: str
 
         :param card_number: Card number of the credential to assign.
@@ -67,12 +67,12 @@ class AbstractAccessMethods(abc.ABC):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-        :param access_method_id: ID of the `access_method` to encode onto a card.
+        :param access_method_id: ID of the ``access_method`` to encode onto a card.
         :type access_method_id: str
 
-        :param acs_encoder_id: ID of the `acs_encoder` to use to encode the `access_method`.
+        :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``access_method``.
         :type acs_encoder_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
@@ -159,9 +159,9 @@ class AbstractAccessMethods(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Remotely unlocks a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
-        :param access_method_id: ID of the cloud_key `access_method` to use for the unlock operation.
+        :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
         :type access_method_id: str
 
         :param acs_entrance_id: ID of the entrance to unlock.
@@ -192,9 +192,9 @@ class AccessMethods(AbstractAccessMethods):
         card_number: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Assigns a pre-registered card credential, identified by `card_number`, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
+        """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
-        :param access_method_id: ID of the `access_method` to assign the credential to.
+        :param access_method_id: ID of the ``access_method`` to assign the credential to.
         :type access_method_id: str
 
         :param card_number: Card number of the credential to assign.
@@ -263,12 +263,12 @@ class AccessMethods(AbstractAccessMethods):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified [encoder](https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners).
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-        :param access_method_id: ID of the `access_method` to encode onto a card.
+        :param access_method_id: ID of the ``access_method`` to encode onto a card.
         :type access_method_id: str
 
-        :param acs_encoder_id: ID of the `acs_encoder` to use to encode the `access_method`.
+        :param acs_encoder_id: ID of the ``acs_encoder`` to use to encode the ``access_method``.
         :type acs_encoder_id: str
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
@@ -405,9 +405,9 @@ class AccessMethods(AbstractAccessMethods):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Remotely unlocks a specified [entrance](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
-        :param access_method_id: ID of the cloud_key `access_method` to use for the unlock operation.
+        :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
         :type access_method_id: str
 
         :param acs_entrance_id: ID of the entrance to unlock.

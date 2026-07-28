@@ -5,12 +5,12 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class Workspace:
-    """Represents a Seam [workspace](https://docs.seam.co/core-concepts/workspaces). A workspace is a top-level entity that encompasses all other resources below it, such as devices, connected accounts, and Connect Webviews. Seam provides two types of workspaces. A [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces) is a special type of workspace designed for testing code. Sandbox workspaces offer test device accounts and virtual devices that you can connect and control. This ability to work with virtual devices is quite handy because it removes the need to own physical devices from multiple brands. To connect real devices and systems to Seam, use a [production workspace](https://docs.seam.co/core-concepts/workspaces#production-workspaces).
+    """Represents a Seam `workspace <https://docs.seam.co/core-concepts/workspaces>`_. A workspace is a top-level entity that encompasses all other resources below it, such as devices, connected accounts, and Connect Webviews. Seam provides two types of workspaces. A `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ is a special type of workspace designed for testing code. Sandbox workspaces offer test device accounts and virtual devices that you can connect and control. This ability to work with virtual devices is quite handy because it removes the need to own physical devices from multiple brands. To connect real devices and systems to Seam, use a `production workspace <https://docs.seam.co/core-concepts/workspaces#production-workspaces>`_.
 
-    :ivar company_name: Company name associated with the [workspace](https://docs.seam.co/core-concepts/workspaces).
+    :ivar company_name: Company name associated with the `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
     :vartype company_name: str
 
-    :ivar connect_partner_name: Deprecated: Use `company_name` instead.
+    :ivar connect_partner_name: Deprecated: Use ``company_name`` instead.
     :vartype connect_partner_name: str
 
     :ivar connect_webview_customization:
@@ -19,19 +19,19 @@ class Workspace:
     :ivar is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
     :vartype is_publishable_key_auth_enabled: bool
 
-    :ivar is_sandbox: Indicates whether the workspace is a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces).
+    :ivar is_sandbox: Indicates whether the workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
     :vartype is_sandbox: bool
 
-    :ivar is_suspended: Indicates whether the [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces) is suspended. Seam suspends sandbox workspaces that have not been accessed in 14 days.
+    :ivar is_suspended: Indicates whether the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ is suspended. Seam suspends sandbox workspaces that have not been accessed in 14 days.
     :vartype is_suspended: bool
 
-    :ivar name: Name of the [workspace](https://docs.seam.co/core-concepts/workspaces).
+    :ivar name: Name of the `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
     :vartype name: str
 
-    :ivar organization_id: ID of the organization to which the workspace belongs, or `null` if the workspace is not assigned to an organization.
+    :ivar organization_id: ID of the organization to which the workspace belongs, or ``null`` if the workspace is not assigned to an organization.
     :vartype organization_id: str
 
-    :ivar publishable_key: Publishable key for the [workspace](https://docs.seam.co/core-concepts/workspaces). This key is used to identify the workspace in client-side applications.
+    :ivar publishable_key: Publishable key for the `workspace <https://docs.seam.co/core-concepts/workspaces>`_. This key is used to identify the workspace in client-side applications.
     :vartype publishable_key: str
 
     :ivar workspace_id: ID of the workspace.

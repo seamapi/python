@@ -8,6 +8,7 @@ import {
   type ClassModel,
   sortClassMethodParameters,
 } from '../class-model.js'
+import { formatPythonDoc } from '../python-docstring.js'
 
 export interface MethodLayoutContext {
   name: string
@@ -57,9 +58,6 @@ export interface RouteLayoutContext {
 const waitForActionAttemptParameter =
   'wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None'
 
-const cleanDoc = (value: string): string =>
-  value.trim().replaceAll('"""', '\\"\\"\\"')
-
 const indentDoc = (value: string, spaces: number): string =>
   value.replaceAll('\n', `\n${' '.repeat(spaces)}`)
 
@@ -67,13 +65,13 @@ const methodDocstring = (
   method: ClassMethod,
   sortedParameters: ClassMethod['parameters'],
 ): string => {
-  const lines = [cleanDoc(method.description)]
+  const lines = [formatPythonDoc(method.description)]
 
   for (const parameter of sortedParameters) {
     const deprecated = parameter.isDeprecated
-      ? `Deprecated${parameter.deprecationMessage === '' ? '.' : `: ${cleanDoc(parameter.deprecationMessage)}`}`
+      ? `Deprecated${parameter.deprecationMessage === '' ? '.' : `: ${formatPythonDoc(parameter.deprecationMessage)}`}`
       : ''
-    const description = cleanDoc(parameter.description)
+    const description = formatPythonDoc(parameter.description)
     lines.push(
       '',
       `:param ${parameter.name}: ${[deprecated, description].filter(Boolean).join(' ')}`,
@@ -92,7 +90,7 @@ const methodDocstring = (
   if (method.returnResource !== 'None') {
     lines.push(
       '',
-      `:returns: ${cleanDoc(method.responseDescription)}`,
+      `:returns: ${formatPythonDoc(method.responseDescription)}`,
       `:rtype: ${method.returnResource}`,
     )
   }
@@ -101,7 +99,7 @@ const methodDocstring = (
     lines.push(
       '',
       '.. deprecated::',
-      `   ${cleanDoc(method.deprecationMessage) || 'This method is deprecated.'}`,
+      `   ${formatPythonDoc(method.deprecationMessage) || 'This method is deprecated.'}`,
     )
   }
 

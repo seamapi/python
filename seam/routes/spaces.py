@@ -8,7 +8,7 @@ class AbstractSpaces(abc.ABC):
 
     @abc.abstractmethod
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
-        """Adds [entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) to a specific space.
+        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
         :type acs_entrance_ids: List[str]
@@ -21,7 +21,7 @@ class AbstractSpaces(abc.ABC):
     def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a [connected account](https://docs.seam.co/core-concepts/connected-accounts) to a specific space.
+        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
         :type connected_account_id: str
@@ -149,10 +149,10 @@ class AbstractSpaces(abc.ABC):
         :param limit: Maximum number of records to return per page.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using `name`, `space_key`, or `customer_key`.
+        :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using ``name``, ``space_key``, or ``customer_key``.
         :type search: str
 
         :param space_key: Filter spaces by space_key.
@@ -166,7 +166,7 @@ class AbstractSpaces(abc.ABC):
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes [entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) from a specific space.
+        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
         :type acs_entrance_ids: List[str]
@@ -179,7 +179,7 @@ class AbstractSpaces(abc.ABC):
     def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a [connected account](https://docs.seam.co/core-concepts/connected-accounts) from a specific space.
+        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
         :type connected_account_id: str
@@ -241,7 +241,7 @@ class Spaces(AbstractSpaces):
         self.defaults = defaults
 
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
-        """Adds [entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) to a specific space.
+        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
         :type acs_entrance_ids: List[str]
@@ -262,7 +262,7 @@ class Spaces(AbstractSpaces):
     def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a [connected account](https://docs.seam.co/core-concepts/connected-accounts) to a specific space.
+        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
         :type connected_account_id: str
@@ -450,10 +450,10 @@ class Spaces(AbstractSpaces):
         :param limit: Maximum number of records to return per page.
         :type limit: float
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
-        :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using `name`, `space_key`, or `customer_key`.
+        :param search: String for which to search. Filters returned spaces to include all records that satisfy a partial match using ``name``, ``space_key``, or ``customer_key``.
         :type search: str
 
         :param space_key: Filter spaces by space_key.
@@ -481,7 +481,7 @@ class Spaces(AbstractSpaces):
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes [entrances](https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details) from a specific space.
+        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
         :type acs_entrance_ids: List[str]
@@ -502,7 +502,7 @@ class Spaces(AbstractSpaces):
     def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a [connected account](https://docs.seam.co/core-concepts/connected-accounts) from a specific space.
+        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
         :type connected_account_id: str

@@ -7,7 +7,7 @@ class AbstractNoiseSensorsSimulate(abc.ABC):
 
     @abc.abstractmethod
     def trigger_noise_threshold(self, *, device_id: str) -> None:
-        """Simulates the triggering of a [noise threshold](https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings) for a [noise sensor](https://docs.seam.co/capability-guides/noise-sensors) in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces).
+        """Simulates the triggering of a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_ in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param device_id: ID of the device for which you want to simulate the triggering of a noise threshold.
         :type device_id: str"""
@@ -20,7 +20,7 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
         self.defaults = defaults
 
     def trigger_noise_threshold(self, *, device_id: str) -> None:
-        """Simulates the triggering of a [noise threshold](https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings) for a [noise sensor](https://docs.seam.co/capability-guides/noise-sensors) in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces).
+        """Simulates the triggering of a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_ in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param device_id: ID of the device for which you want to simulate the triggering of a noise threshold.
         :type device_id: str"""

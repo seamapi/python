@@ -10,16 +10,16 @@ class Phone:
     :ivar created_at: Date and time at which the phone was created.
     :vartype created_at: str
 
-    :ivar custom_metadata: Optional [custom metadata](https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device) for the phone.
+    :ivar custom_metadata: Optional `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for the phone.
     :vartype custom_metadata: Dict[str, Any]
 
     :ivar device_id: ID of the phone.
     :vartype device_id: str
 
-    :ivar device_type: Type of the phone device, such as `ios_phone` or `android_phone`.
+    :ivar device_type: Type of the phone device, such as ``ios_phone`` or ``android_phone``.
     :vartype device_type: str
 
-    :ivar display_name: Display name of the phone. Defaults to `nickname` (if it is set) or `properties.appearance.name`, otherwise. Enables administrators and users to identify the phone easily, especially when there are numerous phones.
+    :ivar display_name: Display name of the phone. Defaults to ``nickname`` (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the phone easily, especially when there are numerous phones.
     :vartype display_name: str
 
     :ivar errors: Errors associated with the phone.

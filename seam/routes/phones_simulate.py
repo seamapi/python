@@ -15,7 +15,7 @@ class AbstractPhonesSimulate(abc.ABC):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
-        """Creates a new simulated phone in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Creating a Simulated Phone for a User Identity](https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity).
+        """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
         :type user_identity_id: str
@@ -47,7 +47,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
         custom_sdk_installation_id: Optional[str] = None,
         phone_metadata: Optional[Dict[str, Any]] = None
     ) -> Phone:
-        """Creates a new simulated phone in a [sandbox workspace](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces). See also [Creating a Simulated Phone for a User Identity](https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity).
+        """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
         :type user_identity_id: str

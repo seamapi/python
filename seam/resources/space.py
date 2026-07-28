@@ -13,7 +13,7 @@ class Space:
     :ivar created_at: Date and time at which the space was created.
     :vartype created_at: str
 
-    :ivar customer_data: Reservation/stay-related defaults for the space. Also carries the provider/PMS-supplied name under a `<connector_type>_name` key (e.g. `guesty_name`), which Seam preserves when you rename the space (read-only — managed by Seam).
+    :ivar customer_data: Reservation/stay-related defaults for the space. Also carries the provider/PMS-supplied name under a ``<connector_type>_name`` key (e.g. ``guesty_name``), which Seam preserves when you rename the space (read-only — managed by Seam).
     :vartype customer_data: Dict[str, Any]
 
     :ivar customer_key: Customer key associated with the space.

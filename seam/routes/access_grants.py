@@ -35,7 +35,7 @@ class AbstractAccessGrants(abc.ABC):
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
-        """Creates a new [Access Grant](https://docs.seam.co/use-cases/granting-access/access-grants). Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using `device_ids`) and access control systems (using `acs_entrance_ids` or `space_ids`), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
         :type requested_access_methods: List[Dict[str, Any]]
@@ -49,22 +49,22 @@ class AbstractAccessGrants(abc.ABC):
         :param access_grant_key: Unique key for the access grant within the workspace.
         :type access_grant_key: str
 
-        :param acs_entrance_ids: Set of IDs of the [entrances](https://docs.seam.co/api/acs/systems/list) to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
         :type acs_entrance_ids: List[str]
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
         :type customization_profile_id: str
 
-        :param device_ids: Set of IDs of the [devices](https://docs.seam.co/api/devices/list) to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
         :type device_ids: List[str]
 
-        :param ends_at: Date and time at which the validity of the new grant ends, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Must be a time in the future and after `starts_at`.
+        :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
         :type ends_at: str
 
-        :param location: Deprecated: Create a space first, then reference it using `space_ids`.
+        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
         :type location: Dict[str, Any]
 
-        :param location_ids: Deprecated: Use `space_ids`.
+        :param location_ids: Deprecated: Use ``space_ids``.
         :type location_ids: List[str]
 
         :param name: Name for the access grant.
@@ -79,7 +79,7 @@ class AbstractAccessGrants(abc.ABC):
         :param space_keys: Set of keys of existing spaces to which access is being granted.
         :type space_keys: List[str]
 
-        :param starts_at: Date and time at which the validity of the new grant starts, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+        :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         :type starts_at: str
 
         :returns: OK
@@ -184,10 +184,10 @@ class AbstractAccessGrants(abc.ABC):
         :param limit: Numerical limit on the number of access grants to return.
         :type limit: float
 
-        :param location_id: Deprecated: Use `space_id`.
+        :param location_id: Deprecated: Use ``space_id``.
         :type location_id: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
         :param reservation_key: Filter Access Grants by reservation_key.
@@ -231,19 +231,19 @@ class AbstractAccessGrants(abc.ABC):
     ) -> None:
         """Updates an existing Access Grant's time window.
 
-        :param access_grant_id: ID of the Access Grant to update. Provide either `access_grant_id` or `access_grant_key`.
+        :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
         :type access_grant_id: str
 
-        :param access_grant_key: Key of the Access Grant to update. Provide either `access_grant_id` or `access_grant_key`.
+        :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
         :type access_grant_key: str
 
-        :param ends_at: Date and time at which the validity of the grant ends, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Must be a time in the future and after `starts_at`.
+        :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
         :type ends_at: str
 
         :param name: Display name for the access grant.
         :type name: str
 
-        :param starts_at: Date and time at which the validity of the grant starts, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+        :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         :type starts_at: str"""
         raise NotImplementedError()
 
@@ -277,7 +277,7 @@ class AccessGrants(AbstractAccessGrants):
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
-        """Creates a new [Access Grant](https://docs.seam.co/use-cases/granting-access/access-grants). Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using `device_ids`) and access control systems (using `acs_entrance_ids` or `space_ids`), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
         :type requested_access_methods: List[Dict[str, Any]]
@@ -291,22 +291,22 @@ class AccessGrants(AbstractAccessGrants):
         :param access_grant_key: Unique key for the access grant within the workspace.
         :type access_grant_key: str
 
-        :param acs_entrance_ids: Set of IDs of the [entrances](https://docs.seam.co/api/acs/systems/list) to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
         :type acs_entrance_ids: List[str]
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
         :type customization_profile_id: str
 
-        :param device_ids: Set of IDs of the [devices](https://docs.seam.co/api/devices/list) to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
         :type device_ids: List[str]
 
-        :param ends_at: Date and time at which the validity of the new grant ends, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Must be a time in the future and after `starts_at`.
+        :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
         :type ends_at: str
 
-        :param location: Deprecated: Create a space first, then reference it using `space_ids`.
+        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
         :type location: Dict[str, Any]
 
-        :param location_ids: Deprecated: Use `space_ids`.
+        :param location_ids: Deprecated: Use ``space_ids``.
         :type location_ids: List[str]
 
         :param name: Name for the access grant.
@@ -321,7 +321,7 @@ class AccessGrants(AbstractAccessGrants):
         :param space_keys: Set of keys of existing spaces to which access is being granted.
         :type space_keys: List[str]
 
-        :param starts_at: Date and time at which the validity of the new grant starts, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+        :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         :type starts_at: str
 
         :returns: OK
@@ -486,10 +486,10 @@ class AccessGrants(AbstractAccessGrants):
         :param limit: Numerical limit on the number of access grants to return.
         :type limit: float
 
-        :param location_id: Deprecated: Use `space_id`.
+        :param location_id: Deprecated: Use ``space_id``.
         :type location_id: str
 
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's `next_page_cursor`.
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
         :type page_cursor: str
 
         :param reservation_key: Filter Access Grants by reservation_key.
@@ -573,19 +573,19 @@ class AccessGrants(AbstractAccessGrants):
     ) -> None:
         """Updates an existing Access Grant's time window.
 
-        :param access_grant_id: ID of the Access Grant to update. Provide either `access_grant_id` or `access_grant_key`.
+        :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
         :type access_grant_id: str
 
-        :param access_grant_key: Key of the Access Grant to update. Provide either `access_grant_id` or `access_grant_key`.
+        :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
         :type access_grant_key: str
 
-        :param ends_at: Date and time at which the validity of the grant ends, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Must be a time in the future and after `starts_at`.
+        :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
         :type ends_at: str
 
         :param name: Display name for the access grant.
         :type name: str
 
-        :param starts_at: Date and time at which the validity of the grant starts, in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+        :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         :type starts_at: str"""
         json_payload = {}
 

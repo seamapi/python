@@ -7,7 +7,7 @@ class AbstractConnectedAccountsSimulate(abc.ABC):
 
     @abc.abstractmethod
     def disconnect(self, *, connected_account_id: str) -> None:
-        """Simulates a connected account becoming disconnected from Seam. Only applicable for [sandbox workspaces](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces).
+        """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
         :type connected_account_id: str"""
@@ -20,7 +20,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
         self.defaults = defaults
 
     def disconnect(self, *, connected_account_id: str) -> None:
-        """Simulates a connected account becoming disconnected from Seam. Only applicable for [sandbox workspaces](https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces).
+        """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
         :type connected_account_id: str"""

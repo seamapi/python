@@ -5,7 +5,7 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class UserIdentity:
-    """Represents a [user identity](https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity) associated with an application user account.
+    """Represents a `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with an application user account.
 
     :ivar acs_user_ids: Array of access system user IDs associated with the user identity.
     :vartype acs_user_ids: List[str]
@@ -25,7 +25,7 @@ class UserIdentity:
     :ivar full_name: Full name of the user associated with the user identity.
     :vartype full_name: str
 
-    :ivar phone_number: Unique phone number for the user identity in [E.164 format](https://www.itu.int/rec/T-REC-E.164/en) (for example, +15555550100).
+    :ivar phone_number: Unique phone number for the user identity in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, +15555550100).
     :vartype phone_number: str
 
     :ivar user_identity_id: ID of the user identity.
