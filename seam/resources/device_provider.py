@@ -6,6 +6,7 @@ from ..utils.deep_attr_dict import DeepAttrDict
 @dataclass
 class DeviceProvider:
     """
+
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
 
     :ivar can_hvac_cool: Indicates whether the thermostat supports cooling.

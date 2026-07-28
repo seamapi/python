@@ -6,6 +6,7 @@ from ..utils.deep_attr_dict import DeepAttrDict
 @dataclass
 class SeamEvent:
     """
+
     :ivar access_code_id: ID of the affected access code.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.

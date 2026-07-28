@@ -48,18 +48,14 @@ class AbstractWorkspaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(
-        self,
-    ) -> Workspace:
+    def get(self) -> Workspace:
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Workspace]:
+    def list(self) -> List[Workspace]:
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
@@ -67,7 +63,7 @@ class AbstractWorkspaces(abc.ABC):
 
     @abc.abstractmethod
     def reset_sandbox(
-        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 
@@ -177,9 +173,7 @@ class Workspaces(AbstractWorkspaces):
 
         return Workspace.from_dict(res["workspace"])
 
-    def get(
-        self,
-    ) -> Workspace:
+    def get(self) -> Workspace:
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
@@ -189,9 +183,7 @@ class Workspaces(AbstractWorkspaces):
 
         return Workspace.from_dict(res["workspace"])
 
-    def list(
-        self,
-    ) -> List[Workspace]:
+    def list(self) -> List[Workspace]:
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
@@ -202,7 +194,7 @@ class Workspaces(AbstractWorkspaces):
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
     def reset_sandbox(
-        self, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
         """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 

@@ -34,9 +34,7 @@ class AbstractWebhooks(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-    ) -> List[Webhook]:
+    def list(self) -> List[Webhook]:
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK"""
@@ -104,9 +102,7 @@ class Webhooks(AbstractWebhooks):
 
         return Webhook.from_dict(res["webhook"])
 
-    def list(
-        self,
-    ) -> List[Webhook]:
+    def list(self) -> List[Webhook]:
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK"""
