@@ -13,6 +13,20 @@
     "preformat": "eslint --fix .",
     "start": "fake-seam-connect --seed"
   },
+  "engines": {
+    "node": ">=22.11.0",
+    "npm": ">=10.9.4"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.11.0 || ^22.11.0"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "^11.0.0 || ^10.9.4"
+    }
+  },
   "devDependencies": {
     "@seamapi/blueprint": "^1.1.0",
     "@seamapi/fake-seam-connect": "1.86.0",

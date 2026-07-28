@@ -2,7 +2,7 @@ ARG VARIANT="3"
 
 FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 
-ARG NODE_VERSION="20"
+ARG NODE_VERSION="24"
 ARG POETRY_VERSION="1.8.2"
 ARG POETRY_SRC="https://install.python-poetry.org"
 
