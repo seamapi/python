@@ -1,50 +1,46 @@
 // Builds the template context for route class files (seam/routes/{namespace}.py).
-// Each module holds the abstract route class alongside its concrete
-// implementation. The context mirrors the output of the nextlove
-// ClassFile#serializeToClass.
+// The context contains semantic route data; Handlebars templates own all Python
+// and docstring serialization.
 
 import {
   type ClassMethod,
   type ClassModel,
   sortClassMethodParameters,
 } from '../class-model.js'
-import { formatPythonDoc } from '../python-docstring.js'
 
 export interface MethodLayoutContext {
   name: string
   path: string
-  docstring: string
-  hasParams: boolean
-  signatureParams: string
-  params: Array<{ name: string }>
+  description: string
+  responseDescription: string
+  isDeprecated: boolean
+  deprecationMessage: string
+  params: Array<{
+    name: string
+    type: string
+    description: string
+    isDeprecated: boolean
+    deprecationMessage: string
+    required: boolean
+  }>
+  returnPath: string[]
   returnType: string
-  returnsNone: boolean
-  pollsActionAttempt: boolean
-  isList: boolean
-  itemType: string
-  resAccessor: string
 }
 
 export interface AbstractClassLayoutContext {
   className: string
-  docstring: string
+  isDeprecated: boolean
   showPass: boolean
   childProperties: Array<{ namespace: string; abstractClassName: string }>
-  methods: Array<{
-    name: string
-    hasParams: boolean
-    signatureParams: string
-    returnType: string
-    docstring: string
-  }>
+  methods: MethodLayoutContext[]
 }
 
 export interface RouteLayoutContext {
   className: string
   abstractClassName: string
-  docstring: string
+  isDeprecated: boolean
   abstractClass: AbstractClassLayoutContext
-  resourceImportList: string
+  resourceClasses: string[]
   childClasses: Array<{
     namespace: string
     className: string
@@ -55,100 +51,32 @@ export interface RouteLayoutContext {
   methods: MethodLayoutContext[]
 }
 
-const waitForActionAttemptParameter =
-  'wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None'
-
-const indentDoc = (value: string, spaces: number): string =>
-  value.replaceAll('\n', `\n${' '.repeat(spaces)}`)
-
-const methodDocstring = (
-  method: ClassMethod,
-  sortedParameters: ClassMethod['parameters'],
-): string => {
-  const lines = [formatPythonDoc(method.description)]
-
-  for (const parameter of sortedParameters) {
-    const deprecated = parameter.isDeprecated
-      ? `Deprecated${parameter.deprecationMessage === '' ? '.' : `: ${formatPythonDoc(parameter.deprecationMessage)}`}`
-      : ''
-    const description = formatPythonDoc(parameter.description)
-    lines.push(
-      '',
-      `:param ${parameter.name}: ${[deprecated, description].filter(Boolean).join(' ')}`,
-    )
-  }
-
-  if (method.returnResource === 'ActionAttempt') {
-    lines.push(
-      '',
-      ':param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.',
-    )
-  }
-
-  if (method.returnResource !== 'None') {
-    lines.push('', `:returns: ${formatPythonDoc(method.responseDescription)}`)
-  }
-
-  if (method.isDeprecated) {
-    lines.push(
-      '',
-      '.. deprecated::',
-      `   ${formatPythonDoc(method.deprecationMessage) || 'This method is deprecated.'}`,
-    )
-  }
-
-  return lines.filter((line, index) => line !== '' || index !== 0).join('\n')
-}
-
 export const getMethodLayoutContext = (
   method: ClassMethod,
-): MethodLayoutContext => {
-  const { methodName, path, parameters, returnPath, returnResource } = method
-
-  let returnResourceItem = returnResource
-  const isList = returnResourceItem.startsWith('List[')
-
-  if (isList) {
-    returnResourceItem = returnResource.slice(5, -1)
-  }
-
-  const pollsActionAttempt = returnResource === 'ActionAttempt'
-  const returnsNone = returnResourceItem === 'None'
-  const hasParams = parameters.length > 0
-
-  const sortedParameters = sortClassMethodParameters(parameters)
-
-  const signatureParams = sortedParameters
-    .map(({ name, type, required }) =>
-      (required ?? false)
-        ? `${name}: ${type}`
-        : `${name}: Optional[${type}] = None`,
-    )
-    .concat(pollsActionAttempt ? [waitForActionAttemptParameter] : [])
-    .join(', ')
-
-  return {
-    name: methodName,
-    path,
-    docstring: indentDoc(methodDocstring(method, sortedParameters), 8),
-    hasParams,
-    signatureParams,
-    params: sortedParameters.map(({ name }) => ({ name })),
-    returnType: returnResource,
-    returnsNone,
-    pollsActionAttempt,
-    isList,
-    itemType: returnResourceItem,
-    resAccessor:
-      returnPath.length > 0 ? `res["${returnPath.join('"]["')}"]` : '',
-  }
-}
+): MethodLayoutContext => ({
+  name: method.methodName,
+  path: method.path,
+  description: method.description,
+  responseDescription: method.responseDescription,
+  isDeprecated: method.isDeprecated,
+  deprecationMessage: method.deprecationMessage,
+  params: sortClassMethodParameters(method.parameters).map((parameter) => ({
+    name: parameter.name,
+    type: parameter.type,
+    description: parameter.description,
+    isDeprecated: parameter.isDeprecated,
+    deprecationMessage: parameter.deprecationMessage,
+    required: parameter.required ?? false,
+  })),
+  returnPath: method.returnPath,
+  returnType: method.returnResource,
+})
 
 export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   const resourceClasses = Array.from(
     new Set(
-      cls.methods.map((m) =>
-        m.returnResource.replace(/^List\[/, '').replace(/\]$/, ''),
+      cls.methods.map((method) =>
+        method.returnResource.replace(/^List\[/, '').replace(/\]$/, ''),
       ),
     ),
   ).filter((className) => className !== '' && className !== 'None')
@@ -158,37 +86,31 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   )
 
   const abstractClassName = `Abstract${cls.name}`
-  const classDocstring = cls.isDeprecated
-    ? indentDoc('.. deprecated::\n   This route is deprecated.', 4)
-    : ''
+  const methods = cls.methods.map(getMethodLayoutContext)
 
   return {
     className: cls.name,
     abstractClassName,
-    docstring: classDocstring,
+    isDeprecated: cls.isDeprecated,
     abstractClass: {
       className: abstractClassName,
-      docstring: classDocstring,
+      isDeprecated: cls.isDeprecated,
       showPass:
         cls.methods.length === 0 && cls.childClassIdentifiers.length === 0,
-      childProperties: cls.childClassIdentifiers.map((i) => ({
-        namespace: i.namespace,
-        abstractClassName: `Abstract${i.className}`,
+      childProperties: cls.childClassIdentifiers.map((identifier) => ({
+        namespace: identifier.namespace,
+        abstractClassName: `Abstract${identifier.className}`,
       })),
-      methods: cls.methods.map((method) => {
-        const { name, hasParams, signatureParams, returnType, docstring } =
-          getMethodLayoutContext(method)
-        return { name, hasParams, signatureParams, returnType, docstring }
-      }),
+      methods,
     },
-    resourceImportList: resourceClasses.join(','),
-    childClasses: cls.childClassIdentifiers.map((i) => ({
-      namespace: i.namespace,
-      className: i.className,
-      abstractClassName: `Abstract${i.className}`,
-      module: `${cls.namespace}_${i.namespace}`,
+    resourceClasses,
+    childClasses: cls.childClassIdentifiers.map((identifier) => ({
+      namespace: identifier.namespace,
+      className: identifier.className,
+      abstractClassName: `Abstract${identifier.className}`,
+      module: `${cls.namespace}_${identifier.namespace}`,
     })),
     importResolveActionAttempt,
-    methods: cls.methods.map(getMethodLayoutContext),
+    methods,
   }
 }

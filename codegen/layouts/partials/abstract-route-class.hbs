@@ -1,6 +1,7 @@
 class {{className}}(abc.ABC):
-{{#if docstring}}
-    """{{{docstring}}}"""
+{{#if isDeprecated}}
+    """.. deprecated::
+       This route is deprecated."""
 {{/if}}
 {{#if showPass}}
     pass
@@ -15,7 +16,7 @@ class {{className}}(abc.ABC):
 {{#each methods}}
 
     @abc.abstractmethod
-    def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
-        """{{{docstring}}}"""
+    def {{> method-signature}}:
+        """{{> method-docstring}}"""
         raise NotImplementedError()
 {{/each}}

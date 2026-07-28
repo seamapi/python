@@ -1,5 +1,5 @@
 // Holds the class and method data assembled by the routes plugin; all string
-// serialization lives in the Handlebars layouts and their context builders.
+// serialization lives in the Handlebars layouts and helpers.
 
 export interface ClassMethodParameter {
   name: string

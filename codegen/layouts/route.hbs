@@ -1,8 +1,8 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
-{{#if resourceImportList}}
-from ..resources import ({{resourceImportList}})
+{{#if resourceClasses}}
+from ..resources import ({{#each resourceClasses}}{{this}}{{#unless @last}},{{/unless}}{{/each}})
 {{/if}}
 {{#each childClasses}}
 from .{{module}} import {{abstractClassName}}, {{className}}
@@ -16,8 +16,9 @@ from ..modules.action_attempts import resolve_action_attempt
 
 
 class {{className}}({{abstractClassName}}):
-{{#if docstring}}
-    """{{{docstring}}}"""
+{{#if isDeprecated}}
+    """.. deprecated::
+       This route is deprecated."""
 {{/if}}
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client

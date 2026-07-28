@@ -6,98 +6,22 @@ import type { Blueprint, Property, Resource } from '@seamapi/blueprint'
 import { pascalCase, snakeCase } from 'change-case'
 
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
-import { formatPythonDoc } from '../python-docstring.js'
 import { mapPropertyToPythonType } from '../python-type.js'
-
-// Python hard keywords cannot be used as identifiers. When a property name
-// collides with one (e.g. "from"), the dataclass field and keyword argument
-// are suffixed with an underscore while the original name is preserved as the
-// dict key.
-const PYTHON_KEYWORDS = new Set([
-  'False',
-  'None',
-  'True',
-  'and',
-  'as',
-  'assert',
-  'async',
-  'await',
-  'break',
-  'class',
-  'continue',
-  'def',
-  'del',
-  'elif',
-  'else',
-  'except',
-  'finally',
-  'for',
-  'from',
-  'global',
-  'if',
-  'import',
-  'in',
-  'is',
-  'lambda',
-  'nonlocal',
-  'not',
-  'or',
-  'pass',
-  'raise',
-  'return',
-  'try',
-  'while',
-  'with',
-  'yield',
-])
-
-const toSafeIdentifier = (name: string): string =>
-  PYTHON_KEYWORDS.has(name) ? `${name}_` : name
 
 export interface ResourceLayoutContext {
   className: string
   moduleName: string
-  docstring: string
+  description: string
+  isDeprecated: boolean
+  deprecationMessage: string
   properties: Array<{
     name: string
-    safeName: string
+    description: string
+    isDeprecated: boolean
+    deprecationMessage: string
     type: string
     isDictParam: boolean
   }>
-}
-
-const createResourceDocstring = (
-  description: string,
-  isDeprecated: boolean,
-  deprecationMessage: string,
-  properties: Property[],
-): string => {
-  const lines = [formatPythonDoc(description)]
-  for (const property of properties) {
-    const deprecated = property.isDeprecated
-      ? `Deprecated${property.deprecationMessage === '' ? '.' : `: ${formatPythonDoc(property.deprecationMessage)}`}`
-      : ''
-    lines.push(
-      '',
-      `:ivar ${toSafeIdentifier(property.name)}: ${[
-        deprecated,
-        formatPythonDoc(property.description),
-      ]
-        .filter(Boolean)
-        .join(' ')}`,
-    )
-  }
-  if (isDeprecated) {
-    lines.push(
-      '',
-      '.. deprecated::',
-      `   ${formatPythonDoc(deprecationMessage) || 'This resource is deprecated.'}`,
-    )
-  }
-  return lines
-    .filter((line, index) => line !== '' || index !== 0)
-    .join('\n')
-    .replaceAll('\n', '\n    ')
 }
 
 export interface ResourcesIndexLayoutContext {
@@ -169,12 +93,9 @@ export const getResourceLayoutContexts = (
       const className = pascalCase(convertCustomResourceName(name))
       return {
         className,
-        docstring: createResourceDocstring(
-          description,
-          isDeprecated,
-          deprecationMessage,
-          properties,
-        ),
+        description,
+        isDeprecated,
+        deprecationMessage,
         // Derived from the class name rather than the resource type so the
         // module always matches the dataclass it exports (e.g. the "event"
         // resource becomes SeamEvent in seam_event.py).
@@ -183,7 +104,9 @@ export const getResourceLayoutContexts = (
           const type = mapPropertyToPythonType(property)
           return {
             name: property.name,
-            safeName: toSafeIdentifier(property.name),
+            description: property.description,
+            isDeprecated: property.isDeprecated,
+            deprecationMessage: property.deprecationMessage,
             type,
             isDictParam:
               type.startsWith('Dict') || property.name === 'properties',
