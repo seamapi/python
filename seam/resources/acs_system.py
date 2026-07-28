@@ -5,6 +5,53 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class AcsSystem:
+    """Represents an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    Within an ``acs_system``, create ```acs_user``s <https://docs.seam.co/api/acs/users/object>`_ and ```acs_credential``s <https://docs.seam.co/api/acs/credentials/object>`_ to grant access to the ``acs_user``s.
+
+    For details about the resources associated with an access control system, see the `access control systems namespace <https://docs.seam.co/api/acs>`_.
+
+    :ivar acs_access_group_count: Number of access groups in the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar acs_system_id: ID of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar acs_user_count: Number of users in the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar connected_account_id: ID of the connected account associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar connected_account_ids: Deprecated: Use ``connected_account_id``. IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar created_at: Date and time at which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ was created.
+
+    :ivar default_credential_manager_acs_system_id: ID of the default credential manager ``acs_system`` for this `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar errors: Errors associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar external_type: Brand-specific terminology for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ type.
+
+    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ type.
+
+    :ivar image_alt_text: Alternative text for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ image.
+
+    :ivar image_url: URL for the image that represents the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar is_credential_manager: Indicates whether the ``acs_system`` is a credential manager.
+
+    :ivar location: Location information for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar name: Name of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar system_type: Deprecated: Use ``external_type``.
+
+    :ivar system_type_display_name: Deprecated: Use ``external_type_display_name``.
+
+    :ivar visionline_metadata: Visionline-specific metadata for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar warnings: Warnings associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+
+    :ivar workspace_id: ID of the workspace that contains the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """
+
     acs_access_group_count: float
     acs_system_id: str
     acs_user_count: float

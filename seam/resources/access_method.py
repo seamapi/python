@@ -5,6 +5,44 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class AccessMethod:
+    """Represents an access method for an Access Grant. Access methods describe the modes of access, such as PIN codes, plastic cards, and mobile keys. For a mobile key, the access method also stores the URL for the associated Instant Key.
+
+    :ivar access_method_id: ID of the access method.
+
+    :ivar client_session_token: Token of the client session associated with the access method.
+
+    :ivar code: The actual PIN code for code access methods.
+
+    :ivar created_at: Date and time at which the access method was created.
+
+    :ivar customization_profile_id: ID of the customization profile associated with the access method.
+
+    :ivar display_name: Display name of the access method.
+
+    :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
+
+    :ivar instant_key_url: URL of the Instant Key for mobile key access methods.
+
+    :ivar is_assignment_required: Indicates whether an existing card credential must be assigned to this access method before it can be issued. Only applies to card-mode access methods on systems that support credential assignment.
+
+    :ivar is_encoding_required: Indicates whether encoding with an card encoder is required to issue or reissue the plastic card associated with the access method.
+
+    :ivar is_issued: Indicates whether the access method has been issued.
+
+    :ivar is_ready_for_assignment: Indicates whether the access method is ready for card assignment. This is true when the access method is in card mode, has not yet been issued, and the system supports credential assignment.
+
+    :ivar is_ready_for_encoding: Indicates whether the access method is ready to be encoded. This is true when the credential has been created and the card has not yet been issued.
+
+    :ivar issued_at: Date and time at which the access method was issued.
+
+    :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
+
+    :ivar pending_mutations: Pending mutations for the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_. Indicates operations that are in progress.
+
+    :ivar warnings: Warnings associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
+
+    :ivar workspace_id: ID of the Seam workspace associated with the access method."""
+
     access_method_id: str
     client_session_token: str
     code: str

@@ -10,6 +10,12 @@ class AbstractAcsUsers(abc.ABC):
     def add_to_access_group(
         self, *, acs_access_group_id: str, acs_user_id: str
     ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group to which you want to add an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to add to an access group.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -25,6 +31,25 @@ class AbstractAcsUsers(abc.ABC):
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
+        """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the access system to which you want to add the new access system user.
+
+        :param full_name: Full name of the new access system user.
+
+        :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
+
+        :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
+
+        :param email: Deprecated: use email_address.
+
+        :param email_address: Email address of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+
+        :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -35,6 +60,14 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :param acs_system_id: ID of the access system that you want to delete. You must provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to delete. You must provide either acs_user_id or user_identity_id
+
+        :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -45,6 +78,15 @@ class AbstractAcsUsers(abc.ABC):
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
+        """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_user_id: ID of the access system user that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :param acs_system_id: ID of the access system that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -60,6 +102,25 @@ class AbstractAcsUsers(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
     ) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the ``acs_system`` for which you want to retrieve all access system users.
+
+        :param created_before: Timestamp by which to limit returned access system users. Returns users created before this timestamp.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
+
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
+
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,6 +131,15 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AcsEntrance]:
+        """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
+
+        :param acs_system_id: ID of the access system for which you want to list accessible entrances. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -80,6 +150,14 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -90,6 +168,14 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the access system for which you want to revoke access. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -100,6 +186,14 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
+
+        :param acs_system_id: ID of the access system that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -110,6 +204,14 @@ class AbstractAcsUsers(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
+
+        :param acs_system_id: ID of the access system of the user that you want to unsuspend. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -126,6 +228,26 @@ class AbstractAcsUsers(abc.ABC):
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
+
+        :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
+
+        :param email: Deprecated: use email_address.
+
+        :param email_address: Email address of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param full_name: Full name of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param hid_acs_system_id: ID of the HID access control system associated with the user.
+
+        :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+
+        :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
+        """
         raise NotImplementedError()
 
 
@@ -137,6 +259,12 @@ class AcsUsers(AbstractAcsUsers):
     def add_to_access_group(
         self, *, acs_access_group_id: str, acs_user_id: str
     ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group to which you want to add an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to add to an access group.
+        """
         json_payload = {}
 
         if acs_access_group_id is not None:
@@ -160,6 +288,25 @@ class AcsUsers(AbstractAcsUsers):
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
+        """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the access system to which you want to add the new access system user.
+
+        :param full_name: Full name of the new access system user.
+
+        :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
+
+        :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
+
+        :param email: Deprecated: use email_address.
+
+        :param email_address: Email address of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+
+        :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
+
+        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -190,6 +337,14 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :param acs_system_id: ID of the access system that you want to delete. You must provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to delete. You must provide either acs_user_id or user_identity_id
+
+        :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
+        """
         json_payload = {}
 
         if acs_system_id is not None:
@@ -210,6 +365,15 @@ class AcsUsers(AbstractAcsUsers):
         acs_system_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> AcsUser:
+        """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_user_id: ID of the access system user that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :param acs_system_id: ID of the access system that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
+
+        :returns: OK"""
         json_payload = {}
 
         if acs_user_id is not None:
@@ -235,6 +399,25 @@ class AcsUsers(AbstractAcsUsers):
         user_identity_id: Optional[str] = None,
         user_identity_phone_number: Optional[str] = None
     ) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the ``acs_system`` for which you want to retrieve all access system users.
+
+        :param created_before: Timestamp by which to limit returned access system users. Returns users created before this timestamp.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
+
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
+
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+
+        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -265,6 +448,15 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AcsEntrance]:
+        """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
+
+        :param acs_system_id: ID of the access system for which you want to list accessible entrances. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
+
+        :returns: OK"""
         json_payload = {}
 
         if acs_system_id is not None:
@@ -287,6 +479,14 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
+        """
         json_payload = {}
 
         if acs_access_group_id is not None:
@@ -307,6 +507,14 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param acs_system_id: ID of the access system for which you want to revoke access. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
+        """
         json_payload = {}
 
         if acs_system_id is not None:
@@ -327,6 +535,14 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
+
+        :param acs_system_id: ID of the access system that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+        """
         json_payload = {}
 
         if acs_system_id is not None:
@@ -347,6 +563,14 @@ class AcsUsers(AbstractAcsUsers):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
+
+        :param acs_system_id: ID of the access system of the user that you want to unsuspend. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+
+        :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
+        """
         json_payload = {}
 
         if acs_system_id is not None:
@@ -373,6 +597,26 @@ class AcsUsers(AbstractAcsUsers):
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> None:
+        """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
+
+        :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
+
+        :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
+
+        :param email: Deprecated: use email_address.
+
+        :param email_address: Email address of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param full_name: Full name of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+
+        :param hid_acs_system_id: ID of the HID access control system associated with the user.
+
+        :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+
+        :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
+        """
         json_payload = {}
 
         if access_schedule is not None:

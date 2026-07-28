@@ -35,10 +35,46 @@ class AbstractAccessGrants(abc.ABC):
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
+        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+
+        :param requested_access_methods:
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
+
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param access_grant_key: Unique key for the access grant within the workspace.
+
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+
+        :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
+
+        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+
+        :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
+
+        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
+
+        :param location_ids: Deprecated: Use ``space_ids``.
+
+        :param name: Name for the access grant.
+
+        :param reservation_key: Reservation key for the access grant.
+
+        :param space_ids: Set of IDs of existing spaces to which access is being granted.
+
+        :param space_keys: Set of keys of existing spaces to which access is being granted.
+
+        :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, access_grant_id: str) -> None:
+        """Delete an Access Grant.
+
+        :param access_grant_id: ID of Access Grant to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -48,6 +84,13 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None
     ) -> AccessGrant:
+        """Get an Access Grant.
+
+        :param access_grant_id: ID of Access Grant to get.
+
+        :param access_grant_key: Unique key of Access Grant to get.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -59,6 +102,17 @@ class AbstractAccessGrants(abc.ABC):
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
     ) -> Batch:
+        """Gets all related resources for one or more Access Grants.
+
+        :param access_grant_ids: IDs of the access grants that you want to get along with their related resources.
+
+        :param access_grant_keys: Keys of the access grants that you want to get along with their related resources.
+
+        :param exclude:
+
+        :param include:
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -79,12 +133,48 @@ class AbstractAccessGrants(abc.ABC):
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AccessGrant]:
+        """Gets an Access Grant.
+
+        :param access_code_id: ID of the access code by which you want to filter the list of Access Grants.
+
+        :param access_grant_ids: IDs of the access grants to retrieve.
+
+        :param access_grant_key: Filter Access Grants by access_grant_key. Use null to filter for Access Grants without an access_grant_key.
+
+        :param acs_entrance_id: ID of the entrance by which you want to filter the list of Access Grants.
+
+        :param acs_system_id: ID of the access system by which you want to filter the list of Access Grants.
+
+        :param customer_key: Customer key for which you want to list access grants.
+
+        :param device_id: ID of the device by which you want to filter the list of Access Grants.
+
+        :param limit: Numerical limit on the number of access grants to return.
+
+        :param location_id: Deprecated: Use ``space_id``.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param space_id: ID of the space by which you want to filter the list of Access Grants.
+
+        :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def request_access_methods(
         self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
     ) -> AccessGrant:
+        """Adds additional requested access methods to an existing Access Grant.
+
+        :param access_grant_id: ID of the Access Grant to add access methods to.
+
+        :param requested_access_methods: Array of requested access methods to add to the access grant.
+
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -97,6 +187,18 @@ class AbstractAccessGrants(abc.ABC):
         name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
+        """Updates an existing Access Grant's time window.
+
+        :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
+
+        :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
+
+        :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
+
+        :param name: Display name for the access grant.
+
+        :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+        """
         raise NotImplementedError()
 
 
@@ -129,6 +231,39 @@ class AccessGrants(AbstractAccessGrants):
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None
     ) -> AccessGrant:
+        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+
+        :param requested_access_methods:
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
+
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param access_grant_key: Unique key for the access grant within the workspace.
+
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+
+        :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
+
+        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+
+        :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
+
+        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
+
+        :param location_ids: Deprecated: Use ``space_ids``.
+
+        :param name: Name for the access grant.
+
+        :param reservation_key: Reservation key for the access grant.
+
+        :param space_ids: Set of IDs of existing spaces to which access is being granted.
+
+        :param space_keys: Set of keys of existing spaces to which access is being granted.
+
+        :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+        :returns: OK"""
         json_payload = {}
 
         if requested_access_methods is not None:
@@ -167,6 +302,9 @@ class AccessGrants(AbstractAccessGrants):
         return AccessGrant.from_dict(res["access_grant"])
 
     def delete(self, *, access_grant_id: str) -> None:
+        """Delete an Access Grant.
+
+        :param access_grant_id: ID of Access Grant to delete."""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -182,6 +320,13 @@ class AccessGrants(AbstractAccessGrants):
         access_grant_id: Optional[str] = None,
         access_grant_key: Optional[str] = None
     ) -> AccessGrant:
+        """Get an Access Grant.
+
+        :param access_grant_id: ID of Access Grant to get.
+
+        :param access_grant_key: Unique key of Access Grant to get.
+
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -201,6 +346,17 @@ class AccessGrants(AbstractAccessGrants):
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None
     ) -> Batch:
+        """Gets all related resources for one or more Access Grants.
+
+        :param access_grant_ids: IDs of the access grants that you want to get along with their related resources.
+
+        :param access_grant_keys: Keys of the access grants that you want to get along with their related resources.
+
+        :param exclude:
+
+        :param include:
+
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_ids is not None:
@@ -233,6 +389,35 @@ class AccessGrants(AbstractAccessGrants):
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None
     ) -> List[AccessGrant]:
+        """Gets an Access Grant.
+
+        :param access_code_id: ID of the access code by which you want to filter the list of Access Grants.
+
+        :param access_grant_ids: IDs of the access grants to retrieve.
+
+        :param access_grant_key: Filter Access Grants by access_grant_key. Use null to filter for Access Grants without an access_grant_key.
+
+        :param acs_entrance_id: ID of the entrance by which you want to filter the list of Access Grants.
+
+        :param acs_system_id: ID of the access system by which you want to filter the list of Access Grants.
+
+        :param customer_key: Customer key for which you want to list access grants.
+
+        :param device_id: ID of the device by which you want to filter the list of Access Grants.
+
+        :param limit: Numerical limit on the number of access grants to return.
+
+        :param location_id: Deprecated: Use ``space_id``.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param space_id: ID of the space by which you want to filter the list of Access Grants.
+
+        :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
+
+        :returns: OK"""
         json_payload = {}
 
         if access_code_id is not None:
@@ -269,6 +454,13 @@ class AccessGrants(AbstractAccessGrants):
     def request_access_methods(
         self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
     ) -> AccessGrant:
+        """Adds additional requested access methods to an existing Access Grant.
+
+        :param access_grant_id: ID of the Access Grant to add access methods to.
+
+        :param requested_access_methods: Array of requested access methods to add to the access grant.
+
+        :returns: OK"""
         json_payload = {}
 
         if access_grant_id is not None:
@@ -291,6 +483,18 @@ class AccessGrants(AbstractAccessGrants):
         name: Optional[str] = None,
         starts_at: Optional[str] = None
     ) -> None:
+        """Updates an existing Access Grant's time window.
+
+        :param access_grant_id: ID of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
+
+        :param access_grant_key: Key of the Access Grant to update. Provide either ``access_grant_id`` or ``access_grant_key``.
+
+        :param ends_at: Date and time at which the validity of the grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
+
+        :param name: Display name for the access grant.
+
+        :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+        """
         json_payload = {}
 
         if access_grant_id is not None:

@@ -5,6 +5,40 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class UnmanagedAccessGrant:
+    """Represents an unmanaged Access Grant. Unmanaged Access Grants do not have client sessions, instant keys, customization profiles, or keys.
+
+    :ivar access_grant_id: ID of the Access Grant.
+
+    :ivar access_method_ids: IDs of the access methods created for the Access Grant.
+
+    :ivar created_at: Date and time at which the Access Grant was created.
+
+    :ivar display_name: Display name of the Access Grant.
+
+    :ivar ends_at: Date and time at which the Access Grant ends.
+
+    :ivar errors: Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+
+    :ivar location_ids: Deprecated: Use ``space_ids``.
+
+    :ivar name: Name of the Access Grant. If not provided, the display name will be computed.
+
+    :ivar pending_mutations: List of pending mutations for the access grant. This shows updates that are in progress.
+
+    :ivar requested_access_methods: Access methods that the user requested for the Access Grant.
+
+    :ivar reservation_key: Reservation key for the access grant.
+
+    :ivar space_ids: IDs of the spaces to which the Access Grant gives access.
+
+    :ivar starts_at: Date and time at which the Access Grant starts.
+
+    :ivar user_identity_id: ID of user identity to which the Access Grant gives access.
+
+    :ivar warnings: Warnings associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+
+    :ivar workspace_id: ID of the Seam workspace associated with the Access Grant."""
+
     access_grant_id: str
     access_method_ids: List[str]
     created_at: str

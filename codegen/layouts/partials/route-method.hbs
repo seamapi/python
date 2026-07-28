@@ -1,4 +1,5 @@
-    def {{name}}(self,{{#if hasParams}} *,{{/if}} {{signatureParams}}) -> {{returnType}}:
+    def {{> method-signature}}:
+        """{{> method-docstring}}"""
         json_payload = {}
 
 {{#each params}}
@@ -6,8 +7,8 @@
             json_payload["{{name}}"] = {{name}}
 {{/each}}
 
-        {{#unless returnsNone}}res = {{/unless}}self.client.post("{{path}}", json=json_payload)
-{{#if pollsActionAttempt}}
+        {{#unless (eq returnType "None")}}res = {{/unless}}self.client.post("{{path}}", json=json_payload)
+{{#if (eq returnType "ActionAttempt")}}
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")
@@ -20,13 +21,13 @@
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt
         )
-{{else if returnsNone}}
+{{else if (eq returnType "None")}}
 
         return None
-{{else if isList}}
+{{else if (isListType returnType)}}
 
-        return [{{itemType}}.from_dict(item) for item in {{resAccessor}}]
+        return [{{listItemType returnType}}.from_dict(item) for item in res{{#each returnPath}}["{{this}}"]{{/each}}]
 {{else}}
 
-        return {{returnType}}.from_dict({{resAccessor}})
+        return {{returnType}}.from_dict(res{{#each returnPath}}["{{this}}"]{{/each}})
 {{/if}}

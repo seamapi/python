@@ -1,7 +1,6 @@
 // Builds the template context for route class files (seam/routes/{namespace}.py).
-// Each module holds the abstract route class alongside its concrete
-// implementation. The context mirrors the output of the nextlove
-// ClassFile#serializeToClass.
+// The context contains semantic route data; Handlebars templates own all Python
+// and docstring serialization.
 
 import {
   type ClassMethod,
@@ -12,34 +11,36 @@ import {
 export interface MethodLayoutContext {
   name: string
   path: string
-  hasParams: boolean
-  signatureParams: string
-  params: Array<{ name: string }>
+  description: string
+  responseDescription: string
+  isDeprecated: boolean
+  deprecationMessage: string
+  params: Array<{
+    name: string
+    type: string
+    description: string
+    isDeprecated: boolean
+    deprecationMessage: string
+    required: boolean
+  }>
+  returnPath: string[]
   returnType: string
-  returnsNone: boolean
-  pollsActionAttempt: boolean
-  isList: boolean
-  itemType: string
-  resAccessor: string
 }
 
 export interface AbstractClassLayoutContext {
   className: string
+  isDeprecated: boolean
   showPass: boolean
   childProperties: Array<{ namespace: string; abstractClassName: string }>
-  methods: Array<{
-    name: string
-    hasParams: boolean
-    signatureParams: string
-    returnType: string
-  }>
+  methods: MethodLayoutContext[]
 }
 
 export interface RouteLayoutContext {
   className: string
   abstractClassName: string
+  isDeprecated: boolean
   abstractClass: AbstractClassLayoutContext
-  resourceImportList: string
+  resourceClasses: string[]
   childClasses: Array<{
     namespace: string
     className: string
@@ -50,57 +51,32 @@ export interface RouteLayoutContext {
   methods: MethodLayoutContext[]
 }
 
-const waitForActionAttemptParameter =
-  'wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None'
-
 export const getMethodLayoutContext = (
   method: ClassMethod,
-): MethodLayoutContext => {
-  const { methodName, path, parameters, returnPath, returnResource } = method
-
-  let returnResourceItem = returnResource
-  const isList = returnResourceItem.startsWith('List[')
-
-  if (isList) {
-    returnResourceItem = returnResource.slice(5, -1)
-  }
-
-  const pollsActionAttempt = returnResource === 'ActionAttempt'
-  const returnsNone = returnResourceItem === 'None'
-  const hasParams = parameters.length > 0
-
-  const sortedParameters = sortClassMethodParameters(parameters)
-
-  const signatureParams = sortedParameters
-    .map(({ name, type, required }) =>
-      (required ?? false)
-        ? `${name}: ${type}`
-        : `${name}: Optional[${type}] = None`,
-    )
-    .concat(pollsActionAttempt ? [waitForActionAttemptParameter] : [])
-    .join(', ')
-
-  return {
-    name: methodName,
-    path,
-    hasParams,
-    signatureParams,
-    params: sortedParameters.map(({ name }) => ({ name })),
-    returnType: returnResource,
-    returnsNone,
-    pollsActionAttempt,
-    isList,
-    itemType: returnResourceItem,
-    resAccessor:
-      returnPath.length > 0 ? `res["${returnPath.join('"]["')}"]` : '',
-  }
-}
+): MethodLayoutContext => ({
+  name: method.methodName,
+  path: method.path,
+  description: method.description,
+  responseDescription: method.responseDescription,
+  isDeprecated: method.isDeprecated,
+  deprecationMessage: method.deprecationMessage,
+  params: sortClassMethodParameters(method.parameters).map((parameter) => ({
+    name: parameter.name,
+    type: parameter.type,
+    description: parameter.description,
+    isDeprecated: parameter.isDeprecated,
+    deprecationMessage: parameter.deprecationMessage,
+    required: parameter.required ?? false,
+  })),
+  returnPath: method.returnPath,
+  returnType: method.returnResource,
+})
 
 export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   const resourceClasses = Array.from(
     new Set(
-      cls.methods.map((m) =>
-        m.returnResource.replace(/^List\[/, '').replace(/\]$/, ''),
+      cls.methods.map((method) =>
+        method.returnResource.replace(/^List\[/, '').replace(/\]$/, ''),
       ),
     ),
   ).filter((className) => className !== '' && className !== 'None')
@@ -110,32 +86,31 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   )
 
   const abstractClassName = `Abstract${cls.name}`
+  const methods = cls.methods.map(getMethodLayoutContext)
 
   return {
     className: cls.name,
     abstractClassName,
+    isDeprecated: cls.isDeprecated,
     abstractClass: {
       className: abstractClassName,
+      isDeprecated: cls.isDeprecated,
       showPass:
         cls.methods.length === 0 && cls.childClassIdentifiers.length === 0,
-      childProperties: cls.childClassIdentifiers.map((i) => ({
-        namespace: i.namespace,
-        abstractClassName: `Abstract${i.className}`,
+      childProperties: cls.childClassIdentifiers.map((identifier) => ({
+        namespace: identifier.namespace,
+        abstractClassName: `Abstract${identifier.className}`,
       })),
-      methods: cls.methods.map((method) => {
-        const { name, hasParams, signatureParams, returnType } =
-          getMethodLayoutContext(method)
-        return { name, hasParams, signatureParams, returnType }
-      }),
+      methods,
     },
-    resourceImportList: resourceClasses.join(','),
-    childClasses: cls.childClassIdentifiers.map((i) => ({
-      namespace: i.namespace,
-      className: i.className,
-      abstractClassName: `Abstract${i.className}`,
-      module: `${cls.namespace}_${i.namespace}`,
+    resourceClasses,
+    childClasses: cls.childClassIdentifiers.map((identifier) => ({
+      namespace: identifier.namespace,
+      className: identifier.className,
+      abstractClassName: `Abstract${identifier.className}`,
+      module: `${cls.namespace}_${identifier.namespace}`,
     })),
     importResolveActionAttempt,
-    methods: cls.methods.map(getMethodLayoutContext),
+    methods,
   }
 }

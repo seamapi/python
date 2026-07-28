@@ -5,6 +5,28 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class Phone:
+    """Represents an app user's mobile phone.
+
+    :ivar created_at: Date and time at which the phone was created.
+
+    :ivar custom_metadata: Optional `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for the phone.
+
+    :ivar device_id: ID of the phone.
+
+    :ivar device_type: Type of the phone device, such as ``ios_phone`` or ``android_phone``.
+
+    :ivar display_name: Display name of the phone. Defaults to ``nickname`` (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the phone easily, especially when there are numerous phones.
+
+    :ivar errors: Errors associated with the phone.
+
+    :ivar nickname: Optional nickname to describe the phone, settable through Seam.
+
+    :ivar properties: Properties of the phone.
+
+    :ivar warnings: Warnings associated with the phone.
+
+    :ivar workspace_id: ID of the workspace that contains the phone."""
+
     created_at: str
     custom_metadata: Dict[str, Any]
     device_id: str

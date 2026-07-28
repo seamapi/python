@@ -5,6 +5,18 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class ActionAttempt:
+    """An attempt to perform an action in the Seam API.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of locking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     action_attempt_id: str
     action_type: str
     error: Dict[str, Any]

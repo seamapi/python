@@ -1,9 +1,12 @@
 // Holds the class and method data assembled by the routes plugin; all string
-// serialization lives in the Handlebars layouts and their context builders.
+// serialization lives in the Handlebars layouts and helpers.
 
 export interface ClassMethodParameter {
   name: string
   type: string
+  description: string
+  isDeprecated: boolean
+  deprecationMessage: string
   position?: number | undefined
   required?: boolean | undefined
 }
@@ -11,6 +14,10 @@ export interface ClassMethodParameter {
 export interface ClassMethod {
   methodName: string
   path: string
+  description: string
+  responseDescription: string
+  isDeprecated: boolean
+  deprecationMessage: string
   parameters: ClassMethodParameter[]
   returnPath: string[]
   returnResource: string
@@ -24,6 +31,7 @@ export interface ChildClassIdentifier {
 export interface ClassModel {
   name: string
   namespace: string
+  isDeprecated: boolean
   methods: ClassMethod[]
   childClassIdentifiers: ChildClassIdentifier[]
 }

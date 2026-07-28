@@ -1,13 +1,19 @@
 @dataclass
 class {{className}}:
+    """{{{indent (pythonDoc description) 4}}}{{#each properties}}
+
+    :ivar {{pythonIdentifier name}}: {{#if isDeprecated}}Deprecated{{#if deprecationMessage}}: {{{indent (pythonDoc deprecationMessage) 4}}}{{else}}.{{/if}}{{#if (pythonDoc description)}} {{/if}}{{/if}}{{{indent (pythonDoc description) 4}}}{{/each}}{{#if isDeprecated}}
+
+    .. deprecated::
+       {{#if (pythonDoc deprecationMessage)}}{{{indent (pythonDoc deprecationMessage) 4}}}{{else}}This resource is deprecated.{{/if}}{{/if}}"""
 {{#each properties}}
-    {{safeName}}: {{type}}
+    {{pythonIdentifier name}}: {{type}}
 {{/each}}
 
     @staticmethod
     def from_dict(d: Dict[str, Any]):
         return {{className}}(
 {{#each properties}}
-            {{safeName}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
+            {{pythonIdentifier name}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
 {{/each}}
         )

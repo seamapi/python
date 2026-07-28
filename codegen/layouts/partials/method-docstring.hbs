@@ -1,0 +1,10 @@
+{{{indent (pythonDoc description) 8}}}{{#each params}}
+
+        :param {{name}}: {{#if isDeprecated}}Deprecated{{#if deprecationMessage}}: {{{indent (pythonDoc deprecationMessage) 8}}}{{else}}.{{/if}}{{#if (pythonDoc description)}} {{/if}}{{/if}}{{{indent (pythonDoc description) 8}}}{{/each}}{{#if (eq returnType "ActionAttempt")}}
+
+        :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.{{/if}}{{#unless (eq returnType "None")}}
+
+        :returns: {{{indent (pythonDoc responseDescription) 8}}}{{/unless}}{{#if isDeprecated}}
+
+        .. deprecated::
+           {{#if (pythonDoc deprecationMessage)}}{{{indent (pythonDoc deprecationMessage) 8}}}{{else}}This method is deprecated.{{/if}}{{/if}}

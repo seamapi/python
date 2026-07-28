@@ -5,6 +5,30 @@ from ..utils.deep_attr_dict import DeepAttrDict
 
 @dataclass
 class Space:
+    """Represents a space that is a logical grouping of devices and entrances. You can assign access to an entire space, thereby making granting access more efficient.
+
+    :ivar acs_entrance_count: Number of entrances in the space.
+
+    :ivar created_at: Date and time at which the space was created.
+
+    :ivar customer_data: Reservation/stay-related defaults for the space. Also carries the provider/PMS-supplied name under a ``<connector_type>_name`` key (e.g. ``guesty_name``), which Seam preserves when you rename the space (read-only — managed by Seam).
+
+    :ivar customer_key: Customer key associated with the space.
+
+    :ivar device_count: Number of devices in the space.
+
+    :ivar display_name: Display name for the space.
+
+    :ivar geolocation: Geographic coordinates (latitude and longitude) of the space.
+
+    :ivar name: Name of the space.
+
+    :ivar space_id: ID of the space.
+
+    :ivar space_key: Unique key for the space within the workspace.
+
+    :ivar workspace_id: ID of the workspace associated with the space."""
+
     acs_entrance_count: float
     created_at: str
     customer_data: Dict[str, Any]
