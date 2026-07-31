@@ -5,7 +5,7 @@
   "scripts": {
     "generate": "tsx codegen/smith.ts",
     "pregenerate": "node generate-readme-toc.js",
-    "postgenerate": "make format",
+    "postgenerate": "just format",
     "typecheck": "tsc",
     "lint": "eslint .",
     "postlint": "prettier --check --ignore-path .gitignore --ignore-path .prettierignore .",

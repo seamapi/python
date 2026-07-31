@@ -11,6 +11,10 @@ inputs:
     description: The Poetry version.
     required: false
     default: '1.8.2'
+  just_version:
+    description: The just version.
+    required: false
+    default: '1.57.0'
   install_dependencies:
     description: Install dependencies.
     required: false
@@ -36,6 +40,10 @@ runs:
           ~/.local/bin
           ~/.local/share/pypoetry
           ~/Library/Application Support/pypoetry
+    - name: Setup just
+      uses: extractions/setup-just@v4
+      with:
+        just-version: ${{ inputs.just_version }}
     - name: Setup Python
       uses: actions/setup-python@v5
       with:

@@ -5,6 +5,8 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 ARG NODE_VERSION="24"
 ARG POETRY_VERSION="1.8.2"
 ARG POETRY_SRC="https://install.python-poetry.org"
+ARG JUST_VERSION="1.57.0"
+ARG JUST_SRC="https://just.systems/install.sh"
 
 # https://github.com/microsoft/vscode-dev-containers/blob/main/containers/go/.devcontainer/base.Dockerfile
 ENV USERNAME=vscode
@@ -24,6 +26,9 @@ WORKDIR /home/vscode
 RUN curl -fsSL -o install-poetry.py "${POETRY_SRC}" \
  && python install-poetry.py --version $POETRY_VERSION \
  && rm install-poetry.py
+
+RUN mkdir -p .local/bin \
+ && curl -fsSL "${JUST_SRC}" | bash -s -- --tag "${JUST_VERSION}" --to /home/vscode/.local/bin
 
 RUN mkdir -p .config/git \
  && echo ".vscode/*" >> .config/git/ignore \

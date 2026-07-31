@@ -452,9 +452,9 @@ Run each command below in a separate terminal window:
 
 ::
 
-    $ make watch
+    $ just watch
 
-Primary development tasks are defined in the ``Makefile``.
+Primary development tasks are defined in the ``justfile``.
 
 Source Code
 ~~~~~~~~~~~
@@ -471,7 +471,7 @@ Clone the project with
 Requirements
 ~~~~~~~~~~~~
 
-You will need `Python 3`_ and Poetry_ and Node.js_ with npm_.
+You will need `Python 3`_ and Poetry_ and Node.js_ with npm_ and just_.
 
 Install the development dependencies with
 
@@ -480,6 +480,7 @@ Install the development dependencies with
     $ poetry install
     $ npm install
 
+.. _just: https://just.systems/
 .. _Node.js: https://nodejs.org/
 .. _npm: https://www.npmjs.com/
 .. _Poetry: https://poetry.eustace.io/
@@ -492,20 +493,20 @@ Lint code with
 
 ::
 
-    $ make lint
+    $ just lint
 
 
 Run tests with
 
 ::
 
-    $ make test
+    $ just test
 
 Run tests on changes with
 
 ::
 
-    $ make watch
+    $ just watch
 
 Publishing
 ~~~~~~~~~~

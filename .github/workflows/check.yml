@@ -36,7 +36,7 @@ jobs:
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
       - name: Test
-        run: make test
+        run: just test
   lint:
     name: Lint (Python ${{ matrix.python }})
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
         with:
           python_version: ${{ matrix.python }}
       - name: Lint
-        run: make lint
+        run: just lint
   build:
     name: Build (Python ${{ matrix.python }} on ${{ matrix.os_name }})
     uses: ./.github/workflows/_build.yml

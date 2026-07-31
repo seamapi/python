@@ -4,6 +4,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
+      "JUST_VERSION": "1.57.0",
       "NODE_VERSION": "24",
       "POETRY_VERSION": "1.8.2",
       "VARIANT": "3.12"

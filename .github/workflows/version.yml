@@ -34,4 +34,4 @@ jobs:
       - name: Cut ${{ github.event.inputs.version }} version
         run: |
           poetry version "${{ github.event.inputs.version }}"
-          make version
+          just version
