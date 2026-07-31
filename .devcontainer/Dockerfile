@@ -18,6 +18,10 @@ RUN bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${U
  && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
  && rm -rf /tmp/library-scripts
 
+RUN apt-get update -y \
+ && apt-get install -y --no-install-recommends just \
+ && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
 USER vscode
 WORKDIR /home/vscode
 

@@ -32,7 +32,7 @@ jobs:
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
       - name: Format
-        run: make format
+        run: just format
       - name: Format with Prettier
         run: npm run format
       - name: Commit

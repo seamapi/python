@@ -37,7 +37,7 @@ jobs:
         with:
           python_version: ${{ inputs.python_version }}
       - name: Build
-        run: make build
+        run: just build
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         if: inputs.upload_artifact == 'true'
