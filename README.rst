@@ -73,6 +73,8 @@ Contents
 
     * `Configuring the httpx client`_
 
+    * `Serializing URL search params`_
+
 * `Development and Testing`_
 
   * `Quickstart`_
@@ -517,6 +519,49 @@ precedence over the defaults the SDK sets:
             "limits": Limits(max_connections=25, max_keepalive_connections=20),
         },
     )
+
+Serializing URL search params
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Seam API parses URL search params as complex types.
+This SDK implements the `Seam URL search params serialization standard`_,
+which defines how the Seam SDKs serialize objects to URL search params.
+Use it directly when building requests to the Seam API by hand:
+
+.. code-block:: python
+
+  from seam import serialize_url_search_params
+
+  serialize_url_search_params(
+      {
+          "name": "Dax",
+          "age": 27,
+          "is_admin": True,
+          "tags": ["cars", "planes"],
+      }
+  )
+  # => 'age=27&is_admin=true&name=Dax&tags=cars&tags=planes'
+
+Params are sorted by name, so equivalent input always produces the same query string.
+Nested dicts are serialized to dot-path keys, e.g., ``{"a": {"b": 1}}`` becomes ``a.b=1``.
+Params set to ``None`` are serialized to an empty value, e.g., ``a=``,
+while params set to ``seam.UNDEFINED`` are removed.
+A param that cannot be represented raises a ``seam.UnserializableParamError``.
+
+To merge serialized params into existing params, use ``update_url_search_params``:
+
+.. code-block:: python
+
+  from seam import UrlSearchParams, update_url_search_params
+
+  search_params = UrlSearchParams("?foo=bar")
+
+  update_url_search_params(search_params, {"name": "Dax"})
+
+  str(search_params)
+  # => 'foo=bar&name=Dax'
+
+.. _Seam URL search params serialization standard: https://github.com/seamapi/url-search-params-serializer
 
 Development and Testing
 -----------------------
