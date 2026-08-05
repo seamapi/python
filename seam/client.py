@@ -12,6 +12,7 @@ from .exceptions import (
     SeamHttpInvalidInputError,
     SeamHttpUnauthorizedError,
 )
+from .null import replace_null
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
@@ -102,6 +103,11 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         return self.request("DELETE", url, json=json, **kwargs)
 
     def request(self, method, url, *args, **kwargs) -> Any:
+        # Route methods omit params set to None, so any remaining NULL sentinel
+        # is an explicit null and becomes None for JSON serialization.
+        if "json" in kwargs:
+            kwargs["json"] = replace_null(kwargs["json"])
+
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)

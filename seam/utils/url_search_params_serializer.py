@@ -12,8 +12,10 @@ ECMAScript ``Number::toString`` algorithm.
 
 Type mapping between the reference implementation and this port:
 
-- JavaScript ``undefined`` is :data:`UNDEFINED`, or simply an absent key.
-- JavaScript ``null`` is ``None``.
+- JavaScript ``undefined`` is ``None``, or simply an absent key.
+- JavaScript ``null`` is :data:`seam.NULL <seam.null.NULL>`.
+  Python has a single absence value, so ``None`` means the safe option of
+  omitting the param and sending null is always explicit.
 - JavaScript ``string`` is ``str``.
 - JavaScript ``boolean`` is ``bool``.
 - JavaScript ``number`` is ``float`` or ``int``.
@@ -38,6 +40,8 @@ from decimal import Decimal
 from typing import Any, Iterator, List, Optional, Sequence, Tuple, Union
 from urllib.parse import parse_qsl
 
+from ..null import is_null
+
 Params = Mapping[str, Any]
 
 
@@ -58,31 +62,6 @@ class UnserializableParamError(Exception):
 
         super().__init__(f"Could not serialize parameter: '{name}' {message}")
         self.name = name
-
-
-class _Undefined:
-    """Type of the :data:`UNDEFINED` sentinel."""
-
-    _instance = None
-
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def __repr__(self):
-        return "UNDEFINED"
-
-    def __bool__(self):
-        return False
-
-
-UNDEFINED = _Undefined()
-"""Sentinel for the absence of a value, equivalent to JavaScript ``undefined``.
-
-Params set to this sentinel are removed, whereas params set to ``None``
-are serialized to an empty value. Omitting the key entirely is equivalent.
-"""
 
 
 class UrlSearchParams:
@@ -296,7 +275,7 @@ def _nested_update_url_search_params(
 
         name = ".".join(current_path)
 
-        if _is_undefined(value):
+        if value is None:
             continue
 
         if isinstance(value, str) and len(value) == 0:
@@ -328,7 +307,7 @@ def _update_url_search_params_from_array(
             "is an array containing the empty string which is unsupported",
         )
 
-    if any(value is None or _is_undefined(value) for value in values):
+    if any(value is None or is_null(value) for value in values):
         raise UnserializableParamError(
             name,
             "is an array containing null or undefined values which is unsupported",
@@ -339,7 +318,7 @@ def _update_url_search_params_from_array(
 
 
 def _serialize(name: str, value: Any) -> str:
-    if value is None:
+    if is_null(value):
         return ""
 
     if isinstance(value, str):
@@ -362,10 +341,6 @@ def _serialize(name: str, value: Any) -> str:
 
 def _is_empty_string(value: Any) -> bool:
     return isinstance(value, str) and len(value) == 0
-
-
-def _is_undefined(value: Any) -> bool:
-    return isinstance(value, _Undefined)
 
 
 def _format_datetime(value: datetime.datetime) -> str:

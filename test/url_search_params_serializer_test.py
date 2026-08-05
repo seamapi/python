@@ -3,8 +3,8 @@ from datetime import date, datetime, timedelta, timezone
 
 import pytest
 
+from seam.null import NULL
 from seam.utils.url_search_params_serializer import (
-    UNDEFINED,
     UnserializableParamError,
     UrlSearchParams,
     serialize_url_search_params,
@@ -24,7 +24,8 @@ def test_serializes_string():
     assert serialize_url_search_params({"foo": "0"}) == "foo=0"
 
 
-def test_serializes_the_empty_string_to_undefined():
+def test_removes_the_empty_string():
+    # Serializing the empty string would conflict with NULL.
     assert serialize_url_search_params({"foo": ""}) == ""
     assert serialize_url_search_params({"foo": "d", "bar": ""}) == "foo=d"
 
@@ -79,14 +80,19 @@ def test_serializes_bool():
     )
 
 
-def test_removes_undefined_params():
-    assert serialize_url_search_params({"bar": UNDEFINED}) == ""
-    assert serialize_url_search_params({"foo": 1, "bar": UNDEFINED}) == "foo=1"
+def test_removes_none_params():
+    assert serialize_url_search_params({"bar": None}) == ""
+    assert serialize_url_search_params({"foo": 1, "bar": None}) == "foo=1"
 
 
-def test_serializes_none_params():
-    assert serialize_url_search_params({"bar": None}) == "bar="
-    assert serialize_url_search_params({"foo": 1, "bar": None}) == "bar=&foo=1"
+def test_serializes_null_params():
+    assert serialize_url_search_params({"bar": NULL}) == "bar="
+    assert serialize_url_search_params({"foo": 1, "bar": NULL}) == "bar=&foo=1"
+
+
+def test_removes_none_params_at_any_depth():
+    assert serialize_url_search_params({"foo": {"bar": None, "baz": 1}}) == "foo.baz=1"
+    assert serialize_url_search_params({"foo": {"bar": None}}) == ""
 
 
 def test_serializes_empty_array_params():
@@ -173,7 +179,7 @@ def test_serializes_dicts():
     )
 
     assert serialize_url_search_params(
-        {"foo": 1, "bar": {"baz": {"x": {"z": None}}}}
+        {"foo": 1, "bar": {"baz": {"x": {"z": NULL}}}}
     ) == ("bar.baz.x.z=&foo=1")
 
     assert serialize_url_search_params({"foo": 1, "bar": {"baz": [1, "a"]}}) == (
@@ -185,7 +191,7 @@ def test_serializes_dicts():
     assert serialize_url_search_params({"foo": {"x": {}}, "bar": 2}) == "bar=2"
 
     assert serialize_url_search_params(
-        {"foo": {}, "bar": {"baz": {"x": {"z": None, "t": {}}, "q": {}}}}
+        {"foo": {}, "bar": {"baz": {"x": {"z": NULL, "t": {}}, "q": {}}}}
     ) == ("bar.baz.x.z=")
 
 
@@ -303,7 +309,7 @@ def test_cannot_serialize_array_params_with_unserializable_values():
         serialize_url_search_params({"bar": ["a", None]})
 
     with pytest.raises(UnserializableParamError):
-        serialize_url_search_params({"bar": ["a", UNDEFINED]})
+        serialize_url_search_params({"bar": ["a", NULL]})
 
     with pytest.raises(UnserializableParamError):
         serialize_url_search_params({"bar": ["a", ["s"]]})
@@ -388,7 +394,7 @@ def test_update_url_search_params_appends_array_params():
 
 
 def test_update_url_search_params_keeps_existing_params_for_absent_values():
-    for value in [UNDEFINED, "", {}]:
+    for value in [None, "", {}]:
         search_params = UrlSearchParams([("foo", "a")])
         update_url_search_params(search_params, {"foo": value})
 

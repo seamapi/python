@@ -63,6 +63,8 @@ Contents
 
   * `Webhooks`_
 
+  * `Omitted params and null params`_
+
   * `Advanced Usage`_
 
     * `Setting the endpoint`_
@@ -449,6 +451,45 @@ see the `Svix docs for more examples in specific frameworks <https://docs.svix.c
       app.run(port=8080)
 
 
+Omitted params and null params
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Seam API distinguishes an omitted param from a param explicitly set to null.
+In an update request, an omitted param leaves the current value unchanged,
+while a null param unsets the current value.
+Some endpoints also accept null as a meaningful filter value.
+
+Python has a single absence value, so this SDK maps the two cases as follows:
+
+- ``None``, or simply not passing the param, omits it from the request.
+- ``seam.NULL`` sends the param as null.
+
+Sending null is rarely intended and unsetting a value cannot be undone,
+so ``None`` means the safe option of omitting the param
+and sending null is always explicit:
+
+.. code-block:: python
+
+  from seam import NULL, Seam
+
+  seam = Seam()
+
+  # Unsets the device name.
+  seam.devices.update(device_id=device_id, name=NULL)
+
+  # Leaves the device name unchanged.
+  seam.devices.update(device_id=device_id, name=None)
+
+  # Lists only the Access Grants which have no access_grant_key.
+  seam.access_grants.list(access_grant_key=NULL)
+
+``NULL`` may be used at any depth, e.g., to clear a single key
+while leaving the other keys unchanged:
+
+.. code-block:: python
+
+  seam.spaces.update(space_id=space_id, customer_data={"check_in": NULL})
+
 Advanced Usage
 ~~~~~~~~~~~~~~
 
@@ -544,8 +585,9 @@ Use it directly when building requests to the Seam API by hand:
 
 Params are sorted by name, so equivalent input always produces the same query string.
 Nested dicts are serialized to dot-path keys, e.g., ``{"a": {"b": 1}}`` becomes ``a.b=1``.
-Params set to ``None`` are serialized to an empty value, e.g., ``a=``,
-while params set to ``seam.UNDEFINED`` are removed.
+Params set to ``None`` are omitted,
+while params set to ``seam.NULL`` are serialized to an empty value, e.g., ``a=``.
+See `Omitted params and null params`_.
 A param that cannot be represented raises a ``seam.UnserializableParamError``.
 
 To merge serialized params into existing params, use ``update_url_search_params``:
