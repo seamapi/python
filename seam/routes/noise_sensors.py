@@ -2,11 +2,9 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import Device
-from .noise_sensors_noise_thresholds import (
-    AbstractNoiseSensorsNoiseThresholds,
-    NoiseSensorsNoiseThresholds,
-)
+from ..null import Null
+from ..resources import (Device)
+from .noise_sensors_noise_thresholds import AbstractNoiseSensorsNoiseThresholds, NoiseSensorsNoiseThresholds
 from .noise_sensors_simulate import AbstractNoiseSensorsSimulate, NoiseSensorsSimulate
 
 
@@ -23,16 +21,7 @@ class AbstractNoiseSensors(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
-    ) -> List[Device]:
+    def list(self, *, connect_webview_id: Optional[str] = None, connected_account_id: Optional[str] = None, customer_key: Optional[str] = None, device_type: Optional[str] = None, device_types: Optional[List[str]] = None, manufacturer: Optional[str] = None) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
@@ -55,9 +44,7 @@ class NoiseSensors(AbstractNoiseSensors):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
         self.client = client
         self.defaults = defaults
-        self._noise_thresholds = NoiseSensorsNoiseThresholds(
-            client=client, defaults=defaults
-        )
+        self._noise_thresholds = NoiseSensorsNoiseThresholds(client=client, defaults=defaults)
         self._simulate = NoiseSensorsSimulate(client=client, defaults=defaults)
 
     @property
@@ -68,19 +55,8 @@ class NoiseSensors(AbstractNoiseSensors):
     def simulate(self) -> NoiseSensorsSimulate:
         return self._simulate
 
-    @route_metadata(
-        path="/noise_sensors/list", has_required_parameters=False, has_pagination=False
-    )
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
-    ) -> List[Device]:
+    @route_metadata(path="/noise_sensors/list", has_required_parameters=False, has_pagination=False)
+    def list(self, *, connect_webview_id: Optional[str] = None, connected_account_id: Optional[str] = None, customer_key: Optional[str] = None, device_type: Optional[str] = None, device_types: Optional[List[str]] = None, manufacturer: Optional[str] = None) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.

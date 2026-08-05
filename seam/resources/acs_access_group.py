@@ -7,9 +7,9 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsAccessGroup:
     """Group that defines the entrances to which a set of users has access and, in some cases, the access schedule for these entrances and users.
-
+    
     Some access control systems use `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_, which are sets of users, combined with sets of permissions. These permissions include both the set of areas or assets that the users can access and the schedule during which the users can access these areas or assets. Instead of assigning access rights individually to each access control system user, which can be time-consuming and error-prone, administrators can assign users to an access group, thereby ensuring that the users inherit all the permissions associated with the access group. Using access groups streamlines the process of managing large numbers of access control system users, especially in bigger organizations or complexes.
-
+    
     To learn whether your access control system supports access groups, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
 
     :ivar access_group_type: Deprecated: Use ``external_type``.
@@ -50,8 +50,7 @@ class AcsAccessGroup:
 
         :ivar ends_at: Date and time at which the user's access ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+        :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format."""
 
         ends_at: Optional[str]
         starts_at: str
@@ -71,8 +70,7 @@ class AcsAccessGroup:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-        """
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
 
         created_at: str
         error_code: str
@@ -94,16 +92,15 @@ class AcsAccessGroup:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code:
+        :ivar mutation_code: 
 
-        :ivar from_:
+        :ivar from_: 
 
-        :ivar to:
+        :ivar to: 
 
         :ivar acs_user_id: ID of the user involved in the scheduled change.
 
-        :ivar variant: Whether the user is scheduled to be added to or removed from this access group.
-        """
+        :ivar variant: Whether the user is scheduled to be added to or removed from this access group."""
 
         @dataclass
         class From(ResourceMapping):
@@ -179,11 +176,7 @@ class AcsAccessGroup:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                from_=(
-                    cls.From.from_dict(d.get("from"))
-                    if d.get("from") is not None
-                    else None
-                ),
+                from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
                 acs_user_id=d.get("acs_user_id", None),
                 variant=d.get("variant", None),
@@ -197,8 +190,7 @@ class AcsAccessGroup:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-        """
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
 
         created_at: str
         message: str
@@ -233,14 +225,8 @@ class AcsAccessGroup:
     def from_dict(cls, d: Any):
         return cls(
             access_group_type=d.get("access_group_type", None),
-            access_group_type_display_name=d.get(
-                "access_group_type_display_name", None
-            ),
-            access_schedule=(
-                cls.AccessSchedule.from_dict(d.get("access_schedule"))
-                if d.get("access_schedule") is not None
-                else None
-            ),
+            access_group_type_display_name=d.get("access_group_type_display_name", None),
+            access_schedule=cls.AccessSchedule.from_dict(d.get("access_schedule")) if d.get("access_schedule") is not None else None,
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -251,10 +237,7 @@ class AcsAccessGroup:
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
-            pending_mutations=[
-                cls.PendingMutations.from_dict(i)
-                for i in d.get("pending_mutations") or []
-            ],
+            pending_mutations=[cls.PendingMutations.from_dict(i) for i in d.get("pending_mutations") or []],
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

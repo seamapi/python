@@ -104,6 +104,7 @@ export const routes = (
           deprecationMessage: parameter.deprecationMessage,
           position: parameter.name === idParameterName ? 0 : undefined,
           required: parameter.isRequired,
+          isNullable: parameter.isNullable,
         })),
         ...resolveResponse(response),
       })

@@ -2,19 +2,15 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import ActionAttempt
+from ..null import Null
+from ..resources import (ActionAttempt)
 from ..modules.action_attempts import resolve_action_attempt
 
 
 class AbstractActionAttempts(abc.ABC):
 
     @abc.abstractmethod
-    def get(
-        self,
-        *,
-        action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
-    ) -> ActionAttempt:
+    def get(self, *, action_attempt_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
@@ -27,14 +23,7 @@ class AbstractActionAttempts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-        *,
-        action_attempt_ids: Optional[List[str]] = None,
-        device_id: Optional[str] = None,
-        limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
-    ) -> List[ActionAttempt]:
+    def list(self, *, action_attempt_ids: Optional[List[str]] = None, device_id: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
@@ -54,15 +43,8 @@ class ActionAttempts(AbstractActionAttempts):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
-    )
-    def get(
-        self,
-        *,
-        action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
-    ) -> ActionAttempt:
+    @route_metadata(path="/action_attempts/get", has_required_parameters=True, has_pagination=False)
+    def get(self, *, action_attempt_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
@@ -78,9 +60,7 @@ class ActionAttempts(AbstractActionAttempts):
             params["action_attempt_id"] = action_attempt_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
+            raise ValueError("At least one parameter is required for /action_attempts/get")
 
         res = self.client.get("/action_attempts/get", params=params)
 
@@ -93,20 +73,11 @@ class ActionAttempts(AbstractActionAttempts):
         return resolve_action_attempt(
             client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
-            wait_for_action_attempt=wait_for_action_attempt,
+            wait_for_action_attempt=wait_for_action_attempt
         )
 
-    @route_metadata(
-        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
-    )
-    def list(
-        self,
-        *,
-        action_attempt_ids: Optional[List[str]] = None,
-        device_id: Optional[str] = None,
-        limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
-    ) -> List[ActionAttempt]:
+    @route_metadata(path="/action_attempts/list", has_required_parameters=False, has_pagination=True)
+    def list(self, *, action_attempt_ids: Optional[List[str]] = None, device_id: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.

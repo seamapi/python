@@ -31,7 +31,7 @@ class Null:
         return False
 
 
-NULL: Any = Null()
+NULL = Null()
 """Sentinel for a param explicitly set to null.
 
 Params set to this sentinel are sent as null,
@@ -52,8 +52,8 @@ to unset a value in an update request, or to filter by an unset value:
   # Lists only the Access Grants which have no access_grant_key.
   seam.access_grants.list(access_grant_key=NULL)
 
-This sentinel is typed as ``Any`` so that it may be passed
-to any param without a type error.
+Route methods accept this sentinel only for params the Seam API
+documents as nullable, so passing it to any other param is a type error.
 """
 
 

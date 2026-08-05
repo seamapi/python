@@ -80,8 +80,7 @@ class Device:
 
     :ivar warnings: Array of warnings associated with the device. Each warning object within the array contains two fields: ``warning_code`` and ``message``. ``warning_code`` is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
 
-    :ivar workspace_id: Unique identifier for the Seam workspace associated with the device.
-    """
+    :ivar workspace_id: Unique identifier for the Seam workspace associated with the device."""
 
     @dataclass
     class DeviceManufacturer(ResourceMapping):
@@ -91,8 +90,7 @@ class Device:
 
         :ivar image_url: Image URL for the manufacturer logo.
 
-        :ivar manufacturer: Manufacturer identifier, such as ``august``, ``yale``, ``salto``, and so on.
-        """
+        :ivar manufacturer: Manufacturer identifier, such as ``august``, ``yale``, ``salto``, and so on."""
 
         display_name: str
         image_url: Optional[str]
@@ -116,8 +114,7 @@ class Device:
 
         :ivar image_url: Image URL for the device provider.
 
-        :ivar provider_category: Provider category. Indicates the third-party provider type, such as ``stable``, for stable integrations, or ``internal``, for internal integrations.
-        """
+        :ivar provider_category: Provider category. Indicates the third-party provider type, such as ``stable``, for stable integrations, or ``internal``, for internal integrations."""
 
         device_provider_name: str
         display_name: str
@@ -141,14 +138,13 @@ class Device:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error:
+        :ivar is_connected_account_error: 
 
-        :ivar is_device_error:
+        :ivar is_device_error: 
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
-        """
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_."""
 
         created_at: str
         error_code: str
@@ -178,8 +174,7 @@ class Device:
 
         :ivar time_zone: Time zone of the device location.
 
-        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
-        """
+        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location."""
 
         location_name: Optional[str]
         room_name: Optional[str]
@@ -407,8 +402,7 @@ class Device:
 
         :ivar thermostat_daily_programs: Configured `daily programs <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
 
-        :ivar thermostat_weekly_program: Current `weekly program <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
-        """
+        :ivar thermostat_weekly_program: Current `weekly program <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat."""
 
         @dataclass
         class AccessoryKeypad(ResourceMapping):
@@ -416,14 +410,13 @@ class Device:
 
             :ivar battery: Keypad battery properties.
 
-            :ivar is_connected: Indicates if an accessory keypad is connected to the device.
-            """
+            :ivar is_connected: Indicates if an accessory keypad is connected to the device."""
 
             @dataclass
             class Battery(ResourceMapping):
                 """Keypad battery properties.
 
-                :ivar level:"""
+                :ivar level: """
 
                 level: float
 
@@ -439,11 +432,7 @@ class Device:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    battery=(
-                        cls.Battery.from_dict(d.get("battery"))
-                        if d.get("battery") is not None
-                        else None
-                    ),
+                    battery=cls.Battery.from_dict(d.get("battery")) if d.get("battery") is not None else None,
                     is_connected=d.get("is_connected", None),
                 )
 
@@ -451,8 +440,7 @@ class Device:
         class Appearance(ResourceMapping):
             """Appearance-related properties, as reported by the device.
 
-            :ivar name: Name of the device as seen from the provider API and application, not settable through Seam.
-            """
+            :ivar name: Name of the device as seen from the provider API and application, not settable through Seam."""
 
             name: str
 
@@ -468,8 +456,7 @@ class Device:
 
             :ivar level: Battery charge level as a value between 0 and 1, inclusive.
 
-            :ivar status: Represents the current status of the battery charge level. Values are ``critical``, which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; ``low``, which signifies that the battery is under the preferred threshold and should be charged soon; ``good``, which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and ``full``, which represents a battery that is fully charged, providing the maximum duration of usage.
-            """
+            :ivar status: Represents the current status of the battery charge level. Values are ``critical``, which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; ``low``, which signifies that the battery is under the preferred threshold and should be charged soon; ``good``, which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and ``full``, which represents a battery that is fully charged, providing the maximum duration of usage."""
 
             level: float
             status: str
@@ -497,8 +484,7 @@ class Device:
 
             :ivar offline_access_codes_supported: Deprecated: use device.can_program_offline_access_codes.
 
-            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes.
-            """
+            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes."""
 
             accessory_keypad_supported: Optional[bool]
             can_connect_accessory_keypad: Optional[bool]
@@ -511,21 +497,13 @@ class Device:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    accessory_keypad_supported=d.get(
-                        "accessory_keypad_supported", None
-                    ),
-                    can_connect_accessory_keypad=d.get(
-                        "can_connect_accessory_keypad", None
-                    ),
+                    accessory_keypad_supported=d.get("accessory_keypad_supported", None),
+                    can_connect_accessory_keypad=d.get("can_connect_accessory_keypad", None),
                     display_name=d.get("display_name", None),
                     has_built_in_keypad=d.get("has_built_in_keypad", None),
                     manufacturer_display_name=d.get("manufacturer_display_name", None),
-                    offline_access_codes_supported=d.get(
-                        "offline_access_codes_supported", None
-                    ),
-                    online_access_codes_supported=d.get(
-                        "online_access_codes_supported", None
-                    ),
+                    offline_access_codes_supported=d.get("offline_access_codes_supported", None),
+                    online_access_codes_supported=d.get("online_access_codes_supported", None),
                 )
 
         @dataclass
@@ -534,8 +512,7 @@ class Device:
 
             :ivar endpoints: Endpoints associated with the phone.
 
-            :ivar has_active_endpoint: Indicates whether the credential service has active endpoints associated with the phone.
-            """
+            :ivar has_active_endpoint: Indicates whether the credential service has active endpoints associated with the phone."""
 
             @dataclass
             class Endpoints(ResourceMapping):
@@ -561,9 +538,7 @@ class Device:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    endpoints=[
-                        cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
-                    ],
+                    endpoints=[cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []],
                     has_active_endpoint=d.get("has_active_endpoint", None),
                 )
 
@@ -571,8 +546,7 @@ class Device:
         class SaltoSpaceCredentialServiceMetadata(ResourceMapping):
             """Salto Space credential service metadata for the phone.
 
-            :ivar has_active_phone: Indicates whether the credential service has an active associated phone.
-            """
+            :ivar has_active_phone: Indicates whether the credential service has an active associated phone."""
 
             has_active_phone: Optional[bool]
 
@@ -840,12 +814,8 @@ class Device:
                     return cls(
                         check_in_time=d.get("check_in_time", None),
                         check_out_time=d.get("check_out_time", None),
-                        dormakaba_oracode_user_level_id=d.get(
-                            "dormakaba_oracode_user_level_id", None
-                        ),
-                        dormakaba_oracode_user_level_prefix=d.get(
-                            "dormakaba_oracode_user_level_prefix", None
-                        ),
+                        dormakaba_oracode_user_level_id=d.get("dormakaba_oracode_user_level_id", None),
+                        dormakaba_oracode_user_level_prefix=d.get("dormakaba_oracode_user_level_prefix", None),
                         is_24_hour=d.get("is_24_hour", None),
                         is_biweekly_mode=d.get("is_biweekly_mode", None),
                         is_master=d.get("is_master", None),
@@ -871,10 +841,7 @@ class Device:
                     door_is_wireless=d.get("door_is_wireless", None),
                     door_name=d.get("door_name", None),
                     iana_timezone=d.get("iana_timezone", None),
-                    predefined_time_slots=[
-                        cls.PredefinedTimeSlots.from_dict(i)
-                        for i in d.get("predefined_time_slots") or []
-                    ],
+                    predefined_time_slots=[cls.PredefinedTimeSlots.from_dict(i) for i in d.get("predefined_time_slots") or []],
                     site_id=d.get("site_id", None),
                     site_name=d.get("site_name", None),
                 )
@@ -905,8 +872,7 @@ class Device:
 
             :ivar device_name: Device name for a 4SUITES device.
 
-            :ivar reclose_delay_in_seconds: Reclose delay, in seconds, for a 4SUITES device.
-            """
+            :ivar reclose_delay_in_seconds: Reclose delay, in seconds, for a 4SUITES device."""
 
             device_id: Optional[float]
             device_name: Optional[str]
@@ -944,8 +910,7 @@ class Device:
 
             :ivar device_name: Device name for a Honeywell Resideo device.
 
-            :ivar honeywell_resideo_device_id: Device ID for a Honeywell Resideo device.
-            """
+            :ivar honeywell_resideo_device_id: Device ID for a Honeywell Resideo device."""
 
             device_name: Optional[str]
             honeywell_resideo_device_id: Optional[str]
@@ -954,9 +919,7 @@ class Device:
             def from_dict(cls, d: Any):
                 return cls(
                     device_name=d.get("device_name", None),
-                    honeywell_resideo_device_id=d.get(
-                        "honeywell_resideo_device_id", None
-                    ),
+                    honeywell_resideo_device_id=d.get("honeywell_resideo_device_id", None),
                 )
 
         @dataclass
@@ -1011,9 +974,7 @@ class Device:
                     bridge_name=d.get("bridge_name", None),
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
-                    is_accessory_keypad_linked_to_bridge=d.get(
-                        "is_accessory_keypad_linked_to_bridge", None
-                    ),
+                    is_accessory_keypad_linked_to_bridge=d.get("is_accessory_keypad_linked_to_bridge", None),
                     keypad_id=d.get("keypad_id", None),
                 )
 
@@ -1153,8 +1114,7 @@ class Device:
 
             :ivar serial_number: Serial number for a Korelock device.
 
-            :ivar wifi_signal_strength: WiFi signal strength (0-1) for a Korelock device.
-            """
+            :ivar wifi_signal_strength: WiFi signal strength (0-1) for a Korelock device."""
 
             device_id: Optional[str]
             device_name: Optional[str]
@@ -1250,8 +1210,7 @@ class Device:
 
                     :ivar time: Time of latest accelerometer Z-axis reading for a Minut device.
 
-                    :ivar value: Value of latest accelerometer Z-axis reading for a Minut device.
-                    """
+                    :ivar value: Value of latest accelerometer Z-axis reading for a Minut device."""
 
                     time: Optional[str]
                     value: Optional[float]
@@ -1323,8 +1282,7 @@ class Device:
 
                     :ivar time: Time of latest temperature reading for a Minut device.
 
-                    :ivar value: Value of latest temperature reading for a Minut device.
-                    """
+                    :ivar value: Value of latest temperature reading for a Minut device."""
 
                     time: Optional[str]
                     value: Optional[float]
@@ -1345,31 +1303,11 @@ class Device:
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
-                        accelerometer_z=(
-                            cls.AccelerometerZ.from_dict(d.get("accelerometer_z"))
-                            if d.get("accelerometer_z") is not None
-                            else None
-                        ),
-                        humidity=(
-                            cls.Humidity.from_dict(d.get("humidity"))
-                            if d.get("humidity") is not None
-                            else None
-                        ),
-                        pressure=(
-                            cls.Pressure.from_dict(d.get("pressure"))
-                            if d.get("pressure") is not None
-                            else None
-                        ),
-                        sound=(
-                            cls.Sound.from_dict(d.get("sound"))
-                            if d.get("sound") is not None
-                            else None
-                        ),
-                        temperature=(
-                            cls.Temperature.from_dict(d.get("temperature"))
-                            if d.get("temperature") is not None
-                            else None
-                        ),
+                        accelerometer_z=cls.AccelerometerZ.from_dict(d.get("accelerometer_z")) if d.get("accelerometer_z") is not None else None,
+                        humidity=cls.Humidity.from_dict(d.get("humidity")) if d.get("humidity") is not None else None,
+                        pressure=cls.Pressure.from_dict(d.get("pressure")) if d.get("pressure") is not None else None,
+                        sound=cls.Sound.from_dict(d.get("sound")) if d.get("sound") is not None else None,
+                        temperature=cls.Temperature.from_dict(d.get("temperature")) if d.get("temperature") is not None else None,
                     )
 
             device_id: Optional[str]
@@ -1381,11 +1319,7 @@ class Device:
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
-                    latest_sensor_values=(
-                        cls.LatestSensorValues.from_dict(d.get("latest_sensor_values"))
-                        if d.get("latest_sensor_values") is not None
-                        else None
-                    ),
+                    latest_sensor_values=cls.LatestSensorValues.from_dict(d.get("latest_sensor_values")) if d.get("latest_sensor_values") is not None else None,
                 )
 
         @dataclass
@@ -1402,8 +1336,7 @@ class Device:
 
             :ivar nest_structure_id: ID of the Google Nest structure containing the device.
 
-            :ivar structure_name: Name of the Google Nest structure containing the device. The device owner sets this value.
-            """
+            :ivar structure_name: Name of the Google Nest structure containing the device. The device owner sets this value."""
 
             device_custom_name: Optional[str]
             device_name: Optional[str]
@@ -1435,8 +1368,7 @@ class Device:
 
             :ivar noise_level_decibel: Noise level, in decibels, for a NoiseAware device.
 
-            :ivar noise_level_nrs: Noise level, expressed as a Noise Risk Score (NRS), for a NoiseAware device.
-            """
+            :ivar noise_level_nrs: Noise level, expressed as a Noise Risk Score (NRS), for a NoiseAware device."""
 
             device_id: Optional[str]
             device_model: Optional[str]
@@ -1466,8 +1398,7 @@ class Device:
 
             :ivar keypad_battery_critical: Indicates whether the keypad battery is in a critical state for a Nuki device.
 
-            :ivar keypad_paired: Indicates whether the keypad is paired for a Nuki device.
-            """
+            :ivar keypad_paired: Indicates whether the keypad is paired for a Nuki device."""
 
             device_id: Optional[str]
             device_name: Optional[str]
@@ -1501,8 +1432,7 @@ class Device:
 
             :ivar time_zone: IANA time zone for the Omnitec device, used to schedule time-bound access codes at the correct local time (accounting for DST).
 
-            :ivar timezone_raw_offset_ms: Static UTC offset of the Omnitec lock in milliseconds. Does not account for DST.
-            """
+            :ivar timezone_raw_offset_ms: Static UTC offset of the Omnitec lock in milliseconds. Does not account for DST."""
 
             has_gateway: Optional[bool]
             lock_alias: Optional[str]
@@ -1562,8 +1492,7 @@ class Device:
 
             :ivar site_id: Site ID for the Salto KS site to which the device belongs.
 
-            :ivar site_name: Site name for the Salto KS site to which the device belongs.
-            """
+            :ivar site_name: Site name for the Salto KS site to which the device belongs."""
 
             battery_level: Optional[str]
             customer_reference: Optional[str]
@@ -1580,9 +1509,7 @@ class Device:
                 return cls(
                     battery_level=d.get("battery_level", None),
                     customer_reference=d.get("customer_reference", None),
-                    has_custom_pin_subscription=d.get(
-                        "has_custom_pin_subscription", None
-                    ),
+                    has_custom_pin_subscription=d.get("has_custom_pin_subscription", None),
                     lock_id=d.get("lock_id", None),
                     lock_type=d.get("lock_type", None),
                     locked_state=d.get("locked_state", None),
@@ -1609,8 +1536,7 @@ class Device:
 
             :ivar site_id: Site ID for the Salto KS site to which the device belongs.
 
-            :ivar site_name: Site name for the Salto KS site to which the device belongs.
-            """
+            :ivar site_name: Site name for the Salto KS site to which the device belongs."""
 
             battery_level: Optional[str]
             customer_reference: Optional[str]
@@ -1703,12 +1629,8 @@ class Device:
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
-                    dual_setpoints_not_supported=d.get(
-                        "dual_setpoints_not_supported", None
-                    ),
-                    enforced_setpoint_range_celsius=d.get(
-                        "enforced_setpoint_range_celsius", None
-                    ),
+                    dual_setpoints_not_supported=d.get("dual_setpoints_not_supported", None),
+                    enforced_setpoint_range_celsius=d.get("enforced_setpoint_range_celsius", None),
                     product_type=d.get("product_type", None),
                 )
 
@@ -1842,9 +1764,7 @@ class Device:
                 def from_dict(cls, d: Any):
                     return cls(
                         auto_lock_time_config=d.get("auto_lock_time_config", None),
-                        incomplete_keyboard_passcode=d.get(
-                            "incomplete_keyboard_passcode", None
-                        ),
+                        incomplete_keyboard_passcode=d.get("incomplete_keyboard_passcode", None),
                         lock_command=d.get("lock_command", None),
                         passcode=d.get("passcode", None),
                         passcode_management=d.get("passcode_management", None),
@@ -1858,8 +1778,7 @@ class Device:
 
                 :ivar wireless_keypad_id: ID for a wireless keypad for a TTLock device.
 
-                :ivar wireless_keypad_name: Name for a wireless keypad for a TTLock device.
-                """
+                :ivar wireless_keypad_name: Name for a wireless keypad for a TTLock device."""
 
                 wireless_keypad_id: Optional[float]
                 wireless_keypad_name: Optional[str]
@@ -1883,19 +1802,12 @@ class Device:
             def from_dict(cls, d: Any):
                 return cls(
                     feature_value=d.get("feature_value", None),
-                    features=(
-                        cls.Features.from_dict(d.get("features"))
-                        if d.get("features") is not None
-                        else None
-                    ),
+                    features=cls.Features.from_dict(d.get("features")) if d.get("features") is not None else None,
                     has_gateway=d.get("has_gateway", None),
                     lock_alias=d.get("lock_alias", None),
                     lock_id=d.get("lock_id", None),
                     timezone_raw_offset_ms=d.get("timezone_raw_offset_ms", None),
-                    wireless_keypads=[
-                        cls.WirelessKeypads.from_dict(i)
-                        for i in d.get("wireless_keypads") or []
-                    ],
+                    wireless_keypads=[cls.WirelessKeypads.from_dict(i) for i in d.get("wireless_keypads") or []],
                 )
 
         @dataclass
@@ -2028,7 +1940,7 @@ class Device:
         class CodeConstraints(ResourceMapping):
             """Constraints on access codes for the device. Seam represents each constraint as an object with a ``constraint_type`` property. Depending on the constraint type, there may also be additional properties. Note that some constraints are manufacturer- or device-specific.
 
-            :ivar constraint_type:
+            :ivar constraint_type: 
 
             :ivar max_length: Maximum name length constraint for access codes.
 
@@ -2078,8 +1990,7 @@ class Device:
 
             :ivar time_pairs: Fixed start/end time pairings the caller chooses from. Mutually exclusive with ``matching_start_end_time``.
 
-            :ivar time_zone: IANA time zone for interpreting ``time_pairs`` and the date recurrence rules. Present only when the option fixes times or dates.
-            """
+            :ivar time_zone: IANA time zone for interpreting ``time_pairs`` and the date recurrence rules. Present only when the option fixes times or dates."""
 
             @dataclass
             class TimePairs(ResourceMapping):
@@ -2089,8 +2000,7 @@ class Device:
 
                 :ivar end_time: End time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``. An ``end_time`` earlier on the clock than ``start_time`` means the end falls on a later date.
 
-                :ivar start_time: Start time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``.
-                """
+                :ivar start_time: Start time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``."""
 
                 display_name: str
                 end_time: str
@@ -2121,12 +2031,8 @@ class Device:
                     matching_start_end_time=d.get("matching_start_end_time", None),
                     max_duration=d.get("max_duration", None),
                     min_duration=d.get("min_duration", None),
-                    start_date_recurrence_rule=d.get(
-                        "start_date_recurrence_rule", None
-                    ),
-                    time_pairs=[
-                        cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []
-                    ],
+                    start_date_recurrence_rule=d.get("start_date_recurrence_rule", None),
+                    time_pairs=[cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []],
                     time_zone=d.get("time_zone", None),
                 )
 
@@ -2148,8 +2054,7 @@ class Device:
 
             :ivar time_pairs: Fixed start/end time pairings the caller chooses from. Mutually exclusive with ``matching_start_end_time``.
 
-            :ivar time_zone: IANA time zone for interpreting ``time_pairs`` and the date recurrence rules. Present only when the option fixes times or dates.
-            """
+            :ivar time_zone: IANA time zone for interpreting ``time_pairs`` and the date recurrence rules. Present only when the option fixes times or dates."""
 
             @dataclass
             class TimePairs(ResourceMapping):
@@ -2159,8 +2064,7 @@ class Device:
 
                 :ivar end_time: End time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``. An ``end_time`` earlier on the clock than ``start_time`` means the end falls on a later date.
 
-                :ivar start_time: Start time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``.
-                """
+                :ivar start_time: Start time of day as a 24-hour ``HH:MM`` value, interpreted in the option's ``time_zone``."""
 
                 display_name: str
                 end_time: str
@@ -2191,12 +2095,8 @@ class Device:
                     matching_start_end_time=d.get("matching_start_end_time", None),
                     max_duration=d.get("max_duration", None),
                     min_duration=d.get("min_duration", None),
-                    start_date_recurrence_rule=d.get(
-                        "start_date_recurrence_rule", None
-                    ),
-                    time_pairs=[
-                        cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []
-                    ],
+                    start_date_recurrence_rule=d.get("start_date_recurrence_rule", None),
+                    time_pairs=[cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []],
                     time_zone=d.get("time_zone", None),
                 )
 
@@ -2224,8 +2124,7 @@ class Device:
 
             :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-            :ivar workspace_id: ID of the workspace that contains the thermostat schedule.
-            """
+            :ivar workspace_id: ID of the workspace that contains the thermostat schedule."""
 
             @dataclass
             class Errors(ResourceMapping):
@@ -2235,8 +2134,7 @@ class Device:
 
                 :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-                :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-                """
+                :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
 
                 created_at: str
                 error_code: str
@@ -2271,9 +2169,7 @@ class Device:
                     ends_at=d.get("ends_at", None),
                     errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
                     is_override_allowed=d.get("is_override_allowed", None),
-                    max_override_period_minutes=d.get(
-                        "max_override_period_minutes", None
-                    ),
+                    max_override_period_minutes=d.get("max_override_period_minutes", None),
                     name=d.get("name", None),
                     starts_at=d.get("starts_at", None),
                     thermostat_schedule_id=d.get("thermostat_schedule_id", None),
@@ -2312,8 +2208,7 @@ class Device:
 
             :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-            """
+            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_."""
 
             @dataclass
             class EcobeeMetadata(ResourceMapping):
@@ -2323,8 +2218,7 @@ class Device:
 
                 :ivar is_optimized: Indicates if the climate preset is optimized by Ecobee.
 
-                :ivar owner: Indicates whether the climate preset is owned by the user or the system.
-                """
+                :ivar owner: Indicates whether the climate preset is owned by the user or the system."""
 
                 climate_ref: Optional[str]
                 is_optimized: Optional[bool]
@@ -2359,26 +2253,16 @@ class Device:
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
-                    can_use_with_thermostat_daily_programs=d.get(
-                        "can_use_with_thermostat_daily_programs", None
-                    ),
+                    can_use_with_thermostat_daily_programs=d.get("can_use_with_thermostat_daily_programs", None),
                     climate_preset_key=d.get("climate_preset_key", None),
                     climate_preset_mode=d.get("climate_preset_mode", None),
                     cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-                    cooling_set_point_fahrenheit=d.get(
-                        "cooling_set_point_fahrenheit", None
-                    ),
+                    cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
-                    ),
+                    ecobee_metadata=cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata")) if d.get("ecobee_metadata") is not None else None,
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-                    heating_set_point_fahrenheit=d.get(
-                        "heating_set_point_fahrenheit", None
-                    ),
+                    heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
                     hvac_mode_setting=d.get("hvac_mode_setting", None),
                     manual_override_allowed=d.get("manual_override_allowed", None),
                     name=d.get("name", None),
@@ -2416,8 +2300,7 @@ class Device:
 
             :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-            """
+            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_."""
 
             @dataclass
             class EcobeeMetadata(ResourceMapping):
@@ -2427,8 +2310,7 @@ class Device:
 
                 :ivar is_optimized: Indicates if the climate preset is optimized by Ecobee.
 
-                :ivar owner: Indicates whether the climate preset is owned by the user or the system.
-                """
+                :ivar owner: Indicates whether the climate preset is owned by the user or the system."""
 
                 climate_ref: Optional[str]
                 is_optimized: Optional[bool]
@@ -2463,26 +2345,16 @@ class Device:
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
-                    can_use_with_thermostat_daily_programs=d.get(
-                        "can_use_with_thermostat_daily_programs", None
-                    ),
+                    can_use_with_thermostat_daily_programs=d.get("can_use_with_thermostat_daily_programs", None),
                     climate_preset_key=d.get("climate_preset_key", None),
                     climate_preset_mode=d.get("climate_preset_mode", None),
                     cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-                    cooling_set_point_fahrenheit=d.get(
-                        "cooling_set_point_fahrenheit", None
-                    ),
+                    cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
-                    ),
+                    ecobee_metadata=cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata")) if d.get("ecobee_metadata") is not None else None,
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-                    heating_set_point_fahrenheit=d.get(
-                        "heating_set_point_fahrenheit", None
-                    ),
+                    heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
                     hvac_mode_setting=d.get("hvac_mode_setting", None),
                     manual_override_allowed=d.get("manual_override_allowed", None),
                     name=d.get("name", None),
@@ -2520,8 +2392,7 @@ class Device:
 
             :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-            """
+            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_."""
 
             @dataclass
             class EcobeeMetadata(ResourceMapping):
@@ -2531,8 +2402,7 @@ class Device:
 
                 :ivar is_optimized: Indicates if the climate preset is optimized by Ecobee.
 
-                :ivar owner: Indicates whether the climate preset is owned by the user or the system.
-                """
+                :ivar owner: Indicates whether the climate preset is owned by the user or the system."""
 
                 climate_ref: Optional[str]
                 is_optimized: Optional[bool]
@@ -2567,26 +2437,16 @@ class Device:
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
-                    can_use_with_thermostat_daily_programs=d.get(
-                        "can_use_with_thermostat_daily_programs", None
-                    ),
+                    can_use_with_thermostat_daily_programs=d.get("can_use_with_thermostat_daily_programs", None),
                     climate_preset_key=d.get("climate_preset_key", None),
                     climate_preset_mode=d.get("climate_preset_mode", None),
                     cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-                    cooling_set_point_fahrenheit=d.get(
-                        "cooling_set_point_fahrenheit", None
-                    ),
+                    cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
-                    ),
+                    ecobee_metadata=cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata")) if d.get("ecobee_metadata") is not None else None,
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-                    heating_set_point_fahrenheit=d.get(
-                        "heating_set_point_fahrenheit", None
-                    ),
+                    heating_set_point_fahrenheit=d.get("heating_set_point_fahrenheit", None),
                     hvac_mode_setting=d.get("hvac_mode_setting", None),
                     manual_override_allowed=d.get("manual_override_allowed", None),
                     name=d.get("name", None),
@@ -2602,8 +2462,7 @@ class Device:
 
             :ivar upper_limit_celsius: Upper limit in °C within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
-            :ivar upper_limit_fahrenheit: Upper limit in °F within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
-            """
+            :ivar upper_limit_fahrenheit: Upper limit in °F within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat."""
 
             lower_limit_celsius: Optional[float]
             lower_limit_fahrenheit: Optional[float]
@@ -2633,8 +2492,7 @@ class Device:
 
             :ivar thermostat_daily_program_id: ID of the thermostat daily program.
 
-            :ivar workspace_id: ID of the workspace that contains the thermostat daily program.
-            """
+            :ivar workspace_id: ID of the workspace that contains the thermostat daily program."""
 
             @dataclass
             class Periods(ResourceMapping):
@@ -2642,8 +2500,7 @@ class Device:
 
                 :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to activate at the ``starts_at_time``.
 
-                :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-                """
+                :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format."""
 
                 climate_preset_key: str
                 starts_at_time: str
@@ -2669,9 +2526,7 @@ class Device:
                     device_id=d.get("device_id", None),
                     name=d.get("name", None),
                     periods=[cls.Periods.from_dict(i) for i in d.get("periods") or []],
-                    thermostat_daily_program_id=d.get(
-                        "thermostat_daily_program_id", None
-                    ),
+                    thermostat_daily_program_id=d.get("thermostat_daily_program_id", None),
                     workspace_id=d.get("workspace_id", None),
                 )
 
@@ -2693,8 +2548,7 @@ class Device:
 
             :ivar tuesday_program_id: ID of the thermostat daily program to run on Tuesdays.
 
-            :ivar wednesday_program_id: ID of the thermostat daily program to run on Wednesdays.
-            """
+            :ivar wednesday_program_id: ID of the thermostat daily program to run on Wednesdays."""
 
             created_at: str
             friday_program_id: Optional[str]
@@ -2736,12 +2590,8 @@ class Device:
         serial_number: Optional[str]
         supports_accessory_keypad: Optional[bool]
         supports_offline_access_codes: Optional[bool]
-        assa_abloy_credential_service_metadata: Optional[
-            AssaAbloyCredentialServiceMetadata
-        ]
-        salto_space_credential_service_metadata: Optional[
-            SaltoSpaceCredentialServiceMetadata
-        ]
+        assa_abloy_credential_service_metadata: Optional[AssaAbloyCredentialServiceMetadata]
+        salto_space_credential_service_metadata: Optional[SaltoSpaceCredentialServiceMetadata]
         akiles_metadata: Optional[AkilesMetadata]
         aqara_metadata: Optional[AqaraMetadata]
         assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
@@ -2831,392 +2681,111 @@ class Device:
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
-                accessory_keypad=(
-                    cls.AccessoryKeypad.from_dict(d.get("accessory_keypad"))
-                    if d.get("accessory_keypad") is not None
-                    else None
-                ),
-                appearance=(
-                    cls.Appearance.from_dict(d.get("appearance"))
-                    if d.get("appearance") is not None
-                    else None
-                ),
-                battery=(
-                    cls.Battery.from_dict(d.get("battery"))
-                    if d.get("battery") is not None
-                    else None
-                ),
+                accessory_keypad=cls.AccessoryKeypad.from_dict(d.get("accessory_keypad")) if d.get("accessory_keypad") is not None else None,
+                appearance=cls.Appearance.from_dict(d.get("appearance")) if d.get("appearance") is not None else None,
+                battery=cls.Battery.from_dict(d.get("battery")) if d.get("battery") is not None else None,
                 battery_level=d.get("battery_level", None),
-                currently_triggering_noise_threshold_ids=d.get(
-                    "currently_triggering_noise_threshold_ids", None
-                ),
+                currently_triggering_noise_threshold_ids=d.get("currently_triggering_noise_threshold_ids", None),
                 has_direct_power=d.get("has_direct_power", None),
                 image_alt_text=d.get("image_alt_text", None),
                 image_url=d.get("image_url", None),
                 manufacturer=d.get("manufacturer", None),
-                model=(
-                    cls.Model.from_dict(d.get("model"))
-                    if d.get("model") is not None
-                    else None
-                ),
+                model=cls.Model.from_dict(d.get("model")) if d.get("model") is not None else None,
                 name=d.get("name", None),
                 noise_level_decibels=d.get("noise_level_decibels", None),
-                offline_access_codes_enabled=d.get(
-                    "offline_access_codes_enabled", None
-                ),
+                offline_access_codes_enabled=d.get("offline_access_codes_enabled", None),
                 online=d.get("online", None),
                 online_access_codes_enabled=d.get("online_access_codes_enabled", None),
                 serial_number=d.get("serial_number", None),
                 supports_accessory_keypad=d.get("supports_accessory_keypad", None),
-                supports_offline_access_codes=d.get(
-                    "supports_offline_access_codes", None
-                ),
-                assa_abloy_credential_service_metadata=(
-                    cls.AssaAbloyCredentialServiceMetadata.from_dict(
-                        d.get("assa_abloy_credential_service_metadata")
-                    )
-                    if d.get("assa_abloy_credential_service_metadata") is not None
-                    else None
-                ),
-                salto_space_credential_service_metadata=(
-                    cls.SaltoSpaceCredentialServiceMetadata.from_dict(
-                        d.get("salto_space_credential_service_metadata")
-                    )
-                    if d.get("salto_space_credential_service_metadata") is not None
-                    else None
-                ),
-                akiles_metadata=(
-                    cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
-                    if d.get("akiles_metadata") is not None
-                    else None
-                ),
-                aqara_metadata=(
-                    cls.AqaraMetadata.from_dict(d.get("aqara_metadata"))
-                    if d.get("aqara_metadata") is not None
-                    else None
-                ),
-                assa_abloy_vostio_metadata=(
-                    cls.AssaAbloyVostioMetadata.from_dict(
-                        d.get("assa_abloy_vostio_metadata")
-                    )
-                    if d.get("assa_abloy_vostio_metadata") is not None
-                    else None
-                ),
-                august_metadata=(
-                    cls.AugustMetadata.from_dict(d.get("august_metadata"))
-                    if d.get("august_metadata") is not None
-                    else None
-                ),
-                avigilon_alta_metadata=(
-                    cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata"))
-                    if d.get("avigilon_alta_metadata") is not None
-                    else None
-                ),
-                brivo_metadata=(
-                    cls.BrivoMetadata.from_dict(d.get("brivo_metadata"))
-                    if d.get("brivo_metadata") is not None
-                    else None
-                ),
-                controlbyweb_metadata=(
-                    cls.ControlbywebMetadata.from_dict(d.get("controlbyweb_metadata"))
-                    if d.get("controlbyweb_metadata") is not None
-                    else None
-                ),
-                dormakaba_oracode_metadata=(
-                    cls.DormakabaOracodeMetadata.from_dict(
-                        d.get("dormakaba_oracode_metadata")
-                    )
-                    if d.get("dormakaba_oracode_metadata") is not None
-                    else None
-                ),
-                ecobee_metadata=(
-                    cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                    if d.get("ecobee_metadata") is not None
-                    else None
-                ),
-                four_suites_metadata=(
-                    cls.FourSuitesMetadata.from_dict(d.get("four_suites_metadata"))
-                    if d.get("four_suites_metadata") is not None
-                    else None
-                ),
-                genie_metadata=(
-                    cls.GenieMetadata.from_dict(d.get("genie_metadata"))
-                    if d.get("genie_metadata") is not None
-                    else None
-                ),
-                honeywell_resideo_metadata=(
-                    cls.HoneywellResideoMetadata.from_dict(
-                        d.get("honeywell_resideo_metadata")
-                    )
-                    if d.get("honeywell_resideo_metadata") is not None
-                    else None
-                ),
-                igloo_metadata=(
-                    cls.IglooMetadata.from_dict(d.get("igloo_metadata"))
-                    if d.get("igloo_metadata") is not None
-                    else None
-                ),
-                igloohome_metadata=(
-                    cls.IgloohomeMetadata.from_dict(d.get("igloohome_metadata"))
-                    if d.get("igloohome_metadata") is not None
-                    else None
-                ),
-                keynest_metadata=(
-                    cls.KeynestMetadata.from_dict(d.get("keynest_metadata"))
-                    if d.get("keynest_metadata") is not None
-                    else None
-                ),
-                kisi_metadata=(
-                    cls.KisiMetadata.from_dict(d.get("kisi_metadata"))
-                    if d.get("kisi_metadata") is not None
-                    else None
-                ),
-                korelock_metadata=(
-                    cls.KorelockMetadata.from_dict(d.get("korelock_metadata"))
-                    if d.get("korelock_metadata") is not None
-                    else None
-                ),
-                kwikset_metadata=(
-                    cls.KwiksetMetadata.from_dict(d.get("kwikset_metadata"))
-                    if d.get("kwikset_metadata") is not None
-                    else None
-                ),
-                lockly_metadata=(
-                    cls.LocklyMetadata.from_dict(d.get("lockly_metadata"))
-                    if d.get("lockly_metadata") is not None
-                    else None
-                ),
-                minut_metadata=(
-                    cls.MinutMetadata.from_dict(d.get("minut_metadata"))
-                    if d.get("minut_metadata") is not None
-                    else None
-                ),
-                nest_metadata=(
-                    cls.NestMetadata.from_dict(d.get("nest_metadata"))
-                    if d.get("nest_metadata") is not None
-                    else None
-                ),
-                noiseaware_metadata=(
-                    cls.NoiseawareMetadata.from_dict(d.get("noiseaware_metadata"))
-                    if d.get("noiseaware_metadata") is not None
-                    else None
-                ),
-                nuki_metadata=(
-                    cls.NukiMetadata.from_dict(d.get("nuki_metadata"))
-                    if d.get("nuki_metadata") is not None
-                    else None
-                ),
-                omnitec_metadata=(
-                    cls.OmnitecMetadata.from_dict(d.get("omnitec_metadata"))
-                    if d.get("omnitec_metadata") is not None
-                    else None
-                ),
-                ring_metadata=(
-                    cls.RingMetadata.from_dict(d.get("ring_metadata"))
-                    if d.get("ring_metadata") is not None
-                    else None
-                ),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
-                ),
-                salto_metadata=(
-                    cls.SaltoMetadata.from_dict(d.get("salto_metadata"))
-                    if d.get("salto_metadata") is not None
-                    else None
-                ),
-                schlage_metadata=(
-                    cls.SchlageMetadata.from_dict(d.get("schlage_metadata"))
-                    if d.get("schlage_metadata") is not None
-                    else None
-                ),
-                seam_bridge_metadata=(
-                    cls.SeamBridgeMetadata.from_dict(d.get("seam_bridge_metadata"))
-                    if d.get("seam_bridge_metadata") is not None
-                    else None
-                ),
-                sensi_metadata=(
-                    cls.SensiMetadata.from_dict(d.get("sensi_metadata"))
-                    if d.get("sensi_metadata") is not None
-                    else None
-                ),
-                smartthings_metadata=(
-                    cls.SmartthingsMetadata.from_dict(d.get("smartthings_metadata"))
-                    if d.get("smartthings_metadata") is not None
-                    else None
-                ),
-                tado_metadata=(
-                    cls.TadoMetadata.from_dict(d.get("tado_metadata"))
-                    if d.get("tado_metadata") is not None
-                    else None
-                ),
-                tedee_metadata=(
-                    cls.TedeeMetadata.from_dict(d.get("tedee_metadata"))
-                    if d.get("tedee_metadata") is not None
-                    else None
-                ),
-                ttlock_metadata=(
-                    cls.TtlockMetadata.from_dict(d.get("ttlock_metadata"))
-                    if d.get("ttlock_metadata") is not None
-                    else None
-                ),
-                two_n_metadata=(
-                    cls.TwoNMetadata.from_dict(d.get("two_n_metadata"))
-                    if d.get("two_n_metadata") is not None
-                    else None
-                ),
-                ultraloq_metadata=(
-                    cls.UltraloqMetadata.from_dict(d.get("ultraloq_metadata"))
-                    if d.get("ultraloq_metadata") is not None
-                    else None
-                ),
-                visionline_metadata=(
-                    cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
-                    if d.get("visionline_metadata") is not None
-                    else None
-                ),
-                wyze_metadata=(
-                    cls.WyzeMetadata.from_dict(d.get("wyze_metadata"))
-                    if d.get("wyze_metadata") is not None
-                    else None
-                ),
-                yacan_metadata=(
-                    cls.YacanMetadata.from_dict(d.get("yacan_metadata"))
-                    if d.get("yacan_metadata") is not None
-                    else None
-                ),
+                supports_offline_access_codes=d.get("supports_offline_access_codes", None),
+                assa_abloy_credential_service_metadata=cls.AssaAbloyCredentialServiceMetadata.from_dict(d.get("assa_abloy_credential_service_metadata")) if d.get("assa_abloy_credential_service_metadata") is not None else None,
+                salto_space_credential_service_metadata=cls.SaltoSpaceCredentialServiceMetadata.from_dict(d.get("salto_space_credential_service_metadata")) if d.get("salto_space_credential_service_metadata") is not None else None,
+                akiles_metadata=cls.AkilesMetadata.from_dict(d.get("akiles_metadata")) if d.get("akiles_metadata") is not None else None,
+                aqara_metadata=cls.AqaraMetadata.from_dict(d.get("aqara_metadata")) if d.get("aqara_metadata") is not None else None,
+                assa_abloy_vostio_metadata=cls.AssaAbloyVostioMetadata.from_dict(d.get("assa_abloy_vostio_metadata")) if d.get("assa_abloy_vostio_metadata") is not None else None,
+                august_metadata=cls.AugustMetadata.from_dict(d.get("august_metadata")) if d.get("august_metadata") is not None else None,
+                avigilon_alta_metadata=cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata")) if d.get("avigilon_alta_metadata") is not None else None,
+                brivo_metadata=cls.BrivoMetadata.from_dict(d.get("brivo_metadata")) if d.get("brivo_metadata") is not None else None,
+                controlbyweb_metadata=cls.ControlbywebMetadata.from_dict(d.get("controlbyweb_metadata")) if d.get("controlbyweb_metadata") is not None else None,
+                dormakaba_oracode_metadata=cls.DormakabaOracodeMetadata.from_dict(d.get("dormakaba_oracode_metadata")) if d.get("dormakaba_oracode_metadata") is not None else None,
+                ecobee_metadata=cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata")) if d.get("ecobee_metadata") is not None else None,
+                four_suites_metadata=cls.FourSuitesMetadata.from_dict(d.get("four_suites_metadata")) if d.get("four_suites_metadata") is not None else None,
+                genie_metadata=cls.GenieMetadata.from_dict(d.get("genie_metadata")) if d.get("genie_metadata") is not None else None,
+                honeywell_resideo_metadata=cls.HoneywellResideoMetadata.from_dict(d.get("honeywell_resideo_metadata")) if d.get("honeywell_resideo_metadata") is not None else None,
+                igloo_metadata=cls.IglooMetadata.from_dict(d.get("igloo_metadata")) if d.get("igloo_metadata") is not None else None,
+                igloohome_metadata=cls.IgloohomeMetadata.from_dict(d.get("igloohome_metadata")) if d.get("igloohome_metadata") is not None else None,
+                keynest_metadata=cls.KeynestMetadata.from_dict(d.get("keynest_metadata")) if d.get("keynest_metadata") is not None else None,
+                kisi_metadata=cls.KisiMetadata.from_dict(d.get("kisi_metadata")) if d.get("kisi_metadata") is not None else None,
+                korelock_metadata=cls.KorelockMetadata.from_dict(d.get("korelock_metadata")) if d.get("korelock_metadata") is not None else None,
+                kwikset_metadata=cls.KwiksetMetadata.from_dict(d.get("kwikset_metadata")) if d.get("kwikset_metadata") is not None else None,
+                lockly_metadata=cls.LocklyMetadata.from_dict(d.get("lockly_metadata")) if d.get("lockly_metadata") is not None else None,
+                minut_metadata=cls.MinutMetadata.from_dict(d.get("minut_metadata")) if d.get("minut_metadata") is not None else None,
+                nest_metadata=cls.NestMetadata.from_dict(d.get("nest_metadata")) if d.get("nest_metadata") is not None else None,
+                noiseaware_metadata=cls.NoiseawareMetadata.from_dict(d.get("noiseaware_metadata")) if d.get("noiseaware_metadata") is not None else None,
+                nuki_metadata=cls.NukiMetadata.from_dict(d.get("nuki_metadata")) if d.get("nuki_metadata") is not None else None,
+                omnitec_metadata=cls.OmnitecMetadata.from_dict(d.get("omnitec_metadata")) if d.get("omnitec_metadata") is not None else None,
+                ring_metadata=cls.RingMetadata.from_dict(d.get("ring_metadata")) if d.get("ring_metadata") is not None else None,
+                salto_ks_metadata=cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata")) if d.get("salto_ks_metadata") is not None else None,
+                salto_metadata=cls.SaltoMetadata.from_dict(d.get("salto_metadata")) if d.get("salto_metadata") is not None else None,
+                schlage_metadata=cls.SchlageMetadata.from_dict(d.get("schlage_metadata")) if d.get("schlage_metadata") is not None else None,
+                seam_bridge_metadata=cls.SeamBridgeMetadata.from_dict(d.get("seam_bridge_metadata")) if d.get("seam_bridge_metadata") is not None else None,
+                sensi_metadata=cls.SensiMetadata.from_dict(d.get("sensi_metadata")) if d.get("sensi_metadata") is not None else None,
+                smartthings_metadata=cls.SmartthingsMetadata.from_dict(d.get("smartthings_metadata")) if d.get("smartthings_metadata") is not None else None,
+                tado_metadata=cls.TadoMetadata.from_dict(d.get("tado_metadata")) if d.get("tado_metadata") is not None else None,
+                tedee_metadata=cls.TedeeMetadata.from_dict(d.get("tedee_metadata")) if d.get("tedee_metadata") is not None else None,
+                ttlock_metadata=cls.TtlockMetadata.from_dict(d.get("ttlock_metadata")) if d.get("ttlock_metadata") is not None else None,
+                two_n_metadata=cls.TwoNMetadata.from_dict(d.get("two_n_metadata")) if d.get("two_n_metadata") is not None else None,
+                ultraloq_metadata=cls.UltraloqMetadata.from_dict(d.get("ultraloq_metadata")) if d.get("ultraloq_metadata") is not None else None,
+                visionline_metadata=cls.VisionlineMetadata.from_dict(d.get("visionline_metadata")) if d.get("visionline_metadata") is not None else None,
+                wyze_metadata=cls.WyzeMetadata.from_dict(d.get("wyze_metadata")) if d.get("wyze_metadata") is not None else None,
+                yacan_metadata=cls.YacanMetadata.from_dict(d.get("yacan_metadata")) if d.get("yacan_metadata") is not None else None,
                 auto_lock_delay_seconds=d.get("auto_lock_delay_seconds", None),
                 auto_lock_enabled=d.get("auto_lock_enabled", None),
-                backup_access_code_pool_enabled=d.get(
-                    "backup_access_code_pool_enabled", None
-                ),
-                code_constraints=[
-                    cls.CodeConstraints.from_dict(i)
-                    for i in d.get("code_constraints") or []
-                ],
+                backup_access_code_pool_enabled=d.get("backup_access_code_pool_enabled", None),
+                code_constraints=[cls.CodeConstraints.from_dict(i) for i in d.get("code_constraints") or []],
                 door_open=d.get("door_open", None),
                 has_native_entry_events=d.get("has_native_entry_events", None),
-                keypad_battery=(
-                    cls.KeypadBattery.from_dict(d.get("keypad_battery"))
-                    if d.get("keypad_battery") is not None
-                    else None
-                ),
+                keypad_battery=cls.KeypadBattery.from_dict(d.get("keypad_battery")) if d.get("keypad_battery") is not None else None,
                 locked=d.get("locked", None),
                 max_active_codes_supported=d.get("max_active_codes_supported", None),
-                offline_time_frame_options=[
-                    cls.OfflineTimeFrameOptions.from_dict(i)
-                    for i in d.get("offline_time_frame_options") or []
-                ],
-                online_time_frame_options=[
-                    cls.OnlineTimeFrameOptions.from_dict(i)
-                    for i in d.get("online_time_frame_options") or []
-                ],
+                offline_time_frame_options=[cls.OfflineTimeFrameOptions.from_dict(i) for i in d.get("offline_time_frame_options") or []],
+                online_time_frame_options=[cls.OnlineTimeFrameOptions.from_dict(i) for i in d.get("online_time_frame_options") or []],
                 supported_code_lengths=d.get("supported_code_lengths", None),
-                supports_backup_access_code_pool=d.get(
-                    "supports_backup_access_code_pool", None
-                ),
-                active_thermostat_schedule=(
-                    cls.ActiveThermostatSchedule.from_dict(
-                        d.get("active_thermostat_schedule")
-                    )
-                    if d.get("active_thermostat_schedule") is not None
-                    else None
-                ),
-                active_thermostat_schedule_id=d.get(
-                    "active_thermostat_schedule_id", None
-                ),
-                available_climate_preset_modes=d.get(
-                    "available_climate_preset_modes", None
-                ),
-                available_climate_presets=[
-                    cls.AvailableClimatePresets.from_dict(i)
-                    for i in d.get("available_climate_presets") or []
-                ],
+                supports_backup_access_code_pool=d.get("supports_backup_access_code_pool", None),
+                active_thermostat_schedule=cls.ActiveThermostatSchedule.from_dict(d.get("active_thermostat_schedule")) if d.get("active_thermostat_schedule") is not None else None,
+                active_thermostat_schedule_id=d.get("active_thermostat_schedule_id", None),
+                available_climate_preset_modes=d.get("available_climate_preset_modes", None),
+                available_climate_presets=[cls.AvailableClimatePresets.from_dict(i) for i in d.get("available_climate_presets") or []],
                 available_fan_mode_settings=d.get("available_fan_mode_settings", None),
-                available_hvac_mode_settings=d.get(
-                    "available_hvac_mode_settings", None
-                ),
-                current_climate_setting=(
-                    cls.CurrentClimateSetting.from_dict(
-                        d.get("current_climate_setting")
-                    )
-                    if d.get("current_climate_setting") is not None
-                    else None
-                ),
-                default_climate_setting=(
-                    cls.DefaultClimateSetting.from_dict(
-                        d.get("default_climate_setting")
-                    )
-                    if d.get("default_climate_setting") is not None
-                    else None
-                ),
+                available_hvac_mode_settings=d.get("available_hvac_mode_settings", None),
+                current_climate_setting=cls.CurrentClimateSetting.from_dict(d.get("current_climate_setting")) if d.get("current_climate_setting") is not None else None,
+                default_climate_setting=cls.DefaultClimateSetting.from_dict(d.get("default_climate_setting")) if d.get("default_climate_setting") is not None else None,
                 fallback_climate_preset_key=d.get("fallback_climate_preset_key", None),
                 fan_mode_setting=d.get("fan_mode_setting", None),
                 is_cooling=d.get("is_cooling", None),
                 is_fan_running=d.get("is_fan_running", None),
                 is_heating=d.get("is_heating", None),
-                is_temporary_manual_override_active=d.get(
-                    "is_temporary_manual_override_active", None
-                ),
-                max_cooling_set_point_celsius=d.get(
-                    "max_cooling_set_point_celsius", None
-                ),
-                max_cooling_set_point_fahrenheit=d.get(
-                    "max_cooling_set_point_fahrenheit", None
-                ),
-                max_heating_set_point_celsius=d.get(
-                    "max_heating_set_point_celsius", None
-                ),
-                max_heating_set_point_fahrenheit=d.get(
-                    "max_heating_set_point_fahrenheit", None
-                ),
-                max_thermostat_daily_program_periods_per_day=d.get(
-                    "max_thermostat_daily_program_periods_per_day", None
-                ),
-                max_unique_climate_presets_per_thermostat_weekly_program=d.get(
-                    "max_unique_climate_presets_per_thermostat_weekly_program", None
-                ),
-                min_cooling_set_point_celsius=d.get(
-                    "min_cooling_set_point_celsius", None
-                ),
-                min_cooling_set_point_fahrenheit=d.get(
-                    "min_cooling_set_point_fahrenheit", None
-                ),
-                min_heating_cooling_delta_celsius=d.get(
-                    "min_heating_cooling_delta_celsius", None
-                ),
-                min_heating_cooling_delta_fahrenheit=d.get(
-                    "min_heating_cooling_delta_fahrenheit", None
-                ),
-                min_heating_set_point_celsius=d.get(
-                    "min_heating_set_point_celsius", None
-                ),
-                min_heating_set_point_fahrenheit=d.get(
-                    "min_heating_set_point_fahrenheit", None
-                ),
+                is_temporary_manual_override_active=d.get("is_temporary_manual_override_active", None),
+                max_cooling_set_point_celsius=d.get("max_cooling_set_point_celsius", None),
+                max_cooling_set_point_fahrenheit=d.get("max_cooling_set_point_fahrenheit", None),
+                max_heating_set_point_celsius=d.get("max_heating_set_point_celsius", None),
+                max_heating_set_point_fahrenheit=d.get("max_heating_set_point_fahrenheit", None),
+                max_thermostat_daily_program_periods_per_day=d.get("max_thermostat_daily_program_periods_per_day", None),
+                max_unique_climate_presets_per_thermostat_weekly_program=d.get("max_unique_climate_presets_per_thermostat_weekly_program", None),
+                min_cooling_set_point_celsius=d.get("min_cooling_set_point_celsius", None),
+                min_cooling_set_point_fahrenheit=d.get("min_cooling_set_point_fahrenheit", None),
+                min_heating_cooling_delta_celsius=d.get("min_heating_cooling_delta_celsius", None),
+                min_heating_cooling_delta_fahrenheit=d.get("min_heating_cooling_delta_fahrenheit", None),
+                min_heating_set_point_celsius=d.get("min_heating_set_point_celsius", None),
+                min_heating_set_point_fahrenheit=d.get("min_heating_set_point_fahrenheit", None),
                 relative_humidity=d.get("relative_humidity", None),
                 temperature_celsius=d.get("temperature_celsius", None),
                 temperature_fahrenheit=d.get("temperature_fahrenheit", None),
-                temperature_threshold=(
-                    cls.TemperatureThreshold.from_dict(d.get("temperature_threshold"))
-                    if d.get("temperature_threshold") is not None
-                    else None
-                ),
-                thermostat_daily_program_period_precision_minutes=d.get(
-                    "thermostat_daily_program_period_precision_minutes", None
-                ),
-                thermostat_daily_programs=[
-                    cls.ThermostatDailyPrograms.from_dict(i)
-                    for i in d.get("thermostat_daily_programs") or []
-                ],
-                thermostat_weekly_program=(
-                    cls.ThermostatWeeklyProgram.from_dict(
-                        d.get("thermostat_weekly_program")
-                    )
-                    if d.get("thermostat_weekly_program") is not None
-                    else None
-                ),
+                temperature_threshold=cls.TemperatureThreshold.from_dict(d.get("temperature_threshold")) if d.get("temperature_threshold") is not None else None,
+                thermostat_daily_program_period_precision_minutes=d.get("thermostat_daily_program_period_precision_minutes", None),
+                thermostat_daily_programs=[cls.ThermostatDailyPrograms.from_dict(i) for i in d.get("thermostat_daily_programs") or []],
+                thermostat_weekly_program=cls.ThermostatWeeklyProgram.from_dict(d.get("thermostat_weekly_program")) if d.get("thermostat_weekly_program") is not None else None,
             )
 
     @dataclass
@@ -3231,8 +2800,7 @@ class Device:
 
         :ivar active_access_code_count: Number of active access codes on the device when the warning was set.
 
-        :ivar max_active_access_code_count: Maximum number of active access codes supported by the device.
-        """
+        :ivar max_active_access_code_count: Maximum number of active access codes supported by the device."""
 
         created_at: str
         message: str
@@ -3247,9 +2815,7 @@ class Device:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
                 active_access_code_count=d.get("active_access_code_count", None),
-                max_active_access_code_count=d.get(
-                    "max_active_access_code_count", None
-                ),
+                max_active_access_code_count=d.get("max_active_access_code_count", None),
             )
 
     can_configure_auto_lock: Optional[bool]
@@ -3297,33 +2863,19 @@ class Device:
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
-            can_program_offline_access_codes=d.get(
-                "can_program_offline_access_codes", None
-            ),
-            can_program_online_access_codes=d.get(
-                "can_program_online_access_codes", None
-            ),
-            can_program_thermostat_programs_as_different_each_day=d.get(
-                "can_program_thermostat_programs_as_different_each_day", None
-            ),
-            can_program_thermostat_programs_as_same_each_day=d.get(
-                "can_program_thermostat_programs_as_same_each_day", None
-            ),
-            can_program_thermostat_programs_as_weekday_weekend=d.get(
-                "can_program_thermostat_programs_as_weekday_weekend", None
-            ),
+            can_program_offline_access_codes=d.get("can_program_offline_access_codes", None),
+            can_program_online_access_codes=d.get("can_program_online_access_codes", None),
+            can_program_thermostat_programs_as_different_each_day=d.get("can_program_thermostat_programs_as_different_each_day", None),
+            can_program_thermostat_programs_as_same_each_day=d.get("can_program_thermostat_programs_as_same_each_day", None),
+            can_program_thermostat_programs_as_weekday_weekend=d.get("can_program_thermostat_programs_as_weekday_weekend", None),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
-            can_simulate_hub_disconnection=d.get(
-                "can_simulate_hub_disconnection", None
-            ),
-            can_simulate_paid_subscription=d.get(
-                "can_simulate_paid_subscription", None
-            ),
+            can_simulate_hub_disconnection=d.get("can_simulate_hub_disconnection", None),
+            can_simulate_paid_subscription=d.get("can_simulate_paid_subscription", None),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -3332,31 +2884,15 @@ class Device:
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
-            device_manufacturer=(
-                cls.DeviceManufacturer.from_dict(d.get("device_manufacturer"))
-                if d.get("device_manufacturer") is not None
-                else None
-            ),
-            device_provider=(
-                cls.DeviceProvider.from_dict(d.get("device_provider"))
-                if d.get("device_provider") is not None
-                else None
-            ),
+            device_manufacturer=cls.DeviceManufacturer.from_dict(d.get("device_manufacturer")) if d.get("device_manufacturer") is not None else None,
+            device_provider=cls.DeviceProvider.from_dict(d.get("device_provider")) if d.get("device_provider") is not None else None,
             device_type=d.get("device_type", None),
             display_name=d.get("display_name", None),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_managed=d.get("is_managed", None),
-            location=(
-                cls.Location.from_dict(d.get("location"))
-                if d.get("location") is not None
-                else None
-            ),
+            location=cls.Location.from_dict(d.get("location")) if d.get("location") is not None else None,
             nickname=d.get("nickname", None),
-            properties=(
-                cls.Properties.from_dict(d.get("properties"))
-                if d.get("properties") is not None
-                else None
-            ),
+            properties=cls.Properties.from_dict(d.get("properties")) if d.get("properties") is not None else None,
             space_ids=d.get("space_ids", None),
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),

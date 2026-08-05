@@ -91,19 +91,11 @@ class Space:
         return cls(
             acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),
-            customer_data=(
-                cls.CustomerData.from_dict(d.get("customer_data"))
-                if d.get("customer_data") is not None
-                else None
-            ),
+            customer_data=cls.CustomerData.from_dict(d.get("customer_data")) if d.get("customer_data") is not None else None,
             customer_key=d.get("customer_key", None),
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
-            geolocation=(
-                cls.Geolocation.from_dict(d.get("geolocation"))
-                if d.get("geolocation") is not None
-                else None
-            ),
+            geolocation=cls.Geolocation.from_dict(d.get("geolocation")) if d.get("geolocation") is not None else None,
             name=d.get("name", None),
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),

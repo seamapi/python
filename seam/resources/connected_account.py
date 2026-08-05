@@ -58,15 +58,13 @@ class ConnectedAccount:
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has an error.
-        """
+        :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has an error."""
 
         @dataclass
         class SaltoKsMetadata(ResourceMapping):
             """Salto KS metadata associated with the connected account that has an error.
 
-            :ivar sites: Salto sites associated with the connected account that has an error.
-            """
+            :ivar sites: Salto sites associated with the connected account that has an error."""
 
             @dataclass
             class Sites(ResourceMapping):
@@ -78,8 +76,7 @@ class ConnectedAccount:
 
                 :ivar site_user_subscription_limit: Subscription limit of site users for a Salto site associated with the connected account that has an error.
 
-                :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has an error.
-                """
+                :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has an error."""
 
                 site_id: Optional[str]
                 site_name: Optional[str]
@@ -91,12 +88,8 @@ class ConnectedAccount:
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
-                        site_user_subscription_limit=d.get(
-                            "site_user_subscription_limit", None
-                        ),
-                        subscribed_site_user_count=d.get(
-                            "subscribed_site_user_count", None
-                        ),
+                        site_user_subscription_limit=d.get("site_user_subscription_limit", None),
+                        subscribed_site_user_count=d.get("subscribed_site_user_count", None),
                     )
 
             sites: Optional[List[Sites]]
@@ -122,11 +115,7 @@ class ConnectedAccount:
                 is_bridge_error=d.get("is_bridge_error", None),
                 is_connected_account_error=d.get("is_connected_account_error", None),
                 message=d.get("message", None),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
-                ),
+                salto_ks_metadata=cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata")) if d.get("salto_ks_metadata") is not None else None,
             )
 
     @dataclass
@@ -141,8 +130,7 @@ class ConnectedAccount:
 
         :ivar phone: Phone number of the user identifier associated with the connected account.
 
-        :ivar username: Username of the user identifier associated with the connected account.
-        """
+        :ivar username: Username of the user identifier associated with the connected account."""
 
         api_url: Optional[str]
         email: Optional[str]
@@ -170,15 +158,13 @@ class ConnectedAccount:
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
 
-        :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has a warning.
-        """
+        :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has a warning."""
 
         @dataclass
         class SaltoKsMetadata(ResourceMapping):
             """Salto KS metadata associated with the connected account that has a warning.
 
-            :ivar sites: Salto sites associated with the connected account that has a warning.
-            """
+            :ivar sites: Salto sites associated with the connected account that has a warning."""
 
             @dataclass
             class Sites(ResourceMapping):
@@ -190,8 +176,7 @@ class ConnectedAccount:
 
                 :ivar site_user_subscription_limit: Subscription limit of site users for a Salto site associated with the connected account that has a warning.
 
-                :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has a warning.
-                """
+                :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has a warning."""
 
                 site_id: Optional[str]
                 site_name: Optional[str]
@@ -203,12 +188,8 @@ class ConnectedAccount:
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
-                        site_user_subscription_limit=d.get(
-                            "site_user_subscription_limit", None
-                        ),
-                        subscribed_site_user_count=d.get(
-                            "subscribed_site_user_count", None
-                        ),
+                        site_user_subscription_limit=d.get("site_user_subscription_limit", None),
+                        subscribed_site_user_count=d.get("subscribed_site_user_count", None),
                     )
 
             sites: Optional[List[Sites]]
@@ -230,11 +211,7 @@ class ConnectedAccount:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
-                ),
+                salto_ks_metadata=cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata")) if d.get("salto_ks_metadata") is not None else None,
             )
 
     accepted_capabilities: List[str]
@@ -262,9 +239,7 @@ class ConnectedAccount:
             accepted_capabilities=d.get("accepted_capabilities", None),
             account_type=d.get("account_type", None),
             account_type_display_name=d.get("account_type_display_name", None),
-            automatically_manage_new_devices=d.get(
-                "automatically_manage_new_devices", None
-            ),
+            automatically_manage_new_devices=d.get("automatically_manage_new_devices", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
@@ -277,10 +252,6 @@ class ConnectedAccount:
             ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
             time_zone=d.get("time_zone", None),
-            user_identifier=(
-                cls.UserIdentifier.from_dict(d.get("user_identifier"))
-                if d.get("user_identifier") is not None
-                else None
-            ),
+            user_identifier=cls.UserIdentifier.from_dict(d.get("user_identifier")) if d.get("user_identifier") is not None else None,
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
         )

@@ -7,11 +7,11 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsCredential:
     """Means by which an `access control system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ gains access at an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_. The ``acs_credential`` object represents a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ that provides an ACS user access within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
-
+    
     An access control system generally uses digital means of access to authorize a user trying to get through a specific entrance. Examples of credentials include plastic key cards, mobile keys, biometric identifiers, and PIN codes. The electronic nature of these credentials, as well as the fact that access is centralized, enables both the rapid provisioning and rescinding of access and the ability to compile access audit logs.
-
+    
     For each ``acs_credential``, you define the access method. You can also specify additional properties, such as a PIN code, depending on the credential type.
-
+    
     For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach. Use the lower-level ACS credential API directly only when you specifically need to manage individual credentials.
 
     :ivar access_method: Access method for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
@@ -70,8 +70,7 @@ class AcsCredential:
 
     :ivar warnings: Warnings associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
-    """
+    :ivar workspace_id: ID of the workspace that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_."""
 
     @dataclass
     class AkilesMetadata(ResourceMapping):
@@ -101,8 +100,7 @@ class AcsCredential:
 
         :ivar key_issuing_request_id: Key issuing request ID in the Vostio access system.
 
-        :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system.
-        """
+        :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system."""
 
         auto_join: Optional[bool]
         door_names: Optional[List[str]]
@@ -119,9 +117,7 @@ class AcsCredential:
                 endpoint_id=d.get("endpoint_id", None),
                 key_id=d.get("key_id", None),
                 key_issuing_request_id=d.get("key_issuing_request_id", None),
-                override_guest_acs_entrance_ids=d.get(
-                    "override_guest_acs_entrance_ids", None
-                ),
+                override_guest_acs_entrance_ids=d.get("override_guest_acs_entrance_ids", None),
             )
 
     @dataclass
@@ -130,9 +126,9 @@ class AcsCredential:
 
         :ivar created_at: Date and time at which Seam created the error.
 
-        :ivar error_code:
+        :ivar error_code: 
 
-        :ivar message:"""
+        :ivar message: """
 
         created_at: str
         error_code: str
@@ -164,8 +160,7 @@ class AcsCredential:
 
         :ivar is_valid: Indicates whether the credential is valid.
 
-        :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join.
-        """
+        :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join."""
 
         auto_join: Optional[bool]
         card_function_type: Optional[str]
@@ -201,8 +196,7 @@ class AcsCredential:
 
         :ivar new_code: The PIN code that was assigned instead.
 
-        :ivar original_code: The originally requested PIN code that could not be used.
-        """
+        :ivar original_code: The originally requested PIN code that could not be used."""
 
         created_at: str
         message: str
@@ -258,18 +252,8 @@ class AcsCredential:
             acs_credential_pool_id=d.get("acs_credential_pool_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
-            akiles_metadata=(
-                cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
-                if d.get("akiles_metadata") is not None
-                else None
-            ),
-            assa_abloy_vostio_metadata=(
-                cls.AssaAbloyVostioMetadata.from_dict(
-                    d.get("assa_abloy_vostio_metadata")
-                )
-                if d.get("assa_abloy_vostio_metadata") is not None
-                else None
-            ),
+            akiles_metadata=cls.AkilesMetadata.from_dict(d.get("akiles_metadata")) if d.get("akiles_metadata") is not None else None,
+            assa_abloy_vostio_metadata=cls.AssaAbloyVostioMetadata.from_dict(d.get("assa_abloy_vostio_metadata")) if d.get("assa_abloy_vostio_metadata") is not None else None,
             card_number=d.get("card_number", None),
             code=d.get("code", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -280,26 +264,16 @@ class AcsCredential:
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_issued=d.get("is_issued", None),
-            is_latest_desired_state_synced_with_provider=d.get(
-                "is_latest_desired_state_synced_with_provider", None
-            ),
+            is_latest_desired_state_synced_with_provider=d.get("is_latest_desired_state_synced_with_provider", None),
             is_managed=d.get("is_managed", None),
-            is_multi_phone_sync_credential=d.get(
-                "is_multi_phone_sync_credential", None
-            ),
+            is_multi_phone_sync_credential=d.get("is_multi_phone_sync_credential", None),
             is_one_time_use=d.get("is_one_time_use", None),
             issued_at=d.get("issued_at", None),
-            latest_desired_state_synced_with_provider_at=d.get(
-                "latest_desired_state_synced_with_provider_at", None
-            ),
+            latest_desired_state_synced_with_provider_at=d.get("latest_desired_state_synced_with_provider_at", None),
             parent_acs_credential_id=d.get("parent_acs_credential_id", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
-            visionline_metadata=(
-                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
-                if d.get("visionline_metadata") is not None
-                else None
-            ),
+            visionline_metadata=cls.VisionlineMetadata.from_dict(d.get("visionline_metadata")) if d.get("visionline_metadata") is not None else None,
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

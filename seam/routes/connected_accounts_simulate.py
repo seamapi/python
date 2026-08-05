@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 
 
 class AbstractConnectedAccountsSimulate(abc.ABC):
@@ -21,11 +22,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/connected_accounts/simulate/disconnect",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/connected_accounts/simulate/disconnect", has_required_parameters=True, has_pagination=False)
     def disconnect(self, *, connected_account_id: str) -> None:
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -38,9 +35,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
             json_payload["connected_account_id"] = connected_account_id
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/simulate/disconnect"
-            )
+            raise ValueError("At least one parameter is required for /connected_accounts/simulate/disconnect")
 
         self.client.post("/connected_accounts/simulate/disconnect", json=json_payload)
 

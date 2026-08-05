@@ -7,13 +7,13 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AccessCode:
     """Represents a smart lock `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
-
+    
     An access code is a code used for a keypad or pinpad device. Unlike physical keys, which can easily be lost or duplicated, PIN codes can be customized, tracked, and altered on the fly. Using the Seam Access Code API, you can easily generate access codes on the hundreds of door lock models with which we integrate.
-
+    
     Seam supports programming two types of access codes: `ongoing <https://docs.seam.co/low-level-apis/smart-locks/access-codes#ongoing-access-codes>`_ and `time-bound <https://docs.seam.co/low-level-apis/smart-locks/access-codes#time-bound-access-codes>`_. To differentiate between the two, refer to the ``type`` property of the access code. Ongoing codes display as ``ongoing``, whereas time-bound codes are labeled ``time_bound``. An ongoing access code is active, until it has been removed from the device. To specify an ongoing access code, leave both ``starts_at`` and ``ends_at`` empty. A time-bound access code will be programmed at the ``starts_at`` time and removed at the ``ends_at`` time.
-
+    
     In addition, for certain devices, Seam also supports `offline access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes#offline-access-codes>`_. Offline access (PIN) codes are designed for door locks that might not always maintain an internet connection. For this type of access code, the device manufacturer uses encryption keys (tokens) to create server-based registries of algorithmically-generated offline PIN codes. Because the tokens remain synchronized with the managed devices, the locks do not require an active internet connection—and you do not need to be near the locks—to create an offline access code. Then, owners or managers can share these offline codes with users through a variety of mechanisms, such as messaging applications. That is, lock users do not need to install a smartphone application to receive an offline access code.
-
+    
     For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach and work across both standalone smart locks and access systems. Use the lower-level Access Codes API directly only when you specifically need to manage individual PIN codes.
 
     :ivar access_code_id: Unique identifier for the access code.
@@ -62,8 +62,7 @@ class AccessCode:
 
     :ivar warnings: Warnings associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
-    :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code.
-    """
+    :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code."""
 
     @dataclass
     class DormakabaOracodeMetadata(ResourceMapping):
@@ -83,8 +82,7 @@ class AccessCode:
 
         :ivar user_level_id: Dormakaba Oracode user level ID associated with this access code.
 
-        :ivar user_level_name: Dormakaba Oracode user level name associated with this access code.
-        """
+        :ivar user_level_name: Dormakaba Oracode user level name associated with this access code."""
 
         is_cancellable: Optional[bool]
         is_early_checkin_able: Optional[bool]
@@ -128,12 +126,11 @@ class AccessCode:
 
         :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
 
-        :ivar is_connected_account_error:
+        :ivar is_connected_account_error: 
 
-        :ivar is_device_error:
+        :ivar is_device_error: 
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
-        """
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_."""
 
         @dataclass
         class ModifiedFields(ResourceMapping):
@@ -179,10 +176,7 @@ class AccessCode:
                 managed_access_code_id=d.get("managed_access_code_id", None),
                 unmanaged_access_code_id=d.get("unmanaged_access_code_id", None),
                 change_type=d.get("change_type", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=[cls.ModifiedFields.from_dict(i) for i in d.get("modified_fields") or []],
                 is_connected_account_error=d.get("is_connected_account_error", None),
                 is_device_error=d.get("is_device_error", None),
                 is_bridge_error=d.get("is_bridge_error", None),
@@ -196,13 +190,13 @@ class AccessCode:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code:
+        :ivar mutation_code: 
 
         :ivar scheduled_at: Date and time at which Seam will attempt to program this access code on the device.
 
-        :ivar from_:
+        :ivar from_: 
 
-        :ivar to:"""
+        :ivar to: """
 
         @dataclass
         class From(ResourceMapping):
@@ -270,11 +264,7 @@ class AccessCode:
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
                 scheduled_at=d.get("scheduled_at", None),
-                from_=(
-                    cls.From.from_dict(d.get("from"))
-                    if d.get("from") is not None
-                    else None
-                ),
+                from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
@@ -290,8 +280,7 @@ class AccessCode:
 
         :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
 
-        :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
-        """
+        :ivar modified_fields: List of fields that were changed externally, with their previous and new values."""
 
         @dataclass
         class ModifiedFields(ResourceMapping):
@@ -328,10 +317,7 @@ class AccessCode:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
                 change_type=d.get("change_type", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=[cls.ModifiedFields.from_dict(i) for i in d.get("modified_fields") or []],
             )
 
     access_code_id: str
@@ -367,34 +353,19 @@ class AccessCode:
             common_code_key=d.get("common_code_key", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
-            dormakaba_oracode_metadata=(
-                cls.DormakabaOracodeMetadata.from_dict(
-                    d.get("dormakaba_oracode_metadata")
-                )
-                if d.get("dormakaba_oracode_metadata") is not None
-                else None
-            ),
+            dormakaba_oracode_metadata=cls.DormakabaOracodeMetadata.from_dict(d.get("dormakaba_oracode_metadata")) if d.get("dormakaba_oracode_metadata") is not None else None,
             ends_at=d.get("ends_at", None),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_backup=d.get("is_backup", None),
-            is_backup_access_code_available=d.get(
-                "is_backup_access_code_available", None
-            ),
-            is_external_modification_allowed=d.get(
-                "is_external_modification_allowed", None
-            ),
+            is_backup_access_code_available=d.get("is_backup_access_code_available", None),
+            is_external_modification_allowed=d.get("is_external_modification_allowed", None),
             is_managed=d.get("is_managed", None),
             is_offline_access_code=d.get("is_offline_access_code", None),
             is_one_time_use=d.get("is_one_time_use", None),
             is_scheduled_on_device=d.get("is_scheduled_on_device", None),
-            is_waiting_for_code_assignment=d.get(
-                "is_waiting_for_code_assignment", None
-            ),
+            is_waiting_for_code_assignment=d.get("is_waiting_for_code_assignment", None),
             name=d.get("name", None),
-            pending_mutations=[
-                cls.PendingMutations.from_dict(i)
-                for i in d.get("pending_mutations") or []
-            ],
+            pending_mutations=[cls.PendingMutations.from_dict(i) for i in d.get("pending_mutations") or []],
             pulled_backup_access_code_id=d.get("pulled_backup_access_code_id", None),
             starts_at=d.get("starts_at", None),
             status=d.get("status", None),

@@ -56,3 +56,8 @@ export const pythonIdentifier = (name: string): string =>
 export const isListType = (type: string): boolean => type.startsWith('List[')
 
 export const listItemType = (type: string): string => type.slice(5, -1)
+
+// A nullable param accepts the NULL sentinel, which is sent as null.
+// A param set to None is omitted from the request instead.
+export const nullableType = (type: string, isNullable: boolean): string =>
+  isNullable ? `Union[${type}, Null]` : type

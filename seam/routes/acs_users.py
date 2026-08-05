@@ -2,15 +2,14 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import AcsUser, AcsEntrance
+from ..null import Null
+from ..resources import (AcsUser,AcsEntrance)
 
 
 class AbstractAcsUsers(abc.ABC):
 
     @abc.abstractmethod
-    def add_to_access_group(
-        self, *, acs_access_group_id: str, acs_user_id: str
-    ) -> None:
+    def add_to_access_group(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
@@ -21,18 +20,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def create(
-        self,
-        *,
-        acs_system_id: str,
-        full_name: str,
-        access_schedule: Optional[Dict[str, Any]] = None,
-        acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
-        email_address: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> AcsUser:
+    def create(self, *, acs_system_id: str, full_name: str, access_schedule: Optional[Dict[str, Any]] = None, acs_access_group_ids: Optional[List[str]] = None, email: Optional[str] = None, email_address: Optional[str] = None, phone_number: Optional[str] = None, user_identity_id: Optional[str] = None) -> AcsUser:
         """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the access system to which you want to add the new access system user.
@@ -57,13 +45,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def delete(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system that you want to delete. You must provide acs_system_id with user_identity_id.
@@ -76,13 +58,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(
-        self,
-        *,
-        acs_user_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> AcsUser:
+    def get(self, *, acs_user_id: Optional[str] = None, acs_system_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> AcsUser:
         """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_user_id: ID of the access system user that you want to get. You can only provide acs_user_id or user_identity_id.
@@ -97,18 +73,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        created_before: Optional[str] = None,
-        limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
-    ) -> List[AcsUser]:
+    def list(self, *, acs_system_id: Optional[str] = None, created_before: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, user_identity_email_address: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_phone_number: Optional[str] = None) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the ``acs_system`` for which you want to retrieve all access system users.
@@ -131,13 +96,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_accessible_entrances(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> List[AcsEntrance]:
+    def list_accessible_entrances(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> List[AcsEntrance]:
         """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
 
         :param acs_system_id: ID of the access system for which you want to list accessible entrances. You can only provide acs_system_id with user_identity_id.
@@ -152,13 +111,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def remove_from_access_group(
-        self,
-        *,
-        acs_access_group_id: str,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def remove_from_access_group(self, *, acs_access_group_id: str, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
@@ -171,13 +124,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def revoke_access_to_all_entrances(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def revoke_access_to_all_entrances(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the access system for which you want to revoke access. You can only provide acs_system_id with user_identity_id.
@@ -190,13 +137,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def suspend(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def suspend(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
 
         :param acs_system_id: ID of the access system that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
@@ -209,13 +150,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def unsuspend(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def unsuspend(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
 
         :param acs_system_id: ID of the access system of the user that you want to unsuspend. You can only provide acs_system_id with user_identity_id.
@@ -228,19 +163,7 @@ class AbstractAcsUsers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(
-        self,
-        *,
-        access_schedule: Optional[Dict[str, Any]] = None,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        hid_acs_system_id: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    def update(self, *, access_schedule: Optional[Union[Dict[str, Any], Null]] = None, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, email: Optional[str] = None, email_address: Optional[str] = None, full_name: Optional[str] = None, hid_acs_system_id: Optional[str] = None, phone_number: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
@@ -270,14 +193,8 @@ class AcsUsers(AbstractAcsUsers):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/acs/users/add_to_access_group",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def add_to_access_group(
-        self, *, acs_access_group_id: str, acs_user_id: str
-    ) -> None:
+    @route_metadata(path="/acs/users/add_to_access_group", has_required_parameters=True, has_pagination=False)
+    def add_to_access_group(self, *, acs_access_group_id: str, acs_user_id: str) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
@@ -293,29 +210,14 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/add_to_access_group"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/add_to_access_group")
 
         self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
-    @route_metadata(
-        path="/acs/users/create", has_required_parameters=True, has_pagination=False
-    )
-    def create(
-        self,
-        *,
-        acs_system_id: str,
-        full_name: str,
-        access_schedule: Optional[Dict[str, Any]] = None,
-        acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
-        email_address: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> AcsUser:
+    @route_metadata(path="/acs/users/create", has_required_parameters=True, has_pagination=False)
+    def create(self, *, acs_system_id: str, full_name: str, access_schedule: Optional[Dict[str, Any]] = None, acs_access_group_ids: Optional[List[str]] = None, email: Optional[str] = None, email_address: Optional[str] = None, phone_number: Optional[str] = None, user_identity_id: Optional[str] = None) -> AcsUser:
         """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the access system to which you want to add the new access system user.
@@ -363,16 +265,8 @@ class AcsUsers(AbstractAcsUsers):
 
         return AcsUser.from_dict(res["acs_user"])
 
-    @route_metadata(
-        path="/acs/users/delete", has_required_parameters=True, has_pagination=False
-    )
-    def delete(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/delete", has_required_parameters=True, has_pagination=False)
+    def delete(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system that you want to delete. You must provide acs_system_id with user_identity_id.
@@ -398,16 +292,8 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
-    @route_metadata(
-        path="/acs/users/get", has_required_parameters=True, has_pagination=False
-    )
-    def get(
-        self,
-        *,
-        acs_user_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> AcsUser:
+    @route_metadata(path="/acs/users/get", has_required_parameters=True, has_pagination=False)
+    def get(self, *, acs_user_id: Optional[str] = None, acs_system_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> AcsUser:
         """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_user_id: ID of the access system user that you want to get. You can only provide acs_user_id or user_identity_id.
@@ -435,21 +321,8 @@ class AcsUsers(AbstractAcsUsers):
 
         return AcsUser.from_dict(res["acs_user"])
 
-    @route_metadata(
-        path="/acs/users/list", has_required_parameters=False, has_pagination=True
-    )
-    def list(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        created_before: Optional[str] = None,
-        limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
-    ) -> List[AcsUser]:
+    @route_metadata(path="/acs/users/list", has_required_parameters=False, has_pagination=True)
+    def list(self, *, acs_system_id: Optional[str] = None, created_before: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, user_identity_email_address: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_phone_number: Optional[str] = None) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the ``acs_system`` for which you want to retrieve all access system users.
@@ -492,18 +365,8 @@ class AcsUsers(AbstractAcsUsers):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
-    @route_metadata(
-        path="/acs/users/list_accessible_entrances",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def list_accessible_entrances(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> List[AcsEntrance]:
+    @route_metadata(path="/acs/users/list_accessible_entrances", has_required_parameters=True, has_pagination=False)
+    def list_accessible_entrances(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> List[AcsEntrance]:
         """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
 
         :param acs_system_id: ID of the access system for which you want to list accessible entrances. You can only provide acs_system_id with user_identity_id.
@@ -525,26 +388,14 @@ class AcsUsers(AbstractAcsUsers):
             params["user_identity_id"] = user_identity_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/list_accessible_entrances"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/list_accessible_entrances")
 
         res = self.client.get("/acs/users/list_accessible_entrances", params=params)
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
-    @route_metadata(
-        path="/acs/users/remove_from_access_group",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def remove_from_access_group(
-        self,
-        *,
-        acs_access_group_id: str,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/remove_from_access_group", has_required_parameters=True, has_pagination=False)
+    def remove_from_access_group(self, *, acs_access_group_id: str, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
@@ -564,26 +415,14 @@ class AcsUsers(AbstractAcsUsers):
             params["user_identity_id"] = user_identity_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/remove_from_access_group"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/remove_from_access_group")
 
         self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
 
-    @route_metadata(
-        path="/acs/users/revoke_access_to_all_entrances",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def revoke_access_to_all_entrances(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/revoke_access_to_all_entrances", has_required_parameters=True, has_pagination=False)
+    def revoke_access_to_all_entrances(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param acs_system_id: ID of the access system for which you want to revoke access. You can only provide acs_system_id with user_identity_id.
@@ -603,24 +442,14 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["user_identity_id"] = user_identity_id
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/revoke_access_to_all_entrances")
 
         self.client.post("/acs/users/revoke_access_to_all_entrances", json=json_payload)
 
         return None
 
-    @route_metadata(
-        path="/acs/users/suspend", has_required_parameters=True, has_pagination=False
-    )
-    def suspend(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/suspend", has_required_parameters=True, has_pagination=False)
+    def suspend(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
 
         :param acs_system_id: ID of the access system that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
@@ -640,24 +469,14 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["user_identity_id"] = user_identity_id
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/suspend"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/suspend")
 
         self.client.post("/acs/users/suspend", json=json_payload)
 
         return None
 
-    @route_metadata(
-        path="/acs/users/unsuspend", has_required_parameters=True, has_pagination=False
-    )
-    def unsuspend(
-        self,
-        *,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/unsuspend", has_required_parameters=True, has_pagination=False)
+    def unsuspend(self, *, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
 
         :param acs_system_id: ID of the access system of the user that you want to unsuspend. You can only provide acs_system_id with user_identity_id.
@@ -677,30 +496,14 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["user_identity_id"] = user_identity_id
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/unsuspend"
-            )
+            raise ValueError("At least one parameter is required for /acs/users/unsuspend")
 
         self.client.post("/acs/users/unsuspend", json=json_payload)
 
         return None
 
-    @route_metadata(
-        path="/acs/users/update", has_required_parameters=True, has_pagination=False
-    )
-    def update(
-        self,
-        *,
-        access_schedule: Optional[Dict[str, Any]] = None,
-        acs_system_id: Optional[str] = None,
-        acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        hid_acs_system_id: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/acs/users/update", has_required_parameters=True, has_pagination=False)
+    def update(self, *, access_schedule: Optional[Union[Dict[str, Any], Null]] = None, acs_system_id: Optional[str] = None, acs_user_id: Optional[str] = None, email: Optional[str] = None, email_address: Optional[str] = None, full_name: Optional[str] = None, hid_acs_system_id: Optional[str] = None, phone_number: Optional[str] = None, user_identity_id: Optional[str] = None) -> None:
         """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.

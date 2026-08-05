@@ -2,7 +2,8 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import Device, DeviceProvider
+from ..null import Null
+from ..resources import (Device,DeviceProvider)
 from .devices_simulate import AbstractDevicesSimulate, DevicesSimulate
 from .devices_unmanaged import AbstractDevicesUnmanaged, DevicesUnmanaged
 
@@ -20,11 +21,9 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
+    def get(self, *, device_id: Optional[str] = None, name: Optional[str] = None) -> Device:
         """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
-
+        
         You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
@@ -37,26 +36,7 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
-    ) -> List[Device]:
+    def list(self, *, connect_webview_id: Optional[str] = None, connected_account_id: Optional[str] = None, connected_account_ids: Optional[List[str]] = None, created_before: Optional[str] = None, custom_metadata_has: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, device_ids: Optional[List[str]] = None, device_type: Optional[str] = None, device_types: Optional[List[str]] = None, limit: Optional[float] = None, manufacturer: Optional[str] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_id: Optional[str] = None, unstable_location_id: Optional[Union[str, Null]] = None, user_identifier_key: Optional[str] = None) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
@@ -95,13 +75,11 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_device_providers(
-        self, *, provider_category: Optional[str] = None
-    ) -> List[DeviceProvider]:
+    def list_device_providers(self, *, provider_category: Optional[str] = None) -> List[DeviceProvider]:
         """Returns a list of all device providers.
-
+        
         The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
-
+        
         When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
@@ -119,18 +97,9 @@ class AbstractDevices(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(
-        self,
-        *,
-        device_id: str,
-        backup_access_code_pool_enabled: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None,
-        name: Optional[str] = None,
-        properties: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    def update(self, *, device_id: str, backup_access_code_pool_enabled: Optional[bool] = None, custom_metadata: Optional[Dict[str, Any]] = None, is_managed: Optional[bool] = None, name: Optional[Union[str, Null]] = None, properties: Optional[Dict[str, Any]] = None) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
-
+        
         You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
@@ -143,7 +112,7 @@ class AbstractDevices(abc.ABC):
 
         :param name: Name for the device.
 
-        :param properties:
+        :param properties: 
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -164,14 +133,10 @@ class Devices(AbstractDevices):
     def unmanaged(self) -> DevicesUnmanaged:
         return self._unmanaged
 
-    @route_metadata(
-        path="/devices/get", has_required_parameters=True, has_pagination=False
-    )
-    def get(
-        self, *, device_id: Optional[str] = None, name: Optional[str] = None
-    ) -> Device:
+    @route_metadata(path="/devices/get", has_required_parameters=True, has_pagination=False)
+    def get(self, *, device_id: Optional[str] = None, name: Optional[str] = None) -> Device:
         """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
-
+        
         You must specify either ``device_id`` or ``name``.
 
         :param device_id: ID of the device that you want to get.
@@ -195,29 +160,8 @@ class Devices(AbstractDevices):
 
         return Device.from_dict(res["device"])
 
-    @route_metadata(
-        path="/devices/list", has_required_parameters=False, has_pagination=True
-    )
-    def list(
-        self,
-        *,
-        connect_webview_id: Optional[str] = None,
-        connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
-        customer_key: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        limit: Optional[float] = None,
-        manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
-    ) -> List[Device]:
+    @route_metadata(path="/devices/list", has_required_parameters=False, has_pagination=True)
+    def list(self, *, connect_webview_id: Optional[str] = None, connected_account_id: Optional[str] = None, connected_account_ids: Optional[List[str]] = None, created_before: Optional[str] = None, custom_metadata_has: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, device_ids: Optional[List[str]] = None, device_type: Optional[str] = None, device_types: Optional[List[str]] = None, limit: Optional[float] = None, manufacturer: Optional[str] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_id: Optional[str] = None, unstable_location_id: Optional[Union[str, Null]] = None, user_identifier_key: Optional[str] = None) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
@@ -292,18 +236,12 @@ class Devices(AbstractDevices):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
-    @route_metadata(
-        path="/devices/list_device_providers",
-        has_required_parameters=False,
-        has_pagination=False,
-    )
-    def list_device_providers(
-        self, *, provider_category: Optional[str] = None
-    ) -> List[DeviceProvider]:
+    @route_metadata(path="/devices/list_device_providers", has_required_parameters=False, has_pagination=False)
+    def list_device_providers(self, *, provider_category: Optional[str] = None) -> List[DeviceProvider]:
         """Returns a list of all device providers.
-
+        
         The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
-
+        
         When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
@@ -318,11 +256,7 @@ class Devices(AbstractDevices):
 
         return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
-    @route_metadata(
-        path="/devices/report_provider_metadata",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/devices/report_provider_metadata", has_required_parameters=True, has_pagination=False)
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
@@ -335,29 +269,16 @@ class Devices(AbstractDevices):
             json_payload["devices"] = devices
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /devices/report_provider_metadata"
-            )
+            raise ValueError("At least one parameter is required for /devices/report_provider_metadata")
 
         self.client.post("/devices/report_provider_metadata", json=json_payload)
 
         return None
 
-    @route_metadata(
-        path="/devices/update", has_required_parameters=True, has_pagination=False
-    )
-    def update(
-        self,
-        *,
-        device_id: str,
-        backup_access_code_pool_enabled: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None,
-        name: Optional[str] = None,
-        properties: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    @route_metadata(path="/devices/update", has_required_parameters=True, has_pagination=False)
+    def update(self, *, device_id: str, backup_access_code_pool_enabled: Optional[bool] = None, custom_metadata: Optional[Dict[str, Any]] = None, is_managed: Optional[bool] = None, name: Optional[Union[str, Null]] = None, properties: Optional[Dict[str, Any]] = None) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
-
+        
         You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
@@ -370,7 +291,7 @@ class Devices(AbstractDevices):
 
         :param name: Name for the device.
 
-        :param properties:
+        :param properties: 
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
@@ -378,9 +299,7 @@ class Devices(AbstractDevices):
         if device_id is not None:
             json_payload["device_id"] = device_id
         if backup_access_code_pool_enabled is not None:
-            json_payload["backup_access_code_pool_enabled"] = (
-                backup_access_code_pool_enabled
-            )
+            json_payload["backup_access_code_pool_enabled"] = backup_access_code_pool_enabled
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:

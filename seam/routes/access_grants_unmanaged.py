@@ -2,7 +2,8 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import UnmanagedAccessGrant
+from ..null import Null
+from ..resources import (UnmanagedAccessGrant)
 
 
 class AbstractAccessGrantsUnmanaged(abc.ABC):
@@ -19,16 +20,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(
-        self,
-        *,
-        acs_entrance_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
-        reservation_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> List[UnmanagedAccessGrant]:
+    def list(self, *, acs_entrance_id: Optional[str] = None, acs_system_id: Optional[str] = None, limit: Optional[float] = None, page_cursor: Optional[Union[str, Null]] = None, reservation_key: Optional[str] = None, user_identity_id: Optional[str] = None) -> List[UnmanagedAccessGrant]:
         """Gets unmanaged Access Grants (where is_managed = false).
 
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
@@ -47,17 +39,11 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(
-        self,
-        *,
-        access_grant_id: str,
-        is_managed: bool,
-        access_grant_key: Optional[str] = None,
-    ) -> None:
+    def update(self, *, access_grant_id: str, is_managed: bool, access_grant_key: Optional[str] = None) -> None:
         """Updates an unmanaged Access Grant to make it managed.
-
+        
         This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
-
+        
         When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
 
         :param access_grant_id: ID of the unmanaged Access Grant to update.
@@ -75,11 +61,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/access_grants/unmanaged/get",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/access_grants/unmanaged/get", has_required_parameters=True, has_pagination=False)
     def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         """Get an unmanaged Access Grant (where is_managed = false).
 
@@ -94,29 +76,14 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             params["access_grant_id"] = access_grant_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/unmanaged/get"
-            )
+            raise ValueError("At least one parameter is required for /access_grants/unmanaged/get")
 
         res = self.client.get("/access_grants/unmanaged/get", params=params)
 
         return UnmanagedAccessGrant.from_dict(res["access_grant"])
 
-    @route_metadata(
-        path="/access_grants/unmanaged/list",
-        has_required_parameters=False,
-        has_pagination=True,
-    )
-    def list(
-        self,
-        *,
-        acs_entrance_id: Optional[str] = None,
-        acs_system_id: Optional[str] = None,
-        limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
-        reservation_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
-    ) -> List[UnmanagedAccessGrant]:
+    @route_metadata(path="/access_grants/unmanaged/list", has_required_parameters=False, has_pagination=True)
+    def list(self, *, acs_entrance_id: Optional[str] = None, acs_system_id: Optional[str] = None, limit: Optional[float] = None, page_cursor: Optional[Union[str, Null]] = None, reservation_key: Optional[str] = None, user_identity_id: Optional[str] = None) -> List[UnmanagedAccessGrant]:
         """Gets unmanaged Access Grants (where is_managed = false).
 
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
@@ -151,22 +118,12 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
 
-    @route_metadata(
-        path="/access_grants/unmanaged/update",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def update(
-        self,
-        *,
-        access_grant_id: str,
-        is_managed: bool,
-        access_grant_key: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/access_grants/unmanaged/update", has_required_parameters=True, has_pagination=False)
+    def update(self, *, access_grant_id: str, is_managed: bool, access_grant_key: Optional[str] = None) -> None:
         """Updates an unmanaged Access Grant to make it managed.
-
+        
         This endpoint can only be used to convert unmanaged access grants to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed access grants back to unmanaged.
-
+        
         When converting an unmanaged access grant to managed, all associated access methods will also be converted to managed.
 
         :param access_grant_id: ID of the unmanaged Access Grant to update.
@@ -186,9 +143,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             json_payload["access_grant_key"] = access_grant_key
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/unmanaged/update"
-            )
+            raise ValueError("At least one parameter is required for /access_grants/unmanaged/update")
 
         self.client.patch("/access_grants/unmanaged/update", json=json_payload)
 

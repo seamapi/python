@@ -7,15 +7,15 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class UnmanagedAccessCode:
     """Represents an `unmanaged smart lock access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
-
+    
     An access code is a code used for a keypad or pinpad device. Unlike physical keys, which can easily be lost or duplicated, PIN codes can be customized, tracked, and altered on the fly.
-
+    
     When you create an access code on a device in Seam, it is created as a managed access code. Access codes that exist on a device that were not created through Seam are considered unmanaged codes. We strictly limit the operations that can be performed on unmanaged codes.
-
+    
     Prior to using Seam to manage your devices, you may have used another lock management system to manage the access codes on your devices. Where possible, we help you keep any existing access codes on devices and transition those codes to ones managed by your Seam workspace.
-
+    
     Not all providers support unmanaged access codes. The following providers do not support unmanaged access codes:
-
+    
     - `Kwikset <https://docs.seam.co/device-and-system-integration-guides/kwikset-locks>`_
 
     :ivar access_code_id: Unique identifier for the access code.
@@ -48,8 +48,7 @@ class UnmanagedAccessCode:
 
     :ivar warnings: Warnings associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
-    :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code.
-    """
+    :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code."""
 
     @dataclass
     class DormakabaOracodeMetadata(ResourceMapping):
@@ -69,8 +68,7 @@ class UnmanagedAccessCode:
 
         :ivar user_level_id: Dormakaba Oracode user level ID associated with this access code.
 
-        :ivar user_level_name: Dormakaba Oracode user level name associated with this access code.
-        """
+        :ivar user_level_name: Dormakaba Oracode user level name associated with this access code."""
 
         is_cancellable: Optional[bool]
         is_early_checkin_able: Optional[bool]
@@ -114,12 +112,11 @@ class UnmanagedAccessCode:
 
         :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
 
-        :ivar is_connected_account_error:
+        :ivar is_connected_account_error: 
 
-        :ivar is_device_error:
+        :ivar is_device_error: 
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
-        """
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_."""
 
         @dataclass
         class ModifiedFields(ResourceMapping):
@@ -165,10 +162,7 @@ class UnmanagedAccessCode:
                 managed_access_code_id=d.get("managed_access_code_id", None),
                 unmanaged_access_code_id=d.get("unmanaged_access_code_id", None),
                 change_type=d.get("change_type", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=[cls.ModifiedFields.from_dict(i) for i in d.get("modified_fields") or []],
                 is_connected_account_error=d.get("is_connected_account_error", None),
                 is_device_error=d.get("is_device_error", None),
                 is_bridge_error=d.get("is_bridge_error", None),
@@ -186,8 +180,7 @@ class UnmanagedAccessCode:
 
         :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
 
-        :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
-        """
+        :ivar modified_fields: List of fields that were changed externally, with their previous and new values."""
 
         @dataclass
         class ModifiedFields(ResourceMapping):
@@ -224,10 +217,7 @@ class UnmanagedAccessCode:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
                 change_type=d.get("change_type", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=[cls.ModifiedFields.from_dict(i) for i in d.get("modified_fields") or []],
             )
 
     access_code_id: str
@@ -252,19 +242,11 @@ class UnmanagedAccessCode:
         return cls(
             access_code_id=d.get("access_code_id", None),
             cannot_be_managed=d.get("cannot_be_managed", None),
-            cannot_delete_unmanaged_access_code=d.get(
-                "cannot_delete_unmanaged_access_code", None
-            ),
+            cannot_delete_unmanaged_access_code=d.get("cannot_delete_unmanaged_access_code", None),
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
-            dormakaba_oracode_metadata=(
-                cls.DormakabaOracodeMetadata.from_dict(
-                    d.get("dormakaba_oracode_metadata")
-                )
-                if d.get("dormakaba_oracode_metadata") is not None
-                else None
-            ),
+            dormakaba_oracode_metadata=cls.DormakabaOracodeMetadata.from_dict(d.get("dormakaba_oracode_metadata")) if d.get("dormakaba_oracode_metadata") is not None else None,
             ends_at=d.get("ends_at", None),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_managed=d.get("is_managed", None),

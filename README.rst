@@ -466,7 +466,9 @@ Python has a single absence value, so this SDK maps the two cases as follows:
 
 Sending null is rarely intended and unsetting a value cannot be undone,
 so ``None`` means the safe option of omitting the param
-and sending null is always explicit:
+and sending null is always explicit.
+Route methods accept ``NULL`` only for the params the Seam API documents as
+nullable, so a type checker reports passing it to any other param as an error:
 
 .. code-block:: python
 

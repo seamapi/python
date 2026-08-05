@@ -42,8 +42,7 @@ class UserIdentity:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-        """
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
 
         acs_system_id: str
         acs_user_id: str
@@ -69,8 +68,7 @@ class UserIdentity:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-        """
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
 
         created_at: str
         message: str

@@ -2,20 +2,14 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import Phone
+from ..null import Null
+from ..resources import (Phone)
 
 
 class AbstractPhonesSimulate(abc.ABC):
 
     @abc.abstractmethod
-    def create_sandbox_phone(
-        self,
-        *,
-        user_identity_id: str,
-        assa_abloy_metadata: Optional[Dict[str, Any]] = None,
-        custom_sdk_installation_id: Optional[str] = None,
-        phone_metadata: Optional[Dict[str, Any]] = None,
-    ) -> Phone:
+    def create_sandbox_phone(self, *, user_identity_id: str, assa_abloy_metadata: Optional[Dict[str, Any]] = None, custom_sdk_installation_id: Optional[str] = None, phone_metadata: Optional[Dict[str, Any]] = None) -> Phone:
         """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
@@ -37,19 +31,8 @@ class PhonesSimulate(AbstractPhonesSimulate):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/phones/simulate/create_sandbox_phone",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def create_sandbox_phone(
-        self,
-        *,
-        user_identity_id: str,
-        assa_abloy_metadata: Optional[Dict[str, Any]] = None,
-        custom_sdk_installation_id: Optional[str] = None,
-        phone_metadata: Optional[Dict[str, Any]] = None,
-    ) -> Phone:
+    @route_metadata(path="/phones/simulate/create_sandbox_phone", has_required_parameters=True, has_pagination=False)
+    def create_sandbox_phone(self, *, user_identity_id: str, assa_abloy_metadata: Optional[Dict[str, Any]] = None, custom_sdk_installation_id: Optional[str] = None, phone_metadata: Optional[Dict[str, Any]] = None) -> Phone:
         """Creates a new simulated phone in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Creating a Simulated Phone for a User Identity <https://docs.seam.co/capability-guides/mobile-access/developing-in-a-sandbox-workspace#creating-a-simulated-phone-for-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to associate with the simulated phone.
@@ -75,12 +58,8 @@ class PhonesSimulate(AbstractPhonesSimulate):
             json_payload["phone_metadata"] = phone_metadata
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
-            )
+            raise ValueError("At least one parameter is required for /phones/simulate/create_sandbox_phone")
 
-        res = self.client.post(
-            "/phones/simulate/create_sandbox_phone", json=json_payload
-        )
+        res = self.client.post("/phones/simulate/create_sandbox_phone", json=json_payload)
 
         return Phone.from_dict(res["phone"])

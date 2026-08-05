@@ -7,7 +7,7 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsEntrance:
     """Represents an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
-
+    
     In an access control system, an entrance is a secured door, gate, zone, or other method of entry. You can list details for all the ``acs_entrance`` resources in your workspace or get these details for a specific ``acs_entrance``. You can also list all entrances associated with a specific credential, and you can list all credentials associated with a specific entrance.
 
     :ivar acs_entrance_id: ID of the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
@@ -58,8 +58,7 @@ class AcsEntrance:
 
     :ivar visionline_metadata: Visionline-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar warnings: Warnings associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
-    """
+    :ivar warnings: Warnings associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_."""
 
     @dataclass
     class AkilesMetadata(ResourceMapping):
@@ -117,8 +116,7 @@ class AcsEntrance:
 
         :ivar pms_id: PMS ID of the door in the Vostio access system.
 
-        :ivar stand_open: Indicates whether keys are allowed to set the door in stand open mode in the Vostio access system.
-        """
+        :ivar stand_open: Indicates whether keys are allowed to set the door in stand open mode in the Vostio access system."""
 
         door_name: Optional[str]
         door_number: Optional[float]
@@ -200,8 +198,7 @@ class AcsEntrance:
     class DormakabaAmbianceMetadata(ResourceMapping):
         """dormakaba Ambiance-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-        :ivar access_point_name: Name of the access point in the dormakaba Ambiance access system.
-        """
+        :ivar access_point_name: Name of the access point in the dormakaba Ambiance access system."""
 
         access_point_name: Optional[str]
 
@@ -215,8 +212,7 @@ class AcsEntrance:
     class DormakabaCommunityMetadata(ResourceMapping):
         """dormakaba Community-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-        :ivar access_point_profile: Type of access point profile in the dormakaba Community access system.
-        """
+        :ivar access_point_profile: Type of access point profile in the dormakaba Community access system."""
 
         access_point_profile: Optional[str]
 
@@ -234,8 +230,7 @@ class AcsEntrance:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-        """
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
 
         created_at: str
         error_code: str
@@ -389,8 +384,7 @@ class AcsEntrance:
 
             :ivar visionline_door_profile_id: Door profile ID in the Visionline access system.
 
-            :ivar visionline_door_profile_type: Door profile type in the Visionline access system.
-            """
+            :ivar visionline_door_profile_type: Door profile type in the Visionline access system."""
 
             visionline_door_profile_id: Optional[str]
             visionline_door_profile_type: Optional[str]
@@ -398,12 +392,8 @@ class AcsEntrance:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    visionline_door_profile_id=d.get(
-                        "visionline_door_profile_id", None
-                    ),
-                    visionline_door_profile_type=d.get(
-                        "visionline_door_profile_type", None
-                    ),
+                    visionline_door_profile_id=d.get("visionline_door_profile_id", None),
+                    visionline_door_profile_type=d.get("visionline_door_profile_type", None),
                 )
 
         door_category: Optional[str]
@@ -426,8 +416,7 @@ class AcsEntrance:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-        """
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
 
         created_at: str
         message: str
@@ -472,28 +461,10 @@ class AcsEntrance:
         return cls(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),
-            akiles_metadata=(
-                cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
-                if d.get("akiles_metadata") is not None
-                else None
-            ),
-            assa_abloy_vostio_metadata=(
-                cls.AssaAbloyVostioMetadata.from_dict(
-                    d.get("assa_abloy_vostio_metadata")
-                )
-                if d.get("assa_abloy_vostio_metadata") is not None
-                else None
-            ),
-            avigilon_alta_metadata=(
-                cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata"))
-                if d.get("avigilon_alta_metadata") is not None
-                else None
-            ),
-            brivo_metadata=(
-                cls.BrivoMetadata.from_dict(d.get("brivo_metadata"))
-                if d.get("brivo_metadata") is not None
-                else None
-            ),
+            akiles_metadata=cls.AkilesMetadata.from_dict(d.get("akiles_metadata")) if d.get("akiles_metadata") is not None else None,
+            assa_abloy_vostio_metadata=cls.AssaAbloyVostioMetadata.from_dict(d.get("assa_abloy_vostio_metadata")) if d.get("assa_abloy_vostio_metadata") is not None else None,
+            avigilon_alta_metadata=cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata")) if d.get("avigilon_alta_metadata") is not None else None,
+            brivo_metadata=cls.BrivoMetadata.from_dict(d.get("brivo_metadata")) if d.get("brivo_metadata") is not None else None,
             can_belong_to_reservation=d.get("can_belong_to_reservation", None),
             can_unlock_with_card=d.get("can_unlock_with_card", None),
             can_unlock_with_cloud_key=d.get("can_unlock_with_cloud_key", None),
@@ -502,47 +473,15 @@ class AcsEntrance:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            dormakaba_ambiance_metadata=(
-                cls.DormakabaAmbianceMetadata.from_dict(
-                    d.get("dormakaba_ambiance_metadata")
-                )
-                if d.get("dormakaba_ambiance_metadata") is not None
-                else None
-            ),
-            dormakaba_community_metadata=(
-                cls.DormakabaCommunityMetadata.from_dict(
-                    d.get("dormakaba_community_metadata")
-                )
-                if d.get("dormakaba_community_metadata") is not None
-                else None
-            ),
+            dormakaba_ambiance_metadata=cls.DormakabaAmbianceMetadata.from_dict(d.get("dormakaba_ambiance_metadata")) if d.get("dormakaba_ambiance_metadata") is not None else None,
+            dormakaba_community_metadata=cls.DormakabaCommunityMetadata.from_dict(d.get("dormakaba_community_metadata")) if d.get("dormakaba_community_metadata") is not None else None,
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
-            hotek_metadata=(
-                cls.HotekMetadata.from_dict(d.get("hotek_metadata"))
-                if d.get("hotek_metadata") is not None
-                else None
-            ),
+            hotek_metadata=cls.HotekMetadata.from_dict(d.get("hotek_metadata")) if d.get("hotek_metadata") is not None else None,
             is_locked=d.get("is_locked", None),
-            latch_metadata=(
-                cls.LatchMetadata.from_dict(d.get("latch_metadata"))
-                if d.get("latch_metadata") is not None
-                else None
-            ),
-            salto_ks_metadata=(
-                cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                if d.get("salto_ks_metadata") is not None
-                else None
-            ),
-            salto_space_metadata=(
-                cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata"))
-                if d.get("salto_space_metadata") is not None
-                else None
-            ),
+            latch_metadata=cls.LatchMetadata.from_dict(d.get("latch_metadata")) if d.get("latch_metadata") is not None else None,
+            salto_ks_metadata=cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata")) if d.get("salto_ks_metadata") is not None else None,
+            salto_space_metadata=cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata")) if d.get("salto_space_metadata") is not None else None,
             space_ids=d.get("space_ids", None),
-            visionline_metadata=(
-                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
-                if d.get("visionline_metadata") is not None
-                else None
-            ),
+            visionline_metadata=cls.VisionlineMetadata.from_dict(d.get("visionline_metadata")) if d.get("visionline_metadata") is not None else None,
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
         )

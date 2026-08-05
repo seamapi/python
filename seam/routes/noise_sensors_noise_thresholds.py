@@ -2,22 +2,14 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
-from ..resources import NoiseThreshold
+from ..null import Null
+from ..resources import (NoiseThreshold)
 
 
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
     @abc.abstractmethod
-    def create(
-        self,
-        *,
-        device_id: str,
-        ends_daily_at: str,
-        starts_daily_at: str,
-        name: Optional[str] = None,
-        noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-    ) -> NoiseThreshold:
+    def create(self, *, device_id: str, ends_daily_at: str, starts_daily_at: str, name: Optional[str] = None, noise_threshold_decibels: Optional[float] = None, noise_threshold_nrs: Optional[float] = None) -> NoiseThreshold:
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
         :param device_id: ID of the device for which you want to create a noise threshold.
@@ -71,17 +63,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(
-        self,
-        *,
-        device_id: str,
-        noise_threshold_id: str,
-        ends_daily_at: Optional[str] = None,
-        name: Optional[str] = None,
-        noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-        starts_daily_at: Optional[str] = None,
-    ) -> None:
+    def update(self, *, device_id: str, noise_threshold_id: str, ends_daily_at: Optional[str] = None, name: Optional[str] = None, noise_threshold_decibels: Optional[float] = None, noise_threshold_nrs: Optional[float] = None, starts_daily_at: Optional[str] = None) -> None:
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
@@ -107,21 +89,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(
-        path="/noise_sensors/noise_thresholds/create",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def create(
-        self,
-        *,
-        device_id: str,
-        ends_daily_at: str,
-        starts_daily_at: str,
-        name: Optional[str] = None,
-        noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-    ) -> NoiseThreshold:
+    @route_metadata(path="/noise_sensors/noise_thresholds/create", has_required_parameters=True, has_pagination=False)
+    def create(self, *, device_id: str, ends_daily_at: str, starts_daily_at: str, name: Optional[str] = None, noise_threshold_decibels: Optional[float] = None, noise_threshold_nrs: Optional[float] = None) -> NoiseThreshold:
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
         :param device_id: ID of the device for which you want to create a noise threshold.
@@ -155,21 +124,13 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
-            )
+            raise ValueError("At least one parameter is required for /noise_sensors/noise_thresholds/create")
 
-        res = self.client.post(
-            "/noise_sensors/noise_thresholds/create", json=json_payload
-        )
+        res = self.client.post("/noise_sensors/noise_thresholds/create", json=json_payload)
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
 
-    @route_metadata(
-        path="/noise_sensors/noise_thresholds/delete",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/noise_sensors/noise_thresholds/delete", has_required_parameters=True, has_pagination=False)
     def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -186,19 +147,13 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             params["noise_threshold_id"] = noise_threshold_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
-            )
+            raise ValueError("At least one parameter is required for /noise_sensors/noise_thresholds/delete")
 
         self.client.delete("/noise_sensors/noise_thresholds/delete", params=params)
 
         return None
 
-    @route_metadata(
-        path="/noise_sensors/noise_thresholds/get",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/noise_sensors/noise_thresholds/get", has_required_parameters=True, has_pagination=False)
     def get(self, *, noise_threshold_id: str) -> NoiseThreshold:
         """Returns a specified `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -213,19 +168,13 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             params["noise_threshold_id"] = noise_threshold_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
-            )
+            raise ValueError("At least one parameter is required for /noise_sensors/noise_thresholds/get")
 
         res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
 
-    @route_metadata(
-        path="/noise_sensors/noise_thresholds/list",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
+    @route_metadata(path="/noise_sensors/noise_thresholds/list", has_required_parameters=True, has_pagination=False)
     def list(self, *, device_id: str) -> List[NoiseThreshold]:
         """Returns a list of all `noise thresholds <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -240,30 +189,14 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             params["device_id"] = device_id
 
         if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
-            )
+            raise ValueError("At least one parameter is required for /noise_sensors/noise_thresholds/list")
 
         res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
         return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
 
-    @route_metadata(
-        path="/noise_sensors/noise_thresholds/update",
-        has_required_parameters=True,
-        has_pagination=False,
-    )
-    def update(
-        self,
-        *,
-        device_id: str,
-        noise_threshold_id: str,
-        ends_daily_at: Optional[str] = None,
-        name: Optional[str] = None,
-        noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None,
-        starts_daily_at: Optional[str] = None,
-    ) -> None:
+    @route_metadata(path="/noise_sensors/noise_thresholds/update", has_required_parameters=True, has_pagination=False)
+    def update(self, *, device_id: str, noise_threshold_id: str, ends_daily_at: Optional[str] = None, name: Optional[str] = None, noise_threshold_decibels: Optional[float] = None, noise_threshold_nrs: Optional[float] = None, starts_daily_at: Optional[str] = None) -> None:
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
@@ -299,9 +232,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["starts_daily_at"] = starts_daily_at
 
         if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
-            )
+            raise ValueError("At least one parameter is required for /noise_sensors/noise_thresholds/update")
 
         self.client.put("/noise_sensors/noise_thresholds/update", json=json_payload)
 

@@ -7,18 +7,18 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsEncoder:
     """Represents a hardware device that encodes `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ data onto physical cards within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
-
+    
     Some access control systems require credentials to be encoded onto plastic key cards using a card encoder. This process involves the following two key steps:
-
+    
     1. Credential creation
        Configure the access parameters for the credential.
     2. Card encoding
        Write the credential data onto the card using a compatible card encoder.
-
+    
     Separately, the Seam API also supports card scanning, which enables you to scan and read the encoded data on a card. You can use this action to confirm consistency with access control system records or diagnose discrepancies if needed.
-
+    
     See `Working with Card Encoders and Scanners <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
+    
     To verify if your access control system requires a card encoder, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
 
     :ivar acs_encoder_id: ID of the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
@@ -33,8 +33,7 @@ class AcsEncoder:
 
     :ivar errors: Errors associated with the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-    """
+    :ivar workspace_id: ID of the workspace that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_."""
 
     @dataclass
     class Errors(ResourceMapping):
@@ -44,8 +43,7 @@ class AcsEncoder:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-        """
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
 
         created_at: str
         error_code: str
