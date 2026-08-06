@@ -4,7 +4,7 @@ from typing_extensions import Self
 from urllib3.util import Retry
 
 from .auth import get_auth_headers_for_multi_workspace_personal_access_token
-from .constants import LTS_VERSION
+from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .options import get_endpoint
 from .client import SeamHttpClient
 from .models import AbstractSeamMultiWorkspace
@@ -52,6 +52,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        niquests_options: Optional[Dict[str, Any]] = None,
     ):
         """
         Initialize a SeamMultiWorkspace client instance.
@@ -71,6 +73,12 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[urllib3.util.Retry]
+        :param timeout: The request timeout in seconds. Defaults to 30
+            seconds. Pass None for no timeout
+        :type timeout: Optional[float]
+        :param niquests_options: Options passed through to the underlying
+            niquests Session, for control the other options do not cover
+        :type niquests_options: Optional[Dict[str, Any]]
 
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
@@ -86,6 +94,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
             base_url=endpoint,
             auth_headers=auth_headers,
             retries=retries,
+            timeout=timeout,
+            niquests_options=niquests_options,
         )
 
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
@@ -101,6 +111,8 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        niquests_options: Optional[Dict[str, Any]] = None,
     ) -> Self:
         """
         Create a SeamMultiWorkspace instance using a personal access token.
@@ -132,4 +144,6 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
             endpoint=endpoint,
             wait_for_action_attempt=wait_for_action_attempt,
             retries=retries,
+            timeout=timeout,
+            niquests_options=niquests_options,
         )
