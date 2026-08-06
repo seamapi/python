@@ -7,17 +7,7 @@ from seam import Seam
 SERVICE_UNAVAILABLE = (503, "Service Unavailable")
 DEVICES = (200, {"devices": [{"device_id": "august_device_1"}]})
 
-# The retries option is currently ignored: SeamHttpClient sets self.retries after
-# calling niquests.Session.__init__ without forwarding it, so the mounted
-# HTTPAdapter keeps its default max_retries. Tests that depend on the option
-# being honored are marked xfail until seam/client.py passes retries through.
-retries_are_ignored = pytest.mark.xfail(
-    strict=True,
-    reason="SeamHttpClient does not forward retries to niquests.Session.",
-)
 
-
-@retries_are_ignored
 def test_seam_retries_service_unavailable_responses(recording_server):
     expected_retry_count = 2
     responses = [SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE, DEVICES]
@@ -34,7 +24,6 @@ def test_seam_retries_service_unavailable_responses(recording_server):
     assert len(requests) == expected_retry_count + 1
 
 
-@retries_are_ignored
 def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
     expected_retry_count = 1
 
