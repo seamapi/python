@@ -47,15 +47,17 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         retries: Optional[Retry] = DEFAULT_RETRIES,
         **kwargs
     ):
-        super().__init__(**kwargs)
+        # niquests.Session mounts its adapters while initializing, so retries
+        # must be passed through here. Assigning self.retries afterwards leaves
+        # the mounted adapters on their default and the option has no effect.
+        super().__init__(
+            retries=DEFAULT_RETRIES if retries is None else retries, **kwargs
+        )
 
         self.base_url = base_url
 
         headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
         self.headers.update(headers)
-
-        if retries:
-            self.retries = retries
 
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)

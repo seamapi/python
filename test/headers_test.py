@@ -1,41 +1,45 @@
-import niquests
 import uuid
-from unittest.mock import patch, Mock
-from seam import Seam
 from importlib.metadata import version
+
+from seam import Seam
 from seam.constants import LTS_VERSION
 
 
-def test_seam_http_client_request(server):
-    endpoint, seed = server
-    seam = Seam.from_api_key(seed["seam_apikey1_token"], endpoint=endpoint)
+def test_seam_sends_default_headers(recording_server):
     device_id = str(uuid.uuid4())
+    responses = [(200, {"device": {"device_id": device_id}})]
 
-    mock_response = Mock()
-    mock_response.status_code = 200
-    mock_response.headers = {"content-type": "application/json"}
-    mock_response_data = {"device": {"device_id": device_id}}
-    mock_response.json.return_value = mock_response_data
+    with recording_server(responses) as (endpoint, requests):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+        device = seam.devices.get(device_id=device_id)
 
-    with patch.object(
-        niquests.Session, "request", return_value=mock_response
-    ) as mock_request:
-        response = seam.client.post("/devices/get", json={"device_id": device_id})
+    assert device.device_id == device_id
 
-        mock_request.assert_called_once()
-        args, _ = mock_request.call_args
+    assert len(requests) == 1
+    [request] = requests
 
-        assert args[0] == "POST"
-        assert args[1] == f"{endpoint}/devices/get"
+    assert request["path"] == "/devices/get"
+    assert request["body"] == {"device_id": device_id}
 
-        passed_headers = mock_request.call_args.kwargs["headers"] or {}
-        request_headers = {
-            **seam.client.headers,
-            **passed_headers,
-        }
+    assert request["headers"]["seam-sdk-name"] == "seamapi/python"
+    assert request["headers"]["seam-sdk-version"] == version("seam")
+    assert request["headers"]["seam-lts-version"] == LTS_VERSION
+    assert request["headers"]["authorization"] == "Bearer seam_apikey_token"
 
-        assert request_headers["seam-sdk-name"] == "seamapi/python"
-        assert request_headers["seam-sdk-version"] == version("seam")
-        assert request_headers["seam-lts-version"] == LTS_VERSION
+    assert Seam.lts_version == seam.lts_version
 
-        assert response == mock_response_data
+
+def test_seam_sends_workspace_header_with_personal_access_token(recording_server):
+    device_id = str(uuid.uuid4())
+    responses = [(200, {"device": {"device_id": device_id}})]
+
+    with recording_server(responses) as (endpoint, requests):
+        seam = Seam.from_personal_access_token(
+            "seam_at_token", "workspace-1", endpoint=endpoint
+        )
+        seam.devices.get(device_id=device_id)
+
+    [request] = requests
+
+    assert request["headers"]["authorization"] == "Bearer seam_at_token"
+    assert request["headers"]["seam-workspace"] == "workspace-1"
