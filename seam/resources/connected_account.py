@@ -1,6 +1,154 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
+
+
+@dataclass
+class ConnectedAccountSites(ResourceMapping):
+    """Salto sites associated with the connected account that has an error.
+
+    :ivar site_id: ID of a Salto site associated with the connected account that has an error.
+
+    :ivar site_name: Name of a Salto site associated with the connected account that has an error.
+
+    :ivar site_user_subscription_limit: Subscription limit of site users for a Salto site associated with the connected account that has an error.
+
+    :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has an error.
+    """
+
+    site_id: str
+    site_name: str
+    site_user_subscription_limit: int
+    subscribed_site_user_count: int
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            site_id=d.get("site_id", None),
+            site_name=d.get("site_name", None),
+            site_user_subscription_limit=d.get("site_user_subscription_limit", None),
+            subscribed_site_user_count=d.get("subscribed_site_user_count", None),
+        )
+
+
+@dataclass
+class ConnectedAccountSaltoKsMetadata(ResourceMapping):
+    """Salto KS metadata associated with the connected account that has an error.
+
+    :ivar sites: Salto sites associated with the connected account that has an error."""
+
+    sites: List[ConnectedAccountSites]
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            sites=[ConnectedAccountSites.from_dict(i) for i in d.get("sites") or []],
+        )
+
+
+@dataclass
+class ConnectedAccountErrors(ResourceMapping):
+    """Errors associated with the connected account.
+
+    :ivar created_at: Date and time at which Seam created the error.
+
+    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+    :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+
+    :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
+
+    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+    :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has an error.
+    """
+
+    created_at: str
+    error_code: str
+    is_bridge_error: bool
+    is_connected_account_error: bool
+    message: str
+    salto_ks_metadata: ConnectedAccountSaltoKsMetadata
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            created_at=d.get("created_at", None),
+            error_code=d.get("error_code", None),
+            is_bridge_error=d.get("is_bridge_error", None),
+            is_connected_account_error=d.get("is_connected_account_error", None),
+            message=d.get("message", None),
+            salto_ks_metadata=(
+                ConnectedAccountSaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                if d.get("salto_ks_metadata") is not None
+                else None
+            ),
+        )
+
+
+@dataclass
+class ConnectedAccountUserIdentifier(ResourceMapping):
+    """User identifier associated with the connected account.
+
+    :ivar api_url: API URL for the user identifier associated with the connected account.
+
+    :ivar email: Email address of the user identifier associated with the connected account.
+
+    :ivar exclusive: Indicates whether the user identifier associated with the connected account is exclusive.
+
+    :ivar phone: Phone number of the user identifier associated with the connected account.
+
+    :ivar username: Username of the user identifier associated with the connected account.
+    """
+
+    api_url: str
+    email: str
+    exclusive: bool
+    phone: str
+    username: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            api_url=d.get("api_url", None),
+            email=d.get("email", None),
+            exclusive=d.get("exclusive", None),
+            phone=d.get("phone", None),
+            username=d.get("username", None),
+        )
+
+
+@dataclass
+class ConnectedAccountWarnings(ResourceMapping):
+    """Warnings associated with the connected account.
+
+    :ivar created_at: Date and time at which Seam created the warning.
+
+    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+
+    :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has a warning.
+    """
+
+    created_at: str
+    message: str
+    warning_code: str
+    salto_ks_metadata: ConnectedAccountSaltoKsMetadata
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            created_at=d.get("created_at", None),
+            message=d.get("message", None),
+            warning_code=d.get("warning_code", None),
+            salto_ks_metadata=(
+                ConnectedAccountSaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                if d.get("salto_ks_metadata") is not None
+                else None
+            ),
+        )
 
 
 @dataclass
@@ -54,17 +202,17 @@ class ConnectedAccount:
     default_checkin_time: str
     default_checkout_time: str
     display_name: str
-    errors: List[Dict[str, Any]]
+    errors: List[ConnectedAccountErrors]
     ical_feed_origin: str
     ical_url: str
     image_url: str
     time_zone: str
-    user_identifier: Dict[str, Any]
-    warnings: List[Dict[str, Any]]
+    user_identifier: ConnectedAccountUserIdentifier
+    warnings: List[ConnectedAccountWarnings]
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ConnectedAccount(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             accepted_capabilities=d.get("accepted_capabilities", None),
             account_type=d.get("account_type", None),
             account_type_display_name=d.get("account_type_display_name", None),
@@ -78,11 +226,17 @@ class ConnectedAccount:
             default_checkin_time=d.get("default_checkin_time", None),
             default_checkout_time=d.get("default_checkout_time", None),
             display_name=d.get("display_name", None),
-            errors=d.get("errors", None),
+            errors=[ConnectedAccountErrors.from_dict(i) for i in d.get("errors") or []],
             ical_feed_origin=d.get("ical_feed_origin", None),
             ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
             time_zone=d.get("time_zone", None),
-            user_identifier=DeepAttrDict(d.get("user_identifier", None)),
-            warnings=d.get("warnings", None),
+            user_identifier=(
+                ConnectedAccountUserIdentifier.from_dict(d.get("user_identifier"))
+                if d.get("user_identifier") is not None
+                else None
+            ),
+            warnings=[
+                ConnectedAccountWarnings.from_dict(i) for i in d.get("warnings") or []
+            ],
         )

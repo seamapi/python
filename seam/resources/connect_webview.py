@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -75,9 +76,9 @@ class ConnectWebview:
     wait_for_device_creation: bool
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ConnectWebview(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             accepted_capabilities=d.get("accepted_capabilities", None),
             accepted_providers=d.get("accepted_providers", None),
             any_provider_allowed=d.get("any_provider_allowed", None),

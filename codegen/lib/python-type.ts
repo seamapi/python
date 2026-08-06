@@ -21,9 +21,14 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
   return mapScalarFormatToPythonType(parameter.format)
 }
 
-export const mapPropertyToPythonType = (property: Property): string => {
+export const mapPropertyToPythonType = (
+  property: Property,
+  nestedClassName?: string,
+): string => {
   if (property.format === 'list') {
-    return `List[${mapListItemFormatToPythonType(property.itemFormat)}]`
+    return `List[${
+      nestedClassName ?? mapListItemFormatToPythonType(property.itemFormat)
+    }]`
   }
 
   if (property.format === 'number') {
@@ -34,6 +39,10 @@ export const mapPropertyToPythonType = (property: Property): string => {
   // though the blueprint types them as records.
   if (property.format === 'record' && 'resourceType' in property) {
     return 'List[Dict[str, Any]]'
+  }
+
+  if (property.format === 'object' && nestedClassName != null) {
+    return nestedClassName
   }
 
   return mapScalarFormatToPythonType(property.format)

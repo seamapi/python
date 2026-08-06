@@ -1,6 +1,153 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
+
+
+@dataclass
+class AcsAccessGroupAccessSchedule(ResourceMapping):
+    """``starts_at`` and ``ends_at`` timestamps for the access group's access.
+
+    :ivar ends_at: Date and time at which the user's access ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+    :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+    """
+
+    ends_at: str
+    starts_at: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            ends_at=d.get("ends_at", None),
+            starts_at=d.get("starts_at", None),
+        )
+
+
+@dataclass
+class AcsAccessGroupErrors(ResourceMapping):
+    """Errors associated with the ``acs_access_group``.
+
+    :ivar created_at: Date and time at which Seam created the error.
+
+    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+    """
+
+    created_at: str
+    error_code: str
+    message: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            created_at=d.get("created_at", None),
+            error_code=d.get("error_code", None),
+            message=d.get("message", None),
+        )
+
+
+@dataclass
+class AcsAccessGroupFrom(ResourceMapping):
+    """Old access group information.
+
+    :ivar name: Name of the access group."""
+
+    name: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            name=d.get("name", None),
+        )
+
+
+@dataclass
+class AcsAccessGroupTo(ResourceMapping):
+    """New access group information.
+
+    :ivar name: Name of the access group."""
+
+    name: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            name=d.get("name", None),
+        )
+
+
+@dataclass
+class AcsAccessGroupPendingMutations(ResourceMapping):
+    """Collection of pending mutations for the access group. Represents operations that have been requested but not yet completed on the integrated access system.
+
+    :ivar created_at: Date and time at which the mutation was created.
+
+    :ivar message: Detailed description of the mutation.
+
+    :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing an access group creation to the integrated access system.
+
+    :ivar from_: Old access group information.
+
+    :ivar to: New access group information.
+
+    :ivar acs_user_id: ID of the user involved in the scheduled change.
+
+    :ivar variant: Whether the user is scheduled to be added to or removed from this access group.
+    """
+
+    created_at: str
+    message: str
+    mutation_code: str
+    from_: AcsAccessGroupFrom
+    to: AcsAccessGroupTo
+    acs_user_id: str
+    variant: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            created_at=d.get("created_at", None),
+            message=d.get("message", None),
+            mutation_code=d.get("mutation_code", None),
+            from_=(
+                AcsAccessGroupFrom.from_dict(d.get("from"))
+                if d.get("from") is not None
+                else None
+            ),
+            to=(
+                AcsAccessGroupTo.from_dict(d.get("to"))
+                if d.get("to") is not None
+                else None
+            ),
+            acs_user_id=d.get("acs_user_id", None),
+            variant=d.get("variant", None),
+        )
+
+
+@dataclass
+class AcsAccessGroupWarnings(ResourceMapping):
+    """Warnings associated with the ``acs_access_group``.
+
+    :ivar created_at: Date and time at which Seam created the warning.
+
+    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+    """
+
+    created_at: str
+    message: str
+    warning_code: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            created_at=d.get("created_at", None),
+            message=d.get("message", None),
+            warning_code=d.get("warning_code", None),
+        )
 
 
 @dataclass
@@ -45,40 +192,49 @@ class AcsAccessGroup:
 
     access_group_type: str
     access_group_type_display_name: str
-    access_schedule: Dict[str, Any]
+    access_schedule: AcsAccessGroupAccessSchedule
     acs_access_group_id: str
     acs_system_id: str
     connected_account_id: str
     created_at: str
     display_name: str
-    errors: List[Dict[str, Any]]
+    errors: List[AcsAccessGroupErrors]
     external_type: str
     external_type_display_name: str
     is_managed: bool
     name: str
-    pending_mutations: List[Dict[str, Any]]
-    warnings: List[Dict[str, Any]]
+    pending_mutations: List[AcsAccessGroupPendingMutations]
+    warnings: List[AcsAccessGroupWarnings]
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return AcsAccessGroup(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             access_group_type=d.get("access_group_type", None),
             access_group_type_display_name=d.get(
                 "access_group_type_display_name", None
             ),
-            access_schedule=DeepAttrDict(d.get("access_schedule", None)),
+            access_schedule=(
+                AcsAccessGroupAccessSchedule.from_dict(d.get("access_schedule"))
+                if d.get("access_schedule") is not None
+                else None
+            ),
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            errors=d.get("errors", None),
+            errors=[AcsAccessGroupErrors.from_dict(i) for i in d.get("errors") or []],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
-            pending_mutations=d.get("pending_mutations", None),
-            warnings=d.get("warnings", None),
+            pending_mutations=[
+                AcsAccessGroupPendingMutations.from_dict(i)
+                for i in d.get("pending_mutations") or []
+            ],
+            warnings=[
+                AcsAccessGroupWarnings.from_dict(i) for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

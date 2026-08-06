@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -52,9 +53,9 @@ class ClientSession:
     user_identity_ids: List[str]
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ClientSession(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             client_session_id=d.get("client_session_id", None),
             connect_webview_ids=d.get("connect_webview_ids", None),
             connected_account_ids=d.get("connected_account_ids", None),

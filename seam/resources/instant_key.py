@@ -1,6 +1,30 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
+
+
+@dataclass
+class InstantKeyCustomization(ResourceMapping):
+    """Customization applied to the Instant Key UI.
+
+    :ivar logo_url: URL of the logo displayed on the Instant Key.
+
+    :ivar primary_color: Primary color used in the Instant Key UI.
+
+    :ivar secondary_color: Secondary color used in the Instant Key UI."""
+
+    logo_url: str
+    primary_color: str
+    secondary_color: str
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
+            logo_url=d.get("logo_url", None),
+            primary_color=d.get("primary_color", None),
+            secondary_color=d.get("secondary_color", None),
+        )
 
 
 @dataclass
@@ -29,7 +53,7 @@ class InstantKey:
 
     client_session_id: str
     created_at: str
-    customization: Dict[str, Any]
+    customization: InstantKeyCustomization
     customization_profile_id: str
     expires_at: str
     instant_key_id: str
@@ -37,12 +61,16 @@ class InstantKey:
     user_identity_id: str
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return InstantKey(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
-            customization=DeepAttrDict(d.get("customization", None)),
+            customization=(
+                InstantKeyCustomization.from_dict(d.get("customization"))
+                if d.get("customization") is not None
+                else None
+            ),
             customization_profile_id=d.get("customization_profile_id", None),
             expires_at=d.get("expires_at", None),
             instant_key_id=d.get("instant_key_id", None),

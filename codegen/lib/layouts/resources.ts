@@ -2,7 +2,7 @@
 // Each blueprint resource, along with events, action attempts, and pagination,
 // becomes a dataclass in its own module, re-exported from seam/resources/__init__.py.
 
-import type { Blueprint, Property, Resource } from '@seamapi/blueprint'
+import type { Blueprint, Property } from '@seamapi/blueprint'
 import { pascalCase, snakeCase } from 'change-case'
 
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
@@ -14,14 +14,25 @@ export interface ResourceLayoutContext {
   description: string
   isDeprecated: boolean
   deprecationMessage: string
-  properties: Array<{
-    name: string
-    description: string
-    isDeprecated: boolean
-    deprecationMessage: string
-    type: string
-    isDictParam: boolean
-  }>
+  nestedClasses: ResourceClassLayoutContext[]
+  properties: ResourcePropertyLayoutContext[]
+}
+
+interface ResourceClassLayoutContext {
+  className: string
+  description: string
+  properties: ResourcePropertyLayoutContext[]
+}
+
+interface ResourcePropertyLayoutContext {
+  name: string
+  description: string
+  isDeprecated: boolean
+  deprecationMessage: string
+  type: string
+  isDictParam: boolean
+  isObject: boolean
+  isObjectList: boolean
 }
 
 export interface ResourcesIndexLayoutContext {
@@ -31,7 +42,9 @@ export interface ResourcesIndexLayoutContext {
 // The action attempt and event variants each generate a single dataclass with
 // the union of the variant properties. The first occurrence of a property
 // name wins.
-const mergeResourceProperties = (resources: Resource[]): Property[] => {
+const mergeResourceProperties = (
+  resources: Array<{ properties: Property[] }>,
+): Property[] => {
   const merged = new Map<string, Property>()
   for (const { properties } of resources) {
     for (const property of properties) {
@@ -91,6 +104,67 @@ export const getResourceLayoutContexts = (
       const { properties, description, isDeprecated, deprecationMessage } =
         model
       const className = pascalCase(convertCustomResourceName(name))
+      const nestedClasses = new Map<string, ResourceClassLayoutContext>()
+
+      const buildProperties = (
+        sourceProperties: Property[],
+      ): ResourcePropertyLayoutContext[] =>
+        sourceProperties.map((property) => {
+          let nestedClassName: string | undefined
+          let nestedProperties: Property[] | undefined
+          if (property.format === 'object') {
+            nestedClassName = `${className}${pascalCase(property.name)}`
+            nestedProperties = property.properties
+          } else if (
+            property.format === 'list' &&
+            property.itemFormat === 'object'
+          ) {
+            nestedClassName = `${className}${pascalCase(property.name)}`
+            nestedProperties = property.itemProperties
+          } else if (
+            property.format === 'list' &&
+            property.itemFormat === 'discriminated_object'
+          ) {
+            nestedClassName = `${className}${pascalCase(property.name)}`
+            nestedProperties = mergeResourceProperties(property.variants)
+          }
+
+          if (
+            nestedClassName != null &&
+            nestedProperties != null &&
+            !nestedClasses.has(nestedClassName)
+          ) {
+            // Reserve the name before recursing so colliding/recursive shapes
+            // cannot register it twice. Reinsert after children for definition
+            // order: annotations are evaluated when each class is created.
+            nestedClasses.set(nestedClassName, {
+              className: nestedClassName,
+              description: property.description,
+              properties: [],
+            })
+            const childProperties = buildProperties(nestedProperties)
+            nestedClasses.delete(nestedClassName)
+            nestedClasses.set(nestedClassName, {
+              className: nestedClassName,
+              description: property.description,
+              properties: childProperties,
+            })
+          }
+
+          const type = mapPropertyToPythonType(property, nestedClassName)
+          return {
+            name: property.name,
+            description: property.description,
+            isDeprecated: property.isDeprecated,
+            deprecationMessage: property.deprecationMessage,
+            type,
+            isDictParam: type.startsWith('Dict'),
+            isObject: nestedClassName != null && property.format === 'object',
+            isObjectList: nestedClassName != null && property.format === 'list',
+          }
+        })
+
+      const resourceProperties = buildProperties(properties)
       return {
         className,
         description,
@@ -100,18 +174,8 @@ export const getResourceLayoutContexts = (
         // module always matches the dataclass it exports (e.g. the "event"
         // resource becomes SeamEvent in seam_event.py).
         moduleName: snakeCase(className),
-        properties: properties.map((property) => {
-          const type = mapPropertyToPythonType(property)
-          return {
-            name: property.name,
-            description: property.description,
-            isDeprecated: property.isDeprecated,
-            deprecationMessage: property.deprecationMessage,
-            type,
-            isDictParam:
-              type.startsWith('Dict') || property.name === 'properties',
-          }
-        }),
+        nestedClasses: [...nestedClasses.values()],
+        properties: resourceProperties,
       }
     })
     .sort((a, b) => (a.moduleName < b.moduleName ? -1 : 1))

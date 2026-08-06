@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -30,9 +31,9 @@ class NoiseThreshold:
     noise_threshold_nrs: float
     starts_daily_at: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return NoiseThreshold(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             device_id=d.get("device_id", None),
             ends_daily_at=d.get("ends_daily_at", None),
             name=d.get("name", None),

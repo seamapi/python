@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -27,9 +28,9 @@ class CustomerPortal:
     url: str
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return CustomerPortal(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
             expires_at=d.get("expires_at", None),

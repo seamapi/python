@@ -1,5 +1,5 @@
 @dataclass
-class {{className}}:
+class {{className}}{{#if isNested}}(ResourceMapping){{/if}}:
     """{{{indent (pythonDoc description) 4}}}{{#each properties}}
 
     :ivar {{pythonIdentifier name}}: {{#if isDeprecated}}Deprecated{{#if deprecationMessage}}: {{{indent (pythonDoc deprecationMessage) 4}}}{{else}}.{{/if}}{{#if (pythonDoc description)}} {{/if}}{{/if}}{{{indent (pythonDoc description) 4}}}{{/each}}{{#if isDeprecated}}
@@ -10,10 +10,10 @@ class {{className}}:
     {{pythonIdentifier name}}: {{type}}
 {{/each}}
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return {{className}}(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
 {{#each properties}}
-            {{pythonIdentifier name}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
+            {{pythonIdentifier name}}={{#if isObject}}{{type}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isObjectList}}[{{listItemType type}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}},
 {{/each}}
         )
