@@ -58,6 +58,9 @@ def recording_server_fixture():
 def recording_server(responses):
     """Serve the given (status, body) responses, repeating the last one.
 
+    A response may also be (status, body, content_type) to override the
+    content type inferred from the body, e.g. to serve malformed JSON.
+
     Yields the endpoint along with the list of requests received so far.
     """
 
@@ -80,7 +83,8 @@ def recording_server(responses):
                 }
             )
 
-            status, payload = remaining.pop(0) if len(remaining) > 1 else remaining[0]
+            response = remaining.pop(0) if len(remaining) > 1 else remaining[0]
+            status, payload, *rest = response
 
             if isinstance(payload, str):
                 content_type = "text/plain"
@@ -88,6 +92,9 @@ def recording_server(responses):
             else:
                 content_type = "application/json"
                 body = json.dumps(payload).encode()
+
+            if rest:
+                content_type = rest[0]
 
             self.send_response(status)
             self.send_header("content-type", content_type)

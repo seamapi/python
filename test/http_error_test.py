@@ -60,3 +60,50 @@ def test_seam_http_throws_http_error_on_non_standard_response(server):
         seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
+
+
+# The fake cannot produce malformed error responses, so the recording server
+# drives the bodies that must fall through is_api_error_response and raise a
+# plain HTTPError rather than being parsed into a SeamHttpApiError.
+def test_seam_http_raises_http_error_on_non_json_response(recording_server):
+    with recording_server([(500, "Internal Server Error")]) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(niquests.HTTPError) as exc_info:
+            seam.devices.list()
+
+    assert exc_info.value.response.status_code == 500
+
+
+def test_seam_http_raises_http_error_on_malformed_json(recording_server):
+    responses = [(500, "{invalid json", "application/json")]
+
+    with recording_server(responses) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(niquests.HTTPError) as exc_info:
+            seam.devices.list()
+
+    assert exc_info.value.response.status_code == 500
+
+
+def test_seam_http_raises_http_error_on_json_without_error_object(recording_server):
+    with recording_server([(500, {"message": "Some error"})]) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(niquests.HTTPError) as exc_info:
+            seam.devices.list()
+
+    assert exc_info.value.response.status_code == 500
+
+
+def test_seam_http_raises_http_error_on_error_object_without_type_and_message(
+    recording_server,
+):
+    with recording_server([(500, {"error": {"code": 500}})]) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(niquests.HTTPError) as exc_info:
+            seam.devices.list()
+
+    assert exc_info.value.response.status_code == 500
