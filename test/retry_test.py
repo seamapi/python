@@ -73,10 +73,11 @@ def test_seam_surfaces_service_unavailable_from_a_workspace_outage(server):
     assert exc_info.value.response.status_code == 503
 
 
+# The policy omits allowed_methods: the SDK must retry its own API
+# requests without consumers knowing which HTTP methods those use.
 def retry_policy(*, total):
     return Retry(
         total=total,
         status_forcelist=[503],
-        allowed_methods=["POST"],
         backoff_factor=0,
     )

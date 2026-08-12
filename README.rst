@@ -479,9 +479,7 @@ Configuring retries
 
 Pass the ``retries`` option to configure retry behavior.
 Retries are handled by `httpx-retries <https://will-ockmore.github.io/httpx-retries/>`_,
-and its ``Retry`` class is re-exported from ``seam`` for convenience.
-The Seam API is called with POST requests,
-so include ``POST`` in ``allowed_methods`` to enable retrying API requests:
+and its ``Retry`` class is re-exported from ``seam`` for convenience:
 
 .. code-block:: python
 
@@ -489,12 +487,7 @@ so include ``POST`` in ``allowed_methods`` to enable retrying API requests:
 
     seam = Seam(
         api_key="your-api-key",
-        retries=Retry(
-            total=3,
-            backoff_factor=0.5,
-            status_forcelist=[503],
-            allowed_methods=["POST"],
-        ),
+        retries=Retry(total=3, backoff_factor=0.5, status_forcelist=[503]),
     )
 
 Configuring the httpx client
