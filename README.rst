@@ -477,9 +477,11 @@ A request that exceeds the timeout raises ``httpx.TimeoutException``.
 Configuring retries
 ^^^^^^^^^^^^^^^^^^^
 
-Connection errors are retried automatically.
-Pass the ``retries`` option to customize retry behavior,
-e.g., to also retry requests answered with specific status codes:
+Pass the ``retries`` option to configure retry behavior.
+Retries are handled by `httpx-retries <https://will-ockmore.github.io/httpx-retries/>`_,
+and its ``Retry`` class is re-exported from ``seam`` for convenience.
+The Seam API is called with POST requests,
+so include ``POST`` in ``allowed_methods`` to enable retrying API requests:
 
 .. code-block:: python
 

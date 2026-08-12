@@ -3,9 +3,9 @@ from importlib.metadata import version
 import abc
 
 import httpx
+from httpx_retries import Retry, RetryTransport
 
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
-from .retry import Retry, RetryTransport
 from .exceptions import (
     SeamHttpApiError,
     SeamHttpInvalidInputError,
@@ -60,7 +60,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
         if "transport" not in options:
             options["transport"] = RetryTransport(
-                DEFAULT_RETRIES if retries is None else retries
+                retry=DEFAULT_RETRIES if retries is None else retries
             )
 
         super().__init__(**options)

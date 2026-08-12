@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union
 from typing_extensions import Self
-from .retry import Retry
+from httpx_retries import Retry
 
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .parse_options import parse_without_workspace_options
@@ -71,7 +71,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
-        :type retries: Optional[seam.Retry]
+        :type retries: Optional[httpx_retries.Retry]
         :param timeout: The request timeout in seconds. Defaults to 30
             seconds. Pass None for no timeout
         :type timeout: Optional[float]
@@ -130,7 +130,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
-        :type retries: Optional[seam.Retry]
+        :type retries: Optional[httpx_retries.Retry]
         :return: A new instance of the SeamWithoutWorkspace class
             authenticated with the provided personal access token
         :rtype: Self

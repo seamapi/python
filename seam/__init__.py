@@ -2,7 +2,7 @@
 
 from .seam import Seam
 from .seam_without_workspace import SeamWithoutWorkspace
-from .retry import Retry
+from httpx_retries import Retry
 from .options import SeamInvalidOptionsError
 from .auth import SeamInvalidTokenError
 from .exceptions import (
