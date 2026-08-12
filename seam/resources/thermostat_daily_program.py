@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -20,20 +21,39 @@ class ThermostatDailyProgram:
     :ivar workspace_id: ID of the workspace that contains the thermostat daily program.
     """
 
+    @dataclass
+    class Periods(ResourceMapping):
+        """Array of thermostat daily program periods.
+
+        :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to activate at the ``starts_at_time``.
+
+        :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+        """
+
+        climate_preset_key: str
+        starts_at_time: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                climate_preset_key=d.get("climate_preset_key", None),
+                starts_at_time=d.get("starts_at_time", None),
+            )
+
     created_at: str
     device_id: str
     name: str
-    periods: List[Dict[str, Any]]
+    periods: List[Periods]
     thermostat_daily_program_id: str
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return ThermostatDailyProgram(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             name=d.get("name", None),
-            periods=d.get("periods", None),
+            periods=[cls.Periods.from_dict(i) for i in d.get("periods") or []],
             thermostat_daily_program_id=d.get("thermostat_daily_program_id", None),
             workspace_id=d.get("workspace_id", None),
         )

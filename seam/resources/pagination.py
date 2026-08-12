@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -17,9 +18,9 @@ class Pagination:
     next_page_cursor: str
     next_page_url: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Pagination(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             has_next_page=d.get("has_next_page", None),
             next_page_cursor=d.get("next_page_cursor", None),
             next_page_url=d.get("next_page_url", None),

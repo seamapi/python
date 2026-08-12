@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -20,9 +21,9 @@ class Webhook:
     url: str
     webhook_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Webhook(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             event_types=d.get("event_types", None),
             secret=d.get("secret", None),
             url=d.get("url", None),

@@ -1,19 +1,28 @@
-@dataclass
-class {{className}}:
-    """{{{indent (pythonDoc description) 4}}}{{#each properties}}
+{{classIndent}}@dataclass
+{{classIndent}}class {{className}}{{#if isNested}}(ResourceMapping){{/if}}:
+{{memberIndent}}"""{{{indent (pythonDoc description) docIndent}}}{{#each properties}}
 
-    :ivar {{pythonIdentifier name}}: {{#if isDeprecated}}Deprecated{{#if deprecationMessage}}: {{{indent (pythonDoc deprecationMessage) 4}}}{{else}}.{{/if}}{{#if (pythonDoc description)}} {{/if}}{{/if}}{{{indent (pythonDoc description) 4}}}{{/each}}{{#if isDeprecated}}
+{{../memberIndent}}:ivar {{pythonIdentifier name}}: {{#if isDeprecated}}Deprecated{{#if deprecationMessage}}: {{{indent (pythonDoc deprecationMessage) ../docIndent}}}{{else}}.{{/if}}{{#if (pythonDoc description)}} {{/if}}{{/if}}{{{indent (pythonDoc description) ../docIndent}}}{{/each}}{{#if isDeprecated}}
 
-    .. deprecated::
-       {{#if (pythonDoc deprecationMessage)}}{{{indent (pythonDoc deprecationMessage) 4}}}{{else}}This resource is deprecated.{{/if}}{{/if}}"""
+{{memberIndent}}.. deprecated::
+{{memberIndent}}   {{#if (pythonDoc deprecationMessage)}}{{{indent (pythonDoc deprecationMessage) docIndent}}}{{else}}This resource is deprecated.{{/if}}{{/if}}"""
+
+{{#each nestedClasses}}
+{{> resource-dataclass isNested=true}}
+
+{{/each}}
 {{#each properties}}
-    {{pythonIdentifier name}}: {{type}}
+{{../memberIndent}}{{pythonIdentifier name}}: {{type}}
 {{/each}}
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return {{className}}(
+{{memberIndent}}@classmethod
+{{memberIndent}}def from_dict(cls, d: Dict[str, Any]):
+{{#unless properties}}
+{{memberIndent}}    # This shape documents no properties, so there is nothing to read.
+{{memberIndent}}    # pylint: disable=unused-argument
+{{/unless}}
+{{memberIndent}}    return cls(
 {{#each properties}}
-            {{pythonIdentifier name}}={{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}},
+{{../memberIndent}}        {{pythonIdentifier name}}={{#if isObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isObjectList}}[cls.{{nestedClassName}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}},
 {{/each}}
-        )
+{{memberIndent}}    )

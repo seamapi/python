@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -81,9 +82,9 @@ class DeviceProvider:
     image_url: str
     provider_categories: List[str]
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return DeviceProvider(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),

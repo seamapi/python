@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -158,9 +159,9 @@ class Batch:
     user_identities: List[Dict[str, Any]]
     workspaces: List[Dict[str, Any]]
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Batch(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             access_codes=d.get("access_codes", None),
             access_grants=d.get("access_grants", None),
             access_methods=d.get("access_methods", None),

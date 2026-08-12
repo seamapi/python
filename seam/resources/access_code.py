@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -64,14 +65,283 @@ class AccessCode:
     :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code.
     """
 
+    @dataclass
+    class DormakabaOracodeMetadata(ResourceMapping):
+        """Metadata for a dormakaba Oracode managed access code. Only present for access codes from dormakaba Oracode devices.
+
+        :ivar is_cancellable: Indicates whether the stay can be cancelled via the Dormakaba Oracode API.
+
+        :ivar is_early_checkin_able: Indicates whether early check-in is available for this stay.
+
+        :ivar is_extendable: Indicates whether the stay can be extended via the Dormakaba Oracode API.
+
+        :ivar is_overridable: Indicates whether the access code can be overridden. When false, the maximum number of overrides has been reached.
+
+        :ivar site_name: Dormakaba Oracode site name associated with this access code.
+
+        :ivar stay_id: Dormakaba Oracode stay ID associated with this access code.
+
+        :ivar user_level_id: Dormakaba Oracode user level ID associated with this access code.
+
+        :ivar user_level_name: Dormakaba Oracode user level name associated with this access code.
+        """
+
+        is_cancellable: bool
+        is_early_checkin_able: bool
+        is_extendable: bool
+        is_overridable: bool
+        site_name: str
+        stay_id: float
+        user_level_id: str
+        user_level_name: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                is_cancellable=d.get("is_cancellable", None),
+                is_early_checkin_able=d.get("is_early_checkin_able", None),
+                is_extendable=d.get("is_extendable", None),
+                is_overridable=d.get("is_overridable", None),
+                site_name=d.get("site_name", None),
+                stay_id=d.get("stay_id", None),
+                user_level_id=d.get("user_level_id", None),
+                user_level_name=d.get("user_level_name", None),
+            )
+
+    @dataclass
+    class Errors(ResourceMapping):
+        """Errors associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_access_code_error: Indicates that this is an access code error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar managed_access_code_id: ID of the managed access code that conflicts with this managed access code, when Seam can identify it.
+
+        :ivar unmanaged_access_code_id: ID of the unmanaged access code that conflicts with this managed access code, when Seam can identify it.
+
+        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
+
+        :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
+
+        :ivar is_connected_account_error:
+
+        :ivar is_device_error:
+
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        """
+
+        @dataclass
+        class ModifiedFields(ResourceMapping):
+            """List of fields that were changed externally, with their previous and new values.
+
+            :ivar field: The name of the field that was changed (e.g. ``code``, ``starts_at``, ``ends_at``).
+
+            :ivar from_: The previous value of the field.
+
+            :ivar to: The new value of the field."""
+
+            field: str
+            from_: str
+            to: str
+
+            @classmethod
+            def from_dict(cls, d: Dict[str, Any]):
+                return cls(
+                    field=d.get("field", None),
+                    from_=d.get("from", None),
+                    to=d.get("to", None),
+                )
+
+        created_at: str
+        error_code: str
+        is_access_code_error: bool
+        message: str
+        managed_access_code_id: str
+        unmanaged_access_code_id: str
+        change_type: str
+        modified_fields: List[ModifiedFields]
+        is_connected_account_error: bool
+        is_device_error: bool
+        is_bridge_error: bool
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_access_code_error=d.get("is_access_code_error", None),
+                message=d.get("message", None),
+                managed_access_code_id=d.get("managed_access_code_id", None),
+                unmanaged_access_code_id=d.get("unmanaged_access_code_id", None),
+                change_type=d.get("change_type", None),
+                modified_fields=[
+                    cls.ModifiedFields.from_dict(i)
+                    for i in d.get("modified_fields") or []
+                ],
+                is_connected_account_error=d.get("is_connected_account_error", None),
+                is_device_error=d.get("is_device_error", None),
+                is_bridge_error=d.get("is_bridge_error", None),
+            )
+
+    @dataclass
+    class PendingMutations(ResourceMapping):
+        """Collection of pending mutations for the access code. Indicates changes that Seam is in the process of pushing to the device.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code:
+
+        :ivar scheduled_at: Date and time at which Seam will attempt to program this access code on the device.
+
+        :ivar from_:
+
+        :ivar to:"""
+
+        @dataclass
+        class From(ResourceMapping):
+            """
+
+            :ivar code: Previous PIN code.
+
+            :ivar name: Previous access code name.
+
+            :ivar ends_at: Previous end time for the access code.
+
+            :ivar starts_at: Previous start time for the access code."""
+
+            code: str
+            name: str
+            ends_at: str
+            starts_at: str
+
+            @classmethod
+            def from_dict(cls, d: Dict[str, Any]):
+                return cls(
+                    code=d.get("code", None),
+                    name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """
+
+            :ivar code: New PIN code.
+
+            :ivar name: New access code name.
+
+            :ivar ends_at: New end time for the access code.
+
+            :ivar starts_at: New start time for the access code."""
+
+            code: str
+            name: str
+            ends_at: str
+            starts_at: str
+
+            @classmethod
+            def from_dict(cls, d: Dict[str, Any]):
+                return cls(
+                    code=d.get("code", None),
+                    name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        created_at: str
+        message: str
+        mutation_code: str
+        scheduled_at: str
+        from_: From
+        to: To
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+                scheduled_at=d.get("scheduled_at", None),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class Warnings(ResourceMapping):
+        """Warnings associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+
+        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
+
+        :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
+        """
+
+        @dataclass
+        class ModifiedFields(ResourceMapping):
+            """List of fields that were changed externally, with their previous and new values.
+
+            :ivar field: The name of the field that was changed (e.g. ``code``, ``starts_at``, ``ends_at``).
+
+            :ivar from_: The previous value of the field.
+
+            :ivar to: The new value of the field."""
+
+            field: str
+            from_: str
+            to: str
+
+            @classmethod
+            def from_dict(cls, d: Dict[str, Any]):
+                return cls(
+                    field=d.get("field", None),
+                    from_=d.get("from", None),
+                    to=d.get("to", None),
+                )
+
+        created_at: str
+        message: str
+        warning_code: str
+        change_type: str
+        modified_fields: List[ModifiedFields]
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+                change_type=d.get("change_type", None),
+                modified_fields=[
+                    cls.ModifiedFields.from_dict(i)
+                    for i in d.get("modified_fields") or []
+                ],
+            )
+
     access_code_id: str
     code: str
     common_code_key: str
     created_at: str
     device_id: str
-    dormakaba_oracode_metadata: Dict[str, Any]
+    dormakaba_oracode_metadata: DormakabaOracodeMetadata
     ends_at: str
-    errors: List[Dict[str, Any]]
+    errors: List[Errors]
     is_backup: bool
     is_backup_access_code_available: bool
     is_external_modification_allowed: bool
@@ -81,27 +351,31 @@ class AccessCode:
     is_scheduled_on_device: bool
     is_waiting_for_code_assignment: bool
     name: str
-    pending_mutations: List[Dict[str, Any]]
+    pending_mutations: List[PendingMutations]
     pulled_backup_access_code_id: str
     starts_at: str
     status: str
     type: str
-    warnings: List[Dict[str, Any]]
+    warnings: List[Warnings]
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return AccessCode(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             access_code_id=d.get("access_code_id", None),
             code=d.get("code", None),
             common_code_key=d.get("common_code_key", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
-            dormakaba_oracode_metadata=DeepAttrDict(
-                d.get("dormakaba_oracode_metadata", None)
+            dormakaba_oracode_metadata=(
+                cls.DormakabaOracodeMetadata.from_dict(
+                    d.get("dormakaba_oracode_metadata")
+                )
+                if d.get("dormakaba_oracode_metadata") is not None
+                else None
             ),
             ends_at=d.get("ends_at", None),
-            errors=d.get("errors", None),
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_backup=d.get("is_backup", None),
             is_backup_access_code_available=d.get(
                 "is_backup_access_code_available", None
@@ -117,11 +391,14 @@ class AccessCode:
                 "is_waiting_for_code_assignment", None
             ),
             name=d.get("name", None),
-            pending_mutations=d.get("pending_mutations", None),
+            pending_mutations=[
+                cls.PendingMutations.from_dict(i)
+                for i in d.get("pending_mutations") or []
+            ],
             pulled_backup_access_code_id=d.get("pulled_backup_access_code_id", None),
             starts_at=d.get("starts_at", None),
             status=d.get("status", None),
             type=d.get("type", None),
-            warnings=d.get("warnings", None),
+            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

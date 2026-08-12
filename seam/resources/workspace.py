@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from ..utils.deep_attr_dict import DeepAttrDict
+from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
@@ -27,9 +28,40 @@ class Workspace:
 
     :ivar workspace_id: ID of the workspace."""
 
+    @dataclass
+    class ConnectWebviewCustomization(ResourceMapping):
+        """
+
+        :ivar inviter_logo_url: URL of the inviter logo for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+
+        :ivar logo_shape: Logo shape for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+
+        :ivar primary_button_color: Primary button color for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+
+        :ivar primary_button_text_color: Primary button text color for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+
+        :ivar success_message: Success message for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        """
+
+        inviter_logo_url: str
+        logo_shape: str
+        primary_button_color: str
+        primary_button_text_color: str
+        success_message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                inviter_logo_url=d.get("inviter_logo_url", None),
+                logo_shape=d.get("logo_shape", None),
+                primary_button_color=d.get("primary_button_color", None),
+                primary_button_text_color=d.get("primary_button_text_color", None),
+                success_message=d.get("success_message", None),
+            )
+
     company_name: str
     connect_partner_name: str
-    connect_webview_customization: Dict[str, Any]
+    connect_webview_customization: ConnectWebviewCustomization
     is_publishable_key_auth_enabled: bool
     is_sandbox: bool
     is_suspended: bool
@@ -38,13 +70,17 @@ class Workspace:
     publishable_key: str
     workspace_id: str
 
-    @staticmethod
-    def from_dict(d: Dict[str, Any]):
-        return Workspace(
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]):
+        return cls(
             company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
-            connect_webview_customization=DeepAttrDict(
-                d.get("connect_webview_customization", None)
+            connect_webview_customization=(
+                cls.ConnectWebviewCustomization.from_dict(
+                    d.get("connect_webview_customization")
+                )
+                if d.get("connect_webview_customization") is not None
+                else None
             ),
             is_publishable_key_auth_enabled=d.get(
                 "is_publishable_key_auth_enabled", None

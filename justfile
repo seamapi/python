@@ -11,6 +11,7 @@ default: build
     poetry run pylint ./seam ./test
     poetry run black --check .
     poetry run rstcheck README.rst
+    poetry run mypy seam/resources --disable-error-code=arg-type --disable-error-code=import-not-found
 
 @test:
     poetry run pytest --cov=./seam
