@@ -5,30 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class AcsEncoderErrors(ResourceMapping):
-    """Errors associated with the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
 class AcsEncoder:
     """Represents a hardware device that encodes `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ data onto physical cards within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -60,12 +36,35 @@ class AcsEncoder:
     :ivar workspace_id: ID of the workspace that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
     """
 
+    @dataclass
+    class Errors(ResourceMapping):
+        """Errors associated with the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
     acs_encoder_id: str
     acs_system_id: str
     connected_account_id: str
     created_at: str
     display_name: str
-    errors: List[AcsEncoderErrors]
+    errors: List[Errors]
     workspace_id: str
 
     @classmethod
@@ -76,6 +75,6 @@ class AcsEncoder:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            errors=[AcsEncoderErrors.from_dict(i) for i in d.get("errors") or []],
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             workspace_id=d.get("workspace_id", None),
         )

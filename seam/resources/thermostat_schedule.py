@@ -5,30 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class ThermostatScheduleErrors(ResourceMapping):
-    """Errors associated with the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
 class ThermostatSchedule:
     """Represents a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ that activates a configured `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ on a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ at a specified starting time and deactivates the climate preset at a specified ending time.
 
@@ -54,11 +30,34 @@ class ThermostatSchedule:
 
     :ivar workspace_id: ID of the workspace that contains the thermostat schedule."""
 
+    @dataclass
+    class Errors(ResourceMapping):
+        """Errors associated with the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
     climate_preset_key: str
     created_at: str
     device_id: str
     ends_at: str
-    errors: List[ThermostatScheduleErrors]
+    errors: List[Errors]
     is_override_allowed: bool
     max_override_period_minutes: int
     name: str
@@ -73,9 +72,7 @@ class ThermostatSchedule:
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             ends_at=d.get("ends_at", None),
-            errors=[
-                ThermostatScheduleErrors.from_dict(i) for i in d.get("errors") or []
-            ],
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_override_allowed=d.get("is_override_allowed", None),
             max_override_period_minutes=d.get("max_override_period_minutes", None),
             name=d.get("name", None),

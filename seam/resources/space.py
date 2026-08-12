@@ -5,52 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class SpaceCustomerData(ResourceMapping):
-    """Reservation/stay-related defaults for the space. Also carries the provider/PMS-supplied name under a ``<connector_type>_name`` key (e.g. ``guesty_name``), which Seam preserves when you rename the space (read-only — managed by Seam).
-
-    :ivar address: Postal address for the space.
-
-    :ivar default_checkin_time: Default check-in time for reservations at the space, as HH:mm or HH:mm:ss.
-
-    :ivar default_checkout_time: Default check-out time for reservations at the space, as HH:mm or HH:mm:ss.
-
-    :ivar time_zone: IANA time zone for the space, e.g. America/Los_Angeles."""
-
-    address: str
-    default_checkin_time: str
-    default_checkout_time: str
-    time_zone: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            address=d.get("address", None),
-            default_checkin_time=d.get("default_checkin_time", None),
-            default_checkout_time=d.get("default_checkout_time", None),
-            time_zone=d.get("time_zone", None),
-        )
-
-
-@dataclass
-class SpaceGeolocation(ResourceMapping):
-    """Geographic coordinates (latitude and longitude) of the space.
-
-    :ivar latitude: Latitude of the space, in decimal degrees.
-
-    :ivar longitude: Longitude of the space, in decimal degrees."""
-
-    latitude: float
-    longitude: float
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            latitude=d.get("latitude", None),
-            longitude=d.get("longitude", None),
-        )
-
-
-@dataclass
 class Space:
     """Represents a space that is a logical grouping of devices and entrances. You can assign access to an entire space, thereby making granting access more efficient.
 
@@ -76,13 +30,57 @@ class Space:
 
     :ivar workspace_id: ID of the workspace associated with the space."""
 
+    @dataclass
+    class CustomerData(ResourceMapping):
+        """Reservation/stay-related defaults for the space. Also carries the provider/PMS-supplied name under a ``<connector_type>_name`` key (e.g. ``guesty_name``), which Seam preserves when you rename the space (read-only — managed by Seam).
+
+        :ivar address: Postal address for the space.
+
+        :ivar default_checkin_time: Default check-in time for reservations at the space, as HH:mm or HH:mm:ss.
+
+        :ivar default_checkout_time: Default check-out time for reservations at the space, as HH:mm or HH:mm:ss.
+
+        :ivar time_zone: IANA time zone for the space, e.g. America/Los_Angeles."""
+
+        address: str
+        default_checkin_time: str
+        default_checkout_time: str
+        time_zone: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                address=d.get("address", None),
+                default_checkin_time=d.get("default_checkin_time", None),
+                default_checkout_time=d.get("default_checkout_time", None),
+                time_zone=d.get("time_zone", None),
+            )
+
+    @dataclass
+    class Geolocation(ResourceMapping):
+        """Geographic coordinates (latitude and longitude) of the space.
+
+        :ivar latitude: Latitude of the space, in decimal degrees.
+
+        :ivar longitude: Longitude of the space, in decimal degrees."""
+
+        latitude: float
+        longitude: float
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                latitude=d.get("latitude", None),
+                longitude=d.get("longitude", None),
+            )
+
     acs_entrance_count: float
     created_at: str
-    customer_data: SpaceCustomerData
+    customer_data: CustomerData
     customer_key: str
     device_count: float
     display_name: str
-    geolocation: SpaceGeolocation
+    geolocation: Geolocation
     name: str
     space_id: str
     space_key: str
@@ -94,7 +92,7 @@ class Space:
             acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),
             customer_data=(
-                SpaceCustomerData.from_dict(d.get("customer_data"))
+                cls.CustomerData.from_dict(d.get("customer_data"))
                 if d.get("customer_data") is not None
                 else None
             ),
@@ -102,7 +100,7 @@ class Space:
             device_count=d.get("device_count", None),
             display_name=d.get("display_name", None),
             geolocation=(
-                SpaceGeolocation.from_dict(d.get("geolocation"))
+                cls.Geolocation.from_dict(d.get("geolocation"))
                 if d.get("geolocation") is not None
                 else None
             ),

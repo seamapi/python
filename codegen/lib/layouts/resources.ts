@@ -8,19 +8,19 @@ import { pascalCase, snakeCase } from 'change-case'
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
 import { mapPropertyToPythonType } from '../python-type.js'
 
-export interface ResourceLayoutContext {
-  className: string
+export interface ResourceLayoutContext extends ResourceClassLayoutContext {
   moduleName: string
-  description: string
   isDeprecated: boolean
   deprecationMessage: string
-  nestedClasses: ResourceClassLayoutContext[]
-  properties: ResourcePropertyLayoutContext[]
 }
 
 interface ResourceClassLayoutContext {
   className: string
   description: string
+  classIndent: string
+  memberIndent: string
+  docIndent: number
+  nestedClasses: ResourceClassLayoutContext[]
   properties: ResourcePropertyLayoutContext[]
 }
 
@@ -30,6 +30,7 @@ interface ResourcePropertyLayoutContext {
   isDeprecated: boolean
   deprecationMessage: string
   type: string
+  nestedClassName: string
   isDictParam: boolean
   isObject: boolean
   isObjectList: boolean
@@ -52,6 +53,117 @@ const mergeResourceProperties = (
     }
   }
   return [...merged.values()]
+}
+
+// Resource dataclasses are declared at module level.
+const rootIndentation = 0
+
+// Nested classes are named after their property, so an unusually deep shape is
+// far more likely to be an accidental cycle than a real schema.
+const maxNestingDepth = 16
+
+// Names a nested class must not claim, since it would shadow something the
+// generated module resolves from an enclosing scope.
+const reservedClassNames = new Set([
+  'Any',
+  'DeepAttrDict',
+  'Dict',
+  'List',
+  'Optional',
+  'ResourceMapping',
+  'Union',
+  'dataclass',
+])
+
+const getNestedProperties = (property: Property): Property[] | undefined => {
+  if (property.format === 'object') return property.properties
+  if (property.format === 'list' && property.itemFormat === 'object') {
+    return property.itemProperties
+  }
+  if (
+    property.format === 'list' &&
+    property.itemFormat === 'discriminated_object'
+  ) {
+    return mergeResourceProperties(property.variants)
+  }
+  return undefined
+}
+
+const buildClass = (
+  className: string,
+  description: string,
+  classProperties: Property[],
+  path: string,
+  indentation: number,
+): ResourceClassLayoutContext => {
+  if (indentation > rootIndentation + 4 * maxNestingDepth) {
+    throw new Error(
+      `Nested resource classes exceeded a depth of ${maxNestingDepth} at ${path}. This usually means the schema is cyclic.`,
+    )
+  }
+
+  const nestedClasses: ResourceClassLayoutContext[] = []
+  const takenClassNames = new Set<string>()
+
+  const properties = classProperties.map((property) => {
+    const nestedProperties = getNestedProperties(property)
+    const nestedPath = `${path}.${property.name}`
+    let nestedClassName: string | undefined
+
+    if (nestedProperties != null) {
+      // Each class scopes its own nested classes, so the property name alone
+      // names them unambiguously.
+      nestedClassName = pascalCase(property.name)
+
+      if (reservedClassNames.has(nestedClassName)) {
+        throw new Error(
+          `The ${nestedPath} property would generate a nested class named ${nestedClassName}, which shadows a name the generated module depends on.`,
+        )
+      }
+
+      if (takenClassNames.has(nestedClassName)) {
+        throw new Error(
+          `The ${nestedPath} property would generate a second nested class named ${nestedClassName} inside ${className}.`,
+        )
+      }
+      takenClassNames.add(nestedClassName)
+
+      nestedClasses.push(
+        buildClass(
+          nestedClassName,
+          property.description,
+          nestedProperties,
+          nestedPath,
+          indentation + 4,
+        ),
+      )
+    }
+
+    const type = mapPropertyToPythonType(property, nestedClassName)
+    return {
+      name: property.name,
+      description: property.description,
+      isDeprecated: property.isDeprecated,
+      deprecationMessage: property.deprecationMessage,
+      type,
+      // Nested classes are attributes of the class that owns them, so
+      // from_dict reaches them through cls rather than a qualified path.
+      nestedClassName: nestedClassName ?? '',
+      isDictParam: type.startsWith('Dict'),
+      isObject: nestedClassName != null && property.format === 'object',
+      isObjectList: nestedClassName != null && property.format === 'list',
+    }
+  })
+
+  return {
+    className,
+    description,
+    classIndent: ' '.repeat(indentation),
+    memberIndent: ' '.repeat(indentation + 4),
+    docIndent: indentation + 4,
+    nestedClasses,
+    properties,
+  }
 }
 
 export const getResourceLayoutContexts = (
@@ -104,78 +216,22 @@ export const getResourceLayoutContexts = (
       const { properties, description, isDeprecated, deprecationMessage } =
         model
       const className = pascalCase(convertCustomResourceName(name))
-      const nestedClasses = new Map<string, ResourceClassLayoutContext>()
-
-      const buildProperties = (
-        sourceProperties: Property[],
-      ): ResourcePropertyLayoutContext[] =>
-        sourceProperties.map((property) => {
-          let nestedClassName: string | undefined
-          let nestedProperties: Property[] | undefined
-          if (property.format === 'object') {
-            nestedClassName = `${className}${pascalCase(property.name)}`
-            nestedProperties = property.properties
-          } else if (
-            property.format === 'list' &&
-            property.itemFormat === 'object'
-          ) {
-            nestedClassName = `${className}${pascalCase(property.name)}`
-            nestedProperties = property.itemProperties
-          } else if (
-            property.format === 'list' &&
-            property.itemFormat === 'discriminated_object'
-          ) {
-            nestedClassName = `${className}${pascalCase(property.name)}`
-            nestedProperties = mergeResourceProperties(property.variants)
-          }
-
-          if (
-            nestedClassName != null &&
-            nestedProperties != null &&
-            !nestedClasses.has(nestedClassName)
-          ) {
-            // Reserve the name before recursing so colliding/recursive shapes
-            // cannot register it twice. Reinsert after children for definition
-            // order: annotations are evaluated when each class is created.
-            nestedClasses.set(nestedClassName, {
-              className: nestedClassName,
-              description: property.description,
-              properties: [],
-            })
-            const childProperties = buildProperties(nestedProperties)
-            nestedClasses.delete(nestedClassName)
-            nestedClasses.set(nestedClassName, {
-              className: nestedClassName,
-              description: property.description,
-              properties: childProperties,
-            })
-          }
-
-          const type = mapPropertyToPythonType(property, nestedClassName)
-          return {
-            name: property.name,
-            description: property.description,
-            isDeprecated: property.isDeprecated,
-            deprecationMessage: property.deprecationMessage,
-            type,
-            isDictParam: type.startsWith('Dict'),
-            isObject: nestedClassName != null && property.format === 'object',
-            isObjectList: nestedClassName != null && property.format === 'list',
-          }
-        })
-
-      const resourceProperties = buildProperties(properties)
-      return {
+      const rootClass = buildClass(
         className,
         description,
+        properties,
+        name,
+        rootIndentation,
+      )
+
+      return {
+        ...rootClass,
         isDeprecated,
         deprecationMessage,
         // Derived from the class name rather than the resource type so the
         // module always matches the dataclass it exports (e.g. the "event"
         // resource becomes SeamEvent in seam_event.py).
         moduleName: snakeCase(className),
-        nestedClasses: [...nestedClasses.values()],
-        properties: resourceProperties,
       }
     })
     .sort((a, b) => (a.moduleName < b.moduleName ? -1 : 1))

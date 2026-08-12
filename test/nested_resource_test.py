@@ -2,12 +2,9 @@
 
 import pytest
 
-from seam.resources.action_attempt import (
-    ActionAttempt,
-    ActionAttemptError,
-    ActionAttemptResult,
-)
-from seam.resources.device import Device, DeviceErrors, DeviceProperties
+import seam.resources.device as device_module
+from seam.resources.action_attempt import ActionAttempt
+from seam.resources.device import Device
 
 
 def test_nested_objects_are_typed_and_drop_unknown_fields():
@@ -19,16 +16,16 @@ def test_nested_objects_are_typed_and_drop_unknown_fields():
         }
     )
 
-    assert isinstance(device.properties, DeviceProperties)
+    assert isinstance(device.properties, Device.Properties)
     assert device.properties.locked is True
     assert not hasattr(device.properties, "future_api_field")
-    assert isinstance(device.errors[0], DeviceErrors)
+    assert isinstance(device.errors[0], Device.Errors)
     assert device.errors[0].error_code == "offline"
     assert device.custom_metadata["arbitrary"]["future"] is True
 
 
 def test_nested_objects_keep_dictionary_style_reads():
-    properties = DeviceProperties.from_dict({"locked": True})
+    properties = Device.Properties.from_dict({"locked": True})
 
     assert properties["locked"] is True
     assert properties.get("locked") is True
@@ -55,7 +52,39 @@ def test_action_attempt_union_hydrates_nested_result_and_error():
         }
     )
 
-    assert isinstance(attempt.result, ActionAttemptResult)
+    assert isinstance(attempt.result, ActionAttempt.Result)
     assert attempt.result.was_confirmed_by_device is True
-    assert isinstance(attempt.error, ActionAttemptError)
+    assert isinstance(attempt.error, ActionAttempt.Error)
     assert attempt.error.message == "failed"
+
+
+def test_same_named_nested_objects_keep_distinct_shapes():
+    device = Device.from_dict(
+        {
+            "properties": {
+                "battery": {"level": 0.5, "status": "good"},
+                "accessory_keypad": {"battery": {"level": 0.25}},
+            }
+        }
+    )
+
+    battery = device.properties.battery
+    assert isinstance(battery, Device.Properties.Battery)
+    assert battery.status == "good"
+
+    keypad_battery = device.properties.accessory_keypad.battery
+    assert isinstance(keypad_battery, Device.Properties.AccessoryKeypad.Battery)
+    assert keypad_battery.level == 0.25
+    assert not isinstance(keypad_battery, Device.Properties.Battery)
+
+
+def test_nested_classes_are_scoped_to_their_owner():
+    preset_metadata = Device.Properties.AvailableClimatePresets.EcobeeMetadata
+    device_metadata = Device.Properties.EcobeeMetadata
+
+    assert preset_metadata is not device_metadata
+    assert "climate_ref" in preset_metadata.__dataclass_fields__
+    assert "ecobee_device_id" in device_metadata.__dataclass_fields__
+
+    # Nested shapes stay off the module namespace.
+    assert not hasattr(device_module, "DeviceProperties")

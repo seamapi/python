@@ -5,135 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class AcsCredentialAssaAbloyVostioMetadata(ResourceMapping):
-    """Vostio-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
-
-    :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
-
-    :ivar door_names: Names of the doors to which to grant access in the Vostio access system.
-
-    :ivar endpoint_id: Endpoint ID in the Vostio access system.
-
-    :ivar key_id: Key ID in the Vostio access system.
-
-    :ivar key_issuing_request_id: Key issuing request ID in the Vostio access system.
-
-    :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system.
-    """
-
-    auto_join: bool
-    door_names: List[str]
-    endpoint_id: str
-    key_id: str
-    key_issuing_request_id: str
-    override_guest_acs_entrance_ids: List[str]
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            auto_join=d.get("auto_join", None),
-            door_names=d.get("door_names", None),
-            endpoint_id=d.get("endpoint_id", None),
-            key_id=d.get("key_id", None),
-            key_issuing_request_id=d.get("key_issuing_request_id", None),
-            override_guest_acs_entrance_ids=d.get(
-                "override_guest_acs_entrance_ids", None
-            ),
-        )
-
-
-@dataclass
-class AcsCredentialErrors(ResourceMapping):
-    """Errors associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code:
-
-    :ivar message:"""
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
-class AcsCredentialVisionlineMetadata(ResourceMapping):
-    """Visionline-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
-
-    :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
-
-    :ivar card_function_type: Card function type in the Visionline access system.
-
-    :ivar card_id: ID of the card in the Visionline access system.
-
-    :ivar common_acs_entrance_ids: Common entrance IDs in the Visionline access system.
-
-    :ivar credential_id: ID of the credential in the Visionline access system.
-
-    :ivar guest_acs_entrance_ids: Guest entrance IDs in the Visionline access system.
-
-    :ivar is_valid: Indicates whether the credential is valid.
-
-    :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join.
-    """
-
-    auto_join: bool
-    card_function_type: str
-    card_id: str
-    common_acs_entrance_ids: List[str]
-    credential_id: str
-    guest_acs_entrance_ids: List[str]
-    is_valid: bool
-    joiner_acs_credential_ids: List[str]
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            auto_join=d.get("auto_join", None),
-            card_function_type=d.get("card_function_type", None),
-            card_id=d.get("card_id", None),
-            common_acs_entrance_ids=d.get("common_acs_entrance_ids", None),
-            credential_id=d.get("credential_id", None),
-            guest_acs_entrance_ids=d.get("guest_acs_entrance_ids", None),
-            is_valid=d.get("is_valid", None),
-            joiner_acs_credential_ids=d.get("joiner_acs_credential_ids", None),
-        )
-
-
-@dataclass
-class AcsCredentialWarnings(ResourceMapping):
-    """Warnings associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
-
-    :ivar created_at: Date and time at which Seam created the warning.
-
-    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-    """
-
-    created_at: str
-    message: str
-    warning_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            message=d.get("message", None),
-            warning_code=d.get("warning_code", None),
-        )
-
-
-@dataclass
 class AcsCredential:
     """Means by which an `access control system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ gains access at an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_. The ``acs_credential`` object represents a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ that provides an ACS user access within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -200,19 +71,144 @@ class AcsCredential:
     :ivar workspace_id: ID of the workspace that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
     """
 
+    @dataclass
+    class AssaAbloyVostioMetadata(ResourceMapping):
+        """Vostio-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
+
+        :ivar door_names: Names of the doors to which to grant access in the Vostio access system.
+
+        :ivar endpoint_id: Endpoint ID in the Vostio access system.
+
+        :ivar key_id: Key ID in the Vostio access system.
+
+        :ivar key_issuing_request_id: Key issuing request ID in the Vostio access system.
+
+        :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system.
+        """
+
+        auto_join: bool
+        door_names: List[str]
+        endpoint_id: str
+        key_id: str
+        key_issuing_request_id: str
+        override_guest_acs_entrance_ids: List[str]
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                auto_join=d.get("auto_join", None),
+                door_names=d.get("door_names", None),
+                endpoint_id=d.get("endpoint_id", None),
+                key_id=d.get("key_id", None),
+                key_issuing_request_id=d.get("key_issuing_request_id", None),
+                override_guest_acs_entrance_ids=d.get(
+                    "override_guest_acs_entrance_ids", None
+                ),
+            )
+
+    @dataclass
+    class Errors(ResourceMapping):
+        """Errors associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code:
+
+        :ivar message:"""
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class VisionlineMetadata(ResourceMapping):
+        """Visionline-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
+
+        :ivar card_function_type: Card function type in the Visionline access system.
+
+        :ivar card_id: ID of the card in the Visionline access system.
+
+        :ivar common_acs_entrance_ids: Common entrance IDs in the Visionline access system.
+
+        :ivar credential_id: ID of the credential in the Visionline access system.
+
+        :ivar guest_acs_entrance_ids: Guest entrance IDs in the Visionline access system.
+
+        :ivar is_valid: Indicates whether the credential is valid.
+
+        :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join.
+        """
+
+        auto_join: bool
+        card_function_type: str
+        card_id: str
+        common_acs_entrance_ids: List[str]
+        credential_id: str
+        guest_acs_entrance_ids: List[str]
+        is_valid: bool
+        joiner_acs_credential_ids: List[str]
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                auto_join=d.get("auto_join", None),
+                card_function_type=d.get("card_function_type", None),
+                card_id=d.get("card_id", None),
+                common_acs_entrance_ids=d.get("common_acs_entrance_ids", None),
+                credential_id=d.get("credential_id", None),
+                guest_acs_entrance_ids=d.get("guest_acs_entrance_ids", None),
+                is_valid=d.get("is_valid", None),
+                joiner_acs_credential_ids=d.get("joiner_acs_credential_ids", None),
+            )
+
+    @dataclass
+    class Warnings(ResourceMapping):
+        """Warnings associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     access_method: str
     acs_credential_id: str
     acs_credential_pool_id: str
     acs_system_id: str
     acs_user_id: str
-    assa_abloy_vostio_metadata: AcsCredentialAssaAbloyVostioMetadata
+    assa_abloy_vostio_metadata: AssaAbloyVostioMetadata
     card_number: str
     code: str
     connected_account_id: str
     created_at: str
     display_name: str
     ends_at: str
-    errors: List[AcsCredentialErrors]
+    errors: List[Errors]
     external_type: str
     external_type_display_name: str
     is_issued: bool
@@ -225,8 +221,8 @@ class AcsCredential:
     parent_acs_credential_id: str
     starts_at: str
     user_identity_id: str
-    visionline_metadata: AcsCredentialVisionlineMetadata
-    warnings: List[AcsCredentialWarnings]
+    visionline_metadata: VisionlineMetadata
+    warnings: List[Warnings]
     workspace_id: str
 
     @classmethod
@@ -238,7 +234,7 @@ class AcsCredential:
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
             assa_abloy_vostio_metadata=(
-                AcsCredentialAssaAbloyVostioMetadata.from_dict(
+                cls.AssaAbloyVostioMetadata.from_dict(
                     d.get("assa_abloy_vostio_metadata")
                 )
                 if d.get("assa_abloy_vostio_metadata") is not None
@@ -250,7 +246,7 @@ class AcsCredential:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
-            errors=[AcsCredentialErrors.from_dict(i) for i in d.get("errors") or []],
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_issued=d.get("is_issued", None),
@@ -270,12 +266,10 @@ class AcsCredential:
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
             visionline_metadata=(
-                AcsCredentialVisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
                 if d.get("visionline_metadata") is not None
                 else None
             ),
-            warnings=[
-                AcsCredentialWarnings.from_dict(i) for i in d.get("warnings") or []
-            ],
+            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

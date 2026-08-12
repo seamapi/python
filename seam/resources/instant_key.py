@@ -5,29 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class InstantKeyCustomization(ResourceMapping):
-    """Customization applied to the Instant Key UI.
-
-    :ivar logo_url: URL of the logo displayed on the Instant Key.
-
-    :ivar primary_color: Primary color used in the Instant Key UI.
-
-    :ivar secondary_color: Secondary color used in the Instant Key UI."""
-
-    logo_url: str
-    primary_color: str
-    secondary_color: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            logo_url=d.get("logo_url", None),
-            primary_color=d.get("primary_color", None),
-            secondary_color=d.get("secondary_color", None),
-        )
-
-
-@dataclass
 class InstantKey:
     """Represents a Seam Instant Key. For issuing Bluetooth mobile keys, Instant Keys are the fastest way to share access. With a single API call, you can create a mobile key and send it through text or email or embed it in your own app.
 
@@ -51,9 +28,31 @@ class InstantKey:
 
     :ivar workspace_id: ID of the workspace that contains the Instant Key."""
 
+    @dataclass
+    class Customization(ResourceMapping):
+        """Customization applied to the Instant Key UI.
+
+        :ivar logo_url: URL of the logo displayed on the Instant Key.
+
+        :ivar primary_color: Primary color used in the Instant Key UI.
+
+        :ivar secondary_color: Secondary color used in the Instant Key UI."""
+
+        logo_url: str
+        primary_color: str
+        secondary_color: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                logo_url=d.get("logo_url", None),
+                primary_color=d.get("primary_color", None),
+                secondary_color=d.get("secondary_color", None),
+            )
+
     client_session_id: str
     created_at: str
-    customization: InstantKeyCustomization
+    customization: Customization
     customization_profile_id: str
     expires_at: str
     instant_key_id: str
@@ -67,7 +66,7 @@ class InstantKey:
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
             customization=(
-                InstantKeyCustomization.from_dict(d.get("customization"))
+                cls.Customization.from_dict(d.get("customization"))
                 if d.get("customization") is not None
                 else None
             ),

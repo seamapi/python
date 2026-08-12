@@ -5,295 +5,6 @@ from ..utils.resource_mapping import ResourceMapping
 
 
 @dataclass
-class SeamEventChangedProperties(ResourceMapping):
-    """List of properties that changed on the access code.
-
-    :ivar from_: Previous value of the property, or null if not set.
-
-    :ivar property: Name of the property that changed (e.g. ``code``).
-
-    :ivar to: New value of the property, or null if cleared."""
-
-    from_: str
-    property: str
-    to: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            from_=d.get("from", None),
-            property=d.get("property", None),
-            to=d.get("to", None),
-        )
-
-
-@dataclass
-class SeamEventFrom(ResourceMapping):
-    """Previous access code name configuration.
-
-    :ivar name: Previous name of the access code."""
-
-    name: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            name=d.get("name", None),
-        )
-
-
-@dataclass
-class SeamEventTo(ResourceMapping):
-    """New access code name configuration.
-
-    :ivar name: New name of the access code."""
-
-    name: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            name=d.get("name", None),
-        )
-
-
-@dataclass
-class SeamEventRequestedMutations(ResourceMapping):
-    """Array of mutations requested on the access code, each containing the mutation type and from/to values.
-
-    :ivar from_: Previous property values before the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
-
-    :ivar mutation_code: Code identifying the type of mutation requested, such as ``updating_name``, ``updating_code``, ``updating_time_frame``, or ``deleting``.
-
-    :ivar to: New property values after the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
-    """
-
-    from_: Dict[str, Any]
-    mutation_code: str
-    to: Dict[str, Any]
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            from_=DeepAttrDict(d.get("from", None)),
-            mutation_code=d.get("mutation_code", None),
-            to=DeepAttrDict(d.get("to", None)),
-        )
-
-
-@dataclass
-class SeamEventAccessCodeErrors(ResourceMapping):
-    """Errors associated with the access code.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
-class SeamEventAccessCodeWarnings(ResourceMapping):
-    """Warnings associated with the access code.
-
-    :ivar created_at: Date and time at which Seam created the warning.
-
-    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-    """
-
-    created_at: str
-    message: str
-    warning_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            message=d.get("message", None),
-            warning_code=d.get("warning_code", None),
-        )
-
-
-@dataclass
-class SeamEventConnectedAccountErrors(ResourceMapping):
-    """Errors associated with the connected account.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
-class SeamEventConnectedAccountWarnings(ResourceMapping):
-    """Warnings associated with the connected account.
-
-    :ivar created_at: Date and time at which Seam created the warning.
-
-    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-    """
-
-    created_at: str
-    message: str
-    warning_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            message=d.get("message", None),
-            warning_code=d.get("warning_code", None),
-        )
-
-
-@dataclass
-class SeamEventDeviceErrors(ResourceMapping):
-    """Errors associated with the device.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
-class SeamEventDeviceWarnings(ResourceMapping):
-    """Warnings associated with the device.
-
-    :ivar created_at: Date and time at which Seam created the warning.
-
-    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-    """
-
-    created_at: str
-    message: str
-    warning_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            message=d.get("message", None),
-            warning_code=d.get("warning_code", None),
-        )
-
-
-@dataclass
-class SeamEventAcsSystemErrors(ResourceMapping):
-    """Errors associated with the access control system.
-
-    :ivar created_at: Date and time at which Seam created the error.
-
-    :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-    :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-    """
-
-    created_at: str
-    error_code: str
-    message: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            error_code=d.get("error_code", None),
-            message=d.get("message", None),
-        )
-
-
-@dataclass
-class SeamEventAcsSystemWarnings(ResourceMapping):
-    """Warnings associated with the access control system.
-
-    :ivar created_at: Date and time at which Seam created the warning.
-
-    :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-    :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-    """
-
-    created_at: str
-    message: str
-    warning_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            created_at=d.get("created_at", None),
-            message=d.get("message", None),
-            warning_code=d.get("warning_code", None),
-        )
-
-
-@dataclass
-class SeamEventReason(ResourceMapping):
-    """Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
-
-    :ivar message: Human-readable explanation of why access was denied.
-
-    :ivar reason_code: Normalized reason a lock denied access. Provider-agnostic; not all providers report every value.
-    """
-
-    message: str
-    reason_code: str
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
-        return cls(
-            message=d.get("message", None),
-            reason_code=d.get("reason_code", None),
-        )
-
-
-@dataclass
 class SeamEvent:
     """
 
@@ -481,6 +192,282 @@ class SeamEvent:
 
     :ivar space_key: Unique key for the space within the workspace."""
 
+    @dataclass
+    class ChangedProperties(ResourceMapping):
+        """List of properties that changed on the access code.
+
+        :ivar from_: Previous value of the property, or null if not set.
+
+        :ivar property: Name of the property that changed (e.g. ``code``).
+
+        :ivar to: New value of the property, or null if cleared."""
+
+        from_: str
+        property: str
+        to: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                from_=d.get("from", None),
+                property=d.get("property", None),
+                to=d.get("to", None),
+            )
+
+    @dataclass
+    class From(ResourceMapping):
+        """Previous access code name configuration.
+
+        :ivar name: Previous name of the access code."""
+
+        name: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                name=d.get("name", None),
+            )
+
+    @dataclass
+    class To(ResourceMapping):
+        """New access code name configuration.
+
+        :ivar name: New name of the access code."""
+
+        name: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                name=d.get("name", None),
+            )
+
+    @dataclass
+    class RequestedMutations(ResourceMapping):
+        """Array of mutations requested on the access code, each containing the mutation type and from/to values.
+
+        :ivar from_: Previous property values before the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
+
+        :ivar mutation_code: Code identifying the type of mutation requested, such as ``updating_name``, ``updating_code``, ``updating_time_frame``, or ``deleting``.
+
+        :ivar to: New property values after the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
+        """
+
+        from_: Dict[str, Any]
+        mutation_code: str
+        to: Dict[str, Any]
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                from_=DeepAttrDict(d.get("from", None)),
+                mutation_code=d.get("mutation_code", None),
+                to=DeepAttrDict(d.get("to", None)),
+            )
+
+    @dataclass
+    class AccessCodeErrors(ResourceMapping):
+        """Errors associated with the access code.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class AccessCodeWarnings(ResourceMapping):
+        """Warnings associated with the access code.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class ConnectedAccountErrors(ResourceMapping):
+        """Errors associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class ConnectedAccountWarnings(ResourceMapping):
+        """Warnings associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class DeviceErrors(ResourceMapping):
+        """Errors associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class DeviceWarnings(ResourceMapping):
+        """Warnings associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class AcsSystemErrors(ResourceMapping):
+        """Errors associated with the access control system.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class AcsSystemWarnings(ResourceMapping):
+        """Warnings associated with the access control system.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class Reason(ResourceMapping):
+        """Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
+
+        :ivar message: Human-readable explanation of why access was denied.
+
+        :ivar reason_code: Normalized reason a lock denied access. Provider-agnostic; not all providers report every value.
+        """
+
+        message: str
+        reason_code: str
+
+        @classmethod
+        def from_dict(cls, d: Dict[str, Any]):
+            return cls(
+                message=d.get("message", None),
+                reason_code=d.get("reason_code", None),
+            )
+
     access_code_id: str
     connected_account_custom_metadata: Dict[str, Any]
     connected_account_id: str
@@ -493,18 +480,18 @@ class SeamEvent:
     occurred_at: str
     workspace_id: str
     change_reason: str
-    changed_properties: List[SeamEventChangedProperties]
+    changed_properties: List[ChangedProperties]
     description: str
-    from_: SeamEventFrom
-    to: SeamEventTo
-    requested_mutations: List[SeamEventRequestedMutations]
+    from_: From
+    to: To
+    requested_mutations: List[RequestedMutations]
     code: str
-    access_code_errors: List[SeamEventAccessCodeErrors]
-    access_code_warnings: List[SeamEventAccessCodeWarnings]
-    connected_account_errors: List[SeamEventConnectedAccountErrors]
-    connected_account_warnings: List[SeamEventConnectedAccountWarnings]
-    device_errors: List[SeamEventDeviceErrors]
-    device_warnings: List[SeamEventDeviceWarnings]
+    access_code_errors: List[AccessCodeErrors]
+    access_code_warnings: List[AccessCodeWarnings]
+    connected_account_errors: List[ConnectedAccountErrors]
+    connected_account_warnings: List[ConnectedAccountWarnings]
+    device_errors: List[DeviceErrors]
+    device_warnings: List[DeviceWarnings]
     backup_access_code_id: str
     access_grant_id: str
     acs_entrance_id: str
@@ -518,8 +505,8 @@ class SeamEvent:
     access_method_id: str
     is_backup_code: bool
     acs_system_id: str
-    acs_system_errors: List[SeamEventAcsSystemErrors]
-    acs_system_warnings: List[SeamEventAcsSystemWarnings]
+    acs_system_errors: List[AcsSystemErrors]
+    acs_system_warnings: List[AcsSystemWarnings]
     acs_credential_id: str
     acs_user_id: str
     acs_encoder_id: str
@@ -546,7 +533,7 @@ class SeamEvent:
     is_via_nfc: bool
     method: str
     user_identity_id: str
-    reason: SeamEventReason
+    reason: Reason
     climate_preset_key: str
     is_fallback_climate_preset: bool
     thermostat_schedule_id: str
@@ -591,43 +578,40 @@ class SeamEvent:
             workspace_id=d.get("workspace_id", None),
             change_reason=d.get("change_reason", None),
             changed_properties=[
-                SeamEventChangedProperties.from_dict(i)
+                cls.ChangedProperties.from_dict(i)
                 for i in d.get("changed_properties") or []
             ],
             description=d.get("description", None),
             from_=(
-                SeamEventFrom.from_dict(d.get("from"))
-                if d.get("from") is not None
-                else None
+                cls.From.from_dict(d.get("from")) if d.get("from") is not None else None
             ),
-            to=SeamEventTo.from_dict(d.get("to")) if d.get("to") is not None else None,
+            to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             requested_mutations=[
-                SeamEventRequestedMutations.from_dict(i)
+                cls.RequestedMutations.from_dict(i)
                 for i in d.get("requested_mutations") or []
             ],
             code=d.get("code", None),
             access_code_errors=[
-                SeamEventAccessCodeErrors.from_dict(i)
+                cls.AccessCodeErrors.from_dict(i)
                 for i in d.get("access_code_errors") or []
             ],
             access_code_warnings=[
-                SeamEventAccessCodeWarnings.from_dict(i)
+                cls.AccessCodeWarnings.from_dict(i)
                 for i in d.get("access_code_warnings") or []
             ],
             connected_account_errors=[
-                SeamEventConnectedAccountErrors.from_dict(i)
+                cls.ConnectedAccountErrors.from_dict(i)
                 for i in d.get("connected_account_errors") or []
             ],
             connected_account_warnings=[
-                SeamEventConnectedAccountWarnings.from_dict(i)
+                cls.ConnectedAccountWarnings.from_dict(i)
                 for i in d.get("connected_account_warnings") or []
             ],
             device_errors=[
-                SeamEventDeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
             ],
             device_warnings=[
-                SeamEventDeviceWarnings.from_dict(i)
-                for i in d.get("device_warnings") or []
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
             ],
             backup_access_code_id=d.get("backup_access_code_id", None),
             access_grant_id=d.get("access_grant_id", None),
@@ -643,11 +627,11 @@ class SeamEvent:
             is_backup_code=d.get("is_backup_code", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_system_errors=[
-                SeamEventAcsSystemErrors.from_dict(i)
+                cls.AcsSystemErrors.from_dict(i)
                 for i in d.get("acs_system_errors") or []
             ],
             acs_system_warnings=[
-                SeamEventAcsSystemWarnings.from_dict(i)
+                cls.AcsSystemWarnings.from_dict(i)
                 for i in d.get("acs_system_warnings") or []
             ],
             acs_credential_id=d.get("acs_credential_id", None),
@@ -677,7 +661,7 @@ class SeamEvent:
             method=d.get("method", None),
             user_identity_id=d.get("user_identity_id", None),
             reason=(
-                SeamEventReason.from_dict(d.get("reason"))
+                cls.Reason.from_dict(d.get("reason"))
                 if d.get("reason") is not None
                 else None
             ),
