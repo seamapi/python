@@ -1,7 +1,6 @@
 from typing import Any, Dict, Optional, Union
-import niquests as requests
 from typing_extensions import Self
-from urllib3.util import Retry
+from .retry import Retry
 
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .parse_options import parse_without_workspace_options
@@ -52,7 +51,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
     ):
         """
         Initialize a SeamWithoutWorkspace client instance.
@@ -72,13 +71,13 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
-        :type retries: Optional[urllib3.util.Retry]
+        :type retries: Optional[seam.Retry]
         :param timeout: The request timeout in seconds. Defaults to 30
             seconds. Pass None for no timeout
         :type timeout: Optional[float]
-        :param niquests_options: Options passed through to the underlying
-            niquests Session, for control the other options do not cover
-        :type niquests_options: Optional[Dict[str, Any]]
+        :param httpx_options: Options passed through to the underlying
+            httpx Client, for control the other options do not cover
+        :type httpx_options: Optional[Dict[str, Any]]
 
         :raises SeamInvalidOptionsError: If no personal_access_token is provided
             and the SEAM_PERSONAL_ACCESS_TOKEN environment variable is not set
@@ -97,7 +96,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             auth_headers=auth_headers,
             retries=retries,
             timeout=timeout,
-            niquests_options=niquests_options,
+            httpx_options=httpx_options,
         )
 
         defaults = {"wait_for_action_attempt": wait_for_action_attempt}
@@ -114,7 +113,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
     ) -> Self:
         """
         Create a SeamWithoutWorkspace instance using a personal access token.
@@ -131,7 +130,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
-        :type retries: Optional[urllib3.util.Retry]
+        :type retries: Optional[seam.Retry]
         :return: A new instance of the SeamWithoutWorkspace class
             authenticated with the provided personal access token
         :rtype: Self
@@ -147,5 +146,5 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             wait_for_action_attempt=wait_for_action_attempt,
             retries=retries,
             timeout=timeout,
-            niquests_options=niquests_options,
+            httpx_options=httpx_options,
         )

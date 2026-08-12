@@ -1,8 +1,7 @@
-import niquests
+import httpx
 import pytest
-from urllib3.util import Retry
 
-from seam import Seam
+from seam import Retry, Seam
 
 SERVICE_UNAVAILABLE = (503, "Service Unavailable")
 DEVICES = (200, {"devices": [{"device_id": "august_device_1"}]})
@@ -34,7 +33,7 @@ def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
             retries=retry_policy(total=expected_retry_count),
         )
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(httpx.HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -47,7 +46,7 @@ def test_seam_does_not_retry_when_retries_are_disabled(recording_server):
             "seam_apikey_token", endpoint=endpoint, retries=retry_policy(total=0)
         )
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(httpx.HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -68,7 +67,7 @@ def test_seam_surfaces_service_unavailable_from_a_workspace_outage(server):
         },
     )
 
-    with pytest.raises(niquests.HTTPError) as exc_info:
+    with pytest.raises(httpx.HTTPStatusError) as exc_info:
         seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -80,5 +79,4 @@ def retry_policy(*, total):
         status_forcelist=[503],
         allowed_methods=["POST"],
         backoff_factor=0,
-        raise_on_status=False,
     )

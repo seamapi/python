@@ -1,6 +1,7 @@
-from typing import Callable, Dict, Any, Optional, Tuple, Generator, List, Union
+from typing import Callable, Dict, Any, Optional, Tuple, Generator, List
+from json import JSONDecodeError
+from httpx import Response
 from .client import SeamHttpClient
-from niquests import PreparedRequest, Response, JSONDecodeError
 from .pagination import Pagination
 
 
@@ -34,11 +35,11 @@ class SeamPaginator:
 
     def first_page(self) -> Tuple[List[Any], Pagination | None]:
         """Fetches the first page of results."""
-        self.client.hooks["response"].append(
+        self.client.event_hooks["response"].append(
             lambda response: self._cache_pagination(response, self._FIRST_PAGE)
         )
         data = self._request(**self._params)
-        self.client.hooks["response"].pop()
+        self.client.event_hooks["response"].pop()
 
         pagination = self._pagination_cache.get(self._FIRST_PAGE)
 
@@ -56,11 +57,11 @@ class SeamPaginator:
             "page_cursor": next_page_cursor,
         }
 
-        self.client.hooks["response"].append(
+        self.client.event_hooks["response"].append(
             lambda response: self._cache_pagination(response, next_page_cursor)
         )
         data = self._request(**params)
-        self.client.hooks["response"].pop()
+        self.client.event_hooks["response"].pop()
 
         pagination = self._pagination_cache.get(next_page_cursor)
 
@@ -92,14 +93,11 @@ class SeamPaginator:
             if current_items:
                 yield from current_items
 
-    def _cache_pagination(
-        self, response: Union[PreparedRequest, Response], page_key: str
-    ) -> None:
+    def _cache_pagination(self, response: Response, page_key: str) -> None:
         """Extracts pagination dict from response, creates Pagination object, and caches it."""
-        if not isinstance(response, Response):
-            return
-
         try:
+            # httpx response hooks fire before the response body is read.
+            response.read()
             response_json = response.json()
             pagination = response_json.get("pagination", {})
         except JSONDecodeError:

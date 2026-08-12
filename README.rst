@@ -69,7 +69,9 @@ Contents
 
     * `Setting the request timeout`_
 
-    * `Configuring the niquests session`_
+    * `Configuring retries`_
+
+    * `Configuring the httpx client`_
 
 * `Development and Testing`_
 
@@ -470,20 +472,45 @@ Pass the ``timeout`` option, in seconds, to override this:
 
 Setting it to ``None`` disables the timeout entirely.
 
-A request that exceeds the timeout raises ``niquests.exceptions.Timeout``.
+A request that exceeds the timeout raises ``httpx.TimeoutException``.
 
-Configuring the niquests session
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuring retries
+^^^^^^^^^^^^^^^^^^^
 
-For control the options above do not cover, pass ``niquests_options``.
-These are handed to the underlying niquests ``Session`` and take
+Connection errors are retried automatically.
+Pass the ``retries`` option to customize retry behavior,
+e.g., to also retry requests answered with specific status codes:
+
+.. code-block:: python
+
+    from seam import Seam, Retry
+
+    seam = Seam(
+        api_key="your-api-key",
+        retries=Retry(
+            total=3,
+            backoff_factor=0.5,
+            status_forcelist=[503],
+            allowed_methods=["POST"],
+        ),
+    )
+
+Configuring the httpx client
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For control the options above do not cover, pass ``httpx_options``.
+These are handed to the underlying httpx ``Client`` and take
 precedence over the defaults the SDK sets:
 
 .. code-block:: python
 
+    import httpx
+
     seam = Seam(
         api_key="your-api-key",
-        niquests_options={"pool_connections": 20, "pool_maxsize": 25},
+        httpx_options={
+            "limits": httpx.Limits(max_connections=25, max_keepalive_connections=20),
+        },
     )
 
 Development and Testing

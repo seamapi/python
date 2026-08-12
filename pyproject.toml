@@ -9,7 +9,7 @@ readme = "README.rst"
 requires-python = ">=3.10"
 dependencies = [
     "dataclasses-json>=0.6.4,<0.7",
-    "niquests>=3.6.4,<4",
+    "httpx>=0.28.1,<0.29",
     "svix>=1.24.0,<2",
 ]
 

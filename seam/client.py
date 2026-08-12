@@ -1,12 +1,11 @@
 from typing import Any, Dict, Optional
-from urllib.parse import urljoin
-import niquests as requests
 from importlib.metadata import version
-from inspect import signature
-from urllib3.util import Retry
 import abc
 
+import httpx
+
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
+from .retry import Retry, RetryTransport
 from .exceptions import (
     SeamHttpApiError,
     SeamHttpInvalidInputError,
@@ -21,10 +20,6 @@ SDK_HEADERS = {
 
 DEFAULT_RETRIES = Retry()
 
-NIQUESTS_TIMEOUT_DEFAULT = (
-    signature(requests.Session.post).parameters["timeout"].default
-)
-
 
 class AbstractSeamHttpClient(abc.ABC):
     @abc.abstractmethod
@@ -36,83 +31,69 @@ class AbstractSeamHttpClient(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _handle_response(self, response: requests.Response):
+    def _handle_response(self, response: httpx.Response):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _handle_error_response(self, response: requests.Response, status_code: int):
+    def _handle_error_response(self, response: httpx.Response):
         raise NotImplementedError
 
 
-class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
+class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
     def __init__(
         self,
         base_url: str,
         auth_headers: Dict[str, str],
         retries: Optional[Retry] = DEFAULT_RETRIES,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
         **kwargs,
     ):
-        # niquests.Session mounts its adapters while initializing, so retries
-        # must be passed through here. Assigning self.retries afterwards leaves
-        # the mounted adapters on their default and the option has no effect.
         options = {
-            "retries": DEFAULT_RETRIES if retries is None else retries,
+            "base_url": base_url,
+            "timeout": timeout,
             **kwargs,
-            **(niquests_options or {}),
+            **(httpx_options or {}),
         }
 
         custom_headers = options.pop("headers", {})
 
+        if "transport" not in options:
+            options["transport"] = RetryTransport(
+                DEFAULT_RETRIES if retries is None else retries
+            )
+
         super().__init__(**options)
-
-        self.base_url = base_url
-
-        self.timeout = timeout
 
         headers = {**auth_headers, **custom_headers, **SDK_HEADERS}
         self.headers.update(headers)
 
     # request returns the decoded body rather than the Response that
-    # niquests.Session promises, so the verb helpers routed through it have to
+    # httpx.Client promises, so the verb helpers routed through it have to
     # say so too. Without these overrides callers see the inherited Response
     # type and indexing the returned payload does not type check.
     def get(self, url, **kwargs) -> Any:
         return self.request("GET", url, **kwargs)
 
-    # data and json are named rather than collected into *args because
-    # Session.request takes params in the position Session.post gives data.
     def post(self, url, data=None, json=None, **kwargs) -> Any:
         return self.request("POST", url, data=data, json=json, **kwargs)
 
     def request(self, method, url, *args, **kwargs) -> Any:
-        url = urljoin(self.base_url, url)
-
-        if kwargs.get("timeout", NIQUESTS_TIMEOUT_DEFAULT) == NIQUESTS_TIMEOUT_DEFAULT:
-            kwargs["timeout"] = self.timeout
-
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)
 
-    def _handle_response(self, response: requests.Response):
-        # niquests types status_code as optional because a Response exists
-        # before it has one. Anything reaching here has been received, so a
-        # missing status is an error the SDK cannot classify itself.
-        status_code = response.status_code
-
-        if status_code is None:
-            response.raise_for_status()
-        elif not 200 <= status_code < 300:
-            self._handle_error_response(response, status_code)
+    def _handle_response(self, response: httpx.Response):
+        if not 200 <= response.status_code < 300:
+            self._handle_error_response(response)
 
         if "application/json" in response.headers.get("content-type", ""):
             return response.json()
 
         return response.text
 
-    def _handle_error_response(self, response: requests.Response, status_code: int):
+    def _handle_error_response(self, response: httpx.Response):
+        status_code = response.status_code
         request_id = response.headers.get("seam-request-id")
 
         if status_code == 401:
@@ -138,7 +119,7 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         raise SeamHttpApiError(error_details, status_code, request_id)
 
 
-def is_api_error_response(response: requests.Response) -> bool:
+def is_api_error_response(response: httpx.Response) -> bool:
     try:
         content_type = response.headers.get("content-type", "")
 
@@ -148,7 +129,7 @@ def is_api_error_response(response: requests.Response) -> bool:
             return False
 
         data = response.json()
-    except (ValueError, requests.exceptions.JSONDecodeError):
+    except ValueError:
         return False
 
     if not isinstance(data, dict):

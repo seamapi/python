@@ -3,11 +3,10 @@ import time
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-import niquests
+import httpx
 import pytest
-from urllib3.util import Retry
 
-from seam import Seam
+from seam import Retry, Seam
 from seam.constants import DEFAULT_TIMEOUT
 
 
@@ -15,24 +14,24 @@ def test_timeout_defaults_to_30_seconds():
     seam = Seam.from_api_key("seam_apikey_token")
 
     assert DEFAULT_TIMEOUT == 30
-    assert seam.client.timeout == 30
+    assert seam.client.timeout == httpx.Timeout(30)
 
 
 def test_timeout_can_be_overridden():
     seam = Seam.from_api_key("seam_apikey_token", timeout=60)
 
-    assert seam.client.timeout == 60
+    assert seam.client.timeout == httpx.Timeout(60)
 
 
 def test_timeout_can_be_disabled_with_none():
     seam = Seam.from_api_key("seam_apikey_token", timeout=None)
 
-    assert seam.client.timeout is None
+    assert seam.client.timeout == httpx.Timeout(None)
 
 
-def test_niquests_options_are_passed_to_the_session():
+def test_httpx_options_are_passed_to_the_client():
     seam = Seam.from_api_key(
-        "seam_apikey_token", niquests_options={"headers": {"Custom-Header": "Test"}}
+        "seam_apikey_token", httpx_options={"headers": {"Custom-Header": "Test"}}
     )
 
     assert seam.client.headers["Custom-Header"] == "Test"
@@ -40,10 +39,10 @@ def test_niquests_options_are_passed_to_the_session():
     assert seam.client.headers["Authorization"] == "Bearer seam_apikey_token"
 
 
-def test_niquests_options_take_precedence():
-    seam = Seam.from_api_key("seam_apikey_token", niquests_options={"pool_maxsize": 25})
+def test_httpx_options_take_precedence():
+    seam = Seam.from_api_key("seam_apikey_token", httpx_options={"timeout": 15})
 
-    assert seam.client.timeout == 30
+    assert seam.client.timeout == httpx.Timeout(15)
 
 
 def test_per_request_timeout_overrides_the_client_timeout(recording_server):
@@ -64,7 +63,7 @@ def test_seam_times_out_a_slow_request():
             retries=Retry(total=0),
         )
 
-        with pytest.raises(niquests.exceptions.Timeout):
+        with pytest.raises(httpx.TimeoutException):
             seam.devices.list()
 
 
