@@ -800,6 +800,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Dict[str, Any]):
+                    # This shape documents no properties, so there is nothing to read.
+                    # pylint: disable=unused-argument
                     return cls()
 
             @dataclass

@@ -17,6 +17,10 @@
 
 {{memberIndent}}@classmethod
 {{memberIndent}}def from_dict(cls, d: Dict[str, Any]):
+{{#unless properties}}
+{{memberIndent}}    # This shape documents no properties, so there is nothing to read.
+{{memberIndent}}    # pylint: disable=unused-argument
+{{/unless}}
 {{memberIndent}}    return cls(
 {{#each properties}}
 {{../memberIndent}}        {{pythonIdentifier name}}={{#if isObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isObjectList}}[cls.{{nestedClassName}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}},

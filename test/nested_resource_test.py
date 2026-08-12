@@ -34,14 +34,15 @@ def test_nested_objects_keep_dictionary_style_reads():
     assert "locked" in properties.keys()
     assert "locked" in list(properties)
     with pytest.raises(AttributeError):
-        _ = properties.typo
+        _ = properties.typo  # pylint: disable=no-member
 
 
 def test_missing_nested_values_use_stable_defaults():
     device = Device.from_dict({"errors": None})
 
     assert device.properties is None
-    assert device.errors == []
+    assert isinstance(device.errors, list)
+    assert len(device.errors) == 0
 
 
 def test_action_attempt_union_hydrates_nested_result_and_error():
