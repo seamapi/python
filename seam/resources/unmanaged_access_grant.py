@@ -73,19 +73,19 @@ class UnmanagedAccessGrant:
 
         :ivar created_at: Date and time at which the mutation was created.
 
-        :ivar from_: Previous location configuration.
+        :ivar from_:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: Mutation code to indicate that Seam is in the process of updating the spaces (devices) associated with this access grant.
+        :ivar mutation_code:
 
-        :ivar to: New location configuration.
+        :ivar to:
 
         :ivar access_method_ids: IDs of the access methods being updated."""
 
         @dataclass
         class From(ResourceMapping):
-            """Previous location configuration.
+            """
 
             :ivar device_ids: Previous device IDs where access codes existed.
 
@@ -107,7 +107,7 @@ class UnmanagedAccessGrant:
 
         @dataclass
         class To(ResourceMapping):
-            """New location configuration.
+            """
 
             :ivar common_code_key: Common code key to ensure PIN code reuse across devices.
 
@@ -202,7 +202,7 @@ class UnmanagedAccessGrant:
 
         :ivar access_method_ids: IDs of the access methods being updated.
 
-        :ivar device_id: ID of the device where the requested code was unavailable.
+        :ivar device_id:
 
         :ivar new_code: The new PIN code that was assigned instead.
 

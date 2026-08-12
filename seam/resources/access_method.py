@@ -73,19 +73,19 @@ class AccessMethod:
 
         :ivar created_at: Date and time at which the mutation was created.
 
-        :ivar from_: Previous device configuration.
+        :ivar from_:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: Mutation code to indicate that Seam is in the process of provisioning access for this access method on new devices.
+        :ivar mutation_code:
 
-        :ivar to: New device configuration."""
+        :ivar to:"""
 
         @dataclass
         class From(ResourceMapping):
-            """Previous device configuration.
+            """
 
-            :ivar device_ids: Previous device IDs where access was provisioned.
+            :ivar device_ids:
 
             :ivar ends_at: Previous end time for access.
 
@@ -105,9 +105,9 @@ class AccessMethod:
 
         @dataclass
         class To(ResourceMapping):
-            """New device configuration.
+            """
 
-            :ivar device_ids: New device IDs where access is being provisioned.
+            :ivar device_ids:
 
             :ivar ends_at: New end time for access.
 

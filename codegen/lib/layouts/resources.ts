@@ -53,6 +53,37 @@ const formatKey = (property: Property): string =>
 const isScalar = (property: Property): boolean =>
   property.format !== 'list' && property.format !== 'object'
 
+interface MergedDocs {
+  description: string
+  isDeprecated: boolean
+  deprecationMessage: string
+}
+
+// Each variant documents a property for its own case, which is accurate there
+// but not for the single dataclass the variants merge into. Some are merely
+// narrow ("Previous code configuration" on a shape that also covers names);
+// others contradict each other outright ("the error is not a device error"
+// against "the error is a device error"). No description beats a wrong one, so
+// keep one only when every variant that documents the property agrees.
+const mergeDocs = (occurrences: Property[]): MergedDocs => {
+  const descriptions = [
+    ...new Set(
+      occurrences
+        .map((occurrence) => occurrence.description.trim())
+        .filter((description) => description !== ''),
+    ),
+  ]
+  const deprecated = occurrences.find(({ isDeprecated }) => isDeprecated)
+
+  return {
+    description: descriptions.length === 1 ? (descriptions[0] ?? '') : '',
+    // Deprecating in any variant deprecates the merged property, so a warning
+    // is never dropped just because another variant omits it.
+    isDeprecated: deprecated != null,
+    deprecationMessage: deprecated?.deprecationMessage ?? '',
+  }
+}
+
 // The variants of a discriminated union collapse into a single dataclass, so a
 // property carried by more than one variant has to end up with every field any
 // variant gives it. Keeping only the first occurrence silently drops the rest,
@@ -62,10 +93,12 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
   if (first == null) throw new Error(`Nothing to merge at ${path}.`)
   if (rest.length === 0) return first
 
+  const docs = mergeDocs(occurrences)
+
   const formats = new Set(occurrences.map(formatKey))
   if (formats.size > 1) {
     // Scalars all map to the same Python type, so any of them stands in.
-    if (occurrences.every(isScalar)) return first
+    if (occurrences.every(isScalar)) return { ...first, ...docs }
     throw new Error(
       `Cannot merge ${path}: variants disagree on its shape (${[...formats].join(', ')}).`,
     )
@@ -74,6 +107,7 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
   if (first.format === 'object') {
     return {
       ...first,
+      ...docs,
       properties: mergePropertyLists(
         occurrences.map(
           (occurrence) => (occurrence as typeof first).properties,
@@ -86,6 +120,7 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
   if (first.format === 'list' && first.itemFormat === 'object') {
     return {
       ...first,
+      ...docs,
       itemProperties: mergePropertyLists(
         occurrences.map(
           (occurrence) => (occurrence as typeof first).itemProperties,
@@ -99,13 +134,14 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
     // Keep every variant. Whoever consumes this list merges them in turn.
     return {
       ...first,
+      ...docs,
       variants: occurrences.flatMap(
         (occurrence) => (occurrence as typeof first).variants,
       ),
     }
   }
 
-  return first
+  return { ...first, ...docs }
 }
 
 const mergePropertyLists = (

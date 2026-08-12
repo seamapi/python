@@ -8,23 +8,23 @@ from ..utils.resource_mapping import ResourceMapping
 class SeamEvent:
     """
 
-    :ivar access_code_id: ID of the affected access code.
+    :ivar access_code_id:
 
-    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+    :ivar connected_account_custom_metadata:
 
-    :ivar connected_account_id: ID of the connected account associated with the affected access code.
+    :ivar connected_account_id:
 
     :ivar created_at: Date and time at which the event was created.
 
-    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+    :ivar device_custom_metadata:
 
-    :ivar device_id: ID of the device associated with the affected access code.
+    :ivar device_id:
 
     :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
 
     :ivar event_id: ID of the event.
 
-    :ivar event_type:
+    :ivar event_type: Type of the event.
 
     :ivar occurred_at: Date and time at which the event occurred.
 
@@ -36,13 +36,13 @@ class SeamEvent:
 
     :ivar description: Human-readable description of the change and its source.
 
-    :ivar from_: Previous access code name configuration.
+    :ivar from_:
 
-    :ivar to: New access code name configuration.
+    :ivar to:
 
     :ivar requested_mutations: Array of mutations requested on the access code, each containing the mutation type and from/to values.
 
-    :ivar code: Code for the affected access code.
+    :ivar code:
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -60,7 +60,7 @@ class SeamEvent:
 
     :ivar access_grant_id: ID of the affected Access Grant.
 
-    :ivar acs_entrance_id: ID of the affected `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar acs_entrance_id:
 
     :ivar access_grant_key: Key of the affected Access Grant (if present).
 
@@ -80,7 +80,7 @@ class SeamEvent:
 
     :ivar is_backup_code: Indicates whether the code is a backup code (only present when mode is 'code' and a backup code was used).
 
-    :ivar acs_system_id: ID of the access system.
+    :ivar acs_system_id:
 
     :ivar acs_system_errors: Errors associated with the access control system.
 
@@ -88,7 +88,7 @@ class SeamEvent:
 
     :ivar acs_credential_id: ID of the affected credential.
 
-    :ivar acs_user_id: ID of the affected access system user.
+    :ivar acs_user_id:
 
     :ivar acs_encoder_id: ID of the affected encoder.
 
@@ -96,13 +96,13 @@ class SeamEvent:
 
     :ivar client_session_id: ID of the affected client session.
 
-    :ivar connect_webview_id: ID of the Connect Webview associated with the event.
+    :ivar connect_webview_id:
 
-    :ivar customer_key: The customer key associated with this connected account, if any.
+    :ivar customer_key:
 
     :ivar connected_account_type: undocumented: Unreleased.
 
-    :ivar action_attempt_id: ID of the affected action attempt.
+    :ivar action_attempt_id:
 
     :ivar action_type: Type of the action.
 
@@ -114,7 +114,7 @@ class SeamEvent:
 
     :ivar battery_status: Battery status of the affected device, calculated from the numeric ``battery_level`` value.
 
-    :ivar device_name: Name of the deleted device, captured at deletion time. The device record no longer exists when this event fires, so the name is preserved here. Null when the device had no resolvable name.
+    :ivar device_name:
 
     :ivar minut_metadata: Metadata from Minut.
 
@@ -130,15 +130,13 @@ class SeamEvent:
 
     :ivar access_code_is_managed: Whether the access code is managed by Seam (true) or unmanaged (false). Only present when access_code_id is set.
 
-    :ivar is_via_bluetooth: Whether the lock action was performed over Bluetooth by a remote client (such as the provider's mobile app), rather than a direct physical interaction or a Seam-initiated remote action.
+    :ivar is_via_bluetooth:
 
-    :ivar is_via_nfc: Whether the lock action was performed by an NFC credential tap (such as an Apple Home Key or an NFC key fob) presented to the lock, rather than a direct physical interaction or a Seam-initiated remote action.
+    :ivar is_via_nfc:
 
-    :ivar method: Method by which the lock was locked. ``keycode``: an access code was used (see ``access_code_id``). ``manual``: a physical action such as a thumbturn or button press. ``remote``: a remote action via an app, Bluetooth, or the Seam API (see ``action_attempt_id`` if Seam-initiated; see ``is_via_bluetooth`` or ``is_via_nfc`` for the transport). ``automatic``: triggered automatically, for example by an auto-relock timer. ``unknown``: could not be determined.
+    :ivar method:
 
-    :ivar user_identity_id: undocumented: Unreleased.
-          ---
-          ID of the user identity associated with the lock event.
+    :ivar user_identity_id:
 
     :ivar reason: Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
 
@@ -178,15 +176,15 @@ class SeamEvent:
 
     :ivar activation_reason: The reason the camera was activated.
 
-    :ivar image_url: URL to a thumbnail image captured at the time of activation.
+    :ivar image_url:
 
     :ivar motion_sub_type: Sub-type of motion detected, if available.
 
-    :ivar video_url: URL to a short video clip captured at the time of activation.
+    :ivar video_url:
 
-    :ivar acs_entrance_ids: IDs of all ACS entrances currently attached to the space.
+    :ivar acs_entrance_ids:
 
-    :ivar device_ids: IDs of all devices currently attached to the space.
+    :ivar device_ids:
 
     :ivar space_id: ID of the affected space.
 
@@ -216,7 +214,7 @@ class SeamEvent:
 
     @dataclass
     class From(ResourceMapping):
-        """Previous access code name configuration.
+        """
 
         :ivar name: Previous name of the access code.
 
@@ -242,7 +240,7 @@ class SeamEvent:
 
     @dataclass
     class To(ResourceMapping):
-        """New access code name configuration.
+        """
 
         :ivar name: New name of the access code.
 

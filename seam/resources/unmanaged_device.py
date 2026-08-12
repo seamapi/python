@@ -81,9 +81,9 @@ class UnmanagedDevice:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error:
 
-        :ivar is_device_error: Indicates that the error is not a device error.
+        :ivar is_device_error:
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 

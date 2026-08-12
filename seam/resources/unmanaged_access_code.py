@@ -114,9 +114,9 @@ class UnmanagedAccessCode:
 
         :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error:
 
-        :ivar is_device_error: Indicates that the error is not a device error.
+        :ivar is_device_error:
 
         :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
         """

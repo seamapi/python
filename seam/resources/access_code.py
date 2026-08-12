@@ -128,9 +128,9 @@ class AccessCode:
 
         :ivar modified_fields: List of fields that were changed externally, with their previous and new values.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error:
 
-        :ivar is_device_error: Indicates that the error is not a device error.
+        :ivar is_device_error:
 
         :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
         """
@@ -196,17 +196,17 @@ class AccessCode:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: Mutation code to indicate that Seam is in the process of setting an access code on the device.
+        :ivar mutation_code:
 
         :ivar scheduled_at: Date and time at which Seam will attempt to program this access code on the device.
 
-        :ivar from_: Previous code configuration.
+        :ivar from_:
 
-        :ivar to: New code configuration."""
+        :ivar to:"""
 
         @dataclass
         class From(ResourceMapping):
-            """Previous code configuration.
+            """
 
             :ivar code: Previous PIN code.
 
@@ -232,7 +232,7 @@ class AccessCode:
 
         @dataclass
         class To(ResourceMapping):
-            """New code configuration.
+            """
 
             :ivar code: New PIN code.
 

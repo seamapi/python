@@ -94,11 +94,11 @@ class AcsAccessGroup:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing an access group creation to the integrated access system.
+        :ivar mutation_code:
 
-        :ivar from_: Old access group information.
+        :ivar from_:
 
-        :ivar to: New access group information.
+        :ivar to:
 
         :ivar acs_user_id: ID of the user involved in the scheduled change.
 
@@ -107,7 +107,7 @@ class AcsAccessGroup:
 
         @dataclass
         class From(ResourceMapping):
-            """Old access group information.
+            """
 
             :ivar name: Name of the access group.
 
@@ -137,7 +137,7 @@ class AcsAccessGroup:
 
         @dataclass
         class To(ResourceMapping):
-            """New access group information.
+            """
 
             :ivar name: Name of the access group.
 

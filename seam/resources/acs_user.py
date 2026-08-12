@@ -113,13 +113,13 @@ class AcsUser:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing a user creation to the integrated access system.
+        :ivar mutation_code:
 
         :ivar scheduled_at: Optional: When the user creation is scheduled to occur.
 
-        :ivar from_: Old access system user information.
+        :ivar from_:
 
-        :ivar to: New access system user information.
+        :ivar to:
 
         :ivar acs_access_group_id: ID of the access group involved in the scheduled change.
 
@@ -128,7 +128,7 @@ class AcsUser:
 
         @dataclass
         class From(ResourceMapping):
-            """Old access system user information.
+            """
 
             :ivar email_address: Email address of the access system user.
 
@@ -170,7 +170,7 @@ class AcsUser:
 
         @dataclass
         class To(ResourceMapping):
-            """New access system user information.
+            """
 
             :ivar email_address: Email address of the access system user.
 
