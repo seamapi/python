@@ -65,6 +65,10 @@ Contents
 
     * `Setting the endpoint`_
 
+    * `Setting the request timeout`_
+
+    * `Configuring the niquests session`_
+
 * `Development and Testing`_
 
   * `Quickstart`_
@@ -435,6 +439,36 @@ Some contexts may need to override the API endpoint,
 e.g., testing or proxy setups.
 
 Either pass the ``endpoint`` option to the constructor, or set the ``SEAM_ENDPOINT`` environment variable.
+
+Setting the request timeout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Requests time out after 30 seconds by default.
+Pass the ``timeout`` option, in seconds, to override this:
+
+.. code-block:: python
+
+    from seam import Seam
+
+    seam = Seam(api_key="your-api-key", timeout=60)
+
+Setting it to ``None`` disables the timeout entirely.
+
+A request that exceeds the timeout raises ``niquests.exceptions.Timeout``.
+
+Configuring the niquests session
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For control the options above do not cover, pass ``niquests_options``.
+These are handed to the underlying niquests ``Session`` and take
+precedence over the defaults the SDK sets:
+
+.. code-block:: python
+
+    seam = Seam(
+        api_key="your-api-key",
+        niquests_options={"pool_connections": 20, "pool_maxsize": 25},
+    )
 
 Development and Testing
 -----------------------

@@ -1,11 +1,12 @@
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 from urllib.parse import urljoin
 import niquests as requests
 from importlib.metadata import version
+from inspect import signature
 from urllib3.util import Retry
 import abc
 
-from .constants import LTS_VERSION
+from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .exceptions import (
     SeamHttpApiError,
     SeamHttpInvalidInputError,
@@ -19,6 +20,10 @@ SDK_HEADERS = {
 }
 
 DEFAULT_RETRIES = Retry()
+
+NIQUESTS_TIMEOUT_DEFAULT = (
+    signature(requests.Session.post).parameters["timeout"].default
+)
 
 
 class AbstractSeamHttpClient(abc.ABC):
@@ -45,22 +50,36 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         base_url: str,
         auth_headers: Dict[str, str],
         retries: Optional[Retry] = DEFAULT_RETRIES,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        niquests_options: Optional[Dict[str, Any]] = None,
         **kwargs
     ):
         # niquests.Session mounts its adapters while initializing, so retries
         # must be passed through here. Assigning self.retries afterwards leaves
         # the mounted adapters on their default and the option has no effect.
-        super().__init__(
-            retries=DEFAULT_RETRIES if retries is None else retries, **kwargs
-        )
+        options = {
+            "retries": DEFAULT_RETRIES if retries is None else retries,
+            **kwargs,
+            **(niquests_options or {}),
+        }
+
+        custom_headers = options.pop("headers", {})
+
+        super().__init__(**options)
 
         self.base_url = base_url
 
-        headers = {**auth_headers, **kwargs.get("headers", {}), **SDK_HEADERS}
+        self.timeout = timeout
+
+        headers = {**auth_headers, **custom_headers, **SDK_HEADERS}
         self.headers.update(headers)
 
     def request(self, method, url, *args, **kwargs):
         url = urljoin(self.base_url, url)
+
+        if kwargs.get("timeout", NIQUESTS_TIMEOUT_DEFAULT) == NIQUESTS_TIMEOUT_DEFAULT:
+            kwargs["timeout"] = self.timeout
+
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)
