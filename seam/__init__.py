@@ -2,7 +2,7 @@
 # type: ignore
 
 from .seam import Seam
-from .seam_multi_workspace import SeamMultiWorkspace
+from .seam_without_workspace import SeamWithoutWorkspace
 from .options import SeamInvalidOptionsError
 from .auth import SeamInvalidTokenError
 from .exceptions import (

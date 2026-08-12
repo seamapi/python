@@ -111,7 +111,7 @@ def get_auth_headers_for_personal_access_token(
     }
 
 
-def get_auth_headers_for_multi_workspace_personal_access_token(
+def get_auth_headers_for_without_workspace_personal_access_token(
     personal_access_token: str,
 ) -> dict:
     if is_jwt(personal_access_token):
