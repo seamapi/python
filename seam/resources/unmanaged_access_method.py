@@ -79,28 +79,44 @@ class UnmanagedAccessMethod:
         class From(ResourceMapping):
             """Previous device configuration.
 
-            :ivar device_ids: Previous device IDs where access was provisioned."""
+            :ivar device_ids: Previous device IDs where access was provisioned.
+
+            :ivar ends_at: Previous end time for access.
+
+            :ivar starts_at: Previous start time for access."""
 
             device_ids: List[str]
+            ends_at: str
+            starts_at: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     device_ids=d.get("device_ids", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
                 )
 
         @dataclass
         class To(ResourceMapping):
             """New device configuration.
 
-            :ivar device_ids: New device IDs where access is being provisioned."""
+            :ivar device_ids: New device IDs where access is being provisioned.
+
+            :ivar ends_at: New end time for access.
+
+            :ivar starts_at: New start time for access."""
 
             device_ids: List[str]
+            ends_at: str
+            starts_at: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     device_ids=d.get("device_ids", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
                 )
 
         created_at: str

@@ -218,28 +218,52 @@ class SeamEvent:
     class From(ResourceMapping):
         """Previous access code name configuration.
 
-        :ivar name: Previous name of the access code."""
+        :ivar name: Previous name of the access code.
+
+        :ivar code: Previous pin code.
+
+        :ivar ends_at: Previous end time.
+
+        :ivar starts_at: Previous start time."""
 
         name: str
+        code: str
+        ends_at: str
+        starts_at: str
 
         @classmethod
         def from_dict(cls, d: Dict[str, Any]):
             return cls(
                 name=d.get("name", None),
+                code=d.get("code", None),
+                ends_at=d.get("ends_at", None),
+                starts_at=d.get("starts_at", None),
             )
 
     @dataclass
     class To(ResourceMapping):
         """New access code name configuration.
 
-        :ivar name: New name of the access code."""
+        :ivar name: New name of the access code.
+
+        :ivar code: New pin code.
+
+        :ivar ends_at: New end time.
+
+        :ivar starts_at: New start time."""
 
         name: str
+        code: str
+        ends_at: str
+        starts_at: str
 
         @classmethod
         def from_dict(cls, d: Dict[str, Any]):
             return cls(
                 name=d.get("name", None),
+                code=d.get("code", None),
+                ends_at=d.get("ends_at", None),
+                starts_at=d.get("starts_at", None),
             )
 
     @dataclass

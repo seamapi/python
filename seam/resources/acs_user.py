@@ -134,11 +134,26 @@ class AcsUser:
 
             :ivar full_name: Full name of the access system user.
 
-            :ivar phone_number: Phone number of the access system user."""
+            :ivar phone_number: Phone number of the access system user.
+
+            :ivar ends_at: Starting time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule.
+
+            :ivar is_suspended:
+
+            :ivar acs_access_group_id: Old access group ID.
+
+            :ivar acs_credential_id: Previous credential ID."""
 
             email_address: str
             full_name: str
             phone_number: str
+            ends_at: str
+            starts_at: str
+            is_suspended: bool
+            acs_access_group_id: str
+            acs_credential_id: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
@@ -146,6 +161,11 @@ class AcsUser:
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
                     phone_number=d.get("phone_number", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                    is_suspended=d.get("is_suspended", None),
+                    acs_access_group_id=d.get("acs_access_group_id", None),
+                    acs_credential_id=d.get("acs_credential_id", None),
                 )
 
         @dataclass
@@ -156,11 +176,26 @@ class AcsUser:
 
             :ivar full_name: Full name of the access system user.
 
-            :ivar phone_number: Phone number of the access system user."""
+            :ivar phone_number: Phone number of the access system user.
+
+            :ivar ends_at: Starting time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule.
+
+            :ivar is_suspended:
+
+            :ivar acs_access_group_id: New access group ID.
+
+            :ivar acs_credential_id: New credential ID."""
 
             email_address: str
             full_name: str
             phone_number: str
+            ends_at: str
+            starts_at: str
+            is_suspended: bool
+            acs_access_group_id: str
+            acs_credential_id: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
@@ -168,6 +203,11 @@ class AcsUser:
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
                     phone_number=d.get("phone_number", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                    is_suspended=d.get("is_suspended", None),
+                    acs_access_group_id=d.get("acs_access_group_id", None),
+                    acs_credential_id=d.get("acs_credential_id", None),
                 )
 
         created_at: str

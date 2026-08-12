@@ -109,28 +109,60 @@ class AcsAccessGroup:
         class From(ResourceMapping):
             """Old access group information.
 
-            :ivar name: Name of the access group."""
+            :ivar name: Name of the access group.
+
+            :ivar ends_at: Ending time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule.
+
+            :ivar acs_user_id: Old user ID.
+
+            :ivar acs_entrance_id: Old entrance ID."""
 
             name: str
+            ends_at: str
+            starts_at: str
+            acs_user_id: str
+            acs_entrance_id: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                    acs_user_id=d.get("acs_user_id", None),
+                    acs_entrance_id=d.get("acs_entrance_id", None),
                 )
 
         @dataclass
         class To(ResourceMapping):
             """New access group information.
 
-            :ivar name: Name of the access group."""
+            :ivar name: Name of the access group.
+
+            :ivar ends_at: Ending time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule.
+
+            :ivar acs_user_id: New user ID.
+
+            :ivar acs_entrance_id: New entrance ID."""
 
             name: str
+            ends_at: str
+            starts_at: str
+            acs_user_id: str
+            acs_entrance_id: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                    acs_user_id=d.get("acs_user_id", None),
+                    acs_entrance_id=d.get("acs_entrance_id", None),
                 )
 
         created_at: str

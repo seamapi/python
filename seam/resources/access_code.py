@@ -208,28 +208,52 @@ class AccessCode:
         class From(ResourceMapping):
             """Previous code configuration.
 
-            :ivar code: Previous PIN code."""
+            :ivar code: Previous PIN code.
+
+            :ivar name: Previous access code name.
+
+            :ivar ends_at: Previous end time for the access code.
+
+            :ivar starts_at: Previous start time for the access code."""
 
             code: str
+            name: str
+            ends_at: str
+            starts_at: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     code=d.get("code", None),
+                    name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
                 )
 
         @dataclass
         class To(ResourceMapping):
             """New code configuration.
 
-            :ivar code: New PIN code."""
+            :ivar code: New PIN code.
+
+            :ivar name: New access code name.
+
+            :ivar ends_at: New end time for the access code.
+
+            :ivar starts_at: New start time for the access code."""
 
             code: str
+            name: str
+            ends_at: str
+            starts_at: str
 
             @classmethod
             def from_dict(cls, d: Dict[str, Any]):
                 return cls(
                     code=d.get("code", None),
+                    name=d.get("name", None),
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
                 )
 
         created_at: str
