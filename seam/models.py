@@ -45,7 +45,7 @@ class AbstractSeam(AbstractRoutes):
         raise NotImplementedError
 
 
-class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
+class AbstractSeamWithoutWorkspaceWorkspaces(abc.ABC):
     @abc.abstractmethod
     def create(
         self,
@@ -65,7 +65,7 @@ class AbstractSeamMultiWorkspaceWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamMultiWorkspace:
+class AbstractSeamWithoutWorkspace:
     lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 

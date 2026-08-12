@@ -1,6 +1,6 @@
 import pytest
 
-from seam import Seam, SeamMultiWorkspace
+from seam import Seam, SeamWithoutWorkspace
 from seam.auth import SeamInvalidTokenError
 
 # UPSTREAM: The fake rejects a personal access token on /devices/list, so these
@@ -57,11 +57,11 @@ def test_seam_checks_personal_access_token_format():
         Seam.from_personal_access_token("seam_pk_token", workspace_id)
 
 
-def test_seam_multi_workspace_from_personal_access_token_returns_authorized_instance(
+def test_seam_without_workspace_from_personal_access_token_returns_authorized_instance(
     server,
 ):
     endpoint, seed = server
-    seam = SeamMultiWorkspace.from_personal_access_token(
+    seam = SeamWithoutWorkspace.from_personal_access_token(
         seed["seam_at1_token"], endpoint=endpoint
     )
 
@@ -70,9 +70,9 @@ def test_seam_multi_workspace_from_personal_access_token_returns_authorized_inst
     assert len(workspaces) > 0
 
 
-def test_seam_multi_workspace_constructor_returns_authorized_instance(server):
+def test_seam_without_workspace_constructor_returns_authorized_instance(server):
     endpoint, seed = server
-    seam = SeamMultiWorkspace(
+    seam = SeamWithoutWorkspace(
         personal_access_token=seed["seam_at1_token"], endpoint=endpoint
     )
 
@@ -81,9 +81,9 @@ def test_seam_multi_workspace_constructor_returns_authorized_instance(server):
     assert len(workspaces) > 0
 
 
-def test_seam_multi_workspace_creates_a_workspace(server):
+def test_seam_without_workspace_creates_a_workspace(server):
     endpoint, seed = server
-    seam = SeamMultiWorkspace(
+    seam = SeamWithoutWorkspace(
         personal_access_token=seed["seam_at1_token"], endpoint=endpoint
     )
 
@@ -96,18 +96,18 @@ def test_seam_multi_workspace_creates_a_workspace(server):
     assert workspace.workspace_id is not None
 
 
-def test_seam_multi_workspace_checks_personal_access_token_format():
+def test_seam_without_workspace_checks_personal_access_token_format():
     with pytest.raises(SeamInvalidTokenError, match=r"Unknown"):
-        SeamMultiWorkspace.from_personal_access_token("some-invalid-key-format")
+        SeamWithoutWorkspace.from_personal_access_token("some-invalid-key-format")
 
     with pytest.raises(SeamInvalidTokenError, match=r"Unknown"):
-        SeamMultiWorkspace.from_personal_access_token("seam_apikey_token")
+        SeamWithoutWorkspace.from_personal_access_token("seam_apikey_token")
 
     with pytest.raises(SeamInvalidTokenError, match=r"Client Session Token"):
-        SeamMultiWorkspace.from_personal_access_token("seam_cst")
+        SeamWithoutWorkspace.from_personal_access_token("seam_cst")
 
     with pytest.raises(SeamInvalidTokenError, match=r"JWT"):
-        SeamMultiWorkspace.from_personal_access_token("ey")
+        SeamWithoutWorkspace.from_personal_access_token("ey")
 
     with pytest.raises(SeamInvalidTokenError, match=r"Publishable Key"):
-        SeamMultiWorkspace.from_personal_access_token("seam_pk_token")
+        SeamWithoutWorkspace.from_personal_access_token("seam_pk_token")

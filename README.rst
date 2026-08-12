@@ -57,7 +57,9 @@ Contents
 
     * `Return all resources across all pages as a list`_
 
-  * `Interacting with Multiple Workspaces`_
+  * `Requests without a Workspace in Scope`_
+
+    * `Personal Access Token without a Workspace`_
 
   * `Webhooks`_
 
@@ -367,20 +369,28 @@ Return all resources across all pages as a list
 
   all_devices = paginator.flatten_to_list()
 
-Interacting with Multiple Workspaces
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Requests without a Workspace in Scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some Seam API endpoints interact with multiple workspaces. The ``SeamMultiWorkspace`` client is not bound to a specific workspace and may use those endpoints with a personal access token authentication method.
+Some Seam API endpoints do not require a workspace in scope.
+The ``SeamWithoutWorkspace`` client is not bound to a specific workspace
+and may use those endpoints with an appropriate authentication method.
 
-A Personal Access Token is scoped to a Seam Console user. Obtain one from the Seam Console.
+Personal Access Token without a Workspace
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A Personal Access Token is scoped to a Seam Console user.
+Obtain one from the Seam Console.
 
 .. code-block:: python
 
+  from seam import SeamWithoutWorkspace
+
   # Pass as an option to the constructor
-  seam = SeamMultiWorkspace(personal_access_token="your-personal-access-token")
+  seam = SeamWithoutWorkspace(personal_access_token="your-personal-access-token")
 
   # Use the factory method
-  seam = SeamMultiWorkspace.from_personal_access_token("your-personal-access-token")
+  seam = SeamWithoutWorkspace.from_personal_access_token("your-personal-access-token")
 
   # List workspaces authorized for this Personal Access Token
   workspaces = seam.workspaces.list()

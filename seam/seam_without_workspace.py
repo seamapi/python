@@ -3,11 +3,11 @@ import niquests as requests
 from typing_extensions import Self
 from urllib3.util import Retry
 
-from .auth import get_auth_headers_for_multi_workspace_personal_access_token
+from .auth import get_auth_headers_for_without_workspace_personal_access_token
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .options import get_endpoint
 from .client import SeamHttpClient
-from .models import AbstractSeamMultiWorkspace
+from .models import AbstractSeamWithoutWorkspace
 from .routes.workspaces import Workspaces
 
 
@@ -24,7 +24,7 @@ class WorkspacesProxy:
         return self._workspaces.create(**kwargs)
 
 
-class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
+class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
     """
     Seam class used to interact with Seam API without being scoped to a specific workspace.
 
@@ -56,9 +56,9 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         niquests_options: Optional[Dict[str, Any]] = None,
     ):
         """
-        Initialize a SeamMultiWorkspace client instance.
+        Initialize a SeamWithoutWorkspace client instance.
 
-        This method sets up the SeamMultiWorkspace client with the provided personal access token
+        This method sets up the SeamWithoutWorkspace client with the provided personal access token
         and configuration options.
 
         :param personal_access_token: A personal access token for
@@ -83,9 +83,9 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
-        self.lts_version = SeamMultiWorkspace.lts_version
+        self.lts_version = SeamWithoutWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        auth_headers = get_auth_headers_for_multi_workspace_personal_access_token(
+        auth_headers = get_auth_headers_for_without_workspace_personal_access_token(
             personal_access_token
         )
         endpoint = get_endpoint(endpoint)
@@ -115,9 +115,9 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         niquests_options: Optional[Dict[str, Any]] = None,
     ) -> Self:
         """
-        Create a SeamMultiWorkspace instance using a personal access token.
+        Create a SeamWithoutWorkspace instance using a personal access token.
 
-        This class method is a convenience constructor for creating a SeamMultiWorkspace instance
+        This class method is a convenience constructor for creating a SeamWithoutWorkspace instance
         authenticated with a personal access token.
 
         :param personal_access_token: The personal access token for authenticating with Seam
@@ -130,13 +130,13 @@ class SeamMultiWorkspace(AbstractSeamMultiWorkspace):
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[urllib3.util.Retry]
-        :return: A new instance of the SeamMultiWorkspace class
+        :return: A new instance of the SeamWithoutWorkspace class
             authenticated with the provided personal access token
         :rtype: Self
 
         :Example:
 
-        >>> seam = SeamMultiWorkspace.from_personal_access_token("your-personal-access-token-here")
+        >>> seam = SeamWithoutWorkspace.from_personal_access_token("your-personal-access-token-here")
         """
 
         return cls(
