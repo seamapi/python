@@ -73,6 +73,8 @@ Contents
 
     * `Configuring the httpx client`_
 
+    * `Serializing URL search params`_
+
 * `Development and Testing`_
 
   * `Quickstart`_
@@ -517,6 +519,58 @@ precedence over the defaults the SDK sets:
             "limits": Limits(max_connections=25, max_keepalive_connections=20),
         },
     )
+
+Serializing URL search params
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Seam API parses URL search params as complex types.
+If you call it with your own HTTP client,
+``serialize_url_search_params`` is exported for that purpose:
+
+.. code-block:: python
+
+  import httpx
+  from seam import serialize_url_search_params
+
+  httpx.get(
+      "https://connect.getseam.com/devices/list",
+      params=serialize_url_search_params({"device_ids": ["device1", "device2"]}),
+      headers={"Authorization": "Bearer your-api-key"},
+  )
+
+The serialization defines the name and value of each search param,
+where every value is a string.
+``UrlSearchParams`` holds those pairs and renders the query string,
+as `URLSearchParams`_ does for the `reference implementation`_:
+
+.. code-block:: python
+
+  from seam import UrlSearchParams, update_url_search_params
+
+  search_params = UrlSearchParams()
+
+  update_url_search_params(search_params, {"device_ids": ["device1", "device2"]})
+
+  list(search_params)
+  # => [('device_ids', 'device1'), ('device_ids', 'device2')]
+
+  str(search_params)
+  # => 'device_ids=device1&device_ids=device2'
+
+Pass either the query string or the pairs to your HTTP client.
+A client may percent-encode a few characters differently than
+``URLSearchParams`` does, e.g. httpx escapes ``*`` and unescapes ``~``,
+which the Seam API reads as the same params either way.
+
+A param set to ``None`` is omitted, while a param set to ``seam.NULL``
+is serialized to an empty value, which the Seam API reads as null.
+A param that cannot be represented raises a ``seam.UnserializableParamError``.
+
+The Seam API parses these params with the corresponding `parser`_.
+
+.. _URLSearchParams: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+.. _reference implementation: https://github.com/seamapi/url-search-params-serializer
+.. _parser: https://github.com/seamapi/url-search-params-parser
 
 Development and Testing
 -----------------------
