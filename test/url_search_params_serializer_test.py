@@ -371,11 +371,11 @@ def test_update_url_search_params_preserves_existing_params():
     search_params = UrlSearchParams([("foo", "bar")])
     update_url_search_params(
         search_params,
-        {"name": "Dax", "age": 27, "isAdmin": True, "tags": ["cars", "planes"]},
+        {"name": "Dax", "age": 27, "is_admin": True, "tags": ["cars", "planes"]},
     )
 
     assert search_params.to_string() == (
-        "age=27&foo=bar&isAdmin=true&name=Dax&tags=cars&tags=planes"
+        "age=27&foo=bar&is_admin=true&name=Dax&tags=cars&tags=planes"
     )
 
 
