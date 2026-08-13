@@ -31,7 +31,6 @@ jobs:
           name: ${{ inputs.artifact_name }}
           path: dist/
       - name: Publish
-        run: poetry publish --skip-existing -u $USERNAME -p $PASSWORD
+        run: uv publish --check-url https://pypi.org/simple/
         env:
-          USERNAME: __token__
-          PASSWORD: ${{ secrets.registry_token }}
+          UV_PUBLISH_TOKEN: ${{ secrets.registry_token }}

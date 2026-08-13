@@ -3,8 +3,8 @@ ARG VARIANT="3"
 FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 
 ARG NODE_VERSION="24"
-ARG POETRY_VERSION="1.8.2"
-ARG POETRY_SRC="https://install.python-poetry.org"
+ARG UV_VERSION="0.8.17"
+ARG UV_SRC="https://astral.sh/uv"
 
 # https://github.com/microsoft/vscode-dev-containers/blob/main/containers/go/.devcontainer/base.Dockerfile
 ENV USERNAME=vscode
@@ -25,9 +25,7 @@ RUN apt-get update -y \
 USER vscode
 WORKDIR /home/vscode
 
-RUN curl -fsSL -o install-poetry.py "${POETRY_SRC}" \
- && python install-poetry.py --version $POETRY_VERSION \
- && rm install-poetry.py
+RUN curl -fsSL "${UV_SRC}/${UV_VERSION}/install.sh" | sh
 
 RUN mkdir -p .config/git \
  && echo ".vscode/*" >> .config/git/ignore \

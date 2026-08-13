@@ -2,25 +2,25 @@ default: build
 
 @build:
     rm -rf dist
-    poetry build
+    uv build
 
 @format:
-    poetry run black .
+    uv run black .
 
 @lint:
-    poetry run pylint ./seam ./test
-    poetry run black --check .
-    poetry run rstcheck README.rst
-    poetry run mypy seam/resources --disable-error-code=arg-type --disable-error-code=import-not-found
+    uv run pylint ./seam ./test
+    uv run black --check .
+    uv run rstcheck README.rst
+    uv run mypy seam/resources --disable-error-code=arg-type --disable-error-code=import-not-found
 
 @test:
-    poetry run pytest --cov=./seam
+    uv run pytest --cov=./seam
 
 @watch:
-    poetry run ptw
+    uv run ptw
 
 @version:
-    git add pyproject.toml
-    git commit -m "$(poetry version -s)"
-    git tag --sign "v$(poetry version -s)" -m "$(poetry version -s)"
+    git add pyproject.toml uv.lock
+    git commit -m "$(uv version --short)"
+    git tag --sign "v$(uv version --short)" -m "$(uv version --short)"
     git push --follow-tags
