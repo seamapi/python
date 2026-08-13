@@ -14,6 +14,7 @@ export interface ClassMethodParameter {
 export interface ClassMethod {
   methodName: string
   path: string
+  preferredMethod: string
   description: string
   responseDescription: string
   isDeprecated: boolean

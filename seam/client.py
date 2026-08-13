@@ -92,6 +92,9 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
     def post(self, url, data=None, json=None, **kwargs) -> Any:
         return self.request("POST", url, data=data, json=json, **kwargs)
 
+    def delete(self, url, json=None, **kwargs) -> Any:
+        return self.request("DELETE", url, json=json, **kwargs)
+
     def request(self, method, url, *args, **kwargs) -> Any:
         response = super().request(method, url, *args, **kwargs)
 

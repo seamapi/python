@@ -89,6 +89,7 @@ export const routes = (
       cls.methods.push({
         methodName: endpoint.name,
         path: endpoint.path,
+        preferredMethod: endpoint.request.preferredMethod,
         description: endpoint.description,
         responseDescription: endpoint.response.description,
         isDeprecated: endpoint.isDeprecated,

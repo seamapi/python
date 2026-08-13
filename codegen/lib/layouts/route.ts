@@ -11,6 +11,9 @@ import {
 export interface MethodLayoutContext {
   name: string
   path: string
+  httpVerb: string
+  payloadVar: string
+  payloadArg: string
   description: string
   responseDescription: string
   isDeprecated: boolean
@@ -51,11 +54,24 @@ export interface RouteLayoutContext {
   methods: MethodLayoutContext[]
 }
 
+const getRequestLayoutContext = (
+  preferredMethod: string,
+): Pick<MethodLayoutContext, 'httpVerb' | 'payloadVar' | 'payloadArg'> => {
+  const httpVerb = preferredMethod.toLowerCase()
+
+  if (preferredMethod === 'GET' || preferredMethod === 'DELETE') {
+    return { httpVerb, payloadVar: 'params', payloadArg: 'params' }
+  }
+
+  return { httpVerb, payloadVar: 'json_payload', payloadArg: 'json' }
+}
+
 export const getMethodLayoutContext = (
   method: ClassMethod,
 ): MethodLayoutContext => ({
   name: method.methodName,
   path: method.path,
+  ...getRequestLayoutContext(method.preferredMethod),
   description: method.description,
   responseDescription: method.responseDescription,
   isDeprecated: method.isDeprecated,
