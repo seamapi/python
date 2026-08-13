@@ -14,7 +14,7 @@ def test_paginator_next_page_requires_a_cursor(seam: Seam):
     paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 2})
 
     with pytest.raises(ValueError, match=r"next_page_cursor"):
-        paginator.next_page(None)
+        paginator.next_page(None)  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match=r"next_page_cursor"):
         paginator.next_page("")
@@ -24,8 +24,12 @@ def test_paginator_last_page_has_no_next_page(seam: Seam):
     paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 2})
     _, first_pagination = paginator.first_page()
 
+    assert first_pagination is not None
+    assert first_pagination.next_page_cursor is not None
+
     _, next_pagination = paginator.next_page(first_pagination.next_page_cursor)
 
+    assert next_pagination is not None
     assert next_pagination.has_next_page is False
     assert next_pagination.next_page_cursor is None
 
@@ -47,7 +51,9 @@ def test_paginator_next_page(seam: Seam):
     first_page_accounts, first_pagination = paginator.first_page()
 
     assert len(first_page_accounts) == 2
+    assert first_pagination is not None
     assert first_pagination.has_next_page is True
+    assert first_pagination.next_page_cursor is not None
 
     next_page_accounts, _ = paginator.next_page(first_pagination.next_page_cursor)
 

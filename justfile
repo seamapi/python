@@ -11,7 +11,7 @@ default: build
     uv run pylint ./seam ./test
     uv run black --check .
     uv run rstcheck README.rst
-    uv run mypy seam/resources --disable-error-code=arg-type --disable-error-code=import-not-found
+    uv run mypy seam test
 
 @test:
     uv run pytest --cov=./seam
