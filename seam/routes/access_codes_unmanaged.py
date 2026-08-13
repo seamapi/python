@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import UnmanagedAccessCode
 
 
@@ -71,7 +72,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         *,
         device_id: str,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedAccessCode]:
@@ -253,7 +254,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         *,
         device_id: str,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedAccessCode]:

@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import AcsUser, AcsEntrance
 
 
@@ -103,7 +104,7 @@ class AbstractAcsUsers(abc.ABC):
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -231,7 +232,7 @@ class AbstractAcsUsers(abc.ABC):
     def update(
         self,
         *,
-        access_schedule: Optional[Dict[str, Any]] = None,
+        access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         email: Optional[str] = None,
@@ -444,7 +445,7 @@ class AcsUsers(AbstractAcsUsers):
         acs_system_id: Optional[str] = None,
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -691,7 +692,7 @@ class AcsUsers(AbstractAcsUsers):
     def update(
         self,
         *,
-        access_schedule: Optional[Dict[str, Any]] = None,
+        access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         email: Optional[str] = None,

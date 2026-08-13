@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import UnmanagedDevice
 
 
@@ -40,7 +41,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         device_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
         """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
@@ -156,7 +157,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         device_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
         """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.

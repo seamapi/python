@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from typing import Any, Dict, Optional
 from importlib.metadata import version
 import abc
@@ -12,6 +13,8 @@ from .exceptions import (
     SeamHttpInvalidInputError,
     SeamHttpUnauthorizedError,
 )
+from .null import replace_null
+from .url_search_params_serializer import serialize_url_search_params
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
@@ -102,6 +105,12 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         return self.request("DELETE", url, json=json, **kwargs)
 
     def request(self, method, url, *args, **kwargs) -> Any:
+        if isinstance(kwargs.get("params"), Mapping):
+            url = with_search_params(url, kwargs.pop("params"))
+
+        if "json" in kwargs:
+            kwargs["json"] = replace_null(kwargs["json"])
+
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)
@@ -140,6 +149,15 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
             raise SeamHttpInvalidInputError(error_details, status_code, request_id)
 
         raise SeamHttpApiError(error_details, status_code, request_id)
+
+
+def with_search_params(url: Any, params: Mapping[str, Any]) -> Any:
+    query = serialize_url_search_params(params)
+
+    if not query:
+        return url
+
+    return httpx.URL(url, query=query.encode())
 
 
 def is_api_error_response(response: Response) -> bool:

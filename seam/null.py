@@ -10,6 +10,7 @@ Since sending null is rarely intended and unsetting a value cannot be undone,
 Sending null is explicit and always spelled :data:`NULL`.
 """
 
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 
@@ -60,3 +61,27 @@ def is_null(value: Any) -> bool:
     :returns: Whether the value is the ``NULL`` sentinel"""
 
     return isinstance(value, Null)
+
+
+def replace_null(value: Any) -> Any:
+    """Returns a copy of a value with every :data:`NULL` sentinel replaced by ``None``.
+
+    The sentinel only distinguishes an explicit null from an omitted param
+    within this SDK. Once a request body is being serialized, the param is
+    known to be present, so the sentinel becomes the null that JSON has.
+
+    :param value: The value to copy
+    :type value: Any
+
+    :returns: The value with each ``NULL`` sentinel replaced by ``None``"""
+
+    if is_null(value):
+        return None
+
+    if isinstance(value, Mapping):
+        return {key: replace_null(item) for key, item in value.items()}
+
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        return [replace_null(item) for item in value]
+
+    return value

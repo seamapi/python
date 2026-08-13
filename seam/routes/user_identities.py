@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import (
     UserIdentity,
     InstantKey,
@@ -51,10 +52,10 @@ class AbstractUserIdentities(abc.ABC):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
         """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -137,7 +138,7 @@ class AbstractUserIdentities(abc.ABC):
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
@@ -229,10 +230,10 @@ class AbstractUserIdentities(abc.ABC):
         self,
         *,
         user_identity_id: str,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -312,10 +313,10 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
         """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -487,7 +488,7 @@ class UserIdentities(AbstractUserIdentities):
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
@@ -704,10 +705,10 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         user_identity_id: str,
-        email_address: Optional[str] = None,
-        full_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 

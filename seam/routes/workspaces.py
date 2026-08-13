@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import Workspace, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -14,7 +15,7 @@ class AbstractWorkspaces(abc.ABC):
         *,
         name: str,
         company_name: Optional[str] = None,
-        connect_partner_name: Optional[str] = None,
+        connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
@@ -116,7 +117,7 @@ class Workspaces(AbstractWorkspaces):
         *,
         name: str,
         company_name: Optional[str] = None,
-        connect_partner_name: Optional[str] = None,
+        connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,

@@ -23,6 +23,7 @@ export interface MethodLayoutContext {
   params: Array<{
     name: string
     type: string
+    isNullable: boolean
     description: string
     isDeprecated: boolean
     deprecationMessage: string
@@ -53,6 +54,7 @@ export interface RouteLayoutContext {
     module: string
   }>
   importResolveActionAttempt: boolean
+  importNull: boolean
   methods: MethodLayoutContext[]
 }
 
@@ -83,6 +85,7 @@ export const getMethodLayoutContext = (
   params: sortClassMethodParameters(method.parameters).map((parameter) => ({
     name: parameter.name,
     type: parameter.type,
+    isNullable: parameter.isNullable,
     description: parameter.description,
     isDeprecated: parameter.isDeprecated,
     deprecationMessage: parameter.deprecationMessage,
@@ -108,6 +111,10 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   const abstractClassName = `Abstract${cls.name}`
   const methods = cls.methods.map(getMethodLayoutContext)
 
+  const importNull = methods.some(({ params }) =>
+    params.some(({ isNullable }) => isNullable),
+  )
+
   return {
     className: cls.name,
     abstractClassName,
@@ -131,6 +138,7 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
       module: `${cls.namespace}_${identifier.namespace}`,
     })),
     importResolveActionAttempt,
+    importNull,
     methods,
   }
 }

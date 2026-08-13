@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -33,7 +34,7 @@ class AbstractActionAttempts(abc.ABC):
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
@@ -105,7 +106,7 @@ class ActionAttempts(AbstractActionAttempts):
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 

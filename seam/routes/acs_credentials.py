@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import AcsCredential, AcsEntrance
 
 
@@ -107,7 +108,7 @@ class AbstractAcsCredentials(abc.ABC):
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
@@ -382,7 +383,7 @@ class AcsCredentials(AbstractAcsCredentials):
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.

@@ -99,6 +99,7 @@ export const routes = (
         parameters: endpoint.request.parameters.map((parameter) => ({
           name: parameter.name,
           type: mapParameterToPythonType(parameter),
+          isNullable: parameter.isNullable,
           description: parameter.description,
           isDeprecated: parameter.isDeprecated,
           deprecationMessage: parameter.deprecationMessage,

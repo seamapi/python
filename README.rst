@@ -47,6 +47,8 @@ Contents
 
   * `Action Attempts`_
 
+  * `Setting a Param to Null`_
+
   * `Pagination`_
 
     * `Manually fetch pages with the next_page_cursor`_
@@ -279,6 +281,56 @@ For example:
       print("Could not unlock the door")
   except SeamActionAttemptTimeoutError as e:
       print("Door took too long to unlock")
+
+Setting a Param to Null
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The Seam API tells an omitted param apart from one explicitly set to null.
+In an update request, an omitted param leaves the current value unchanged,
+while a null param unsets it.
+
+Python has a single nil value `None` which represents an undefined parameter. This SDK provides an explicit null value to send in requests.
+A param set to ``None`` is omitted, and a param set to ``NULL`` is sent as `null`:
+
+.. code-block:: python
+
+  from seam import NULL, Seam
+
+  seam = Seam()
+
+  # Leaves the name unchanged.
+  seam.devices.update(device_id="your-device-id", name=None)
+
+  # Unsets the name.
+  seam.devices.update(device_id="your-device-id", name=NULL)
+
+Because unsetting a value cannot be undone, ``None`` means the safe option of
+omitting the param, and sending null is always explicit.
+This is why a param is never sent as null by default,
+even though ``None`` is the natural way to spell null in Python.
+
+``NULL`` behaves the same way in a request body and in a URL search param.
+Its type is exported as ``Null`` for annotating your own code:
+
+.. code-block:: python
+
+  from typing import Optional, Union
+
+  from seam import NULL, Null
+
+  name: Optional[Union[str, Null]] = NULL
+
+Only params the Seam API documents as nullable accept ``NULL``.
+The generated method signatures say which ones those are,
+so a type checker rejects ``NULL`` anywhere else:
+
+.. code-block:: python
+
+  # name is nullable, so it may be unset.
+  seam.devices.update(device_id="your-device-id", name=NULL)
+
+  # is_managed is not, so this fails the type check.
+  seam.devices.update(device_id="your-device-id", is_managed=NULL)
 
 Pagination
 ~~~~~~~~~~
@@ -562,8 +614,9 @@ A client may percent-encode a few characters differently than
 ``URLSearchParams`` does, e.g. httpx escapes ``*`` and unescapes ``~``,
 which the Seam API reads as the same params either way.
 
-A param set to ``None`` is omitted, while a param set to ``seam.NULL``
-is serialized to an empty value, which the Seam API reads as null.
+A param set to ``None`` is omitted, while a param set to ``NULL``
+is serialized to an empty value, which the Seam API reads as null,
+as described in `Setting a Param to Null`_.
 A param that cannot be represented raises a ``seam.UnserializableParamError``.
 
 The Seam API parses these params with the corresponding `parser`_.

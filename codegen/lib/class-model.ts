@@ -4,6 +4,7 @@
 export interface ClassMethodParameter {
   name: string
   type: string
+  isNullable: boolean
   description: string
   isDeprecated: boolean
   deprecationMessage: string
