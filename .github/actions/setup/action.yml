@@ -7,10 +7,6 @@ inputs:
     description: The Python version.
     required: false
     default: '3.12'
-  uv_version:
-    description: The uv version.
-    required: false
-    default: '0.8.17'
   just_version:
     description: The just version.
     required: false
@@ -30,7 +26,6 @@ runs:
     - name: Setup uv
       uses: astral-sh/setup-uv@v7
       with:
-        version: ${{ inputs.uv_version }}
         python-version: ${{ inputs.python_version }}
         enable-cache: true
     - name: Check lockfile
