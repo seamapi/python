@@ -146,6 +146,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         }
 
         if error_type == "invalid_input":
+            error_details["validation_errors"] = error.get("validation_errors")
             raise SeamHttpInvalidInputError(error_details, status_code, request_id)
 
         raise SeamHttpApiError(error_details, status_code, request_id)

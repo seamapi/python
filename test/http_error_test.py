@@ -45,6 +45,20 @@ def test_seam_http_throws_invalid_input_error(server):
     assert err.status_code == 400
     assert err.code == "invalid_input"
     assert err.request_id.startswith("request")
+    assert err.get_validation_error_messages("device_ids") == [
+        "Expected array, received number"
+    ]
+
+
+def test_seam_http_invalid_input_error_has_no_messages_for_unknown_param(server):
+    endpoint, seed = server
+
+    seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
+
+    with pytest.raises(SeamHttpInvalidInputError) as exc_info:
+        seam.devices.list(device_ids=4242)
+
+    assert exc_info.value.get_validation_error_messages("non_existent_param") == []
 
 
 def test_seam_http_throws_http_error_on_non_standard_response(server):
