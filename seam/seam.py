@@ -1,6 +1,6 @@
 from typing import Any, Optional, Union, Dict, Callable
 from typing_extensions import Self
-from urllib3.util.retry import Retry
+from httpx_retries import Retry
 
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
 from .parse_options import parse_options
@@ -43,7 +43,7 @@ class Seam(AbstractSeam):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
     ):
         """Initialize a Seam client instance.
 
@@ -71,13 +71,13 @@ class Seam(AbstractSeam):
             'timeout' and 'poll_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
-        :type retries: Optional[urllib3.util.Retry]
+        :type retries: Optional[httpx_retries.Retry]
         :param timeout: The request timeout in seconds. Defaults to 30
             seconds. Pass None for no timeout
         :type timeout: Optional[float]
-        :param niquests_options: Options passed through to the underlying
-            niquests Session, for control the other options do not cover
-        :type niquests_options: Optional[Dict[str, Any]]
+        :param httpx_options: Options passed through to the underlying
+            httpx Client, for control the other options do not cover
+        :type httpx_options: Optional[Dict[str, Any]]
 
         :raises SeamInvalidOptionsError: If neither api_key nor
             personal_access_token is provided, or if workspace_id is missing
@@ -101,7 +101,7 @@ class Seam(AbstractSeam):
             auth_headers=auth_headers,
             retries=retries,
             timeout=timeout,
-            niquests_options=niquests_options,
+            httpx_options=httpx_options,
         )
 
         # Seam and Routes are siblings under AbstractRoutes rather than parent
@@ -143,7 +143,7 @@ class Seam(AbstractSeam):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
     ) -> Self:
         """Create a Seam instance using an API key.
 
@@ -173,7 +173,7 @@ class Seam(AbstractSeam):
             wait_for_action_attempt=wait_for_action_attempt,
             retries=retries,
             timeout=timeout,
-            niquests_options=niquests_options,
+            httpx_options=httpx_options,
         )
 
     @classmethod
@@ -186,7 +186,7 @@ class Seam(AbstractSeam):
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
         retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
-        niquests_options: Optional[Dict[str, Any]] = None,
+        httpx_options: Optional[Dict[str, Any]] = None,
     ) -> Self:
         """Create a Seam instance using a personal access token.
 
@@ -220,5 +220,5 @@ class Seam(AbstractSeam):
             wait_for_action_attempt=wait_for_action_attempt,
             retries=retries,
             timeout=timeout,
-            niquests_options=niquests_options,
+            httpx_options=httpx_options,
         )

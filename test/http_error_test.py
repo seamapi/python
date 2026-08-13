@@ -1,5 +1,5 @@
 import pytest
-import niquests
+from httpx import HTTPStatusError
 from seam import Seam
 from seam.exceptions import (
     SeamHttpApiError,
@@ -56,7 +56,7 @@ def test_seam_http_throws_http_error_on_non_standard_response(server):
         json={"workspace_id": seed["seed_workspace_1"], "routes": ["/devices/list"]},
     )
 
-    with pytest.raises(niquests.HTTPError) as exc_info:
+    with pytest.raises(HTTPStatusError) as exc_info:
         seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -69,7 +69,7 @@ def test_seam_http_raises_http_error_on_non_json_response(recording_server):
     with recording_server([(500, "Internal Server Error")]) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 500
@@ -81,7 +81,7 @@ def test_seam_http_raises_http_error_on_malformed_json(recording_server):
     with recording_server(responses) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 500
@@ -91,7 +91,7 @@ def test_seam_http_raises_http_error_on_json_without_error_object(recording_serv
     with recording_server([(500, {"message": "Some error"})]) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 500
@@ -103,7 +103,7 @@ def test_seam_http_raises_http_error_on_error_object_without_type_and_message(
     with recording_server([(500, {"error": {"code": 500}})]) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
 
-        with pytest.raises(niquests.HTTPError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 500
