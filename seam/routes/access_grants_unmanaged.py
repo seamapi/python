@@ -77,7 +77,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param access_grant_id: ID of unmanaged Access Grant to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
@@ -111,7 +111,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param user_identity_id: ID of user identity by which you want to filter the list of unmanaged Access Grants.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
@@ -149,7 +149,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id

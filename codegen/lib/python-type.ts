@@ -21,7 +21,23 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
   return mapScalarFormatToPythonType(parameter.format)
 }
 
+// from_dict reads every property with dict.get, so a property the API may omit
+// or send as null arrives as None. Declaring those fields Optional keeps the
+// dataclass honest about what a caller can actually find on it.
 export const mapPropertyToPythonType = (
+  property: Property,
+  nestedClassName?: string,
+  isOptional = false,
+): string => {
+  const type = mapRequiredPropertyToPythonType(property, nestedClassName)
+  return isOptional || property.isOptional || property.isNullable
+    ? `Optional[${type}]`
+    : type
+}
+
+// The type a property has before optionality is taken into account. Callers
+// that match on the shape of the type, rather than render it, want this one.
+export const mapRequiredPropertyToPythonType = (
   property: Property,
   nestedClassName?: string,
 ): string => {

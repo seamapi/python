@@ -6,7 +6,10 @@ import type { Blueprint, Property } from '@seamapi/blueprint'
 import { pascalCase, snakeCase } from 'change-case'
 
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
-import { mapPropertyToPythonType } from '../python-type.js'
+import {
+  mapPropertyToPythonType,
+  mapRequiredPropertyToPythonType,
+} from '../python-type.js'
 
 export interface ResourceLayoutContext extends ResourceClassLayoutContext {
   moduleName: string
@@ -144,6 +147,9 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
   return { ...first, ...docs }
 }
 
+const withOptionality = (property: Property, isOptional: boolean): Property =>
+  isOptional ? { ...property, isOptional: true } : property
+
 const mergePropertyLists = (
   propertyLists: Property[][],
   path = '',
@@ -161,7 +167,13 @@ const mergePropertyLists = (
   }
 
   return [...occurrences.entries()].map(([name, group]) =>
-    mergeOccurrences(group, path === '' ? name : `${path}.${name}`),
+    // A property only some variants carry is absent whenever the merged
+    // dataclass holds one of the variants that omits it, so it is optional on
+    // the merged shape no matter how each variant declares it.
+    withOptionality(
+      mergeOccurrences(group, path === '' ? name : `${path}.${name}`),
+      group.length < propertyLists.length,
+    ),
   )
 }
 
@@ -249,7 +261,17 @@ const buildClass = (
       )
     }
 
-    const type = mapPropertyToPythonType(property, nestedClassName)
+    const isObject = nestedClassName != null && property.format === 'object'
+    // A nested object is read as None whenever the payload omits it, and the
+    // schema is not a reliable guide to when that happens: an action attempt
+    // documents both error and result as required, yet a pending one carries
+    // neither. Constructing them unconditionally would fail on those payloads,
+    // so from_dict keeps its None fallback and the field stays Optional.
+    const type = mapPropertyToPythonType(property, nestedClassName, isObject)
+    const requiredType = mapRequiredPropertyToPythonType(
+      property,
+      nestedClassName,
+    )
     return {
       name: property.name,
       description: property.description,
@@ -259,8 +281,8 @@ const buildClass = (
       // Nested classes are attributes of the class that owns them, so
       // from_dict reaches them through cls rather than a qualified path.
       nestedClassName: nestedClassName ?? '',
-      isDictParam: type.startsWith('Dict'),
-      isObject: nestedClassName != null && property.format === 'object',
+      isDictParam: requiredType.startsWith('Dict'),
+      isObject,
       isObjectList: nestedClassName != null && property.format === 'list',
     }
   })

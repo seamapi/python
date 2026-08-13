@@ -458,7 +458,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -500,7 +500,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -565,7 +565,7 @@ class Thermostats(AbstractThermostats):
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -603,7 +603,7 @@ class Thermostats(AbstractThermostats):
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -633,7 +633,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -681,7 +681,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -763,7 +763,7 @@ class Thermostats(AbstractThermostats):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -815,7 +815,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -843,7 +843,7 @@ class Thermostats(AbstractThermostats):
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -873,7 +873,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -924,7 +924,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -974,7 +974,7 @@ class Thermostats(AbstractThermostats):
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -1033,7 +1033,7 @@ class Thermostats(AbstractThermostats):
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -1098,7 +1098,7 @@ class Thermostats(AbstractThermostats):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

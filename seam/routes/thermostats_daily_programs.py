@@ -70,7 +70,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :param periods: Array of thermostat daily program periods.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -88,7 +88,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
@@ -116,7 +116,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if name is not None:
             json_payload["name"] = name

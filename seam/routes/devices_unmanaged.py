@@ -123,7 +123,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param name: Name of the unmanaged device that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -191,7 +191,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -247,7 +247,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

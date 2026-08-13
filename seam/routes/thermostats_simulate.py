@@ -80,7 +80,7 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
 
         :param heating_set_point_fahrenheit: Heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to simulate. You must set ``heating_set_point_fahrenheit`` or ``heating_set_point_celsius``.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -114,7 +114,7 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
 
         :param temperature_fahrenheit: Temperature in °F that you want simulate the thermostat reaching. You must set ``temperature_fahrenheit`` or ``temperature_celsius``.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

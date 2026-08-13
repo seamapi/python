@@ -169,7 +169,7 @@ class Devices(AbstractDevices):
         :param name: Name of the device that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -235,7 +235,7 @@ class Devices(AbstractDevices):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -286,7 +286,7 @@ class Devices(AbstractDevices):
         :param provider_category: Category for which you want to list providers.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if provider_category is not None:
             json_payload["provider_category"] = provider_category
@@ -299,7 +299,7 @@ class Devices(AbstractDevices):
         """Updates provider-specific metadata for devices.
 
         :param devices: Array of devices with provider metadata to update"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if devices is not None:
             json_payload["devices"] = devices
@@ -333,7 +333,7 @@ class Devices(AbstractDevices):
         :param name: Name for the device.
 
         :param properties:"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

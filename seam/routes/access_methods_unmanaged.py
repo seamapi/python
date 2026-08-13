@@ -49,7 +49,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :param access_method_id: ID of unmanaged access method to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
@@ -77,7 +77,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id

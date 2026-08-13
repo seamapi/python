@@ -126,7 +126,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param connected_account_id: ID of the connected account that you want to delete.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -145,7 +145,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param email: Email address associated with the connected account that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -184,7 +184,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param user_identifier_key: Your user ID for the user by which you want to filter connected accounts.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has
@@ -210,7 +210,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param connected_account_id: ID of the connected account that you want to sync.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -243,7 +243,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id

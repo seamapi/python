@@ -189,7 +189,7 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param user_identity_id: ID of the user identity to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the credential belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
@@ -248,7 +248,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :param visionline_metadata: Visionline-specific metadata for the new credential.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_method is not None:
             json_payload["access_method"] = access_method
@@ -289,7 +289,7 @@ class AcsCredentials(AbstractAcsCredentials):
         """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
@@ -304,7 +304,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
@@ -344,7 +344,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
@@ -375,7 +375,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
@@ -401,7 +401,7 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param user_identity_id: ID of the user identity from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
@@ -429,7 +429,7 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param ends_at: Replacement date and time at which the validity of the credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after the ``starts_at`` value that you set when creating the credential.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id

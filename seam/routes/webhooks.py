@@ -63,7 +63,7 @@ class Webhooks(AbstractWebhooks):
         :param event_types: Types of events that you want the new webhook to receive.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if url is not None:
             json_payload["url"] = url
@@ -78,7 +78,7 @@ class Webhooks(AbstractWebhooks):
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
@@ -93,7 +93,7 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
@@ -106,7 +106,7 @@ class Webhooks(AbstractWebhooks):
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         res = self.client.post("/webhooks/list", json=json_payload)
 
@@ -118,7 +118,7 @@ class Webhooks(AbstractWebhooks):
         :param event_types: Types of events that you want the webhook to receive.
 
         :param webhook_id: ID of the webhook that you want to update."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if event_types is not None:
             json_payload["event_types"] = event_types

@@ -1,6 +1,6 @@
-from typing import Callable, Dict, Any, Tuple, Generator, List
+from typing import Callable, Dict, Any, Optional, Tuple, Generator, List, Union
 from .client import SeamHttpClient
-from niquests import Response, JSONDecodeError
+from niquests import PreparedRequest, Response, JSONDecodeError
 from .pagination import Pagination
 
 
@@ -17,7 +17,7 @@ class SeamPaginator:
         self,
         client: SeamHttpClient,
         request: Callable,
-        params: Dict[str, Any] = None,
+        params: Optional[Dict[str, Any]] = None,
     ):
         """
         Initializes the Paginator.
@@ -74,7 +74,7 @@ class SeamPaginator:
         if current_items:
             all_items.extend(current_items)
 
-        while pagination.has_next_page:
+        while pagination and pagination.has_next_page and pagination.next_page_cursor:
             current_items, pagination = self.next_page(pagination.next_page_cursor)
             if current_items:
                 all_items.extend(current_items)
@@ -92,8 +92,13 @@ class SeamPaginator:
             if current_items:
                 yield from current_items
 
-    def _cache_pagination(self, response: Response, page_key: str) -> None:
+    def _cache_pagination(
+        self, response: Union[PreparedRequest, Response], page_key: str
+    ) -> None:
         """Extracts pagination dict from response, creates Pagination object, and caches it."""
+        if not isinstance(response, Response):
+            return
+
         try:
             response_json = response.json()
             pagination = response_json.get("pagination", {})

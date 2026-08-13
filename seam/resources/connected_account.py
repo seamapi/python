@@ -81,13 +81,16 @@ class ConnectedAccount:
                 :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has an error.
                 """
 
-                site_id: str
-                site_name: str
-                site_user_subscription_limit: int
-                subscribed_site_user_count: int
+                site_id: Optional[str]
+                site_name: Optional[str]
+                site_user_subscription_limit: Optional[int]
+                subscribed_site_user_count: Optional[int]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
@@ -99,23 +102,29 @@ class ConnectedAccount:
                         ),
                     )
 
-            sites: List[Sites]
+            sites: Optional[List[Sites]]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     sites=[cls.Sites.from_dict(i) for i in d.get("sites") or []],
                 )
 
         created_at: str
         error_code: str
-        is_bridge_error: bool
-        is_connected_account_error: bool
+        is_bridge_error: Optional[bool]
+        is_connected_account_error: Optional[bool]
         message: str
-        salto_ks_metadata: SaltoKsMetadata
+        salto_ks_metadata: Optional[SaltoKsMetadata]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -144,14 +153,17 @@ class ConnectedAccount:
         :ivar username: Username of the user identifier associated with the connected account.
         """
 
-        api_url: str
-        email: str
-        exclusive: bool
-        phone: str
-        username: str
+        api_url: Optional[str]
+        email: Optional[str]
+        exclusive: Optional[bool]
+        phone: Optional[str]
+        username: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 api_url=d.get("api_url", None),
                 email=d.get("email", None),
@@ -193,13 +205,16 @@ class ConnectedAccount:
                 :ivar subscribed_site_user_count: Count of subscribed site users for a Salto site associated with the connected account that has a warning.
                 """
 
-                site_id: str
-                site_name: str
-                site_user_subscription_limit: int
-                subscribed_site_user_count: int
+                site_id: Optional[str]
+                site_name: Optional[str]
+                site_user_subscription_limit: Optional[int]
+                subscribed_site_user_count: Optional[int]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
@@ -211,10 +226,13 @@ class ConnectedAccount:
                         ),
                     )
 
-            sites: List[Sites]
+            sites: Optional[List[Sites]]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     sites=[cls.Sites.from_dict(i) for i in d.get("sites") or []],
                 )
@@ -222,10 +240,13 @@ class ConnectedAccount:
         created_at: str
         message: str
         warning_code: str
-        salto_ks_metadata: SaltoKsMetadata
+        salto_ks_metadata: Optional[SaltoKsMetadata]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -238,26 +259,29 @@ class ConnectedAccount:
             )
 
     accepted_capabilities: List[str]
-    account_type: str
+    account_type: Optional[str]
     account_type_display_name: str
     automatically_manage_new_devices: bool
     connected_account_id: str
-    created_at: str
+    created_at: Optional[str]
     custom_metadata: Dict[str, Any]
-    customer_key: str
-    default_checkin_time: str
-    default_checkout_time: str
+    customer_key: Optional[str]
+    default_checkin_time: Optional[str]
+    default_checkout_time: Optional[str]
     display_name: str
     errors: List[Errors]
-    ical_feed_origin: str
-    ical_url: str
-    image_url: str
-    time_zone: str
-    user_identifier: UserIdentifier
+    ical_feed_origin: Optional[str]
+    ical_url: Optional[str]
+    image_url: Optional[str]
+    time_zone: Optional[str]
+    user_identifier: Optional[UserIdentifier]
     warnings: List[Warnings]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             accepted_capabilities=d.get("accepted_capabilities", None),
             account_type=d.get("account_type", None),

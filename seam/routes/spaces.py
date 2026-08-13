@@ -206,7 +206,7 @@ class Spaces(AbstractSpaces):
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add entrances."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
             json_payload["acs_entrance_ids"] = acs_entrance_ids
@@ -226,7 +226,7 @@ class Spaces(AbstractSpaces):
 
         :param space_id: ID of the space to which you want to add the connected account.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -243,7 +243,7 @@ class Spaces(AbstractSpaces):
         :param device_ids: IDs of the devices that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add devices."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
@@ -282,7 +282,7 @@ class Spaces(AbstractSpaces):
         :param space_key: Unique key for the space within the workspace.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if name is not None:
             json_payload["name"] = name
@@ -307,7 +307,7 @@ class Spaces(AbstractSpaces):
         """Deletes a space.
 
         :param space_id: ID of the space that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if space_id is not None:
             json_payload["space_id"] = space_id
@@ -326,7 +326,7 @@ class Spaces(AbstractSpaces):
         :param space_key: Unique key of the space that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if space_id is not None:
             json_payload["space_id"] = space_id
@@ -356,7 +356,7 @@ class Spaces(AbstractSpaces):
         :param space_keys: Keys of the spaces that you want to get along with their related resources.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if exclude is not None:
             json_payload["exclude"] = exclude
@@ -393,7 +393,7 @@ class Spaces(AbstractSpaces):
         :param space_key: Filter spaces by space_key.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
@@ -418,7 +418,7 @@ class Spaces(AbstractSpaces):
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove entrances."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
             json_payload["acs_entrance_ids"] = acs_entrance_ids
@@ -438,7 +438,7 @@ class Spaces(AbstractSpaces):
 
         :param space_id: ID of the space from which you want to remove the connected account.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -455,7 +455,7 @@ class Spaces(AbstractSpaces):
         :param device_ids: IDs of the devices that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove devices."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
@@ -491,7 +491,7 @@ class Spaces(AbstractSpaces):
         :param space_key: Unique key of the space that you want to update.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
             json_payload["acs_entrance_ids"] = acs_entrance_ids

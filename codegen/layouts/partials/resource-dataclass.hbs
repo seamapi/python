@@ -15,8 +15,11 @@
 {{../memberIndent}}{{pythonIdentifier name}}: {{type}}
 {{/each}}
 
+{{memberIndent}}# The payload is decoded JSON, so every value read out of it is untyped.
+{{memberIndent}}# Typing d as Any keeps that at this boundary instead of casting each
+{{memberIndent}}# read, and the dataclass fields carry the real types.
 {{memberIndent}}@classmethod
-{{memberIndent}}def from_dict(cls, d: Dict[str, Any]):
+{{memberIndent}}def from_dict(cls, d: Any):
 {{#unless properties}}
 {{memberIndent}}    # This shape documents no properties, so there is nothing to read.
 {{memberIndent}}    # pylint: disable=unused-argument

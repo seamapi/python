@@ -121,7 +121,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -138,7 +138,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -153,7 +153,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -181,7 +181,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access groups.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -204,7 +204,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -221,7 +221,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -245,7 +245,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id

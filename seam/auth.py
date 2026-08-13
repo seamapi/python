@@ -43,15 +43,18 @@ def get_auth_headers(
         api_key=api_key,
         personal_access_token=personal_access_token,
     ):
-        return get_auth_headers_for_api_key(api_key)
+        # The guard returns True only for a non-None api_key, which is not
+        # something the type checker can see through the call.
+        return get_auth_headers_for_api_key(api_key)  # type: ignore[arg-type]
 
     if is_seam_options_with_personal_access_token(
         personal_access_token=personal_access_token,
         api_key=api_key,
         workspace_id=workspace_id,
     ):
+        # Likewise, the guard raises unless both of these are set.
         return get_auth_headers_for_personal_access_token(
-            personal_access_token, workspace_id
+            personal_access_token, workspace_id  # type: ignore[arg-type]
         )
 
     raise SeamInvalidOptionsError(

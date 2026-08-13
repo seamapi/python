@@ -258,7 +258,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
@@ -293,7 +293,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_key: Unique key for the new user identity.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
@@ -314,7 +314,7 @@ class UserIdentities(AbstractUserIdentities):
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -339,7 +339,7 @@ class UserIdentities(AbstractUserIdentities):
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -367,7 +367,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_key:
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -385,7 +385,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -421,7 +421,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_ids: Array of user identity IDs by which to filter the list of user identities.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if created_before is not None:
             json_payload["created_before"] = created_before
@@ -448,7 +448,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -465,7 +465,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -482,7 +482,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -497,7 +497,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -513,7 +513,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
@@ -531,7 +531,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -562,7 +562,7 @@ class UserIdentities(AbstractUserIdentities):
         :param phone_number: Unique phone number for the user identity.
 
         :param user_identity_key: Unique key for the user identity."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id

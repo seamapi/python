@@ -72,17 +72,20 @@ class UnmanagedAccessCode:
         :ivar user_level_name: Dormakaba Oracode user level name associated with this access code.
         """
 
-        is_cancellable: bool
-        is_early_checkin_able: bool
-        is_extendable: bool
-        is_overridable: bool
-        site_name: str
-        stay_id: float
-        user_level_id: str
-        user_level_name: str
+        is_cancellable: Optional[bool]
+        is_early_checkin_able: Optional[bool]
+        is_extendable: Optional[bool]
+        is_overridable: Optional[bool]
+        site_name: Optional[str]
+        stay_id: Optional[float]
+        user_level_id: Optional[str]
+        user_level_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 is_cancellable=d.get("is_cancellable", None),
                 is_early_checkin_able=d.get("is_early_checkin_able", None),
@@ -132,31 +135,37 @@ class UnmanagedAccessCode:
             :ivar to: The new value of the field."""
 
             field: str
-            from_: str
-            to: str
+            from_: Optional[str]
+            to: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     field=d.get("field", None),
                     from_=d.get("from", None),
                     to=d.get("to", None),
                 )
 
-        created_at: str
+        created_at: Optional[str]
         error_code: str
-        is_access_code_error: bool
+        is_access_code_error: Optional[bool]
         message: str
-        managed_access_code_id: str
-        unmanaged_access_code_id: str
-        change_type: str
-        modified_fields: List[ModifiedFields]
-        is_connected_account_error: bool
-        is_device_error: bool
-        is_bridge_error: bool
+        managed_access_code_id: Optional[str]
+        unmanaged_access_code_id: Optional[str]
+        change_type: Optional[str]
+        modified_fields: Optional[List[ModifiedFields]]
+        is_connected_account_error: Optional[bool]
+        is_device_error: Optional[bool]
+        is_bridge_error: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -200,25 +209,31 @@ class UnmanagedAccessCode:
             :ivar to: The new value of the field."""
 
             field: str
-            from_: str
-            to: str
+            from_: Optional[str]
+            to: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     field=d.get("field", None),
                     from_=d.get("from", None),
                     to=d.get("to", None),
                 )
 
-        created_at: str
+        created_at: Optional[str]
         message: str
         warning_code: str
-        change_type: str
-        modified_fields: List[ModifiedFields]
+        change_type: Optional[str]
+        modified_fields: Optional[List[ModifiedFields]]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -231,24 +246,27 @@ class UnmanagedAccessCode:
             )
 
     access_code_id: str
-    cannot_be_managed: bool
-    cannot_delete_unmanaged_access_code: bool
-    code: str
+    cannot_be_managed: Optional[bool]
+    cannot_delete_unmanaged_access_code: Optional[bool]
+    code: Optional[str]
     created_at: str
     device_id: str
-    dormakaba_oracode_metadata: DormakabaOracodeMetadata
-    ends_at: str
+    dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
+    ends_at: Optional[str]
     errors: List[Errors]
     is_managed: bool
-    name: str
-    starts_at: str
+    name: Optional[str]
+    starts_at: Optional[str]
     status: str
     type: str
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             access_code_id=d.get("access_code_id", None),
             cannot_be_managed=d.get("cannot_be_managed", None),

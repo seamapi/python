@@ -43,14 +43,17 @@ class Workspace:
         :ivar success_message: Success message for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
         """
 
-        inviter_logo_url: str
-        logo_shape: str
-        primary_button_color: str
-        primary_button_text_color: str
-        success_message: str
+        inviter_logo_url: Optional[str]
+        logo_shape: Optional[str]
+        primary_button_color: Optional[str]
+        primary_button_text_color: Optional[str]
+        success_message: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 inviter_logo_url=d.get("inviter_logo_url", None),
                 logo_shape=d.get("logo_shape", None),
@@ -60,18 +63,21 @@ class Workspace:
             )
 
     company_name: str
-    connect_partner_name: str
-    connect_webview_customization: ConnectWebviewCustomization
+    connect_partner_name: Optional[str]
+    connect_webview_customization: Optional[ConnectWebviewCustomization]
     is_publishable_key_auth_enabled: bool
     is_sandbox: bool
     is_suspended: bool
     name: str
-    organization_id: str
-    publishable_key: str
+    organization_id: Optional[str]
+    publishable_key: Optional[str]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),

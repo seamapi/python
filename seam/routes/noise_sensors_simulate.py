@@ -24,7 +24,7 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
 
         :param device_id: ID of the device for which you want to simulate the triggering of a noise threshold.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

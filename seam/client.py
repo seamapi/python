@@ -40,7 +40,7 @@ class AbstractSeamHttpClient(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _handle_error_response(self, response: requests.Response):
+    def _handle_error_response(self, response: requests.Response, status_code: int):
         raise NotImplementedError
 
 
@@ -74,7 +74,19 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         headers = {**auth_headers, **custom_headers, **SDK_HEADERS}
         self.headers.update(headers)
 
-    def request(self, method, url, *args, **kwargs):
+    # request returns the decoded body rather than the Response that
+    # niquests.Session promises, so the verb helpers routed through it have to
+    # say so too. Without these overrides callers see the inherited Response
+    # type and indexing the returned payload does not type check.
+    def get(self, url, **kwargs) -> Any:
+        return self.request("GET", url, **kwargs)
+
+    # data and json are named rather than collected into *args because
+    # Session.request takes params in the position Session.post gives data.
+    def post(self, url, data=None, json=None, **kwargs) -> Any:
+        return self.request("POST", url, data=data, json=json, **kwargs)
+
+    def request(self, method, url, *args, **kwargs) -> Any:
         url = urljoin(self.base_url, url)
 
         if kwargs.get("timeout", NIQUESTS_TIMEOUT_DEFAULT) == NIQUESTS_TIMEOUT_DEFAULT:
@@ -85,16 +97,22 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         return self._handle_response(response)
 
     def _handle_response(self, response: requests.Response):
-        if not 200 <= response.status_code < 300:
-            self._handle_error_response(response)
+        # niquests types status_code as optional because a Response exists
+        # before it has one. Anything reaching here has been received, so a
+        # missing status is an error the SDK cannot classify itself.
+        status_code = response.status_code
+
+        if status_code is None:
+            response.raise_for_status()
+        elif not 200 <= status_code < 300:
+            self._handle_error_response(response, status_code)
 
         if "application/json" in response.headers.get("content-type", ""):
             return response.json()
 
         return response.text
 
-    def _handle_error_response(self, response: requests.Response):
-        status_code = response.status_code
+    def _handle_error_response(self, response: requests.Response, status_code: int):
         request_id = response.headers.get("seam-request-id")
 
         if status_code == 401:

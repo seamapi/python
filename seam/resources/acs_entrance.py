@@ -81,23 +81,29 @@ class AcsEntrance:
 
             :ivar name: Name of the gadget action."""
 
-            id: str
-            name: str
+            id: Optional[str]
+            name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     id=d.get("id", None),
                     name=d.get("name", None),
                 )
 
-        actions: List[Actions]
-        gadget_id: str
-        site_id: str
-        site_name: str
+        actions: Optional[List[Actions]]
+        gadget_id: Optional[str]
+        site_id: Optional[str]
+        site_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 actions=[cls.Actions.from_dict(i) for i in d.get("actions") or []],
                 gadget_id=d.get("gadget_id", None),
@@ -120,14 +126,17 @@ class AcsEntrance:
         :ivar stand_open: Indicates whether keys are allowed to set the door in stand open mode in the Vostio access system.
         """
 
-        door_name: str
-        door_number: float
-        door_type: str
-        pms_id: str
-        stand_open: bool
+        door_name: Optional[str]
+        door_number: Optional[float]
+        door_type: Optional[str]
+        pms_id: Optional[str]
+        stand_open: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 door_name=d.get("door_name", None),
                 door_number=d.get("door_number", None),
@@ -154,16 +163,19 @@ class AcsEntrance:
 
         :ivar zone_name: Zone name for an Avigilon Alta system."""
 
-        entry_name: str
-        entry_relays_total_count: float
-        org_name: str
-        site_id: float
-        site_name: str
-        zone_id: float
-        zone_name: str
+        entry_name: Optional[str]
+        entry_relays_total_count: Optional[float]
+        org_name: Optional[str]
+        site_id: Optional[float]
+        site_name: Optional[str]
+        zone_id: Optional[float]
+        zone_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 entry_name=d.get("entry_name", None),
                 entry_relays_total_count=d.get("entry_relays_total_count", None),
@@ -184,12 +196,15 @@ class AcsEntrance:
 
         :ivar site_name: Name of the site that the access point belongs to."""
 
-        access_point_id: str
-        site_id: float
-        site_name: str
+        access_point_id: Optional[str]
+        site_id: Optional[float]
+        site_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 access_point_id=d.get("access_point_id", None),
                 site_id=d.get("site_id", None),
@@ -203,10 +218,13 @@ class AcsEntrance:
         :ivar access_point_name: Name of the access point in the dormakaba Ambiance access system.
         """
 
-        access_point_name: str
+        access_point_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 access_point_name=d.get("access_point_name", None),
             )
@@ -218,10 +236,13 @@ class AcsEntrance:
         :ivar access_point_profile: Type of access point profile in the dormakaba Community access system.
         """
 
-        access_point_profile: str
+        access_point_profile: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 access_point_profile=d.get("access_point_profile", None),
             )
@@ -241,8 +262,11 @@ class AcsEntrance:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -259,12 +283,15 @@ class AcsEntrance:
 
         :ivar room_number: Room number of the entrance."""
 
-        common_area_name: str
-        common_area_number: str
-        room_number: str
+        common_area_name: Optional[str]
+        common_area_number: Optional[str]
+        room_number: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 common_area_name=d.get("common_area_name", None),
                 common_area_number=d.get("common_area_number", None),
@@ -283,13 +310,16 @@ class AcsEntrance:
 
         :ivar is_connected: Indicates whether the entrance is connected."""
 
-        accessibility_type: str
-        door_name: str
-        door_type: str
-        is_connected: bool
+        accessibility_type: Optional[str]
+        door_name: Optional[str]
+        door_type: Optional[str]
+        is_connected: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 accessibility_type=d.get("accessibility_type", None),
                 door_name=d.get("door_name", None),
@@ -317,17 +347,20 @@ class AcsEntrance:
 
         :ivar privacy_mode: Indicates whether privacy mode is enabled for the lock."""
 
-        battery_level: str
-        door_name: str
-        intrusion_alarm: bool
-        left_open_alarm: bool
-        lock_type: str
-        locked_state: str
-        online: bool
-        privacy_mode: bool
+        battery_level: Optional[str]
+        door_name: Optional[str]
+        intrusion_alarm: Optional[bool]
+        left_open_alarm: Optional[bool]
+        lock_type: Optional[str]
+        locked_state: Optional[str]
+        online: Optional[bool]
+        privacy_mode: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 battery_level=d.get("battery_level", None),
                 door_name=d.get("door_name", None),
@@ -355,15 +388,18 @@ class AcsEntrance:
 
         :ivar room_name: Name of the room in the Salto Space access system."""
 
-        audit_on_keys: bool
-        door_description: str
-        door_id: str
-        door_name: str
-        room_description: str
-        room_name: str
+        audit_on_keys: Optional[bool]
+        door_description: Optional[str]
+        door_id: Optional[str]
+        door_name: Optional[str]
+        room_description: Optional[str]
+        room_name: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 audit_on_keys=d.get("audit_on_keys", None),
                 door_description=d.get("door_description", None),
@@ -392,11 +428,14 @@ class AcsEntrance:
             :ivar visionline_door_profile_type: Door profile type in the Visionline access system.
             """
 
-            visionline_door_profile_id: str
-            visionline_door_profile_type: str
+            visionline_door_profile_id: Optional[str]
+            visionline_door_profile_type: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     visionline_door_profile_id=d.get(
                         "visionline_door_profile_id", None
@@ -406,12 +445,15 @@ class AcsEntrance:
                     ),
                 )
 
-        door_category: str
-        door_name: str
-        profiles: List[Profiles]
+        door_category: Optional[str]
+        door_name: Optional[str]
+        profiles: Optional[List[Profiles]]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 door_category=d.get("door_category", None),
                 door_name=d.get("door_name", None),
@@ -433,8 +475,11 @@ class AcsEntrance:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -443,32 +488,35 @@ class AcsEntrance:
 
     acs_entrance_id: str
     acs_system_id: str
-    akiles_metadata: AkilesMetadata
-    assa_abloy_vostio_metadata: AssaAbloyVostioMetadata
-    avigilon_alta_metadata: AvigilonAltaMetadata
-    brivo_metadata: BrivoMetadata
-    can_belong_to_reservation: bool
-    can_unlock_with_card: bool
-    can_unlock_with_cloud_key: bool
-    can_unlock_with_code: bool
-    can_unlock_with_mobile_key: bool
+    akiles_metadata: Optional[AkilesMetadata]
+    assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
+    avigilon_alta_metadata: Optional[AvigilonAltaMetadata]
+    brivo_metadata: Optional[BrivoMetadata]
+    can_belong_to_reservation: Optional[bool]
+    can_unlock_with_card: Optional[bool]
+    can_unlock_with_cloud_key: Optional[bool]
+    can_unlock_with_code: Optional[bool]
+    can_unlock_with_mobile_key: Optional[bool]
     connected_account_id: str
     created_at: str
     display_name: str
-    dormakaba_ambiance_metadata: DormakabaAmbianceMetadata
-    dormakaba_community_metadata: DormakabaCommunityMetadata
+    dormakaba_ambiance_metadata: Optional[DormakabaAmbianceMetadata]
+    dormakaba_community_metadata: Optional[DormakabaCommunityMetadata]
     errors: List[Errors]
-    hotek_metadata: HotekMetadata
-    is_locked: bool
-    latch_metadata: LatchMetadata
-    salto_ks_metadata: SaltoKsMetadata
-    salto_space_metadata: SaltoSpaceMetadata
+    hotek_metadata: Optional[HotekMetadata]
+    is_locked: Optional[bool]
+    latch_metadata: Optional[LatchMetadata]
+    salto_ks_metadata: Optional[SaltoKsMetadata]
+    salto_space_metadata: Optional[SaltoSpaceMetadata]
     space_ids: List[str]
-    visionline_metadata: VisionlineMetadata
+    visionline_metadata: Optional[VisionlineMetadata]
     warnings: List[Warnings]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),

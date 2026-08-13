@@ -104,7 +104,10 @@ class Seam(AbstractSeam):
             niquests_options=niquests_options,
         )
 
-        Routes.__init__(self, client=self.client, defaults=self.defaults)
+        # Seam and Routes are siblings under AbstractRoutes rather than parent
+        # and child, so borrowing this initializer to attach the route
+        # namespaces passes a self the signature does not admit.
+        Routes.__init__(self, client=self.client, defaults=self.defaults)  # type: ignore[arg-type]
 
     def create_paginator(
         self, request: Callable, params: Optional[Dict[str, Any]] = None, /

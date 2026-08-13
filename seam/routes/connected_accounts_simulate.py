@@ -24,7 +24,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id

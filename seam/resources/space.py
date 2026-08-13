@@ -42,13 +42,16 @@ class Space:
 
         :ivar time_zone: IANA time zone for the space, e.g. America/Los_Angeles."""
 
-        address: str
-        default_checkin_time: str
-        default_checkout_time: str
-        time_zone: str
+        address: Optional[str]
+        default_checkin_time: Optional[str]
+        default_checkout_time: Optional[str]
+        time_zone: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 address=d.get("address", None),
                 default_checkin_time=d.get("default_checkin_time", None),
@@ -67,8 +70,11 @@ class Space:
         latitude: float
         longitude: float
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 latitude=d.get("latitude", None),
                 longitude=d.get("longitude", None),
@@ -76,18 +82,21 @@ class Space:
 
     acs_entrance_count: float
     created_at: str
-    customer_data: CustomerData
-    customer_key: str
+    customer_data: Optional[CustomerData]
+    customer_key: Optional[str]
     device_count: float
     display_name: str
-    geolocation: Geolocation
+    geolocation: Optional[Geolocation]
     name: str
     space_id: str
-    space_key: str
+    space_key: Optional[str]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             acs_entrance_count=d.get("acs_entrance_count", None),
             created_at=d.get("created_at", None),

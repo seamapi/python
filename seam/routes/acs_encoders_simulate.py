@@ -89,7 +89,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
@@ -112,7 +112,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
         :param scenario: Scenario to simulate."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
@@ -140,7 +140,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param error_code:
 
         :param acs_credential_id_on_seam:"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
@@ -169,7 +169,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param acs_credential_id_on_seam: ID of the Seam ``acs_credential`` that matches the ``acs_credential`` on the encoder in this simulation.
 
         :param scenario: Scenario to simulate."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id

@@ -42,8 +42,11 @@ class Phone:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -76,21 +79,27 @@ class Phone:
 
                 :ivar is_active: Indicated whether the endpoint is active."""
 
-                endpoint_id: str
-                is_active: bool
+                endpoint_id: Optional[str]
+                is_active: Optional[bool]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         endpoint_id=d.get("endpoint_id", None),
                         is_active=d.get("is_active", None),
                     )
 
-            endpoints: List[Endpoints]
-            has_active_endpoint: bool
+            endpoints: Optional[List[Endpoints]]
+            has_active_endpoint: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     endpoints=[
                         cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
@@ -105,19 +114,29 @@ class Phone:
             :ivar has_active_phone: Indicates whether the credential service has an active associated phone.
             """
 
-            has_active_phone: bool
+            has_active_phone: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     has_active_phone=d.get("has_active_phone", None),
                 )
 
-        assa_abloy_credential_service_metadata: AssaAbloyCredentialServiceMetadata
-        salto_space_credential_service_metadata: SaltoSpaceCredentialServiceMetadata
+        assa_abloy_credential_service_metadata: Optional[
+            AssaAbloyCredentialServiceMetadata
+        ]
+        salto_space_credential_service_metadata: Optional[
+            SaltoSpaceCredentialServiceMetadata
+        ]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 assa_abloy_credential_service_metadata=(
                     cls.AssaAbloyCredentialServiceMetadata.from_dict(
@@ -149,8 +168,11 @@ class Phone:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -163,13 +185,16 @@ class Phone:
     device_type: str
     display_name: str
     errors: List[Errors]
-    nickname: str
-    properties: Properties
+    nickname: Optional[str]
+    properties: Optional[Properties]
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),

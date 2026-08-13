@@ -141,7 +141,7 @@ class Events(AbstractEvents):
         :param event_type: Type of the event that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if event_id is not None:
             json_payload["event_id"] = event_id
@@ -245,7 +245,7 @@ class Events(AbstractEvents):
         :param user_identity_id: ID of the user identity for which you want to list events.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id

@@ -64,7 +64,7 @@ class ActionAttempts(AbstractActionAttempts):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             json_payload["action_attempt_id"] = action_attempt_id
@@ -102,7 +102,7 @@ class ActionAttempts(AbstractActionAttempts):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if action_attempt_ids is not None:
             json_payload["action_attempt_ids"] = action_attempt_ids

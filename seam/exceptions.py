@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from .resources import ActionAttempt
 
 
@@ -15,20 +15,24 @@ class SeamHttpApiError(Exception):
     :vartype code: str
     :ivar status_code: The HTTP status code of the error response
     :vartype status_code: int
-    :ivar request_id: The unique identifier for the API request
-    :vartype request_id: str
+    :ivar request_id: The unique identifier for the API request, when the
+        response carried one
+    :vartype request_id: Optional[str]
     :ivar data: Additional error data, if provided by the API
     :vartype data: Dict[str, Any]
     """
 
-    def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+    def __init__(
+        self, error: Dict[str, Any], status_code: int, request_id: Optional[str]
+    ):
         """
         :param error: Dictionary containing error details from the API response
         :type error: Dict[str, Any]
         :param status_code: HTTP status code of the error response
         :type status_code: int
-        :param request_id: Unique identifier for the API request
-        :type request_id: str
+        :param request_id: Unique identifier for the API request, when the
+            response carried one
+        :type request_id: Optional[str]
         """
 
         super().__init__(error.get("message"))
@@ -45,10 +49,11 @@ class SeamHttpUnauthorizedError(SeamHttpApiError):
     This exception is a specific type of SeamHttpApiError for 401 Unauthorized errors.
     """
 
-    def __init__(self, request_id: str):
+    def __init__(self, request_id: Optional[str]):
         """
-        :param request_id: Unique identifier for the API request
-        :type request_id: str
+        :param request_id: Unique identifier for the API request, when the
+            response carried one
+        :type request_id: Optional[str]
         """
 
         super().__init__(
@@ -66,14 +71,17 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
     :vartype code: str
     """
 
-    def __init__(self, error: Dict[str, Any], status_code: int, request_id: str):
+    def __init__(
+        self, error: Dict[str, Any], status_code: int, request_id: Optional[str]
+    ):
         """
         :param error: Dictionary containing error details from the API response
         :type error: Dict[str, Any]
         :param status_code: HTTP status code of the error response
         :type status_code: int
-        :param request_id: Unique identifier for the API request
-        :type request_id: str
+        :param request_id: Unique identifier for the API request, when the
+            response carried one
+        :type request_id: Optional[str]
         """
 
         super().__init__(error, status_code, request_id)
@@ -120,9 +128,17 @@ class SeamActionAttemptFailedError(SeamActionAttemptError):
         :type action_attempt: ActionAttempt
         """
 
-        super().__init__(action_attempt.error.message, action_attempt)
+        # A failed action attempt carries an error, but reading through it
+        # unguarded would raise AttributeError over the actual failure if one
+        # ever arrives without it.
+        error = action_attempt.error
+
+        super().__init__(
+            error.message if error is not None else "Action attempt failed",
+            action_attempt,
+        )
         self.name = self.__class__.__name__
-        self.code = action_attempt.error.type
+        self.code = error.type if error is not None else "unknown_error"
 
 
 class SeamActionAttemptTimeoutError(SeamActionAttemptError):
@@ -136,12 +152,12 @@ class SeamActionAttemptTimeoutError(SeamActionAttemptError):
     :vartype name: str
     """
 
-    def __init__(self, action_attempt: ActionAttempt, timeout: str):
+    def __init__(self, action_attempt: ActionAttempt, timeout: float):
         """
         :param action_attempt: The ActionAttempt object associated with this error
         :type action_attempt: ActionAttempt
         :param timeout: The timeout duration in seconds
-        :type timeout: str
+        :type timeout: float
         """
 
         message = f"Timed out waiting for action attempt after {timeout}s"

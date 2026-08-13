@@ -121,7 +121,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :param acs_entrance_id: ID of the entrance that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
@@ -145,7 +145,7 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
@@ -198,7 +198,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :param space_id: ID of the space for which you want to list entrances.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
@@ -237,7 +237,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
@@ -266,7 +266,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id

@@ -21,8 +21,8 @@ def poll_until_ready(
     client: SeamHttpClient,
     *,
     action_attempt_id: str,
-    timeout: Optional[float] = TIMEOUT,
-    polling_interval: Optional[float] = POLLING_INTERVAL,
+    timeout: float = TIMEOUT,
+    polling_interval: float = POLLING_INTERVAL,
 ) -> ActionAttempt:
     time_waiting = 0.0
 

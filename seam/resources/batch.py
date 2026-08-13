@@ -134,33 +134,36 @@ class Batch:
     :ivar workspaces: Represents a Seam `workspace <https://docs.seam.co/core-concepts/workspaces>`_. A workspace is a top-level entity that encompasses all other resources below it, such as devices, connected accounts, and Connect Webviews. Seam provides two types of workspaces. A `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ is a special type of workspace designed for testing code. Sandbox workspaces offer test device accounts and virtual devices that you can connect and control. This ability to work with virtual devices is quite handy because it removes the need to own physical devices from multiple brands. To connect real devices and systems to Seam, use a `production workspace <https://docs.seam.co/core-concepts/workspaces#production-workspaces>`_.
     """
 
-    access_codes: List[Dict[str, Any]]
-    access_grants: List[Dict[str, Any]]
-    access_methods: List[Dict[str, Any]]
-    acs_access_groups: List[Dict[str, Any]]
-    acs_credentials: List[Dict[str, Any]]
-    acs_encoders: List[Dict[str, Any]]
-    acs_entrances: List[Dict[str, Any]]
-    acs_systems: List[Dict[str, Any]]
-    acs_users: List[Dict[str, Any]]
-    action_attempts: List[Dict[str, Any]]
-    client_sessions: List[Dict[str, Any]]
-    connect_webviews: List[Dict[str, Any]]
-    connected_accounts: List[Dict[str, Any]]
-    devices: List[Dict[str, Any]]
-    events: List[Dict[str, Any]]
-    instant_keys: List[Dict[str, Any]]
-    noise_thresholds: List[Dict[str, Any]]
-    spaces: List[Dict[str, Any]]
-    thermostat_daily_programs: List[Dict[str, Any]]
-    thermostat_schedules: List[Dict[str, Any]]
-    unmanaged_access_codes: List[Dict[str, Any]]
-    unmanaged_devices: List[Dict[str, Any]]
-    user_identities: List[Dict[str, Any]]
-    workspaces: List[Dict[str, Any]]
+    access_codes: Optional[List[Dict[str, Any]]]
+    access_grants: Optional[List[Dict[str, Any]]]
+    access_methods: Optional[List[Dict[str, Any]]]
+    acs_access_groups: Optional[List[Dict[str, Any]]]
+    acs_credentials: Optional[List[Dict[str, Any]]]
+    acs_encoders: Optional[List[Dict[str, Any]]]
+    acs_entrances: Optional[List[Dict[str, Any]]]
+    acs_systems: Optional[List[Dict[str, Any]]]
+    acs_users: Optional[List[Dict[str, Any]]]
+    action_attempts: Optional[List[Dict[str, Any]]]
+    client_sessions: Optional[List[Dict[str, Any]]]
+    connect_webviews: Optional[List[Dict[str, Any]]]
+    connected_accounts: Optional[List[Dict[str, Any]]]
+    devices: Optional[List[Dict[str, Any]]]
+    events: Optional[List[Dict[str, Any]]]
+    instant_keys: Optional[List[Dict[str, Any]]]
+    noise_thresholds: Optional[List[Dict[str, Any]]]
+    spaces: Optional[List[Dict[str, Any]]]
+    thermostat_daily_programs: Optional[List[Dict[str, Any]]]
+    thermostat_schedules: Optional[List[Dict[str, Any]]]
+    unmanaged_access_codes: Optional[List[Dict[str, Any]]]
+    unmanaged_devices: Optional[List[Dict[str, Any]]]
+    user_identities: Optional[List[Dict[str, Any]]]
+    workspaces: Optional[List[Dict[str, Any]]]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             access_codes=d.get("access_codes", None),
             access_grants=d.get("access_grants", None),

@@ -39,7 +39,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         :param name: Name of the simulated unmanaged access code.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if code is not None:
             json_payload["code"] = code

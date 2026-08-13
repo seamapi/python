@@ -149,7 +149,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param wait_for_device_creation: Indicates whether Seam should finish syncing all devices in a newly-connected account before completing the associated Connect Webview. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if accepted_capabilities is not None:
             json_payload["accepted_capabilities"] = accepted_capabilities
@@ -184,7 +184,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
         :param connect_webview_id: ID of the Connect Webview that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -201,7 +201,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -235,7 +235,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param user_identifier_key: Your user ID for the user by which you want to filter Connect Webviews.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if custom_metadata_has is not None:
             json_payload["custom_metadata_has"] = custom_metadata_has

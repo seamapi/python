@@ -49,8 +49,11 @@ class UnmanagedUserIdentity:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 acs_system_id=d.get("acs_system_id", None),
                 acs_user_id=d.get("acs_user_id", None),
@@ -74,8 +77,11 @@ class UnmanagedUserIdentity:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -85,16 +91,19 @@ class UnmanagedUserIdentity:
     acs_user_ids: List[str]
     created_at: str
     display_name: str
-    email_address: str
+    email_address: Optional[str]
     errors: List[Errors]
-    full_name: str
-    phone_number: str
+    full_name: Optional[str]
+    phone_number: Optional[str]
     user_identity_id: str
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             acs_user_ids=d.get("acs_user_ids", None),
             created_at=d.get("created_at", None),

@@ -72,11 +72,14 @@ class AcsUser:
         :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         """
 
-        ends_at: str
+        ends_at: Optional[str]
         starts_at: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 ends_at=d.get("ends_at", None),
                 starts_at=d.get("starts_at", None),
@@ -97,8 +100,11 @@ class AcsUser:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -146,17 +152,20 @@ class AcsUser:
 
             :ivar acs_credential_id: Previous credential ID."""
 
-            email_address: str
-            full_name: str
-            phone_number: str
-            ends_at: str
-            starts_at: str
-            is_suspended: bool
-            acs_access_group_id: str
-            acs_credential_id: str
+            email_address: Optional[str]
+            full_name: Optional[str]
+            phone_number: Optional[str]
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+            is_suspended: Optional[bool]
+            acs_access_group_id: Optional[str]
+            acs_credential_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
@@ -188,17 +197,20 @@ class AcsUser:
 
             :ivar acs_credential_id: New credential ID."""
 
-            email_address: str
-            full_name: str
-            phone_number: str
-            ends_at: str
-            starts_at: str
-            is_suspended: bool
-            acs_access_group_id: str
-            acs_credential_id: str
+            email_address: Optional[str]
+            full_name: Optional[str]
+            phone_number: Optional[str]
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+            is_suspended: Optional[bool]
+            acs_access_group_id: Optional[str]
+            acs_credential_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
@@ -213,14 +225,17 @@ class AcsUser:
         created_at: str
         message: str
         mutation_code: str
-        scheduled_at: str
-        from_: From
-        to: To
-        acs_access_group_id: str
-        variant: str
+        scheduled_at: Optional[str]
+        from_: Optional[From]
+        to: Optional[To]
+        acs_access_group_id: Optional[str]
+        variant: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -243,10 +258,13 @@ class AcsUser:
         :ivar is_subscribed: Indicates whether the user holds an active subscription slot on the Salto KS site. Only subscribed users can unlock doors and count against the site's user-subscription limit. A user may not be subscribed because their access schedule has not started or has ended, the site has reached its subscription limit, or they were manually unsubscribed. This is distinct from ``is_suspended``, which reflects whether the user has been explicitly blocked.
         """
 
-        is_subscribed: bool
+        is_subscribed: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 is_subscribed=d.get("is_subscribed", None),
             )
@@ -259,11 +277,14 @@ class AcsUser:
 
         :ivar user_id: User ID in the Salto Space access system."""
 
-        audit_openings: bool
-        user_id: str
+        audit_openings: Optional[bool]
+        user_id: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 audit_openings=d.get("audit_openings", None),
                 user_id=d.get("user_id", None),
@@ -283,42 +304,48 @@ class AcsUser:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
             )
 
-    access_schedule: AccessSchedule
+    access_schedule: Optional[AccessSchedule]
     acs_system_id: str
     acs_user_id: str
     connected_account_id: str
     created_at: str
     display_name: str
-    email: str
-    email_address: str
+    email: Optional[str]
+    email_address: Optional[str]
     errors: List[Errors]
-    external_type: str
-    external_type_display_name: str
-    full_name: str
-    hid_acs_system_id: str
+    external_type: Optional[str]
+    external_type_display_name: Optional[str]
+    full_name: Optional[str]
+    hid_acs_system_id: Optional[str]
     is_managed: bool
-    is_suspended: bool
-    pending_mutations: List[PendingMutations]
-    phone_number: str
-    salto_ks_metadata: SaltoKsMetadata
-    salto_space_metadata: SaltoSpaceMetadata
-    user_identity_email_address: str
-    user_identity_full_name: str
-    user_identity_id: str
-    user_identity_phone_number: str
+    is_suspended: Optional[bool]
+    pending_mutations: Optional[List[PendingMutations]]
+    phone_number: Optional[str]
+    salto_ks_metadata: Optional[SaltoKsMetadata]
+    salto_space_metadata: Optional[SaltoSpaceMetadata]
+    user_identity_email_address: Optional[str]
+    user_identity_full_name: Optional[str]
+    user_identity_id: Optional[str]
+    user_identity_phone_number: Optional[str]
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             access_schedule=(
                 cls.AccessSchedule.from_dict(d.get("access_schedule"))
