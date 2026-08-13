@@ -8,7 +8,7 @@ DEVICE = {"device": {"device_id": "device1"}}
 DEVICES: Dict[str, List[Any]] = {"devices": []}
 
 
-def test_client_serializes_search_params_with_the_seam_standard(recording_server):
+def test_client_serializes_search_params(recording_server):
     with recording_server([(200, DEVICES)]) as (endpoint, requests):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
 
@@ -35,10 +35,10 @@ def test_client_serializes_search_params_with_the_seam_standard(recording_server
 
 
 def test_client_does_not_reencode_the_serialized_search_params(recording_server):
-    """The Seam standard and httpx disagree on exactly two characters.
+    """The serializer and httpx disagree on exactly two characters.
 
     httpx escapes ``*`` and leaves ``~`` alone, so a query it encodes is not
-    the one the standard defines. Setting the query on the url keeps ours.
+    the one the serializer produced. Setting the query on the url keeps ours.
     """
 
     with recording_server([(200, DEVICES)]) as (endpoint, requests):
