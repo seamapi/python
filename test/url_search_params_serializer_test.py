@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta, timezone
 import pytest
 
 from seam.null import NULL
-from seam.utils.url_search_params_serializer import (
+from seam.url_search_params_serializer import (
     UnserializableParamError,
     UrlSearchParams,
     serialize_url_search_params,

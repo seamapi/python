@@ -40,7 +40,7 @@ from decimal import Decimal
 from typing import Any, Iterator, List, Optional, Sequence, Tuple, Union
 from urllib.parse import parse_qsl
 
-from ..null import is_null
+from .null import is_null
 
 Params = Mapping[str, Any]
 

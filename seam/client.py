@@ -14,7 +14,7 @@ from .exceptions import (
     SeamHttpUnauthorizedError,
 )
 from .null import replace_null
-from .utils.url_search_params_serializer import serialize_url_search_params
+from .url_search_params_serializer import serialize_url_search_params
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",

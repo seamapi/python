@@ -16,7 +16,7 @@ from .exceptions import (
 from .seam_webhook import SeamWebhook
 from svix.webhooks import WebhookVerificationError as SeamWebhookVerificationError
 from .null import NULL, Null
-from .utils.url_search_params_serializer import (
+from .url_search_params_serializer import (
     UnserializableParamError,
     UrlSearchParams,
     serialize_url_search_params,
