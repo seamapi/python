@@ -229,7 +229,7 @@ class Customers(AbstractCustomers):
         :param customer_data:
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if customer_resources_filters is not None:
             json_payload["customer_resources_filters"] = customer_resources_filters
@@ -321,7 +321,7 @@ class Customers(AbstractCustomers):
         :param user_identity_keys: List of user identity keys to delete.
 
         :param user_keys: List of user keys to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_keys is not None:
             json_payload["access_grant_keys"] = access_grant_keys
@@ -431,7 +431,7 @@ class Customers(AbstractCustomers):
         :param user_identities: List of user identities.
 
         :param users: List of users."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:
             json_payload["customer_key"] = customer_key

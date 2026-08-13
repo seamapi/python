@@ -16,13 +16,16 @@ class Webhook:
 
     :ivar webhook_id: ID of the webhook."""
 
-    event_types: List[str]
-    secret: str
+    event_types: Optional[List[str]]
+    secret: Optional[str]
     url: str
     webhook_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             event_types=d.get("event_types", None),
             secret=d.get("secret", None),

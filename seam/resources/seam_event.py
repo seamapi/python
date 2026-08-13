@@ -200,12 +200,15 @@ class SeamEvent:
 
         :ivar to: New value of the property, or null if cleared."""
 
-        from_: str
+        from_: Optional[str]
         property: str
-        to: str
+        to: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 from_=d.get("from", None),
                 property=d.get("property", None),
@@ -224,13 +227,16 @@ class SeamEvent:
 
         :ivar starts_at: Previous start time."""
 
-        name: str
-        code: str
-        ends_at: str
-        starts_at: str
+        name: Optional[str]
+        code: Optional[str]
+        ends_at: Optional[str]
+        starts_at: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 name=d.get("name", None),
                 code=d.get("code", None),
@@ -250,13 +256,16 @@ class SeamEvent:
 
         :ivar starts_at: New start time."""
 
-        name: str
-        code: str
-        ends_at: str
-        starts_at: str
+        name: Optional[str]
+        code: Optional[str]
+        ends_at: Optional[str]
+        starts_at: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 name=d.get("name", None),
                 code=d.get("code", None),
@@ -275,12 +284,15 @@ class SeamEvent:
         :ivar to: New property values after the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
         """
 
-        from_: Dict[str, Any]
+        from_: Optional[Dict[str, Any]]
         mutation_code: str
-        to: Dict[str, Any]
+        to: Optional[Dict[str, Any]]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 from_=DeepAttrDict(d.get("from", None)),
                 mutation_code=d.get("mutation_code", None),
@@ -302,8 +314,11 @@ class SeamEvent:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -325,8 +340,11 @@ class SeamEvent:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -348,8 +366,11 @@ class SeamEvent:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -371,8 +392,11 @@ class SeamEvent:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -394,8 +418,11 @@ class SeamEvent:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -417,8 +444,11 @@ class SeamEvent:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -440,8 +470,11 @@ class SeamEvent:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -463,8 +496,11 @@ class SeamEvent:
         message: str
         warning_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -483,107 +519,113 @@ class SeamEvent:
         message: str
         reason_code: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 message=d.get("message", None),
                 reason_code=d.get("reason_code", None),
             )
 
-    access_code_id: str
-    connected_account_custom_metadata: Dict[str, Any]
-    connected_account_id: str
+    access_code_id: Optional[str]
+    connected_account_custom_metadata: Optional[Dict[str, Any]]
+    connected_account_id: Optional[str]
     created_at: str
-    device_custom_metadata: Dict[str, Any]
-    device_id: str
-    event_description: str
+    device_custom_metadata: Optional[Dict[str, Any]]
+    device_id: Optional[str]
+    event_description: Optional[str]
     event_id: str
     event_type: str
     occurred_at: str
     workspace_id: str
-    change_reason: str
-    changed_properties: List[ChangedProperties]
-    description: str
-    from_: From
-    to: To
-    requested_mutations: List[RequestedMutations]
-    code: str
-    access_code_errors: List[AccessCodeErrors]
-    access_code_warnings: List[AccessCodeWarnings]
-    connected_account_errors: List[ConnectedAccountErrors]
-    connected_account_warnings: List[ConnectedAccountWarnings]
-    device_errors: List[DeviceErrors]
-    device_warnings: List[DeviceWarnings]
-    backup_access_code_id: str
-    access_grant_id: str
-    acs_entrance_id: str
-    access_grant_key: str
-    ends_at: str
-    starts_at: str
-    error_message: str
-    missing_device_ids: List[str]
-    access_grant_ids: List[str]
-    access_grant_keys: List[str]
-    access_method_id: str
-    is_backup_code: bool
-    acs_system_id: str
-    acs_system_errors: List[AcsSystemErrors]
-    acs_system_warnings: List[AcsSystemWarnings]
-    acs_credential_id: str
-    acs_user_id: str
-    acs_encoder_id: str
-    acs_access_group_id: str
-    client_session_id: str
-    connect_webview_id: str
-    customer_key: str
-    connected_account_type: str
-    action_attempt_id: str
-    action_type: str
-    status: str
-    error_code: str
-    battery_level: float
-    battery_status: str
-    device_name: str
-    minut_metadata: Dict[str, Any]
-    noise_level_decibels: float
-    noise_level_nrs: float
-    noise_threshold_id: str
-    noise_threshold_name: str
-    noiseaware_metadata: Dict[str, Any]
-    access_code_is_managed: bool
-    is_via_bluetooth: bool
-    is_via_nfc: bool
-    method: str
-    user_identity_id: str
-    reason: Reason
-    climate_preset_key: str
-    is_fallback_climate_preset: bool
-    thermostat_schedule_id: str
-    cooling_set_point_celsius: float
-    cooling_set_point_fahrenheit: float
-    fan_mode_setting: str
-    heating_set_point_celsius: float
-    heating_set_point_fahrenheit: float
-    hvac_mode_setting: str
-    lower_limit_celsius: float
-    lower_limit_fahrenheit: float
-    temperature_celsius: float
-    temperature_fahrenheit: float
-    upper_limit_celsius: float
-    upper_limit_fahrenheit: float
-    desired_temperature_celsius: float
-    desired_temperature_fahrenheit: float
-    activation_reason: str
-    image_url: str
-    motion_sub_type: str
-    video_url: str
-    acs_entrance_ids: List[str]
-    device_ids: List[str]
-    space_id: str
-    space_key: str
+    change_reason: Optional[str]
+    changed_properties: Optional[List[ChangedProperties]]
+    description: Optional[str]
+    from_: Optional[From]
+    to: Optional[To]
+    requested_mutations: Optional[List[RequestedMutations]]
+    code: Optional[str]
+    access_code_errors: Optional[List[AccessCodeErrors]]
+    access_code_warnings: Optional[List[AccessCodeWarnings]]
+    connected_account_errors: Optional[List[ConnectedAccountErrors]]
+    connected_account_warnings: Optional[List[ConnectedAccountWarnings]]
+    device_errors: Optional[List[DeviceErrors]]
+    device_warnings: Optional[List[DeviceWarnings]]
+    backup_access_code_id: Optional[str]
+    access_grant_id: Optional[str]
+    acs_entrance_id: Optional[str]
+    access_grant_key: Optional[str]
+    ends_at: Optional[str]
+    starts_at: Optional[str]
+    error_message: Optional[str]
+    missing_device_ids: Optional[List[str]]
+    access_grant_ids: Optional[List[str]]
+    access_grant_keys: Optional[List[str]]
+    access_method_id: Optional[str]
+    is_backup_code: Optional[bool]
+    acs_system_id: Optional[str]
+    acs_system_errors: Optional[List[AcsSystemErrors]]
+    acs_system_warnings: Optional[List[AcsSystemWarnings]]
+    acs_credential_id: Optional[str]
+    acs_user_id: Optional[str]
+    acs_encoder_id: Optional[str]
+    acs_access_group_id: Optional[str]
+    client_session_id: Optional[str]
+    connect_webview_id: Optional[str]
+    customer_key: Optional[str]
+    connected_account_type: Optional[str]
+    action_attempt_id: Optional[str]
+    action_type: Optional[str]
+    status: Optional[str]
+    error_code: Optional[str]
+    battery_level: Optional[float]
+    battery_status: Optional[str]
+    device_name: Optional[str]
+    minut_metadata: Optional[Dict[str, Any]]
+    noise_level_decibels: Optional[float]
+    noise_level_nrs: Optional[float]
+    noise_threshold_id: Optional[str]
+    noise_threshold_name: Optional[str]
+    noiseaware_metadata: Optional[Dict[str, Any]]
+    access_code_is_managed: Optional[bool]
+    is_via_bluetooth: Optional[bool]
+    is_via_nfc: Optional[bool]
+    method: Optional[str]
+    user_identity_id: Optional[str]
+    reason: Optional[Reason]
+    climate_preset_key: Optional[str]
+    is_fallback_climate_preset: Optional[bool]
+    thermostat_schedule_id: Optional[str]
+    cooling_set_point_celsius: Optional[float]
+    cooling_set_point_fahrenheit: Optional[float]
+    fan_mode_setting: Optional[str]
+    heating_set_point_celsius: Optional[float]
+    heating_set_point_fahrenheit: Optional[float]
+    hvac_mode_setting: Optional[str]
+    lower_limit_celsius: Optional[float]
+    lower_limit_fahrenheit: Optional[float]
+    temperature_celsius: Optional[float]
+    temperature_fahrenheit: Optional[float]
+    upper_limit_celsius: Optional[float]
+    upper_limit_fahrenheit: Optional[float]
+    desired_temperature_celsius: Optional[float]
+    desired_temperature_fahrenheit: Optional[float]
+    activation_reason: Optional[str]
+    image_url: Optional[str]
+    motion_sub_type: Optional[str]
+    video_url: Optional[str]
+    acs_entrance_ids: Optional[List[str]]
+    device_ids: Optional[List[str]]
+    space_id: Optional[str]
+    space_key: Optional[str]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             access_code_id=d.get("access_code_id", None),
             connected_account_custom_metadata=DeepAttrDict(

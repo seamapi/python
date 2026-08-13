@@ -53,7 +53,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id

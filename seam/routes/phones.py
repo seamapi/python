@@ -59,7 +59,7 @@ class Phones(AbstractPhones):
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -74,7 +74,7 @@ class Phones(AbstractPhones):
         :param device_id: Device ID of the phone that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -96,7 +96,7 @@ class Phones(AbstractPhones):
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id

@@ -189,7 +189,7 @@ class ClientSessions(AbstractClientSessions):
         :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_ids is not None:
             json_payload["connect_webview_ids"] = connect_webview_ids
@@ -216,7 +216,7 @@ class ClientSessions(AbstractClientSessions):
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
@@ -238,7 +238,7 @@ class ClientSessions(AbstractClientSessions):
         :param user_identifier_key: User identifier key associated with the client session that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
@@ -274,7 +274,7 @@ class ClientSessions(AbstractClientSessions):
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_ids is not None:
             json_payload["connect_webview_ids"] = connect_webview_ids
@@ -317,7 +317,7 @@ class ClientSessions(AbstractClientSessions):
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
@@ -358,7 +358,7 @@ class ClientSessions(AbstractClientSessions):
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
@@ -381,7 +381,7 @@ class ClientSessions(AbstractClientSessions):
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
         :param client_session_id: ID of the client session that you want to revoke."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id

@@ -445,7 +445,7 @@ class AccessCodes(AbstractAccessCodes):
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -545,7 +545,7 @@ class AccessCodes(AbstractAccessCodes):
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
@@ -587,7 +587,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param device_id: ID of the device for which you want to delete the access code.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -604,7 +604,7 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device for which you want to generate a code.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -631,7 +631,7 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -683,7 +683,7 @@ class AccessCodes(AbstractAccessCodes):
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_ids is not None:
             json_payload["access_code_ids"] = access_code_ids
@@ -724,7 +724,7 @@ class AccessCodes(AbstractAccessCodes):
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -755,7 +755,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -838,7 +838,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -911,7 +911,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:
             json_payload["common_code_key"] = common_code_key

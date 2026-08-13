@@ -72,7 +72,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -88,7 +88,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         This will clear the ``hub_disconnected`` error on the device.
 
         :param device_id: ID of the device whose hub you want to reconnect."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -102,7 +102,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -119,7 +119,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         IglooHome bridge offline in sandbox.
 
         :param device_id: ID of the device whose hub you want to disconnect."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -136,7 +136,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id:
 
         :param is_expired:"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -152,7 +152,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

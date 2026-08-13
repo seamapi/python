@@ -64,7 +64,7 @@ class LocksSimulate(AbstractLocksSimulate):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if code is not None:
             json_payload["code"] = code
@@ -98,7 +98,7 @@ class LocksSimulate(AbstractLocksSimulate):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

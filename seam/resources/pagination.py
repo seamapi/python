@@ -15,11 +15,14 @@ class Pagination:
     :ivar next_page_url: URL to get the next page of results."""
 
     has_next_page: bool
-    next_page_cursor: str
-    next_page_url: str
+    next_page_cursor: Optional[str]
+    next_page_url: Optional[str]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             has_next_page=d.get("has_next_page", None),
             next_page_cursor=d.get("next_page_cursor", None),

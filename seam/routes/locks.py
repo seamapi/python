@@ -171,7 +171,7 @@ class Locks(AbstractLocks):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
             json_payload["auto_lock_enabled"] = auto_lock_enabled
@@ -207,7 +207,7 @@ class Locks(AbstractLocks):
 
         .. deprecated::
            Use ``/devices/get`` instead."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -273,7 +273,7 @@ class Locks(AbstractLocks):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id
@@ -325,7 +325,7 @@ class Locks(AbstractLocks):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -357,7 +357,7 @@ class Locks(AbstractLocks):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id

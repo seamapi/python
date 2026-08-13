@@ -131,7 +131,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param name: Name of the thermostat schedule.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
@@ -157,7 +157,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id
@@ -172,7 +172,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id
@@ -191,7 +191,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -231,7 +231,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             json_payload["thermostat_schedule_id"] = thermostat_schedule_id

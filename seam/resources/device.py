@@ -95,11 +95,14 @@ class Device:
         """
 
         display_name: str
-        image_url: str
+        image_url: Optional[str]
         manufacturer: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 display_name=d.get("display_name", None),
                 image_url=d.get("image_url", None),
@@ -121,11 +124,14 @@ class Device:
 
         device_provider_name: str
         display_name: str
-        image_url: str
+        image_url: Optional[str]
         provider_category: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 device_provider_name=d.get("device_provider_name", None),
                 display_name=d.get("display_name", None),
@@ -152,13 +158,16 @@ class Device:
 
         created_at: str
         error_code: str
-        is_connected_account_error: bool
-        is_device_error: bool
+        is_connected_account_error: Optional[bool]
+        is_device_error: Optional[bool]
         message: str
-        is_bridge_error: bool
+        is_bridge_error: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -179,12 +188,15 @@ class Device:
         :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
         """
 
-        location_name: str
-        time_zone: str
-        timezone: str
+        location_name: Optional[str]
+        time_zone: Optional[str]
+        timezone: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 location_name=d.get("location_name", None),
                 time_zone=d.get("time_zone", None),
@@ -421,17 +433,23 @@ class Device:
 
                 level: float
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         level=d.get("level", None),
                     )
 
-            battery: Battery
+            battery: Optional[Battery]
             is_connected: bool
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     battery=(
                         cls.Battery.from_dict(d.get("battery"))
@@ -450,8 +468,11 @@ class Device:
 
             name: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     name=d.get("name", None),
                 )
@@ -468,8 +489,11 @@ class Device:
             level: float
             status: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     level=d.get("level", None),
                     status=d.get("status", None),
@@ -494,16 +518,19 @@ class Device:
             :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes.
             """
 
-            accessory_keypad_supported: bool
-            can_connect_accessory_keypad: bool
+            accessory_keypad_supported: Optional[bool]
+            can_connect_accessory_keypad: Optional[bool]
             display_name: str
-            has_built_in_keypad: bool
+            has_built_in_keypad: Optional[bool]
             manufacturer_display_name: str
-            offline_access_codes_supported: bool
-            online_access_codes_supported: bool
+            offline_access_codes_supported: Optional[bool]
+            online_access_codes_supported: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     accessory_keypad_supported=d.get(
                         "accessory_keypad_supported", None
@@ -539,21 +566,27 @@ class Device:
 
                 :ivar is_active: Indicated whether the endpoint is active."""
 
-                endpoint_id: str
-                is_active: bool
+                endpoint_id: Optional[str]
+                is_active: Optional[bool]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         endpoint_id=d.get("endpoint_id", None),
                         is_active=d.get("is_active", None),
                     )
 
-            endpoints: List[Endpoints]
-            has_active_endpoint: bool
+            endpoints: Optional[List[Endpoints]]
+            has_active_endpoint: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     endpoints=[
                         cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
@@ -568,10 +601,13 @@ class Device:
             :ivar has_active_phone: Indicates whether the credential service has an active associated phone.
             """
 
-            has_active_phone: bool
+            has_active_phone: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     has_active_phone=d.get("has_active_phone", None),
                 )
@@ -588,13 +624,16 @@ class Device:
 
             :ivar product_name: Product name for an Akiles device."""
 
-            _member_group_id: str
-            gadget_id: str
-            gadget_name: str
-            product_name: str
+            _member_group_id: Optional[str]
+            gadget_id: Optional[str]
+            gadget_name: Optional[str]
+            product_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     _member_group_id=d.get("_member_group_id", None),
                     gadget_id=d.get("gadget_id", None),
@@ -622,17 +661,20 @@ class Device:
 
             :ivar time_zone: Time zone reported for an Aqara device (e.g. GMT-07:00)."""
 
-            device_name: str
-            did: str
-            firmware_version: str
-            model: str
-            model_type: float
-            parent_did: str
-            position_id: str
-            time_zone: str
+            device_name: Optional[str]
+            did: Optional[str]
+            firmware_version: Optional[str]
+            model: Optional[str]
+            model_type: Optional[float]
+            parent_did: Optional[str]
+            position_id: Optional[str]
+            time_zone: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_name=d.get("device_name", None),
                     did=d.get("did", None),
@@ -650,10 +692,13 @@ class Device:
 
             :ivar encoder_name: Encoder name for an ASSA ABLOY Vostio system."""
 
-            encoder_name: str
+            encoder_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     encoder_name=d.get("encoder_name", None),
                 )
@@ -676,16 +721,19 @@ class Device:
 
             :ivar model: Model for an August device."""
 
-            has_keypad: bool
-            house_id: str
-            house_name: str
-            keypad_battery_level: str
-            lock_id: str
-            lock_name: str
-            model: str
+            has_keypad: Optional[bool]
+            house_id: Optional[str]
+            house_name: Optional[str]
+            keypad_battery_level: Optional[str]
+            lock_id: Optional[str]
+            lock_name: Optional[str]
+            model: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     has_keypad=d.get("has_keypad", None),
                     house_id=d.get("house_id", None),
@@ -714,16 +762,19 @@ class Device:
 
             :ivar zone_name: Zone name for an Avigilon Alta system."""
 
-            entry_name: str
-            entry_relays_total_count: float
-            org_name: str
-            site_id: float
-            site_name: str
-            zone_id: float
-            zone_name: str
+            entry_name: Optional[str]
+            entry_relays_total_count: Optional[float]
+            org_name: Optional[str]
+            site_id: Optional[float]
+            site_name: Optional[str]
+            zone_id: Optional[float]
+            zone_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     entry_name=d.get("entry_name", None),
                     entry_relays_total_count=d.get("entry_relays_total_count", None),
@@ -742,11 +793,14 @@ class Device:
 
             :ivar device_name: Device name for a Brivo device."""
 
-            activation_enabled: bool
-            device_name: str
+            activation_enabled: Optional[bool]
+            device_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     activation_enabled=d.get("activation_enabled", None),
                     device_name=d.get("device_name", None),
@@ -762,12 +816,15 @@ class Device:
 
             :ivar relay_name: Relay name for a ControlByWeb device."""
 
-            device_id: str
-            device_name: str
-            relay_name: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            relay_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -798,8 +855,11 @@ class Device:
             class DeviceId(ResourceMapping):
                 """Device ID for a dormakaba Oracode device."""
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     # This shape documents no properties, so there is nothing to read.
                     # pylint: disable=unused-argument
                     return cls()
@@ -828,19 +888,22 @@ class Device:
 
                 :ivar prefix: Prefix for a time slot for a dormakaba Oracode device."""
 
-                check_in_time: str
-                check_out_time: str
-                dormakaba_oracode_user_level_id: str
-                dormakaba_oracode_user_level_prefix: float
-                is_24_hour: bool
-                is_biweekly_mode: bool
-                is_master: bool
-                is_one_shot: bool
-                name: str
-                prefix: float
+                check_in_time: Optional[str]
+                check_out_time: Optional[str]
+                dormakaba_oracode_user_level_id: Optional[str]
+                dormakaba_oracode_user_level_prefix: Optional[float]
+                is_24_hour: Optional[bool]
+                is_biweekly_mode: Optional[bool]
+                is_master: Optional[bool]
+                is_one_shot: Optional[bool]
+                name: Optional[str]
+                prefix: Optional[float]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         check_in_time=d.get("check_in_time", None),
                         check_out_time=d.get("check_out_time", None),
@@ -858,17 +921,20 @@ class Device:
                         prefix=d.get("prefix", None),
                     )
 
-            device_id: DeviceId
-            door_id: float
-            door_is_wireless: bool
-            door_name: str
-            iana_timezone: str
-            predefined_time_slots: List[PredefinedTimeSlots]
-            site_id: float
-            site_name: str
+            device_id: Optional[DeviceId]
+            door_id: Optional[float]
+            door_is_wireless: Optional[bool]
+            door_name: Optional[str]
+            iana_timezone: Optional[str]
+            predefined_time_slots: Optional[List[PredefinedTimeSlots]]
+            site_id: Optional[float]
+            site_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=(
                         cls.DeviceId.from_dict(d.get("device_id"))
@@ -895,11 +961,14 @@ class Device:
 
             :ivar ecobee_device_id: Device ID for an ecobee device."""
 
-            device_name: str
-            ecobee_device_id: str
+            device_name: Optional[str]
+            ecobee_device_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_name=d.get("device_name", None),
                     ecobee_device_id=d.get("ecobee_device_id", None),
@@ -916,12 +985,15 @@ class Device:
             :ivar reclose_delay_in_seconds: Reclose delay, in seconds, for a 4SUITES device.
             """
 
-            device_id: float
-            device_name: str
-            reclose_delay_in_seconds: float
+            device_id: Optional[float]
+            device_name: Optional[str]
+            reclose_delay_in_seconds: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -936,11 +1008,14 @@ class Device:
 
             :ivar door_name: Door name for a Genie device."""
 
-            device_name: str
-            door_name: str
+            device_name: Optional[str]
+            door_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_name=d.get("device_name", None),
                     door_name=d.get("door_name", None),
@@ -955,11 +1030,14 @@ class Device:
             :ivar honeywell_resideo_device_id: Device ID for a Honeywell Resideo device.
             """
 
-            device_name: str
-            honeywell_resideo_device_id: str
+            device_name: Optional[str]
+            honeywell_resideo_device_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_name=d.get("device_name", None),
                     honeywell_resideo_device_id=d.get(
@@ -977,12 +1055,15 @@ class Device:
 
             :ivar model: Model for an igloo device."""
 
-            bridge_id: str
-            device_id: str
-            model: str
+            bridge_id: Optional[str]
+            device_id: Optional[str]
+            model: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     device_id=d.get("device_id", None),
@@ -1005,15 +1086,18 @@ class Device:
 
             :ivar keypad_id: Keypad ID for an igloohome device."""
 
-            bridge_id: str
-            bridge_name: str
-            device_id: str
-            device_name: str
-            is_accessory_keypad_linked_to_bridge: bool
-            keypad_id: str
+            bridge_id: Optional[str]
+            bridge_name: Optional[str]
+            device_id: Optional[str]
+            device_name: Optional[str]
+            is_accessory_keypad_linked_to_bridge: Optional[bool]
+            keypad_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     bridge_name=d.get("bridge_name", None),
@@ -1071,30 +1155,33 @@ class Device:
 
             :ivar subscription_plan: Subscription plan for a KeyNest device."""
 
-            address: str
-            current_or_last_store_id: float
-            current_status: str
-            current_user_company: str
-            current_user_email: str
-            current_user_name: str
-            current_user_phone_number: str
-            default_office_id: float
-            device_name: str
-            fob_id: float
-            handover_method: str
-            has_photo: bool
-            is_quadient_locker: bool
-            key_id: str
-            key_notes: str
-            keynest_app_user: str
-            last_movement: str
-            property_id: str
-            property_postcode: str
-            status_type: str
-            subscription_plan: str
+            address: Optional[str]
+            current_or_last_store_id: Optional[float]
+            current_status: Optional[str]
+            current_user_company: Optional[str]
+            current_user_email: Optional[str]
+            current_user_name: Optional[str]
+            current_user_phone_number: Optional[str]
+            default_office_id: Optional[float]
+            device_name: Optional[str]
+            fob_id: Optional[float]
+            handover_method: Optional[str]
+            has_photo: Optional[bool]
+            is_quadient_locker: Optional[bool]
+            key_id: Optional[str]
+            key_notes: Optional[str]
+            keynest_app_user: Optional[str]
+            last_movement: Optional[str]
+            property_id: Optional[str]
+            property_postcode: Optional[str]
+            status_type: Optional[str]
+            subscription_plan: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     address=d.get("address", None),
                     current_or_last_store_id=d.get("current_or_last_store_id", None),
@@ -1131,13 +1218,16 @@ class Device:
 
             :ivar place_name: Place name for a Kisi device."""
 
-            description: str
-            lock_id: float
-            lock_name: str
-            place_name: str
+            description: Optional[str]
+            lock_id: Optional[float]
+            lock_name: Optional[str]
+            place_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     description=d.get("description", None),
                     lock_id=d.get("lock_id", None),
@@ -1164,16 +1254,19 @@ class Device:
             :ivar wifi_signal_strength: WiFi signal strength (0-1) for a Korelock device.
             """
 
-            device_id: str
-            device_name: str
-            firmware_version: str
-            location_id: str
-            model_code: str
-            serial_number: str
-            wifi_signal_strength: float
+            device_id: Optional[str]
+            device_name: Optional[str]
+            firmware_version: Optional[str]
+            location_id: Optional[str]
+            model_code: Optional[str]
+            serial_number: Optional[str]
+            wifi_signal_strength: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1194,12 +1287,15 @@ class Device:
 
             :ivar model_number: Model number for a Kwikset device."""
 
-            device_id: str
-            device_name: str
-            model_number: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            model_number: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1216,12 +1312,15 @@ class Device:
 
             :ivar model: Model for a Lockly device."""
 
-            device_id: str
-            device_name: str
-            model: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            model: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1261,11 +1360,14 @@ class Device:
                     :ivar value: Value of latest accelerometer Z-axis reading for a Minut device.
                     """
 
-                    time: str
-                    value: float
+                    time: Optional[str]
+                    value: Optional[float]
 
+                    # The payload is decoded JSON, so every value read out of it is untyped.
+                    # Typing d as Any keeps that at this boundary instead of casting each
+                    # read, and the dataclass fields carry the real types.
                     @classmethod
-                    def from_dict(cls, d: Dict[str, Any]):
+                    def from_dict(cls, d: Any):
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1279,11 +1381,14 @@ class Device:
 
                     :ivar value: Value of latest humidity reading for a Minut device."""
 
-                    time: str
-                    value: float
+                    time: Optional[str]
+                    value: Optional[float]
 
+                    # The payload is decoded JSON, so every value read out of it is untyped.
+                    # Typing d as Any keeps that at this boundary instead of casting each
+                    # read, and the dataclass fields carry the real types.
                     @classmethod
-                    def from_dict(cls, d: Dict[str, Any]):
+                    def from_dict(cls, d: Any):
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1297,11 +1402,14 @@ class Device:
 
                     :ivar value: Value of latest pressure reading for a Minut device."""
 
-                    time: str
-                    value: float
+                    time: Optional[str]
+                    value: Optional[float]
 
+                    # The payload is decoded JSON, so every value read out of it is untyped.
+                    # Typing d as Any keeps that at this boundary instead of casting each
+                    # read, and the dataclass fields carry the real types.
                     @classmethod
-                    def from_dict(cls, d: Dict[str, Any]):
+                    def from_dict(cls, d: Any):
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1315,11 +1423,14 @@ class Device:
 
                     :ivar value: Value of latest sound reading for a Minut device."""
 
-                    time: str
-                    value: float
+                    time: Optional[str]
+                    value: Optional[float]
 
+                    # The payload is decoded JSON, so every value read out of it is untyped.
+                    # Typing d as Any keeps that at this boundary instead of casting each
+                    # read, and the dataclass fields carry the real types.
                     @classmethod
-                    def from_dict(cls, d: Dict[str, Any]):
+                    def from_dict(cls, d: Any):
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1334,24 +1445,30 @@ class Device:
                     :ivar value: Value of latest temperature reading for a Minut device.
                     """
 
-                    time: str
-                    value: float
+                    time: Optional[str]
+                    value: Optional[float]
 
+                    # The payload is decoded JSON, so every value read out of it is untyped.
+                    # Typing d as Any keeps that at this boundary instead of casting each
+                    # read, and the dataclass fields carry the real types.
                     @classmethod
-                    def from_dict(cls, d: Dict[str, Any]):
+                    def from_dict(cls, d: Any):
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
                         )
 
-                accelerometer_z: AccelerometerZ
-                humidity: Humidity
-                pressure: Pressure
-                sound: Sound
-                temperature: Temperature
+                accelerometer_z: Optional[AccelerometerZ]
+                humidity: Optional[Humidity]
+                pressure: Optional[Pressure]
+                sound: Optional[Sound]
+                temperature: Optional[Temperature]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         accelerometer_z=(
                             cls.AccelerometerZ.from_dict(d.get("accelerometer_z"))
@@ -1380,12 +1497,15 @@ class Device:
                         ),
                     )
 
-            device_id: str
-            device_name: str
-            latest_sensor_values: LatestSensorValues
+            device_id: Optional[str]
+            device_name: Optional[str]
+            latest_sensor_values: Optional[LatestSensorValues]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1408,13 +1528,16 @@ class Device:
 
             :ivar nest_device_id: Device ID for a Google Nest device."""
 
-            device_custom_name: str
-            device_name: str
-            display_name: str
-            nest_device_id: str
+            device_custom_name: Optional[str]
+            device_name: Optional[str]
+            display_name: Optional[str]
+            nest_device_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_custom_name=d.get("device_custom_name", None),
                     device_name=d.get("device_name", None),
@@ -1437,14 +1560,17 @@ class Device:
             :ivar noise_level_nrs: Noise level, expressed as a Noise Risk Score (NRS), for a NoiseAware device.
             """
 
-            device_id: str
-            device_model: str
-            device_name: str
-            noise_level_decibel: float
-            noise_level_nrs: float
+            device_id: Optional[str]
+            device_model: Optional[str]
+            device_name: Optional[str]
+            noise_level_decibel: Optional[float]
+            noise_level_nrs: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_model=d.get("device_model", None),
@@ -1468,14 +1594,17 @@ class Device:
             :ivar keypad_paired: Indicates whether the keypad is paired for a Nuki device.
             """
 
-            device_id: str
-            device_name: str
-            keypad_2_paired: bool
-            keypad_battery_critical: bool
-            keypad_paired: bool
+            device_id: Optional[str]
+            device_name: Optional[str]
+            keypad_2_paired: Optional[bool]
+            keypad_battery_critical: Optional[bool]
+            keypad_paired: Optional[bool]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1503,16 +1632,19 @@ class Device:
             :ivar timezone_raw_offset_ms: Static UTC offset of the Omnitec lock in milliseconds. Does not account for DST.
             """
 
-            has_gateway: bool
-            lock_alias: str
-            lock_id: float
-            lock_mac: str
-            lock_name: str
-            time_zone: str
-            timezone_raw_offset_ms: float
+            has_gateway: Optional[bool]
+            lock_alias: Optional[str]
+            lock_id: Optional[float]
+            lock_mac: Optional[str]
+            lock_name: Optional[str]
+            time_zone: Optional[str]
+            timezone_raw_offset_ms: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     has_gateway=d.get("has_gateway", None),
                     lock_alias=d.get("lock_alias", None),
@@ -1531,11 +1663,14 @@ class Device:
 
             :ivar device_name: Device name for a Ring device."""
 
-            device_id: str
-            device_name: str
+            device_id: Optional[str]
+            device_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1564,18 +1699,21 @@ class Device:
             :ivar site_name: Site name for the Salto KS site to which the device belongs.
             """
 
-            battery_level: str
-            customer_reference: str
-            has_custom_pin_subscription: bool
-            lock_id: str
-            lock_type: str
-            locked_state: str
-            model: str
-            site_id: str
-            site_name: str
+            battery_level: Optional[str]
+            customer_reference: Optional[str]
+            has_custom_pin_subscription: Optional[bool]
+            lock_id: Optional[str]
+            lock_type: Optional[str]
+            locked_state: Optional[str]
+            model: Optional[str]
+            site_id: Optional[str]
+            site_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     battery_level=d.get("battery_level", None),
                     customer_reference=d.get("customer_reference", None),
@@ -1611,17 +1749,20 @@ class Device:
             :ivar site_name: Site name for the Salto KS site to which the device belongs.
             """
 
-            battery_level: str
-            customer_reference: str
-            lock_id: str
-            lock_type: str
-            locked_state: str
-            model: str
-            site_id: str
-            site_name: str
+            battery_level: Optional[str]
+            customer_reference: Optional[str]
+            lock_id: Optional[str]
+            lock_type: Optional[str]
+            locked_state: Optional[str]
+            model: Optional[str]
+            site_id: Optional[str]
+            site_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     battery_level=d.get("battery_level", None),
                     customer_reference=d.get("customer_reference", None),
@@ -1643,12 +1784,15 @@ class Device:
 
             :ivar model: Model for a Schlage device."""
 
-            device_id: str
-            device_name: str
-            model: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            model: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1665,12 +1809,15 @@ class Device:
 
             :ivar unlock_method: Unlock method for Seam Bridge."""
 
-            device_num: float
-            name: str
-            unlock_method: str
+            device_num: Optional[float]
+            name: Optional[str]
+            unlock_method: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_num=d.get("device_num", None),
                     name=d.get("name", None),
@@ -1689,13 +1836,16 @@ class Device:
 
             :ivar product_type: Product type for a Sensi device."""
 
-            device_id: str
-            device_name: str
-            dual_setpoints_not_supported: bool
-            product_type: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            dual_setpoints_not_supported: Optional[bool]
+            product_type: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1717,13 +1867,16 @@ class Device:
 
             :ivar model: Model for a SmartThings device."""
 
-            device_id: str
-            device_name: str
-            location_id: str
-            model: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            location_id: Optional[str]
+            model: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1739,11 +1892,14 @@ class Device:
 
             :ivar serial_no: Serial number for a tado° device."""
 
-            device_type: str
-            serial_no: str
+            device_type: Optional[str]
+            serial_no: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_type=d.get("device_type", None),
                     serial_no=d.get("serial_no", None),
@@ -1767,16 +1923,19 @@ class Device:
 
             :ivar serial_number: Serial number for a Tedee device."""
 
-            bridge_id: float
-            bridge_name: str
-            device_id: float
-            device_model: str
-            device_name: str
-            keypad_id: float
-            serial_number: str
+            bridge_id: Optional[float]
+            bridge_name: Optional[str]
+            device_id: Optional[float]
+            device_model: Optional[str]
+            device_name: Optional[str]
+            keypad_id: Optional[float]
+            serial_number: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     bridge_name=d.get("bridge_name", None),
@@ -1823,16 +1982,19 @@ class Device:
 
                 :ivar wifi: Indicates whether a TTLock device supports Wi-Fi."""
 
-                auto_lock_time_config: bool
-                incomplete_keyboard_passcode: bool
-                lock_command: bool
-                passcode: bool
-                passcode_management: bool
-                unlock_via_gateway: bool
-                wifi: bool
+                auto_lock_time_config: Optional[bool]
+                incomplete_keyboard_passcode: Optional[bool]
+                lock_command: Optional[bool]
+                passcode: Optional[bool]
+                passcode_management: Optional[bool]
+                unlock_via_gateway: Optional[bool]
+                wifi: Optional[bool]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         auto_lock_time_config=d.get("auto_lock_time_config", None),
                         incomplete_keyboard_passcode=d.get(
@@ -1854,26 +2016,32 @@ class Device:
                 :ivar wireless_keypad_name: Name for a wireless keypad for a TTLock device.
                 """
 
-                wireless_keypad_id: float
-                wireless_keypad_name: str
+                wireless_keypad_id: Optional[float]
+                wireless_keypad_name: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         wireless_keypad_id=d.get("wireless_keypad_id", None),
                         wireless_keypad_name=d.get("wireless_keypad_name", None),
                     )
 
-            feature_value: str
-            features: Features
-            has_gateway: bool
-            lock_alias: str
-            lock_id: float
-            timezone_raw_offset_ms: float
-            wireless_keypads: List[WirelessKeypads]
+            feature_value: Optional[str]
+            features: Optional[Features]
+            has_gateway: Optional[bool]
+            lock_alias: Optional[str]
+            lock_id: Optional[float]
+            timezone_raw_offset_ms: Optional[float]
+            wireless_keypads: Optional[List[WirelessKeypads]]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     feature_value=d.get("feature_value", None),
                     features=(
@@ -1899,11 +2067,14 @@ class Device:
 
             :ivar device_name: Device name for a 2N device."""
 
-            device_id: float
-            device_name: str
+            device_id: Optional[float]
+            device_name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1921,13 +2092,16 @@ class Device:
 
             :ivar time_zone: IANA timezone for the Ultraloq device."""
 
-            device_id: str
-            device_name: str
-            device_type: str
-            time_zone: str
+            device_id: Optional[str]
+            device_name: Optional[str]
+            device_type: Optional[str]
+            time_zone: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1941,10 +2115,13 @@ class Device:
 
             :ivar encoder_id: Encoder ID for an ASSA ABLOY Visionline system."""
 
-            encoder_id: str
+            encoder_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     encoder_id=d.get("encoder_id", None),
                 )
@@ -1969,17 +2146,20 @@ class Device:
 
             :ivar product_type: Product type for a Wyze device."""
 
-            device_id: str
-            device_info_model: str
-            device_name: str
-            keypad_uuid: str
-            locker_status_hardlock: float
-            product_model: str
-            product_name: str
-            product_type: str
+            device_id: Optional[str]
+            device_info_model: Optional[str]
+            device_name: Optional[str]
+            keypad_uuid: Optional[str]
+            locker_status_hardlock: Optional[float]
+            product_model: Optional[str]
+            product_name: Optional[str]
+            product_type: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     device_id=d.get("device_id", None),
                     device_info_model=d.get("device_info_model", None),
@@ -2002,11 +2182,14 @@ class Device:
             :ivar min_length: Minimum name length constraint for access codes."""
 
             constraint_type: str
-            max_length: float
-            min_length: float
+            max_length: Optional[float]
+            min_length: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     constraint_type=d.get("constraint_type", None),
                     max_length=d.get("max_length", None),
@@ -2021,8 +2204,11 @@ class Device:
 
             level: float
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     level=d.get("level", None),
                 )
@@ -2063,8 +2249,11 @@ class Device:
                 end_time: str
                 start_time: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         display_name=d.get("display_name", None),
                         end_time=d.get("end_time", None),
@@ -2072,16 +2261,19 @@ class Device:
                     )
 
             display_name: str
-            end_date_recurrence_rule: str
-            matching_start_end_time: bool
-            max_duration: str
-            min_duration: str
-            start_date_recurrence_rule: str
-            time_pairs: List[TimePairs]
-            time_zone: str
+            end_date_recurrence_rule: Optional[str]
+            matching_start_end_time: Optional[bool]
+            max_duration: Optional[str]
+            min_duration: Optional[str]
+            start_date_recurrence_rule: Optional[str]
+            time_pairs: Optional[List[TimePairs]]
+            time_zone: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     display_name=d.get("display_name", None),
                     end_date_recurrence_rule=d.get("end_date_recurrence_rule", None),
@@ -2133,8 +2325,11 @@ class Device:
                 end_time: str
                 start_time: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         display_name=d.get("display_name", None),
                         end_time=d.get("end_time", None),
@@ -2142,16 +2337,19 @@ class Device:
                     )
 
             display_name: str
-            end_date_recurrence_rule: str
-            matching_start_end_time: bool
-            max_duration: str
-            min_duration: str
-            start_date_recurrence_rule: str
-            time_pairs: List[TimePairs]
-            time_zone: str
+            end_date_recurrence_rule: Optional[str]
+            matching_start_end_time: Optional[bool]
+            max_duration: Optional[str]
+            min_duration: Optional[str]
+            start_date_recurrence_rule: Optional[str]
+            time_pairs: Optional[List[TimePairs]]
+            time_zone: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     display_name=d.get("display_name", None),
                     end_date_recurrence_rule=d.get("end_date_recurrence_rule", None),
@@ -2209,8 +2407,11 @@ class Device:
                 error_code: str
                 message: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         created_at=d.get("created_at", None),
                         error_code=d.get("error_code", None),
@@ -2222,15 +2423,18 @@ class Device:
             device_id: str
             ends_at: str
             errors: List[Errors]
-            is_override_allowed: bool
-            max_override_period_minutes: int
-            name: str
+            is_override_allowed: Optional[bool]
+            max_override_period_minutes: Optional[int]
+            name: Optional[str]
             starts_at: str
             thermostat_schedule_id: str
             workspace_id: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     climate_preset_key=d.get("climate_preset_key", None),
                     created_at=d.get("created_at", None),
@@ -2293,12 +2497,15 @@ class Device:
                 :ivar owner: Indicates whether the climate preset is owned by the user or the system.
                 """
 
-                climate_ref: str
-                is_optimized: bool
-                owner: str
+                climate_ref: Optional[str]
+                is_optimized: Optional[bool]
+                owner: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
@@ -2309,20 +2516,23 @@ class Device:
             can_edit: bool
             can_use_with_thermostat_daily_programs: bool
             climate_preset_key: str
-            climate_preset_mode: str
-            cooling_set_point_celsius: float
-            cooling_set_point_fahrenheit: float
+            climate_preset_mode: Optional[str]
+            cooling_set_point_celsius: Optional[float]
+            cooling_set_point_fahrenheit: Optional[float]
             display_name: str
-            ecobee_metadata: EcobeeMetadata
-            fan_mode_setting: str
-            heating_set_point_celsius: float
-            heating_set_point_fahrenheit: float
-            hvac_mode_setting: str
+            ecobee_metadata: Optional[EcobeeMetadata]
+            fan_mode_setting: Optional[str]
+            heating_set_point_celsius: Optional[float]
+            heating_set_point_fahrenheit: Optional[float]
+            hvac_mode_setting: Optional[str]
             manual_override_allowed: bool
-            name: str
+            name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2397,36 +2607,42 @@ class Device:
                 :ivar owner: Indicates whether the climate preset is owned by the user or the system.
                 """
 
-                climate_ref: str
-                is_optimized: bool
-                owner: str
+                climate_ref: Optional[str]
+                is_optimized: Optional[bool]
+                owner: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
                         owner=d.get("owner", None),
                     )
 
-            can_delete: bool
-            can_edit: bool
-            can_use_with_thermostat_daily_programs: bool
-            climate_preset_key: str
-            climate_preset_mode: str
-            cooling_set_point_celsius: float
-            cooling_set_point_fahrenheit: float
-            display_name: str
-            ecobee_metadata: EcobeeMetadata
-            fan_mode_setting: str
-            heating_set_point_celsius: float
-            heating_set_point_fahrenheit: float
-            hvac_mode_setting: str
-            manual_override_allowed: bool
-            name: str
+            can_delete: Optional[bool]
+            can_edit: Optional[bool]
+            can_use_with_thermostat_daily_programs: Optional[bool]
+            climate_preset_key: Optional[str]
+            climate_preset_mode: Optional[str]
+            cooling_set_point_celsius: Optional[float]
+            cooling_set_point_fahrenheit: Optional[float]
+            display_name: Optional[str]
+            ecobee_metadata: Optional[EcobeeMetadata]
+            fan_mode_setting: Optional[str]
+            heating_set_point_celsius: Optional[float]
+            heating_set_point_fahrenheit: Optional[float]
+            hvac_mode_setting: Optional[str]
+            manual_override_allowed: Optional[bool]
+            name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2501,36 +2717,42 @@ class Device:
                 :ivar owner: Indicates whether the climate preset is owned by the user or the system.
                 """
 
-                climate_ref: str
-                is_optimized: bool
-                owner: str
+                climate_ref: Optional[str]
+                is_optimized: Optional[bool]
+                owner: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
                         owner=d.get("owner", None),
                     )
 
-            can_delete: bool
-            can_edit: bool
-            can_use_with_thermostat_daily_programs: bool
-            climate_preset_key: str
-            climate_preset_mode: str
-            cooling_set_point_celsius: float
-            cooling_set_point_fahrenheit: float
-            display_name: str
-            ecobee_metadata: EcobeeMetadata
-            fan_mode_setting: str
-            heating_set_point_celsius: float
-            heating_set_point_fahrenheit: float
-            hvac_mode_setting: str
-            manual_override_allowed: bool
-            name: str
+            can_delete: Optional[bool]
+            can_edit: Optional[bool]
+            can_use_with_thermostat_daily_programs: Optional[bool]
+            climate_preset_key: Optional[str]
+            climate_preset_mode: Optional[str]
+            cooling_set_point_celsius: Optional[float]
+            cooling_set_point_fahrenheit: Optional[float]
+            display_name: Optional[str]
+            ecobee_metadata: Optional[EcobeeMetadata]
+            fan_mode_setting: Optional[str]
+            heating_set_point_celsius: Optional[float]
+            heating_set_point_fahrenheit: Optional[float]
+            hvac_mode_setting: Optional[str]
+            manual_override_allowed: Optional[bool]
+            name: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2572,13 +2794,16 @@ class Device:
             :ivar upper_limit_fahrenheit: Upper limit in °F within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
             """
 
-            lower_limit_celsius: float
-            lower_limit_fahrenheit: float
-            upper_limit_celsius: float
-            upper_limit_fahrenheit: float
+            lower_limit_celsius: Optional[float]
+            lower_limit_fahrenheit: Optional[float]
+            upper_limit_celsius: Optional[float]
+            upper_limit_fahrenheit: Optional[float]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     lower_limit_celsius=d.get("lower_limit_celsius", None),
                     lower_limit_fahrenheit=d.get("lower_limit_fahrenheit", None),
@@ -2615,8 +2840,11 @@ class Device:
                 climate_preset_key: str
                 starts_at_time: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         climate_preset_key=d.get("climate_preset_key", None),
                         starts_at_time=d.get("starts_at_time", None),
@@ -2624,13 +2852,16 @@ class Device:
 
             created_at: str
             device_id: str
-            name: str
+            name: Optional[str]
             periods: List[Periods]
             thermostat_daily_program_id: str
             workspace_id: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     created_at=d.get("created_at", None),
                     device_id=d.get("device_id", None),
@@ -2664,16 +2895,19 @@ class Device:
             """
 
             created_at: str
-            friday_program_id: str
-            monday_program_id: str
-            saturday_program_id: str
-            sunday_program_id: str
-            thursday_program_id: str
-            tuesday_program_id: str
-            wednesday_program_id: str
+            friday_program_id: Optional[str]
+            monday_program_id: Optional[str]
+            saturday_program_id: Optional[str]
+            sunday_program_id: Optional[str]
+            thursday_program_id: Optional[str]
+            tuesday_program_id: Optional[str]
+            wednesday_program_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     created_at=d.get("created_at", None),
                     friday_program_id=d.get("friday_program_id", None),
@@ -2685,113 +2919,120 @@ class Device:
                     wednesday_program_id=d.get("wednesday_program_id", None),
                 )
 
-        accessory_keypad: AccessoryKeypad
-        appearance: Appearance
-        battery: Battery
-        battery_level: float
-        currently_triggering_noise_threshold_ids: List[str]
-        has_direct_power: bool
-        image_alt_text: str
-        image_url: str
-        manufacturer: str
-        model: Model
+        accessory_keypad: Optional[AccessoryKeypad]
+        appearance: Optional[Appearance]
+        battery: Optional[Battery]
+        battery_level: Optional[float]
+        currently_triggering_noise_threshold_ids: Optional[List[str]]
+        has_direct_power: Optional[bool]
+        image_alt_text: Optional[str]
+        image_url: Optional[str]
+        manufacturer: Optional[str]
+        model: Optional[Model]
         name: str
-        noise_level_decibels: float
-        offline_access_codes_enabled: bool
+        noise_level_decibels: Optional[float]
+        offline_access_codes_enabled: Optional[bool]
         online: bool
-        online_access_codes_enabled: bool
-        serial_number: str
-        supports_accessory_keypad: bool
-        supports_offline_access_codes: bool
-        assa_abloy_credential_service_metadata: AssaAbloyCredentialServiceMetadata
-        salto_space_credential_service_metadata: SaltoSpaceCredentialServiceMetadata
-        akiles_metadata: AkilesMetadata
-        aqara_metadata: AqaraMetadata
-        assa_abloy_vostio_metadata: AssaAbloyVostioMetadata
-        august_metadata: AugustMetadata
-        avigilon_alta_metadata: AvigilonAltaMetadata
-        brivo_metadata: BrivoMetadata
-        controlbyweb_metadata: ControlbywebMetadata
-        dormakaba_oracode_metadata: DormakabaOracodeMetadata
-        ecobee_metadata: EcobeeMetadata
-        four_suites_metadata: FourSuitesMetadata
-        genie_metadata: GenieMetadata
-        honeywell_resideo_metadata: HoneywellResideoMetadata
-        igloo_metadata: IglooMetadata
-        igloohome_metadata: IgloohomeMetadata
-        keynest_metadata: KeynestMetadata
-        kisi_metadata: KisiMetadata
-        korelock_metadata: KorelockMetadata
-        kwikset_metadata: KwiksetMetadata
-        lockly_metadata: LocklyMetadata
-        minut_metadata: MinutMetadata
-        nest_metadata: NestMetadata
-        noiseaware_metadata: NoiseawareMetadata
-        nuki_metadata: NukiMetadata
-        omnitec_metadata: OmnitecMetadata
-        ring_metadata: RingMetadata
-        salto_ks_metadata: SaltoKsMetadata
-        salto_metadata: SaltoMetadata
-        schlage_metadata: SchlageMetadata
-        seam_bridge_metadata: SeamBridgeMetadata
-        sensi_metadata: SensiMetadata
-        smartthings_metadata: SmartthingsMetadata
-        tado_metadata: TadoMetadata
-        tedee_metadata: TedeeMetadata
-        ttlock_metadata: TtlockMetadata
-        two_n_metadata: TwoNMetadata
-        ultraloq_metadata: UltraloqMetadata
-        visionline_metadata: VisionlineMetadata
-        wyze_metadata: WyzeMetadata
-        auto_lock_delay_seconds: float
-        auto_lock_enabled: bool
-        backup_access_code_pool_enabled: bool
-        code_constraints: List[CodeConstraints]
-        door_open: bool
-        has_native_entry_events: bool
-        keypad_battery: KeypadBattery
-        locked: bool
-        max_active_codes_supported: float
-        offline_time_frame_options: List[OfflineTimeFrameOptions]
-        online_time_frame_options: List[OnlineTimeFrameOptions]
-        supported_code_lengths: List[float]
-        supports_backup_access_code_pool: bool
-        active_thermostat_schedule: ActiveThermostatSchedule
-        active_thermostat_schedule_id: str
-        available_climate_preset_modes: List[str]
-        available_climate_presets: List[AvailableClimatePresets]
-        available_fan_mode_settings: List[str]
-        available_hvac_mode_settings: List[str]
-        current_climate_setting: CurrentClimateSetting
-        default_climate_setting: DefaultClimateSetting
-        fallback_climate_preset_key: str
-        fan_mode_setting: str
-        is_cooling: bool
-        is_fan_running: bool
-        is_heating: bool
-        is_temporary_manual_override_active: bool
-        max_cooling_set_point_celsius: float
-        max_cooling_set_point_fahrenheit: float
-        max_heating_set_point_celsius: float
-        max_heating_set_point_fahrenheit: float
-        max_thermostat_daily_program_periods_per_day: float
-        max_unique_climate_presets_per_thermostat_weekly_program: float
-        min_cooling_set_point_celsius: float
-        min_cooling_set_point_fahrenheit: float
-        min_heating_cooling_delta_celsius: float
-        min_heating_cooling_delta_fahrenheit: float
-        min_heating_set_point_celsius: float
-        min_heating_set_point_fahrenheit: float
-        relative_humidity: float
-        temperature_celsius: float
-        temperature_fahrenheit: float
-        temperature_threshold: TemperatureThreshold
-        thermostat_daily_program_period_precision_minutes: float
-        thermostat_daily_programs: List[ThermostatDailyPrograms]
-        thermostat_weekly_program: ThermostatWeeklyProgram
+        online_access_codes_enabled: Optional[bool]
+        serial_number: Optional[str]
+        supports_accessory_keypad: Optional[bool]
+        supports_offline_access_codes: Optional[bool]
+        assa_abloy_credential_service_metadata: Optional[
+            AssaAbloyCredentialServiceMetadata
+        ]
+        salto_space_credential_service_metadata: Optional[
+            SaltoSpaceCredentialServiceMetadata
+        ]
+        akiles_metadata: Optional[AkilesMetadata]
+        aqara_metadata: Optional[AqaraMetadata]
+        assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
+        august_metadata: Optional[AugustMetadata]
+        avigilon_alta_metadata: Optional[AvigilonAltaMetadata]
+        brivo_metadata: Optional[BrivoMetadata]
+        controlbyweb_metadata: Optional[ControlbywebMetadata]
+        dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
+        ecobee_metadata: Optional[EcobeeMetadata]
+        four_suites_metadata: Optional[FourSuitesMetadata]
+        genie_metadata: Optional[GenieMetadata]
+        honeywell_resideo_metadata: Optional[HoneywellResideoMetadata]
+        igloo_metadata: Optional[IglooMetadata]
+        igloohome_metadata: Optional[IgloohomeMetadata]
+        keynest_metadata: Optional[KeynestMetadata]
+        kisi_metadata: Optional[KisiMetadata]
+        korelock_metadata: Optional[KorelockMetadata]
+        kwikset_metadata: Optional[KwiksetMetadata]
+        lockly_metadata: Optional[LocklyMetadata]
+        minut_metadata: Optional[MinutMetadata]
+        nest_metadata: Optional[NestMetadata]
+        noiseaware_metadata: Optional[NoiseawareMetadata]
+        nuki_metadata: Optional[NukiMetadata]
+        omnitec_metadata: Optional[OmnitecMetadata]
+        ring_metadata: Optional[RingMetadata]
+        salto_ks_metadata: Optional[SaltoKsMetadata]
+        salto_metadata: Optional[SaltoMetadata]
+        schlage_metadata: Optional[SchlageMetadata]
+        seam_bridge_metadata: Optional[SeamBridgeMetadata]
+        sensi_metadata: Optional[SensiMetadata]
+        smartthings_metadata: Optional[SmartthingsMetadata]
+        tado_metadata: Optional[TadoMetadata]
+        tedee_metadata: Optional[TedeeMetadata]
+        ttlock_metadata: Optional[TtlockMetadata]
+        two_n_metadata: Optional[TwoNMetadata]
+        ultraloq_metadata: Optional[UltraloqMetadata]
+        visionline_metadata: Optional[VisionlineMetadata]
+        wyze_metadata: Optional[WyzeMetadata]
+        auto_lock_delay_seconds: Optional[float]
+        auto_lock_enabled: Optional[bool]
+        backup_access_code_pool_enabled: Optional[bool]
+        code_constraints: Optional[List[CodeConstraints]]
+        door_open: Optional[bool]
+        has_native_entry_events: Optional[bool]
+        keypad_battery: Optional[KeypadBattery]
+        locked: Optional[bool]
+        max_active_codes_supported: Optional[float]
+        offline_time_frame_options: Optional[List[OfflineTimeFrameOptions]]
+        online_time_frame_options: Optional[List[OnlineTimeFrameOptions]]
+        supported_code_lengths: Optional[List[float]]
+        supports_backup_access_code_pool: Optional[bool]
+        active_thermostat_schedule: Optional[ActiveThermostatSchedule]
+        active_thermostat_schedule_id: Optional[str]
+        available_climate_preset_modes: Optional[List[str]]
+        available_climate_presets: Optional[List[AvailableClimatePresets]]
+        available_fan_mode_settings: Optional[List[str]]
+        available_hvac_mode_settings: Optional[List[str]]
+        current_climate_setting: Optional[CurrentClimateSetting]
+        default_climate_setting: Optional[DefaultClimateSetting]
+        fallback_climate_preset_key: Optional[str]
+        fan_mode_setting: Optional[str]
+        is_cooling: Optional[bool]
+        is_fan_running: Optional[bool]
+        is_heating: Optional[bool]
+        is_temporary_manual_override_active: Optional[bool]
+        max_cooling_set_point_celsius: Optional[float]
+        max_cooling_set_point_fahrenheit: Optional[float]
+        max_heating_set_point_celsius: Optional[float]
+        max_heating_set_point_fahrenheit: Optional[float]
+        max_thermostat_daily_program_periods_per_day: Optional[float]
+        max_unique_climate_presets_per_thermostat_weekly_program: Optional[float]
+        min_cooling_set_point_celsius: Optional[float]
+        min_cooling_set_point_fahrenheit: Optional[float]
+        min_heating_cooling_delta_celsius: Optional[float]
+        min_heating_cooling_delta_fahrenheit: Optional[float]
+        min_heating_set_point_celsius: Optional[float]
+        min_heating_set_point_fahrenheit: Optional[float]
+        relative_humidity: Optional[float]
+        temperature_celsius: Optional[float]
+        temperature_fahrenheit: Optional[float]
+        temperature_threshold: Optional[TemperatureThreshold]
+        thermostat_daily_program_period_precision_minutes: Optional[float]
+        thermostat_daily_programs: Optional[List[ThermostatDailyPrograms]]
+        thermostat_weekly_program: Optional[ThermostatWeeklyProgram]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 accessory_keypad=(
                     cls.AccessoryKeypad.from_dict(d.get("accessory_keypad"))
@@ -3194,11 +3435,14 @@ class Device:
         created_at: str
         message: str
         warning_code: str
-        active_access_code_count: int
-        max_active_access_code_count: int
+        active_access_code_count: Optional[int]
+        max_active_access_code_count: Optional[int]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3209,46 +3453,49 @@ class Device:
                 ),
             )
 
-    can_configure_auto_lock: bool
-    can_hvac_cool: bool
-    can_hvac_heat: bool
-    can_hvac_heat_cool: bool
-    can_program_offline_access_codes: bool
-    can_program_online_access_codes: bool
-    can_program_thermostat_programs_as_different_each_day: bool
-    can_program_thermostat_programs_as_same_each_day: bool
-    can_program_thermostat_programs_as_weekday_weekend: bool
-    can_remotely_lock: bool
-    can_remotely_unlock: bool
-    can_run_thermostat_programs: bool
-    can_simulate_connection: bool
-    can_simulate_disconnection: bool
-    can_simulate_hub_connection: bool
-    can_simulate_hub_disconnection: bool
-    can_simulate_paid_subscription: bool
-    can_simulate_removal: bool
-    can_turn_off_hvac: bool
-    can_unlock_with_code: bool
+    can_configure_auto_lock: Optional[bool]
+    can_hvac_cool: Optional[bool]
+    can_hvac_heat: Optional[bool]
+    can_hvac_heat_cool: Optional[bool]
+    can_program_offline_access_codes: Optional[bool]
+    can_program_online_access_codes: Optional[bool]
+    can_program_thermostat_programs_as_different_each_day: Optional[bool]
+    can_program_thermostat_programs_as_same_each_day: Optional[bool]
+    can_program_thermostat_programs_as_weekday_weekend: Optional[bool]
+    can_remotely_lock: Optional[bool]
+    can_remotely_unlock: Optional[bool]
+    can_run_thermostat_programs: Optional[bool]
+    can_simulate_connection: Optional[bool]
+    can_simulate_disconnection: Optional[bool]
+    can_simulate_hub_connection: Optional[bool]
+    can_simulate_hub_disconnection: Optional[bool]
+    can_simulate_paid_subscription: Optional[bool]
+    can_simulate_removal: Optional[bool]
+    can_turn_off_hvac: Optional[bool]
+    can_unlock_with_code: Optional[bool]
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
     custom_metadata: Dict[str, Any]
     device_id: str
-    device_manufacturer: DeviceManufacturer
-    device_provider: DeviceProvider
+    device_manufacturer: Optional[DeviceManufacturer]
+    device_provider: Optional[DeviceProvider]
     device_type: str
     display_name: str
     errors: List[Errors]
     is_managed: bool
-    location: Location
-    nickname: str
-    properties: Properties
+    location: Optional[Location]
+    nickname: Optional[str]
+    properties: Optional[Properties]
     space_ids: List[str]
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),

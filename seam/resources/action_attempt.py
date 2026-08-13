@@ -29,8 +29,11 @@ class ActionAttempt:
         message: str
         type: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -169,21 +172,24 @@ class ActionAttempt:
                 :ivar pending_auto_update: Indicates whether the card associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is pending auto-update.
                 """
 
-                cancelled: bool
-                card_format: str
-                card_holder: str
-                card_id: str
-                common_acs_entrance_ids: List[str]
-                discarded: bool
-                expired: bool
-                guest_acs_entrance_ids: List[str]
-                number_of_issued_cards: float
-                overridden: bool
-                overwritten: bool
-                pending_auto_update: bool
+                cancelled: Optional[bool]
+                card_format: Optional[str]
+                card_holder: Optional[str]
+                card_id: Optional[str]
+                common_acs_entrance_ids: Optional[List[str]]
+                discarded: Optional[bool]
+                expired: Optional[bool]
+                guest_acs_entrance_ids: Optional[List[str]]
+                number_of_issued_cards: Optional[float]
+                overridden: Optional[bool]
+                overwritten: Optional[bool]
+                pending_auto_update: Optional[bool]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         cancelled=d.get("cancelled", None),
                         card_format=d.get("card_format", None),
@@ -199,15 +205,18 @@ class ActionAttempt:
                         pending_auto_update=d.get("pending_auto_update", None),
                     )
 
-            card_number: str
-            created_at: str
-            ends_at: str
-            is_issued: bool
-            starts_at: str
-            visionline_metadata: VisionlineMetadata
+            card_number: Optional[str]
+            created_at: Optional[str]
+            ends_at: Optional[str]
+            is_issued: Optional[bool]
+            starts_at: Optional[str]
+            visionline_metadata: Optional[VisionlineMetadata]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     card_number=d.get("card_number", None),
                     created_at=d.get("created_at", None),
@@ -299,15 +308,18 @@ class ActionAttempt:
                 :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system.
                 """
 
-                auto_join: bool
-                door_names: List[str]
-                endpoint_id: str
-                key_id: str
-                key_issuing_request_id: str
-                override_guest_acs_entrance_ids: List[str]
+                auto_join: Optional[bool]
+                door_names: Optional[List[str]]
+                endpoint_id: Optional[str]
+                key_id: Optional[str]
+                key_issuing_request_id: Optional[str]
+                override_guest_acs_entrance_ids: Optional[List[str]]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         auto_join=d.get("auto_join", None),
                         door_names=d.get("door_names", None),
@@ -333,8 +345,11 @@ class ActionAttempt:
                 error_code: str
                 message: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         created_at=d.get("created_at", None),
                         error_code=d.get("error_code", None),
@@ -362,17 +377,20 @@ class ActionAttempt:
                 :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join.
                 """
 
-                auto_join: bool
-                card_function_type: str
-                card_id: str
-                common_acs_entrance_ids: List[str]
-                credential_id: str
-                guest_acs_entrance_ids: List[str]
-                is_valid: bool
-                joiner_acs_credential_ids: List[str]
+                auto_join: Optional[bool]
+                card_function_type: Optional[str]
+                card_id: Optional[str]
+                common_acs_entrance_ids: Optional[List[str]]
+                credential_id: Optional[str]
+                guest_acs_entrance_ids: Optional[List[str]]
+                is_valid: Optional[bool]
+                joiner_acs_credential_ids: Optional[List[str]]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         auto_join=d.get("auto_join", None),
                         card_function_type=d.get("card_function_type", None),
@@ -401,8 +419,11 @@ class ActionAttempt:
                 message: str
                 warning_code: str
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         created_at=d.get("created_at", None),
                         message=d.get("message", None),
@@ -411,35 +432,38 @@ class ActionAttempt:
 
             access_method: str
             acs_credential_id: str
-            acs_credential_pool_id: str
+            acs_credential_pool_id: Optional[str]
             acs_system_id: str
-            acs_user_id: str
-            assa_abloy_vostio_metadata: AssaAbloyVostioMetadata
-            card_number: str
-            code: str
+            acs_user_id: Optional[str]
+            assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
+            card_number: Optional[str]
+            code: Optional[str]
             connected_account_id: str
             created_at: str
             display_name: str
-            ends_at: str
+            ends_at: Optional[str]
             errors: List[Errors]
-            external_type: str
-            external_type_display_name: str
-            is_issued: bool
-            is_latest_desired_state_synced_with_provider: bool
+            external_type: Optional[str]
+            external_type_display_name: Optional[str]
+            is_issued: Optional[bool]
+            is_latest_desired_state_synced_with_provider: Optional[bool]
             is_managed: bool
-            is_multi_phone_sync_credential: bool
-            is_one_time_use: bool
-            issued_at: str
-            latest_desired_state_synced_with_provider_at: str
-            parent_acs_credential_id: str
-            starts_at: str
-            user_identity_id: str
-            visionline_metadata: VisionlineMetadata
+            is_multi_phone_sync_credential: Optional[bool]
+            is_one_time_use: Optional[bool]
+            issued_at: Optional[str]
+            latest_desired_state_synced_with_provider_at: Optional[str]
+            parent_acs_credential_id: Optional[str]
+            starts_at: Optional[str]
+            user_identity_id: Optional[str]
+            visionline_metadata: Optional[VisionlineMetadata]
             warnings: List[Warnings]
             workspace_id: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     access_method=d.get("access_method", None),
                     acs_credential_id=d.get("acs_credential_id", None),
@@ -507,13 +531,16 @@ class ActionAttempt:
             """
 
             warning_code: str
-            warning_message: str
-            created_at: str
-            message: str
-            original_access_method_id: str
+            warning_message: Optional[str]
+            created_at: Optional[str]
+            message: Optional[str]
+            original_access_method_id: Optional[str]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     warning_code=d.get("warning_code", None),
                     warning_message=d.get("warning_message", None),
@@ -539,15 +566,18 @@ class ActionAttempt:
             :ivar override_guest_acs_entrance_ids: IDs of the guest entrances to override in the Vostio access system.
             """
 
-            auto_join: bool
-            door_names: List[str]
-            endpoint_id: str
-            key_id: str
-            key_issuing_request_id: str
-            override_guest_acs_entrance_ids: List[str]
+            auto_join: Optional[bool]
+            door_names: Optional[List[str]]
+            endpoint_id: Optional[str]
+            key_id: Optional[str]
+            key_issuing_request_id: Optional[str]
+            override_guest_acs_entrance_ids: Optional[List[str]]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     auto_join=d.get("auto_join", None),
                     door_names=d.get("door_names", None),
@@ -574,8 +604,11 @@ class ActionAttempt:
             error_code: str
             message: str
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     created_at=d.get("created_at", None),
                     error_code=d.get("error_code", None),
@@ -603,17 +636,20 @@ class ActionAttempt:
             :ivar joiner_acs_credential_ids: IDs of the credentials to which you want to join.
             """
 
-            auto_join: bool
-            card_function_type: str
-            card_id: str
-            common_acs_entrance_ids: List[str]
-            credential_id: str
-            guest_acs_entrance_ids: List[str]
-            is_valid: bool
-            joiner_acs_credential_ids: List[str]
+            auto_join: Optional[bool]
+            card_function_type: Optional[str]
+            card_id: Optional[str]
+            common_acs_entrance_ids: Optional[List[str]]
+            credential_id: Optional[str]
+            guest_acs_entrance_ids: Optional[List[str]]
+            is_valid: Optional[bool]
+            joiner_acs_credential_ids: Optional[List[str]]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     auto_join=d.get("auto_join", None),
                     card_function_type=d.get("card_function_type", None),
@@ -647,11 +683,14 @@ class ActionAttempt:
 
                 :ivar starts_at: Previous start time for access."""
 
-                ends_at: str
-                starts_at: str
+                ends_at: Optional[str]
+                starts_at: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         ends_at=d.get("ends_at", None),
                         starts_at=d.get("starts_at", None),
@@ -665,24 +704,30 @@ class ActionAttempt:
 
                 :ivar starts_at: New start time for access."""
 
-                ends_at: str
-                starts_at: str
+                ends_at: Optional[str]
+                starts_at: Optional[str]
 
+                # The payload is decoded JSON, so every value read out of it is untyped.
+                # Typing d as Any keeps that at this boundary instead of casting each
+                # read, and the dataclass fields carry the real types.
                 @classmethod
-                def from_dict(cls, d: Dict[str, Any]):
+                def from_dict(cls, d: Any):
                     return cls(
                         ends_at=d.get("ends_at", None),
                         starts_at=d.get("starts_at", None),
                     )
 
             created_at: str
-            from_: From
+            from_: Optional[From]
             message: str
             mutation_code: str
-            to: To
+            to: Optional[To]
 
+            # The payload is decoded JSON, so every value read out of it is untyped.
+            # Typing d as Any keeps that at this boundary instead of casting each
+            # read, and the dataclass fields carry the real types.
             @classmethod
-            def from_dict(cls, d: Dict[str, Any]):
+            def from_dict(cls, d: Any):
                 return cls(
                     created_at=d.get("created_at", None),
                     from_=(
@@ -699,50 +744,53 @@ class ActionAttempt:
                     ),
                 )
 
-        was_confirmed_by_device: bool
-        acs_credential_on_encoder: AcsCredentialOnEncoder
-        acs_credential_on_seam: AcsCredentialOnSeam
-        warnings: List[Warnings]
-        access_method: str
-        acs_credential_id: str
-        acs_credential_pool_id: str
-        acs_system_id: str
-        acs_user_id: str
-        assa_abloy_vostio_metadata: AssaAbloyVostioMetadata
-        card_number: str
-        code: str
-        connected_account_id: str
-        created_at: str
-        display_name: str
-        ends_at: str
-        errors: List[Errors]
-        external_type: str
-        external_type_display_name: str
-        is_issued: bool
-        is_latest_desired_state_synced_with_provider: bool
-        is_managed: bool
-        is_multi_phone_sync_credential: bool
-        is_one_time_use: bool
-        issued_at: str
-        latest_desired_state_synced_with_provider_at: str
-        parent_acs_credential_id: str
-        starts_at: str
-        user_identity_id: str
-        visionline_metadata: VisionlineMetadata
-        workspace_id: str
-        access_method_id: str
-        client_session_token: str
-        customization_profile_id: str
-        instant_key_url: str
-        is_assignment_required: bool
-        is_encoding_required: bool
-        is_ready_for_assignment: bool
-        is_ready_for_encoding: bool
-        mode: str
-        pending_mutations: List[PendingMutations]
+        was_confirmed_by_device: Optional[bool]
+        acs_credential_on_encoder: Optional[AcsCredentialOnEncoder]
+        acs_credential_on_seam: Optional[AcsCredentialOnSeam]
+        warnings: Optional[List[Warnings]]
+        access_method: Optional[str]
+        acs_credential_id: Optional[str]
+        acs_credential_pool_id: Optional[str]
+        acs_system_id: Optional[str]
+        acs_user_id: Optional[str]
+        assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
+        card_number: Optional[str]
+        code: Optional[str]
+        connected_account_id: Optional[str]
+        created_at: Optional[str]
+        display_name: Optional[str]
+        ends_at: Optional[str]
+        errors: Optional[List[Errors]]
+        external_type: Optional[str]
+        external_type_display_name: Optional[str]
+        is_issued: Optional[bool]
+        is_latest_desired_state_synced_with_provider: Optional[bool]
+        is_managed: Optional[bool]
+        is_multi_phone_sync_credential: Optional[bool]
+        is_one_time_use: Optional[bool]
+        issued_at: Optional[str]
+        latest_desired_state_synced_with_provider_at: Optional[str]
+        parent_acs_credential_id: Optional[str]
+        starts_at: Optional[str]
+        user_identity_id: Optional[str]
+        visionline_metadata: Optional[VisionlineMetadata]
+        workspace_id: Optional[str]
+        access_method_id: Optional[str]
+        client_session_token: Optional[str]
+        customization_profile_id: Optional[str]
+        instant_key_url: Optional[str]
+        is_assignment_required: Optional[bool]
+        is_encoding_required: Optional[bool]
+        is_ready_for_assignment: Optional[bool]
+        is_ready_for_encoding: Optional[bool]
+        mode: Optional[str]
+        pending_mutations: Optional[List[PendingMutations]]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 was_confirmed_by_device=d.get("was_confirmed_by_device", None),
                 acs_credential_on_encoder=(
@@ -818,12 +866,15 @@ class ActionAttempt:
 
     action_attempt_id: str
     action_type: str
-    error: Error
-    result: Result
+    error: Optional[Error]
+    result: Optional[Result]
     status: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),

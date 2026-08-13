@@ -69,10 +69,13 @@ class AcsSystem:
         created_at: str
         error_code: str
         message: str
-        is_bridge_error: bool
+        is_bridge_error: Optional[bool]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -87,10 +90,13 @@ class AcsSystem:
         :ivar time_zone: Time zone in which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ is located.
         """
 
-        time_zone: str
+        time_zone: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 time_zone=d.get("time_zone", None),
             )
@@ -106,12 +112,15 @@ class AcsSystem:
         :ivar system_id: Unique ID assigned by the ASSA ABLOY licensing team that identifies each hotel in your credential manager.
         """
 
-        lan_address: str
-        mobile_access_uuid: str
-        system_id: str
+        lan_address: Optional[str]
+        mobile_access_uuid: Optional[str]
+        system_id: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 lan_address=d.get("lan_address", None),
                 mobile_access_uuid=d.get("mobile_access_uuid", None),
@@ -133,10 +142,13 @@ class AcsSystem:
         created_at: str
         message: str
         warning_code: str
-        misconfigured_acs_entrance_ids: List[str]
+        misconfigured_acs_entrance_ids: Optional[List[str]]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -146,29 +158,32 @@ class AcsSystem:
                 ),
             )
 
-    acs_access_group_count: float
+    acs_access_group_count: Optional[float]
     acs_system_id: str
-    acs_user_count: float
+    acs_user_count: Optional[float]
     connected_account_id: str
     connected_account_ids: List[str]
     created_at: str
-    default_credential_manager_acs_system_id: str
+    default_credential_manager_acs_system_id: Optional[str]
     errors: List[Errors]
-    external_type: str
-    external_type_display_name: str
+    external_type: Optional[str]
+    external_type_display_name: Optional[str]
     image_alt_text: str
     image_url: str
     is_credential_manager: bool
-    location: Location
+    location: Optional[Location]
     name: str
-    system_type: str
-    system_type_display_name: str
-    visionline_metadata: VisionlineMetadata
+    system_type: Optional[str]
+    system_type_display_name: Optional[str]
+    visionline_metadata: Optional[VisionlineMetadata]
     warnings: List[Warnings]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             acs_access_group_count=d.get("acs_access_group_count", None),
             acs_system_id=d.get("acs_system_id", None),

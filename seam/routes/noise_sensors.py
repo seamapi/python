@@ -152,7 +152,7 @@ class NoiseSensors(AbstractNoiseSensors):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             json_payload["connect_webview_id"] = connect_webview_id

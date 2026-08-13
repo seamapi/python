@@ -69,7 +69,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
@@ -97,7 +97,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param search: String for which to search. Filters returned unmanaged user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``,  ``user_identity_id`` or ``acs_system_id``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if created_before is not None:
             json_payload["created_before"] = created_before
@@ -131,7 +131,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:
             json_payload["is_managed"] = is_managed

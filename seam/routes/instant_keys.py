@@ -48,7 +48,7 @@ class InstantKeys(AbstractInstantKeys):
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             json_payload["instant_key_id"] = instant_key_id
@@ -70,7 +70,7 @@ class InstantKeys(AbstractInstantKeys):
         :param instant_key_url: URL of the instant key to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             json_payload["instant_key_id"] = instant_key_id
@@ -87,7 +87,7 @@ class InstantKeys(AbstractInstantKeys):
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id

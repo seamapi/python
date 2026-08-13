@@ -142,7 +142,7 @@ class Workspaces(AbstractWorkspaces):
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if name is not None:
             json_payload["name"] = name
@@ -177,7 +177,7 @@ class Workspaces(AbstractWorkspaces):
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         res = self.client.post("/workspaces/get", json=json_payload)
 
@@ -187,7 +187,7 @@ class Workspaces(AbstractWorkspaces):
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         res = self.client.post("/workspaces/list", json=json_payload)
 
@@ -201,7 +201,7 @@ class Workspaces(AbstractWorkspaces):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         res = self.client.post("/workspaces/reset_sandbox", json=json_payload)
 
@@ -241,7 +241,7 @@ class Workspaces(AbstractWorkspaces):
 
         :param organization_id: ID of the organization to assign the workspace to. The authenticated user must be the owner of the workspace and an admin of the target organization.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connect_partner_name is not None:
             json_payload["connect_partner_name"] = connect_partner_name

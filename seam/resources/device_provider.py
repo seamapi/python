@@ -57,33 +57,36 @@ class DeviceProvider:
     :ivar provider_categories: List of provider categories to which the device provider belongs, such as ``stable``, ``consumer_smartlocks``, ``thermostats``, and so on.
     """
 
-    can_configure_auto_lock: bool
-    can_hvac_cool: bool
-    can_hvac_heat: bool
-    can_hvac_heat_cool: bool
-    can_program_offline_access_codes: bool
-    can_program_online_access_codes: bool
-    can_program_thermostat_programs_as_different_each_day: bool
-    can_program_thermostat_programs_as_same_each_day: bool
-    can_program_thermostat_programs_as_weekday_weekend: bool
-    can_remotely_lock: bool
-    can_remotely_unlock: bool
-    can_run_thermostat_programs: bool
-    can_simulate_connection: bool
-    can_simulate_disconnection: bool
-    can_simulate_hub_connection: bool
-    can_simulate_hub_disconnection: bool
-    can_simulate_paid_subscription: bool
-    can_simulate_removal: bool
-    can_turn_off_hvac: bool
-    can_unlock_with_code: bool
+    can_configure_auto_lock: Optional[bool]
+    can_hvac_cool: Optional[bool]
+    can_hvac_heat: Optional[bool]
+    can_hvac_heat_cool: Optional[bool]
+    can_program_offline_access_codes: Optional[bool]
+    can_program_online_access_codes: Optional[bool]
+    can_program_thermostat_programs_as_different_each_day: Optional[bool]
+    can_program_thermostat_programs_as_same_each_day: Optional[bool]
+    can_program_thermostat_programs_as_weekday_weekend: Optional[bool]
+    can_remotely_lock: Optional[bool]
+    can_remotely_unlock: Optional[bool]
+    can_run_thermostat_programs: Optional[bool]
+    can_simulate_connection: Optional[bool]
+    can_simulate_disconnection: Optional[bool]
+    can_simulate_hub_connection: Optional[bool]
+    can_simulate_hub_disconnection: Optional[bool]
+    can_simulate_paid_subscription: Optional[bool]
+    can_simulate_removal: Optional[bool]
+    can_turn_off_hvac: Optional[bool]
+    can_unlock_with_code: Optional[bool]
     device_provider_name: str
     display_name: str
     image_url: str
     provider_categories: List[str]
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),

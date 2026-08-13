@@ -264,7 +264,7 @@ class AccessGrants(AbstractAccessGrants):
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
@@ -305,7 +305,7 @@ class AccessGrants(AbstractAccessGrants):
         """Delete an Access Grant.
 
         :param access_grant_id: ID of Access Grant to delete."""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
@@ -327,7 +327,7 @@ class AccessGrants(AbstractAccessGrants):
         :param access_grant_key: Unique key of Access Grant to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
@@ -357,7 +357,7 @@ class AccessGrants(AbstractAccessGrants):
         :param include:
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_ids is not None:
             json_payload["access_grant_ids"] = access_grant_ids
@@ -418,7 +418,7 @@ class AccessGrants(AbstractAccessGrants):
         :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -461,7 +461,7 @@ class AccessGrants(AbstractAccessGrants):
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
@@ -495,7 +495,7 @@ class AccessGrants(AbstractAccessGrants):
 
         :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id

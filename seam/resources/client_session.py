@@ -44,17 +44,20 @@ class ClientSession:
     connect_webview_ids: List[str]
     connected_account_ids: List[str]
     created_at: str
-    customer_key: str
+    customer_key: Optional[str]
     device_count: float
     expires_at: str
     token: str
-    user_identifier_key: str
-    user_identity_id: str
+    user_identifier_key: Optional[str]
+    user_identity_id: Optional[str]
     user_identity_ids: List[str]
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             client_session_id=d.get("client_session_id", None),
             connect_webview_ids=d.get("connect_webview_ids", None),

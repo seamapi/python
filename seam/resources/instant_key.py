@@ -38,12 +38,15 @@ class InstantKey:
 
         :ivar secondary_color: Secondary color used in the Instant Key UI."""
 
-        logo_url: str
-        primary_color: str
-        secondary_color: str
+        logo_url: Optional[str]
+        primary_color: Optional[str]
+        secondary_color: Optional[str]
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 logo_url=d.get("logo_url", None),
                 primary_color=d.get("primary_color", None),
@@ -52,16 +55,19 @@ class InstantKey:
 
     client_session_id: str
     created_at: str
-    customization: Customization
-    customization_profile_id: str
+    customization: Optional[Customization]
+    customization_profile_id: Optional[str]
     expires_at: str
     instant_key_id: str
     instant_key_url: str
     user_identity_id: str
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),

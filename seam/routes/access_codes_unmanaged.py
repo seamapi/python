@@ -137,7 +137,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the access code is allowed.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -161,7 +161,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param access_code_id: ID of the unmanaged access code that you want to delete.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -188,7 +188,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
@@ -223,7 +223,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
@@ -261,7 +261,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id

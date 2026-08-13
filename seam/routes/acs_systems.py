@@ -78,7 +78,7 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_system_id: ID of the access system that you want to get.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -105,7 +105,7 @@ class AcsSystems(AbstractAcsSystems):
         :param search: String for which to search. Filters returned access systems to include all records that satisfy a partial match using ``name`` or ``acs_system_id``.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
@@ -128,7 +128,7 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -154,7 +154,7 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_encoders: Array of ACS encoders to report
 
         :param acs_entrances: Array of ACS entrances to report"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id

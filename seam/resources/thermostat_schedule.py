@@ -45,8 +45,11 @@ class ThermostatSchedule:
         error_code: str
         message: str
 
+        # The payload is decoded JSON, so every value read out of it is untyped.
+        # Typing d as Any keeps that at this boundary instead of casting each
+        # read, and the dataclass fields carry the real types.
         @classmethod
-        def from_dict(cls, d: Dict[str, Any]):
+        def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -58,15 +61,18 @@ class ThermostatSchedule:
     device_id: str
     ends_at: str
     errors: List[Errors]
-    is_override_allowed: bool
-    max_override_period_minutes: int
-    name: str
+    is_override_allowed: Optional[bool]
+    max_override_period_minutes: Optional[int]
+    name: Optional[str]
     starts_at: str
     thermostat_schedule_id: str
     workspace_id: str
 
+    # The payload is decoded JSON, so every value read out of it is untyped.
+    # Typing d as Any keeps that at this boundary instead of casting each
+    # read, and the dataclass fields carry the real types.
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Any):
         return cls(
             climate_preset_key=d.get("climate_preset_key", None),
             created_at=d.get("created_at", None),

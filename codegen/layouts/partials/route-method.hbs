@@ -1,6 +1,6 @@
     def {{> method-signature}}:
         """{{> method-docstring}}"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
 {{#each params}}
         if {{name}} is not None:

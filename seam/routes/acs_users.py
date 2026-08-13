@@ -265,7 +265,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -307,7 +307,7 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -345,7 +345,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -374,7 +374,7 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
@@ -418,7 +418,7 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -457,7 +457,7 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
 
         :returns: OK"""
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -487,7 +487,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
@@ -515,7 +515,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -543,7 +543,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -571,7 +571,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             json_payload["acs_system_id"] = acs_system_id
@@ -617,7 +617,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
         """
-        json_payload = {}
+        json_payload: Dict[str, Any] = {}
 
         if access_schedule is not None:
             json_payload["access_schedule"] = access_schedule
