@@ -1,5 +1,4 @@
 # flake8: noqa
-# type: ignore
 
 from .seam import Seam
 from .seam_without_workspace import SeamWithoutWorkspace
