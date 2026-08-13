@@ -40,7 +40,7 @@ from decimal import Decimal
 from typing import Any, Iterator, List, Optional, Sequence, Tuple, Union
 from urllib.parse import parse_qsl
 
-from ..null import _is_null
+from ..null import is_null
 
 Params = Mapping[str, Any]
 
@@ -307,7 +307,7 @@ def _update_url_search_params_from_array(
             "is an array containing the empty string which is unsupported",
         )
 
-    if any(value is None or _is_null(value) for value in values):
+    if any(value is None or is_null(value) for value in values):
         raise UnserializableParamError(
             name,
             "is an array containing null or undefined values which is unsupported",
@@ -318,7 +318,7 @@ def _update_url_search_params_from_array(
 
 
 def _serialize(name: str, value: Any) -> str:
-    if _is_null(value):
+    if is_null(value):
         return ""
 
     if isinstance(value, str):

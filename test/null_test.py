@@ -1,20 +1,20 @@
 from collections import OrderedDict
 
 from seam.client import SeamHttpClient
-from seam.null import NULL, Null, _is_null, _replace_null
+from seam.null import NULL, Null, is_null, replace_null
 
 
 def test_null_is_a_singleton():
     assert Null() is NULL
-    assert _is_null(NULL)
-    assert _is_null(Null())
+    assert is_null(NULL)
+    assert is_null(Null())
 
 
 def test_null_is_not_none():
     assert NULL is not None
-    assert not _is_null(None)
-    assert not _is_null("")
-    assert not _is_null(0)
+    assert not is_null(None)
+    assert not is_null("")
+    assert not is_null(0)
 
 
 def test_null_is_falsy():
@@ -26,15 +26,15 @@ def test_null_repr():
 
 
 def test_replace_null():
-    assert _replace_null(NULL) is None
-    assert _replace_null(None) is None
-    assert _replace_null("a") == "a"
-    assert _replace_null(0) == 0
-    assert _replace_null(False) is False
+    assert replace_null(NULL) is None
+    assert replace_null(None) is None
+    assert replace_null("a") == "a"
+    assert replace_null(0) == 0
+    assert replace_null(False) is False
 
 
 def test_replace_null_in_dict():
-    assert _replace_null({"a": NULL, "b": 1, "c": None}) == {
+    assert replace_null({"a": NULL, "b": 1, "c": None}) == {
         "a": None,
         "b": 1,
         "c": None,
@@ -42,24 +42,24 @@ def test_replace_null_in_dict():
 
 
 def test_replace_null_in_nested_dict():
-    assert _replace_null({"a": {"b": {"c": NULL}}}) == {"a": {"b": {"c": None}}}
+    assert replace_null({"a": {"b": {"c": NULL}}}) == {"a": {"b": {"c": None}}}
 
 
 def test_replace_null_in_lists_and_tuples():
-    assert _replace_null(["a", NULL]) == ["a", None]
-    assert _replace_null(("a", NULL)) == ("a", None)
-    assert _replace_null({"a": [{"b": NULL}]}) == {"a": [{"b": None}]}
+    assert replace_null(["a", NULL]) == ["a", None]
+    assert replace_null(("a", NULL)) == ("a", None)
+    assert replace_null({"a": [{"b": NULL}]}) == {"a": [{"b": None}]}
 
 
 def test_replace_null_does_not_modify_the_given_value():
     params = {"a": NULL, "b": [NULL]}
-    _replace_null(params)
+    replace_null(params)
 
     assert params == {"a": NULL, "b": [NULL]}
 
 
 def test_replace_null_normalizes_mappings_to_dicts():
-    result = _replace_null(OrderedDict([("a", NULL)]))
+    result = replace_null(OrderedDict([("a", NULL)]))
 
     assert result == {"a": None}
 
