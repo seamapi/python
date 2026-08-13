@@ -18,7 +18,13 @@ SDK_HEADERS = {
     "seam-sdk-version": version("seam"),
 }
 
-DEFAULT_RETRIES = Retry()
+DEFAULT_RETRIES = Retry(
+    total=2,
+    allowed_methods=["GET", "HEAD", "OPTIONS", "PUT", "DELETE"],
+    status_forcelist=[429, *range(500, 600)],
+    backoff_factor=0.12,
+    backoff_jitter=1 / 6,
+)
 
 
 class AbstractSeamHttpClient(abc.ABC):

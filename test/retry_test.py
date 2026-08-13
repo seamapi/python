@@ -2,9 +2,39 @@ import pytest
 from httpx import HTTPStatusError
 
 from seam import Retry, Seam
+from seam.client import DEFAULT_RETRIES
 
 SERVICE_UNAVAILABLE = (503, "Service Unavailable")
 DEVICES = (200, {"devices": [{"device_id": "august_device_1"}]})
+
+
+def test_default_retry_policy_matches_the_standard_policy():
+    assert DEFAULT_RETRIES.total == 2
+    assert DEFAULT_RETRIES.allowed_methods == {
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "PUT",
+        "DELETE",
+    }
+    assert DEFAULT_RETRIES.status_forcelist == {429, *range(500, 600)}
+    assert DEFAULT_RETRIES.backoff_factor == 0.12
+    assert DEFAULT_RETRIES.backoff_jitter == pytest.approx(1 / 6)
+
+
+def test_default_retry_backoff_ranges(monkeypatch):
+    monkeypatch.setattr("httpx_retries.retry.random.uniform", lambda low, high: low)
+
+    first_retry = DEFAULT_RETRIES.increment()
+    second_retry = first_retry.increment()
+
+    assert first_retry.backoff_strategy() == pytest.approx(0.2)
+    assert second_retry.backoff_strategy() == pytest.approx(0.4)
+
+    monkeypatch.setattr("httpx_retries.retry.random.uniform", lambda low, high: high)
+
+    assert first_retry.backoff_strategy() == pytest.approx(0.24)
+    assert second_retry.backoff_strategy() == pytest.approx(0.48)
 
 
 # The retries option has no effect on API requests because the Seam API

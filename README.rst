@@ -477,6 +477,16 @@ A request that exceeds the timeout raises ``httpx.TimeoutException``.
 Configuring retries
 ^^^^^^^^^^^^^^^^^^^
 
+By default, the SDK makes up to three attempts: the initial request and two
+retries. Retries are limited to ``GET``, ``HEAD``, ``OPTIONS``, ``PUT``, and
+``DELETE`` requests that fail because of a transport error, timeout, HTTP 429
+response, or HTTP 5xx response. ``POST`` and ``PATCH`` requests are not retried.
+
+Retries use exponential backoff with jitter: approximately 200–240 ms before
+the first retry and 400–480 ms before the second. A ``Retry-After`` header is
+honored instead of the calculated backoff. The request timeout is reset for
+each attempt.
+
 Pass the ``retries`` option to configure retry behavior.
 Retries are handled by `httpx-retries <https://will-ockmore.github.io/httpx-retries/>`_,
 and its ``Retry`` class is re-exported from ``seam`` for convenience:
