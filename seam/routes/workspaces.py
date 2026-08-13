@@ -177,9 +177,9 @@ class Workspaces(AbstractWorkspaces):
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
-        res = self.client.post("/workspaces/get", json=json_payload)
+        res = self.client.get("/workspaces/get", params=params)
 
         return Workspace.from_dict(res["workspace"])
 
@@ -187,9 +187,9 @@ class Workspaces(AbstractWorkspaces):
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
-        res = self.client.post("/workspaces/list", json=json_payload)
+        res = self.client.get("/workspaces/list", params=params)
 
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
@@ -260,6 +260,6 @@ class Workspaces(AbstractWorkspaces):
         if organization_id is not None:
             json_payload["organization_id"] = organization_id
 
-        self.client.post("/workspaces/update", json=json_payload)
+        self.client.patch("/workspaces/update", json=json_payload)
 
         return None

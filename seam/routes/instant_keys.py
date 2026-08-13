@@ -48,12 +48,12 @@ class InstantKeys(AbstractInstantKeys):
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
-            json_payload["instant_key_id"] = instant_key_id
+            params["instant_key_id"] = instant_key_id
 
-        self.client.post("/instant_keys/delete", json=json_payload)
+        self.client.delete("/instant_keys/delete", params=params)
 
         return None
 
@@ -70,14 +70,14 @@ class InstantKeys(AbstractInstantKeys):
         :param instant_key_url: URL of the instant key to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
-            json_payload["instant_key_id"] = instant_key_id
+            params["instant_key_id"] = instant_key_id
         if instant_key_url is not None:
-            json_payload["instant_key_url"] = instant_key_url
+            params["instant_key_url"] = instant_key_url
 
-        res = self.client.post("/instant_keys/get", json=json_payload)
+        res = self.client.get("/instant_keys/get", params=params)
 
         return InstantKey.from_dict(res["instant_key"])
 
@@ -87,11 +87,11 @@ class InstantKeys(AbstractInstantKeys):
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/instant_keys/list", json=json_payload)
+        res = self.client.get("/instant_keys/list", params=params)
 
         return [InstantKey.from_dict(item) for item in res["instant_keys"]]

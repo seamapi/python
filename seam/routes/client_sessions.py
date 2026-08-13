@@ -208,7 +208,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        res = self.client.post("/client_sessions/create", json=json_payload)
+        res = self.client.put("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(res["client_session"])
 
@@ -216,12 +216,12 @@ class ClientSessions(AbstractClientSessions):
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if client_session_id is not None:
-            json_payload["client_session_id"] = client_session_id
+            params["client_session_id"] = client_session_id
 
-        self.client.post("/client_sessions/delete", json=json_payload)
+        self.client.delete("/client_sessions/delete", params=params)
 
         return None
 
@@ -238,14 +238,14 @@ class ClientSessions(AbstractClientSessions):
         :param user_identifier_key: User identifier key associated with the client session that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if client_session_id is not None:
-            json_payload["client_session_id"] = client_session_id
+            params["client_session_id"] = client_session_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/client_sessions/get", json=json_payload)
+        res = self.client.get("/client_sessions/get", params=params)
 
         return ClientSession.from_dict(res["client_session"])
 
@@ -332,7 +332,7 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        self.client.post("/client_sessions/grant_access", json=json_payload)
+        self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None
 
@@ -358,20 +358,20 @@ class ClientSessions(AbstractClientSessions):
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if client_session_id is not None:
-            json_payload["client_session_id"] = client_session_id
+            params["client_session_id"] = client_session_id
         if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+            params["connect_webview_id"] = connect_webview_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
         if without_user_identifier_key is not None:
-            json_payload["without_user_identifier_key"] = without_user_identifier_key
+            params["without_user_identifier_key"] = without_user_identifier_key
 
-        res = self.client.post("/client_sessions/list", json=json_payload)
+        res = self.client.get("/client_sessions/list", params=params)
 
         return [ClientSession.from_dict(item) for item in res["client_sessions"]]
 

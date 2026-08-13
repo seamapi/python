@@ -111,14 +111,14 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param name: Name of the unmanaged device that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if name is not None:
-            json_payload["name"] = name
+            params["name"] = name
 
-        res = self.client.post("/devices/unmanaged/get", json=json_payload)
+        res = self.client.get("/devices/unmanaged/get", params=params)
 
         return UnmanagedDevice.from_dict(res["device"])
 
@@ -224,6 +224,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
 
-        self.client.post("/devices/unmanaged/update", json=json_payload)
+        self.client.patch("/devices/unmanaged/update", json=json_payload)
 
         return None

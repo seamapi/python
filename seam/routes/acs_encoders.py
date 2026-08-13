@@ -172,12 +172,12 @@ class AcsEncoders(AbstractAcsEncoders):
         :param acs_encoder_id: ID of the encoder that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
-            json_payload["acs_encoder_id"] = acs_encoder_id
+            params["acs_encoder_id"] = acs_encoder_id
 
-        res = self.client.post("/acs/encoders/get", json=json_payload)
+        res = self.client.get("/acs/encoders/get", params=params)
 
         return AcsEncoder.from_dict(res["acs_encoder"])
 

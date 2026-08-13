@@ -267,7 +267,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        self.client.post("/user_identities/add_acs_user", json=json_payload)
+        self.client.put("/user_identities/add_acs_user", json=json_payload)
 
         return None
 
@@ -314,12 +314,12 @@ class UserIdentities(AbstractUserIdentities):
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/user_identities/delete", json=json_payload)
+        self.client.delete("/user_identities/delete", params=params)
 
         return None
 
@@ -367,14 +367,14 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_key:
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
-            json_payload["user_identity_key"] = user_identity_key
+            params["user_identity_key"] = user_identity_key
 
-        res = self.client.post("/user_identities/get", json=json_payload)
+        res = self.client.get("/user_identities/get", params=params)
 
         return UserIdentity.from_dict(res["user_identity"])
 
@@ -392,7 +392,7 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/user_identities/grant_access_to_device", json=json_payload)
+        self.client.put("/user_identities/grant_access_to_device", json=json_payload)
 
         return None
 
@@ -448,14 +448,12 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post(
-            "/user_identities/list_accessible_devices", json=json_payload
-        )
+        res = self.client.get("/user_identities/list_accessible_devices", params=params)
 
         return [Device.from_dict(item) for item in res["devices"]]
 
@@ -465,13 +463,13 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post(
-            "/user_identities/list_accessible_entrances", json=json_payload
+        res = self.client.get(
+            "/user_identities/list_accessible_entrances", params=params
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -482,12 +480,12 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/user_identities/list_acs_systems", json=json_payload)
+        res = self.client.get("/user_identities/list_acs_systems", params=params)
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
@@ -497,12 +495,12 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/user_identities/list_acs_users", json=json_payload)
+        res = self.client.get("/user_identities/list_acs_users", params=params)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -513,14 +511,14 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/user_identities/remove_acs_user", json=json_payload)
+        self.client.delete("/user_identities/remove_acs_user", params=params)
 
         return None
 
@@ -531,14 +529,14 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/user_identities/revoke_access_to_device", json=json_payload)
+        self.client.delete("/user_identities/revoke_access_to_device", params=params)
 
         return None
 
@@ -575,6 +573,6 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        self.client.post("/user_identities/update", json=json_payload)
+        self.client.patch("/user_identities/update", json=json_payload)
 
         return None

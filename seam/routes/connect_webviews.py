@@ -184,12 +184,12 @@ class ConnectWebviews(AbstractConnectWebviews):
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
         :param connect_webview_id: ID of the Connect Webview that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+            params["connect_webview_id"] = connect_webview_id
 
-        self.client.post("/connect_webviews/delete", json=json_payload)
+        self.client.delete("/connect_webviews/delete", params=params)
 
         return None
 
@@ -201,12 +201,12 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+            params["connect_webview_id"] = connect_webview_id
 
-        res = self.client.post("/connect_webviews/get", json=json_payload)
+        res = self.client.get("/connect_webviews/get", params=params)
 
         return ConnectWebview.from_dict(res["connect_webview"])
 

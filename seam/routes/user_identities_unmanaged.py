@@ -69,12 +69,12 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/user_identities/unmanaged/get", json=json_payload)
+        res = self.client.get("/user_identities/unmanaged/get", params=params)
 
         return UnmanagedUserIdentity.from_dict(res["user_identity"])
 
@@ -97,18 +97,18 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param search: String for which to search. Filters returned unmanaged user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``,  ``user_identity_id`` or ``acs_system_id``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if created_before is not None:
-            json_payload["created_before"] = created_before
+            params["created_before"] = created_before
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
 
-        res = self.client.post("/user_identities/unmanaged/list", json=json_payload)
+        res = self.client.get("/user_identities/unmanaged/list", params=params)
 
         return [
             UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
@@ -140,6 +140,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        self.client.post("/user_identities/unmanaged/update", json=json_payload)
+        self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 
         return None

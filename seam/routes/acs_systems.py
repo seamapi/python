@@ -78,12 +78,12 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_system_id: ID of the access system that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
 
-        res = self.client.post("/acs/systems/get", json=json_payload)
+        res = self.client.get("/acs/systems/get", params=params)
 
         return AcsSystem.from_dict(res["acs_system"])
 
@@ -105,16 +105,16 @@ class AcsSystems(AbstractAcsSystems):
         :param search: String for which to search. Filters returned access systems to include all records that satisfy a partial match using ``name`` or ``acs_system_id``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
 
-        res = self.client.post("/acs/systems/list", json=json_payload)
+        res = self.client.get("/acs/systems/list", params=params)
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
@@ -128,14 +128,13 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
 
-        res = self.client.post(
-            "/acs/systems/list_compatible_credential_manager_acs_systems",
-            json=json_payload,
+        res = self.client.get(
+            "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
         )
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]

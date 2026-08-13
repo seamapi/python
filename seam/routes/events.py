@@ -141,16 +141,16 @@ class Events(AbstractEvents):
         :param event_type: Type of the event that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if event_id is not None:
-            json_payload["event_id"] = event_id
+            params["event_id"] = event_id
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if event_type is not None:
-            json_payload["event_type"] = event_type
+            params["event_type"] = event_type
 
-        res = self.client.post("/events/get", json=json_payload)
+        res = self.client.get("/events/get", params=params)
 
         return SeamEvent.from_dict(res["event"])
 

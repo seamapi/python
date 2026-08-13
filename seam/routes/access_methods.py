@@ -216,16 +216,16 @@ class AccessMethods(AbstractAccessMethods):
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
+            params["access_method_id"] = access_method_id
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
         if reservation_key is not None:
-            json_payload["reservation_key"] = reservation_key
+            params["reservation_key"] = reservation_key
 
-        self.client.post("/access_methods/delete", json=json_payload)
+        self.client.delete("/access_methods/delete", params=params)
 
         return None
 
@@ -272,12 +272,12 @@ class AccessMethods(AbstractAccessMethods):
         :param access_method_id: ID of access method to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
+            params["access_method_id"] = access_method_id
 
-        res = self.client.post("/access_methods/get", json=json_payload)
+        res = self.client.get("/access_methods/get", params=params)
 
         return AccessMethod.from_dict(res["access_method"])
 
@@ -341,26 +341,26 @@ class AccessMethods(AbstractAccessMethods):
         :param space_id: ID of the space by which to filter the returned access methods. Must be combined with ``access_grant_id``, ``access_grant_key``, or ``acs_entrance_id``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
-            json_payload["access_grant_key"] = access_grant_key
+            params["access_grant_key"] = access_grant_key
         if acs_entrance_id is not None:
-            json_payload["acs_entrance_id"] = acs_entrance_id
+            params["acs_entrance_id"] = acs_entrance_id
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        res = self.client.post("/access_methods/list", json=json_payload)
+        res = self.client.get("/access_methods/list", params=params)
 
         return [AccessMethod.from_dict(item) for item in res["access_methods"]]
 

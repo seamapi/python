@@ -88,12 +88,12 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
-            json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
+            params["thermostat_daily_program_id"] = thermostat_daily_program_id
 
-        self.client.post("/thermostats/daily_programs/delete", json=json_payload)
+        self.client.delete("/thermostats/daily_programs/delete", params=params)
 
         return None
 
@@ -125,7 +125,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
 
-        res = self.client.post("/thermostats/daily_programs/update", json=json_payload)
+        res = self.client.patch("/thermostats/daily_programs/update", json=json_payload)
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")

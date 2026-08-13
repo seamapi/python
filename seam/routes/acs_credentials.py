@@ -198,7 +198,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/credentials/assign", json=json_payload)
+        self.client.patch("/acs/credentials/assign", json=json_payload)
 
         return None
 
@@ -289,12 +289,12 @@ class AcsCredentials(AbstractAcsCredentials):
         """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
+            params["acs_credential_id"] = acs_credential_id
 
-        self.client.post("/acs/credentials/delete", json=json_payload)
+        self.client.delete("/acs/credentials/delete", params=params)
 
         return None
 
@@ -304,12 +304,12 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
+            params["acs_credential_id"] = acs_credential_id
 
-        res = self.client.post("/acs/credentials/get", json=json_payload)
+        res = self.client.get("/acs/credentials/get", params=params)
 
         return AcsCredential.from_dict(res["acs_credential"])
 
@@ -344,28 +344,26 @@ class AcsCredentials(AbstractAcsCredentials):
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
         if created_before is not None:
-            json_payload["created_before"] = created_before
+            params["created_before"] = created_before
         if is_multi_phone_sync_credential is not None:
-            json_payload["is_multi_phone_sync_credential"] = (
-                is_multi_phone_sync_credential
-            )
+            params["is_multi_phone_sync_credential"] = is_multi_phone_sync_credential
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
 
-        res = self.client.post("/acs/credentials/list", json=json_payload)
+        res = self.client.get("/acs/credentials/list", params=params)
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
 
@@ -375,13 +373,13 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
+            params["acs_credential_id"] = acs_credential_id
 
-        res = self.client.post(
-            "/acs/credentials/list_accessible_entrances", json=json_payload
+        res = self.client.get(
+            "/acs/credentials/list_accessible_entrances", params=params
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -410,7 +408,7 @@ class AcsCredentials(AbstractAcsCredentials):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/credentials/unassign", json=json_payload)
+        self.client.patch("/acs/credentials/unassign", json=json_payload)
 
         return None
 
@@ -438,6 +436,6 @@ class AcsCredentials(AbstractAcsCredentials):
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
 
-        self.client.post("/acs/credentials/update", json=json_payload)
+        self.client.patch("/acs/credentials/update", json=json_payload)
 
         return None

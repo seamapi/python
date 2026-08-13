@@ -272,7 +272,7 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        self.client.post("/acs/users/add_to_access_group", json=json_payload)
+        self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
@@ -345,16 +345,16 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/users/delete", json=json_payload)
+        self.client.delete("/acs/users/delete", params=params)
 
         return None
 
@@ -374,16 +374,16 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/acs/users/get", json=json_payload)
+        res = self.client.get("/acs/users/get", params=params)
 
         return AcsUser.from_dict(res["acs_user"])
 
@@ -418,26 +418,26 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if created_before is not None:
-            json_payload["created_before"] = created_before
+            params["created_before"] = created_before
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if user_identity_email_address is not None:
-            json_payload["user_identity_email_address"] = user_identity_email_address
+            params["user_identity_email_address"] = user_identity_email_address
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
         if user_identity_phone_number is not None:
-            json_payload["user_identity_phone_number"] = user_identity_phone_number
+            params["user_identity_phone_number"] = user_identity_phone_number
 
-        res = self.client.post("/acs/users/list", json=json_payload)
+        res = self.client.get("/acs/users/list", params=params)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -457,18 +457,16 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post(
-            "/acs/users/list_accessible_entrances", json=json_payload
-        )
+        res = self.client.get("/acs/users/list_accessible_entrances", params=params)
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
@@ -487,16 +485,16 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/users/remove_from_access_group", json=json_payload)
+        self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
 
@@ -638,6 +636,6 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/users/update", json=json_payload)
+        self.client.patch("/acs/users/update", json=json_payload)
 
         return None

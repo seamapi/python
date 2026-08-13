@@ -149,14 +149,14 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
         :param noise_threshold_id: ID of the noise threshold that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if noise_threshold_id is not None:
-            json_payload["noise_threshold_id"] = noise_threshold_id
+            params["noise_threshold_id"] = noise_threshold_id
 
-        self.client.post("/noise_sensors/noise_thresholds/delete", json=json_payload)
+        self.client.delete("/noise_sensors/noise_thresholds/delete", params=params)
 
         return None
 
@@ -166,12 +166,12 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
-            json_payload["noise_threshold_id"] = noise_threshold_id
+            params["noise_threshold_id"] = noise_threshold_id
 
-        res = self.client.post("/noise_sensors/noise_thresholds/get", json=json_payload)
+        res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
 
@@ -181,14 +181,12 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param device_id: ID of the device for which you want to list noise thresholds.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        res = self.client.post(
-            "/noise_sensors/noise_thresholds/list", json=json_payload
-        )
+        res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
         return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
 
@@ -236,6 +234,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
 
-        self.client.post("/noise_sensors/noise_thresholds/update", json=json_payload)
+        self.client.put("/noise_sensors/noise_thresholds/update", json=json_payload)
 
         return None

@@ -126,12 +126,12 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param connected_account_id: ID of the connected account that you want to delete.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
 
-        self.client.post("/connected_accounts/delete", json=json_payload)
+        self.client.delete("/connected_accounts/delete", params=params)
 
         return None
 
@@ -145,14 +145,14 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param email: Email address associated with the connected account that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if email is not None:
-            json_payload["email"] = email
+            params["email"] = email
 
-        res = self.client.post("/connected_accounts/get", json=json_payload)
+        res = self.client.get("/connected_accounts/get", params=params)
 
         return ConnectedAccount.from_dict(res["connected_account"])
 
@@ -260,6 +260,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if display_name is not None:
             json_payload["display_name"] = display_name
 
-        self.client.post("/connected_accounts/update", json=json_payload)
+        self.client.patch("/connected_accounts/update", json=json_payload)
 
         return None

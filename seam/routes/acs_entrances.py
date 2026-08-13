@@ -121,12 +121,12 @@ class AcsEntrances(AbstractAcsEntrances):
         :param acs_entrance_id: ID of the entrance that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
-            json_payload["acs_entrance_id"] = acs_entrance_id
+            params["acs_entrance_id"] = acs_entrance_id
 
-        res = self.client.post("/acs/entrances/get", json=json_payload)
+        res = self.client.get("/acs/entrances/get", params=params)
 
         return AcsEntrance.from_dict(res["acs_entrance"])
 

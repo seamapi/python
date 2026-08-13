@@ -157,12 +157,12 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
-            json_payload["thermostat_schedule_id"] = thermostat_schedule_id
+            params["thermostat_schedule_id"] = thermostat_schedule_id
 
-        self.client.post("/thermostats/schedules/delete", json=json_payload)
+        self.client.delete("/thermostats/schedules/delete", params=params)
 
         return None
 
@@ -172,12 +172,12 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
-            json_payload["thermostat_schedule_id"] = thermostat_schedule_id
+            params["thermostat_schedule_id"] = thermostat_schedule_id
 
-        res = self.client.post("/thermostats/schedules/get", json=json_payload)
+        res = self.client.get("/thermostats/schedules/get", params=params)
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
 
@@ -191,14 +191,14 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/thermostats/schedules/list", json=json_payload)
+        res = self.client.get("/thermostats/schedules/list", params=params)
 
         return [
             ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
@@ -248,6 +248,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        self.client.post("/thermostats/schedules/update", json=json_payload)
+        self.client.patch("/thermostats/schedules/update", json=json_payload)
 
         return None

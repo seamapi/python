@@ -213,7 +213,7 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        self.client.post("/spaces/add_acs_entrances", json=json_payload)
+        self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
 
@@ -233,7 +233,7 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        self.client.post("/spaces/add_connected_account", json=json_payload)
+        self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
 
@@ -250,7 +250,7 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        self.client.post("/spaces/add_devices", json=json_payload)
+        self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
 
@@ -307,12 +307,12 @@ class Spaces(AbstractSpaces):
         """Deletes a space.
 
         :param space_id: ID of the space that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        self.client.post("/spaces/delete", json=json_payload)
+        self.client.delete("/spaces/delete", params=params)
 
         return None
 
@@ -326,14 +326,14 @@ class Spaces(AbstractSpaces):
         :param space_key: Unique key of the space that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
         if space_key is not None:
-            json_payload["space_key"] = space_key
+            params["space_key"] = space_key
 
-        res = self.client.post("/spaces/get", json=json_payload)
+        res = self.client.get("/spaces/get", params=params)
 
         return Space.from_dict(res["space"])
 
@@ -393,20 +393,20 @@ class Spaces(AbstractSpaces):
         :param space_key: Filter spaces by space_key.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if space_key is not None:
-            json_payload["space_key"] = space_key
+            params["space_key"] = space_key
 
-        res = self.client.post("/spaces/list", json=json_payload)
+        res = self.client.get("/spaces/list", params=params)
 
         return [Space.from_dict(item) for item in res["spaces"]]
 
@@ -438,14 +438,14 @@ class Spaces(AbstractSpaces):
 
         :param space_id: ID of the space from which you want to remove the connected account.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        self.client.post("/spaces/remove_connected_account", json=json_payload)
+        self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
 
@@ -506,6 +506,6 @@ class Spaces(AbstractSpaces):
         if space_key is not None:
             json_payload["space_key"] = space_key
 
-        res = self.client.post("/spaces/update", json=json_payload)
+        res = self.client.patch("/spaces/update", json=json_payload)
 
         return Space.from_dict(res["space"])

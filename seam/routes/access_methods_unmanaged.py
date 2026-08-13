@@ -49,12 +49,12 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :param access_method_id: ID of unmanaged access method to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
+            params["access_method_id"] = access_method_id
 
-        res = self.client.post("/access_methods/unmanaged/get", json=json_payload)
+        res = self.client.get("/access_methods/unmanaged/get", params=params)
 
         return UnmanagedAccessMethod.from_dict(res["access_method"])
 
@@ -77,17 +77,17 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
         if acs_entrance_id is not None:
-            json_payload["acs_entrance_id"] = acs_entrance_id
+            params["acs_entrance_id"] = acs_entrance_id
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        res = self.client.post("/access_methods/unmanaged/list", json=json_payload)
+        res = self.client.get("/access_methods/unmanaged/list", params=params)
 
         return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]

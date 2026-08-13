@@ -78,12 +78,12 @@ class Webhooks(AbstractWebhooks):
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if webhook_id is not None:
-            json_payload["webhook_id"] = webhook_id
+            params["webhook_id"] = webhook_id
 
-        self.client.post("/webhooks/delete", json=json_payload)
+        self.client.delete("/webhooks/delete", params=params)
 
         return None
 
@@ -93,12 +93,12 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if webhook_id is not None:
-            json_payload["webhook_id"] = webhook_id
+            params["webhook_id"] = webhook_id
 
-        res = self.client.post("/webhooks/get", json=json_payload)
+        res = self.client.get("/webhooks/get", params=params)
 
         return Webhook.from_dict(res["webhook"])
 
@@ -106,9 +106,9 @@ class Webhooks(AbstractWebhooks):
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
-        res = self.client.post("/webhooks/list", json=json_payload)
+        res = self.client.get("/webhooks/list", params=params)
 
         return [Webhook.from_dict(item) for item in res["webhooks"]]
 
@@ -125,6 +125,6 @@ class Webhooks(AbstractWebhooks):
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
 
-        self.client.post("/webhooks/update", json=json_payload)
+        self.client.put("/webhooks/update", json=json_payload)
 
         return None

@@ -59,12 +59,12 @@ class Phones(AbstractPhones):
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        self.client.post("/phones/deactivate", json=json_payload)
+        self.client.delete("/phones/deactivate", params=params)
 
         return None
 
@@ -74,12 +74,12 @@ class Phones(AbstractPhones):
         :param device_id: Device ID of the phone that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        res = self.client.post("/phones/get", json=json_payload)
+        res = self.client.get("/phones/get", params=params)
 
         return Phone.from_dict(res["phone"])
 
@@ -96,13 +96,13 @@ class Phones(AbstractPhones):
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
+            params["acs_credential_id"] = acs_credential_id
         if owner_user_identity_id is not None:
-            json_payload["owner_user_identity_id"] = owner_user_identity_id
+            params["owner_user_identity_id"] = owner_user_identity_id
 
-        res = self.client.post("/phones/list", json=json_payload)
+        res = self.client.get("/phones/list", params=params)
 
         return [Phone.from_dict(item) for item in res["phones"]]

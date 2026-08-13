@@ -150,7 +150,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
                 is_external_modification_allowed
             )
 
-        self.client.post(
+        self.client.patch(
             "/access_codes/unmanaged/convert_to_managed", json=json_payload
         )
 
@@ -161,12 +161,12 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param access_code_id: ID of the unmanaged access code that you want to delete.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
 
-        self.client.post("/access_codes/unmanaged/delete", json=json_payload)
+        self.client.delete("/access_codes/unmanaged/delete", params=params)
 
         return None
 
@@ -188,16 +188,16 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
         if code is not None:
-            json_payload["code"] = code
+            params["code"] = code
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        res = self.client.post("/access_codes/unmanaged/get", json=json_payload)
+        res = self.client.get("/access_codes/unmanaged/get", params=params)
 
         return UnmanagedAccessCode.from_dict(res["access_code"])
 
@@ -223,20 +223,20 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/access_codes/unmanaged/list", json=json_payload)
+        res = self.client.get("/access_codes/unmanaged/list", params=params)
 
         return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -276,6 +276,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
                 is_external_modification_allowed
             )
 
-        self.client.post("/access_codes/unmanaged/update", json=json_payload)
+        self.client.patch("/access_codes/unmanaged/update", json=json_payload)
 
         return None

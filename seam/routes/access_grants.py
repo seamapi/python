@@ -305,12 +305,12 @@ class AccessGrants(AbstractAccessGrants):
         """Delete an Access Grant.
 
         :param access_grant_id: ID of Access Grant to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
 
-        self.client.post("/access_grants/delete", json=json_payload)
+        self.client.delete("/access_grants/delete", params=params)
 
         return None
 
@@ -327,14 +327,14 @@ class AccessGrants(AbstractAccessGrants):
         :param access_grant_key: Unique key of Access Grant to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
-            json_payload["access_grant_key"] = access_grant_key
+            params["access_grant_key"] = access_grant_key
 
-        res = self.client.post("/access_grants/get", json=json_payload)
+        res = self.client.get("/access_grants/get", params=params)
 
         return AccessGrant.from_dict(res["access_grant"])
 
@@ -508,6 +508,6 @@ class AccessGrants(AbstractAccessGrants):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        self.client.post("/access_grants/update", json=json_payload)
+        self.client.patch("/access_grants/update", json=json_payload)
 
         return None

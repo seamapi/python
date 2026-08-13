@@ -130,7 +130,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/access_groups/add_user", json=json_payload)
+        self.client.put("/acs/access_groups/add_user", json=json_payload)
 
         return None
 
@@ -138,12 +138,12 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
 
-        self.client.post("/acs/access_groups/delete", json=json_payload)
+        self.client.delete("/acs/access_groups/delete", params=params)
 
         return None
 
@@ -153,12 +153,12 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
 
-        res = self.client.post("/acs/access_groups/get", json=json_payload)
+        res = self.client.get("/acs/access_groups/get", params=params)
 
         return AcsAccessGroup.from_dict(res["acs_access_group"])
 
@@ -181,18 +181,18 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access groups.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/acs/access_groups/list", json=json_payload)
+        res = self.client.get("/acs/access_groups/list", params=params)
 
         return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
 
@@ -204,13 +204,13 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
 
-        res = self.client.post(
-            "/acs/access_groups/list_accessible_entrances", json=json_payload
+        res = self.client.get(
+            "/acs/access_groups/list_accessible_entrances", params=params
         )
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
@@ -221,12 +221,12 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
 
-        res = self.client.post("/acs/access_groups/list_users", json=json_payload)
+        res = self.client.get("/acs/access_groups/list_users", params=params)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
@@ -245,15 +245,15 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
-            json_payload["acs_access_group_id"] = acs_access_group_id
+            params["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
-            json_payload["acs_user_id"] = acs_user_id
+            params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        self.client.post("/acs/access_groups/remove_user", json=json_payload)
+        self.client.delete("/acs/access_groups/remove_user", params=params)
 
         return None

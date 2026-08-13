@@ -169,14 +169,14 @@ class Devices(AbstractDevices):
         :param name: Name of the device that you want to get.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if name is not None:
-            json_payload["name"] = name
+            params["name"] = name
 
-        res = self.client.post("/devices/get", json=json_payload)
+        res = self.client.get("/devices/get", params=params)
 
         return Device.from_dict(res["device"])
 
@@ -286,12 +286,12 @@ class Devices(AbstractDevices):
         :param provider_category: Category for which you want to list providers.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if provider_category is not None:
-            json_payload["provider_category"] = provider_category
+            params["provider_category"] = provider_category
 
-        res = self.client.post("/devices/list_device_providers", json=json_payload)
+        res = self.client.get("/devices/list_device_providers", params=params)
 
         return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
@@ -350,6 +350,6 @@ class Devices(AbstractDevices):
         if properties is not None:
             json_payload["properties"] = properties
 
-        self.client.post("/devices/update", json=json_payload)
+        self.client.patch("/devices/update", json=json_payload)
 
         return None

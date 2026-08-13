@@ -555,7 +555,7 @@ class AccessCodes(AbstractAccessCodes):
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
 
-        res = self.client.post("/access_codes/create_multiple", json=json_payload)
+        res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
@@ -566,14 +566,14 @@ class AccessCodes(AbstractAccessCodes):
 
         :param device_id: ID of the device for which you want to delete the access code.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        self.client.post("/access_codes/delete", json=json_payload)
+        self.client.delete("/access_codes/delete", params=params)
 
         return None
 
@@ -583,12 +583,12 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device for which you want to generate a code.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        res = self.client.post("/access_codes/generate_code", json=json_payload)
+        res = self.client.get("/access_codes/generate_code", params=params)
 
         return AccessCode.from_dict(res["generated_code"])
 
@@ -610,16 +610,16 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
         if code is not None:
-            json_payload["code"] = code
+            params["code"] = code
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        res = self.client.post("/access_codes/get", json=json_payload)
+        res = self.client.get("/access_codes/get", params=params)
 
         return AccessCode.from_dict(res["access_code"])
 
@@ -823,7 +823,7 @@ class AccessCodes(AbstractAccessCodes):
         if type is not None:
             json_payload["type"] = type
 
-        self.client.post("/access_codes/update", json=json_payload)
+        self.client.put("/access_codes/update", json=json_payload)
 
         return None
 
@@ -866,6 +866,6 @@ class AccessCodes(AbstractAccessCodes):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        self.client.post("/access_codes/update_multiple", json=json_payload)
+        self.client.patch("/access_codes/update_multiple", json=json_payload)
 
         return None

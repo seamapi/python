@@ -177,14 +177,14 @@ class Locks(AbstractLocks):
 
         .. deprecated::
            Use ``/devices/get`` instead."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if name is not None:
-            json_payload["name"] = name
+            params["name"] = name
 
-        res = self.client.post("/locks/get", json=json_payload)
+        res = self.client.get("/locks/get", params=params)
 
         return Device.from_dict(res["device"])
 

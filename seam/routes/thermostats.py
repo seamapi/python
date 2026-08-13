@@ -573,14 +573,14 @@ class Thermostats(AbstractThermostats):
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
         """
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
-            json_payload["climate_preset_key"] = climate_preset_key
+            params["climate_preset_key"] = climate_preset_key
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
 
-        self.client.post("/thermostats/delete_climate_preset", json=json_payload)
+        self.client.delete("/thermostats/delete_climate_preset", params=params)
 
         return None
 
@@ -907,7 +907,7 @@ class Thermostats(AbstractThermostats):
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
 
-        self.client.post("/thermostats/set_temperature_threshold", json=json_payload)
+        self.client.patch("/thermostats/set_temperature_threshold", json=json_payload)
 
         return None
 
@@ -980,7 +980,7 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        self.client.post("/thermostats/update_climate_preset", json=json_payload)
+        self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
         return None
 

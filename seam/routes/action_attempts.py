@@ -64,12 +64,12 @@ class ActionAttempts(AbstractActionAttempts):
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
-            json_payload["action_attempt_id"] = action_attempt_id
+            params["action_attempt_id"] = action_attempt_id
 
-        res = self.client.post("/action_attempts/get", json=json_payload)
+        res = self.client.get("/action_attempts/get", params=params)
 
         wait_for_action_attempt = (
             self.defaults.get("wait_for_action_attempt")
