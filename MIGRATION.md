@@ -6,12 +6,8 @@ Version 3 replaces the underlying HTTP library, adds client-side validation and 
 
 ## Installation
 
-While v3 is in prerelease, install it explicitly:
-
 ```sh
-pip install --pre seam
-# or pin a specific beta
-pip install 'seam==3.0.0b6'
+pip install --upgrade 'seam>=3,<4'
 ```
 
 ## Summary of breaking changes
@@ -190,7 +186,7 @@ Only parameters the Seam API documents as nullable are typed to accept `NULL`, s
 ## Migration checklist
 
 1. Upgrade your runtime to Python 3.11 or later.
-2. Update the dependency: `seam>=3,<4` (or a pinned `3.0.0bN` while in prerelease).
+2. Update the dependency: `seam>=3,<4`.
 3. Rename `niquests_options` to `httpx_options` and translate its contents to `httpx.Client` options.
 4. Replace `urllib3.util.retry.Retry` with `seam.Retry` (httpx-retries) in any `retries` argument, and review the new default retry policy.
 5. Replace handling of `niquests`/`urllib3` exceptions with the `httpx` equivalents (`httpx.TimeoutException`, `httpx.ConnectError`, ...). Seam error classes are unchanged.
