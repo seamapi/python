@@ -62,9 +62,6 @@ def test_seam_http_throws_http_error_on_non_standard_response(server):
     assert exc_info.value.response.status_code == 503
 
 
-# The fake cannot produce malformed error responses, so the recording server
-# drives the bodies that must fall through is_api_error_response and raise a
-# plain HTTPError rather than being parsed into a SeamHttpApiError.
 def test_seam_http_raises_http_error_on_non_json_response(recording_server):
     with recording_server([(500, "Internal Server Error")]) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)

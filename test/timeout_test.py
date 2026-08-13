@@ -110,13 +110,11 @@ def test_seam_times_out_a_slow_request():
 
 @contextmanager
 def slow_server():
-    """Serve a response too slowly for the client timeout to tolerate."""
-
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
         # pylint: disable-next=invalid-name
-        def do_POST(self):  # BaseHTTPRequestHandler dispatches on this name.
+        def do_POST(self):
             time.sleep(5)
             self.send_response(200)
             self.send_header("content-length", "0")

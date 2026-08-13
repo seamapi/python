@@ -77,7 +77,6 @@ def test_wait_for_action_attempt_waits_for_pending_action_attempt(server):
             },
         )
 
-    # Use Timer to schedule the update after 1 second
     t = Timer(1.0, update_action_attempt)
     t.start()
 

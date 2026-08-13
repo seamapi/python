@@ -65,7 +65,6 @@ def test_action_attempt_union_hydrates_nested_result_and_error():
 def test_merged_variants_keep_every_variant_field():
     result_fields = {f.name for f in dataclasses.fields(ActionAttempt.Result)}
 
-    # One field from each of several action attempt variants.
     assert "was_confirmed_by_device" in result_fields
     assert "acs_credential_on_encoder" in result_fields
     assert "instant_key_url" in result_fields
@@ -94,7 +93,6 @@ def test_merged_variants_keep_every_variant_field():
 def test_merged_variants_recurse_into_nested_objects():
     from_fields = {f.name for f in dataclasses.fields(AcsUser.PendingMutations.From)}
 
-    # Each of these arrives from a different pending mutation variant.
     assert "full_name" in from_fields
     assert "starts_at" in from_fields
     assert "is_suspended" in from_fields
@@ -129,5 +127,4 @@ def test_nested_classes_are_scoped_to_their_owner():
     assert "climate_ref" in preset_metadata.__dataclass_fields__
     assert "ecobee_device_id" in device_metadata.__dataclass_fields__
 
-    # Nested shapes stay off the module namespace.
     assert not hasattr(device_module, "DeviceProperties")

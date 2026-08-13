@@ -71,7 +71,7 @@ def recording_server(responses):
         protocol_version = "HTTP/1.1"
 
         # pylint: disable-next=invalid-name
-        def do_POST(self):  # BaseHTTPRequestHandler dispatches on this name.
+        def do_POST(self):
             content_length = int(self.headers.get("content-length", 0))
             raw_body = self.rfile.read(content_length)
 
