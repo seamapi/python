@@ -8,7 +8,7 @@ on:
         description: The Python version.
         type: string
         required: false
-        default: '3.12'
+        default: '3.14'
       runs_on:
         description: The runner environment.
         type: string

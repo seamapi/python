@@ -6,7 +6,7 @@
     "args": {
       "NODE_VERSION": "24",
       "UV_VERSION": "0.8.17",
-      "VARIANT": "3.12"
+      "VARIANT": "3.14"
     }
   },
   "remoteEnv": {
