@@ -41,6 +41,9 @@ module-root = ""
 source-exclude = ["**/*_test.py"]
 wheel-exclude = ["**/*_test.py"]
 
+[tool.black]
+target-version = ["py311"]
+
 [tool.pytest.ini_options]
 norecursedirs = [
     "node_modules"
