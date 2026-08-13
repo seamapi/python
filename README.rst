@@ -289,7 +289,7 @@ The Seam API tells an omitted param apart from one explicitly set to null.
 In an update request, an omitted param leaves the current value unchanged,
 while a null param unsets it.
 
-Python has a single absence value, so this SDK spells the two apart.
+Python has a single nil value `None` which represents an undefined parameter. This SDK provides an explicit null value to send in requests.
 A param set to ``None`` is omitted, and a param set to ``NULL`` is sent as null:
 
 .. code-block:: python

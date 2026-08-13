@@ -152,20 +152,6 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
 
 def with_search_params(url: Any, params: Mapping[str, Any]) -> Any:
-    """Returns the url with the params serialized into its query string.
-
-    The Seam API parses URL search params as complex types, so the query
-    string is built here and set on the url as-is. Handing the params to
-    httpx instead would encode them with its own rules.
-
-    :param url: The url of the request
-    :type url: Any
-
-    :param params: The search params of the request
-    :type params: Mapping[str, Any]
-
-    :returns: The url carrying the serialized params"""
-
     query = serialize_url_search_params(params)
 
     if not query:
