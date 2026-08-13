@@ -80,7 +80,7 @@ class SeamEvent:
 
     :ivar is_backup_code: Indicates whether the code is a backup code (only present when mode is 'code' and a backup code was used).
 
-    :ivar acs_system_id:
+    :ivar acs_system_id: ID of the access system.
 
     :ivar acs_system_errors: Errors associated with the access control system.
 
@@ -88,7 +88,7 @@ class SeamEvent:
 
     :ivar acs_credential_id: ID of the affected credential.
 
-    :ivar acs_user_id:
+    :ivar acs_user_id: ID of the affected access system user.
 
     :ivar acs_encoder_id: ID of the affected encoder.
 
@@ -99,8 +99,6 @@ class SeamEvent:
     :ivar connect_webview_id:
 
     :ivar customer_key:
-
-    :ivar connected_account_type: undocumented: Unreleased.
 
     :ivar action_attempt_id:
 
@@ -135,8 +133,6 @@ class SeamEvent:
     :ivar is_via_nfc:
 
     :ivar method:
-
-    :ivar user_identity_id:
 
     :ivar reason: Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
 
@@ -536,7 +532,6 @@ class SeamEvent:
     client_session_id: Optional[str]
     connect_webview_id: Optional[str]
     customer_key: Optional[str]
-    connected_account_type: Optional[str]
     action_attempt_id: Optional[str]
     action_type: Optional[str]
     status: Optional[str]
@@ -554,7 +549,6 @@ class SeamEvent:
     is_via_bluetooth: Optional[bool]
     is_via_nfc: Optional[bool]
     method: Optional[str]
-    user_identity_id: Optional[str]
     reason: Optional[Reason]
     climate_preset_key: Optional[str]
     is_fallback_climate_preset: Optional[bool]
@@ -663,7 +657,6 @@ class SeamEvent:
             client_session_id=d.get("client_session_id", None),
             connect_webview_id=d.get("connect_webview_id", None),
             customer_key=d.get("customer_key", None),
-            connected_account_type=d.get("connected_account_type", None),
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             status=d.get("status", None),
@@ -681,7 +674,6 @@ class SeamEvent:
             is_via_bluetooth=d.get("is_via_bluetooth", None),
             is_via_nfc=d.get("is_via_nfc", None),
             method=d.get("method", None),
-            user_identity_id=d.get("user_identity_id", None),
             reason=(
                 cls.Reason.from_dict(d.get("reason"))
                 if d.get("reason") is not None

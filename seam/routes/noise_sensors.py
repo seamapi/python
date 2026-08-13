@@ -27,20 +27,10 @@ class AbstractNoiseSensors(abc.ABC):
         *,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -48,33 +38,13 @@ class AbstractNoiseSensors(abc.ABC):
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
 
-        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-
-        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-
         :param customer_key: Customer key for which you want to list devices.
-
-        :param device_ids: Array of device IDs for which you want to list devices.
 
         :param device_type: Device type of the noise sensors that you want to list.
 
         :param device_types: Device types of the noise sensors that you want to list.
 
-        :param limit: Numerical limit on the number of devices to return.
-
         :param manufacturer: Manufacturers of the noise sensors that you want to list.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-
-        :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
-
-        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -102,20 +72,10 @@ class NoiseSensors(AbstractNoiseSensors):
         *,
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
-        connected_account_ids: Optional[List[str]] = None,
-        created_before: Optional[str] = None,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        device_ids: Optional[List[str]] = None,
         device_type: Optional[str] = None,
         device_types: Optional[List[str]] = None,
-        limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
-        search: Optional[str] = None,
-        space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -123,33 +83,13 @@ class NoiseSensors(AbstractNoiseSensors):
 
         :param connected_account_id: ID of the connected account for which you want to list devices.
 
-        :param connected_account_ids: Array of IDs of the connected accounts for which you want to list devices.
-
-        :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
-
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
-
         :param customer_key: Customer key for which you want to list devices.
-
-        :param device_ids: Array of device IDs for which you want to list devices.
 
         :param device_type: Device type of the noise sensors that you want to list.
 
         :param device_types: Device types of the noise sensors that you want to list.
 
-        :param limit: Numerical limit on the number of devices to return.
-
         :param manufacturer: Manufacturers of the noise sensors that you want to list.
-
-        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
-
-        :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
-
-        :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
-
-        :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -158,34 +98,14 @@ class NoiseSensors(AbstractNoiseSensors):
             json_payload["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-        if connected_account_ids is not None:
-            json_payload["connected_account_ids"] = connected_account_ids
-        if created_before is not None:
-            json_payload["created_before"] = created_before
-        if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
         if customer_key is not None:
             json_payload["customer_key"] = customer_key
-        if device_ids is not None:
-            json_payload["device_ids"] = device_ids
         if device_type is not None:
             json_payload["device_type"] = device_type
         if device_types is not None:
             json_payload["device_types"] = device_types
-        if limit is not None:
-            json_payload["limit"] = limit
         if manufacturer is not None:
             json_payload["manufacturer"] = manufacturer
-        if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
-        if search is not None:
-            json_payload["search"] = search
-        if space_id is not None:
-            json_payload["space_id"] = space_id
-        if unstable_location_id is not None:
-            json_payload["unstable_location_id"] = unstable_location_id
-        if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
 
         res = self.client.post("/noise_sensors/list", json=json_payload)
 

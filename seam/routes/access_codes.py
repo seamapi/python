@@ -278,16 +278,9 @@ class AbstractAccessCodes(abc.ABC):
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
         is_managed: Optional[bool] = None,
-        is_offline_access_code: Optional[bool] = None,
-        is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
-        prefer_native_scheduling: Optional[bool] = None,
-        preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         type: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -309,12 +302,6 @@ class AbstractAccessCodes(abc.ABC):
 
         :param is_managed: Indicates whether the access code is managed through Seam. Note that to convert an unmanaged access code into a managed access code, use ``/access_codes/unmanaged/convert_to_managed``.
 
-        :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-
-        :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-
-        :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
         Note that the name provided on Seam is used to identify the code on Seam and is not necessarily the name that will appear in the lock provider's app or on the device. This is because lock providers may have constraints on names, such as length, uniqueness, or characters that can be used. In addition, some lock providers may break down names into components such as ``first_name`` and ``last_name``.
@@ -323,17 +310,9 @@ class AbstractAccessCodes(abc.ABC):
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
-        :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-
-        :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
         """
         raise NotImplementedError()
 
@@ -781,16 +760,9 @@ class AccessCodes(AbstractAccessCodes):
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
         is_managed: Optional[bool] = None,
-        is_offline_access_code: Optional[bool] = None,
-        is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
         name: Optional[str] = None,
-        prefer_native_scheduling: Optional[bool] = None,
-        preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         type: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -812,12 +784,6 @@ class AccessCodes(AbstractAccessCodes):
 
         :param is_managed: Indicates whether the access code is managed through Seam. Note that to convert an unmanaged access code into a managed access code, use ``/access_codes/unmanaged/convert_to_managed``.
 
-        :param is_offline_access_code: Indicates whether the access code is an `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_.
-
-        :param is_one_time_use: Indicates whether the `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ is a single-use access code.
-
-        :param max_time_rounding: Maximum rounding adjustment. To create a daily-bound `offline access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/offline-access-codes>`_ for devices that support this feature, set this parameter to ``1d``.
-
         :param name: Name of the new access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.
 
         Note that the name provided on Seam is used to identify the code on Seam and is not necessarily the name that will appear in the lock provider's app or on the device. This is because lock providers may have constraints on names, such as length, uniqueness, or characters that can be used. In addition, some lock providers may break down names into components such as ``first_name`` and ``last_name``.
@@ -826,17 +792,9 @@ class AccessCodes(AbstractAccessCodes):
 
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
-        :param prefer_native_scheduling: Indicates whether `native scheduling <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ should be used for time-bound codes when supported by the provider. Default: ``true``.
-
-        :param preferred_code_length: Preferred code length. Only applicable if you do not specify a ``code``. If the affected device does not support the preferred code length, Seam reverts to using the shortest supported code length.
-
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
-
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
         """
         json_payload: Dict[str, Any] = {}
 
@@ -858,26 +816,12 @@ class AccessCodes(AbstractAccessCodes):
             )
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
-        if is_offline_access_code is not None:
-            json_payload["is_offline_access_code"] = is_offline_access_code
-        if is_one_time_use is not None:
-            json_payload["is_one_time_use"] = is_one_time_use
-        if max_time_rounding is not None:
-            json_payload["max_time_rounding"] = max_time_rounding
         if name is not None:
             json_payload["name"] = name
-        if prefer_native_scheduling is not None:
-            json_payload["prefer_native_scheduling"] = prefer_native_scheduling
-        if preferred_code_length is not None:
-            json_payload["preferred_code_length"] = preferred_code_length
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
-        if use_backup_access_code_pool is not None:
-            json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-        if use_offline_access_code is not None:
-            json_payload["use_offline_access_code"] = use_offline_access_code
 
         self.client.post("/access_codes/update", json=json_payload)
 

@@ -174,12 +174,15 @@ class Device:
 
         :ivar location_name: Name of the device location.
 
+        :ivar room_name: Name of the room within the device location, when the provider reports one.
+
         :ivar time_zone: Time zone of the device location.
 
         :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
         """
 
         location_name: Optional[str]
+        room_name: Optional[str]
         time_zone: Optional[str]
         timezone: Optional[str]
 
@@ -187,6 +190,7 @@ class Device:
         def from_dict(cls, d: Any):
             return cls(
                 location_name=d.get("location_name", None),
+                room_name=d.get("room_name", None),
                 time_zone=d.get("time_zone", None),
                 timezone=d.get("timezone", None),
             )
@@ -287,7 +291,7 @@ class Device:
 
         :ivar salto_ks_metadata: Metadata for a Salto KS device.
 
-        :ivar salto_metadata: Deprecated: Use ``salto_ks_metadata `` instead. Metada for a Salto device.
+        :ivar salto_metadata: Deprecated: Use ``salto_ks_metadata`` instead. Metada for a Salto device.
 
         :ivar schlage_metadata: Metadata for a Schlage device.
 
@@ -310,6 +314,8 @@ class Device:
         :ivar visionline_metadata: Metadata for an ASSA ABLOY Visionline system.
 
         :ivar wyze_metadata: Metadata for a Wyze device.
+
+        :ivar yacan_metadata: Metadata for a Yacan device.
 
         :ivar auto_lock_delay_seconds: The delay in seconds before the lock automatically locks after being unlocked.
 
@@ -795,15 +801,6 @@ class Device:
             :ivar site_name: Site name for a dormakaba Oracode device."""
 
             @dataclass
-            class DeviceId(ResourceMapping):
-                """Device ID for a dormakaba Oracode device."""
-
-                @classmethod
-                def from_dict(cls, d: Any):
-                    # pylint: disable=unused-argument
-                    return cls()
-
-            @dataclass
             class PredefinedTimeSlots(ResourceMapping):
                 """Predefined time slots for a dormakaba Oracode device.
 
@@ -857,7 +854,7 @@ class Device:
                         prefix=d.get("prefix", None),
                     )
 
-            device_id: Optional[DeviceId]
+            device_id: Optional[str]
             door_id: Optional[float]
             door_is_wireless: Optional[bool]
             door_name: Optional[str]
@@ -869,11 +866,7 @@ class Device:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    device_id=(
-                        cls.DeviceId.from_dict(d.get("device_id"))
-                        if d.get("device_id") is not None
-                        else None
-                    ),
+                    device_id=d.get("device_id", None),
                     door_id=d.get("door_id", None),
                     door_is_wireless=d.get("door_is_wireless", None),
                     door_name=d.get("door_name", None),
@@ -1405,12 +1398,19 @@ class Device:
 
             :ivar display_name: Display name for a Google Nest device.
 
-            :ivar nest_device_id: Device ID for a Google Nest device."""
+            :ivar nest_device_id: Device ID for a Google Nest device.
+
+            :ivar nest_structure_id: ID of the Google Nest structure containing the device.
+
+            :ivar structure_name: Name of the Google Nest structure containing the device. The device owner sets this value.
+            """
 
             device_custom_name: Optional[str]
             device_name: Optional[str]
             display_name: Optional[str]
             nest_device_id: Optional[str]
+            nest_structure_id: Optional[str]
+            structure_name: Optional[str]
 
             @classmethod
             def from_dict(cls, d: Any):
@@ -1419,6 +1419,8 @@ class Device:
                     device_name=d.get("device_name", None),
                     display_name=d.get("display_name", None),
                     nest_device_id=d.get("nest_device_id", None),
+                    nest_structure_id=d.get("nest_structure_id", None),
+                    structure_name=d.get("structure_name", None),
                 )
 
         @dataclass
@@ -1686,11 +1688,14 @@ class Device:
 
             :ivar dual_setpoints_not_supported: Set to true when the device does not support the /dual-setpoints API endpoint.
 
+            :ivar enforced_setpoint_range_celsius: Enforced setpoint range in Celsius for a Sensi device, derived from an OutOfRange API error.
+
             :ivar product_type: Product type for a Sensi device."""
 
             device_id: Optional[str]
             device_name: Optional[str]
             dual_setpoints_not_supported: Optional[bool]
+            enforced_setpoint_range_celsius: Optional[List[float]]
             product_type: Optional[str]
 
             @classmethod
@@ -1700,6 +1705,9 @@ class Device:
                     device_name=d.get("device_name", None),
                     dual_setpoints_not_supported=d.get(
                         "dual_setpoints_not_supported", None
+                    ),
+                    enforced_setpoint_range_celsius=d.get(
+                        "enforced_setpoint_range_celsius", None
                     ),
                     product_type=d.get("product_type", None),
                 )
@@ -1988,6 +1996,32 @@ class Device:
                     product_model=d.get("product_model", None),
                     product_name=d.get("product_name", None),
                     product_type=d.get("product_type", None),
+                )
+
+        @dataclass
+        class YacanMetadata(ResourceMapping):
+            """Metadata for a Yacan device.
+
+            :ivar device_id: Device ID for a Yacan device.
+
+            :ivar device_name: Device name for a Yacan device.
+
+            :ivar device_type: Device type for a Yacan device.
+
+            :ivar serial_number: Serial number for a Yacan device."""
+
+            device_id: Optional[str]
+            device_name: Optional[str]
+            device_type: Optional[str]
+            serial_number: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    device_id=d.get("device_id", None),
+                    device_name=d.get("device_name", None),
+                    device_type=d.get("device_type", None),
+                    serial_number=d.get("serial_number", None),
                 )
 
         @dataclass
@@ -2746,6 +2780,7 @@ class Device:
         ultraloq_metadata: Optional[UltraloqMetadata]
         visionline_metadata: Optional[VisionlineMetadata]
         wyze_metadata: Optional[WyzeMetadata]
+        yacan_metadata: Optional[YacanMetadata]
         auto_lock_delay_seconds: Optional[float]
         auto_lock_enabled: Optional[bool]
         backup_access_code_pool_enabled: Optional[bool]
@@ -3044,6 +3079,11 @@ class Device:
                 wyze_metadata=(
                     cls.WyzeMetadata.from_dict(d.get("wyze_metadata"))
                     if d.get("wyze_metadata") is not None
+                    else None
+                ),
+                yacan_metadata=(
+                    cls.YacanMetadata.from_dict(d.get("yacan_metadata"))
+                    if d.get("yacan_metadata") is not None
                     else None
                 ),
                 auto_lock_delay_seconds=d.get("auto_lock_delay_seconds", None),

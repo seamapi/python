@@ -114,12 +114,15 @@ class UnmanagedDevice:
 
         :ivar location_name: Name of the device location.
 
+        :ivar room_name: Name of the room within the device location, when the provider reports one.
+
         :ivar time_zone: Time zone of the device location.
 
         :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
         """
 
         location_name: Optional[str]
+        room_name: Optional[str]
         time_zone: Optional[str]
         timezone: Optional[str]
 
@@ -127,6 +130,7 @@ class UnmanagedDevice:
         def from_dict(cls, d: Any):
             return cls(
                 location_name=d.get("location_name", None),
+                room_name=d.get("room_name", None),
                 time_zone=d.get("time_zone", None),
                 timezone=d.get("timezone", None),
             )

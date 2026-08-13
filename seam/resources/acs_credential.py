@@ -24,6 +24,8 @@ class AcsCredential:
 
     :ivar acs_user_id: ID of the `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to whom the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ belongs.
 
+    :ivar akiles_metadata: Akiles-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
     :ivar assa_abloy_vostio_metadata: Vostio-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
     :ivar card_number: Number of the card associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
@@ -70,6 +72,20 @@ class AcsCredential:
 
     :ivar workspace_id: ID of the workspace that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
     """
+
+    @dataclass
+    class AkilesMetadata(ResourceMapping):
+        """Akiles-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+
+        :ivar member_pin_id: ID of the Akiles member PIN."""
+
+        member_pin_id: Optional[str]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                member_pin_id=d.get("member_pin_id", None),
+            )
 
     @dataclass
     class AssaAbloyVostioMetadata(ResourceMapping):
@@ -182,11 +198,17 @@ class AcsCredential:
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+
+        :ivar new_code: The PIN code that was assigned instead.
+
+        :ivar original_code: The originally requested PIN code that could not be used.
         """
 
         created_at: str
         message: str
         warning_code: str
+        new_code: Optional[str]
+        original_code: Optional[str]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -194,6 +216,8 @@ class AcsCredential:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
+                new_code=d.get("new_code", None),
+                original_code=d.get("original_code", None),
             )
 
     access_method: str
@@ -201,6 +225,7 @@ class AcsCredential:
     acs_credential_pool_id: Optional[str]
     acs_system_id: str
     acs_user_id: Optional[str]
+    akiles_metadata: Optional[AkilesMetadata]
     assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
     card_number: Optional[str]
     code: Optional[str]
@@ -233,6 +258,11 @@ class AcsCredential:
             acs_credential_pool_id=d.get("acs_credential_pool_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
+            akiles_metadata=(
+                cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
+                if d.get("akiles_metadata") is not None
+                else None
+            ),
             assa_abloy_vostio_metadata=(
                 cls.AssaAbloyVostioMetadata.from_dict(
                     d.get("assa_abloy_vostio_metadata")
