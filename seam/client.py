@@ -6,7 +6,7 @@ import httpx
 from httpx import Response
 from httpx_retries import Retry, RetryTransport
 
-from .constants import DEFAULT_TIMEOUT, LTS_VERSION
+from .constants import DEFAULT_TIMEOUT
 from .exceptions import (
     SeamHttpApiError,
     SeamHttpInvalidInputError,
@@ -16,7 +16,6 @@ from .exceptions import (
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
     "seam-sdk-version": version("seam"),
-    "seam-lts-version": LTS_VERSION,
 }
 
 DEFAULT_RETRIES = Retry()

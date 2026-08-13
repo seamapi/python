@@ -2,7 +2,6 @@ import uuid
 from importlib.metadata import version
 
 from seam import Seam
-from seam.constants import LTS_VERSION
 
 
 def test_seam_sends_default_headers(recording_server):
@@ -23,10 +22,8 @@ def test_seam_sends_default_headers(recording_server):
 
     assert request["headers"]["seam-sdk-name"] == "seamapi/python"
     assert request["headers"]["seam-sdk-version"] == version("seam")
-    assert request["headers"]["seam-lts-version"] == LTS_VERSION
+    assert "seam-lts-version" not in request["headers"]
     assert request["headers"]["authorization"] == "Bearer seam_apikey_token"
-
-    assert Seam.lts_version == seam.lts_version
 
 
 def test_seam_sends_workspace_header_with_personal_access_token(recording_server):

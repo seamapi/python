@@ -7,8 +7,6 @@ from .resources import Workspace
 
 
 class AbstractSeam(AbstractRoutes):
-    lts_version: str
-
     @abc.abstractmethod
     def __init__(
         self,
@@ -66,7 +64,6 @@ class AbstractSeamWithoutWorkspaceWorkspaces(abc.ABC):
 
 
 class AbstractSeamWithoutWorkspace:
-    lts_version: str
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
     @abc.abstractmethod

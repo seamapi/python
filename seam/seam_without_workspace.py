@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional, Union
 from typing_extensions import Self
 from httpx_retries import Retry
 
-from .constants import DEFAULT_TIMEOUT, LTS_VERSION
+from .constants import DEFAULT_TIMEOUT
 from .parse_options import parse_without_workspace_options
 from .client import SeamHttpClient
 from .models import AbstractSeamWithoutWorkspace
@@ -29,9 +29,6 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
     This class provides methods to authenticate and interact with Seam API endpoints
     that can operate without being tied to a specific workspace. It supports operations such as creating and listing workspaces.
 
-    :cvar lts_version: The long-term support (LTS) version of the Seam
-        Python SDK
-    :vartype lts_version: str
     :ivar wait_for_action_attempt: Controls whether to wait for an action
         attempt to complete
     :vartype wait_for_action_attempt: Union[bool, Dict[str, float]]
@@ -40,8 +37,6 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
     :ivar workspaces: Proxy to access workspace-related operations
     :vartype workspaces: WorkspacesProxy
     """
-
-    lts_version: str = LTS_VERSION
 
     def __init__(
         self,
@@ -84,7 +79,6 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
-        self.lts_version = SeamWithoutWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_without_workspace_options(
             personal_access_token=personal_access_token,

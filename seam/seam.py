@@ -2,7 +2,7 @@ from typing import Any, Optional, Union, Dict, Callable
 from typing_extensions import Self
 from httpx_retries import Retry
 
-from .constants import DEFAULT_TIMEOUT, LTS_VERSION
+from .constants import DEFAULT_TIMEOUT
 from .parse_options import parse_options
 from .routes import Routes
 from .models import AbstractSeam
@@ -17,9 +17,6 @@ class Seam(AbstractSeam):
     Seam API endpoints,
     including devices, access codes, action_attempts, and more. It supports authentication via API key or personal access token.
 
-    :cvar lts_version: The long-term support (LTS) version of the Seam
-        Python SDK
-    :vartype lts_version: str
     :ivar defaults: Default settings for API requests
     :vartype defaults: Dict[str, Any]
     :ivar client: The HTTP client used for making API requests
@@ -30,8 +27,6 @@ class Seam(AbstractSeam):
 
     For more information about the Seam API, visit https://docs.seam.co/
     """
-
-    lts_version: str = LTS_VERSION
 
     def __init__(
         self,
@@ -86,7 +81,6 @@ class Seam(AbstractSeam):
             access token format is invalid
         """
 
-        self.lts_version = Seam.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_options(
             api_key=api_key,
