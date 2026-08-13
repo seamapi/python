@@ -1,5 +1,5 @@
-import httpx
 import pytest
+from httpx import HTTPStatusError
 
 from seam import Retry, Seam
 
@@ -39,7 +39,7 @@ def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
             retries=retry_policy(total=expected_retry_count),
         )
 
-        with pytest.raises(httpx.HTTPStatusError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -52,7 +52,7 @@ def test_seam_does_not_retry_when_retries_are_disabled(recording_server):
             "seam_apikey_token", endpoint=endpoint, retries=retry_policy(total=0)
         )
 
-        with pytest.raises(httpx.HTTPStatusError) as exc_info:
+        with pytest.raises(HTTPStatusError) as exc_info:
             seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
@@ -73,7 +73,7 @@ def test_seam_surfaces_service_unavailable_from_a_workspace_outage(server):
         },
     )
 
-    with pytest.raises(httpx.HTTPStatusError) as exc_info:
+    with pytest.raises(HTTPStatusError) as exc_info:
         seam.devices.list()
 
     assert exc_info.value.response.status_code == 503

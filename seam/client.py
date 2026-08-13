@@ -3,6 +3,7 @@ from importlib.metadata import version
 import abc
 
 import httpx
+from httpx import Response
 from httpx_retries import Retry, RetryTransport
 
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
@@ -31,11 +32,11 @@ class AbstractSeamHttpClient(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _handle_response(self, response: httpx.Response):
+    def _handle_response(self, response: Response):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _handle_error_response(self, response: httpx.Response):
+    def _handle_error_response(self, response: Response):
         raise NotImplementedError
 
 
@@ -83,7 +84,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
         return self._handle_response(response)
 
-    def _handle_response(self, response: httpx.Response):
+    def _handle_response(self, response: Response):
         if not 200 <= response.status_code < 300:
             self._handle_error_response(response)
 
@@ -92,7 +93,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
         return response.text
 
-    def _handle_error_response(self, response: httpx.Response):
+    def _handle_error_response(self, response: Response):
         status_code = response.status_code
         request_id = response.headers.get("seam-request-id")
 
@@ -119,7 +120,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         raise SeamHttpApiError(error_details, status_code, request_id)
 
 
-def is_api_error_response(response: httpx.Response) -> bool:
+def is_api_error_response(response: Response) -> bool:
     try:
         content_type = response.headers.get("content-type", "")
 

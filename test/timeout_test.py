@@ -3,8 +3,8 @@ import time
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-import httpx
 import pytest
+from httpx import Timeout, TimeoutException
 
 from seam import Retry, Seam
 from seam.constants import DEFAULT_TIMEOUT
@@ -14,19 +14,19 @@ def test_timeout_defaults_to_30_seconds():
     seam = Seam.from_api_key("seam_apikey_token")
 
     assert DEFAULT_TIMEOUT == 30
-    assert seam.client.timeout == httpx.Timeout(30)
+    assert seam.client.timeout == Timeout(30)
 
 
 def test_timeout_can_be_overridden():
     seam = Seam.from_api_key("seam_apikey_token", timeout=60)
 
-    assert seam.client.timeout == httpx.Timeout(60)
+    assert seam.client.timeout == Timeout(60)
 
 
 def test_timeout_can_be_disabled_with_none():
     seam = Seam.from_api_key("seam_apikey_token", timeout=None)
 
-    assert seam.client.timeout == httpx.Timeout(None)
+    assert seam.client.timeout == Timeout(None)
 
 
 def test_httpx_options_are_passed_to_the_client():
@@ -42,7 +42,7 @@ def test_httpx_options_are_passed_to_the_client():
 def test_httpx_options_take_precedence():
     seam = Seam.from_api_key("seam_apikey_token", httpx_options={"timeout": 15})
 
-    assert seam.client.timeout == httpx.Timeout(15)
+    assert seam.client.timeout == Timeout(15)
 
 
 def test_per_request_timeout_overrides_the_client_timeout(recording_server):
@@ -63,7 +63,7 @@ def test_seam_times_out_a_slow_request():
             retries=Retry(total=0),
         )
 
-        with pytest.raises(httpx.TimeoutException):
+        with pytest.raises(TimeoutException):
             seam.devices.list()
 
 

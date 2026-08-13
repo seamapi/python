@@ -499,12 +499,12 @@ precedence over the defaults the SDK sets:
 
 .. code-block:: python
 
-    import httpx
+    from httpx import Limits
 
     seam = Seam(
         api_key="your-api-key",
         httpx_options={
-            "limits": httpx.Limits(max_connections=25, max_keepalive_connections=20),
+            "limits": Limits(max_connections=25, max_keepalive_connections=20),
         },
     )
 
