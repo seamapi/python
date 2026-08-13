@@ -26,6 +26,7 @@ export interface MethodLayoutContext {
     isDeprecated: boolean
     deprecationMessage: string
     required: boolean
+    nullable: boolean
   }>
   returnPath: string[]
   returnType: string
@@ -85,6 +86,7 @@ export const getMethodLayoutContext = (
     isDeprecated: parameter.isDeprecated,
     deprecationMessage: parameter.deprecationMessage,
     required: parameter.required ?? false,
+    nullable: parameter.nullable ?? false,
   })),
   returnPath: method.returnPath,
   returnType: method.returnResource,
