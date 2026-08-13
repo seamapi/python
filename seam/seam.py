@@ -51,13 +51,17 @@ class Seam(AbstractSeam):
         It supports two authentication methods: API key or personal access token.
 
         :param api_key: The API key for authenticating with Seam. Mutually
-            exclusive with personal_access_token
+            exclusive with personal_access_token. Read from the SEAM_API_KEY
+            environment variable when omitted
         :type api_key: Optional[str]
         :param personal_access_token: A personal access token for
-            authenticating with Seam. Mutually exclusive with api_key
+            authenticating with Seam. Mutually exclusive with api_key. Read
+            from the SEAM_PERSONAL_ACCESS_TOKEN environment variable when
+            omitted
         :type personal_access_token: Optional[str]
         :param workspace_id: The ID of the workspace to interact with.
-            Required when using a personal access token
+            Required when using a personal access token. Read from the
+            SEAM_WORKSPACE_ID environment variable when omitted
         :type workspace_id: Optional[str]
         :param endpoint: The custom API endpoint URL. If not provided, the
             default Seam API endpoint will be used
