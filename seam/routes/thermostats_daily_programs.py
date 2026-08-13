@@ -37,7 +37,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         name: str,
         periods: List[Dict[str, Any]],
         thermostat_daily_program_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
 
@@ -103,7 +103,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         name: str,
         periods: List[Dict[str, Any]],
         thermostat_daily_program_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates a specified thermostat daily program. The periods that you specify overwrite any existing periods for the daily program.
 

@@ -22,7 +22,7 @@ class AbstractAccessMethods(abc.ABC):
         *,
         access_method_id: str,
         card_number: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
@@ -41,7 +41,7 @@ class AbstractAccessMethods(abc.ABC):
         *,
         access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
-        reservation_key: Optional[str] = None
+        reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
@@ -59,7 +59,7 @@ class AbstractAccessMethods(abc.ABC):
         *,
         access_method_id: str,
         acs_encoder_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -87,7 +87,7 @@ class AbstractAccessMethods(abc.ABC):
         *,
         access_method_ids: List[str],
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -111,7 +111,7 @@ class AbstractAccessMethods(abc.ABC):
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
 
@@ -140,7 +140,7 @@ class AbstractAccessMethods(abc.ABC):
         *,
         access_method_id: str,
         acs_entrance_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
@@ -169,7 +169,7 @@ class AccessMethods(AbstractAccessMethods):
         *,
         access_method_id: str,
         card_number: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
@@ -206,7 +206,7 @@ class AccessMethods(AbstractAccessMethods):
         *,
         access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
-        reservation_key: Optional[str] = None
+        reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
@@ -234,7 +234,7 @@ class AccessMethods(AbstractAccessMethods):
         *,
         access_method_id: str,
         acs_encoder_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -286,7 +286,7 @@ class AccessMethods(AbstractAccessMethods):
         *,
         access_method_ids: List[str],
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -320,7 +320,7 @@ class AccessMethods(AbstractAccessMethods):
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
 
@@ -369,7 +369,7 @@ class AccessMethods(AbstractAccessMethods):
         *,
         access_method_id: str,
         acs_entrance_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 

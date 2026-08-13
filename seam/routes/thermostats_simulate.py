@@ -14,7 +14,7 @@ class AbstractThermostatsSimulate(abc.ABC):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None
+        heating_set_point_fahrenheit: Optional[float] = None,
     ) -> None:
         """Simulates having adjusted the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ for a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your Thermostat App with Simulate Endpoints <https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints>`_.
 
@@ -38,7 +38,7 @@ class AbstractThermostatsSimulate(abc.ABC):
         *,
         device_id: str,
         temperature_celsius: Optional[float] = None,
-        temperature_fahrenheit: Optional[float] = None
+        temperature_fahrenheit: Optional[float] = None,
     ) -> None:
         """Simulates a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ reaching a specified temperature. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your Thermostat App with Simulate Endpoints <https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints>`_.
 
@@ -64,7 +64,7 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
-        heating_set_point_fahrenheit: Optional[float] = None
+        heating_set_point_fahrenheit: Optional[float] = None,
     ) -> None:
         """Simulates having adjusted the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ for a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your Thermostat App with Simulate Endpoints <https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints>`_.
 
@@ -104,7 +104,7 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         *,
         device_id: str,
         temperature_celsius: Optional[float] = None,
-        temperature_fahrenheit: Optional[float] = None
+        temperature_fahrenheit: Optional[float] = None,
     ) -> None:
         """Simulates a `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ reaching a specified temperature. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your Thermostat App with Simulate Endpoints <https://docs.seam.co/capability-guides/thermostats/testing-your-thermostat-app-with-simulate-endpoints>`_.
 

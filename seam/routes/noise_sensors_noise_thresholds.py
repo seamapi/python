@@ -15,7 +15,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         starts_daily_at: str,
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None
+        noise_threshold_nrs: Optional[float] = None,
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
@@ -71,7 +71,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
         noise_threshold_nrs: Optional[float] = None,
-        starts_daily_at: Optional[str] = None
+        starts_daily_at: Optional[str] = None,
     ) -> None:
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -105,7 +105,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         starts_daily_at: str,
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
-        noise_threshold_nrs: Optional[float] = None
+        noise_threshold_nrs: Optional[float] = None,
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
@@ -201,7 +201,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         name: Optional[str] = None,
         noise_threshold_decibels: Optional[float] = None,
         noise_threshold_nrs: Optional[float] = None,
-        starts_daily_at: Optional[str] = None
+        starts_daily_at: Optional[str] = None,
     ) -> None:
         """Updates a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 

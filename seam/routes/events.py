@@ -12,7 +12,7 @@ class AbstractEvents(abc.ABC):
         *,
         event_id: Optional[str] = None,
         device_id: Optional[str] = None,
-        event_type: Optional[str] = None
+        event_type: Optional[str] = None,
     ) -> SeamEvent:
         """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
@@ -56,7 +56,7 @@ class AbstractEvents(abc.ABC):
         space_id: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         unstable_offset: Optional[float] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
         """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
@@ -130,7 +130,7 @@ class Events(AbstractEvents):
         *,
         event_id: Optional[str] = None,
         device_id: Optional[str] = None,
-        event_type: Optional[str] = None
+        event_type: Optional[str] = None,
     ) -> SeamEvent:
         """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
@@ -184,7 +184,7 @@ class Events(AbstractEvents):
         space_id: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         unstable_offset: Optional[float] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
         """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 

@@ -20,7 +20,7 @@ class AbstractCustomers(abc.ABC):
         locale: Optional[str] = None,
         navigation_mode: Optional[str] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None
+        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
 
@@ -71,7 +71,7 @@ class AbstractCustomers(abc.ABC):
         tenant_keys: Optional[List[str]] = None,
         unit_keys: Optional[List[str]] = None,
         user_identity_keys: Optional[List[str]] = None,
-        user_keys: Optional[List[str]] = None
+        user_keys: Optional[List[str]] = None,
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
@@ -138,7 +138,7 @@ class AbstractCustomers(abc.ABC):
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
-        users: Optional[List[Dict[str, Any]]] = None
+        users: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         """Pushes customer data including resources like spaces, properties, rooms, users, etc.
 
@@ -202,7 +202,7 @@ class Customers(AbstractCustomers):
         locale: Optional[str] = None,
         navigation_mode: Optional[str] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None
+        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
 
@@ -279,7 +279,7 @@ class Customers(AbstractCustomers):
         tenant_keys: Optional[List[str]] = None,
         unit_keys: Optional[List[str]] = None,
         user_identity_keys: Optional[List[str]] = None,
-        user_keys: Optional[List[str]] = None
+        user_keys: Optional[List[str]] = None,
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
@@ -388,7 +388,7 @@ class Customers(AbstractCustomers):
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
-        users: Optional[List[Dict[str, Any]]] = None
+        users: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         """Pushes customer data including resources like spaces, properties, rooms, users, etc.
 

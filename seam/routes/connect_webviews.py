@@ -19,7 +19,7 @@ class AbstractConnectWebviews(abc.ABC):
         customer_key: Optional[str] = None,
         excluded_providers: Optional[List[str]] = None,
         provider_category: Optional[str] = None,
-        wait_for_device_creation: Optional[bool] = None
+        wait_for_device_creation: Optional[bool] = None,
     ) -> ConnectWebview:
         """Creates a new `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
@@ -81,7 +81,7 @@ class AbstractConnectWebviews(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
@@ -118,7 +118,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         customer_key: Optional[str] = None,
         excluded_providers: Optional[List[str]] = None,
         provider_category: Optional[str] = None,
-        wait_for_device_creation: Optional[bool] = None
+        wait_for_device_creation: Optional[bool] = None,
     ) -> ConnectWebview:
         """Creates a new `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
@@ -218,7 +218,7 @@ class ConnectWebviews(AbstractConnectWebviews):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 

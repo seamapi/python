@@ -13,7 +13,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         access_code_id: str,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None,
     ) -> None:
         """Converts an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ to an `access code managed through Seam <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -45,7 +45,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         *,
         access_code_id: Optional[str] = None,
         code: Optional[str] = None,
-        device_id: Optional[str] = None
+        device_id: Optional[str] = None,
     ) -> UnmanagedAccessCode:
         """Returns a specified `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -68,7 +68,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedAccessCode]:
         """Returns a list of all `unmanaged access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -93,7 +93,7 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         is_managed: bool,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None,
     ) -> None:
         """Updates a specified `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -121,7 +121,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         access_code_id: str,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None,
     ) -> None:
         """Converts an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ to an `access code managed through Seam <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -175,7 +175,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         *,
         access_code_id: Optional[str] = None,
         code: Optional[str] = None,
-        device_id: Optional[str] = None
+        device_id: Optional[str] = None,
     ) -> UnmanagedAccessCode:
         """Returns a specified `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -208,7 +208,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedAccessCode]:
         """Returns a list of all `unmanaged access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -247,7 +247,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         is_managed: bool,
         allow_external_modification: Optional[bool] = None,
         force: Optional[bool] = None,
-        is_external_modification_allowed: Optional[bool] = None
+        is_external_modification_allowed: Optional[bool] = None,
     ) -> None:
         """Updates a specified `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 

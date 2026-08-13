@@ -22,7 +22,7 @@ class AbstractAcsEntrances(abc.ABC):
         *,
         acs_entrance_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -48,7 +48,7 @@ class AbstractAcsEntrances(abc.ABC):
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
         """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -96,7 +96,7 @@ class AbstractAcsEntrances(abc.ABC):
         *,
         acs_credential_id: str,
         acs_entrance_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 
@@ -135,7 +135,7 @@ class AcsEntrances(AbstractAcsEntrances):
         *,
         acs_entrance_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -171,7 +171,7 @@ class AcsEntrances(AbstractAcsEntrances):
         location_id: Optional[str] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
         """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -255,7 +255,7 @@ class AcsEntrances(AbstractAcsEntrances):
         *,
         acs_credential_id: str,
         acs_entrance_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 

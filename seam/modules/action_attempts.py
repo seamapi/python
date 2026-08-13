@@ -22,7 +22,7 @@ def poll_until_ready(
     *,
     action_attempt_id: str,
     timeout: Optional[float] = TIMEOUT,
-    polling_interval: Optional[float] = POLLING_INTERVAL
+    polling_interval: Optional[float] = POLLING_INTERVAL,
 ) -> ActionAttempt:
     time_waiting = 0.0
 
@@ -47,7 +47,7 @@ def resolve_action_attempt(
     client: SeamHttpClient,
     *,
     action_attempt: ActionAttempt,
-    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+    wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]],
 ) -> ActionAttempt:
     if wait_for_action_attempt is True:
         return poll_until_ready(

@@ -16,7 +16,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -77,7 +77,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
@@ -112,7 +112,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -213,7 +213,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         is_override_allowed: Optional[bool] = None,
         max_override_period_minutes: Optional[int] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 

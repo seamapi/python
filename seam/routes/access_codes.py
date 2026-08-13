@@ -37,7 +37,7 @@ class AbstractAccessCodes(abc.ABC):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://docs.seam.co/low-level-apis/access-codes>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -97,7 +97,7 @@ class AbstractAccessCodes(abc.ABC):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None
+        use_backup_access_code_pool: Optional[bool] = None,
     ) -> List[AccessCode]:
         """Creates new `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ that share a common code across multiple devices.
 
@@ -169,7 +169,7 @@ class AbstractAccessCodes(abc.ABC):
         *,
         access_code_id: Optional[str] = None,
         code: Optional[str] = None,
-        device_id: Optional[str] = None
+        device_id: Optional[str] = None,
     ) -> AccessCode:
         """Returns a specified `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -197,7 +197,7 @@ class AbstractAccessCodes(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -250,7 +250,7 @@ class AbstractAccessCodes(abc.ABC):
         device_id: str,
         max_code_length: Optional[int] = None,
         min_code_length: Optional[int] = None,
-        supported_code_lengths: Optional[List[float]] = None
+        supported_code_lengths: Optional[List[float]] = None,
     ) -> None:
         """Enables you to report access code-related constraints for a device. Currently, supports reporting supported code length constraints for SmartThings devices.
 
@@ -287,7 +287,7 @@ class AbstractAccessCodes(abc.ABC):
         starts_at: Optional[str] = None,
         type: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        use_offline_access_code: Optional[bool] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -344,7 +344,7 @@ class AbstractAccessCodes(abc.ABC):
         common_code_key: str,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ that share a common code across multiple devices.
 
@@ -402,7 +402,7 @@ class AccessCodes(AbstractAccessCodes):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://docs.seam.co/low-level-apis/access-codes>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -500,7 +500,7 @@ class AccessCodes(AbstractAccessCodes):
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
-        use_backup_access_code_pool: Optional[bool] = None
+        use_backup_access_code_pool: Optional[bool] = None,
     ) -> List[AccessCode]:
         """Creates new `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ that share a common code across multiple devices.
 
@@ -618,7 +618,7 @@ class AccessCodes(AbstractAccessCodes):
         *,
         access_code_id: Optional[str] = None,
         code: Optional[str] = None,
-        device_id: Optional[str] = None
+        device_id: Optional[str] = None,
     ) -> AccessCode:
         """Returns a specified `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -656,7 +656,7 @@ class AccessCodes(AbstractAccessCodes):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -741,7 +741,7 @@ class AccessCodes(AbstractAccessCodes):
         device_id: str,
         max_code_length: Optional[int] = None,
         min_code_length: Optional[int] = None,
-        supported_code_lengths: Optional[List[float]] = None
+        supported_code_lengths: Optional[List[float]] = None,
     ) -> None:
         """Enables you to report access code-related constraints for a device. Currently, supports reporting supported code length constraints for SmartThings devices.
 
@@ -790,7 +790,7 @@ class AccessCodes(AbstractAccessCodes):
         starts_at: Optional[str] = None,
         type: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None
+        use_offline_access_code: Optional[bool] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -889,7 +889,7 @@ class AccessCodes(AbstractAccessCodes):
         common_code_key: str,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ that share a common code across multiple devices.
 

@@ -33,7 +33,7 @@ class AbstractAccessGrants(abc.ABC):
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
@@ -82,7 +82,7 @@ class AbstractAccessGrants(abc.ABC):
         self,
         *,
         access_grant_id: Optional[str] = None,
-        access_grant_key: Optional[str] = None
+        access_grant_key: Optional[str] = None,
     ) -> AccessGrant:
         """Get an Access Grant.
 
@@ -100,7 +100,7 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
@@ -131,7 +131,7 @@ class AbstractAccessGrants(abc.ABC):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         space_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
         """Gets an Access Grant.
 
@@ -185,7 +185,7 @@ class AbstractAccessGrants(abc.ABC):
         access_grant_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates an existing Access Grant's time window.
 
@@ -229,7 +229,7 @@ class AccessGrants(AbstractAccessGrants):
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
@@ -318,7 +318,7 @@ class AccessGrants(AbstractAccessGrants):
         self,
         *,
         access_grant_id: Optional[str] = None,
-        access_grant_key: Optional[str] = None
+        access_grant_key: Optional[str] = None,
     ) -> AccessGrant:
         """Get an Access Grant.
 
@@ -344,7 +344,7 @@ class AccessGrants(AbstractAccessGrants):
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
         exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None
+        include: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
@@ -387,7 +387,7 @@ class AccessGrants(AbstractAccessGrants):
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
         space_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
         """Gets an Access Grant.
 
@@ -481,7 +481,7 @@ class AccessGrants(AbstractAccessGrants):
         access_grant_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None
+        starts_at: Optional[str] = None,
     ) -> None:
         """Updates an existing Access Grant's time window.
 

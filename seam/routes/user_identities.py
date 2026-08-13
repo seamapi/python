@@ -28,7 +28,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         acs_user_id: str,
         user_identity_id: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -52,7 +52,7 @@ class AbstractUserIdentities(abc.ABC):
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
         """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -82,7 +82,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         user_identity_id: str,
         customization_profile_id: Optional[str] = None,
-        max_use_count: Optional[float] = None
+        max_use_count: Optional[float] = None,
     ) -> InstantKey:
         """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -100,7 +100,7 @@ class AbstractUserIdentities(abc.ABC):
         self,
         *,
         user_identity_id: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
         """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -130,7 +130,7 @@ class AbstractUserIdentities(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
         """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -213,7 +213,7 @@ class AbstractUserIdentities(abc.ABC):
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -244,7 +244,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         acs_user_id: str,
         user_identity_id: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -278,7 +278,7 @@ class UserIdentities(AbstractUserIdentities):
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
         """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -328,7 +328,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         user_identity_id: str,
         customization_profile_id: Optional[str] = None,
-        max_use_count: Optional[float] = None
+        max_use_count: Optional[float] = None,
     ) -> InstantKey:
         """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -358,7 +358,7 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         user_identity_id: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
         """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -404,7 +404,7 @@ class UserIdentities(AbstractUserIdentities):
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
         """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -549,7 +549,7 @@ class UserIdentities(AbstractUserIdentities):
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 

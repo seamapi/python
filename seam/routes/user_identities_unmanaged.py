@@ -22,7 +22,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
@@ -43,7 +43,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         *,
         is_managed: bool,
         user_identity_id: str,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ to make it managed.
 
@@ -84,7 +84,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
@@ -119,7 +119,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         *,
         is_managed: bool,
         user_identity_id: str,
-        user_identity_key: Optional[str] = None
+        user_identity_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ to make it managed.
 

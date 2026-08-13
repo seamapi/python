@@ -42,7 +42,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
         """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
@@ -89,7 +89,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         *,
         device_id: str,
         custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None
+        is_managed: Optional[bool] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
@@ -152,7 +152,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
         """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
@@ -235,7 +235,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         *,
         device_id: str,
         custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None
+        is_managed: Optional[bool] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 

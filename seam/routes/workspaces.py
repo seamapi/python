@@ -20,7 +20,7 @@ class AbstractWorkspaces(abc.ABC):
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None
+        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
 
@@ -81,7 +81,7 @@ class AbstractWorkspaces(abc.ABC):
         is_publishable_key_auth_enabled: Optional[bool] = None,
         is_suspended: Optional[bool] = None,
         name: Optional[str] = None,
-        organization_id: Optional[str] = None
+        organization_id: Optional[str] = None,
     ) -> None:
         """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
@@ -117,7 +117,7 @@ class Workspaces(AbstractWorkspaces):
         webview_logo_shape: Optional[str] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None
+        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
 
@@ -225,7 +225,7 @@ class Workspaces(AbstractWorkspaces):
         is_publishable_key_auth_enabled: Optional[bool] = None,
         is_suspended: Optional[bool] = None,
         name: Optional[str] = None,
-        organization_id: Optional[str] = None
+        organization_id: Optional[str] = None,
     ) -> None:
         """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 

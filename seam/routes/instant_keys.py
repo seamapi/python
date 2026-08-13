@@ -18,7 +18,7 @@ class AbstractInstantKeys(abc.ABC):
         self,
         *,
         instant_key_id: Optional[str] = None,
-        instant_key_url: Optional[str] = None
+        instant_key_url: Optional[str] = None,
     ) -> InstantKey:
         """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
@@ -61,7 +61,7 @@ class InstantKeys(AbstractInstantKeys):
         self,
         *,
         instant_key_id: Optional[str] = None,
-        instant_key_url: Optional[str] = None
+        instant_key_url: Optional[str] = None,
     ) -> InstantKey:
         """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
 

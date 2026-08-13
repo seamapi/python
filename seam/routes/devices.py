@@ -52,7 +52,7 @@ class AbstractDevices(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
@@ -122,7 +122,7 @@ class AbstractDevices(abc.ABC):
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
-        properties: Optional[Dict[str, Any]] = None
+        properties: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
@@ -198,7 +198,7 @@ class Devices(AbstractDevices):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
 
@@ -316,7 +316,7 @@ class Devices(AbstractDevices):
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
-        properties: Optional[Dict[str, Any]] = None
+        properties: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
 
