@@ -3,9 +3,8 @@ import niquests as requests
 from typing_extensions import Self
 from urllib3.util import Retry
 
-from .auth import get_auth_headers_for_without_workspace_personal_access_token
 from .constants import DEFAULT_TIMEOUT, LTS_VERSION
-from .options import get_endpoint
+from .parse_options import parse_without_workspace_options
 from .client import SeamHttpClient
 from .models import AbstractSeamWithoutWorkspace
 from .routes.workspaces import Workspaces
@@ -47,7 +46,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
 
     def __init__(
         self,
-        personal_access_token: str,
+        personal_access_token: Optional[str] = None,
         *,
         endpoint: Optional[str] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
@@ -62,8 +61,9 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         and configuration options.
 
         :param personal_access_token: A personal access token for
-            authenticating with Seam
-        :type personal_access_token: str
+            authenticating with Seam. Read from the
+            SEAM_PERSONAL_ACCESS_TOKEN environment variable when omitted
+        :type personal_access_token: Optional[str]
         :param endpoint: The custom API endpoint URL. If not provided,
             the default Seam API endpoint will be used
         :type endpoint: Optional[str]
@@ -80,15 +80,17 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             niquests Session, for control the other options do not cover
         :type niquests_options: Optional[Dict[str, Any]]
 
+        :raises SeamInvalidOptionsError: If no personal_access_token is provided
+            and the SEAM_PERSONAL_ACCESS_TOKEN environment variable is not set
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
         self.lts_version = SeamWithoutWorkspace.lts_version
         self.wait_for_action_attempt = wait_for_action_attempt
-        auth_headers = get_auth_headers_for_without_workspace_personal_access_token(
-            personal_access_token
+        auth_headers, endpoint = parse_without_workspace_options(
+            personal_access_token=personal_access_token,
+            endpoint=endpoint,
         )
-        endpoint = get_endpoint(endpoint)
 
         self.client = SeamHttpClient(
             base_url=endpoint,

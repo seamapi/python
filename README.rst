@@ -174,6 +174,9 @@ A workspace ID must be provided when using this method and all requests will be 
 
 .. code-block:: python
 
+  # Set the `SEAM_PERSONAL_ACCESS_TOKEN` and `SEAM_WORKSPACE_ID` environment variables
+  seam = Seam()
+
   # Pass as an option to the constructor
   seam = Seam(
       personal_access_token="your-personal-access-token",
@@ -385,6 +388,9 @@ Obtain one from the Seam Console.
 .. code-block:: python
 
   from seam import SeamWithoutWorkspace
+
+  # Set the `SEAM_PERSONAL_ACCESS_TOKEN` environment variable
+  seam = SeamWithoutWorkspace()
 
   # Pass as an option to the constructor
   seam = SeamWithoutWorkspace(personal_access_token="your-personal-access-token")
