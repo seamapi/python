@@ -14,6 +14,7 @@ export interface MethodLayoutContext {
   httpVerb: string
   payloadVar: string
   payloadArg: string
+  hasRequiredParameters: boolean
   description: string
   responseDescription: string
   isDeprecated: boolean
@@ -72,6 +73,7 @@ export const getMethodLayoutContext = (
   name: method.methodName,
   path: method.path,
   ...getRequestLayoutContext(method.preferredMethod),
+  hasRequiredParameters: method.hasRequiredParameters,
   description: method.description,
   responseDescription: method.responseDescription,
   isDeprecated: method.isDeprecated,

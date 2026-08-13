@@ -90,6 +90,7 @@ export const routes = (
         methodName: endpoint.name,
         path: endpoint.path,
         preferredMethod: endpoint.request.preferredMethod,
+        hasRequiredParameters: endpoint.request.hasRequiredParameters,
         description: endpoint.description,
         responseDescription: endpoint.response.description,
         isDeprecated: endpoint.isDeprecated,
