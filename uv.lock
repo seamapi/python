@@ -1246,7 +1246,7 @@ wheels = [
 
 [[package]]
 name = "seam"
-version = "2.2.0"
+version = "3.0.0b1"
 source = { editable = "." }
 dependencies = [
     { name = "dataclasses-json" },
