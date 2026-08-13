@@ -16,15 +16,15 @@ pip install 'seam==3.0.0b6'
 
 ## Summary of breaking changes
 
-| Change | Affects you if... |
-| --- | --- |
-| [Python 3.11+ required](#python-311-or-later-is-required) | You run Python 3.10 |
-| [httpx replaces niquests](#httpx-replaces-niquests) | You pass `niquests_options`, catch `niquests` exceptions, or touch `seam.client` directly |
-| [`retries` takes an `httpx_retries.Retry`](#retry-configuration-uses-httpx-retries) | You pass a custom `retries` option |
-| [Endpoints validate parameters client-side](#client-side-parameter-validation) | You call endpoints with no parameters, or rely on the server's 400 response |
-| [`lts_version` removed](#lts_version-is-removed) | You read `Seam.lts_version` or the `seam-lts-version` header |
-| [Preferred HTTP methods and URL search params](#endpoints-use-preferred-http-methods) | You inspect traffic in a proxy, mock server, or firewall rules |
-| [Removed endpoint parameters](#removed-endpoint-parameters) | You use the removed parameters listed below |
+| Change                                                                                | Affects you if...                                                                         |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Python 3.11+ required](#python-311-or-later-is-required)                             | You run Python 3.10                                                                       |
+| [httpx replaces niquests](#httpx-replaces-niquests)                                   | You pass `niquests_options`, catch `niquests` exceptions, or touch `seam.client` directly |
+| [`retries` takes an `httpx_retries.Retry`](#retry-configuration-uses-httpx-retries)   | You pass a custom `retries` option                                                        |
+| [Endpoints validate parameters client-side](#client-side-parameter-validation)        | You call endpoints with no parameters, or rely on the server's 400 response               |
+| [`lts_version` removed](#lts_version-is-removed)                                      | You read `Seam.lts_version` or the `seam-lts-version` header                              |
+| [Preferred HTTP methods and URL search params](#endpoints-use-preferred-http-methods) | You inspect traffic in a proxy, mock server, or firewall rules                            |
+| [Removed endpoint parameters](#removed-endpoint-parameters)                           | You use the removed parameters listed below                                               |
 
 ## Python 3.11 or later is required
 
