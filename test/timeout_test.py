@@ -1,10 +1,12 @@
+import ssl
 import threading
 import time
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pytest
-from httpx import Timeout, TimeoutException
+from httpx import HTTPTransport, Limits, Timeout, TimeoutException
+from httpx_retries import RetryTransport
 
 from seam import Retry, Seam
 from seam.constants import DEFAULT_TIMEOUT
@@ -43,6 +45,45 @@ def test_httpx_options_take_precedence():
     seam = Seam.from_api_key("seam_apikey_token", httpx_options={"timeout": 15})
 
     assert seam.client.timeout == Timeout(15)
+
+
+def test_transport_httpx_options_are_applied():
+    seam = Seam.from_api_key(
+        "seam_apikey_token",
+        httpx_options={
+            "limits": Limits(max_connections=25, max_keepalive_connections=20),
+            "verify": False,
+        },
+    )
+
+    transport = vars(seam.client)["_transport"]
+    assert isinstance(transport, RetryTransport)
+    inner_transport = vars(transport)["_sync_transport"]
+    assert isinstance(inner_transport, HTTPTransport)
+    pool = vars(inner_transport)["_pool"]
+    assert vars(pool)["_max_connections"] == 25
+    assert vars(pool)["_ssl_context"].verify_mode == ssl.CERT_NONE
+
+
+def test_environment_proxy_transport_is_used(monkeypatch):
+    for variable in (
+        "ALL_PROXY",
+        "HTTP_PROXY",
+        "NO_PROXY",
+        "all_proxy",
+        "http_proxy",
+        "https_proxy",
+        "no_proxy",
+    ):
+        monkeypatch.delenv(variable, raising=False)
+    monkeypatch.setenv("HTTPS_PROXY", "http://localhost:8080")
+
+    seam = Seam.from_api_key("seam_apikey_token")
+
+    mounts = vars(seam.client)["_mounts"].values()
+    proxy_transports = [transport for transport in mounts if transport is not None]
+    assert proxy_transports
+    assert all(isinstance(transport, RetryTransport) for transport in proxy_transports)
 
 
 def test_per_request_timeout_overrides_the_client_timeout(recording_server):

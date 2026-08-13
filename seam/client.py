@@ -57,16 +57,24 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         }
 
         custom_headers = options.pop("headers", {})
-
-        if "transport" not in options:
-            options["transport"] = RetryTransport(
-                retry=DEFAULT_RETRIES if retries is None else retries
-            )
+        self._retry_policy = DEFAULT_RETRIES if retries is None else retries
 
         super().__init__(**options)
 
         headers = {**auth_headers, **custom_headers, **SDK_HEADERS}
         self.headers.update(headers)
+
+    def _init_transport(self, *args, **kwargs) -> httpx.BaseTransport:
+        transport = super()._init_transport(*args, **kwargs)
+
+        if kwargs.get("transport") is not None:
+            return transport
+
+        return RetryTransport(transport=transport, retry=self._retry_policy)
+
+    def _init_proxy_transport(self, *args, **kwargs) -> httpx.BaseTransport:
+        transport = super()._init_proxy_transport(*args, **kwargs)
+        return RetryTransport(transport=transport, retry=self._retry_policy)
 
     # request returns the decoded body rather than the Response that
     # httpx.Client promises, so the verb helpers routed through it have to
