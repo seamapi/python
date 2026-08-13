@@ -20,7 +20,7 @@ class AbstractAcsEncoders(abc.ABC):
         acs_encoder_id: str,
         access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Encodes an existing `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_. Either provide an ``acs_credential_id`` or an ``access_method_id``
 
@@ -52,7 +52,7 @@ class AbstractAcsEncoders(abc.ABC):
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -75,7 +75,7 @@ class AbstractAcsEncoders(abc.ABC):
         *,
         acs_encoder_id: str,
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Scans an encoded `acs_credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -96,7 +96,7 @@ class AbstractAcsEncoders(abc.ABC):
         acs_user_id: Optional[str] = None,
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Scans a physical card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ and assigns the scanned credential to an ACS user. Provide either an ``acs_user_id`` or a ``user_identity_id``.
 
@@ -130,7 +130,7 @@ class AcsEncoders(AbstractAcsEncoders):
         acs_encoder_id: str,
         access_method_id: Optional[str] = None,
         acs_credential_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Encodes an existing `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_. Either provide an ``acs_credential_id`` or an ``access_method_id``
 
@@ -188,7 +188,7 @@ class AcsEncoders(AbstractAcsEncoders):
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -225,7 +225,7 @@ class AcsEncoders(AbstractAcsEncoders):
         *,
         acs_encoder_id: str,
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Scans an encoded `acs_credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -264,7 +264,7 @@ class AcsEncoders(AbstractAcsEncoders):
         acs_user_id: Optional[str] = None,
         salto_ks_metadata: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Scans a physical card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ and assigns the scanned credential to an ACS user. Provide either an ``acs_user_id`` or a ``user_identity_id``.
 

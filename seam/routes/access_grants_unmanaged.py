@@ -24,7 +24,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[UnmanagedAccessGrant]:
         """Gets unmanaged Access Grants (where is_managed = false).
 
@@ -49,7 +49,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         *,
         access_grant_id: str,
         is_managed: bool,
-        access_grant_key: Optional[str] = None
+        access_grant_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.
 
@@ -94,7 +94,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         reservation_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[UnmanagedAccessGrant]:
         """Gets unmanaged Access Grants (where is_managed = false).
 
@@ -135,7 +135,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         *,
         access_grant_id: str,
         is_managed: bool,
-        access_grant_key: Optional[str] = None
+        access_grant_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.
 

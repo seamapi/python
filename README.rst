@@ -496,7 +496,7 @@ Quickstart
 
     $ git clone https://github.com/seamapi/python.git
     $ cd python
-    $ poetry install
+    $ uv sync
 
 Run each command below in a separate terminal window:
 
@@ -521,19 +521,19 @@ Clone the project with
 Requirements
 ~~~~~~~~~~~~
 
-You will need `Python 3`_ and Poetry_ and Node.js_ with npm_ and just_.
+You will need `Python 3`_ and uv_ and Node.js_ with npm_ and just_.
 
 Install the development dependencies with
 
 ::
 
-    $ poetry install
+    $ uv sync
     $ npm install
 
 .. _just: https://just.systems/
 .. _Node.js: https://nodejs.org/
 .. _npm: https://www.npmjs.com/
-.. _Poetry: https://poetry.eustace.io/
+.. _uv: https://docs.astral.sh/uv/
 .. _Python 3: https://www.python.org/
 
 Tests
@@ -561,7 +561,7 @@ Run tests on changes with
 Publishing
 ~~~~~~~~~~
 
-New versions are created with `poetry version`_.
+New versions are created with `uv version`_.
 
 Automatic
 ^^^^^^^^^
@@ -576,7 +576,7 @@ Manual
 ^^^^^^
 
 Publish a new version by triggering a `version workflow_dispatch on GitHub Actions`_.
-The ``version`` input will be passed as the first argument to `poetry version`_.
+The ``version`` input will be passed as the first argument to `uv version`_.
 
 This may be done on the web or using the `GitHub CLI`_ with
 
@@ -584,7 +584,7 @@ This may be done on the web or using the `GitHub CLI`_ with
 
     $ gh workflow run version.yml --raw-field version=<version>
 
-.. _Poetry version: https://python-poetry.org/docs/cli/#version
+.. _uv version: https://docs.astral.sh/uv/reference/cli/#uv-version
 .. _GitHub CLI: https://cli.github.com/
 .. _version workflow_dispatch on GitHub Actions: https://github.com/seamapi/python/actions?query=workflow%3Aversion
 

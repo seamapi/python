@@ -29,7 +29,7 @@ class AbstractAcsUsers(abc.ABC):
         email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> AcsUser:
         """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -58,7 +58,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -76,7 +76,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> AcsUser:
         """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -100,7 +100,7 @@ class AbstractAcsUsers(abc.ABC):
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None
+        user_identity_phone_number: Optional[str] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -129,7 +129,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
         """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
 
@@ -148,7 +148,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -166,7 +166,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -184,7 +184,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
 
@@ -202,7 +202,7 @@ class AbstractAcsUsers(abc.ABC):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
 
@@ -226,7 +226,7 @@ class AbstractAcsUsers(abc.ABC):
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -286,7 +286,7 @@ class AcsUsers(AbstractAcsUsers):
         email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> AcsUser:
         """Creates a new `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -335,7 +335,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Deletes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ and invalidates the access system user's `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -363,7 +363,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> AcsUser:
         """Returns a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -397,7 +397,7 @@ class AcsUsers(AbstractAcsUsers):
         search: Optional[str] = None,
         user_identity_email_address: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None
+        user_identity_phone_number: Optional[str] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -446,7 +446,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
         """Lists the `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ has access.
 
@@ -477,7 +477,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -505,7 +505,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Revokes access to all `entrances <https://docs.seam.co/api/acs/entrances>`_ for a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -533,7 +533,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """`Suspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#suspend-an-acs-user>`_ a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Suspending an access system user revokes their access temporarily. To restore an access system user's access, you can `unsuspend <https://docs.seam.co/api/acs/users/unsuspend>`_ them.
 
@@ -561,7 +561,7 @@ class AcsUsers(AbstractAcsUsers):
         *,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """`Unsuspends <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users#unsuspend-an-acs-user>`_ a specified suspended `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. While `suspending an access system user <https://docs.seam.co/api/acs/users/suspend>`_ revokes their access temporarily, unsuspending the access system user restores their access.
 
@@ -595,7 +595,7 @@ class AcsUsers(AbstractAcsUsers):
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
         phone_number: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Updates the properties of a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 

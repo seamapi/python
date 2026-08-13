@@ -21,7 +21,7 @@ class AbstractAcsSystems(abc.ABC):
         *,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[AcsSystem]:
         """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -55,7 +55,7 @@ class AbstractAcsSystems(abc.ABC):
         *,
         acs_system_id: str,
         acs_encoders: Optional[List[Dict[str, Any]]] = None,
-        acs_entrances: Optional[List[Dict[str, Any]]] = None
+        acs_entrances: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         """Reports ACS system device status including encoders and entrances.
 
@@ -92,7 +92,7 @@ class AcsSystems(AbstractAcsSystems):
         *,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[AcsSystem]:
         """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -145,7 +145,7 @@ class AcsSystems(AbstractAcsSystems):
         *,
         acs_system_id: str,
         acs_encoders: Optional[List[Dict[str, Any]]] = None,
-        acs_entrances: Optional[List[Dict[str, Any]]] = None
+        acs_entrances: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         """Reports ACS system device status including encoders and entrances.
 

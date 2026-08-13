@@ -40,7 +40,7 @@ class AbstractNoiseSensors(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -115,7 +115,7 @@ class NoiseSensors(AbstractNoiseSensors):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 

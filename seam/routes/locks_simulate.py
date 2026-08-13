@@ -13,7 +13,7 @@ class AbstractLocksSimulate(abc.ABC):
         *,
         code: str,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Simulates the entry of a code on a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -31,7 +31,7 @@ class AbstractLocksSimulate(abc.ABC):
         self,
         *,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Simulates a manual lock action using a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -53,7 +53,7 @@ class LocksSimulate(AbstractLocksSimulate):
         *,
         code: str,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Simulates the entry of a code on a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -89,7 +89,7 @@ class LocksSimulate(AbstractLocksSimulate):
         self,
         *,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Simulates a manual lock action using a keypad. You can only perform this action for `August <https://docs.seam.co/device-and-system-integration-guides/august-locks>`_ devices within `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 

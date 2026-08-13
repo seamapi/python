@@ -33,7 +33,7 @@ class AbstractPhones(abc.ABC):
         self,
         *,
         acs_credential_id: Optional[str] = None,
-        owner_user_identity_id: Optional[str] = None
+        owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
         """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 
@@ -87,7 +87,7 @@ class Phones(AbstractPhones):
         self,
         *,
         acs_credential_id: Optional[str] = None,
-        owner_user_identity_id: Optional[str] = None
+        owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
         """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 

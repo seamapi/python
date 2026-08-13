@@ -12,7 +12,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -47,7 +47,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         search: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
         """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -88,7 +88,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -111,7 +111,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -168,7 +168,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         search: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
         """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -235,7 +235,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         *,
         acs_access_group_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 

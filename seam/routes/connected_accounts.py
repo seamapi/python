@@ -50,7 +50,7 @@ class AbstractConnectedAccounts(abc.ABC):
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
@@ -88,7 +88,7 @@ class AbstractConnectedAccounts(abc.ABC):
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        display_name: Optional[str] = None
+        display_name: Optional[str] = None,
     ) -> None:
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
@@ -165,7 +165,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
@@ -227,7 +227,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
-        display_name: Optional[str] = None
+        display_name: Optional[str] = None,
     ) -> None:
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 

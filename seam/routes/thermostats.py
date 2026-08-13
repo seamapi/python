@@ -34,7 +34,7 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Activates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -54,7 +54,7 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `cool mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -84,7 +84,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> None:
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -131,7 +131,7 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -155,7 +155,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat-cool ("auto") mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -193,7 +193,7 @@ class AbstractThermostats(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -237,7 +237,7 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `"off" mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -267,7 +267,7 @@ class AbstractThermostats(abc.ABC):
         device_id: str,
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -292,7 +292,7 @@ class AbstractThermostats(abc.ABC):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -321,7 +321,7 @@ class AbstractThermostats(abc.ABC):
         lower_limit_celsius: Optional[float] = None,
         lower_limit_fahrenheit: Optional[float] = None,
         upper_limit_celsius: Optional[float] = None,
-        upper_limit_fahrenheit: Optional[float] = None
+        upper_limit_fahrenheit: Optional[float] = None,
     ) -> None:
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
@@ -352,7 +352,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> None:
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -394,7 +394,7 @@ class AbstractThermostats(abc.ABC):
         thursday_program_id: Optional[str] = None,
         tuesday_program_id: Optional[str] = None,
         wednesday_program_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.
 
@@ -447,7 +447,7 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Activates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -487,7 +487,7 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `cool mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -537,7 +537,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> None:
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -620,7 +620,7 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -664,7 +664,7 @@ class Thermostats(AbstractThermostats):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `heat-cool ("auto") mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -726,7 +726,7 @@ class Thermostats(AbstractThermostats):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         unstable_location_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -806,7 +806,7 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ to `"off" mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_.
 
@@ -860,7 +860,7 @@ class Thermostats(AbstractThermostats):
         device_id: str,
         fan_mode: Optional[str] = None,
         fan_mode_setting: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -905,7 +905,7 @@ class Thermostats(AbstractThermostats):
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `HVAC mode <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -960,7 +960,7 @@ class Thermostats(AbstractThermostats):
         lower_limit_celsius: Optional[float] = None,
         lower_limit_fahrenheit: Optional[float] = None,
         upper_limit_celsius: Optional[float] = None,
-        upper_limit_fahrenheit: Optional[float] = None
+        upper_limit_fahrenheit: Optional[float] = None,
     ) -> None:
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
@@ -1005,7 +1005,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> None:
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -1075,7 +1075,7 @@ class Thermostats(AbstractThermostats):
         thursday_program_id: Optional[str] = None,
         tuesday_program_id: Optional[str] = None,
         wednesday_program_id: Optional[str] = None,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.
 

@@ -17,7 +17,7 @@ class AbstractClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -52,7 +52,7 @@ class AbstractClientSessions(abc.ABC):
         self,
         *,
         client_session_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> ClientSession:
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -72,7 +72,7 @@ class AbstractClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -100,7 +100,7 @@ class AbstractClientSessions(abc.ABC):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -126,7 +126,7 @@ class AbstractClientSessions(abc.ABC):
         connect_webview_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        without_user_identifier_key: Optional[bool] = None
+        without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -168,7 +168,7 @@ class ClientSessions(AbstractClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -229,7 +229,7 @@ class ClientSessions(AbstractClientSessions):
         self,
         *,
         client_session_id: Optional[str] = None,
-        user_identifier_key: Optional[str] = None
+        user_identifier_key: Optional[str] = None,
     ) -> ClientSession:
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -257,7 +257,7 @@ class ClientSessions(AbstractClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -301,7 +301,7 @@ class ClientSessions(AbstractClientSessions):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None
+        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -343,7 +343,7 @@ class ClientSessions(AbstractClientSessions):
         connect_webview_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        without_user_identifier_key: Optional[bool] = None
+        without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 

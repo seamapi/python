@@ -12,7 +12,7 @@ class AbstractAcsCredentials(abc.ABC):
         *,
         acs_credential_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -40,7 +40,7 @@ class AbstractAcsCredentials(abc.ABC):
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        visionline_metadata: Optional[Dict[str, Any]] = None
+        visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
         """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
@@ -100,7 +100,7 @@ class AbstractAcsCredentials(abc.ABC):
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -138,7 +138,7 @@ class AbstractAcsCredentials(abc.ABC):
         *,
         acs_credential_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -156,7 +156,7 @@ class AbstractAcsCredentials(abc.ABC):
         *,
         acs_credential_id: str,
         code: Optional[str] = None,
-        ends_at: Optional[str] = None
+        ends_at: Optional[str] = None,
     ) -> None:
         """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -179,7 +179,7 @@ class AcsCredentials(AbstractAcsCredentials):
         *,
         acs_credential_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -217,7 +217,7 @@ class AcsCredentials(AbstractAcsCredentials):
         salto_space_metadata: Optional[Dict[str, Any]] = None,
         starts_at: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        visionline_metadata: Optional[Dict[str, Any]] = None
+        visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
         """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
@@ -323,7 +323,7 @@ class AcsCredentials(AbstractAcsCredentials):
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -391,7 +391,7 @@ class AcsCredentials(AbstractAcsCredentials):
         *,
         acs_credential_id: str,
         acs_user_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None
+        user_identity_id: Optional[str] = None,
     ) -> None:
         """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -419,7 +419,7 @@ class AcsCredentials(AbstractAcsCredentials):
         *,
         acs_credential_id: str,
         code: Optional[str] = None,
-        ends_at: Optional[str] = None
+        ends_at: Optional[str] = None,
     ) -> None:
         """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 

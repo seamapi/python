@@ -12,7 +12,7 @@ class AbstractActionAttempts(abc.ABC):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
@@ -30,7 +30,7 @@ class AbstractActionAttempts(abc.ABC):
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
     ) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
@@ -55,7 +55,7 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_id: str,
-        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
 
@@ -89,7 +89,7 @@ class ActionAttempts(AbstractActionAttempts):
         action_attempt_ids: Optional[List[str]] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None
+        page_cursor: Optional[str] = None,
     ) -> List[ActionAttempt]:
         """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 

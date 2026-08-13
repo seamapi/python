@@ -22,7 +22,7 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
         access_grant_id: str,
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[UnmanagedAccessMethod]:
         """Lists all unmanaged access methods (where is_managed = false), usually filtered by Access Grant.
 
@@ -64,7 +64,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         access_grant_id: str,
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
-        space_id: Optional[str] = None
+        space_id: Optional[str] = None,
     ) -> List[UnmanagedAccessMethod]:
         """Lists all unmanaged access methods (where is_managed = false), usually filtered by Access Grant.
 

@@ -52,7 +52,7 @@ class SeamHttpClient(requests.Session, AbstractSeamHttpClient):
         retries: Optional[Retry] = DEFAULT_RETRIES,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
         niquests_options: Optional[Dict[str, Any]] = None,
-        **kwargs
+        **kwargs,
     ):
         # niquests.Session mounts its adapters while initializing, so retries
         # must be passed through here. Assigning self.retries afterwards leaves

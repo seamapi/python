@@ -46,7 +46,7 @@ class AbstractSpaces(abc.ABC):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> Space:
         """Creates a new space.
 
@@ -94,7 +94,7 @@ class AbstractSpaces(abc.ABC):
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None,
         space_ids: Optional[List[str]] = None,
-        space_keys: Optional[List[str]] = None
+        space_keys: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Spaces.
 
@@ -117,7 +117,7 @@ class AbstractSpaces(abc.ABC):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> List[Space]:
         """Returns a list of all spaces.
 
@@ -175,7 +175,7 @@ class AbstractSpaces(abc.ABC):
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> Space:
         """Updates an existing space.
 
@@ -263,7 +263,7 @@ class Spaces(AbstractSpaces):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> Space:
         """Creates a new space.
 
@@ -343,7 +343,7 @@ class Spaces(AbstractSpaces):
         exclude: Optional[List[str]] = None,
         include: Optional[List[str]] = None,
         space_ids: Optional[List[str]] = None,
-        space_keys: Optional[List[str]] = None
+        space_keys: Optional[List[str]] = None,
     ) -> Batch:
         """Gets all related resources for one or more Spaces.
 
@@ -378,7 +378,7 @@ class Spaces(AbstractSpaces):
         limit: Optional[float] = None,
         page_cursor: Optional[str] = None,
         search: Optional[str] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> List[Space]:
         """Returns a list of all spaces.
 
@@ -474,7 +474,7 @@ class Spaces(AbstractSpaces):
         device_ids: Optional[List[str]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
-        space_key: Optional[str] = None
+        space_key: Optional[str] = None,
     ) -> Space:
         """Updates an existing space.
 

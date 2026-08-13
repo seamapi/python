@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/setup
       - name: Cut ${{ github.event.inputs.version }} version
         run: |
-          poetry version "${{ github.event.inputs.version }}"
+          uv version "${{ github.event.inputs.version }}"
           just version
       - name: Record prerelease channel
         env:

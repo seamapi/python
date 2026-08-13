@@ -35,12 +35,12 @@ jobs:
         uses: ./.github/actions/setup-node
         with:
           install_dependencies: 'false'
-      - name: Normalize poetry.lock
-        run: poetry lock --no-update
+      - name: Normalize uv.lock
+        run: uv lock
       - name: Normalize package-lock.json
         run: npm install
       - name: Install dependencies
-        run: poetry install --sync
+        run: uv sync
       - name: Generate code
         run: npm run generate
       - name: Commit
