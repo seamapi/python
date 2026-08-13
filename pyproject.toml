@@ -1,6 +1,6 @@
 [project]
 name = "seam"
-version = "3.0.0b2"
+version = "3.0.0b1"
 description = "SDK for the Seam API written in Python."
 authors = [{ name = "Seam Labs, Inc.", email = "engineering@getseam.com" }]
 license = "MIT"
