@@ -1,8 +1,5 @@
 from collections import OrderedDict
 
-import niquests
-import pytest
-
 from seam.client import SeamHttpClient
 from seam.null import NULL, Null, is_null, replace_null
 
@@ -67,44 +64,67 @@ def test_replace_null_normalizes_mappings_to_dicts():
     assert result == {"a": None}
 
 
-class StubResponse:
-    status_code = 200
-    headers = {"content-type": "application/json"}
+def sent_request(recording_server, send):
+    """Return the single request the given call put on the wire."""
 
-    def json(self):
-        return {}
+    with recording_server([(200, {})]) as (endpoint, requests):
+        send(SeamHttpClient(base_url=endpoint, auth_headers={}))
 
+    [request] = requests
 
-@pytest.fixture(name="sent_payloads")
-def sent_payloads_fixture(monkeypatch):
-    payloads = []
-
-    # pylint: disable=unused-argument
-    def request(self, method, url, *args, **kwargs):
-        payloads.append(kwargs.get("json"))
-        return StubResponse()
-
-    monkeypatch.setattr(niquests.Session, "request", request)
-
-    return payloads
+    return request
 
 
-def test_client_sends_null_params_as_json_null(sent_payloads):
-    client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.patch("/devices/update", json={"device_id": "a", "name": NULL})
+def test_client_sends_null_params_as_json_null(recording_server):
+    request = sent_request(
+        recording_server,
+        lambda client: client.patch(
+            "/devices/update", json={"device_id": "a", "name": NULL}
+        ),
+    )
 
-    assert sent_payloads == [{"device_id": "a", "name": None}]
-
-
-def test_client_sends_nested_null_params_as_json_null(sent_payloads):
-    client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.patch("/spaces/update", json={"customer_data": {"check_in": NULL}})
-
-    assert sent_payloads == [{"customer_data": {"check_in": None}}]
+    assert request["body"] == {"device_id": "a", "name": None}
 
 
-def test_client_passes_through_payloads_without_null_params(sent_payloads):
-    client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.patch("/devices/update", json={"device_id": "a", "name": "Front Door"})
+def test_client_sends_nested_null_params_as_json_null(recording_server):
+    request = sent_request(
+        recording_server,
+        lambda client: client.patch(
+            "/spaces/update", json={"customer_data": {"check_in": NULL}}
+        ),
+    )
 
-    assert sent_payloads == [{"device_id": "a", "name": "Front Door"}]
+    assert request["body"] == {"customer_data": {"check_in": None}}
+
+
+def test_client_passes_through_payloads_without_null_params(recording_server):
+    request = sent_request(
+        recording_server,
+        lambda client: client.patch(
+            "/devices/update", json={"device_id": "a", "name": "Front Door"}
+        ),
+    )
+
+    assert request["body"] == {"device_id": "a", "name": "Front Door"}
+
+
+def test_client_sends_null_search_params_as_an_empty_value(recording_server):
+    request = sent_request(
+        recording_server,
+        lambda client: client.get(
+            "/devices/list", params={"device_id": NULL, "limit": 2}
+        ),
+    )
+
+    assert request["query"] == "device_id=&limit=2"
+
+
+def test_client_omits_none_search_params(recording_server):
+    request = sent_request(
+        recording_server,
+        lambda client: client.get(
+            "/devices/list", params={"device_id": None, "limit": 2}
+        ),
+    )
+
+    assert request["query"] == "limit=2"

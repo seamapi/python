@@ -566,46 +566,32 @@ precedence over the defaults the SDK sets:
 Serializing URL search params
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Seam API parses URL search params as complex types.
-This SDK implements the `Seam URL search params serialization standard`_,
-which defines how the Seam SDKs serialize objects to URL search params.
-Use it directly when building requests to the Seam API by hand:
+The SDK serializes URL search params for you.
+If you call the Seam API with your own HTTP client,
+``serialize_url_search_params`` is exported for that purpose:
 
 .. code-block:: python
 
+  import httpx
   from seam import serialize_url_search_params
 
-  serialize_url_search_params(
-      {
-          "name": "Dax",
-          "age": 27,
-          "is_admin": True,
-          "tags": ["cars", "planes"],
-      }
+  query = serialize_url_search_params({"device_ids": ["device1", "device2"]})
+
+  httpx.get(
+      f"https://connect.getseam.com/devices/list?{query}",
+      headers={"Authorization": "Bearer your-api-key"},
   )
-  # => 'age=27&is_admin=true&name=Dax&tags=cars&tags=planes'
 
-Params are sorted by name, so equivalent input always produces the same query string.
-Nested dicts are serialized to dot-path keys, e.g., ``{"a": {"b": 1}}`` becomes ``a.b=1``.
-Params set to ``None`` are omitted,
-while params set to ``seam.NULL`` are serialized to an empty value, e.g., ``a=``.
-See `Omitted params and null params`_.
-A param that cannot be represented raises a ``seam.UnserializableParamError``.
+It returns a query string, so it works with any HTTP client.
+Put it on the URL as above rather than handing it to the client as params:
+clients re-encode a query string they are given, e.g. httpx escapes ``*``
+and unescapes ``~``, which this serialization does not.
 
-To merge serialized params into existing params, use ``update_url_search_params``:
+The `reference implementation`_ defines this serialization,
+and the Seam API parses it with the corresponding `parser`_.
 
-.. code-block:: python
-
-  from seam import UrlSearchParams, update_url_search_params
-
-  search_params = UrlSearchParams("?foo=bar")
-
-  update_url_search_params(search_params, {"name": "Dax"})
-
-  str(search_params)
-  # => 'foo=bar&name=Dax'
-
-.. _Seam URL search params serialization standard: https://github.com/seamapi/url-search-params-serializer
+.. _reference implementation: https://github.com/seamapi/url-search-params-serializer
+.. _parser: https://github.com/seamapi/url-search-params-parser
 
 Development and Testing
 -----------------------

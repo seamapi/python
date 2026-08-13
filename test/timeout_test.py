@@ -101,9 +101,7 @@ def test_seam_times_out_a_slow_request():
             "seam_apikey_token",
             endpoint=endpoint,
             timeout=0.25,
-            # GET is idempotent, so urllib3 would retry the read timeout and
-            # raise its own error instead of surfacing the timeout.
-            retries=Retry(total=0, read=False),
+            retries=Retry(total=0),
         )
 
         with pytest.raises(TimeoutException):

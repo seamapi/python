@@ -114,8 +114,13 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
         # Search params are serialized to the Seam API standard, which httpx
         # does not implement. The NULL sentinel is serialized to an empty value.
+        # The query is set on the URL rather than passed to httpx as params,
+        # because httpx re-encodes a query string it is given, e.g. it escapes
+        # "*" and unescapes "~", which the standard does not.
         if isinstance(kwargs.get("params"), Mapping):
-            kwargs["params"] = serialize_url_search_params(kwargs["params"])
+            query = serialize_url_search_params(kwargs.pop("params"))
+            if query:
+                url = httpx.URL(url, query=query.encode())
 
         response = super().request(method, url, *args, **kwargs)
 
