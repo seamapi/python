@@ -13,7 +13,7 @@ from .exceptions import (
     SeamHttpInvalidInputError,
     SeamHttpUnauthorizedError,
 )
-from .null import replace_null
+from .null import _replace_null
 from .utils.url_search_params_serializer import serialize_url_search_params
 
 SDK_HEADERS = {
@@ -110,17 +110,14 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         # Route methods omit params set to None, so any remaining NULL sentinel
         # is an explicit null and becomes None for JSON serialization.
         if "json" in kwargs:
-            kwargs["json"] = replace_null(kwargs["json"])
+            kwargs["json"] = _replace_null(kwargs["json"])
 
         # Search params are serialized to the Seam API standard, which httpx
         # does not implement. The NULL sentinel is serialized to an empty value.
-        # The query is set on the URL rather than passed to httpx as params,
-        # because httpx re-encodes a query string it is given, e.g. it escapes
-        # "*" and unescapes "~", which the standard does not.
+        # httpx percent-encodes a few characters differently than the standard
+        # when it re-encodes the query, which the Seam API reads the same way.
         if isinstance(kwargs.get("params"), Mapping):
-            query = serialize_url_search_params(kwargs.pop("params"))
-            if query:
-                url = httpx.URL(url, query=query.encode())
+            kwargs["params"] = serialize_url_search_params(kwargs["params"])
 
         response = super().request(method, url, *args, **kwargs)
 

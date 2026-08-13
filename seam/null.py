@@ -13,6 +13,8 @@ Sending null is explicit and always spelled :data:`NULL`.
 from collections.abc import Mapping
 from typing import Any
 
+__all__ = ["NULL", "Null"]
+
 
 class Null:
     """Type of the :data:`NULL` sentinel."""
@@ -57,7 +59,7 @@ documents as nullable, so passing it to any other param is a type error.
 """
 
 
-def is_null(value: Any) -> bool:
+def _is_null(value: Any) -> bool:
     """Returns whether a value is the :data:`NULL` sentinel.
 
     :param value: The value to check
@@ -68,7 +70,7 @@ def is_null(value: Any) -> bool:
     return isinstance(value, Null)
 
 
-def replace_null(value: Any) -> Any:
+def _replace_null(value: Any) -> Any:
     """Recursively replaces the :data:`NULL` sentinel with ``None``.
 
     Returns a copy, so the given value is never modified.
@@ -80,16 +82,16 @@ def replace_null(value: Any) -> Any:
 
     :returns: A copy of the value with every ``NULL`` sentinel replaced"""
 
-    if is_null(value):
+    if _is_null(value):
         return None
 
     if isinstance(value, Mapping):
-        return {key: replace_null(item) for key, item in value.items()}
+        return {key: _replace_null(item) for key, item in value.items()}
 
     if isinstance(value, list):
-        return [replace_null(item) for item in value]
+        return [_replace_null(item) for item in value]
 
     if isinstance(value, tuple):
-        return tuple(replace_null(item) for item in value)
+        return tuple(_replace_null(item) for item in value)
 
     return value

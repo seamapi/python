@@ -575,20 +575,39 @@ If you call the Seam API with your own HTTP client,
   import httpx
   from seam import serialize_url_search_params
 
-  query = serialize_url_search_params({"device_ids": ["device1", "device2"]})
-
   httpx.get(
-      f"https://connect.getseam.com/devices/list?{query}",
+      "https://connect.getseam.com/devices/list",
+      params=serialize_url_search_params({"device_ids": ["device1", "device2"]}),
       headers={"Authorization": "Bearer your-api-key"},
   )
 
-It returns a query string, so it works with any HTTP client.
-Put it on the URL as above rather than handing it to the client as params:
-clients re-encode a query string they are given, e.g. httpx escapes ``*``
-and unescapes ``~``, which this serialization does not.
+The serialization defines the name and value of each search param,
+where every value is a string.
+``UrlSearchParams`` holds those pairs and renders the query string,
+as `URLSearchParams`_ does for the `reference implementation`_:
 
-The `reference implementation`_ defines this serialization,
-and the Seam API parses it with the corresponding `parser`_.
+.. code-block:: python
+
+  from seam import UrlSearchParams, update_url_search_params
+
+  search_params = UrlSearchParams()
+
+  update_url_search_params(search_params, {"device_ids": ["device1", "device2"]})
+
+  list(search_params)
+  # => [('device_ids', 'device1'), ('device_ids', 'device2')]
+
+  str(search_params)
+  # => 'device_ids=device1&device_ids=device2'
+
+Pass either the query string or the pairs to your HTTP client.
+A client may percent-encode a few characters differently than
+``URLSearchParams`` does, e.g. httpx escapes ``*`` and unescapes ``~``,
+which the Seam API reads as the same params either way.
+
+The Seam API parses these params with the corresponding `parser`_.
+
+.. _URLSearchParams: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
 
 .. _reference implementation: https://github.com/seamapi/url-search-params-serializer
 .. _parser: https://github.com/seamapi/url-search-params-parser
