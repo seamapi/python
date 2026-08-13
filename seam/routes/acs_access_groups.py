@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AcsAccessGroup, AcsEntrance, AcsUser
 
 
@@ -116,6 +117,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/acs/access_groups/add_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_user(
         self,
         *,
@@ -137,7 +143,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/add_user"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -151,6 +159,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return None
 
+    @route_metadata(
+        path="/acs/access_groups/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -158,7 +171,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_access_group_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/delete"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -168,6 +183,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return None
 
+    @route_metadata(
+        path="/acs/access_groups/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
         """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -177,7 +197,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_access_group_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/get"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -187,6 +209,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return AcsAccessGroup.from_dict(res["acs_access_group"])
 
+    @route_metadata(
+        path="/acs/access_groups/list",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def list(
         self,
         *,
@@ -221,6 +248,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
 
+    @route_metadata(
+        path="/acs/access_groups/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_accessible_entrances(
         self, *, acs_access_group_id: str
     ) -> List[AcsEntrance]:
@@ -232,7 +264,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_access_group_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -244,6 +278,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
+    @route_metadata(
+        path="/acs/access_groups/list_users",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
@@ -253,7 +292,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_access_group_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_users"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -263,6 +304,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
+    @route_metadata(
+        path="/acs/access_groups/remove_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_user(
         self,
         *,
@@ -284,7 +330,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/remove_user"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:

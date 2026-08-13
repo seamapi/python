@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AcsCredential, AcsEntrance
 
 
@@ -185,6 +186,11 @@ class AcsCredentials(AbstractAcsCredentials):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/acs/credentials/assign",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def assign(
         self,
         *,
@@ -206,7 +212,9 @@ class AcsCredentials(AbstractAcsCredentials):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/assign"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -220,6 +228,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return None
 
+    @route_metadata(
+        path="/acs/credentials/create",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -283,7 +296,9 @@ class AcsCredentials(AbstractAcsCredentials):
             user_identity_id is not None,
             visionline_metadata is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_method is not None:
@@ -321,6 +336,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return AcsCredential.from_dict(res["acs_credential"])
 
+    @route_metadata(
+        path="/acs/credentials/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, acs_credential_id: str) -> None:
         """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -328,7 +348,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_credential_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/delete"
+            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -338,6 +360,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return None
 
+    @route_metadata(
+        path="/acs/credentials/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, acs_credential_id: str) -> AcsCredential:
         """Returns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
@@ -347,7 +372,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_credential_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/get"
+            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -357,6 +384,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return AcsCredential.from_dict(res["acs_credential"])
 
+    @route_metadata(
+        path="/acs/credentials/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -411,6 +441,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
 
+    @route_metadata(
+        path="/acs/credentials/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
         """Returns a list of all `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a `credential <https://docs.seam.co/api/acs/credentials>`_ grants access.
 
@@ -420,7 +455,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_credential_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/list_accessible_entrances"
+            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -432,6 +469,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
+    @route_metadata(
+        path="/acs/credentials/unassign",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def unassign(
         self,
         *,
@@ -453,7 +495,9 @@ class AcsCredentials(AbstractAcsCredentials):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/unassign"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -467,6 +511,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         return None
 
+    @route_metadata(
+        path="/acs/credentials/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -486,7 +535,9 @@ class AcsCredentials(AbstractAcsCredentials):
         if not any(
             acs_credential_id is not None, code is not None, ends_at is not None
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:

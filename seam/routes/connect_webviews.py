@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ConnectWebview
 
 
@@ -110,6 +111,11 @@ class ConnectWebviews(AbstractConnectWebviews):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/connect_webviews/create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -182,6 +188,11 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         return ConnectWebview.from_dict(res["connect_webview"])
 
+    @route_metadata(
+        path="/connect_webviews/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, connect_webview_id: str) -> None:
         """Deletes a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
@@ -191,7 +202,9 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connect_webview_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connect_webviews/delete"
+            )
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
@@ -201,6 +214,9 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         return None
 
+    @route_metadata(
+        path="/connect_webviews/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, connect_webview_id: str) -> ConnectWebview:
         """Returns a specified `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
@@ -212,7 +228,9 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connect_webview_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connect_webviews/get"
+            )
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
@@ -222,6 +240,11 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         return ConnectWebview.from_dict(res["connect_webview"])
 
+    @route_metadata(
+        path="/connect_webviews/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
     def list(
         self,
         *,

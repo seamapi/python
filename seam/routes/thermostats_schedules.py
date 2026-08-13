@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ThermostatSchedule
 
 
@@ -111,6 +112,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/thermostats/schedules/create",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -150,7 +156,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             max_override_period_minutes is not None,
             name is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -172,6 +180,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
 
+    @route_metadata(
+        path="/thermostats/schedules/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, thermostat_schedule_id: str) -> None:
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -179,7 +192,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(thermostat_schedule_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/delete"
+            )
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -189,6 +204,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/schedules/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
         """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
@@ -198,7 +218,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(thermostat_schedule_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/get"
+            )
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -208,6 +230,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
 
+    @route_metadata(
+        path="/thermostats/schedules/list",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
     ) -> List[ThermostatSchedule]:
@@ -221,7 +248,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, user_identifier_key is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/list"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -235,6 +264,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
         ]
 
+    @route_metadata(
+        path="/thermostats/schedules/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -272,7 +306,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             name is not None,
             starts_at is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:

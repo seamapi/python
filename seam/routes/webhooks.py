@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Webhook
 
 
@@ -63,6 +64,9 @@ class Webhooks(AbstractWebhooks):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/webhooks/create", has_required_parameters=True, has_pagination=False
+    )
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
         """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
@@ -74,7 +78,7 @@ class Webhooks(AbstractWebhooks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(url is not None, event_types is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /webhooks/create")
         json_payload: Dict[str, Any] = {}
 
         if url is not None:
@@ -86,6 +90,9 @@ class Webhooks(AbstractWebhooks):
 
         return Webhook.from_dict(res["webhook"])
 
+    @route_metadata(
+        path="/webhooks/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, webhook_id: str) -> None:
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
@@ -93,7 +100,7 @@ class Webhooks(AbstractWebhooks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(webhook_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /webhooks/delete")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
@@ -103,6 +110,9 @@ class Webhooks(AbstractWebhooks):
 
         return None
 
+    @route_metadata(
+        path="/webhooks/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, webhook_id: str) -> Webhook:
         """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
@@ -112,7 +122,7 @@ class Webhooks(AbstractWebhooks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(webhook_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /webhooks/get")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
@@ -122,6 +132,9 @@ class Webhooks(AbstractWebhooks):
 
         return Webhook.from_dict(res["webhook"])
 
+    @route_metadata(
+        path="/webhooks/list", has_required_parameters=False, has_pagination=False
+    )
     def list(self) -> List[Webhook]:
         """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
 
@@ -132,6 +145,9 @@ class Webhooks(AbstractWebhooks):
 
         return [Webhook.from_dict(item) for item in res["webhooks"]]
 
+    @route_metadata(
+        path="/webhooks/update", has_required_parameters=True, has_pagination=False
+    )
     def update(self, *, event_types: List[str], webhook_id: str) -> None:
         """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
@@ -141,7 +157,7 @@ class Webhooks(AbstractWebhooks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(event_types is not None, webhook_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /webhooks/update")
         json_payload: Dict[str, Any] = {}
 
         if event_types is not None:

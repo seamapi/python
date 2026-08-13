@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedAccessCode
 
 
@@ -122,6 +123,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/access_codes/unmanaged/convert_to_managed",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def convert_to_managed(
         self,
         *,
@@ -151,7 +157,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             force is not None,
             is_external_modification_allowed is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/convert_to_managed"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -171,6 +179,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         return None
 
+    @route_metadata(
+        path="/access_codes/unmanaged/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, access_code_id: str) -> None:
         """Deletes an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
@@ -178,7 +191,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_code_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/delete"
+            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -188,6 +203,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         return None
 
+    @route_metadata(
+        path="/access_codes/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(
         self,
         *,
@@ -209,7 +229,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_code_id is not None, code is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/get"
+            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -223,6 +245,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         return UnmanagedAccessCode.from_dict(res["access_code"])
 
+    @route_metadata(
+        path="/access_codes/unmanaged/list",
+        has_required_parameters=True,
+        has_pagination=True,
+    )
     def list(
         self,
         *,
@@ -254,7 +281,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             search is not None,
             user_identifier_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/list"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -272,6 +301,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
 
+    @route_metadata(
+        path="/access_codes/unmanaged/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -301,7 +335,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             force is not None,
             is_external_modification_allowed is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:

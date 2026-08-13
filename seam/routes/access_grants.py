@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AccessGrant, Batch
 from .access_grants_unmanaged import (
     AbstractAccessGrantsUnmanaged,
@@ -223,6 +224,9 @@ class AccessGrants(AbstractAccessGrants):
     def unmanaged(self) -> AccessGrantsUnmanaged:
         return self._unmanaged
 
+    @route_metadata(
+        path="/access_grants/create", has_required_parameters=True, has_pagination=False
+    )
     def create(
         self,
         *,
@@ -294,7 +298,9 @@ class AccessGrants(AbstractAccessGrants):
             space_keys is not None,
             starts_at is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if requested_access_methods is not None:
@@ -332,6 +338,9 @@ class AccessGrants(AbstractAccessGrants):
 
         return AccessGrant.from_dict(res["access_grant"])
 
+    @route_metadata(
+        path="/access_grants/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
@@ -339,7 +348,9 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_grant_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/delete"
+            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -349,6 +360,9 @@ class AccessGrants(AbstractAccessGrants):
 
         return None
 
+    @route_metadata(
+        path="/access_grants/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -365,7 +379,9 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_grant_id is not None, access_grant_key is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/get"
+            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -377,6 +393,11 @@ class AccessGrants(AbstractAccessGrants):
 
         return AccessGrant.from_dict(res["access_grant"])
 
+    @route_metadata(
+        path="/access_grants/get_related",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get_related(
         self,
         *,
@@ -404,7 +425,9 @@ class AccessGrants(AbstractAccessGrants):
             exclude is not None,
             include is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/get_related"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_grant_ids is not None:
@@ -420,6 +443,9 @@ class AccessGrants(AbstractAccessGrants):
 
         return Batch.from_dict(res["batch"])
 
+    @route_metadata(
+        path="/access_grants/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -499,6 +525,11 @@ class AccessGrants(AbstractAccessGrants):
 
         return [AccessGrant.from_dict(item) for item in res["access_grants"]]
 
+    @route_metadata(
+        path="/access_grants/request_access_methods",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def request_access_methods(
         self, *, access_grant_id: str, requested_access_methods: List[Dict[str, Any]]
     ) -> AccessGrant:
@@ -512,7 +543,9 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_grant_id is not None, requested_access_methods is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/request_access_methods"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -526,6 +559,9 @@ class AccessGrants(AbstractAccessGrants):
 
         return AccessGrant.from_dict(res["access_grant"])
 
+    @route_metadata(
+        path="/access_grants/update", has_required_parameters=True, has_pagination=False
+    )
     def update(
         self,
         *,
@@ -555,7 +591,9 @@ class AccessGrants(AbstractAccessGrants):
             name is not None,
             starts_at is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:

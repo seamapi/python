@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedAccessCode
 
 
@@ -29,6 +30,11 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/access_codes/simulate/create_unmanaged_access_code",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create_unmanaged_access_code(
         self, *, code: str, device_id: str, name: str
     ) -> UnmanagedAccessCode:
@@ -44,7 +50,9 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(code is not None, device_id is not None, name is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/simulate/create_unmanaged_access_code"
+            )
         json_payload: Dict[str, Any] = {}
 
         if code is not None:

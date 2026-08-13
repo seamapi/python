@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ActionAttempt, AcsEncoder
 from .acs_encoders_simulate import AbstractAcsEncodersSimulate, AcsEncodersSimulate
 from ..modules.action_attempts import resolve_action_attempt
@@ -132,6 +133,11 @@ class AcsEncoders(AbstractAcsEncoders):
     def simulate(self) -> AcsEncodersSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/acs/encoders/encode_credential",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def encode_credential(
         self,
         *,
@@ -158,7 +164,9 @@ class AcsEncoders(AbstractAcsEncoders):
             access_method_id is not None,
             acs_credential_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/encode_credential"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -182,6 +190,9 @@ class AcsEncoders(AbstractAcsEncoders):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/acs/encoders/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, acs_encoder_id: str) -> AcsEncoder:
         """Returns a specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -191,7 +202,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_encoder_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/encoders/get")
         params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -201,6 +212,9 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return AcsEncoder.from_dict(res["acs_encoder"])
 
+    @route_metadata(
+        path="/acs/encoders/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -240,6 +254,11 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return [AcsEncoder.from_dict(item) for item in res["acs_encoders"]]
 
+    @route_metadata(
+        path="/acs/encoders/scan_credential",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def scan_credential(
         self,
         *,
@@ -259,7 +278,9 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_encoder_id is not None, salto_ks_metadata is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/scan_credential"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -281,6 +302,11 @@ class AcsEncoders(AbstractAcsEncoders):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/acs/encoders/scan_to_assign_credential",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def scan_to_assign_credential(
         self,
         *,
@@ -311,7 +337,9 @@ class AcsEncoders(AbstractAcsEncoders):
             salto_ks_metadata is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/scan_to_assign_credential"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:

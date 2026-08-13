@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ThermostatDailyProgram, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -63,6 +64,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/thermostats/daily_programs/create",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create(
         self, *, device_id: str, name: str, periods: List[Dict[str, Any]]
     ) -> ThermostatDailyProgram:
@@ -78,7 +84,9 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, name is not None, periods is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -92,6 +100,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         return ThermostatDailyProgram.from_dict(res["thermostat_daily_program"])
 
+    @route_metadata(
+        path="/thermostats/daily_programs/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, thermostat_daily_program_id: str) -> None:
         """Deletes a thermostat daily program.
 
@@ -99,7 +112,9 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(thermostat_daily_program_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/delete"
+            )
         params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
@@ -109,6 +124,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/daily_programs/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -135,7 +155,9 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             periods is not None,
             thermostat_daily_program_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if name is not None:

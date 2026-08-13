@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AcsUser, AcsEntrance
 
 
@@ -269,6 +270,11 @@ class AcsUsers(AbstractAcsUsers):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/acs/users/add_to_access_group",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_to_access_group(
         self, *, acs_access_group_id: str, acs_user_id: str
     ) -> None:
@@ -280,7 +286,9 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_access_group_id is not None, acs_user_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/add_to_access_group"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -292,6 +300,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/create", has_required_parameters=True, has_pagination=False
+    )
     def create(
         self,
         *,
@@ -335,7 +346,7 @@ class AcsUsers(AbstractAcsUsers):
             phone_number is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/users/create")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -359,6 +370,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return AcsUser.from_dict(res["acs_user"])
 
+    @route_metadata(
+        path="/acs/users/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(
         self,
         *,
@@ -380,7 +394,7 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/users/delete")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -394,6 +408,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -417,7 +434,7 @@ class AcsUsers(AbstractAcsUsers):
             acs_system_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/users/get")
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -431,6 +448,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return AcsUser.from_dict(res["acs_user"])
 
+    @route_metadata(
+        path="/acs/users/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -485,6 +505,11 @@ class AcsUsers(AbstractAcsUsers):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
+    @route_metadata(
+        path="/acs/users/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_accessible_entrances(
         self,
         *,
@@ -508,7 +533,9 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/list_accessible_entrances"
+            )
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -522,6 +549,11 @@ class AcsUsers(AbstractAcsUsers):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
+    @route_metadata(
+        path="/acs/users/remove_from_access_group",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_from_access_group(
         self,
         *,
@@ -543,7 +575,9 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/remove_from_access_group"
+            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -557,6 +591,11 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/revoke_access_to_all_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def revoke_access_to_all_entrances(
         self,
         *,
@@ -578,7 +617,9 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -592,6 +633,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/suspend", has_required_parameters=True, has_pagination=False
+    )
     def suspend(
         self,
         *,
@@ -613,7 +657,9 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/suspend"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -627,6 +673,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/unsuspend", has_required_parameters=True, has_pagination=False
+    )
     def unsuspend(
         self,
         *,
@@ -648,7 +697,9 @@ class AcsUsers(AbstractAcsUsers):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/users/unsuspend"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -662,6 +713,9 @@ class AcsUsers(AbstractAcsUsers):
 
         return None
 
+    @route_metadata(
+        path="/acs/users/update", has_required_parameters=True, has_pagination=False
+    )
     def update(
         self,
         *,
@@ -707,7 +761,7 @@ class AcsUsers(AbstractAcsUsers):
             phone_number is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/users/update")
         json_payload: Dict[str, Any] = {}
 
         if access_schedule is not None:

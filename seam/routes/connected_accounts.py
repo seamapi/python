@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ConnectedAccount
 from .connected_accounts_simulate import (
     AbstractConnectedAccountsSimulate,
@@ -122,6 +123,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     def simulate(self) -> ConnectedAccountsSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/connected_accounts/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, connected_account_id: str) -> None:
         """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
@@ -133,7 +139,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connected_account_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/delete"
+            )
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -143,6 +151,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         return None
 
+    @route_metadata(
+        path="/connected_accounts/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(
         self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
     ) -> ConnectedAccount:
@@ -156,7 +169,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connected_account_id is not None, email is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/get"
+            )
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -168,6 +183,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         return ConnectedAccount.from_dict(res["connected_account"])
 
+    @route_metadata(
+        path="/connected_accounts/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
     def list(
         self,
         *,
@@ -217,6 +237,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
 
+    @route_metadata(
+        path="/connected_accounts/sync",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def sync(self, *, connected_account_id: str) -> None:
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
@@ -224,7 +249,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connected_account_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/sync"
+            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -234,6 +261,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         return None
 
+    @route_metadata(
+        path="/connected_accounts/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -267,7 +299,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             customer_key is not None,
             display_name is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:

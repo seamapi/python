@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AccessCode
 from .access_codes_simulate import AbstractAccessCodesSimulate, AccessCodesSimulate
 from .access_codes_unmanaged import AbstractAccessCodesUnmanaged, AccessCodesUnmanaged
@@ -379,6 +380,9 @@ class AccessCodes(AbstractAccessCodes):
     def unmanaged(self) -> AccessCodesUnmanaged:
         return self._unmanaged
 
+    @route_metadata(
+        path="/access_codes/create", has_required_parameters=True, has_pagination=False
+    )
     def create(
         self,
         *,
@@ -460,7 +464,9 @@ class AccessCodes(AbstractAccessCodes):
             use_backup_access_code_pool is not None,
             use_offline_access_code is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -502,6 +508,11 @@ class AccessCodes(AbstractAccessCodes):
 
         return AccessCode.from_dict(res["access_code"])
 
+    @route_metadata(
+        path="/access_codes/create_multiple",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create_multiple(
         self,
         *,
@@ -577,7 +588,9 @@ class AccessCodes(AbstractAccessCodes):
             starts_at is not None,
             use_backup_access_code_pool is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/create_multiple"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -613,6 +626,9 @@ class AccessCodes(AbstractAccessCodes):
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
+    @route_metadata(
+        path="/access_codes/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, access_code_id: str, device_id: Optional[str] = None) -> None:
         """Deletes an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -622,7 +638,9 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_code_id is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/delete"
+            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -634,6 +652,11 @@ class AccessCodes(AbstractAccessCodes):
 
         return None
 
+    @route_metadata(
+        path="/access_codes/generate_code",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def generate_code(self, *, device_id: str) -> AccessCode:
         """Generates a code for an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_, given a device ID.
 
@@ -643,7 +666,9 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/generate_code"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -653,6 +678,9 @@ class AccessCodes(AbstractAccessCodes):
 
         return AccessCode.from_dict(res["generated_code"])
 
+    @route_metadata(
+        path="/access_codes/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -674,7 +702,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_code_id is not None, code is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /access_codes/get")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -688,6 +716,9 @@ class AccessCodes(AbstractAccessCodes):
 
         return AccessCode.from_dict(res["access_code"])
 
+    @route_metadata(
+        path="/access_codes/list", has_required_parameters=True, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -741,7 +772,9 @@ class AccessCodes(AbstractAccessCodes):
             search is not None,
             user_identifier_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/list"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_ids is not None:
@@ -769,6 +802,11 @@ class AccessCodes(AbstractAccessCodes):
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 
+    @route_metadata(
+        path="/access_codes/pull_backup_access_code",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def pull_backup_access_code(self, *, access_code_id: str) -> AccessCode:
         """Retrieves a backup access code for an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_. See also `Managing Backup Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_.
 
@@ -786,7 +824,9 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_code_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/pull_backup_access_code"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -798,6 +838,11 @@ class AccessCodes(AbstractAccessCodes):
 
         return AccessCode.from_dict(res["access_code"])
 
+    @route_metadata(
+        path="/access_codes/report_device_constraints",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def report_device_constraints(
         self,
         *,
@@ -825,7 +870,9 @@ class AccessCodes(AbstractAccessCodes):
             min_code_length is not None,
             supported_code_lengths is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/report_device_constraints"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -841,6 +888,9 @@ class AccessCodes(AbstractAccessCodes):
 
         return None
 
+    @route_metadata(
+        path="/access_codes/update", has_required_parameters=True, has_pagination=False
+    )
     def update(
         self,
         *,
@@ -902,7 +952,9 @@ class AccessCodes(AbstractAccessCodes):
             starts_at is not None,
             type is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -934,6 +986,11 @@ class AccessCodes(AbstractAccessCodes):
 
         return None
 
+    @route_metadata(
+        path="/access_codes/update_multiple",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update_multiple(
         self,
         *,
@@ -969,7 +1026,9 @@ class AccessCodes(AbstractAccessCodes):
             name is not None,
             starts_at is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_codes/update_multiple"
+            )
         json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:

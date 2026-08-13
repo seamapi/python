@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 
 
 class AbstractThermostatsSimulate(abc.ABC):
@@ -58,6 +59,11 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/thermostats/simulate/hvac_mode_adjusted",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def hvac_mode_adjusted(
         self,
         *,
@@ -91,7 +97,9 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
             heating_set_point_celsius is not None,
             heating_set_point_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/simulate/hvac_mode_adjusted"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -111,6 +119,11 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/simulate/temperature_reached",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def temperature_reached(
         self,
         *,
@@ -132,7 +145,9 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
             temperature_celsius is not None,
             temperature_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/simulate/temperature_reached"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

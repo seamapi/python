@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedDevice
 
 
@@ -100,6 +101,11 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/devices/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
@@ -117,7 +123,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, name is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/unmanaged/get"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -129,6 +137,11 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         return UnmanagedDevice.from_dict(res["device"])
 
+    @route_metadata(
+        path="/devices/unmanaged/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
     def list(
         self,
         *,
@@ -205,6 +218,11 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
 
+    @route_metadata(
+        path="/devices/unmanaged/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -226,7 +244,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if not any(
             device_id is not None, custom_metadata is not None, is_managed is not None
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/unmanaged/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

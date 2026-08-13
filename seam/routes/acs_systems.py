@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AcsSystem
 
 
@@ -78,6 +79,9 @@ class AcsSystems(AbstractAcsSystems):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/acs/systems/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, acs_system_id: str) -> AcsSystem:
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -87,7 +91,7 @@ class AcsSystems(AbstractAcsSystems):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_system_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /acs/systems/get")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -97,6 +101,9 @@ class AcsSystems(AbstractAcsSystems):
 
         return AcsSystem.from_dict(res["acs_system"])
 
+    @route_metadata(
+        path="/acs/systems/list", has_required_parameters=False, has_pagination=False
+    )
     def list(
         self,
         *,
@@ -128,6 +135,11 @@ class AcsSystems(AbstractAcsSystems):
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
+    @route_metadata(
+        path="/acs/systems/list_compatible_credential_manager_acs_systems",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
@@ -141,7 +153,9 @@ class AcsSystems(AbstractAcsSystems):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_system_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
+            )
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -153,6 +167,11 @@ class AcsSystems(AbstractAcsSystems):
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
+    @route_metadata(
+        path="/acs/systems/report_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def report_devices(
         self,
         *,
@@ -174,7 +193,9 @@ class AcsSystems(AbstractAcsSystems):
             acs_encoders is not None,
             acs_entrances is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/report_devices"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:

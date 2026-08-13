@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 
 
 class AbstractDevicesSimulate(abc.ABC):
@@ -76,6 +77,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/devices/simulate/connect",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def connect(self, *, device_id: str) -> None:
         """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
@@ -83,7 +89,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/connect"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -93,6 +101,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    @route_metadata(
+        path="/devices/simulate/connect_to_hub",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def connect_to_hub(self, *, device_id: str) -> None:
         """Simulates bringing the Wi‑Fi hub (bridge) back online for a device.
         Only applicable for sandbox workspaces and currently
@@ -103,7 +116,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/connect_to_hub"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -113,6 +128,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    @route_metadata(
+        path="/devices/simulate/disconnect",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def disconnect(self, *, device_id: str) -> None:
         """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
@@ -120,7 +140,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/disconnect"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -130,6 +152,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    @route_metadata(
+        path="/devices/simulate/disconnect_from_hub",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def disconnect_from_hub(self, *, device_id: str) -> None:
         """Simulates taking the Wi‑Fi hub (bridge) offline for a device.
         Only applicable for sandbox workspaces and currently
@@ -141,7 +168,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/disconnect_from_hub"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -151,6 +180,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    @route_metadata(
+        path="/devices/simulate/paid_subscription",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def paid_subscription(self, *, device_id: str, is_expired: bool) -> None:
         """Toggle the simulated Nuki Smart Hosting subscription for a device (sandbox only).
         Send ``is_expired: true`` to simulate an expired subscription, or ``false`` to simulate an active subscription.
@@ -162,7 +196,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, is_expired is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/paid_subscription"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -174,6 +210,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         return None
 
+    @route_metadata(
+        path="/devices/simulate/remove",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove(self, *, device_id: str) -> None:
         """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
@@ -181,7 +222,9 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/remove"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

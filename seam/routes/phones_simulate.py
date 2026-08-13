@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Phone
 
 
@@ -36,6 +37,11 @@ class PhonesSimulate(AbstractPhonesSimulate):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/phones/simulate/create_sandbox_phone",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create_sandbox_phone(
         self,
         *,
@@ -63,7 +69,9 @@ class PhonesSimulate(AbstractPhonesSimulate):
             custom_sdk_installation_id is not None,
             phone_metadata is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
+            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:

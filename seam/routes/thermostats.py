@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ActionAttempt, Device
 from .thermostats_daily_programs import (
     AbstractThermostatsDailyPrograms,
@@ -433,6 +434,11 @@ class Thermostats(AbstractThermostats):
     def simulate(self) -> ThermostatsSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/thermostats/activate_climate_preset",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def activate_climate_preset(
         self,
         *,
@@ -452,7 +458,9 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(climate_preset_key is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/activate_climate_preset"
+            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -476,6 +484,9 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/cool", has_required_parameters=True, has_pagination=False
+    )
     def cool(
         self,
         *,
@@ -502,7 +513,7 @@ class Thermostats(AbstractThermostats):
             cooling_set_point_celsius is not None,
             cooling_set_point_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /thermostats/cool")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -526,6 +537,11 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/create_climate_preset",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create_climate_preset(
         self,
         *,
@@ -583,7 +599,9 @@ class Thermostats(AbstractThermostats):
             manual_override_allowed is not None,
             name is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/create_climate_preset"
+            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -615,6 +633,11 @@ class Thermostats(AbstractThermostats):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/delete_climate_preset",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
         """Deletes a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -624,7 +647,9 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(climate_preset_key is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/delete_climate_preset"
+            )
         params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -636,6 +661,9 @@ class Thermostats(AbstractThermostats):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/heat", has_required_parameters=True, has_pagination=False
+    )
     def heat(
         self,
         *,
@@ -662,7 +690,7 @@ class Thermostats(AbstractThermostats):
             heating_set_point_celsius is not None,
             heating_set_point_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /thermostats/heat")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -686,6 +714,11 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/heat_cool",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def heat_cool(
         self,
         *,
@@ -720,7 +753,9 @@ class Thermostats(AbstractThermostats):
             heating_set_point_celsius is not None,
             heating_set_point_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/heat_cool"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -748,6 +783,9 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/list", has_required_parameters=False, has_pagination=False
+    )
     def list(
         self,
         *,
@@ -792,6 +830,9 @@ class Thermostats(AbstractThermostats):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
+    @route_metadata(
+        path="/thermostats/off", has_required_parameters=True, has_pagination=False
+    )
     def off(
         self,
         *,
@@ -808,7 +849,7 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /thermostats/off")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -828,6 +869,11 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/set_fallback_climate_preset",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def set_fallback_climate_preset(
         self, *, climate_preset_key: str, device_id: str
     ) -> None:
@@ -839,7 +885,9 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(climate_preset_key is not None, device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_fallback_climate_preset"
+            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -851,6 +899,11 @@ class Thermostats(AbstractThermostats):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/set_fan_mode",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def set_fan_mode(
         self,
         *,
@@ -875,7 +928,9 @@ class Thermostats(AbstractThermostats):
         if not any(
             device_id is not None, fan_mode is not None, fan_mode_setting is not None
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_fan_mode"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -899,6 +954,11 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/set_hvac_mode",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def set_hvac_mode(
         self,
         *,
@@ -937,7 +997,9 @@ class Thermostats(AbstractThermostats):
             heating_set_point_celsius is not None,
             heating_set_point_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_hvac_mode"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -967,6 +1029,11 @@ class Thermostats(AbstractThermostats):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/thermostats/set_temperature_threshold",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def set_temperature_threshold(
         self,
         *,
@@ -996,7 +1063,9 @@ class Thermostats(AbstractThermostats):
             upper_limit_celsius is not None,
             upper_limit_fahrenheit is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_temperature_threshold"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1014,6 +1083,11 @@ class Thermostats(AbstractThermostats):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/update_climate_preset",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update_climate_preset(
         self,
         *,
@@ -1071,7 +1145,9 @@ class Thermostats(AbstractThermostats):
             manual_override_allowed is not None,
             name is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/update_climate_preset"
+            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1103,6 +1179,11 @@ class Thermostats(AbstractThermostats):
 
         return None
 
+    @route_metadata(
+        path="/thermostats/update_weekly_program",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update_weekly_program(
         self,
         *,
@@ -1149,7 +1230,9 @@ class Thermostats(AbstractThermostats):
             tuesday_program_id is not None,
             wednesday_program_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/update_weekly_program"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

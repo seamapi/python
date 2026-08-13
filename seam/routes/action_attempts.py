@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -53,6 +54,9 @@ class ActionAttempts(AbstractActionAttempts):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -69,7 +73,9 @@ class ActionAttempts(AbstractActionAttempts):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(action_attempt_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /action_attempts/get"
+            )
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
@@ -89,6 +95,9 @@ class ActionAttempts(AbstractActionAttempts):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,

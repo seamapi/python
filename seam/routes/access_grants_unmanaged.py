@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedAccessGrant
 
 
@@ -74,6 +75,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/access_grants/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, access_grant_id: str) -> UnmanagedAccessGrant:
         """Get an unmanaged Access Grant (where is_managed = false).
 
@@ -83,7 +89,9 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_grant_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/unmanaged/get"
+            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -93,6 +101,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         return UnmanagedAccessGrant.from_dict(res["access_grant"])
 
+    @route_metadata(
+        path="/access_grants/unmanaged/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
     def list(
         self,
         *,
@@ -137,6 +150,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
 
+    @route_metadata(
+        path="/access_grants/unmanaged/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -162,7 +180,9 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             is_managed is not None,
             access_grant_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_grants/unmanaged/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:

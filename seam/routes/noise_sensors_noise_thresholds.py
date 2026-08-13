@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import NoiseThreshold
 
 
@@ -106,6 +107,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/noise_sensors/noise_thresholds/create",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -141,7 +147,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             noise_threshold_decibels is not None,
             noise_threshold_nrs is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -163,6 +171,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
 
+    @route_metadata(
+        path="/noise_sensors/noise_thresholds/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -172,7 +185,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, noise_threshold_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -184,6 +199,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         return None
 
+    @route_metadata(
+        path="/noise_sensors/noise_thresholds/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, noise_threshold_id: str) -> NoiseThreshold:
         """Returns a specified `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -193,7 +213,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(noise_threshold_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
+            )
         params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
@@ -203,6 +225,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         return NoiseThreshold.from_dict(res["noise_threshold"])
 
+    @route_metadata(
+        path="/noise_sensors/noise_thresholds/list",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list(self, *, device_id: str) -> List[NoiseThreshold]:
         """Returns a list of all `noise thresholds <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -212,7 +239,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -222,6 +251,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
 
+    @route_metadata(
+        path="/noise_sensors/noise_thresholds/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -259,7 +293,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             noise_threshold_nrs is not None,
             starts_daily_at is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import (
     UserIdentity,
     InstantKey,
@@ -259,6 +260,11 @@ class UserIdentities(AbstractUserIdentities):
     def unmanaged(self) -> UserIdentitiesUnmanaged:
         return self._unmanaged
 
+    @route_metadata(
+        path="/user_identities/add_acs_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_acs_user(
         self,
         *,
@@ -284,7 +290,9 @@ class UserIdentities(AbstractUserIdentities):
             user_identity_id is not None,
             user_identity_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/add_acs_user"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -298,6 +306,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
+    @route_metadata(
+        path="/user_identities/create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -337,6 +350,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return UserIdentity.from_dict(res["user_identity"])
 
+    @route_metadata(
+        path="/user_identities/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
@@ -344,7 +362,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/delete"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -354,6 +374,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
+    @route_metadata(
+        path="/user_identities/generate_instant_key",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def generate_instant_key(
         self,
         *,
@@ -377,7 +402,9 @@ class UserIdentities(AbstractUserIdentities):
             customization_profile_id is not None,
             max_use_count is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/generate_instant_key"
+            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -393,6 +420,9 @@ class UserIdentities(AbstractUserIdentities):
 
         return InstantKey.from_dict(res["instant_key"])
 
+    @route_metadata(
+        path="/user_identities/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -409,7 +439,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None, user_identity_key is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/get"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -421,6 +453,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return UserIdentity.from_dict(res["user_identity"])
 
+    @route_metadata(
+        path="/user_identities/grant_access_to_device",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
         """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
 
@@ -430,7 +467,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/grant_access_to_device"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -442,6 +481,9 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
+    @route_metadata(
+        path="/user_identities/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -488,6 +530,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return [UserIdentity.from_dict(item) for item in res["user_identities"]]
 
+    @route_metadata(
+        path="/user_identities/list_accessible_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
 
@@ -497,7 +544,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_devices"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -507,6 +556,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
+    @route_metadata(
+        path="/user_identities/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
         """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
 
@@ -516,7 +570,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_entrances"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -528,6 +584,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
+    @route_metadata(
+        path="/user_identities/list_acs_systems",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
         """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -537,7 +598,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_systems"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -547,6 +610,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
+    @route_metadata(
+        path="/user_identities/list_acs_users",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -556,7 +624,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_users"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -566,6 +636,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
 
+    @route_metadata(
+        path="/user_identities/remove_acs_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -575,7 +650,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_user_id is not None, user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/remove_acs_user"
+            )
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -587,6 +664,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
+    @route_metadata(
+        path="/user_identities/revoke_access_to_device",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
         """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -596,7 +678,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/revoke_access_to_device"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -608,6 +692,11 @@ class UserIdentities(AbstractUserIdentities):
 
         return None
 
+    @route_metadata(
+        path="/user_identities/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -637,7 +726,9 @@ class UserIdentities(AbstractUserIdentities):
             phone_number is not None,
             user_identity_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:

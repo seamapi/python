@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import CustomerPortal
 
 
@@ -191,6 +192,11 @@ class Customers(AbstractCustomers):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/customers/create_portal",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def create_portal(
         self,
         *,
@@ -260,6 +266,11 @@ class Customers(AbstractCustomers):
 
         return CustomerPortal.from_dict(res["customer_portal"])
 
+    @route_metadata(
+        path="/customers/delete_data",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def delete_data(
         self,
         *,
@@ -368,6 +379,9 @@ class Customers(AbstractCustomers):
 
         return None
 
+    @route_metadata(
+        path="/customers/push_data", has_required_parameters=True, has_pagination=False
+    )
     def push_data(
         self,
         *,
@@ -457,7 +471,9 @@ class Customers(AbstractCustomers):
             user_identities is not None,
             users is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /customers/push_data"
+            )
         json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:

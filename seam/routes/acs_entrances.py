@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import AcsEntrance, AcsCredential, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -122,6 +123,9 @@ class AcsEntrances(AbstractAcsEntrances):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/acs/entrances/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
         """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -131,7 +135,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_entrance_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/get"
+            )
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -141,6 +147,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return AcsEntrance.from_dict(res["acs_entrance"])
 
+    @route_metadata(
+        path="/acs/entrances/grant_access",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def grant_access(
         self,
         *,
@@ -162,7 +173,9 @@ class AcsEntrances(AbstractAcsEntrances):
             acs_user_id is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/grant_access"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -176,6 +189,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return None
 
+    @route_metadata(
+        path="/acs/entrances/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -245,6 +261,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
+    @route_metadata(
+        path="/acs/entrances/list_credentials_with_access",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list_credentials_with_access(
         self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
     ) -> List[AcsCredential]:
@@ -258,7 +279,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_entrance_id is not None, include_if is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/list_credentials_with_access"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -272,6 +295,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
 
+    @route_metadata(
+        path="/acs/entrances/unlock", has_required_parameters=True, has_pagination=False
+    )
     def unlock(
         self,
         *,
@@ -291,7 +317,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_credential_id is not None, acs_entrance_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/unlock"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:

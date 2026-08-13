@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 
 
 class AbstractNoiseSensorsSimulate(abc.ABC):
@@ -20,6 +21,11 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/noise_sensors/simulate/trigger_noise_threshold",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def trigger_noise_threshold(self, *, device_id: str) -> None:
         """Simulates the triggering of a `noise threshold <https://docs.seam.co/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://docs.seam.co/capability-guides/noise-sensors>`_ in a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -27,7 +33,9 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/simulate/trigger_noise_threshold"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

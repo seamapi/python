@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Device
 from .noise_sensors_noise_thresholds import (
     AbstractNoiseSensorsNoiseThresholds,
@@ -67,6 +68,9 @@ class NoiseSensors(AbstractNoiseSensors):
     def simulate(self) -> NoiseSensorsSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/noise_sensors/list", has_required_parameters=False, has_pagination=False
+    )
     def list(
         self,
         *,

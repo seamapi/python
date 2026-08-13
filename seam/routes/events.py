@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import SeamEvent
 
 
@@ -129,6 +130,9 @@ class Events(AbstractEvents):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/events/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -148,7 +152,7 @@ class Events(AbstractEvents):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(event_id is not None, device_id is not None, event_type is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /events/get")
         params: Dict[str, Any] = {}
 
         if event_id is not None:
@@ -162,6 +166,9 @@ class Events(AbstractEvents):
 
         return SeamEvent.from_dict(res["event"])
 
+    @route_metadata(
+        path="/events/list", has_required_parameters=True, has_pagination=False
+    )
     def list(
         self,
         *,
@@ -285,7 +292,7 @@ class Events(AbstractEvents):
             unstable_offset is not None,
             user_identity_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /events/list")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:

@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Space, Batch
 
 
@@ -218,6 +219,11 @@ class Spaces(AbstractSpaces):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/spaces/add_acs_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
         """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
@@ -227,7 +233,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_entrance_ids is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_acs_entrances"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -239,6 +247,11 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/add_connected_account",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
@@ -250,7 +263,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connected_account_id is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_connected_account"
+            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -262,6 +277,9 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/add_devices", has_required_parameters=True, has_pagination=False
+    )
     def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Adds devices to a specific space.
 
@@ -271,7 +289,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_ids is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_devices"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -283,6 +303,9 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/create", has_required_parameters=True, has_pagination=False
+    )
     def create(
         self,
         *,
@@ -322,7 +345,7 @@ class Spaces(AbstractSpaces):
             device_ids is not None,
             space_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /spaces/create")
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -344,6 +367,9 @@ class Spaces(AbstractSpaces):
 
         return Space.from_dict(res["space"])
 
+    @route_metadata(
+        path="/spaces/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
@@ -351,7 +377,7 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /spaces/delete")
         params: Dict[str, Any] = {}
 
         if space_id is not None:
@@ -361,6 +387,9 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
     ) -> Space:
@@ -374,7 +403,7 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(space_id is not None, space_key is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /spaces/get")
         params: Dict[str, Any] = {}
 
         if space_id is not None:
@@ -386,6 +415,9 @@ class Spaces(AbstractSpaces):
 
         return Space.from_dict(res["space"])
 
+    @route_metadata(
+        path="/spaces/get_related", has_required_parameters=True, has_pagination=False
+    )
     def get_related(
         self,
         *,
@@ -413,7 +445,9 @@ class Spaces(AbstractSpaces):
             space_ids is not None,
             space_keys is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/get_related"
+            )
         json_payload: Dict[str, Any] = {}
 
         if exclude is not None:
@@ -429,6 +463,9 @@ class Spaces(AbstractSpaces):
 
         return Batch.from_dict(res["batch"])
 
+    @route_metadata(
+        path="/spaces/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -468,6 +505,11 @@ class Spaces(AbstractSpaces):
 
         return [Space.from_dict(item) for item in res["spaces"]]
 
+    @route_metadata(
+        path="/spaces/remove_acs_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
@@ -479,7 +521,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(acs_entrance_ids is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_acs_entrances"
+            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -491,6 +535,11 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/remove_connected_account",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
@@ -502,7 +551,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(connected_account_id is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_connected_account"
+            )
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -514,6 +565,11 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/remove_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Removes devices from a specific space.
 
@@ -523,7 +579,9 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_ids is not None, space_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_devices"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -535,6 +593,9 @@ class Spaces(AbstractSpaces):
 
         return None
 
+    @route_metadata(
+        path="/spaces/update", has_required_parameters=False, has_pagination=False
+    )
     def update(
         self,
         *,

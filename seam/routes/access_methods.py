@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ActionAttempt, AccessMethod, Batch
 from .access_methods_unmanaged import (
     AbstractAccessMethodsUnmanaged,
@@ -177,6 +178,11 @@ class AccessMethods(AbstractAccessMethods):
     def unmanaged(self) -> AccessMethodsUnmanaged:
         return self._unmanaged
 
+    @route_metadata(
+        path="/access_methods/assign_card",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def assign_card(
         self,
         *,
@@ -196,7 +202,9 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_method_id is not None, card_number is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/assign_card"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -218,6 +226,11 @@ class AccessMethods(AbstractAccessMethods):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/access_methods/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(
         self,
         *,
@@ -239,7 +252,9 @@ class AccessMethods(AbstractAccessMethods):
             access_grant_id is not None,
             reservation_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/delete"
+            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -253,6 +268,11 @@ class AccessMethods(AbstractAccessMethods):
 
         return None
 
+    @route_metadata(
+        path="/access_methods/encode",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def encode(
         self,
         *,
@@ -272,7 +292,9 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_method_id is not None, acs_encoder_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/encode"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -294,6 +316,9 @@ class AccessMethods(AbstractAccessMethods):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/access_methods/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, access_method_id: str) -> AccessMethod:
         """Gets an access method.
 
@@ -303,7 +328,9 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_method_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get"
+            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -313,6 +340,11 @@ class AccessMethods(AbstractAccessMethods):
 
         return AccessMethod.from_dict(res["access_method"])
 
+    @route_metadata(
+        path="/access_methods/get_related",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get_related(
         self,
         *,
@@ -334,7 +366,9 @@ class AccessMethods(AbstractAccessMethods):
         if not any(
             access_method_ids is not None, exclude is not None, include is not None
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get_related"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_ids is not None:
@@ -348,6 +382,9 @@ class AccessMethods(AbstractAccessMethods):
 
         return Batch.from_dict(res["batch"])
 
+    @route_metadata(
+        path="/access_methods/list", has_required_parameters=True, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -391,7 +428,9 @@ class AccessMethods(AbstractAccessMethods):
             page_cursor is not None,
             space_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/list"
+            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -415,6 +454,11 @@ class AccessMethods(AbstractAccessMethods):
 
         return [AccessMethod.from_dict(item) for item in res["access_methods"]]
 
+    @route_metadata(
+        path="/access_methods/unlock_door",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def unlock_door(
         self,
         *,
@@ -434,7 +478,9 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_method_id is not None, acs_entrance_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unlock_door"
+            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:

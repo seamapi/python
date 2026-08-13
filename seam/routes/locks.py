@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ActionAttempt, Device
 from .locks_simulate import AbstractLocksSimulate, LocksSimulate
 from ..modules.action_attempts import resolve_action_attempt
@@ -130,6 +131,11 @@ class Locks(AbstractLocks):
     def simulate(self) -> LocksSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/locks/configure_auto_lock",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def configure_auto_lock(
         self,
         *,
@@ -156,7 +162,9 @@ class Locks(AbstractLocks):
             device_id is not None,
             auto_lock_delay_seconds is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /locks/configure_auto_lock"
+            )
         json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
@@ -180,6 +188,9 @@ class Locks(AbstractLocks):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/locks/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
@@ -196,7 +207,7 @@ class Locks(AbstractLocks):
         .. deprecated::
            Use ``/devices/get`` instead."""
         if not any(device_id is not None, name is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /locks/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -208,6 +219,9 @@ class Locks(AbstractLocks):
 
         return Device.from_dict(res["device"])
 
+    @route_metadata(
+        path="/locks/list", has_required_parameters=False, has_pagination=False
+    )
     def list(
         self,
         *,
@@ -252,6 +266,9 @@ class Locks(AbstractLocks):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
+    @route_metadata(
+        path="/locks/lock_door", has_required_parameters=True, has_pagination=False
+    )
     def lock_door(
         self,
         *,
@@ -268,7 +285,7 @@ class Locks(AbstractLocks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /locks/lock_door")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -288,6 +305,9 @@ class Locks(AbstractLocks):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/locks/unlock_door", has_required_parameters=True, has_pagination=False
+    )
     def unlock_door(
         self,
         *,
@@ -304,7 +324,9 @@ class Locks(AbstractLocks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /locks/unlock_door"
+            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

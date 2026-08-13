@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Workspace, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -107,6 +108,9 @@ class Workspaces(AbstractWorkspaces):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/workspaces/create", has_required_parameters=True, has_pagination=False
+    )
     def create(
         self,
         *,
@@ -158,7 +162,9 @@ class Workspaces(AbstractWorkspaces):
             webview_primary_button_text_color is not None,
             webview_success_message is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /workspaces/create"
+            )
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -190,6 +196,9 @@ class Workspaces(AbstractWorkspaces):
 
         return Workspace.from_dict(res["workspace"])
 
+    @route_metadata(
+        path="/workspaces/get", has_required_parameters=False, has_pagination=False
+    )
     def get(self) -> Workspace:
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
@@ -200,6 +209,9 @@ class Workspaces(AbstractWorkspaces):
 
         return Workspace.from_dict(res["workspace"])
 
+    @route_metadata(
+        path="/workspaces/list", has_required_parameters=False, has_pagination=False
+    )
     def list(self) -> List[Workspace]:
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
 
@@ -210,6 +222,11 @@ class Workspaces(AbstractWorkspaces):
 
         return [Workspace.from_dict(item) for item in res["workspaces"]]
 
+    @route_metadata(
+        path="/workspaces/reset_sandbox",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def reset_sandbox(
         self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
@@ -234,6 +251,9 @@ class Workspaces(AbstractWorkspaces):
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
+    @route_metadata(
+        path="/workspaces/update", has_required_parameters=False, has_pagination=False
+    )
     def update(
         self,
         *,

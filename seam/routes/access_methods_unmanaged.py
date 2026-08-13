@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedAccessMethod
 
 
@@ -47,6 +48,11 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/access_methods/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, access_method_id: str) -> UnmanagedAccessMethod:
         """Gets an unmanaged access method (where is_managed = false).
 
@@ -56,7 +62,9 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(access_method_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unmanaged/get"
+            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -66,6 +74,11 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         return UnmanagedAccessMethod.from_dict(res["access_method"])
 
+    @route_metadata(
+        path="/access_methods/unmanaged/list",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def list(
         self,
         *,
@@ -93,7 +106,9 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
             device_id is not None,
             space_id is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unmanaged/list"
+            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:

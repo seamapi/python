@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import UnmanagedUserIdentity
 
 
@@ -66,6 +67,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/user_identities/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
         """Returns a specified unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
@@ -75,7 +81,9 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(user_identity_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/get"
+            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -85,6 +93,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         return UnmanagedUserIdentity.from_dict(res["user_identity"])
 
+    @route_metadata(
+        path="/user_identities/unmanaged/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
     def list(
         self,
         *,
@@ -121,6 +134,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
         ]
 
+    @route_metadata(
+        path="/user_identities/unmanaged/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def update(
         self,
         *,
@@ -144,7 +162,9 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             user_identity_id is not None,
             user_identity_key is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/update"
+            )
         json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:

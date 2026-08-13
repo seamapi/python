@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import InstantKey
 
 
@@ -48,6 +49,9 @@ class InstantKeys(AbstractInstantKeys):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/instant_keys/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
@@ -55,7 +59,9 @@ class InstantKeys(AbstractInstantKeys):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(instant_key_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /instant_keys/delete"
+            )
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
@@ -65,6 +71,9 @@ class InstantKeys(AbstractInstantKeys):
 
         return None
 
+    @route_metadata(
+        path="/instant_keys/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -81,7 +90,7 @@ class InstantKeys(AbstractInstantKeys):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(instant_key_id is not None, instant_key_url is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /instant_keys/get")
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
@@ -93,6 +102,9 @@ class InstantKeys(AbstractInstantKeys):
 
         return InstantKey.from_dict(res["instant_key"])
 
+    @route_metadata(
+        path="/instant_keys/list", has_required_parameters=False, has_pagination=False
+    )
     def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
         """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
 

@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import ClientSession
 
 
@@ -163,6 +164,11 @@ class ClientSessions(AbstractClientSessions):
         self.client = client
         self.defaults = defaults
 
+    @route_metadata(
+        path="/client_sessions/create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def create(
         self,
         *,
@@ -217,6 +223,11 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
+    @route_metadata(
+        path="/client_sessions/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -224,7 +235,9 @@ class ClientSessions(AbstractClientSessions):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(client_session_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/delete"
+            )
         params: Dict[str, Any] = {}
 
         if client_session_id is not None:
@@ -234,6 +247,9 @@ class ClientSessions(AbstractClientSessions):
 
         return None
 
+    @route_metadata(
+        path="/client_sessions/get", has_required_parameters=False, has_pagination=False
+    )
     def get(
         self,
         *,
@@ -258,6 +274,11 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
+    @route_metadata(
+        path="/client_sessions/get_or_create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def get_or_create(
         self,
         *,
@@ -302,6 +323,11 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
+    @route_metadata(
+        path="/client_sessions/grant_access",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def grant_access(
         self,
         *,
@@ -335,7 +361,9 @@ class ClientSessions(AbstractClientSessions):
             user_identity_id is not None,
             user_identity_ids is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/grant_access"
+            )
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
@@ -355,6 +383,11 @@ class ClientSessions(AbstractClientSessions):
 
         return None
 
+    @route_metadata(
+        path="/client_sessions/list",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def list(
         self,
         *,
@@ -394,6 +427,11 @@ class ClientSessions(AbstractClientSessions):
 
         return [ClientSession.from_dict(item) for item in res["client_sessions"]]
 
+    @route_metadata(
+        path="/client_sessions/revoke",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def revoke(self, *, client_session_id: str) -> None:
         """Revokes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -403,7 +441,9 @@ class ClientSessions(AbstractClientSessions):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(client_session_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/revoke"
+            )
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:

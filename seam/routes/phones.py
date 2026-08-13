@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Phone
 from .phones_simulate import AbstractPhonesSimulate, PhonesSimulate
 
@@ -59,6 +60,9 @@ class Phones(AbstractPhones):
     def simulate(self) -> PhonesSimulate:
         return self._simulate
 
+    @route_metadata(
+        path="/phones/deactivate", has_required_parameters=True, has_pagination=False
+    )
     def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
@@ -66,7 +70,9 @@ class Phones(AbstractPhones):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /phones/deactivate"
+            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -76,6 +82,9 @@ class Phones(AbstractPhones):
 
         return None
 
+    @route_metadata(
+        path="/phones/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, device_id: str) -> Phone:
         """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
@@ -85,7 +94,7 @@ class Phones(AbstractPhones):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /phones/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -95,6 +104,9 @@ class Phones(AbstractPhones):
 
         return Phone.from_dict(res["phone"])
 
+    @route_metadata(
+        path="/phones/list", has_required_parameters=False, has_pagination=False
+    )
     def list(
         self,
         *,

@@ -1,6 +1,7 @@
 from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
+from ..route import route_metadata
 from ..resources import Device, DeviceProvider
 from .devices_simulate import AbstractDevicesSimulate, DevicesSimulate
 from .devices_unmanaged import AbstractDevicesUnmanaged, DevicesUnmanaged
@@ -163,6 +164,9 @@ class Devices(AbstractDevices):
     def unmanaged(self) -> DevicesUnmanaged:
         return self._unmanaged
 
+    @route_metadata(
+        path="/devices/get", has_required_parameters=True, has_pagination=False
+    )
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
@@ -178,7 +182,7 @@ class Devices(AbstractDevices):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(device_id is not None, name is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /devices/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -190,6 +194,9 @@ class Devices(AbstractDevices):
 
         return Device.from_dict(res["device"])
 
+    @route_metadata(
+        path="/devices/list", has_required_parameters=False, has_pagination=True
+    )
     def list(
         self,
         *,
@@ -284,6 +291,11 @@ class Devices(AbstractDevices):
 
         return [Device.from_dict(item) for item in res["devices"]]
 
+    @route_metadata(
+        path="/devices/list_device_providers",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
     def list_device_providers(
         self, *, provider_category: Optional[str] = None
     ) -> List[DeviceProvider]:
@@ -305,6 +317,11 @@ class Devices(AbstractDevices):
 
         return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
 
+    @route_metadata(
+        path="/devices/report_provider_metadata",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
@@ -312,7 +329,9 @@ class Devices(AbstractDevices):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(devices is not None):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError(
+                "At least one parameter is required for /devices/report_provider_metadata"
+            )
         json_payload: Dict[str, Any] = {}
 
         if devices is not None:
@@ -322,6 +341,9 @@ class Devices(AbstractDevices):
 
         return None
 
+    @route_metadata(
+        path="/devices/update", has_required_parameters=True, has_pagination=False
+    )
     def update(
         self,
         *,
@@ -357,7 +379,7 @@ class Devices(AbstractDevices):
             name is not None,
             properties is not None,
         ):
-            raise ValueError("At least one parameter must be provided")
+            raise ValueError("At least one parameter is required for /devices/update")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
