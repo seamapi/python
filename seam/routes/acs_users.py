@@ -15,7 +15,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -49,7 +50,9 @@ class AbstractAcsUsers(abc.ABC):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -67,7 +70,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to delete. You must provide either acs_user_id or user_identity_id
 
         :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -86,7 +90,9 @@ class AbstractAcsUsers(abc.ABC):
 
         :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -139,7 +145,9 @@ class AbstractAcsUsers(abc.ABC):
 
         :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -157,7 +165,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -175,7 +184,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -193,7 +203,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -211,7 +222,8 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -247,7 +259,8 @@ class AbstractAcsUsers(abc.ABC):
         :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
 
         :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -264,7 +277,10 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_access_group_id is not None, acs_user_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -306,7 +322,20 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            full_name is not None,
+            access_schedule is not None,
+            acs_access_group_ids is not None,
+            email is not None,
+            email_address is not None,
+            phone_number is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -344,7 +373,14 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to delete. You must provide either acs_user_id or user_identity_id
 
         :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -373,7 +409,15 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity that you want to get. You can only provide acs_user_id or user_identity_id.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_user_id is not None,
+            acs_system_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -456,7 +500,15 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity for whom you want to list accessible entrances. You can only provide acs_user_id or user_identity_id.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -484,7 +536,14 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_access_group_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -512,7 +571,14 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -540,7 +606,14 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -568,7 +641,14 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -614,7 +694,20 @@ class AcsUsers(AbstractAcsUsers):
         :param phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
 
         :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_schedule is not None,
+            acs_system_id is not None,
+            acs_user_id is not None,
+            email is not None,
+            email_address is not None,
+            full_name is not None,
+            hid_acs_system_id is not None,
+            phone_number is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_schedule is not None:

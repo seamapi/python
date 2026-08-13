@@ -67,14 +67,18 @@ class AbstractAccessGrants(abc.ABC):
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete."""
+        :param access_grant_id: ID of Access Grant to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -90,7 +94,9 @@ class AbstractAccessGrants(abc.ABC):
 
         :param access_grant_key: Unique key of Access Grant to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -112,7 +118,9 @@ class AbstractAccessGrants(abc.ABC):
 
         :param include:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -174,7 +182,9 @@ class AbstractAccessGrants(abc.ABC):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -198,7 +208,8 @@ class AbstractAccessGrants(abc.ABC):
         :param name: Display name for the access grant.
 
         :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -263,7 +274,27 @@ class AccessGrants(AbstractAccessGrants):
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            requested_access_methods is not None,
+            user_identity_id is not None,
+            user_identity is not None,
+            access_grant_key is not None,
+            acs_entrance_ids is not None,
+            customization_profile_id is not None,
+            device_ids is not None,
+            ends_at is not None,
+            location is not None,
+            location_ids is not None,
+            name is not None,
+            reservation_key is not None,
+            space_ids is not None,
+            space_keys is not None,
+            starts_at is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if requested_access_methods is not None:
@@ -304,7 +335,11 @@ class AccessGrants(AbstractAccessGrants):
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete."""
+        :param access_grant_id: ID of Access Grant to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_grant_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -326,7 +361,11 @@ class AccessGrants(AbstractAccessGrants):
 
         :param access_grant_key: Unique key of Access Grant to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_grant_id is not None, access_grant_key is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -356,7 +395,16 @@ class AccessGrants(AbstractAccessGrants):
 
         :param include:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_grant_ids is not None,
+            access_grant_keys is not None,
+            exclude is not None,
+            include is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_grant_ids is not None:
@@ -460,7 +508,11 @@ class AccessGrants(AbstractAccessGrants):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_grant_id is not None, requested_access_methods is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -494,7 +546,16 @@ class AccessGrants(AbstractAccessGrants):
         :param name: Display name for the access grant.
 
         :param starts_at: Date and time at which the validity of the grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_grant_id is not None,
+            access_grant_key is not None,
+            ends_at is not None,
+            name is not None,
+            starts_at is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:

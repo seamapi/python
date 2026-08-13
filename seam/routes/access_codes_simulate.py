@@ -18,7 +18,9 @@ class AbstractAccessCodesSimulate(abc.ABC):
 
         :param name: Name of the simulated unmanaged access code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -38,7 +40,11 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
 
         :param name: Name of the simulated unmanaged access code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(code is not None, device_id is not None, name is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if code is not None:

@@ -20,7 +20,9 @@ class AbstractActionAttempts(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -63,7 +65,11 @@ class ActionAttempts(AbstractActionAttempts):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(action_attempt_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:

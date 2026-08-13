@@ -30,7 +30,9 @@ class AbstractDevices(abc.ABC):
 
         :param name: Name of the device that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -110,7 +112,9 @@ class AbstractDevices(abc.ABC):
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update"""
+        :param devices: Array of devices with provider metadata to update
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -138,7 +142,9 @@ class AbstractDevices(abc.ABC):
 
         :param name: Name for the device.
 
-        :param properties:"""
+        :param properties:
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -168,7 +174,11 @@ class Devices(AbstractDevices):
 
         :param name: Name of the device that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, name is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -298,7 +308,11 @@ class Devices(AbstractDevices):
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update"""
+        :param devices: Array of devices with provider metadata to update
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(devices is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if devices is not None:
@@ -332,7 +346,18 @@ class Devices(AbstractDevices):
 
         :param name: Name for the device.
 
-        :param properties:"""
+        :param properties:
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            backup_access_code_pool_enabled is not None,
+            custom_metadata is not None,
+            is_managed is not None,
+            name is not None,
+            properties is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

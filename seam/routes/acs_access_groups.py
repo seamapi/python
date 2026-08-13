@@ -21,14 +21,17 @@ class AbstractAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete."""
+        :param acs_access_group_id: ID of the access group that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -37,7 +40,9 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,7 +75,9 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -79,7 +86,9 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -97,7 +106,8 @@ class AbstractAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -120,7 +130,14 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_access_group_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -137,7 +154,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
     def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete."""
+        :param acs_access_group_id: ID of the access group that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_access_group_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -152,7 +173,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_access_group_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -203,7 +228,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_access_group_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -220,7 +249,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_access_group_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -244,7 +277,14 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_access_group_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:

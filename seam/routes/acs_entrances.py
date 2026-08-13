@@ -13,7 +13,9 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -31,7 +33,8 @@ class AbstractAcsEntrances(abc.ABC):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,7 +90,9 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -106,7 +111,9 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -120,7 +127,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_entrance_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -144,7 +155,14 @@ class AcsEntrances(AbstractAcsEntrances):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_entrance_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -236,7 +254,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_entrance_id is not None, include_if is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -265,7 +287,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_credential_id is not None, acs_entrance_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:

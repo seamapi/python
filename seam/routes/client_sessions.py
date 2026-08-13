@@ -44,7 +44,9 @@ class AbstractClientSessions(abc.ABC):
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete."""
+        :param client_session_id: ID of the client session that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -115,7 +117,8 @@ class AbstractClientSessions(abc.ABC):
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -149,7 +152,9 @@ class AbstractClientSessions(abc.ABC):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke."""
+        :param client_session_id: ID of the client session that you want to revoke.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -215,7 +220,11 @@ class ClientSessions(AbstractClientSessions):
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete."""
+        :param client_session_id: ID of the client session that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(client_session_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if client_session_id is not None:
@@ -316,7 +325,17 @@ class ClientSessions(AbstractClientSessions):
         :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            client_session_id is not None,
+            connect_webview_ids is not None,
+            connected_account_ids is not None,
+            user_identifier_key is not None,
+            user_identity_id is not None,
+            user_identity_ids is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
@@ -380,7 +399,11 @@ class ClientSessions(AbstractClientSessions):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke."""
+        :param client_session_id: ID of the client session that you want to revoke.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(client_session_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:

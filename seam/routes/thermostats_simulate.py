@@ -29,7 +29,8 @@ class AbstractThermostatsSimulate(abc.ABC):
         :param heating_set_point_celsius: Heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to simulate. You must set ``heating_set_point_celsius`` or ``heating_set_point_fahrenheit``.
 
         :param heating_set_point_fahrenheit: Heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to simulate. You must set ``heating_set_point_fahrenheit`` or ``heating_set_point_celsius``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -47,7 +48,8 @@ class AbstractThermostatsSimulate(abc.ABC):
         :param temperature_celsius: Temperature in °C that you want simulate the thermostat reaching. You must set ``temperature_celsius`` or ``temperature_fahrenheit``.
 
         :param temperature_fahrenheit: Temperature in °F that you want simulate the thermostat reaching. You must set ``temperature_fahrenheit`` or ``temperature_celsius``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -79,7 +81,17 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         :param heating_set_point_celsius: Heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °C that you want to simulate. You must set ``heating_set_point_celsius`` or ``heating_set_point_fahrenheit``.
 
         :param heating_set_point_fahrenheit: Heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_ in °F that you want to simulate. You must set ``heating_set_point_fahrenheit`` or ``heating_set_point_celsius``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            hvac_mode is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -113,7 +125,14 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
         :param temperature_celsius: Temperature in °C that you want simulate the thermostat reaching. You must set ``temperature_celsius`` or ``temperature_fahrenheit``.
 
         :param temperature_fahrenheit: Temperature in °F that you want simulate the thermostat reaching. You must set ``temperature_fahrenheit`` or ``temperature_celsius``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            temperature_celsius is not None,
+            temperature_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

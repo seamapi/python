@@ -14,14 +14,18 @@ class AbstractWebhooks(abc.ABC):
 
         :param event_types: Types of events that you want the new webhook to receive.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, webhook_id: str) -> None:
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :param webhook_id: ID of the webhook that you want to delete."""
+        :param webhook_id: ID of the webhook that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -30,7 +34,9 @@ class AbstractWebhooks(abc.ABC):
 
         :param webhook_id: ID of the webhook that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -46,7 +52,9 @@ class AbstractWebhooks(abc.ABC):
 
         :param event_types: Types of events that you want the webhook to receive.
 
-        :param webhook_id: ID of the webhook that you want to update."""
+        :param webhook_id: ID of the webhook that you want to update.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -62,7 +70,11 @@ class Webhooks(AbstractWebhooks):
 
         :param event_types: Types of events that you want the new webhook to receive.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(url is not None, event_types is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if url is not None:
@@ -77,7 +89,11 @@ class Webhooks(AbstractWebhooks):
     def delete(self, *, webhook_id: str) -> None:
         """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
 
-        :param webhook_id: ID of the webhook that you want to delete."""
+        :param webhook_id: ID of the webhook that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(webhook_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
@@ -92,7 +108,11 @@ class Webhooks(AbstractWebhooks):
 
         :param webhook_id: ID of the webhook that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(webhook_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
@@ -117,7 +137,11 @@ class Webhooks(AbstractWebhooks):
 
         :param event_types: Types of events that you want the webhook to receive.
 
-        :param webhook_id: ID of the webhook that you want to update."""
+        :param webhook_id: ID of the webhook that you want to update.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(event_types is not None, webhook_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if event_types is not None:

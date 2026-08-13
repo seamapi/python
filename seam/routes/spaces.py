@@ -12,7 +12,9 @@ class AbstractSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances."""
+        :param space_id: ID of the space to which you want to add entrances.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -24,7 +26,8 @@ class AbstractSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -33,7 +36,9 @@ class AbstractSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices."""
+        :param space_id: ID of the space to which you want to add devices.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -64,14 +69,18 @@ class AbstractSpaces(abc.ABC):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete."""
+        :param space_id: ID of the space that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -84,7 +93,9 @@ class AbstractSpaces(abc.ABC):
 
         :param space_key: Unique key of the space that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -106,7 +117,9 @@ class AbstractSpaces(abc.ABC):
 
         :param space_keys: Keys of the spaces that you want to get along with their related resources.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -142,7 +155,9 @@ class AbstractSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances."""
+        :param space_id: ID of the space from which you want to remove entrances.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -154,7 +169,8 @@ class AbstractSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -163,7 +179,9 @@ class AbstractSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices."""
+        :param space_id: ID of the space from which you want to remove devices.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -205,7 +223,11 @@ class Spaces(AbstractSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances."""
+        :param space_id: ID of the space to which you want to add entrances.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_entrance_ids is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -225,7 +247,10 @@ class Spaces(AbstractSpaces):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connected_account_id is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -242,7 +267,11 @@ class Spaces(AbstractSpaces):
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices."""
+        :param space_id: ID of the space to which you want to add devices.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_ids is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -281,7 +310,19 @@ class Spaces(AbstractSpaces):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            name is not None,
+            acs_entrance_ids is not None,
+            connected_account_ids is not None,
+            customer_data is not None,
+            customer_key is not None,
+            device_ids is not None,
+            space_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -306,7 +347,11 @@ class Spaces(AbstractSpaces):
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete."""
+        :param space_id: ID of the space that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if space_id is not None:
@@ -325,7 +370,11 @@ class Spaces(AbstractSpaces):
 
         :param space_key: Unique key of the space that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(space_id is not None, space_key is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if space_id is not None:
@@ -355,7 +404,16 @@ class Spaces(AbstractSpaces):
 
         :param space_keys: Keys of the spaces that you want to get along with their related resources.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            exclude is not None,
+            include is not None,
+            space_ids is not None,
+            space_keys is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if exclude is not None:
@@ -417,7 +475,11 @@ class Spaces(AbstractSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances."""
+        :param space_id: ID of the space from which you want to remove entrances.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_entrance_ids is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -437,7 +499,10 @@ class Spaces(AbstractSpaces):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connected_account_id is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -454,7 +519,11 @@ class Spaces(AbstractSpaces):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices."""
+        :param space_id: ID of the space from which you want to remove devices.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_ids is not None, space_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:

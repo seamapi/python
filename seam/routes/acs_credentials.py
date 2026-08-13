@@ -21,7 +21,8 @@ class AbstractAcsCredentials(abc.ABC):
         :param acs_user_id: ID of the access system user to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the credential belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,14 +71,18 @@ class AbstractAcsCredentials(abc.ABC):
 
         :param visionline_metadata: Visionline-specific metadata for the new credential.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, acs_credential_id: str) -> None:
         """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_credential_id: ID of the credential that you want to delete."""
+        :param acs_credential_id: ID of the credential that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -86,7 +91,9 @@ class AbstractAcsCredentials(abc.ABC):
 
         :param acs_credential_id: ID of the credential that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -129,7 +136,9 @@ class AbstractAcsCredentials(abc.ABC):
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -147,7 +156,8 @@ class AbstractAcsCredentials(abc.ABC):
         :param acs_user_id: ID of the access system user from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -165,7 +175,8 @@ class AbstractAcsCredentials(abc.ABC):
         :param code: Replacement access (PIN) code for the credential that you want to update.
 
         :param ends_at: Replacement date and time at which the validity of the credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after the ``starts_at`` value that you set when creating the credential.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -188,7 +199,14 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_user_id: ID of the access system user to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the credential belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_credential_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -247,7 +265,25 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param visionline_metadata: Visionline-specific metadata for the new credential.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_method is not None,
+            acs_system_id is not None,
+            acs_user_id is not None,
+            allowed_acs_entrance_ids is not None,
+            assa_abloy_vostio_metadata is not None,
+            code is not None,
+            credential_manager_acs_system_id is not None,
+            ends_at is not None,
+            is_multi_phone_sync_credential is not None,
+            salto_space_metadata is not None,
+            starts_at is not None,
+            user_identity_id is not None,
+            visionline_metadata is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_method is not None:
@@ -288,7 +324,11 @@ class AcsCredentials(AbstractAcsCredentials):
     def delete(self, *, acs_credential_id: str) -> None:
         """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_credential_id: ID of the credential that you want to delete."""
+        :param acs_credential_id: ID of the credential that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_credential_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -303,7 +343,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param acs_credential_id: ID of the credential that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_credential_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -372,7 +416,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_credential_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -398,7 +446,14 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_user_id: ID of the access system user from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_credential_id is not None,
+            acs_user_id is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -426,7 +481,12 @@ class AcsCredentials(AbstractAcsCredentials):
         :param code: Replacement access (PIN) code for the credential that you want to update.
 
         :param ends_at: Replacement date and time at which the validity of the credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after the ``starts_at`` value that you set when creating the credential.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_credential_id is not None, code is not None, ends_at is not None
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:

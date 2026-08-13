@@ -20,7 +20,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
 
         :param name: Name of the unmanaged device that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -88,7 +90,8 @@ class AbstractDevicesUnmanaged(abc.ABC):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -110,7 +113,11 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         :param name: Name of the unmanaged device that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, name is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -214,7 +221,12 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None, custom_metadata is not None, is_managed is not None
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

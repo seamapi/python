@@ -32,7 +32,9 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -46,6 +48,8 @@ class AbstractLocks(abc.ABC):
         :param name: Name of the lock that you want to get.
 
         :returns: OK
+
+        :raises ValueError: At least one parameter must be provided.
 
         .. deprecated::
            Use ``/devices/get`` instead."""
@@ -92,7 +96,9 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -108,7 +114,9 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -140,7 +148,15 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            auto_lock_enabled is not None,
+            device_id is not None,
+            auto_lock_delay_seconds is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
@@ -175,8 +191,12 @@ class Locks(AbstractLocks):
 
         :returns: OK
 
+        :raises ValueError: At least one parameter must be provided.
+
         .. deprecated::
            Use ``/devices/get`` instead."""
+        if not any(device_id is not None, name is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -244,7 +264,11 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -276,7 +300,11 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

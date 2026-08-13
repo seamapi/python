@@ -16,7 +16,9 @@ class AbstractPhones(abc.ABC):
     def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate."""
+        :param device_id: Device ID of the phone that you want to deactivate.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -25,7 +27,9 @@ class AbstractPhones(abc.ABC):
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -58,7 +62,11 @@ class Phones(AbstractPhones):
     def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate."""
+        :param device_id: Device ID of the phone that you want to deactivate.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -73,7 +81,11 @@ class Phones(AbstractPhones):
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:

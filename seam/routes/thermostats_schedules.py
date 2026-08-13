@@ -34,7 +34,9 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -42,7 +44,8 @@ class AbstractThermostatsSchedules(abc.ABC):
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -51,7 +54,9 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -64,7 +69,9 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -94,7 +101,8 @@ class AbstractThermostatsSchedules(abc.ABC):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -130,7 +138,19 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            climate_preset_key is not None,
+            device_id is not None,
+            ends_at is not None,
+            starts_at is not None,
+            is_override_allowed is not None,
+            max_override_period_minutes is not None,
+            name is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -156,7 +176,10 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(thermostat_schedule_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -171,7 +194,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(thermostat_schedule_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -190,7 +217,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, user_identifier_key is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -230,7 +261,18 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            thermostat_schedule_id is not None,
+            climate_preset_key is not None,
+            ends_at is not None,
+            is_override_allowed is not None,
+            max_override_period_minutes is not None,
+            name is not None,
+            starts_at is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:

@@ -24,7 +24,8 @@ class AbstractConnectedAccounts(abc.ABC):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -37,7 +38,9 @@ class AbstractConnectedAccounts(abc.ABC):
 
         :param email: Email address associated with the connected account that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -76,7 +79,8 @@ class AbstractConnectedAccounts(abc.ABC):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -103,7 +107,8 @@ class AbstractConnectedAccounts(abc.ABC):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -125,7 +130,10 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connected_account_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -144,7 +152,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param email: Email address associated with the connected account that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connected_account_id is not None, email is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -209,7 +221,10 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connected_account_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -242,7 +257,17 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            connected_account_id is not None,
+            accepted_capabilities is not None,
+            automatically_manage_new_devices is not None,
+            custom_metadata is not None,
+            customer_key is not None,
+            display_name is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:

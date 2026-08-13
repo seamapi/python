@@ -10,7 +10,8 @@ class AbstractDevicesSimulate(abc.ABC):
         """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -20,7 +21,9 @@ class AbstractDevicesSimulate(abc.ABC):
         implemented for August and TTLock locks.
         This will clear the ``hub_disconnected`` error on the device.
 
-        :param device_id: ID of the device whose hub you want to reconnect."""
+        :param device_id: ID of the device whose hub you want to reconnect.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -28,7 +31,8 @@ class AbstractDevicesSimulate(abc.ABC):
         """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -39,7 +43,9 @@ class AbstractDevicesSimulate(abc.ABC):
         This will set the ``hub_disconnected`` error on the device, or mark the
         IglooHome bridge offline in sandbox.
 
-        :param device_id: ID of the device whose hub you want to disconnect."""
+        :param device_id: ID of the device whose hub you want to disconnect.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -50,7 +56,9 @@ class AbstractDevicesSimulate(abc.ABC):
 
         :param device_id:
 
-        :param is_expired:"""
+        :param is_expired:
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -58,7 +66,8 @@ class AbstractDevicesSimulate(abc.ABC):
         """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -71,7 +80,10 @@ class DevicesSimulate(AbstractDevicesSimulate):
         """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -87,7 +99,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
         implemented for August and TTLock locks.
         This will clear the ``hub_disconnected`` error on the device.
 
-        :param device_id: ID of the device whose hub you want to reconnect."""
+        :param device_id: ID of the device whose hub you want to reconnect.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -101,7 +117,10 @@ class DevicesSimulate(AbstractDevicesSimulate):
         """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -118,7 +137,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
         This will set the ``hub_disconnected`` error on the device, or mark the
         IglooHome bridge offline in sandbox.
 
-        :param device_id: ID of the device whose hub you want to disconnect."""
+        :param device_id: ID of the device whose hub you want to disconnect.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -135,7 +158,11 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         :param device_id:
 
-        :param is_expired:"""
+        :param is_expired:
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, is_expired is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -151,7 +178,10 @@ class DevicesSimulate(AbstractDevicesSimulate):
         """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

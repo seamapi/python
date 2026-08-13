@@ -32,7 +32,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -50,7 +52,8 @@ class AbstractAccessMethods(abc.ABC):
         :param access_grant_id: ID of access grant whose access methods should be deleted.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -69,7 +72,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -78,7 +83,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -97,7 +104,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param include:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -131,7 +140,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param space_id: ID of the space by which to filter the returned access methods. Must be combined with ``access_grant_id``, ``access_grant_key``, or ``acs_entrance_id``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -150,7 +161,9 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -179,7 +192,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_method_id is not None, card_number is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -215,7 +232,14 @@ class AccessMethods(AbstractAccessMethods):
         :param access_grant_id: ID of access grant whose access methods should be deleted.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_method_id is not None,
+            access_grant_id is not None,
+            reservation_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -244,7 +268,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_method_id is not None, acs_encoder_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -271,7 +299,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_method_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -296,7 +328,13 @@ class AccessMethods(AbstractAccessMethods):
 
         :param include:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_method_ids is not None, exclude is not None, include is not None
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_method_ids is not None:
@@ -340,7 +378,20 @@ class AccessMethods(AbstractAccessMethods):
 
         :param space_id: ID of the space by which to filter the returned access methods. Must be combined with ``access_grant_id``, ``access_grant_key``, or ``acs_entrance_id``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_code_id is not None,
+            access_grant_id is not None,
+            access_grant_key is not None,
+            acs_entrance_id is not None,
+            device_id is not None,
+            limit is not None,
+            page_cursor is not None,
+            space_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -379,7 +430,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_method_id is not None, acs_entrance_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:

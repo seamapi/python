@@ -44,7 +44,9 @@ class AbstractWorkspaces(abc.ABC):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -141,7 +143,22 @@ class Workspaces(AbstractWorkspaces):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            name is not None,
+            company_name is not None,
+            connect_partner_name is not None,
+            connect_webview_customization is not None,
+            is_sandbox is not None,
+            organization_id is not None,
+            webview_logo_shape is not None,
+            webview_primary_button_color is not None,
+            webview_primary_button_text_color is not None,
+            webview_success_message is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if name is not None:

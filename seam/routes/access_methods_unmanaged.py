@@ -12,7 +12,9 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -34,7 +36,9 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -48,7 +52,11 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_method_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -76,7 +84,16 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_grant_id is not None,
+            acs_entrance_id is not None,
+            device_id is not None,
+            space_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:

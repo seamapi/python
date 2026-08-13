@@ -20,7 +20,8 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         :param error_code: Code of the error to simulate.
 
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -31,7 +32,9 @@ class AbstractAcsEncodersSimulate(abc.ABC):
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param scenario: Scenario to simulate."""
+        :param scenario: Scenario to simulate.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -48,7 +51,9 @@ class AbstractAcsEncodersSimulate(abc.ABC):
 
         :param error_code:
 
-        :param acs_credential_id_on_seam:"""
+        :param acs_credential_id_on_seam:
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -65,7 +70,9 @@ class AbstractAcsEncodersSimulate(abc.ABC):
 
         :param acs_credential_id_on_seam: ID of the Seam ``acs_credential`` that matches the ``acs_credential`` on the encoder in this simulation.
 
-        :param scenario: Scenario to simulate."""
+        :param scenario: Scenario to simulate.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -88,7 +95,14 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param error_code: Code of the error to simulate.
 
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_encoder_id is not None,
+            error_code is not None,
+            acs_credential_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -111,7 +125,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param scenario: Scenario to simulate."""
+        :param scenario: Scenario to simulate.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_encoder_id is not None, scenario is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -139,7 +157,15 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :param error_code:
 
-        :param acs_credential_id_on_seam:"""
+        :param acs_credential_id_on_seam:
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_encoder_id is not None,
+            error_code is not None,
+            acs_credential_id_on_seam is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -168,7 +194,15 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :param acs_credential_id_on_seam: ID of the Seam ``acs_credential`` that matches the ``acs_credential`` on the encoder in this simulation.
 
-        :param scenario: Scenario to simulate."""
+        :param scenario: Scenario to simulate.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_encoder_id is not None,
+            acs_credential_id_on_seam is not None,
+            scenario is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:

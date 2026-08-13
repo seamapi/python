@@ -12,7 +12,9 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -46,7 +48,9 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -63,7 +67,9 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report"""
+        :param acs_entrances: Array of ACS entrances to report
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -77,7 +83,11 @@ class AcsSystems(AbstractAcsSystems):
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_system_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -127,7 +137,11 @@ class AcsSystems(AbstractAcsSystems):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_system_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -152,7 +166,15 @@ class AcsSystems(AbstractAcsSystems):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report"""
+        :param acs_entrances: Array of ACS entrances to report
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_system_id is not None,
+            acs_encoders is not None,
+            acs_entrances is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:

@@ -19,7 +19,9 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -27,7 +29,8 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -49,7 +52,9 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -69,7 +74,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, name is not None, periods is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -87,7 +96,10 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(thermostat_daily_program_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
@@ -115,7 +127,15 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            name is not None,
+            periods is not None,
+            thermostat_daily_program_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if name is not None:

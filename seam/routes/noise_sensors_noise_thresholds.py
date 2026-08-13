@@ -31,7 +31,9 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -40,7 +42,9 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -49,7 +53,9 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -58,7 +64,9 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -88,7 +96,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -121,7 +130,18 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            ends_daily_at is not None,
+            starts_daily_at is not None,
+            name is not None,
+            noise_threshold_decibels is not None,
+            noise_threshold_nrs is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -148,7 +168,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, noise_threshold_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -165,7 +189,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(noise_threshold_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
@@ -180,7 +208,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -216,7 +248,18 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            noise_threshold_id is not None,
+            ends_daily_at is not None,
+            name is not None,
+            noise_threshold_decibels is not None,
+            noise_threshold_nrs is not None,
+            starts_daily_at is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

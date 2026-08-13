@@ -41,7 +41,8 @@ class AbstractUserIdentities(abc.ABC):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -73,7 +74,9 @@ class AbstractUserIdentities(abc.ABC):
     def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete."""
+        :param user_identity_id: ID of the user identity that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -92,7 +95,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -108,7 +113,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_key:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -118,7 +125,8 @@ class AbstractUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -155,7 +163,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -164,7 +174,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -173,7 +185,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -182,7 +196,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -192,7 +208,8 @@ class AbstractUserIdentities(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -202,7 +219,8 @@ class AbstractUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -225,7 +243,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity."""
+        :param user_identity_key: Unique key for the user identity.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -257,7 +277,14 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_user_id is not None,
+            user_identity_id is not None,
+            user_identity_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -313,7 +340,11 @@ class UserIdentities(AbstractUserIdentities):
     def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete."""
+        :param user_identity_id: ID of the user identity that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -338,7 +369,15 @@ class UserIdentities(AbstractUserIdentities):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            user_identity_id is not None,
+            customization_profile_id is not None,
+            max_use_count is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -366,7 +405,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_key:
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None, user_identity_key is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -384,7 +427,10 @@ class UserIdentities(AbstractUserIdentities):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -447,7 +493,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -462,7 +512,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -479,7 +533,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -494,7 +552,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -510,7 +572,10 @@ class UserIdentities(AbstractUserIdentities):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_user_id is not None, user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -528,7 +593,10 @@ class UserIdentities(AbstractUserIdentities):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None, user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -559,7 +627,17 @@ class UserIdentities(AbstractUserIdentities):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity."""
+        :param user_identity_key: Unique key for the user identity.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            user_identity_id is not None,
+            email_address is not None,
+            full_name is not None,
+            phone_number is not None,
+            user_identity_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:

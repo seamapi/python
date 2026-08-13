@@ -58,7 +58,9 @@ class AbstractConnectWebviews(abc.ABC):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -69,7 +71,9 @@ class AbstractConnectWebviews(abc.ABC):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -183,7 +187,11 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connect_webview_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
@@ -200,7 +208,11 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(connect_webview_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:

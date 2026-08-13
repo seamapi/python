@@ -12,7 +12,9 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -54,7 +56,8 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -68,7 +71,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(user_identity_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -130,7 +137,14 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            is_managed is not None,
+            user_identity_id is not None,
+            user_identity_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:

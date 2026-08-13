@@ -25,7 +25,9 @@ class AbstractPhonesSimulate(abc.ABC):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -52,7 +54,16 @@ class PhonesSimulate(AbstractPhonesSimulate):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            user_identity_id is not None,
+            assa_abloy_metadata is not None,
+            custom_sdk_installation_id is not None,
+            phone_metadata is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:

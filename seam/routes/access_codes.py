@@ -79,7 +79,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -141,7 +143,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -151,7 +155,8 @@ class AbstractAccessCodes(abc.ABC):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -160,7 +165,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -181,7 +188,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -223,7 +232,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -240,7 +251,9 @@ class AbstractAccessCodes(abc.ABC):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -263,7 +276,8 @@ class AbstractAccessCodes(abc.ABC):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -313,7 +327,8 @@ class AbstractAccessCodes(abc.ABC):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -344,7 +359,8 @@ class AbstractAccessCodes(abc.ABC):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -423,7 +439,28 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            allow_external_modification is not None,
+            attempt_for_offline_device is not None,
+            code is not None,
+            common_code_key is not None,
+            ends_at is not None,
+            is_external_modification_allowed is not None,
+            is_offline_access_code is not None,
+            is_one_time_use is not None,
+            max_time_rounding is not None,
+            name is not None,
+            prefer_native_scheduling is not None,
+            preferred_code_length is not None,
+            starts_at is not None,
+            use_backup_access_code_pool is not None,
+            use_offline_access_code is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -523,7 +560,24 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_ids is not None,
+            allow_external_modification is not None,
+            attempt_for_offline_device is not None,
+            behavior_when_code_cannot_be_shared is not None,
+            code is not None,
+            ends_at is not None,
+            is_external_modification_allowed is not None,
+            name is not None,
+            prefer_native_scheduling is not None,
+            preferred_code_length is not None,
+            starts_at is not None,
+            use_backup_access_code_pool is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -565,7 +619,10 @@ class AccessCodes(AbstractAccessCodes):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_code_id is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -582,7 +639,11 @@ class AccessCodes(AbstractAccessCodes):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -609,7 +670,11 @@ class AccessCodes(AbstractAccessCodes):
 
         :param device_id: ID of the device containing the access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_code_id is not None, code is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -661,7 +726,22 @@ class AccessCodes(AbstractAccessCodes):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_code_ids is not None,
+            access_grant_id is not None,
+            access_grant_key is not None,
+            access_method_id is not None,
+            customer_key is not None,
+            device_id is not None,
+            limit is not None,
+            page_cursor is not None,
+            search is not None,
+            user_identifier_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_code_ids is not None:
@@ -702,7 +782,11 @@ class AccessCodes(AbstractAccessCodes):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_code_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -733,7 +817,15 @@ class AccessCodes(AbstractAccessCodes):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            max_code_length is not None,
+            min_code_length is not None,
+            supported_code_lengths is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -795,7 +887,22 @@ class AccessCodes(AbstractAccessCodes):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_code_id is not None,
+            allow_external_modification is not None,
+            attempt_for_offline_device is not None,
+            code is not None,
+            device_id is not None,
+            ends_at is not None,
+            is_external_modification_allowed is not None,
+            is_managed is not None,
+            name is not None,
+            starts_at is not None,
+            type is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -854,7 +961,15 @@ class AccessCodes(AbstractAccessCodes):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            common_code_key is not None,
+            ends_at is not None,
+            name is not None,
+            starts_at is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:

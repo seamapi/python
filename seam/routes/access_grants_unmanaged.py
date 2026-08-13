@@ -12,7 +12,9 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
 
         :param access_grant_id: ID of unmanaged Access Grant to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -62,7 +64,8 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         :param is_managed: Must be set to true to convert the unmanaged access grant to managed.
 
         :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -76,7 +79,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         :param access_grant_id: ID of unmanaged Access Grant to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_grant_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -148,7 +155,14 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param is_managed: Must be set to true to convert the unmanaged access grant to managed.
 
         :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_grant_id is not None,
+            is_managed is not None,
+            access_grant_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:

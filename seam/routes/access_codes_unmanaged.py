@@ -28,7 +28,8 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         :param force: Indicates whether to force the access code conversion. To switch management of an access code from one Seam workspace to another, set ``force`` to ``true``.
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the access code is allowed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -36,7 +37,8 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         """Deletes an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
         :param access_code_id: ID of the unmanaged access code that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -57,7 +59,9 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
 
         :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -82,7 +86,9 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
 
         :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -106,7 +112,8 @@ class AbstractAccessCodesUnmanaged(abc.ABC):
         :param force: Indicates whether to force the unmanaged access code update.
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -136,7 +143,15 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param force: Indicates whether to force the access code conversion. To switch management of an access code from one Seam workspace to another, set ``force`` to ``true``.
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the access code is allowed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_code_id is not None,
+            allow_external_modification is not None,
+            force is not None,
+            is_external_modification_allowed is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -160,7 +175,10 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         """Deletes an `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
         :param access_code_id: ID of the unmanaged access code that you want to delete.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_code_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -187,7 +205,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param device_id: ID of the device containing the unmanaged access code that you want to get. You must specify either ``access_code_id`` or both ``device_id`` and ``code``.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(access_code_id is not None, code is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -222,7 +244,17 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :param user_identifier_key: Your user ID for the user by which to filter unmanaged access codes.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            limit is not None,
+            page_cursor is not None,
+            search is not None,
+            user_identifier_key is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -260,7 +292,16 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param force: Indicates whether to force the unmanaged access code update.
 
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            access_code_id is not None,
+            is_managed is not None,
+            allow_external_modification is not None,
+            force is not None,
+            is_external_modification_allowed is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:

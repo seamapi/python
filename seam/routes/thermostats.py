@@ -44,7 +44,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -66,7 +68,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -111,7 +115,8 @@ class AbstractThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -121,7 +126,8 @@ class AbstractThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -143,7 +149,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -171,7 +179,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -215,7 +225,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -227,7 +239,8 @@ class AbstractThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -249,7 +262,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -280,7 +295,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -304,7 +321,8 @@ class AbstractThermostats(abc.ABC):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -349,7 +367,8 @@ class AbstractThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -386,7 +405,9 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -427,7 +448,11 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(climate_preset_key is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -469,7 +494,15 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -534,7 +567,23 @@ class Thermostats(AbstractThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            climate_preset_key is not None,
+            device_id is not None,
+            climate_preset_mode is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+            ecobee_metadata is not None,
+            fan_mode_setting is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+            hvac_mode_setting is not None,
+            manual_override_allowed is not None,
+            name is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -572,7 +621,10 @@ class Thermostats(AbstractThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(climate_preset_key is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -602,7 +654,15 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -650,7 +710,17 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -734,7 +804,11 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -762,7 +836,10 @@ class Thermostats(AbstractThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(climate_preset_key is not None, device_id is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -792,7 +869,13 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None, fan_mode is not None, fan_mode_setting is not None
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -843,7 +926,18 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            hvac_mode_setting is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -893,7 +987,16 @@ class Thermostats(AbstractThermostats):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            lower_limit_celsius is not None,
+            lower_limit_fahrenheit is not None,
+            upper_limit_celsius is not None,
+            upper_limit_fahrenheit is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -952,7 +1055,23 @@ class Thermostats(AbstractThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-        """
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            climate_preset_key is not None,
+            device_id is not None,
+            climate_preset_mode is not None,
+            cooling_set_point_celsius is not None,
+            cooling_set_point_fahrenheit is not None,
+            ecobee_metadata is not None,
+            fan_mode_setting is not None,
+            heating_set_point_celsius is not None,
+            heating_set_point_fahrenheit is not None,
+            hvac_mode_setting is not None,
+            manual_override_allowed is not None,
+            name is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1017,7 +1136,20 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            device_id is not None,
+            friday_program_id is not None,
+            monday_program_id is not None,
+            saturday_program_id is not None,
+            sunday_program_id is not None,
+            thursday_program_id is not None,
+            tuesday_program_id is not None,
+            wednesday_program_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:

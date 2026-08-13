@@ -32,7 +32,9 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -41,7 +43,9 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -85,7 +89,9 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -110,7 +116,9 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
 
@@ -142,7 +150,15 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_encoder_id is not None,
+            access_method_id is not None,
+            acs_credential_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -171,7 +187,11 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_encoder_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -235,7 +255,11 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(acs_encoder_id is not None, salto_ks_metadata is not None):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -278,7 +302,16 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(
+            acs_encoder_id is not None,
+            acs_user_id is not None,
+            salto_ks_metadata is not None,
+            user_identity_id is not None,
+        ):
+            raise ValueError("At least one parameter must be provided")
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:

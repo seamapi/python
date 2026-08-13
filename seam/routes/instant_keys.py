@@ -10,7 +10,9 @@ class AbstractInstantKeys(abc.ABC):
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete."""
+        :param instant_key_id: ID of the Instant Key that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -26,7 +28,9 @@ class AbstractInstantKeys(abc.ABC):
 
         :param instant_key_url: URL of the instant key to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -47,7 +51,11 @@ class InstantKeys(AbstractInstantKeys):
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete."""
+        :param instant_key_id: ID of the Instant Key that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(instant_key_id is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
@@ -69,7 +77,11 @@ class InstantKeys(AbstractInstantKeys):
 
         :param instant_key_url: URL of the instant key to get.
 
-        :returns: OK"""
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        if not any(instant_key_id is not None, instant_key_url is not None):
+            raise ValueError("At least one parameter must be provided")
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
