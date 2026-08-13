@@ -62,6 +62,8 @@ def recording_server(responses):
     content type inferred from the body, e.g. to serve malformed JSON.
 
     Yields the endpoint along with the list of requests received so far.
+    Each request records the ``method``, the raw request ``target``, the
+    ``path`` and ``query`` it splits into, the ``headers``, and the ``body``.
     """
 
     requests = []
@@ -70,21 +72,17 @@ def recording_server(responses):
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
-        # pylint: disable-next=invalid-name
-        def do_GET(self):
-            self._handle_request()
-
-        # pylint: disable-next=invalid-name
-        def do_POST(self):
-            self._handle_request()
-
         def _handle_request(self):
             content_length = int(self.headers.get("content-length", 0))
             raw_body = self.rfile.read(content_length)
+            path, _, query = self.path.partition("?")
 
             requests.append(
                 {
-                    "path": self.path,
+                    "method": self.command,
+                    "target": self.path,
+                    "path": path,
+                    "query": query,
                     "headers": {k.lower(): v for k, v in self.headers.items()},
                     "body": json.loads(raw_body) if raw_body else None,
                 }
@@ -111,6 +109,14 @@ def recording_server(responses):
 
         def log_message(self, *args):
             pass
+
+        # Every verb the SDK sends is recorded and answered the same way.
+        # pylint: disable=invalid-name
+        do_GET = _handle_request
+        do_POST = _handle_request
+        do_PUT = _handle_request
+        do_PATCH = _handle_request
+        do_DELETE = _handle_request
 
     server = ThreadingHTTPServer(("localhost", 0), Handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
