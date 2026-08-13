@@ -9,7 +9,6 @@ export interface ClassMethodParameter {
   deprecationMessage: string
   position?: number | undefined
   required?: boolean | undefined
-  nullable?: boolean | undefined
 }
 
 export interface ClassMethod {
