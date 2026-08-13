@@ -8,8 +8,8 @@ license-files = ["LICENSE.txt"]
 readme = "README.rst"
 requires-python = ">=3.10"
 dependencies = [
-    "httpx>=0.28.1,<0.29",
-    "httpx-retries>=0.6.0,<0.7",
+    "httpx>=0.23.0,<1",
+    "httpx-retries>=0.6.0,<1",
     "svix>=1.24.0,<2",
 ]
 

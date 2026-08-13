@@ -915,8 +915,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "httpx", specifier = ">=0.28.1,<0.29" },
-    { name = "httpx-retries", specifier = ">=0.6.0,<0.7" },
+    { name = "httpx", specifier = ">=0.23.0,<1" },
+    { name = "httpx-retries", specifier = ">=0.6.0,<1" },
     { name = "svix", specifier = ">=1.24.0,<2" },
 ]
 
