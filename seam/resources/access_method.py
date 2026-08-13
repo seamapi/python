@@ -59,9 +59,6 @@ class AccessMethod:
         error_code: str
         message: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -98,9 +95,6 @@ class AccessMethod:
             ends_at: Optional[str]
             starts_at: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -123,9 +117,6 @@ class AccessMethod:
             ends_at: Optional[str]
             starts_at: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -140,9 +131,6 @@ class AccessMethod:
         mutation_code: str
         to: Optional[To]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -175,9 +163,6 @@ class AccessMethod:
         warning_code: str
         original_access_method_id: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -206,9 +191,6 @@ class AccessMethod:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

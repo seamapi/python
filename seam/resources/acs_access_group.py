@@ -56,9 +56,6 @@ class AcsAccessGroup:
         ends_at: Optional[str]
         starts_at: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -81,9 +78,6 @@ class AcsAccessGroup:
         error_code: str
         message: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -131,9 +125,6 @@ class AcsAccessGroup:
             acs_user_id: Optional[str]
             acs_entrance_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -164,9 +155,6 @@ class AcsAccessGroup:
             acs_user_id: Optional[str]
             acs_entrance_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -185,9 +173,6 @@ class AcsAccessGroup:
         acs_user_id: Optional[str]
         variant: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -219,9 +204,6 @@ class AcsAccessGroup:
         message: str
         warning_code: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -247,9 +229,6 @@ class AcsAccessGroup:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

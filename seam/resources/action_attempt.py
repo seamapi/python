@@ -29,9 +29,6 @@ class ActionAttempt:
         message: str
         type: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -185,9 +182,6 @@ class ActionAttempt:
                 overwritten: Optional[bool]
                 pending_auto_update: Optional[bool]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -212,9 +206,6 @@ class ActionAttempt:
             starts_at: Optional[str]
             visionline_metadata: Optional[VisionlineMetadata]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -315,9 +306,6 @@ class ActionAttempt:
                 key_issuing_request_id: Optional[str]
                 override_guest_acs_entrance_ids: Optional[List[str]]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -345,9 +333,6 @@ class ActionAttempt:
                 error_code: str
                 message: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -386,9 +371,6 @@ class ActionAttempt:
                 is_valid: Optional[bool]
                 joiner_acs_credential_ids: Optional[List[str]]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -419,9 +401,6 @@ class ActionAttempt:
                 message: str
                 warning_code: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -459,9 +438,6 @@ class ActionAttempt:
             warnings: List[Warnings]
             workspace_id: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -536,9 +512,6 @@ class ActionAttempt:
             message: Optional[str]
             original_access_method_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -573,9 +546,6 @@ class ActionAttempt:
             key_issuing_request_id: Optional[str]
             override_guest_acs_entrance_ids: Optional[List[str]]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -604,9 +574,6 @@ class ActionAttempt:
             error_code: str
             message: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -645,9 +612,6 @@ class ActionAttempt:
             is_valid: Optional[bool]
             joiner_acs_credential_ids: Optional[List[str]]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -686,9 +650,6 @@ class ActionAttempt:
                 ends_at: Optional[str]
                 starts_at: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -707,9 +668,6 @@ class ActionAttempt:
                 ends_at: Optional[str]
                 starts_at: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -723,9 +681,6 @@ class ActionAttempt:
             mutation_code: str
             to: Optional[To]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -786,9 +741,6 @@ class ActionAttempt:
         mode: Optional[str]
         pending_mutations: Optional[List[PendingMutations]]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -870,9 +822,6 @@ class ActionAttempt:
     result: Optional[Result]
     status: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

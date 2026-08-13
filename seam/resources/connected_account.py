@@ -86,9 +86,6 @@ class ConnectedAccount:
                 site_user_subscription_limit: Optional[int]
                 subscribed_site_user_count: Optional[int]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -104,9 +101,6 @@ class ConnectedAccount:
 
             sites: Optional[List[Sites]]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -120,9 +114,6 @@ class ConnectedAccount:
         message: str
         salto_ks_metadata: Optional[SaltoKsMetadata]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -159,9 +150,6 @@ class ConnectedAccount:
         phone: Optional[str]
         username: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -210,9 +198,6 @@ class ConnectedAccount:
                 site_user_subscription_limit: Optional[int]
                 subscribed_site_user_count: Optional[int]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -228,9 +213,6 @@ class ConnectedAccount:
 
             sites: Optional[List[Sites]]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -242,9 +224,6 @@ class ConnectedAccount:
         warning_code: str
         salto_ks_metadata: Optional[SaltoKsMetadata]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -277,9 +256,6 @@ class ConnectedAccount:
     user_identifier: Optional[UserIdentifier]
     warnings: List[Warnings]
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

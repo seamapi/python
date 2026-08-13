@@ -71,9 +71,6 @@ class AcsSystem:
         message: str
         is_bridge_error: Optional[bool]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -92,9 +89,6 @@ class AcsSystem:
 
         time_zone: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -116,9 +110,6 @@ class AcsSystem:
         mobile_access_uuid: Optional[str]
         system_id: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -144,9 +135,6 @@ class AcsSystem:
         warning_code: str
         misconfigured_acs_entrance_ids: Optional[List[str]]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -179,9 +167,6 @@ class AcsSystem:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

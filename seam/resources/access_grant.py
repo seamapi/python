@@ -66,9 +66,6 @@ class AccessGrant:
         message: str
         missing_device_ids: Optional[List[str]]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -108,9 +105,6 @@ class AccessGrant:
             ends_at: Optional[str]
             starts_at: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -136,9 +130,6 @@ class AccessGrant:
             ends_at: Optional[str]
             starts_at: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -155,9 +146,6 @@ class AccessGrant:
         to: Optional[To]
         access_method_ids: Optional[List[str]]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -197,9 +185,6 @@ class AccessGrant:
         instant_key_max_use_count: Optional[int]
         mode: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -248,9 +233,6 @@ class AccessGrant:
             error_code: str
             message: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -269,9 +251,6 @@ class AccessGrant:
         original_code: Optional[str]
         reason: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -310,9 +289,6 @@ class AccessGrant:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

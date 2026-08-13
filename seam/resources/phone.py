@@ -42,9 +42,6 @@ class Phone:
         error_code: str
         message: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -82,9 +79,6 @@ class Phone:
                 endpoint_id: Optional[str]
                 is_active: Optional[bool]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -95,9 +89,6 @@ class Phone:
             endpoints: Optional[List[Endpoints]]
             has_active_endpoint: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -116,9 +107,6 @@ class Phone:
 
             has_active_phone: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -132,9 +120,6 @@ class Phone:
             SaltoSpaceCredentialServiceMetadata
         ]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -168,9 +153,6 @@ class Phone:
         message: str
         warning_code: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -190,9 +172,6 @@ class Phone:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

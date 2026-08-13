@@ -97,9 +97,6 @@ class UnmanagedDevice:
         message: str
         is_bridge_error: Optional[bool]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -126,9 +123,6 @@ class UnmanagedDevice:
         time_zone: Optional[str]
         timezone: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -181,9 +175,6 @@ class UnmanagedDevice:
 
                 level: float
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -193,9 +184,6 @@ class UnmanagedDevice:
             battery: Optional[Battery]
             is_connected: bool
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -219,9 +207,6 @@ class UnmanagedDevice:
             level: float
             status: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -256,9 +241,6 @@ class UnmanagedDevice:
             offline_access_codes_supported: Optional[bool]
             online_access_codes_supported: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -291,9 +273,6 @@ class UnmanagedDevice:
         online: bool
         online_access_codes_enabled: Optional[bool]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -345,9 +324,6 @@ class UnmanagedDevice:
         active_access_code_count: Optional[int]
         max_active_access_code_count: Optional[int]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -393,9 +369,6 @@ class UnmanagedDevice:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(

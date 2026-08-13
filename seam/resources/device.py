@@ -98,9 +98,6 @@ class Device:
         image_url: Optional[str]
         manufacturer: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -127,9 +124,6 @@ class Device:
         image_url: Optional[str]
         provider_category: str
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -163,9 +157,6 @@ class Device:
         message: str
         is_bridge_error: Optional[bool]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -192,9 +183,6 @@ class Device:
         time_zone: Optional[str]
         timezone: Optional[str]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -433,9 +421,6 @@ class Device:
 
                 level: float
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -445,9 +430,6 @@ class Device:
             battery: Optional[Battery]
             is_connected: bool
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -468,9 +450,6 @@ class Device:
 
             name: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -489,9 +468,6 @@ class Device:
             level: float
             status: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -526,9 +502,6 @@ class Device:
             offline_access_codes_supported: Optional[bool]
             online_access_codes_supported: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -569,9 +542,6 @@ class Device:
                 endpoint_id: Optional[str]
                 is_active: Optional[bool]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -582,9 +552,6 @@ class Device:
             endpoints: Optional[List[Endpoints]]
             has_active_endpoint: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -603,9 +570,6 @@ class Device:
 
             has_active_phone: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -629,9 +593,6 @@ class Device:
             gadget_name: Optional[str]
             product_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -670,9 +631,6 @@ class Device:
             position_id: Optional[str]
             time_zone: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -694,9 +652,6 @@ class Device:
 
             encoder_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -729,9 +684,6 @@ class Device:
             lock_name: Optional[str]
             model: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -770,9 +722,6 @@ class Device:
             zone_id: Optional[float]
             zone_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -796,9 +745,6 @@ class Device:
             activation_enabled: Optional[bool]
             device_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -820,9 +766,6 @@ class Device:
             device_name: Optional[str]
             relay_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -855,12 +798,8 @@ class Device:
             class DeviceId(ResourceMapping):
                 """Device ID for a dormakaba Oracode device."""
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
-                    # This shape documents no properties, so there is nothing to read.
                     # pylint: disable=unused-argument
                     return cls()
 
@@ -899,9 +838,6 @@ class Device:
                 name: Optional[str]
                 prefix: Optional[float]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -930,9 +866,6 @@ class Device:
             site_id: Optional[float]
             site_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -964,9 +897,6 @@ class Device:
             device_name: Optional[str]
             ecobee_device_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -989,9 +919,6 @@ class Device:
             device_name: Optional[str]
             reclose_delay_in_seconds: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1011,9 +938,6 @@ class Device:
             device_name: Optional[str]
             door_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1033,9 +957,6 @@ class Device:
             device_name: Optional[str]
             honeywell_resideo_device_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1059,9 +980,6 @@ class Device:
             device_id: Optional[str]
             model: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1093,9 +1011,6 @@ class Device:
             is_accessory_keypad_linked_to_bridge: Optional[bool]
             keypad_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1177,9 +1092,6 @@ class Device:
             status_type: Optional[str]
             subscription_plan: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1223,9 +1135,6 @@ class Device:
             lock_name: Optional[str]
             place_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1262,9 +1171,6 @@ class Device:
             serial_number: Optional[str]
             wifi_signal_strength: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1291,9 +1197,6 @@ class Device:
             device_name: Optional[str]
             model_number: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1316,9 +1219,6 @@ class Device:
             device_name: Optional[str]
             model: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1363,9 +1263,6 @@ class Device:
                     time: Optional[str]
                     value: Optional[float]
 
-                    # The payload is decoded JSON, so every value read out of it is untyped.
-                    # Typing d as Any keeps that at this boundary instead of casting each
-                    # read, and the dataclass fields carry the real types.
                     @classmethod
                     def from_dict(cls, d: Any):
                         return cls(
@@ -1384,9 +1281,6 @@ class Device:
                     time: Optional[str]
                     value: Optional[float]
 
-                    # The payload is decoded JSON, so every value read out of it is untyped.
-                    # Typing d as Any keeps that at this boundary instead of casting each
-                    # read, and the dataclass fields carry the real types.
                     @classmethod
                     def from_dict(cls, d: Any):
                         return cls(
@@ -1405,9 +1299,6 @@ class Device:
                     time: Optional[str]
                     value: Optional[float]
 
-                    # The payload is decoded JSON, so every value read out of it is untyped.
-                    # Typing d as Any keeps that at this boundary instead of casting each
-                    # read, and the dataclass fields carry the real types.
                     @classmethod
                     def from_dict(cls, d: Any):
                         return cls(
@@ -1426,9 +1317,6 @@ class Device:
                     time: Optional[str]
                     value: Optional[float]
 
-                    # The payload is decoded JSON, so every value read out of it is untyped.
-                    # Typing d as Any keeps that at this boundary instead of casting each
-                    # read, and the dataclass fields carry the real types.
                     @classmethod
                     def from_dict(cls, d: Any):
                         return cls(
@@ -1448,9 +1336,6 @@ class Device:
                     time: Optional[str]
                     value: Optional[float]
 
-                    # The payload is decoded JSON, so every value read out of it is untyped.
-                    # Typing d as Any keeps that at this boundary instead of casting each
-                    # read, and the dataclass fields carry the real types.
                     @classmethod
                     def from_dict(cls, d: Any):
                         return cls(
@@ -1464,9 +1349,6 @@ class Device:
                 sound: Optional[Sound]
                 temperature: Optional[Temperature]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -1501,9 +1383,6 @@ class Device:
             device_name: Optional[str]
             latest_sensor_values: Optional[LatestSensorValues]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1533,9 +1412,6 @@ class Device:
             display_name: Optional[str]
             nest_device_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1566,9 +1442,6 @@ class Device:
             noise_level_decibel: Optional[float]
             noise_level_nrs: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1600,9 +1473,6 @@ class Device:
             keypad_battery_critical: Optional[bool]
             keypad_paired: Optional[bool]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1640,9 +1510,6 @@ class Device:
             time_zone: Optional[str]
             timezone_raw_offset_ms: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1666,9 +1533,6 @@ class Device:
             device_id: Optional[str]
             device_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1709,9 +1573,6 @@ class Device:
             site_id: Optional[str]
             site_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1758,9 +1619,6 @@ class Device:
             site_id: Optional[str]
             site_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1788,9 +1646,6 @@ class Device:
             device_name: Optional[str]
             model: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1813,9 +1668,6 @@ class Device:
             name: Optional[str]
             unlock_method: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1841,9 +1693,6 @@ class Device:
             dual_setpoints_not_supported: Optional[bool]
             product_type: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1872,9 +1721,6 @@ class Device:
             location_id: Optional[str]
             model: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1895,9 +1741,6 @@ class Device:
             device_type: Optional[str]
             serial_no: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1931,9 +1774,6 @@ class Device:
             keypad_id: Optional[float]
             serial_number: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -1990,9 +1830,6 @@ class Device:
                 unlock_via_gateway: Optional[bool]
                 wifi: Optional[bool]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2019,9 +1856,6 @@ class Device:
                 wireless_keypad_id: Optional[float]
                 wireless_keypad_name: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2037,9 +1871,6 @@ class Device:
             timezone_raw_offset_ms: Optional[float]
             wireless_keypads: Optional[List[WirelessKeypads]]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2070,9 +1901,6 @@ class Device:
             device_id: Optional[float]
             device_name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2097,9 +1925,6 @@ class Device:
             device_type: Optional[str]
             time_zone: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2117,9 +1942,6 @@ class Device:
 
             encoder_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2155,9 +1977,6 @@ class Device:
             product_name: Optional[str]
             product_type: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2185,9 +2004,6 @@ class Device:
             max_length: Optional[float]
             min_length: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2204,9 +2020,6 @@ class Device:
 
             level: float
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2249,9 +2062,6 @@ class Device:
                 end_time: str
                 start_time: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2269,9 +2079,6 @@ class Device:
             time_pairs: Optional[List[TimePairs]]
             time_zone: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2325,9 +2132,6 @@ class Device:
                 end_time: str
                 start_time: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2345,9 +2149,6 @@ class Device:
             time_pairs: Optional[List[TimePairs]]
             time_zone: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2407,9 +2208,6 @@ class Device:
                 error_code: str
                 message: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2430,9 +2228,6 @@ class Device:
             thermostat_schedule_id: str
             workspace_id: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2501,9 +2296,6 @@ class Device:
                 is_optimized: Optional[bool]
                 owner: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2528,9 +2320,6 @@ class Device:
             manual_override_allowed: bool
             name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2611,9 +2400,6 @@ class Device:
                 is_optimized: Optional[bool]
                 owner: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2638,9 +2424,6 @@ class Device:
             manual_override_allowed: Optional[bool]
             name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2721,9 +2504,6 @@ class Device:
                 is_optimized: Optional[bool]
                 owner: Optional[str]
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2748,9 +2528,6 @@ class Device:
             manual_override_allowed: Optional[bool]
             name: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2799,9 +2576,6 @@ class Device:
             upper_limit_celsius: Optional[float]
             upper_limit_fahrenheit: Optional[float]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2840,9 +2614,6 @@ class Device:
                 climate_preset_key: str
                 starts_at_time: str
 
-                # The payload is decoded JSON, so every value read out of it is untyped.
-                # Typing d as Any keeps that at this boundary instead of casting each
-                # read, and the dataclass fields carry the real types.
                 @classmethod
                 def from_dict(cls, d: Any):
                     return cls(
@@ -2857,9 +2628,6 @@ class Device:
             thermostat_daily_program_id: str
             workspace_id: str
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -2903,9 +2671,6 @@ class Device:
             tuesday_program_id: Optional[str]
             wednesday_program_id: Optional[str]
 
-            # The payload is decoded JSON, so every value read out of it is untyped.
-            # Typing d as Any keeps that at this boundary instead of casting each
-            # read, and the dataclass fields carry the real types.
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
@@ -3028,9 +2793,6 @@ class Device:
         thermostat_daily_programs: Optional[List[ThermostatDailyPrograms]]
         thermostat_weekly_program: Optional[ThermostatWeeklyProgram]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -3438,9 +3200,6 @@ class Device:
         active_access_code_count: Optional[int]
         max_active_access_code_count: Optional[int]
 
-        # The payload is decoded JSON, so every value read out of it is untyped.
-        # Typing d as Any keeps that at this boundary instead of casting each
-        # read, and the dataclass fields carry the real types.
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
@@ -3491,9 +3250,6 @@ class Device:
     warnings: List[Warnings]
     workspace_id: str
 
-    # The payload is decoded JSON, so every value read out of it is untyped.
-    # Typing d as Any keeps that at this boundary instead of casting each
-    # read, and the dataclass fields carry the real types.
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
