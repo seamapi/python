@@ -49,7 +49,7 @@ Contents
 
   * `Pagination`_
 
-    * `Manually fetch pages with the nextPageCursor`_
+    * `Manually fetch pages with the next_page_cursor`_
 
     * `Resume pagination`_
 
@@ -282,8 +282,8 @@ Pagination
 Some Seam API endpoints that return lists of resources support pagination.
 Use the ``SeamPaginator`` class to fetch and process resources across multiple pages.
 
-Manually fetch pages with the nextPageCursor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Manually fetch pages with the next_page_cursor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
