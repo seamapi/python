@@ -24,7 +24,6 @@ pip install 'seam==3.0.0b6'
 | [Endpoints validate parameters client-side](#client-side-parameter-validation)        | You call endpoints with no parameters, or rely on the server's 400 response               |
 | [`lts_version` removed](#lts_version-is-removed)                                      | You read `Seam.lts_version` or the `seam-lts-version` header                              |
 | [Preferred HTTP methods and URL search params](#endpoints-use-preferred-http-methods) | You inspect traffic in a proxy, mock server, or firewall rules                            |
-| [Removed endpoint parameters](#removed-endpoint-parameters)                           | You use the removed parameters listed below                                               |
 
 ## Python 3.11 or later is required
 
@@ -162,26 +161,6 @@ httpx.get(
 )
 ```
 
-## Removed endpoint parameters
-
-Version 3 is generated against the latest Seam API, which removed some parameters:
-
-- `seam.locks.list`, `seam.noise_sensors.list`, and `seam.thermostats.list` no longer accept `connected_account_ids`, `created_before`, `custom_metadata_has`, `device_ids`, `limit`, `page_cursor`, `search`, `space_id`, `unstable_location_id`, or `user_identifier_key`. For filtered or paginated device listings, use `seam.devices.list`, which still supports all of these, combined with `device_type`/`device_types`:
-
-  ```python
-  # v2
-  seam.locks.list(limit=20, page_cursor=cursor)
-
-  # v3
-  seam.devices.list(device_types=["smartlock"], limit=20, page_cursor=cursor)
-  ```
-
-- `seam.devices.unmanaged.list` no longer accepts `custom_metadata_has`, `space_id`, `unstable_location_id`, or `user_identifier_key`.
-
-- `seam.access_codes.update` no longer accepts `is_offline_access_code`, `is_one_time_use`, `max_time_rounding`, `prefer_native_scheduling`, `preferred_code_length`, `use_backup_access_code_pool`, or `use_offline_access_code`. These are creation-time properties; set them with `seam.access_codes.create`.
-
-No methods were added or removed, and no parameters changed from optional to required.
-
 ## New in v3
 
 These are additions, not breaking changes, but they are worth adopting while you migrate.
@@ -217,6 +196,68 @@ Only parameters the Seam API documents as nullable are typed to accept `NULL`, s
 5. Replace handling of `niquests`/`urllib3` exceptions with the `httpx` equivalents (`httpx.TimeoutException`, `httpx.ConnectError`, ...). Seam error classes are unchanged.
 6. Remove any use of `lts_version` or the `seam-lts-version` header.
 7. Handle `ValueError` from endpoints and `create_paginator` where calls might carry no parameters.
-8. Replace calls to removed parameters (see [Removed endpoint parameters](#removed-endpoint-parameters)); use `seam.devices.list` for filtered or paginated device listings.
-9. If proxies, firewalls, or test mocks assume all requests are `POST`, update them for `GET`/`PATCH`/`PUT`/`DELETE`.
-10. Optionally, adopt `NULL` where you need to unset nullable values.
+8. If proxies, firewalls, or test mocks assume all requests are `POST`, update them for `GET`/`PATCH`/`PUT`/`DELETE`.
+9. Optionally, adopt `NULL` where you need to unset nullable values.
+
+# Migrating from seam v1 to v2
+
+If you are still on v1.x, migrate to v2 first (or apply both guides together). Version 2 is a much smaller upgrade than v3: client configuration, authentication, endpoint methods, and error handling are all unchanged. The breaking changes are in resource objects and one class rename.
+
+## Summary of breaking changes
+
+| Change                                                                                                           | Affects you if...                                                        |
+| ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [Nested resource properties are typed objects](#nested-resource-properties-are-typed-objects)                    | You treat nested properties as dicts, or rely on unknown-attribute reads |
+| [`SeamMultiWorkspace` renamed to `SeamWithoutWorkspace`](#seammultiworkspace-is-renamed-to-seamwithoutworkspace) | You use `SeamMultiWorkspace`                                             |
+
+## Nested resource properties are typed objects
+
+In v1, nested properties on resources — for example `device.properties` or `action_attempt.result` — were dict subclasses with attribute access layered on top. In v2, they hydrate as typed dataclasses scoped to their parent resource, such as `Device.Properties` and `ActionAttempt.Result`, so IDEs and type checkers can see their fields.
+
+Attribute access and dictionary-style _reads_ keep working:
+
+```python
+device = seam.devices.get(device_id="your-device-id")
+
+device.properties.locked        # still works
+device.properties["locked"]     # still works
+device.properties.get("online") # still works
+"locked" in device.properties   # still works
+```
+
+What breaks:
+
+- **They are no longer dicts.** `isinstance(device.properties, dict)` is now `False`, and mutation (`device.properties["x"] = ...`) and dict-only methods such as `.items()` and `.values()` are gone. Iterate over `.keys()` and index instead.
+- **Typoed attributes raise `AttributeError`.** In v1, reading an unknown attribute silently returned (and inserted) an empty mapping, so typos went unnoticed and were truthy-checked as empty dicts. In v2 they fail loudly — code that probed for optional fields via bare attribute access should use `.get("field")` or `hasattr`.
+- **Undocumented nested fields are stripped.** API fields not (yet) in the SDK's generated types are dropped during hydration instead of being passed through. If you depend on a field the SDK does not model, upgrade the SDK to a version that includes it.
+
+Free-form record properties, such as `custom_metadata`, remain plain mappings and are not affected.
+
+## `SeamMultiWorkspace` is renamed to `SeamWithoutWorkspace`
+
+The client for personal access tokens without a workspace is renamed; there is no compatibility alias. Its constructor, options, and methods are otherwise identical:
+
+```python
+# v1
+from seam import SeamMultiWorkspace
+
+seam = SeamMultiWorkspace(personal_access_token="your-personal-access-token")
+
+# v2
+from seam import SeamWithoutWorkspace
+
+seam = SeamWithoutWorkspace(personal_access_token="your-personal-access-token")
+```
+
+The abstract base class is likewise renamed from `AbstractSeamMultiWorkspace` to `AbstractSeamWithoutWorkspace`.
+
+## New in v2
+
+Version 2.2 also reads authentication from the environment: `SEAM_PERSONAL_ACCESS_TOKEN` and `SEAM_WORKSPACE_ID` are picked up when no explicit credentials are passed (`SEAM_API_KEY` was already supported in v1). Setting both `SEAM_API_KEY` and `SEAM_PERSONAL_ACCESS_TOKEN` is an error.
+
+## Migration checklist
+
+1. Update the dependency: `seam>=2,<3`.
+2. Rename `SeamMultiWorkspace` to `SeamWithoutWorkspace` (and `AbstractSeamMultiWorkspace` to `AbstractSeamWithoutWorkspace`).
+3. Replace dict-style mutation and `.items()`/`.values()`/`isinstance(..., dict)` usage on nested resource properties with attribute access or `.keys()` iteration.
+4. Replace bare attribute probes for optional nested fields with `.get()` or `hasattr` — unknown attributes now raise `AttributeError`.
