@@ -126,6 +126,18 @@ class Seam(AbstractSeam):
             >>> for connected_account in connected_accounts_paginator.flatten():
             >>>     print(connected_account.account_type_display_name)
         """
+        if not getattr(request, "__seam_has_pagination__", False):
+            raise ValueError("Cannot create a paginator for a non-paginated endpoint")
+
+        has_required_parameters = getattr(
+            request, "__seam_has_required_parameters__", False
+        )
+        if has_required_parameters and (
+            not params or not any(value is not None for value in params.values())
+        ):
+            path = getattr(request, "__seam_path__", "this endpoint")
+            raise ValueError(f"At least one parameter is required for {path}")
+
         return SeamPaginator(self.client, request, params)
 
     @classmethod

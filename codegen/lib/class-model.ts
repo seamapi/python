@@ -16,6 +16,7 @@ export interface ClassMethod {
   path: string
   preferredMethod: string
   hasRequiredParameters: boolean
+  hasPagination: boolean
   description: string
   responseDescription: string
   isDeprecated: boolean
