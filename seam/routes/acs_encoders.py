@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ActionAttempt, AcsEncoder
 from .acs_encoders_simulate import AbstractAcsEncodersSimulate, AcsEncodersSimulate
 from ..modules.action_attempts import resolve_action_attempt
@@ -57,7 +58,7 @@ class AbstractAcsEncoders(abc.ABC):
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
@@ -220,7 +221,7 @@ class AcsEncoders(AbstractAcsEncoders):
         acs_system_ids: Optional[List[str]] = None,
         acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 

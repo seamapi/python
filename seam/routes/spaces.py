@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import Space, Batch
 
 
@@ -129,7 +130,7 @@ class AbstractSpaces(abc.ABC):
         *,
         customer_key: Optional[str] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None,
     ) -> List[Space]:
@@ -465,7 +466,7 @@ class Spaces(AbstractSpaces):
         *,
         customer_key: Optional[str] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_key: Optional[str] = None,
     ) -> List[Space]:

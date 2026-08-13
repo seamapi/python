@@ -290,7 +290,7 @@ In an update request, an omitted param leaves the current value unchanged,
 while a null param unsets it.
 
 Python has a single nil value `None` which represents an undefined parameter. This SDK provides an explicit null value to send in requests.
-A param set to ``None`` is omitted, and a param set to ``NULL`` is sent as null:
+A param set to ``None`` is omitted, and a param set to ``NULL`` is sent as `null`:
 
 .. code-block:: python
 
@@ -320,10 +320,17 @@ Its type is exported as ``Null`` for annotating your own code:
 
   name: Optional[Union[str, Null]] = NULL
 
-Only use ``NULL`` where the Seam API documents null as a meaningful value,
-e.g., to unset a value in an update request.
-The generated method signatures do not yet say which params those are,
-so a type checker reports ``NULL`` as an invalid argument until they do.
+Only params the Seam API documents as nullable accept ``NULL``.
+The generated method signatures say which ones those are,
+so a type checker rejects ``NULL`` anywhere else:
+
+.. code-block:: python
+
+  # name is nullable, so it may be unset.
+  seam.devices.update(device_id="your-device-id", name=NULL)
+
+  # is_managed is not, so this fails the type check.
+  seam.devices.update(device_id="your-device-id", is_managed=NULL)
 
 Pagination
 ~~~~~~~~~~

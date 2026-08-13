@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import Device, DeviceProvider
 from .devices_simulate import AbstractDevicesSimulate, DevicesSimulate
 from .devices_unmanaged import AbstractDevicesUnmanaged, DevicesUnmanaged
@@ -51,10 +52,10 @@ class AbstractDevices(abc.ABC):
         device_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
+        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
@@ -126,7 +127,7 @@ class AbstractDevices(abc.ABC):
         backup_access_code_pool_enabled: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
@@ -212,10 +213,10 @@ class Devices(AbstractDevices):
         device_types: Optional[List[str]] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[str] = None,
+        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
@@ -353,7 +354,7 @@ class Devices(AbstractDevices):
         backup_access_code_pool_enabled: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Any]] = None,
         is_managed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.

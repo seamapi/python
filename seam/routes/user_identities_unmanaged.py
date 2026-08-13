@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import UnmanagedUserIdentity
 
 
@@ -24,7 +25,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         *,
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
@@ -104,7 +105,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         *,
         created_before: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).

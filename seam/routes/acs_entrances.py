@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import AcsEntrance, AcsCredential, ActionAttempt
 from ..modules.action_attempts import resolve_action_attempt
 
@@ -49,8 +50,8 @@ class AbstractAcsEntrances(abc.ABC):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        location_id: Optional[Union[str, Null]] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
@@ -200,8 +201,8 @@ class AcsEntrances(AbstractAcsEntrances):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[str] = None,
-        page_cursor: Optional[str] = None,
+        location_id: Optional[Union[str, Null]] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:

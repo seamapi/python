@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ActionAttempt, Device
 from .thermostats_daily_programs import (
     AbstractThermostatsDailyPrograms,
@@ -89,7 +90,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -306,10 +307,10 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        lower_limit_celsius: Optional[float] = None,
-        lower_limit_fahrenheit: Optional[float] = None,
-        upper_limit_celsius: Optional[float] = None,
-        upper_limit_fahrenheit: Optional[float] = None,
+        lower_limit_celsius: Optional[Union[float, Null]] = None,
+        lower_limit_fahrenheit: Optional[Union[float, Null]] = None,
+        upper_limit_celsius: Optional[Union[float, Null]] = None,
+        upper_limit_fahrenheit: Optional[Union[float, Null]] = None,
     ) -> None:
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
@@ -341,7 +342,7 @@ class AbstractThermostats(abc.ABC):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -377,13 +378,13 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        friday_program_id: Optional[str] = None,
-        monday_program_id: Optional[str] = None,
-        saturday_program_id: Optional[str] = None,
-        sunday_program_id: Optional[str] = None,
-        thursday_program_id: Optional[str] = None,
-        tuesday_program_id: Optional[str] = None,
-        wednesday_program_id: Optional[str] = None,
+        friday_program_id: Optional[Union[str, Null]] = None,
+        monday_program_id: Optional[Union[str, Null]] = None,
+        saturday_program_id: Optional[Union[str, Null]] = None,
+        sunday_program_id: Optional[Union[str, Null]] = None,
+        thursday_program_id: Optional[Union[str, Null]] = None,
+        tuesday_program_id: Optional[Union[str, Null]] = None,
+        wednesday_program_id: Optional[Union[str, Null]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.
@@ -554,7 +555,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -1012,10 +1013,10 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        lower_limit_celsius: Optional[float] = None,
-        lower_limit_fahrenheit: Optional[float] = None,
-        upper_limit_celsius: Optional[float] = None,
-        upper_limit_fahrenheit: Optional[float] = None,
+        lower_limit_celsius: Optional[Union[float, Null]] = None,
+        lower_limit_fahrenheit: Optional[Union[float, Null]] = None,
+        upper_limit_celsius: Optional[Union[float, Null]] = None,
+        upper_limit_fahrenheit: Optional[Union[float, Null]] = None,
     ) -> None:
         """Sets a `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ for a specified thermostat. Seam emits a ``thermostat.temperature_threshold_exceeded`` event and adds a warning on a thermostat if it reports a temperature outside the threshold range.
 
@@ -1071,7 +1072,7 @@ class Thermostats(AbstractThermostats):
         heating_set_point_fahrenheit: Optional[float] = None,
         hvac_mode_setting: Optional[str] = None,
         manual_override_allowed: Optional[bool] = None,
-        name: Optional[str] = None,
+        name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -1145,13 +1146,13 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        friday_program_id: Optional[str] = None,
-        monday_program_id: Optional[str] = None,
-        saturday_program_id: Optional[str] = None,
-        sunday_program_id: Optional[str] = None,
-        thursday_program_id: Optional[str] = None,
-        tuesday_program_id: Optional[str] = None,
-        wednesday_program_id: Optional[str] = None,
+        friday_program_id: Optional[Union[str, Null]] = None,
+        monday_program_id: Optional[Union[str, Null]] = None,
+        saturday_program_id: Optional[Union[str, Null]] = None,
+        sunday_program_id: Optional[Union[str, Null]] = None,
+        thursday_program_id: Optional[Union[str, Null]] = None,
+        tuesday_program_id: Optional[Union[str, Null]] = None,
+        wednesday_program_id: Optional[Union[str, Null]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Updates the thermostat weekly program for a thermostat device. To configure a weekly program, specify the ID of the daily program that you want to use for each day of the week. When you update a weekly program, the set of programs that you specify overwrites any previous weekly program for the thermostat.

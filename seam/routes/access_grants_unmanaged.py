@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import UnmanagedAccessGrant
 
 
@@ -25,7 +26,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[UnmanagedAccessGrant]:
@@ -113,7 +114,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
         limit: Optional[float] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[UnmanagedAccessGrant]:

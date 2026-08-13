@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ConnectedAccount
 from .connected_accounts_simulate import (
     AbstractConnectedAccountsSimulate,
@@ -51,7 +52,7 @@ class AbstractConnectedAccounts(abc.ABC):
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
@@ -196,7 +197,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         custom_metadata_has: Optional[Dict[str, Any]] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,

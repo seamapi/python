@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ThermostatSchedule
 
 
@@ -16,7 +17,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         ends_at: str,
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -83,7 +84,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:
@@ -125,7 +126,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         ends_at: str,
         starts_at: str,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -272,7 +273,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         climate_preset_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_override_allowed: Optional[bool] = None,
-        max_override_period_minutes: Optional[int] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:

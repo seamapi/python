@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ActionAttempt, AccessMethod, Batch
 from .access_methods_unmanaged import (
     AbstractAccessMethodsUnmanaged,
@@ -120,7 +121,7 @@ class AbstractAccessMethods(abc.ABC):
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         space_id: Optional[str] = None,
     ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
@@ -393,7 +394,7 @@ class AccessMethods(AbstractAccessMethods):
         acs_entrance_id: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
-        page_cursor: Optional[str] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         space_id: Optional[str] = None,
     ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
