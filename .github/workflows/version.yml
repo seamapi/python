@@ -31,20 +31,28 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Setup
         uses: ./.github/actions/setup
+      # uv normalizes the semver version semantic-release computes
+      # (3.0.0-beta.1) to PEP 440 (3.0.0b1), which is what gets committed,
+      # tagged and published. The Semantic Release workflow mirrors that tag
+      # back to semver so it can pick up where the last prerelease left off.
       - name: Cut ${{ github.event.inputs.version }} version
         run: |
           uv version "${{ github.event.inputs.version }}"
           just version
+      # semantic-release only treats a prerelease tag as released when a note
+      # records the channel it went out on, so record it here, once the release
+      # exists. The note is keyed to the commit rather than the tag, which is
+      # what lets the mirrored semver tag pick it up.
       - name: Record prerelease channel
-        env:
-          VERSION: ${{ github.event.inputs.version }}
         run: |
-          case "$VERSION" in
-            *-*) channel="${VERSION#*-}"; channel="${channel%%.*}" ;;
+          tag="v$(uv version --short)"
+          case "$(uv version --short)" in
+            *.*.*a[0-9]*) channel=alpha ;;
+            *.*.*b[0-9]*) channel=beta ;;
+            *.*.*rc[0-9]*) channel=rc ;;
             *) echo "Stable release, no channel note required."; exit 0 ;;
           esac
-          git fetch origin "+refs/notes/semantic-release:refs/notes/semantic-release" || true
-          git notes --ref semantic-release add --force \
-            --message "{\"channels\":[\"$channel\"]}" "v$VERSION^{commit}"
-          git push origin refs/notes/semantic-release
-          echo "Recorded v$VERSION on the '$channel' channel."
+          git notes --ref "semantic-release-$tag" add --force \
+            --message "{\"channels\":[\"$channel\"]}" "$tag^{commit}"
+          git push origin "refs/notes/semantic-release-$tag"
+          echo "Recorded $tag on the '$channel' channel."

@@ -25,6 +25,31 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+      - name: Mirror prerelease tags as semver
+        run: |
+          # Prerelease tags use PEP 440 (v3.0.0b1) to match the published
+          # package version, but semantic-release only understands semver and
+          # silently ignores tags it cannot parse. Without this, every run
+          # reports the first prerelease of the channel as the next version.
+          # Mirror each PEP 440 prerelease tag onto its semver equivalent
+          # (v3.0.0-beta.1). These are local to the run and are never pushed;
+          # the PEP 440 tags remain the only real ones. The channel notes the
+          # Version workflow records against the tagged commit apply to the
+          # mirrored tag too, since notes attach to commits, not tags.
+          for tag in $(git tag --list 'v*'); do
+            semver="$(
+              printf '%s' "${tag#v}" | sed -E \
+                -e 's/^([0-9]+\.[0-9]+\.[0-9]+)a([0-9]+)$/\1-alpha.\2/' \
+                -e 's/^([0-9]+\.[0-9]+\.[0-9]+)b([0-9]+)$/\1-beta.\2/' \
+                -e 's/^([0-9]+\.[0-9]+\.[0-9]+)rc([0-9]+)$/\1-rc.\2/'
+            )"
+            if [ "$semver" = "${tag#v}" ]; then
+              continue
+            fi
+
+            git tag --force "v$semver" "$tag^{commit}"
+            echo "Mirrored $tag as v$semver."
+          done
       - name: Semantic release
         id: release
         uses: cycjimmy/semantic-release-action@v6
