@@ -39,9 +39,10 @@ def test_seam_http_throws_invalid_input_error(server):
 
     seam = Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
 
-    # /devices/get requires either device_id or name.
+    # A query string carries no types, so an id given as a number is read as
+    # its digits. Send a value that cannot be read as the declared type.
     with pytest.raises(SeamHttpInvalidInputError) as exc_info:
-        seam.devices.list(device_ids=4242)
+        seam.devices.list(limit="abc")
     err = exc_info.value
     assert err.status_code == 400
     assert err.code == "invalid_input"
