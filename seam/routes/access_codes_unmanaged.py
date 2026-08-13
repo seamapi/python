@@ -152,10 +152,12 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_code_id is not None,
-            allow_external_modification is not None,
-            force is not None,
-            is_external_modification_allowed is not None,
+            [
+                access_code_id is not None,
+                allow_external_modification is not None,
+                force is not None,
+                is_external_modification_allowed is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/unmanaged/convert_to_managed"
@@ -190,7 +192,7 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param access_code_id: ID of the unmanaged access code that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_code_id is not None):
+        if not any([access_code_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_codes/unmanaged/delete"
             )
@@ -228,7 +230,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_code_id is not None, code is not None, device_id is not None):
+        if not any(
+            [access_code_id is not None, code is not None, device_id is not None]
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/unmanaged/get"
             )
@@ -275,11 +279,13 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            limit is not None,
-            page_cursor is not None,
-            search is not None,
-            user_identifier_key is not None,
+            [
+                device_id is not None,
+                limit is not None,
+                page_cursor is not None,
+                search is not None,
+                user_identifier_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/unmanaged/list"
@@ -329,11 +335,13 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_code_id is not None,
-            is_managed is not None,
-            allow_external_modification is not None,
-            force is not None,
-            is_external_modification_allowed is not None,
+            [
+                access_code_id is not None,
+                is_managed is not None,
+                allow_external_modification is not None,
+                force is not None,
+                is_external_modification_allowed is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/unmanaged/update"

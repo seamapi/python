@@ -457,7 +457,7 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(climate_preset_key is not None, device_id is not None):
+        if not any([climate_preset_key is not None, device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/activate_climate_preset"
             )
@@ -509,9 +509,11 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
+            [
+                device_id is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /thermostats/cool")
         json_payload: Dict[str, Any] = {}
@@ -586,18 +588,20 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            climate_preset_key is not None,
-            device_id is not None,
-            climate_preset_mode is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
-            ecobee_metadata is not None,
-            fan_mode_setting is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
-            hvac_mode_setting is not None,
-            manual_override_allowed is not None,
-            name is not None,
+            [
+                climate_preset_key is not None,
+                device_id is not None,
+                climate_preset_mode is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+                ecobee_metadata is not None,
+                fan_mode_setting is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+                hvac_mode_setting is not None,
+                manual_override_allowed is not None,
+                name is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/create_climate_preset"
@@ -646,7 +650,7 @@ class Thermostats(AbstractThermostats):
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(climate_preset_key is not None, device_id is not None):
+        if not any([climate_preset_key is not None, device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/delete_climate_preset"
             )
@@ -686,9 +690,11 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
+            [
+                device_id is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /thermostats/heat")
         json_payload: Dict[str, Any] = {}
@@ -747,11 +753,13 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
+            [
+                device_id is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/heat_cool"
@@ -848,7 +856,7 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError("At least one parameter is required for /thermostats/off")
         json_payload: Dict[str, Any] = {}
 
@@ -884,7 +892,7 @@ class Thermostats(AbstractThermostats):
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(climate_preset_key is not None, device_id is not None):
+        if not any([climate_preset_key is not None, device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/set_fallback_climate_preset"
             )
@@ -926,7 +934,7 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None, fan_mode is not None, fan_mode_setting is not None
+            [device_id is not None, fan_mode is not None, fan_mode_setting is not None]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/set_fan_mode"
@@ -990,12 +998,14 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            hvac_mode_setting is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
+            [
+                device_id is not None,
+                hvac_mode_setting is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/set_hvac_mode"
@@ -1057,11 +1067,13 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            lower_limit_celsius is not None,
-            lower_limit_fahrenheit is not None,
-            upper_limit_celsius is not None,
-            upper_limit_fahrenheit is not None,
+            [
+                device_id is not None,
+                lower_limit_celsius is not None,
+                lower_limit_fahrenheit is not None,
+                upper_limit_celsius is not None,
+                upper_limit_fahrenheit is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/set_temperature_threshold"
@@ -1132,18 +1144,20 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            climate_preset_key is not None,
-            device_id is not None,
-            climate_preset_mode is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
-            ecobee_metadata is not None,
-            fan_mode_setting is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
-            hvac_mode_setting is not None,
-            manual_override_allowed is not None,
-            name is not None,
+            [
+                climate_preset_key is not None,
+                device_id is not None,
+                climate_preset_mode is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+                ecobee_metadata is not None,
+                fan_mode_setting is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+                hvac_mode_setting is not None,
+                manual_override_allowed is not None,
+                name is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/update_climate_preset"
@@ -1221,14 +1235,16 @@ class Thermostats(AbstractThermostats):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            friday_program_id is not None,
-            monday_program_id is not None,
-            saturday_program_id is not None,
-            sunday_program_id is not None,
-            thursday_program_id is not None,
-            tuesday_program_id is not None,
-            wednesday_program_id is not None,
+            [
+                device_id is not None,
+                friday_program_id is not None,
+                monday_program_id is not None,
+                saturday_program_id is not None,
+                sunday_program_id is not None,
+                thursday_program_id is not None,
+                tuesday_program_id is not None,
+                wednesday_program_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/update_weekly_program"

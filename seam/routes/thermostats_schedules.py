@@ -148,13 +148,15 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            climate_preset_key is not None,
-            device_id is not None,
-            ends_at is not None,
-            starts_at is not None,
-            is_override_allowed is not None,
-            max_override_period_minutes is not None,
-            name is not None,
+            [
+                climate_preset_key is not None,
+                device_id is not None,
+                ends_at is not None,
+                starts_at is not None,
+                is_override_allowed is not None,
+                max_override_period_minutes is not None,
+                name is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/schedules/create"
@@ -191,7 +193,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(thermostat_schedule_id is not None):
+        if not any([thermostat_schedule_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/schedules/delete"
             )
@@ -217,7 +219,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(thermostat_schedule_id is not None):
+        if not any([thermostat_schedule_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/schedules/get"
             )
@@ -247,7 +249,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, user_identifier_key is not None):
+        if not any([device_id is not None, user_identifier_key is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/schedules/list"
             )
@@ -298,13 +300,15 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            thermostat_schedule_id is not None,
-            climate_preset_key is not None,
-            ends_at is not None,
-            is_override_allowed is not None,
-            max_override_period_minutes is not None,
-            name is not None,
-            starts_at is not None,
+            [
+                thermostat_schedule_id is not None,
+                climate_preset_key is not None,
+                ends_at is not None,
+                is_override_allowed is not None,
+                max_override_period_minutes is not None,
+                name is not None,
+                starts_at is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/schedules/update"

@@ -88,7 +88,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_grant_id is not None):
+        if not any([access_grant_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_grants/unmanaged/get"
             )
@@ -176,9 +176,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_grant_id is not None,
-            is_managed is not None,
-            access_grant_key is not None,
+            [
+                access_grant_id is not None,
+                is_managed is not None,
+                access_grant_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/unmanaged/update"

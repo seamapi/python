@@ -208,9 +208,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_credential_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_credential_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/assign"
@@ -282,19 +284,21 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_method is not None,
-            acs_system_id is not None,
-            acs_user_id is not None,
-            allowed_acs_entrance_ids is not None,
-            assa_abloy_vostio_metadata is not None,
-            code is not None,
-            credential_manager_acs_system_id is not None,
-            ends_at is not None,
-            is_multi_phone_sync_credential is not None,
-            salto_space_metadata is not None,
-            starts_at is not None,
-            user_identity_id is not None,
-            visionline_metadata is not None,
+            [
+                access_method is not None,
+                acs_system_id is not None,
+                acs_user_id is not None,
+                allowed_acs_entrance_ids is not None,
+                assa_abloy_vostio_metadata is not None,
+                code is not None,
+                credential_manager_acs_system_id is not None,
+                ends_at is not None,
+                is_multi_phone_sync_credential is not None,
+                salto_space_metadata is not None,
+                starts_at is not None,
+                user_identity_id is not None,
+                visionline_metadata is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/create"
@@ -347,7 +351,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_credential_id is not None):
+        if not any([acs_credential_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/delete"
             )
@@ -371,7 +375,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_credential_id is not None):
+        if not any([acs_credential_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/get"
             )
@@ -454,7 +458,7 @@ class AcsCredentials(AbstractAcsCredentials):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_credential_id is not None):
+        if not any([acs_credential_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/list_accessible_entrances"
             )
@@ -491,9 +495,11 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_credential_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_credential_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/unassign"
@@ -533,7 +539,7 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_credential_id is not None, code is not None, ends_at is not None
+            [acs_credential_id is not None, code is not None, ends_at is not None]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/credentials/update"

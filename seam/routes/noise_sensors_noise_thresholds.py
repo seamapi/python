@@ -140,12 +140,14 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            ends_daily_at is not None,
-            starts_daily_at is not None,
-            name is not None,
-            noise_threshold_decibels is not None,
-            noise_threshold_nrs is not None,
+            [
+                device_id is not None,
+                ends_daily_at is not None,
+                starts_daily_at is not None,
+                name is not None,
+                noise_threshold_decibels is not None,
+                noise_threshold_nrs is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/noise_thresholds/create"
@@ -184,7 +186,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param noise_threshold_id: ID of the noise threshold that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, noise_threshold_id is not None):
+        if not any([device_id is not None, noise_threshold_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
             )
@@ -212,7 +214,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(noise_threshold_id is not None):
+        if not any([noise_threshold_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/noise_thresholds/get"
             )
@@ -238,7 +240,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/noise_thresholds/list"
             )
@@ -285,13 +287,15 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            noise_threshold_id is not None,
-            ends_daily_at is not None,
-            name is not None,
-            noise_threshold_decibels is not None,
-            noise_threshold_nrs is not None,
-            starts_daily_at is not None,
+            [
+                device_id is not None,
+                noise_threshold_id is not None,
+                ends_daily_at is not None,
+                name is not None,
+                noise_threshold_decibels is not None,
+                noise_threshold_nrs is not None,
+                starts_daily_at is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/noise_thresholds/update"

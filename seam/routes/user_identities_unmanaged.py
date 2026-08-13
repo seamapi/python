@@ -80,7 +80,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/unmanaged/get"
             )
@@ -158,9 +158,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            is_managed is not None,
-            user_identity_id is not None,
-            user_identity_key is not None,
+            [
+                is_managed is not None,
+                user_identity_id is not None,
+                user_identity_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/unmanaged/update"

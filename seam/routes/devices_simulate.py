@@ -88,7 +88,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate connecting to Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/connect"
             )
@@ -115,7 +115,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device whose hub you want to reconnect.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/connect_to_hub"
             )
@@ -139,7 +139,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/disconnect"
             )
@@ -167,7 +167,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device whose hub you want to disconnect.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/disconnect_from_hub"
             )
@@ -195,7 +195,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param is_expired:
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, is_expired is not None):
+        if not any([device_id is not None, is_expired is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/paid_subscription"
             )
@@ -221,7 +221,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate removing from Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/simulate/remove"
             )

@@ -32,7 +32,7 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
         :param device_id: ID of the device for which you want to simulate the triggering of a noise threshold.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /noise_sensors/simulate/trigger_noise_threshold"
             )

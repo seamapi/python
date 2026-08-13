@@ -285,7 +285,7 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to add to an access group.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_access_group_id is not None, acs_user_id is not None):
+        if not any([acs_access_group_id is not None, acs_user_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/users/add_to_access_group"
             )
@@ -337,14 +337,16 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            full_name is not None,
-            access_schedule is not None,
-            acs_access_group_ids is not None,
-            email is not None,
-            email_address is not None,
-            phone_number is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                full_name is not None,
+                access_schedule is not None,
+                acs_access_group_ids is not None,
+                email is not None,
+                email_address is not None,
+                phone_number is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /acs/users/create")
         json_payload: Dict[str, Any] = {}
@@ -390,9 +392,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /acs/users/delete")
         params: Dict[str, Any] = {}
@@ -430,9 +434,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_user_id is not None,
-            acs_system_id is not None,
-            user_identity_id is not None,
+            [
+                acs_user_id is not None,
+                acs_system_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /acs/users/get")
         params: Dict[str, Any] = {}
@@ -529,9 +535,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/list_accessible_entrances"
@@ -571,9 +579,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_access_group_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_access_group_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/remove_from_access_group"
@@ -613,9 +623,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
@@ -653,9 +665,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/suspend"
@@ -693,9 +707,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_system_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/unsuspend"
@@ -751,15 +767,17 @@ class AcsUsers(AbstractAcsUsers):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_schedule is not None,
-            acs_system_id is not None,
-            acs_user_id is not None,
-            email is not None,
-            email_address is not None,
-            full_name is not None,
-            hid_acs_system_id is not None,
-            phone_number is not None,
-            user_identity_id is not None,
+            [
+                access_schedule is not None,
+                acs_system_id is not None,
+                acs_user_id is not None,
+                email is not None,
+                email_address is not None,
+                full_name is not None,
+                hid_acs_system_id is not None,
+                phone_number is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /acs/users/update")
         json_payload: Dict[str, Any] = {}

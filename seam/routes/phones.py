@@ -69,7 +69,7 @@ class Phones(AbstractPhones):
         :param device_id: Device ID of the phone that you want to deactivate.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /phones/deactivate"
             )
@@ -93,7 +93,7 @@ class Phones(AbstractPhones):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError("At least one parameter is required for /phones/get")
         params: Dict[str, Any] = {}
 

@@ -286,9 +286,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_user_id is not None,
-            user_identity_id is not None,
-            user_identity_key is not None,
+            [
+                acs_user_id is not None,
+                user_identity_id is not None,
+                user_identity_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/add_acs_user"
@@ -361,7 +363,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/delete"
             )
@@ -398,9 +400,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            user_identity_id is not None,
-            customization_profile_id is not None,
-            max_use_count is not None,
+            [
+                user_identity_id is not None,
+                customization_profile_id is not None,
+                max_use_count is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/generate_instant_key"
@@ -438,7 +442,7 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None, user_identity_key is not None):
+        if not any([user_identity_id is not None, user_identity_key is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/get"
             )
@@ -466,7 +470,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, user_identity_id is not None):
+        if not any([device_id is not None, user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/grant_access_to_device"
             )
@@ -543,7 +547,7 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/list_accessible_devices"
             )
@@ -569,7 +573,7 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/list_accessible_entrances"
             )
@@ -597,7 +601,7 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/list_acs_systems"
             )
@@ -623,7 +627,7 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(user_identity_id is not None):
+        if not any([user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/list_acs_users"
             )
@@ -649,7 +653,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_user_id is not None, user_identity_id is not None):
+        if not any([acs_user_id is not None, user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/remove_acs_user"
             )
@@ -677,7 +681,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, user_identity_id is not None):
+        if not any([device_id is not None, user_identity_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /user_identities/revoke_access_to_device"
             )
@@ -720,11 +724,13 @@ class UserIdentities(AbstractUserIdentities):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            user_identity_id is not None,
-            email_address is not None,
-            full_name is not None,
-            phone_number is not None,
-            user_identity_key is not None,
+            [
+                user_identity_id is not None,
+                email_address is not None,
+                full_name is not None,
+                phone_number is not None,
+                user_identity_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/update"

@@ -134,7 +134,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_entrance_id is not None):
+        if not any([acs_entrance_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/entrances/get"
             )
@@ -169,9 +169,11 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_entrance_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_entrance_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/entrances/grant_access"
@@ -278,7 +280,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_entrance_id is not None, include_if is not None):
+        if not any([acs_entrance_id is not None, include_if is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/entrances/list_credentials_with_access"
             )
@@ -316,7 +318,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_credential_id is not None, acs_entrance_id is not None):
+        if not any([acs_credential_id is not None, acs_entrance_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/entrances/unlock"
             )

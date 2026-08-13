@@ -64,10 +64,12 @@ class PhonesSimulate(AbstractPhonesSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            user_identity_id is not None,
-            assa_abloy_metadata is not None,
-            custom_sdk_installation_id is not None,
-            phone_metadata is not None,
+            [
+                user_identity_id is not None,
+                assa_abloy_metadata is not None,
+                custom_sdk_installation_id is not None,
+                phone_metadata is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /phones/simulate/create_sandbox_phone"

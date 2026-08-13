@@ -447,22 +447,24 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            allow_external_modification is not None,
-            attempt_for_offline_device is not None,
-            code is not None,
-            common_code_key is not None,
-            ends_at is not None,
-            is_external_modification_allowed is not None,
-            is_offline_access_code is not None,
-            is_one_time_use is not None,
-            max_time_rounding is not None,
-            name is not None,
-            prefer_native_scheduling is not None,
-            preferred_code_length is not None,
-            starts_at is not None,
-            use_backup_access_code_pool is not None,
-            use_offline_access_code is not None,
+            [
+                device_id is not None,
+                allow_external_modification is not None,
+                attempt_for_offline_device is not None,
+                code is not None,
+                common_code_key is not None,
+                ends_at is not None,
+                is_external_modification_allowed is not None,
+                is_offline_access_code is not None,
+                is_one_time_use is not None,
+                max_time_rounding is not None,
+                name is not None,
+                prefer_native_scheduling is not None,
+                preferred_code_length is not None,
+                starts_at is not None,
+                use_backup_access_code_pool is not None,
+                use_offline_access_code is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/create"
@@ -575,18 +577,20 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_ids is not None,
-            allow_external_modification is not None,
-            attempt_for_offline_device is not None,
-            behavior_when_code_cannot_be_shared is not None,
-            code is not None,
-            ends_at is not None,
-            is_external_modification_allowed is not None,
-            name is not None,
-            prefer_native_scheduling is not None,
-            preferred_code_length is not None,
-            starts_at is not None,
-            use_backup_access_code_pool is not None,
+            [
+                device_ids is not None,
+                allow_external_modification is not None,
+                attempt_for_offline_device is not None,
+                behavior_when_code_cannot_be_shared is not None,
+                code is not None,
+                ends_at is not None,
+                is_external_modification_allowed is not None,
+                name is not None,
+                prefer_native_scheduling is not None,
+                preferred_code_length is not None,
+                starts_at is not None,
+                use_backup_access_code_pool is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/create_multiple"
@@ -637,7 +641,7 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device for which you want to delete the access code.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_code_id is not None, device_id is not None):
+        if not any([access_code_id is not None, device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_codes/delete"
             )
@@ -665,7 +669,7 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_codes/generate_code"
             )
@@ -701,7 +705,9 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_code_id is not None, code is not None, device_id is not None):
+        if not any(
+            [access_code_id is not None, code is not None, device_id is not None]
+        ):
             raise ValueError("At least one parameter is required for /access_codes/get")
         params: Dict[str, Any] = {}
 
@@ -761,16 +767,18 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_code_ids is not None,
-            access_grant_id is not None,
-            access_grant_key is not None,
-            access_method_id is not None,
-            customer_key is not None,
-            device_id is not None,
-            limit is not None,
-            page_cursor is not None,
-            search is not None,
-            user_identifier_key is not None,
+            [
+                access_code_ids is not None,
+                access_grant_id is not None,
+                access_grant_key is not None,
+                access_method_id is not None,
+                customer_key is not None,
+                device_id is not None,
+                limit is not None,
+                page_cursor is not None,
+                search is not None,
+                user_identifier_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/list"
@@ -823,7 +831,7 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_code_id is not None):
+        if not any([access_code_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_codes/pull_backup_access_code"
             )
@@ -865,10 +873,12 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            max_code_length is not None,
-            min_code_length is not None,
-            supported_code_lengths is not None,
+            [
+                device_id is not None,
+                max_code_length is not None,
+                min_code_length is not None,
+                supported_code_lengths is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/report_device_constraints"
@@ -940,17 +950,19 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_code_id is not None,
-            allow_external_modification is not None,
-            attempt_for_offline_device is not None,
-            code is not None,
-            device_id is not None,
-            ends_at is not None,
-            is_external_modification_allowed is not None,
-            is_managed is not None,
-            name is not None,
-            starts_at is not None,
-            type is not None,
+            [
+                access_code_id is not None,
+                allow_external_modification is not None,
+                attempt_for_offline_device is not None,
+                code is not None,
+                device_id is not None,
+                ends_at is not None,
+                is_external_modification_allowed is not None,
+                is_managed is not None,
+                name is not None,
+                starts_at is not None,
+                type is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/update"
@@ -1021,10 +1033,12 @@ class AccessCodes(AbstractAccessCodes):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            common_code_key is not None,
-            ends_at is not None,
-            name is not None,
-            starts_at is not None,
+            [
+                common_code_key is not None,
+                ends_at is not None,
+                name is not None,
+                starts_at is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/update_multiple"

@@ -138,7 +138,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param connected_account_id: ID of the connected account that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None):
+        if not any([connected_account_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/delete"
             )
@@ -168,7 +168,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None, email is not None):
+        if not any([connected_account_id is not None, email is not None]):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/get"
             )
@@ -248,7 +248,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param connected_account_id: ID of the connected account that you want to sync.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None):
+        if not any([connected_account_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/sync"
             )
@@ -292,12 +292,14 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            connected_account_id is not None,
-            accepted_capabilities is not None,
-            automatically_manage_new_devices is not None,
-            custom_metadata is not None,
-            customer_key is not None,
-            display_name is not None,
+            [
+                connected_account_id is not None,
+                accepted_capabilities is not None,
+                automatically_manage_new_devices is not None,
+                custom_metadata is not None,
+                customer_key is not None,
+                display_name is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/update"

@@ -234,7 +234,7 @@ class ClientSessions(AbstractClientSessions):
         :param client_session_id: ID of the client session that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(client_session_id is not None):
+        if not any([client_session_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /client_sessions/delete"
             )
@@ -354,12 +354,14 @@ class ClientSessions(AbstractClientSessions):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            client_session_id is not None,
-            connect_webview_ids is not None,
-            connected_account_ids is not None,
-            user_identifier_key is not None,
-            user_identity_id is not None,
-            user_identity_ids is not None,
+            [
+                client_session_id is not None,
+                connect_webview_ids is not None,
+                connected_account_ids is not None,
+                user_identifier_key is not None,
+                user_identity_id is not None,
+                user_identity_ids is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /client_sessions/grant_access"
@@ -440,7 +442,7 @@ class ClientSessions(AbstractClientSessions):
         :param client_session_id: ID of the client session that you want to revoke.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(client_session_id is not None):
+        if not any([client_session_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /client_sessions/revoke"
             )

@@ -232,7 +232,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space to which you want to add entrances.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_entrance_ids is not None, space_id is not None):
+        if not any([acs_entrance_ids is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/add_acs_entrances"
             )
@@ -262,7 +262,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space to which you want to add the connected account.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None, space_id is not None):
+        if not any([connected_account_id is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/add_connected_account"
             )
@@ -288,7 +288,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space to which you want to add devices.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_ids is not None, space_id is not None):
+        if not any([device_ids is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/add_devices"
             )
@@ -337,13 +337,15 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            name is not None,
-            acs_entrance_ids is not None,
-            connected_account_ids is not None,
-            customer_data is not None,
-            customer_key is not None,
-            device_ids is not None,
-            space_key is not None,
+            [
+                name is not None,
+                acs_entrance_ids is not None,
+                connected_account_ids is not None,
+                customer_data is not None,
+                customer_key is not None,
+                device_ids is not None,
+                space_key is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /spaces/create")
         json_payload: Dict[str, Any] = {}
@@ -376,7 +378,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(space_id is not None):
+        if not any([space_id is not None]):
             raise ValueError("At least one parameter is required for /spaces/delete")
         params: Dict[str, Any] = {}
 
@@ -402,7 +404,7 @@ class Spaces(AbstractSpaces):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(space_id is not None, space_key is not None):
+        if not any([space_id is not None, space_key is not None]):
             raise ValueError("At least one parameter is required for /spaces/get")
         params: Dict[str, Any] = {}
 
@@ -440,10 +442,12 @@ class Spaces(AbstractSpaces):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            exclude is not None,
-            include is not None,
-            space_ids is not None,
-            space_keys is not None,
+            [
+                exclude is not None,
+                include is not None,
+                space_ids is not None,
+                space_keys is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /spaces/get_related"
@@ -520,7 +524,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove entrances.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_entrance_ids is not None, space_id is not None):
+        if not any([acs_entrance_ids is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/remove_acs_entrances"
             )
@@ -550,7 +554,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove the connected account.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None, space_id is not None):
+        if not any([connected_account_id is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/remove_connected_account"
             )
@@ -578,7 +582,7 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove devices.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_ids is not None, space_id is not None):
+        if not any([device_ids is not None, space_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /spaces/remove_devices"
             )

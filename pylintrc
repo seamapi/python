@@ -20,5 +20,6 @@ disable=
     line-too-long,
     too-many-lines,
     unnecessary-pass,
+    fixme,
     redefined-outer-name,
     duplicate-code

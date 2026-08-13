@@ -90,12 +90,14 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            hvac_mode is not None,
-            cooling_set_point_celsius is not None,
-            cooling_set_point_fahrenheit is not None,
-            heating_set_point_celsius is not None,
-            heating_set_point_fahrenheit is not None,
+            [
+                device_id is not None,
+                hvac_mode is not None,
+                cooling_set_point_celsius is not None,
+                cooling_set_point_fahrenheit is not None,
+                heating_set_point_celsius is not None,
+                heating_set_point_fahrenheit is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/simulate/hvac_mode_adjusted"
@@ -141,9 +143,11 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            temperature_celsius is not None,
-            temperature_fahrenheit is not None,
+            [
+                device_id is not None,
+                temperature_celsius is not None,
+                temperature_fahrenheit is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/simulate/temperature_reached"

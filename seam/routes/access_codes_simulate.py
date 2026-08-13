@@ -49,7 +49,7 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(code is not None, device_id is not None, name is not None):
+        if not any([code is not None, device_id is not None, name is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_codes/simulate/create_unmanaged_access_code"
             )

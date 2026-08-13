@@ -72,7 +72,7 @@ class ActionAttempts(AbstractActionAttempts):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(action_attempt_id is not None):
+        if not any([action_attempt_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /action_attempts/get"
             )

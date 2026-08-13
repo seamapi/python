@@ -201,7 +201,7 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_method_id is not None, card_number is not None):
+        if not any([access_method_id is not None, card_number is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_methods/assign_card"
             )
@@ -248,9 +248,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_method_id is not None,
-            access_grant_id is not None,
-            reservation_key is not None,
+            [
+                access_method_id is not None,
+                access_grant_id is not None,
+                reservation_key is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/delete"
@@ -291,7 +293,7 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_method_id is not None, acs_encoder_id is not None):
+        if not any([access_method_id is not None, acs_encoder_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_methods/encode"
             )
@@ -327,7 +329,7 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_method_id is not None):
+        if not any([access_method_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_methods/get"
             )
@@ -364,7 +366,7 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_method_ids is not None, exclude is not None, include is not None
+            [access_method_ids is not None, exclude is not None, include is not None]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/get_related"
@@ -419,14 +421,16 @@ class AccessMethods(AbstractAccessMethods):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_code_id is not None,
-            access_grant_id is not None,
-            access_grant_key is not None,
-            acs_entrance_id is not None,
-            device_id is not None,
-            limit is not None,
-            page_cursor is not None,
-            space_id is not None,
+            [
+                access_code_id is not None,
+                access_grant_id is not None,
+                access_grant_key is not None,
+                acs_entrance_id is not None,
+                device_id is not None,
+                limit is not None,
+                page_cursor is not None,
+                space_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/list"
@@ -477,7 +481,7 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_method_id is not None, acs_entrance_id is not None):
+        if not any([access_method_id is not None, acs_entrance_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_methods/unlock_door"
             )

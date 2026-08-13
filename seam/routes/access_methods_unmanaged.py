@@ -61,7 +61,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_method_id is not None):
+        if not any([access_method_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_methods/unmanaged/get"
             )
@@ -101,10 +101,12 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_grant_id is not None,
-            acs_entrance_id is not None,
-            device_id is not None,
-            space_id is not None,
+            [
+                access_grant_id is not None,
+                acs_entrance_id is not None,
+                device_id is not None,
+                space_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/unmanaged/list"

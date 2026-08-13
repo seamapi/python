@@ -122,7 +122,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, name is not None):
+        if not any([device_id is not None, name is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/unmanaged/get"
             )
@@ -242,7 +242,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None, custom_metadata is not None, is_managed is not None
+            [device_id is not None, custom_metadata is not None, is_managed is not None]
         ):
             raise ValueError(
                 "At least one parameter is required for /devices/unmanaged/update"

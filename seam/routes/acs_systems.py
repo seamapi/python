@@ -90,7 +90,7 @@ class AcsSystems(AbstractAcsSystems):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_system_id is not None):
+        if not any([acs_system_id is not None]):
             raise ValueError("At least one parameter is required for /acs/systems/get")
         params: Dict[str, Any] = {}
 
@@ -152,7 +152,7 @@ class AcsSystems(AbstractAcsSystems):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_system_id is not None):
+        if not any([acs_system_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
             )
@@ -189,9 +189,11 @@ class AcsSystems(AbstractAcsSystems):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_system_id is not None,
-            acs_encoders is not None,
-            acs_entrances is not None,
+            [
+                acs_system_id is not None,
+                acs_encoders is not None,
+                acs_entrances is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/systems/report_devices"

@@ -139,9 +139,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_access_group_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_access_group_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/add_user"
@@ -170,7 +172,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_access_group_id is not None):
+        if not any([acs_access_group_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/delete"
             )
@@ -196,7 +198,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_access_group_id is not None):
+        if not any([acs_access_group_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/get"
             )
@@ -263,7 +265,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_access_group_id is not None):
+        if not any([acs_access_group_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
             )
@@ -291,7 +293,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_access_group_id is not None):
+        if not any([acs_access_group_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/list_users"
             )
@@ -326,9 +328,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_access_group_id is not None,
-            acs_user_id is not None,
-            user_identity_id is not None,
+            [
+                acs_access_group_id is not None,
+                acs_user_id is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/access_groups/remove_user"

@@ -160,9 +160,11 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_encoder_id is not None,
-            access_method_id is not None,
-            acs_credential_id is not None,
+            [
+                acs_encoder_id is not None,
+                access_method_id is not None,
+                acs_credential_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/encode_credential"
@@ -201,7 +203,7 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_encoder_id is not None):
+        if not any([acs_encoder_id is not None]):
             raise ValueError("At least one parameter is required for /acs/encoders/get")
         params: Dict[str, Any] = {}
 
@@ -277,7 +279,7 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_encoder_id is not None, salto_ks_metadata is not None):
+        if not any([acs_encoder_id is not None, salto_ks_metadata is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/scan_credential"
             )
@@ -332,10 +334,12 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_encoder_id is not None,
-            acs_user_id is not None,
-            salto_ks_metadata is not None,
-            user_identity_id is not None,
+            [
+                acs_encoder_id is not None,
+                acs_user_id is not None,
+                salto_ks_metadata is not None,
+                user_identity_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/scan_to_assign_credential"

@@ -83,7 +83,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, name is not None, periods is not None):
+        if not any([device_id is not None, name is not None, periods is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/daily_programs/create"
             )
@@ -111,7 +111,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(thermostat_daily_program_id is not None):
+        if not any([thermostat_daily_program_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /thermostats/daily_programs/delete"
             )
@@ -151,9 +151,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            name is not None,
-            periods is not None,
-            thermostat_daily_program_id is not None,
+            [
+                name is not None,
+                periods is not None,
+                thermostat_daily_program_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /thermostats/daily_programs/update"

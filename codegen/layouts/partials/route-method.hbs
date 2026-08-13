@@ -2,7 +2,7 @@
     def {{> method-signature}}:
         """{{> method-docstring}}"""
 {{#if hasRequiredParameters}}
-        if not any({{#each params}}{{name}} is not None{{#unless @last}}, {{/unless}}{{/each}}):
+        if not any([{{#each params}}{{name}} is not None{{#unless @last}}, {{/unless}}{{/each}}]):
             raise ValueError("At least one parameter is required for {{path}}")
 {{/if}}
         {{payloadVar}}: Dict[str, Any] = {}

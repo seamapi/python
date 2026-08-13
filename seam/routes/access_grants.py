@@ -282,21 +282,23 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            requested_access_methods is not None,
-            user_identity_id is not None,
-            user_identity is not None,
-            access_grant_key is not None,
-            acs_entrance_ids is not None,
-            customization_profile_id is not None,
-            device_ids is not None,
-            ends_at is not None,
-            location is not None,
-            location_ids is not None,
-            name is not None,
-            reservation_key is not None,
-            space_ids is not None,
-            space_keys is not None,
-            starts_at is not None,
+            [
+                requested_access_methods is not None,
+                user_identity_id is not None,
+                user_identity is not None,
+                access_grant_key is not None,
+                acs_entrance_ids is not None,
+                customization_profile_id is not None,
+                device_ids is not None,
+                ends_at is not None,
+                location is not None,
+                location_ids is not None,
+                name is not None,
+                reservation_key is not None,
+                space_ids is not None,
+                space_keys is not None,
+                starts_at is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/create"
@@ -347,7 +349,7 @@ class AccessGrants(AbstractAccessGrants):
         :param access_grant_id: ID of Access Grant to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_grant_id is not None):
+        if not any([access_grant_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_grants/delete"
             )
@@ -378,7 +380,7 @@ class AccessGrants(AbstractAccessGrants):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_grant_id is not None, access_grant_key is not None):
+        if not any([access_grant_id is not None, access_grant_key is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get"
             )
@@ -420,10 +422,12 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_grant_ids is not None,
-            access_grant_keys is not None,
-            exclude is not None,
-            include is not None,
+            [
+                access_grant_ids is not None,
+                access_grant_keys is not None,
+                exclude is not None,
+                include is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get_related"
@@ -542,7 +546,7 @@ class AccessGrants(AbstractAccessGrants):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(access_grant_id is not None, requested_access_methods is not None):
+        if not any([access_grant_id is not None, requested_access_methods is not None]):
             raise ValueError(
                 "At least one parameter is required for /access_grants/request_access_methods"
             )
@@ -585,11 +589,13 @@ class AccessGrants(AbstractAccessGrants):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            access_grant_id is not None,
-            access_grant_key is not None,
-            ends_at is not None,
-            name is not None,
-            starts_at is not None,
+            [
+                access_grant_id is not None,
+                access_grant_key is not None,
+                ends_at is not None,
+                name is not None,
+                starts_at is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/update"

@@ -104,9 +104,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_encoder_id is not None,
-            error_code is not None,
-            acs_credential_id is not None,
+            [
+                acs_encoder_id is not None,
+                error_code is not None,
+                acs_credential_id is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_fail"
@@ -141,7 +143,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param scenario: Scenario to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(acs_encoder_id is not None, scenario is not None):
+        if not any([acs_encoder_id is not None, scenario is not None]):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_succeed"
             )
@@ -181,9 +183,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_encoder_id is not None,
-            error_code is not None,
-            acs_credential_id_on_seam is not None,
+            [
+                acs_encoder_id is not None,
+                error_code is not None,
+                acs_credential_id_on_seam is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_fail"
@@ -225,9 +229,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            acs_encoder_id is not None,
-            acs_credential_id_on_seam is not None,
-            scenario is not None,
+            [
+                acs_encoder_id is not None,
+                acs_credential_id_on_seam is not None,
+                scenario is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_succeed"

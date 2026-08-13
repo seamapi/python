@@ -58,7 +58,7 @@ class InstantKeys(AbstractInstantKeys):
         :param instant_key_id: ID of the Instant Key that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(instant_key_id is not None):
+        if not any([instant_key_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /instant_keys/delete"
             )
@@ -89,7 +89,7 @@ class InstantKeys(AbstractInstantKeys):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(instant_key_id is not None, instant_key_url is not None):
+        if not any([instant_key_id is not None, instant_key_url is not None]):
             raise ValueError("At least one parameter is required for /instant_keys/get")
         params: Dict[str, Any] = {}
 

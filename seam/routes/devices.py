@@ -181,7 +181,7 @@ class Devices(AbstractDevices):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None, name is not None):
+        if not any([device_id is not None, name is not None]):
             raise ValueError("At least one parameter is required for /devices/get")
         params: Dict[str, Any] = {}
 
@@ -328,7 +328,7 @@ class Devices(AbstractDevices):
         :param devices: Array of devices with provider metadata to update
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(devices is not None):
+        if not any([devices is not None]):
             raise ValueError(
                 "At least one parameter is required for /devices/report_provider_metadata"
             )
@@ -372,12 +372,14 @@ class Devices(AbstractDevices):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            device_id is not None,
-            backup_access_code_pool_enabled is not None,
-            custom_metadata is not None,
-            is_managed is not None,
-            name is not None,
-            properties is not None,
+            [
+                device_id is not None,
+                backup_access_code_pool_enabled is not None,
+                custom_metadata is not None,
+                is_managed is not None,
+                name is not None,
+                properties is not None,
+            ]
         ):
             raise ValueError("At least one parameter is required for /devices/update")
         json_payload: Dict[str, Any] = {}

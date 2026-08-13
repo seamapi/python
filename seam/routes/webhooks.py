@@ -77,7 +77,7 @@ class Webhooks(AbstractWebhooks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(url is not None, event_types is not None):
+        if not any([url is not None, event_types is not None]):
             raise ValueError("At least one parameter is required for /webhooks/create")
         json_payload: Dict[str, Any] = {}
 
@@ -99,7 +99,7 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(webhook_id is not None):
+        if not any([webhook_id is not None]):
             raise ValueError("At least one parameter is required for /webhooks/delete")
         params: Dict[str, Any] = {}
 
@@ -121,7 +121,7 @@ class Webhooks(AbstractWebhooks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(webhook_id is not None):
+        if not any([webhook_id is not None]):
             raise ValueError("At least one parameter is required for /webhooks/get")
         params: Dict[str, Any] = {}
 
@@ -156,7 +156,7 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to update.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(event_types is not None, webhook_id is not None):
+        if not any([event_types is not None, webhook_id is not None]):
             raise ValueError("At least one parameter is required for /webhooks/update")
         json_payload: Dict[str, Any] = {}
 

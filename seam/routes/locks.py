@@ -158,9 +158,11 @@ class Locks(AbstractLocks):
 
         :raises ValueError: At least one parameter must be provided."""
         if not any(
-            auto_lock_enabled is not None,
-            device_id is not None,
-            auto_lock_delay_seconds is not None,
+            [
+                auto_lock_enabled is not None,
+                device_id is not None,
+                auto_lock_delay_seconds is not None,
+            ]
         ):
             raise ValueError(
                 "At least one parameter is required for /locks/configure_auto_lock"
@@ -206,7 +208,7 @@ class Locks(AbstractLocks):
 
         .. deprecated::
            Use ``/devices/get`` instead."""
-        if not any(device_id is not None, name is not None):
+        if not any([device_id is not None, name is not None]):
             raise ValueError("At least one parameter is required for /locks/get")
         params: Dict[str, Any] = {}
 
@@ -284,7 +286,7 @@ class Locks(AbstractLocks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError("At least one parameter is required for /locks/lock_door")
         json_payload: Dict[str, Any] = {}
 
@@ -323,7 +325,7 @@ class Locks(AbstractLocks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /locks/unlock_door"
             )

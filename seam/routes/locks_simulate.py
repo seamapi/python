@@ -76,7 +76,7 @@ class LocksSimulate(AbstractLocksSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(code is not None, device_id is not None):
+        if not any([code is not None, device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /locks/simulate/keypad_code_entry"
             )
@@ -121,7 +121,7 @@ class LocksSimulate(AbstractLocksSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(device_id is not None):
+        if not any([device_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /locks/simulate/manual_lock_via_keypad"
             )

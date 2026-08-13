@@ -32,7 +32,7 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(connected_account_id is not None):
+        if not any([connected_account_id is not None]):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/simulate/disconnect"
             )
