@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from .resources import ActionAttempt
 
 
@@ -86,6 +86,19 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
 
         super().__init__(error, status_code, request_id)
         self.code = "invalid_input"
+        self._validation_errors = error.get("validation_errors") or {}
+
+    def get_validation_error_messages(self, param_name: str) -> List[str]:
+        """
+        The validation messages for a request parameter, or an empty list when
+        that parameter has none.
+
+        :param param_name: Name of the request parameter
+        :type param_name: str
+        :rtype: List[str]
+        """
+
+        return self._validation_errors.get(param_name, {}).get("_errors", [])
 
 
 # Action Attempt
