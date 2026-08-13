@@ -4,8 +4,8 @@ from seam import Seam
 def test_seam_exposes_a_client_that_can_make_requests(seam: Seam, server):
     _, seed = server
 
-    response = seam.client.post(
-        "/devices/get", json={"device_id": seed["august_device_1"]}
+    response = seam.client.get(
+        "/devices/get", params={"device_id": seed["august_device_1"]}
     )
 
     assert response["device"]["workspace_id"] == seed["seed_workspace_1"]

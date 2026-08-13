@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (AcsSystem)
+from ..resources import AcsSystem
 
 
 class AbstractAcsSystems(abc.ABC):
@@ -20,9 +20,15 @@ class AbstractAcsSystems(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, connected_account_id: Optional[str] = None, customer_key: Optional[str] = None, search: Optional[str] = None) -> List[AcsSystem]:
+    def list(
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        search: Optional[str] = None,
+    ) -> List[AcsSystem]:
         """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
-        
+
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
         :param connected_account_id: ID of the connected account by which you want to filter the list of access systems.
@@ -35,9 +41,11 @@ class AbstractAcsSystems(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list_compatible_credential_manager_acs_systems(self, *, acs_system_id: str) -> List[AcsSystem]:
+    def list_compatible_credential_manager_acs_systems(
+        self, *, acs_system_id: str
+    ) -> List[AcsSystem]:
         """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
-        
+
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
@@ -48,7 +56,13 @@ class AbstractAcsSystems(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def report_devices(self, *, acs_system_id: str, acs_encoders: Optional[List[Dict[str, Any]]] = None, acs_entrances: Optional[List[Dict[str, Any]]] = None) -> None:
+    def report_devices(
+        self,
+        *,
+        acs_system_id: str,
+        acs_encoders: Optional[List[Dict[str, Any]]] = None,
+        acs_entrances: Optional[List[Dict[str, Any]]] = None,
+    ) -> None:
         """Reports ACS system device status including encoders and entrances.
 
         :param acs_system_id: ID of the ACS system to report resources for
@@ -66,7 +80,9 @@ class AcsSystems(AbstractAcsSystems):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/acs/systems/get", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/acs/systems/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, acs_system_id: str) -> AcsSystem:
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
@@ -87,10 +103,18 @@ class AcsSystems(AbstractAcsSystems):
 
         return AcsSystem.from_dict(res["acs_system"])
 
-    @route_metadata(path="/acs/systems/list", has_required_parameters=False, has_pagination=False)
-    def list(self, *, connected_account_id: Optional[str] = None, customer_key: Optional[str] = None, search: Optional[str] = None) -> List[AcsSystem]:
+    @route_metadata(
+        path="/acs/systems/list", has_required_parameters=False, has_pagination=False
+    )
+    def list(
+        self,
+        *,
+        connected_account_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        search: Optional[str] = None,
+    ) -> List[AcsSystem]:
         """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
-        
+
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
         :param connected_account_id: ID of the connected account by which you want to filter the list of access systems.
@@ -113,10 +137,16 @@ class AcsSystems(AbstractAcsSystems):
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
-    @route_metadata(path="/acs/systems/list_compatible_credential_manager_acs_systems", has_required_parameters=True, has_pagination=False)
-    def list_compatible_credential_manager_acs_systems(self, *, acs_system_id: str) -> List[AcsSystem]:
+    @route_metadata(
+        path="/acs/systems/list_compatible_credential_manager_acs_systems",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def list_compatible_credential_manager_acs_systems(
+        self, *, acs_system_id: str
+    ) -> List[AcsSystem]:
         """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
-        
+
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
@@ -130,14 +160,28 @@ class AcsSystems(AbstractAcsSystems):
             params["acs_system_id"] = acs_system_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems")
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
+            )
 
-        res = self.client.get("/acs/systems/list_compatible_credential_manager_acs_systems", params=params)
+        res = self.client.get(
+            "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
+        )
 
         return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
 
-    @route_metadata(path="/acs/systems/report_devices", has_required_parameters=True, has_pagination=False)
-    def report_devices(self, *, acs_system_id: str, acs_encoders: Optional[List[Dict[str, Any]]] = None, acs_entrances: Optional[List[Dict[str, Any]]] = None) -> None:
+    @route_metadata(
+        path="/acs/systems/report_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def report_devices(
+        self,
+        *,
+        acs_system_id: str,
+        acs_encoders: Optional[List[Dict[str, Any]]] = None,
+        acs_entrances: Optional[List[Dict[str, Any]]] = None,
+    ) -> None:
         """Reports ACS system device status including encoders and entrances.
 
         :param acs_system_id: ID of the ACS system to report resources for
@@ -157,7 +201,9 @@ class AcsSystems(AbstractAcsSystems):
             json_payload["acs_entrances"] = acs_entrances
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /acs/systems/report_devices")
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/report_devices"
+            )
 
         self.client.post("/acs/systems/report_devices", json=json_payload)
 

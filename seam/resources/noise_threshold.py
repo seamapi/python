@@ -20,7 +20,8 @@ class NoiseThreshold:
 
     :ivar noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-    :ivar starts_daily_at: Time at which the noise threshold should become active daily."""
+    :ivar starts_daily_at: Time at which the noise threshold should become active daily.
+    """
 
     device_id: str
     ends_daily_at: str

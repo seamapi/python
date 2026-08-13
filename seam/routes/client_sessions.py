@@ -3,13 +3,24 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (ClientSession)
+from ..resources import ClientSession
 
 
 class AbstractClientSessions(abc.ABC):
 
     @abc.abstractmethod
-    def create(self, *, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, customer_id: Optional[str] = None, customer_key: Optional[str] = None, expires_at: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> ClientSession:
+    def create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> ClientSession:
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to create a client session.
@@ -41,7 +52,12 @@ class AbstractClientSessions(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, client_session_id: Optional[str] = None, user_identifier_key: Optional[str] = None) -> ClientSession:
+    def get(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+    ) -> ClientSession:
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to get.
@@ -52,7 +68,16 @@ class AbstractClientSessions(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get_or_create(self, *, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, expires_at: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> ClientSession:
+    def get_or_create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> ClientSession:
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session (or that are already associated with the existing client session).
@@ -71,7 +96,16 @@ class AbstractClientSessions(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def grant_access(self, *, client_session_id: Optional[str] = None, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> None:
+    def grant_access(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> None:
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
         :param client_session_id: ID of the client session to which you want to grant access to resources.
@@ -90,7 +124,15 @@ class AbstractClientSessions(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, client_session_id: Optional[str] = None, connect_webview_id: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, without_user_identifier_key: Optional[bool] = None) -> List[ClientSession]:
+    def list(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        without_user_identifier_key: Optional[bool] = None,
+    ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
@@ -109,7 +151,7 @@ class AbstractClientSessions(abc.ABC):
     @abc.abstractmethod
     def revoke(self, *, client_session_id: str) -> None:
         """Revokes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-        
+
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
         :param client_session_id: ID of the client session that you want to revoke.
@@ -123,8 +165,23 @@ class ClientSessions(AbstractClientSessions):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/client_sessions/create", has_required_parameters=False, has_pagination=False)
-    def create(self, *, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, customer_id: Optional[str] = None, customer_key: Optional[str] = None, expires_at: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> ClientSession:
+    @route_metadata(
+        path="/client_sessions/create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    def create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> ClientSession:
         """Creates a new `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to create a client session.
@@ -167,7 +224,11 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
-    @route_metadata(path="/client_sessions/delete", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/client_sessions/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
@@ -180,14 +241,23 @@ class ClientSessions(AbstractClientSessions):
             params["client_session_id"] = client_session_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /client_sessions/delete")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/delete"
+            )
 
         self.client.delete("/client_sessions/delete", params=params)
 
         return None
 
-    @route_metadata(path="/client_sessions/get", has_required_parameters=False, has_pagination=False)
-    def get(self, *, client_session_id: Optional[str] = None, user_identifier_key: Optional[str] = None) -> ClientSession:
+    @route_metadata(
+        path="/client_sessions/get", has_required_parameters=False, has_pagination=False
+    )
+    def get(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+    ) -> ClientSession:
         """Returns a specified `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to get.
@@ -206,8 +276,21 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
-    @route_metadata(path="/client_sessions/get_or_create", has_required_parameters=False, has_pagination=False)
-    def get_or_create(self, *, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, expires_at: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> ClientSession:
+    @route_metadata(
+        path="/client_sessions/get_or_create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    def get_or_create(
+        self,
+        *,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        expires_at: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> ClientSession:
         """Returns a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
         :param connect_webview_ids: IDs of the `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ that you want to associate with the client session (or that are already associated with the existing client session).
@@ -242,8 +325,21 @@ class ClientSessions(AbstractClientSessions):
 
         return ClientSession.from_dict(res["client_session"])
 
-    @route_metadata(path="/client_sessions/grant_access", has_required_parameters=True, has_pagination=False)
-    def grant_access(self, *, client_session_id: Optional[str] = None, connect_webview_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, user_identity_ids: Optional[List[str]] = None) -> None:
+    @route_metadata(
+        path="/client_sessions/grant_access",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def grant_access(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> None:
         """Grants a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_, `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
         :param client_session_id: ID of the client session to which you want to grant access to resources.
@@ -275,14 +371,28 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identity_ids"] = user_identity_ids
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /client_sessions/grant_access")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/grant_access"
+            )
 
         self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None
 
-    @route_metadata(path="/client_sessions/list", has_required_parameters=False, has_pagination=False)
-    def list(self, *, client_session_id: Optional[str] = None, connect_webview_id: Optional[str] = None, user_identifier_key: Optional[str] = None, user_identity_id: Optional[str] = None, without_user_identifier_key: Optional[bool] = None) -> List[ClientSession]:
+    @route_metadata(
+        path="/client_sessions/list",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    def list(
+        self,
+        *,
+        client_session_id: Optional[str] = None,
+        connect_webview_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+        without_user_identifier_key: Optional[bool] = None,
+    ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
@@ -313,10 +423,14 @@ class ClientSessions(AbstractClientSessions):
 
         return [ClientSession.from_dict(item) for item in res["client_sessions"]]
 
-    @route_metadata(path="/client_sessions/revoke", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/client_sessions/revoke",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def revoke(self, *, client_session_id: str) -> None:
         """Revokes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
-        
+
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
         :param client_session_id: ID of the client session that you want to revoke.
@@ -328,7 +442,9 @@ class ClientSessions(AbstractClientSessions):
             json_payload["client_session_id"] = client_session_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /client_sessions/revoke")
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/revoke"
+            )
 
         self.client.post("/client_sessions/revoke", json=json_payload)
 

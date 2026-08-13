@@ -18,7 +18,8 @@ class ThermostatDailyProgram:
 
     :ivar thermostat_daily_program_id: ID of the thermostat daily program.
 
-    :ivar workspace_id: ID of the workspace that contains the thermostat daily program."""
+    :ivar workspace_id: ID of the workspace that contains the thermostat daily program.
+    """
 
     @dataclass
     class Periods(ResourceMapping):
@@ -26,7 +27,8 @@ class ThermostatDailyProgram:
 
         :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to activate at the ``starts_at_time``.
 
-        :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format."""
+        :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+        """
 
         climate_preset_key: str
         starts_at_time: str

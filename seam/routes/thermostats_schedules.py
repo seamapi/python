@@ -3,13 +3,23 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (ThermostatSchedule)
+from ..resources import ThermostatSchedule
 
 
 class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
-    def create(self, *, climate_preset_key: str, device_id: str, ends_at: str, starts_at: str, is_override_allowed: Optional[bool] = None, max_override_period_minutes: Optional[Union[int, Null]] = None, name: Optional[str] = None) -> ThermostatSchedule:
+    def create(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        ends_at: str,
+        starts_at: str,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
+        name: Optional[str] = None,
+    ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
@@ -52,7 +62,9 @@ class AbstractThermostatsSchedules(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, device_id: str, user_identifier_key: Optional[str] = None) -> List[ThermostatSchedule]:
+    def list(
+        self, *, device_id: str, user_identifier_key: Optional[str] = None
+    ) -> List[ThermostatSchedule]:
         """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
@@ -65,7 +77,17 @@ class AbstractThermostatsSchedules(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, thermostat_schedule_id: str, climate_preset_key: Optional[str] = None, ends_at: Optional[str] = None, is_override_allowed: Optional[bool] = None, max_override_period_minutes: Optional[Union[int, Null]] = None, name: Optional[str] = None, starts_at: Optional[str] = None) -> None:
+    def update(
+        self,
+        *,
+        thermostat_schedule_id: str,
+        climate_preset_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None,
+    ) -> None:
         """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
@@ -91,8 +113,22 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/thermostats/schedules/create", has_required_parameters=True, has_pagination=False)
-    def create(self, *, climate_preset_key: str, device_id: str, ends_at: str, starts_at: str, is_override_allowed: Optional[bool] = None, max_override_period_minutes: Optional[Union[int, Null]] = None, name: Optional[str] = None) -> ThermostatSchedule:
+    @route_metadata(
+        path="/thermostats/schedules/create",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def create(
+        self,
+        *,
+        climate_preset_key: str,
+        device_id: str,
+        ends_at: str,
+        starts_at: str,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
+        name: Optional[str] = None,
+    ) -> ThermostatSchedule:
         """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
@@ -130,13 +166,19 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["name"] = name
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/schedules/create")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/create"
+            )
 
         res = self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
 
-    @route_metadata(path="/thermostats/schedules/delete", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/thermostats/schedules/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, thermostat_schedule_id: str) -> None:
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -149,13 +191,19 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             params["thermostat_schedule_id"] = thermostat_schedule_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /thermostats/schedules/delete")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/delete"
+            )
 
         self.client.delete("/thermostats/schedules/delete", params=params)
 
         return None
 
-    @route_metadata(path="/thermostats/schedules/get", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/thermostats/schedules/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
         """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
@@ -170,14 +218,22 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             params["thermostat_schedule_id"] = thermostat_schedule_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /thermostats/schedules/get")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/get"
+            )
 
         res = self.client.get("/thermostats/schedules/get", params=params)
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
 
-    @route_metadata(path="/thermostats/schedules/list", has_required_parameters=True, has_pagination=False)
-    def list(self, *, device_id: str, user_identifier_key: Optional[str] = None) -> List[ThermostatSchedule]:
+    @route_metadata(
+        path="/thermostats/schedules/list",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def list(
+        self, *, device_id: str, user_identifier_key: Optional[str] = None
+    ) -> List[ThermostatSchedule]:
         """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
@@ -195,14 +251,32 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             params["user_identifier_key"] = user_identifier_key
 
         if not params:
-            raise ValueError("At least one parameter is required for /thermostats/schedules/list")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/list"
+            )
 
         res = self.client.get("/thermostats/schedules/list", params=params)
 
-        return [ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]]
+        return [
+            ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
+        ]
 
-    @route_metadata(path="/thermostats/schedules/update", has_required_parameters=True, has_pagination=False)
-    def update(self, *, thermostat_schedule_id: str, climate_preset_key: Optional[str] = None, ends_at: Optional[str] = None, is_override_allowed: Optional[bool] = None, max_override_period_minutes: Optional[Union[int, Null]] = None, name: Optional[str] = None, starts_at: Optional[str] = None) -> None:
+    @route_metadata(
+        path="/thermostats/schedules/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def update(
+        self,
+        *,
+        thermostat_schedule_id: str,
+        climate_preset_key: Optional[str] = None,
+        ends_at: Optional[str] = None,
+        is_override_allowed: Optional[bool] = None,
+        max_override_period_minutes: Optional[Union[int, Null]] = None,
+        name: Optional[str] = None,
+        starts_at: Optional[str] = None,
+    ) -> None:
         """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
@@ -238,7 +312,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["starts_at"] = starts_at
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/schedules/update")
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/update"
+            )
 
         self.client.patch("/thermostats/schedules/update", json=json_payload)
 

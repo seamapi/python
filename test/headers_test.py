@@ -17,7 +17,9 @@ def test_seam_sends_default_headers(recording_server):
     assert len(requests) == 1
     [request] = requests
 
-    assert request["path"] == f"/devices/get?device_id={device_id}"
+    assert request["method"] == "GET"
+    assert request["path"] == "/devices/get"
+    assert request["query"] == f"device_id={device_id}"
     assert request["body"] is None
 
     assert request["headers"]["seam-sdk-name"] == "seamapi/python"

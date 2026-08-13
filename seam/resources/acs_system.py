@@ -7,9 +7,9 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsSystem:
     """Represents an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
-    
+
     Within an ``acs_system``, create ```acs_user``s <https://docs.seam.co/api/acs/users/object>`_ and ```acs_credential``s <https://docs.seam.co/api/acs/credentials/object>`_ to grant access to the ``acs_user``s.
-    
+
     For details about the resources associated with an access control system, see the `access control systems namespace <https://docs.seam.co/api/acs>`_.
 
     :ivar acs_access_group_count: Number of access groups in the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
@@ -50,7 +50,8 @@ class AcsSystem:
 
     :ivar warnings: Warnings associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_."""
+    :ivar workspace_id: ID of the workspace that contains the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """
 
     @dataclass
     class Errors(ResourceMapping):
@@ -62,7 +63,8 @@ class AcsSystem:
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar is_bridge_error: Indicates whether the error is related to the `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_."""
+        :ivar is_bridge_error: Indicates whether the error is related to the `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        """
 
         created_at: str
         error_code: str
@@ -82,7 +84,8 @@ class AcsSystem:
     class Location(ResourceMapping):
         """Location information for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
-        :ivar time_zone: Time zone in which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ is located."""
+        :ivar time_zone: Time zone in which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ is located.
+        """
 
         time_zone: Optional[str]
 
@@ -100,7 +103,8 @@ class AcsSystem:
 
         :ivar mobile_access_uuid: Keyset loaded into a reader. Mobile keys and reader administration tools securely authenticate only with readers programmed with a matching keyset.
 
-        :ivar system_id: Unique ID assigned by the ASSA ABLOY licensing team that identifies each hotel in your credential manager."""
+        :ivar system_id: Unique ID assigned by the ASSA ABLOY licensing team that identifies each hotel in your credential manager.
+        """
 
         lan_address: Optional[str]
         mobile_access_uuid: Optional[str]
@@ -137,7 +141,9 @@ class AcsSystem:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
-                misconfigured_acs_entrance_ids=d.get("misconfigured_acs_entrance_ids", None),
+                misconfigured_acs_entrance_ids=d.get(
+                    "misconfigured_acs_entrance_ids", None
+                ),
             )
 
     acs_access_group_count: Optional[float]
@@ -170,18 +176,28 @@ class AcsSystem:
             connected_account_id=d.get("connected_account_id", None),
             connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
-            default_credential_manager_acs_system_id=d.get("default_credential_manager_acs_system_id", None),
+            default_credential_manager_acs_system_id=d.get(
+                "default_credential_manager_acs_system_id", None
+            ),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             image_alt_text=d.get("image_alt_text", None),
             image_url=d.get("image_url", None),
             is_credential_manager=d.get("is_credential_manager", None),
-            location=cls.Location.from_dict(d.get("location")) if d.get("location") is not None else None,
+            location=(
+                cls.Location.from_dict(d.get("location"))
+                if d.get("location") is not None
+                else None
+            ),
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
-            visionline_metadata=cls.VisionlineMetadata.from_dict(d.get("visionline_metadata")) if d.get("visionline_metadata") is not None else None,
+            visionline_metadata=(
+                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                if d.get("visionline_metadata") is not None
+                else None
+            ),
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

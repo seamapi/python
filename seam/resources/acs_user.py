@@ -7,9 +7,9 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class AcsUser:
     """Represents a `user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
-    
+
     An access system user typically refers to an individual who requires access, like an employee or resident. Each user can possess multiple credentials that serve as their keys or identifiers for access. The type of credential can vary widely. For example, in the Salto system, a user can have a PIN code, a mobile app account, and a fob. In other platforms, it is not uncommon for a user to have more than one of the same credential type, such as multiple key cards. Additionally, these credentials can have a schedule or validity period.
-    
+
     For details about how to configure users in your access system, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
 
     :ivar access_schedule: ``starts_at`` and ``ends_at`` timestamps for the `access system user's <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access.
@@ -60,7 +60,8 @@ class AcsUser:
 
     :ivar warnings: Warnings associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_."""
+    :ivar workspace_id: ID of the workspace that contains the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    """
 
     @dataclass
     class AccessSchedule(ResourceMapping):
@@ -68,7 +69,8 @@ class AcsUser:
 
         :ivar ends_at: Date and time at which the user's access ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format."""
+        :ivar starts_at: Date and time at which the user's access starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+        """
 
         ends_at: Optional[str]
         starts_at: str
@@ -86,9 +88,10 @@ class AcsUser:
 
         :ivar created_at: Date and time at which Seam created the error.
 
-        :ivar error_code: 
+        :ivar error_code:
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -110,17 +113,18 @@ class AcsUser:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: 
+        :ivar mutation_code:
 
         :ivar scheduled_at: Optional: When the user creation is scheduled to occur.
 
-        :ivar from_: 
+        :ivar from_:
 
-        :ivar to: 
+        :ivar to:
 
         :ivar acs_access_group_id: ID of the access group involved in the scheduled change.
 
-        :ivar variant: Whether the user is scheduled to be added to or removed from the access group."""
+        :ivar variant: Whether the user is scheduled to be added to or removed from the access group.
+        """
 
         @dataclass
         class From(ResourceMapping):
@@ -136,7 +140,7 @@ class AcsUser:
 
             :ivar starts_at: Starting time for the access schedule.
 
-            :ivar is_suspended: 
+            :ivar is_suspended:
 
             :ivar acs_access_group_id: Old access group ID.
 
@@ -178,7 +182,7 @@ class AcsUser:
 
             :ivar starts_at: Starting time for the access schedule.
 
-            :ivar is_suspended: 
+            :ivar is_suspended:
 
             :ivar acs_access_group_id: New access group ID.
 
@@ -222,7 +226,11 @@ class AcsUser:
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
                 scheduled_at=d.get("scheduled_at", None),
-                from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
                 acs_access_group_id=d.get("acs_access_group_id", None),
                 variant=d.get("variant", None),
@@ -232,7 +240,8 @@ class AcsUser:
     class SaltoKsMetadata(ResourceMapping):
         """Salto KS-specific metadata associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
-        :ivar is_subscribed: Indicates whether the user holds an active subscription slot on the Salto KS site. Only subscribed users can unlock doors and count against the site's user-subscription limit. A user may not be subscribed because their access schedule has not started or has ended, the site has reached its subscription limit, or they were manually unsubscribed. This is distinct from ``is_suspended``, which reflects whether the user has been explicitly blocked."""
+        :ivar is_subscribed: Indicates whether the user holds an active subscription slot on the Salto KS site. Only subscribed users can unlock doors and count against the site's user-subscription limit. A user may not be subscribed because their access schedule has not started or has ended, the site has reached its subscription limit, or they were manually unsubscribed. This is distinct from ``is_suspended``, which reflects whether the user has been explicitly blocked.
+        """
 
         is_subscribed: Optional[bool]
 
@@ -268,7 +277,7 @@ class AcsUser:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: """
+        :ivar warning_code:"""
 
         created_at: str
         message: str
@@ -311,7 +320,11 @@ class AcsUser:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
-            access_schedule=cls.AccessSchedule.from_dict(d.get("access_schedule")) if d.get("access_schedule") is not None else None,
+            access_schedule=(
+                cls.AccessSchedule.from_dict(d.get("access_schedule"))
+                if d.get("access_schedule") is not None
+                else None
+            ),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -326,10 +339,21 @@ class AcsUser:
             hid_acs_system_id=d.get("hid_acs_system_id", None),
             is_managed=d.get("is_managed", None),
             is_suspended=d.get("is_suspended", None),
-            pending_mutations=[cls.PendingMutations.from_dict(i) for i in d.get("pending_mutations") or []],
+            pending_mutations=[
+                cls.PendingMutations.from_dict(i)
+                for i in d.get("pending_mutations") or []
+            ],
             phone_number=d.get("phone_number", None),
-            salto_ks_metadata=cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata")) if d.get("salto_ks_metadata") is not None else None,
-            salto_space_metadata=cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata")) if d.get("salto_space_metadata") is not None else None,
+            salto_ks_metadata=(
+                cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                if d.get("salto_ks_metadata") is not None
+                else None
+            ),
+            salto_space_metadata=(
+                cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata"))
+                if d.get("salto_space_metadata") is not None
+                else None
+            ),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),

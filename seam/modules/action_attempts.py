@@ -10,8 +10,8 @@ POLLING_INTERVAL = 0.5
 
 
 def get_action_attempt(client: SeamHttpClient, action_attempt_id: str) -> ActionAttempt:
-    res = client.post(
-        "/action_attempts/get", json={"action_attempt_id": action_attempt_id}
+    res = client.get(
+        "/action_attempts/get", params={"action_attempt_id": action_attempt_id}
     )
 
     return ActionAttempt.from_dict(res["action_attempt"])

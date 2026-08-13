@@ -70,21 +70,16 @@ def recording_server(responses):
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
-        # pylint: disable-next=invalid-name
-        def do_GET(self):
-            self._handle_request()
-
-        # pylint: disable-next=invalid-name
-        def do_POST(self):
-            self._handle_request()
-
         def _handle_request(self):
             content_length = int(self.headers.get("content-length", 0))
             raw_body = self.rfile.read(content_length)
+            path, _, query = self.path.partition("?")
 
             requests.append(
                 {
-                    "path": self.path,
+                    "method": self.command,
+                    "path": path,
+                    "query": query,
                     "headers": {k.lower(): v for k, v in self.headers.items()},
                     "body": json.loads(raw_body) if raw_body else None,
                 }
@@ -108,6 +103,15 @@ def recording_server(responses):
             self.send_header("content-length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+
+        # Endpoints are served over their semantic method, so record them all.
+        # BaseHTTPRequestHandler dispatches on these names.
+        # pylint: disable=invalid-name
+        do_GET = _handle_request
+        do_POST = _handle_request
+        do_PUT = _handle_request
+        do_PATCH = _handle_request
+        do_DELETE = _handle_request
 
         def log_message(self, *args):
             pass

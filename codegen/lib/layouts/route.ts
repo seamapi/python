@@ -57,12 +57,14 @@ export interface RouteLayoutContext {
   methods: MethodLayoutContext[]
 }
 
+// GET and DELETE carry their params in the query string, as the OpenAPI
+// operations for those methods declare them; the rest read a JSON body.
 const getRequestLayoutContext = (
-  preferredMethod: string,
+  semanticMethod: string,
 ): Pick<MethodLayoutContext, 'httpVerb' | 'payloadVar' | 'payloadArg'> => {
-  const httpVerb = preferredMethod.toLowerCase()
+  const httpVerb = semanticMethod.toLowerCase()
 
-  if (preferredMethod === 'GET' || preferredMethod === 'DELETE') {
+  if (semanticMethod === 'GET' || semanticMethod === 'DELETE') {
     return { httpVerb, payloadVar: 'params', payloadArg: 'params' }
   }
 
@@ -74,7 +76,7 @@ export const getMethodLayoutContext = (
 ): MethodLayoutContext => ({
   name: method.methodName,
   path: method.path,
-  ...getRequestLayoutContext(method.preferredMethod),
+  ...getRequestLayoutContext(method.semanticMethod),
   hasRequiredParameters: method.hasRequiredParameters,
   hasPagination: method.hasPagination,
   description: method.description,

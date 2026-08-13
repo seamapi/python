@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from typing import Any, Dict, Optional
 from importlib.metadata import version
 import abc
@@ -13,6 +14,7 @@ from .exceptions import (
     SeamHttpUnauthorizedError,
 )
 from .null import replace_null
+from .utils.url_search_params_serializer import serialize_url_search_params
 
 SDK_HEADERS = {
     "seam-sdk-name": "seamapi/python",
@@ -87,6 +89,8 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
     # httpx.Client promises, so the verb helpers routed through it have to
     # say so too. Without these overrides callers see the inherited Response
     # type and indexing the returned payload does not type check.
+    # httpx also omits json from its get and delete signatures, though the
+    # Seam API reads the params of a delete from the request body.
     def get(self, url, **kwargs) -> Any:
         return self.request("GET", url, **kwargs)
 
@@ -107,6 +111,11 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         # is an explicit null and becomes None for JSON serialization.
         if "json" in kwargs:
             kwargs["json"] = replace_null(kwargs["json"])
+
+        # Search params are serialized to the Seam API standard, which httpx
+        # does not implement. The NULL sentinel is serialized to an empty value.
+        if isinstance(kwargs.get("params"), Mapping):
+            kwargs["params"] = serialize_url_search_params(kwargs["params"])
 
         response = super().request(method, url, *args, **kwargs)
 

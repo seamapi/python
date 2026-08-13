@@ -3,13 +3,27 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (CustomerPortal)
+from ..resources import CustomerPortal
 
 
 class AbstractCustomers(abc.ABC):
 
     @abc.abstractmethod
-    def create_portal(self, *, customer_resources_filters: Optional[List[Dict[str, Any]]] = None, customization_profile_id: Optional[str] = None, deep_link: Optional[Dict[str, Any]] = None, exclude_locale_picker: Optional[bool] = None, features: Optional[Dict[str, Any]] = None, is_embedded: Optional[bool] = None, landing_page: Optional[Dict[str, Any]] = None, locale: Optional[str] = None, navigation_mode: Optional[str] = None, read_only: Optional[bool] = None, customer_data: Optional[Dict[str, Any]] = None) -> CustomerPortal:
+    def create_portal(
+        self,
+        *,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
+        features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
+        navigation_mode: Optional[str] = None,
+        read_only: Optional[bool] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+    ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
@@ -20,7 +34,7 @@ class AbstractCustomers(abc.ABC):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features: 
+        :param features:
 
         :param is_embedded: Whether the portal is embedded in another application.
 
@@ -32,13 +46,35 @@ class AbstractCustomers(abc.ABC):
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
 
-        :param customer_data: 
+        :param customer_data:
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete_data(self, *, access_grant_keys: Optional[List[str]] = None, booking_keys: Optional[List[str]] = None, building_keys: Optional[List[str]] = None, common_area_keys: Optional[List[str]] = None, customer_keys: Optional[List[str]] = None, facility_keys: Optional[List[str]] = None, guest_keys: Optional[List[str]] = None, listing_keys: Optional[List[str]] = None, property_keys: Optional[List[str]] = None, property_listing_keys: Optional[List[str]] = None, reservation_keys: Optional[List[str]] = None, resident_keys: Optional[List[str]] = None, room_keys: Optional[List[str]] = None, space_keys: Optional[List[str]] = None, staff_member_keys: Optional[List[str]] = None, tenant_keys: Optional[List[str]] = None, unit_keys: Optional[List[str]] = None, user_identity_keys: Optional[List[str]] = None, user_keys: Optional[List[str]] = None) -> None:
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None,
+    ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
 
@@ -82,7 +118,30 @@ class AbstractCustomers(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def push_data(self, *, customer_key: str, access_grants: Optional[List[Dict[str, Any]]] = None, bookings: Optional[List[Dict[str, Any]]] = None, buildings: Optional[List[Dict[str, Any]]] = None, common_areas: Optional[List[Dict[str, Any]]] = None, facilities: Optional[List[Dict[str, Any]]] = None, guests: Optional[List[Dict[str, Any]]] = None, listings: Optional[List[Dict[str, Any]]] = None, properties: Optional[List[Dict[str, Any]]] = None, property_listings: Optional[List[Dict[str, Any]]] = None, reservations: Optional[List[Dict[str, Any]]] = None, residents: Optional[List[Dict[str, Any]]] = None, rooms: Optional[List[Dict[str, Any]]] = None, sites: Optional[List[Dict[str, Any]]] = None, spaces: Optional[List[Dict[str, Any]]] = None, staff_members: Optional[List[Dict[str, Any]]] = None, tenants: Optional[List[Dict[str, Any]]] = None, units: Optional[List[Dict[str, Any]]] = None, user_identities: Optional[List[Dict[str, Any]]] = None, users: Optional[List[Dict[str, Any]]] = None) -> None:
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None,
+    ) -> None:
         """Pushes customer data including resources like spaces, properties, rooms, users, etc.
 
         :param customer_key: Your unique identifier for the customer.
@@ -134,8 +193,26 @@ class Customers(AbstractCustomers):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/customers/create_portal", has_required_parameters=False, has_pagination=False)
-    def create_portal(self, *, customer_resources_filters: Optional[List[Dict[str, Any]]] = None, customization_profile_id: Optional[str] = None, deep_link: Optional[Dict[str, Any]] = None, exclude_locale_picker: Optional[bool] = None, features: Optional[Dict[str, Any]] = None, is_embedded: Optional[bool] = None, landing_page: Optional[Dict[str, Any]] = None, locale: Optional[str] = None, navigation_mode: Optional[str] = None, read_only: Optional[bool] = None, customer_data: Optional[Dict[str, Any]] = None) -> CustomerPortal:
+    @route_metadata(
+        path="/customers/create_portal",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    def create_portal(
+        self,
+        *,
+        customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[str] = None,
+        deep_link: Optional[Dict[str, Any]] = None,
+        exclude_locale_picker: Optional[bool] = None,
+        features: Optional[Dict[str, Any]] = None,
+        is_embedded: Optional[bool] = None,
+        landing_page: Optional[Dict[str, Any]] = None,
+        locale: Optional[str] = None,
+        navigation_mode: Optional[str] = None,
+        read_only: Optional[bool] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+    ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
@@ -146,7 +223,7 @@ class Customers(AbstractCustomers):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features: 
+        :param features:
 
         :param is_embedded: Whether the portal is embedded in another application.
 
@@ -158,7 +235,7 @@ class Customers(AbstractCustomers):
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
 
-        :param customer_data: 
+        :param customer_data:
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -190,8 +267,34 @@ class Customers(AbstractCustomers):
 
         return CustomerPortal.from_dict(res["customer_portal"])
 
-    @route_metadata(path="/customers/delete_data", has_required_parameters=False, has_pagination=False)
-    def delete_data(self, *, access_grant_keys: Optional[List[str]] = None, booking_keys: Optional[List[str]] = None, building_keys: Optional[List[str]] = None, common_area_keys: Optional[List[str]] = None, customer_keys: Optional[List[str]] = None, facility_keys: Optional[List[str]] = None, guest_keys: Optional[List[str]] = None, listing_keys: Optional[List[str]] = None, property_keys: Optional[List[str]] = None, property_listing_keys: Optional[List[str]] = None, reservation_keys: Optional[List[str]] = None, resident_keys: Optional[List[str]] = None, room_keys: Optional[List[str]] = None, space_keys: Optional[List[str]] = None, staff_member_keys: Optional[List[str]] = None, tenant_keys: Optional[List[str]] = None, unit_keys: Optional[List[str]] = None, user_identity_keys: Optional[List[str]] = None, user_keys: Optional[List[str]] = None) -> None:
+    @route_metadata(
+        path="/customers/delete_data",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    def delete_data(
+        self,
+        *,
+        access_grant_keys: Optional[List[str]] = None,
+        booking_keys: Optional[List[str]] = None,
+        building_keys: Optional[List[str]] = None,
+        common_area_keys: Optional[List[str]] = None,
+        customer_keys: Optional[List[str]] = None,
+        facility_keys: Optional[List[str]] = None,
+        guest_keys: Optional[List[str]] = None,
+        listing_keys: Optional[List[str]] = None,
+        property_keys: Optional[List[str]] = None,
+        property_listing_keys: Optional[List[str]] = None,
+        reservation_keys: Optional[List[str]] = None,
+        resident_keys: Optional[List[str]] = None,
+        room_keys: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+        staff_member_keys: Optional[List[str]] = None,
+        tenant_keys: Optional[List[str]] = None,
+        unit_keys: Optional[List[str]] = None,
+        user_identity_keys: Optional[List[str]] = None,
+        user_keys: Optional[List[str]] = None,
+    ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
 
@@ -232,53 +335,78 @@ class Customers(AbstractCustomers):
         :param user_identity_keys: List of user identity keys to delete.
 
         :param user_keys: List of user keys to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_keys is not None:
-            json_payload["access_grant_keys"] = access_grant_keys
+            params["access_grant_keys"] = access_grant_keys
         if booking_keys is not None:
-            json_payload["booking_keys"] = booking_keys
+            params["booking_keys"] = booking_keys
         if building_keys is not None:
-            json_payload["building_keys"] = building_keys
+            params["building_keys"] = building_keys
         if common_area_keys is not None:
-            json_payload["common_area_keys"] = common_area_keys
+            params["common_area_keys"] = common_area_keys
         if customer_keys is not None:
-            json_payload["customer_keys"] = customer_keys
+            params["customer_keys"] = customer_keys
         if facility_keys is not None:
-            json_payload["facility_keys"] = facility_keys
+            params["facility_keys"] = facility_keys
         if guest_keys is not None:
-            json_payload["guest_keys"] = guest_keys
+            params["guest_keys"] = guest_keys
         if listing_keys is not None:
-            json_payload["listing_keys"] = listing_keys
+            params["listing_keys"] = listing_keys
         if property_keys is not None:
-            json_payload["property_keys"] = property_keys
+            params["property_keys"] = property_keys
         if property_listing_keys is not None:
-            json_payload["property_listing_keys"] = property_listing_keys
+            params["property_listing_keys"] = property_listing_keys
         if reservation_keys is not None:
-            json_payload["reservation_keys"] = reservation_keys
+            params["reservation_keys"] = reservation_keys
         if resident_keys is not None:
-            json_payload["resident_keys"] = resident_keys
+            params["resident_keys"] = resident_keys
         if room_keys is not None:
-            json_payload["room_keys"] = room_keys
+            params["room_keys"] = room_keys
         if space_keys is not None:
-            json_payload["space_keys"] = space_keys
+            params["space_keys"] = space_keys
         if staff_member_keys is not None:
-            json_payload["staff_member_keys"] = staff_member_keys
+            params["staff_member_keys"] = staff_member_keys
         if tenant_keys is not None:
-            json_payload["tenant_keys"] = tenant_keys
+            params["tenant_keys"] = tenant_keys
         if unit_keys is not None:
-            json_payload["unit_keys"] = unit_keys
+            params["unit_keys"] = unit_keys
         if user_identity_keys is not None:
-            json_payload["user_identity_keys"] = user_identity_keys
+            params["user_identity_keys"] = user_identity_keys
         if user_keys is not None:
-            json_payload["user_keys"] = user_keys
+            params["user_keys"] = user_keys
 
-        self.client.post("/customers/delete_data", json=json_payload)
+        self.client.delete("/customers/delete_data", params=params)
 
         return None
 
-    @route_metadata(path="/customers/push_data", has_required_parameters=True, has_pagination=False)
-    def push_data(self, *, customer_key: str, access_grants: Optional[List[Dict[str, Any]]] = None, bookings: Optional[List[Dict[str, Any]]] = None, buildings: Optional[List[Dict[str, Any]]] = None, common_areas: Optional[List[Dict[str, Any]]] = None, facilities: Optional[List[Dict[str, Any]]] = None, guests: Optional[List[Dict[str, Any]]] = None, listings: Optional[List[Dict[str, Any]]] = None, properties: Optional[List[Dict[str, Any]]] = None, property_listings: Optional[List[Dict[str, Any]]] = None, reservations: Optional[List[Dict[str, Any]]] = None, residents: Optional[List[Dict[str, Any]]] = None, rooms: Optional[List[Dict[str, Any]]] = None, sites: Optional[List[Dict[str, Any]]] = None, spaces: Optional[List[Dict[str, Any]]] = None, staff_members: Optional[List[Dict[str, Any]]] = None, tenants: Optional[List[Dict[str, Any]]] = None, units: Optional[List[Dict[str, Any]]] = None, user_identities: Optional[List[Dict[str, Any]]] = None, users: Optional[List[Dict[str, Any]]] = None) -> None:
+    @route_metadata(
+        path="/customers/push_data", has_required_parameters=True, has_pagination=False
+    )
+    def push_data(
+        self,
+        *,
+        customer_key: str,
+        access_grants: Optional[List[Dict[str, Any]]] = None,
+        bookings: Optional[List[Dict[str, Any]]] = None,
+        buildings: Optional[List[Dict[str, Any]]] = None,
+        common_areas: Optional[List[Dict[str, Any]]] = None,
+        facilities: Optional[List[Dict[str, Any]]] = None,
+        guests: Optional[List[Dict[str, Any]]] = None,
+        listings: Optional[List[Dict[str, Any]]] = None,
+        properties: Optional[List[Dict[str, Any]]] = None,
+        property_listings: Optional[List[Dict[str, Any]]] = None,
+        reservations: Optional[List[Dict[str, Any]]] = None,
+        residents: Optional[List[Dict[str, Any]]] = None,
+        rooms: Optional[List[Dict[str, Any]]] = None,
+        sites: Optional[List[Dict[str, Any]]] = None,
+        spaces: Optional[List[Dict[str, Any]]] = None,
+        staff_members: Optional[List[Dict[str, Any]]] = None,
+        tenants: Optional[List[Dict[str, Any]]] = None,
+        units: Optional[List[Dict[str, Any]]] = None,
+        user_identities: Optional[List[Dict[str, Any]]] = None,
+        users: Optional[List[Dict[str, Any]]] = None,
+    ) -> None:
         """Pushes customer data including resources like spaces, properties, rooms, users, etc.
 
         :param customer_key: Your unique identifier for the customer.
@@ -366,7 +494,9 @@ class Customers(AbstractCustomers):
             json_payload["users"] = users
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /customers/push_data")
+            raise ValueError(
+                "At least one parameter is required for /customers/push_data"
+            )
 
         self.client.post("/customers/push_data", json=json_payload)
 

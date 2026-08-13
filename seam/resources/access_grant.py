@@ -58,7 +58,8 @@ class AccessGrant:
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar missing_device_ids: IDs of the devices that did not receive an access code at grant creation. Use these to identify which specific devices failed when the message reports a partial failure."""
+        :ivar missing_device_ids: IDs of the devices that did not receive an access code at grant creation. Use these to identify which specific devices failed when the message reports a partial failure.
+        """
 
         created_at: str
         error_code: str
@@ -80,13 +81,13 @@ class AccessGrant:
 
         :ivar created_at: Date and time at which the mutation was created.
 
-        :ivar from_: 
+        :ivar from_:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: 
+        :ivar mutation_code:
 
-        :ivar to: 
+        :ivar to:
 
         :ivar access_method_ids: IDs of the access methods being updated."""
 
@@ -149,7 +150,11 @@ class AccessGrant:
         def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
-                from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
@@ -170,7 +175,8 @@ class AccessGrant:
 
         :ivar instant_key_max_use_count: Maximum number of times the instant key can be used. Only applicable when mode is 'mobile_key'. Defaults to 1 if not specified.
 
-        :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``."""
+        :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
+        """
 
         code: Optional[str]
         created_access_method_ids: List[str]
@@ -204,13 +210,14 @@ class AccessGrant:
 
         :ivar access_method_ids: IDs of the access methods being updated.
 
-        :ivar device_id: 
+        :ivar device_id:
 
         :ivar new_code: The new PIN code that was assigned instead.
 
         :ivar original_code: The originally requested PIN code that was unavailable.
 
-        :ivar reason: Specific reason why the grant's times are not programmable on the device."""
+        :ivar reason: Specific reason why the grant's times are not programmable on the device.
+        """
 
         @dataclass
         class FailedDevices(ResourceMapping):
@@ -250,7 +257,10 @@ class AccessGrant:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
-                failed_devices=[cls.FailedDevices.from_dict(i) for i in d.get("failed_devices") or []],
+                failed_devices=[
+                    cls.FailedDevices.from_dict(i)
+                    for i in d.get("failed_devices") or []
+                ],
                 access_method_ids=d.get("access_method_ids", None),
                 device_id=d.get("device_id", None),
                 new_code=d.get("new_code", None),
@@ -294,8 +304,14 @@ class AccessGrant:
             instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
-            pending_mutations=[cls.PendingMutations.from_dict(i) for i in d.get("pending_mutations") or []],
-            requested_access_methods=[cls.RequestedAccessMethods.from_dict(i) for i in d.get("requested_access_methods") or []],
+            pending_mutations=[
+                cls.PendingMutations.from_dict(i)
+                for i in d.get("pending_mutations") or []
+            ],
+            requested_access_methods=[
+                cls.RequestedAccessMethods.from_dict(i)
+                for i in d.get("requested_access_methods") or []
+            ],
             reservation_key=d.get("reservation_key", None),
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),

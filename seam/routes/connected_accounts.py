@@ -3,8 +3,11 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (ConnectedAccount)
-from .connected_accounts_simulate import AbstractConnectedAccountsSimulate, ConnectedAccountsSimulate
+from ..resources import ConnectedAccount
+from .connected_accounts_simulate import (
+    AbstractConnectedAccountsSimulate,
+    ConnectedAccountsSimulate,
+)
 
 
 class AbstractConnectedAccounts(abc.ABC):
@@ -17,9 +20,9 @@ class AbstractConnectedAccounts(abc.ABC):
     @abc.abstractmethod
     def delete(self, *, connected_account_id: str) -> None:
         """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
-        
+
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
-        
+
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
@@ -28,7 +31,9 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None) -> ConnectedAccount:
+    def get(
+        self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
+    ) -> ConnectedAccount:
         """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
@@ -41,7 +46,17 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, custom_metadata_has: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_id: Optional[str] = None, user_identifier_key: Optional[str] = None) -> List[ConnectedAccount]:
+    def list(
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+    ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
@@ -71,7 +86,16 @@ class AbstractConnectedAccounts(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, connected_account_id: str, accepted_capabilities: Optional[List[str]] = None, automatically_manage_new_devices: Optional[bool] = None, custom_metadata: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, display_name: Optional[str] = None) -> None:
+    def update(
+        self,
+        *,
+        connected_account_id: str,
+        accepted_capabilities: Optional[List[str]] = None,
+        automatically_manage_new_devices: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        display_name: Optional[str] = None,
+    ) -> None:
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
@@ -100,12 +124,16 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     def simulate(self) -> ConnectedAccountsSimulate:
         return self._simulate
 
-    @route_metadata(path="/connected_accounts/delete", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/connected_accounts/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def delete(self, *, connected_account_id: str) -> None:
         """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
-        
+
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
-        
+
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
@@ -117,14 +145,22 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             params["connected_account_id"] = connected_account_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /connected_accounts/delete")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/delete"
+            )
 
         self.client.delete("/connected_accounts/delete", params=params)
 
         return None
 
-    @route_metadata(path="/connected_accounts/get", has_required_parameters=True, has_pagination=False)
-    def get(self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None) -> ConnectedAccount:
+    @route_metadata(
+        path="/connected_accounts/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def get(
+        self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
+    ) -> ConnectedAccount:
         """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
@@ -142,14 +178,30 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             params["email"] = email
 
         if not params:
-            raise ValueError("At least one parameter is required for /connected_accounts/get")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/get"
+            )
 
         res = self.client.get("/connected_accounts/get", params=params)
 
         return ConnectedAccount.from_dict(res["connected_account"])
 
-    @route_metadata(path="/connected_accounts/list", has_required_parameters=False, has_pagination=True)
-    def list(self, *, custom_metadata_has: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_id: Optional[str] = None, user_identifier_key: Optional[str] = None) -> List[ConnectedAccount]:
+    @route_metadata(
+        path="/connected_accounts/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
+    def list(
+        self,
+        *,
+        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        space_id: Optional[str] = None,
+        user_identifier_key: Optional[str] = None,
+    ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
@@ -167,28 +219,32 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param user_identifier_key: Your user ID for the user by which you want to filter connected accounts.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
+            params["custom_metadata_has"] = custom_metadata_has
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/connected_accounts/list", json=json_payload)
+        res = self.client.get("/connected_accounts/list", params=params)
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
 
-    @route_metadata(path="/connected_accounts/sync", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/connected_accounts/sync",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def sync(self, *, connected_account_id: str) -> None:
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
@@ -201,14 +257,29 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["connected_account_id"] = connected_account_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /connected_accounts/sync")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/sync"
+            )
 
         self.client.post("/connected_accounts/sync", json=json_payload)
 
         return None
 
-    @route_metadata(path="/connected_accounts/update", has_required_parameters=True, has_pagination=False)
-    def update(self, *, connected_account_id: str, accepted_capabilities: Optional[List[str]] = None, automatically_manage_new_devices: Optional[bool] = None, custom_metadata: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, display_name: Optional[str] = None) -> None:
+    @route_metadata(
+        path="/connected_accounts/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def update(
+        self,
+        *,
+        connected_account_id: str,
+        accepted_capabilities: Optional[List[str]] = None,
+        automatically_manage_new_devices: Optional[bool] = None,
+        custom_metadata: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        display_name: Optional[str] = None,
+    ) -> None:
         """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
@@ -231,7 +302,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if accepted_capabilities is not None:
             json_payload["accepted_capabilities"] = accepted_capabilities
         if automatically_manage_new_devices is not None:
-            json_payload["automatically_manage_new_devices"] = automatically_manage_new_devices
+            json_payload["automatically_manage_new_devices"] = (
+                automatically_manage_new_devices
+            )
         if custom_metadata is not None:
             json_payload["custom_metadata"] = custom_metadata
         if customer_key is not None:
@@ -240,7 +313,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["display_name"] = display_name
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /connected_accounts/update")
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/update"
+            )
 
         self.client.patch("/connected_accounts/update", json=json_payload)
 

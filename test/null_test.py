@@ -91,20 +91,20 @@ def sent_payloads_fixture(monkeypatch):
 
 def test_client_sends_null_params_as_json_null(sent_payloads):
     client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.post("/devices/update", json={"device_id": "a", "name": NULL})
+    client.patch("/devices/update", json={"device_id": "a", "name": NULL})
 
     assert sent_payloads == [{"device_id": "a", "name": None}]
 
 
 def test_client_sends_nested_null_params_as_json_null(sent_payloads):
     client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.post("/spaces/update", json={"customer_data": {"check_in": NULL}})
+    client.patch("/spaces/update", json={"customer_data": {"check_in": NULL}})
 
     assert sent_payloads == [{"customer_data": {"check_in": None}}]
 
 
 def test_client_passes_through_payloads_without_null_params(sent_payloads):
     client = SeamHttpClient(base_url="https://example.com", auth_headers={})
-    client.post("/devices/update", json={"device_id": "a", "name": "Front Door"})
+    client.patch("/devices/update", json={"device_id": "a", "name": "Front Door"})
 
     assert sent_payloads == [{"device_id": "a", "name": "Front Door"}]

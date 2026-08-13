@@ -7,15 +7,15 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class ConnectWebview:
     """Represents a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
-    
+
     Connect Webviews are fully-embedded client-side components that you add to your app. Your users interact with your embedded Connect Webviews to link their IoT device or system accounts to Seam. That is, Connect Webviews walk your users through the process of logging in to their device or system accounts. Seam handles all the authentication steps, and—once your user has completed the authorization through your app—you can access and control their devices or systems using the Seam API.
-    
+
     Connect Webviews perform credential validation, multifactor authentication (when applicable), and error handling for each brand that Seam supports. Further, Connect Webviews work across all modern browsers and platforms, including Chrome, Safari, and Firefox.
-    
+
     To enable a user to connect their device or system account to Seam through your app, first create a ``connect_webview``. Once created, this ``connect_webview`` includes a URL that you can use to open an `iframe <https://www.w3schools.com/html/html_iframe.asp>`_ or new window containing the Connect Webview for your user.
-    
+
     When you create a Connect Webview, specify the desired provider category key in the ``provider_category`` parameter. Alternately, to specify a list of providers explicitly, use the ``accepted_providers`` parameter with a list of device provider keys.
-    
+
     To list all providers within a category, use ``/devices/list_device_providers`` with the desired ``provider_category`` filter. To list all provider keys, use ``/devices/list_device_providers`` with no filters.
 
     :ivar accepted_capabilities: High-level device capabilities that the Connect Webview can accept. When creating a Connect Webview, you can specify the types of devices that it can connect to Seam. If you do not set custom ``accepted_capabilities``, Seam uses a default set of ``accepted_capabilities`` for each provider. For example, if you create a Connect Webview that accepts SmartThing devices, without specifying ``accepted_capabilities``, Seam accepts only SmartThings locks. To connect SmartThings thermostats and locks to Seam, create a Connect Webview and include both ``thermostat`` and ``lock`` in the ``accepted_capabilities``.
@@ -83,7 +83,9 @@ class ConnectWebview:
             accepted_providers=d.get("accepted_providers", None),
             any_provider_allowed=d.get("any_provider_allowed", None),
             authorized_at=d.get("authorized_at", None),
-            automatically_manage_new_devices=d.get("automatically_manage_new_devices", None),
+            automatically_manage_new_devices=d.get(
+                "automatically_manage_new_devices", None
+            ),
             connect_webview_id=d.get("connect_webview_id", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),

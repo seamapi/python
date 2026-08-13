@@ -52,7 +52,8 @@ class AccessMethod:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -72,19 +73,19 @@ class AccessMethod:
 
         :ivar created_at: Date and time at which the mutation was created.
 
-        :ivar from_: 
+        :ivar from_:
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code: 
+        :ivar mutation_code:
 
-        :ivar to: """
+        :ivar to:"""
 
         @dataclass
         class From(ResourceMapping):
             """
 
-            :ivar device_ids: 
+            :ivar device_ids:
 
             :ivar ends_at: Previous end time for access.
 
@@ -106,7 +107,7 @@ class AccessMethod:
         class To(ResourceMapping):
             """
 
-            :ivar device_ids: 
+            :ivar device_ids:
 
             :ivar ends_at: New end time for access.
 
@@ -134,7 +135,11 @@ class AccessMethod:
         def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
-                from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
@@ -150,7 +155,8 @@ class AccessMethod:
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
 
-        :ivar original_access_method_id: ID of the original access method from which this backup access method was split, if applicable."""
+        :ivar original_access_method_id: ID of the original access method from which this backup access method was split, if applicable.
+        """
 
         created_at: str
         message: str
@@ -203,7 +209,10 @@ class AccessMethod:
             is_ready_for_encoding=d.get("is_ready_for_encoding", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
-            pending_mutations=[cls.PendingMutations.from_dict(i) for i in d.get("pending_mutations") or []],
+            pending_mutations=[
+                cls.PendingMutations.from_dict(i)
+                for i in d.get("pending_mutations") or []
+            ],
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

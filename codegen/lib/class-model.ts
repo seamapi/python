@@ -15,7 +15,7 @@ export interface ClassMethodParameter {
 export interface ClassMethod {
   methodName: string
   path: string
-  preferredMethod: string
+  semanticMethod: string
   hasRequiredParameters: boolean
   hasPagination: boolean
   description: string

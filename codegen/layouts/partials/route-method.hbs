@@ -13,6 +13,7 @@
             raise ValueError("At least one parameter is required for {{path}}")
 {{/if}}
 
+
         {{#unless (eq returnType "None")}}res = {{/unless}}self.client.{{httpVerb}}("{{path}}", {{payloadArg}}={{payloadVar}})
 {{#if (eq returnType "ActionAttempt")}}
 

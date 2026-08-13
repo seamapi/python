@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (Space,Batch)
+from ..resources import Space, Batch
 
 
 class AbstractSpaces(abc.ABC):
@@ -20,7 +20,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def add_connected_account(self, *, connected_account_id: str, space_id: str) -> None:
+    def add_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
         """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
@@ -42,7 +44,17 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def create(self, *, name: str, acs_entrance_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, customer_data: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, device_ids: Optional[List[str]] = None, space_key: Optional[str] = None) -> Space:
+    def create(
+        self,
+        *,
+        name: str,
+        acs_entrance_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        space_key: Optional[str] = None,
+    ) -> Space:
         """Creates a new space.
 
         :param name: Name of the space that you want to create.
@@ -74,7 +86,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get(self, *, space_id: Optional[str] = None, space_key: Optional[str] = None) -> Space:
+    def get(
+        self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
+    ) -> Space:
         """Gets a space.
 
         :param space_id: ID of the space that you want to get.
@@ -87,12 +101,19 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get_related(self, *, exclude: Optional[List[str]] = None, include: Optional[List[str]] = None, space_ids: Optional[List[str]] = None, space_keys: Optional[List[str]] = None) -> Batch:
+    def get_related(
+        self,
+        *,
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+    ) -> Batch:
         """Gets all related resources for one or more Spaces.
 
-        :param exclude: 
+        :param exclude:
 
-        :param include: 
+        :param include:
 
         :param space_ids: IDs of the spaces that you want to get along with their related resources.
 
@@ -104,7 +125,15 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, customer_key: Optional[str] = None, limit: Optional[float] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_key: Optional[str] = None) -> List[Space]:
+    def list(
+        self,
+        *,
+        customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        space_key: Optional[str] = None,
+    ) -> List[Space]:
         """Returns a list of all spaces.
 
         :param customer_key: Customer key for which you want to list spaces.
@@ -121,7 +150,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def remove_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
+    def remove_acs_entrances(
+        self, *, acs_entrance_ids: List[str], space_id: str
+    ) -> None:
         """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
@@ -132,7 +163,9 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def remove_connected_account(self, *, connected_account_id: str, space_id: str) -> None:
+    def remove_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
         """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
@@ -154,7 +187,16 @@ class AbstractSpaces(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, acs_entrance_ids: Optional[List[str]] = None, customer_data: Optional[Dict[str, Any]] = None, device_ids: Optional[List[str]] = None, name: Optional[str] = None, space_id: Optional[str] = None, space_key: Optional[str] = None) -> Space:
+    def update(
+        self,
+        *,
+        acs_entrance_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_key: Optional[str] = None,
+    ) -> Space:
         """Updates an existing space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to set for the space. If specified, this will replace all existing entrances.
@@ -178,7 +220,11 @@ class Spaces(AbstractSpaces):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/spaces/add_acs_entrances", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/spaces/add_acs_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
         """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
@@ -195,14 +241,22 @@ class Spaces(AbstractSpaces):
             json_payload["space_id"] = space_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/add_acs_entrances")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_acs_entrances"
+            )
 
         self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
 
-    @route_metadata(path="/spaces/add_connected_account", has_required_parameters=True, has_pagination=False)
-    def add_connected_account(self, *, connected_account_id: str, space_id: str) -> None:
+    @route_metadata(
+        path="/spaces/add_connected_account",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def add_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
         """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
@@ -218,13 +272,17 @@ class Spaces(AbstractSpaces):
             json_payload["space_id"] = space_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/add_connected_account")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_connected_account"
+            )
 
         self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
 
-    @route_metadata(path="/spaces/add_devices", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/spaces/add_devices", has_required_parameters=True, has_pagination=False
+    )
     def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Adds devices to a specific space.
 
@@ -241,14 +299,28 @@ class Spaces(AbstractSpaces):
             json_payload["space_id"] = space_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/add_devices")
+            raise ValueError(
+                "At least one parameter is required for /spaces/add_devices"
+            )
 
         self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
 
-    @route_metadata(path="/spaces/create", has_required_parameters=True, has_pagination=False)
-    def create(self, *, name: str, acs_entrance_ids: Optional[List[str]] = None, connected_account_ids: Optional[List[str]] = None, customer_data: Optional[Dict[str, Any]] = None, customer_key: Optional[str] = None, device_ids: Optional[List[str]] = None, space_key: Optional[str] = None) -> Space:
+    @route_metadata(
+        path="/spaces/create", has_required_parameters=True, has_pagination=False
+    )
+    def create(
+        self,
+        *,
+        name: str,
+        acs_entrance_ids: Optional[List[str]] = None,
+        connected_account_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        customer_key: Optional[str] = None,
+        device_ids: Optional[List[str]] = None,
+        space_key: Optional[str] = None,
+    ) -> Space:
         """Creates a new space.
 
         :param name: Name of the space that you want to create.
@@ -292,7 +364,9 @@ class Spaces(AbstractSpaces):
 
         return Space.from_dict(res["space"])
 
-    @route_metadata(path="/spaces/delete", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/spaces/delete", has_required_parameters=True, has_pagination=False
+    )
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
@@ -311,8 +385,12 @@ class Spaces(AbstractSpaces):
 
         return None
 
-    @route_metadata(path="/spaces/get", has_required_parameters=True, has_pagination=False)
-    def get(self, *, space_id: Optional[str] = None, space_key: Optional[str] = None) -> Space:
+    @route_metadata(
+        path="/spaces/get", has_required_parameters=True, has_pagination=False
+    )
+    def get(
+        self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
+    ) -> Space:
         """Gets a space.
 
         :param space_id: ID of the space that you want to get.
@@ -336,13 +414,22 @@ class Spaces(AbstractSpaces):
 
         return Space.from_dict(res["space"])
 
-    @route_metadata(path="/spaces/get_related", has_required_parameters=True, has_pagination=False)
-    def get_related(self, *, exclude: Optional[List[str]] = None, include: Optional[List[str]] = None, space_ids: Optional[List[str]] = None, space_keys: Optional[List[str]] = None) -> Batch:
+    @route_metadata(
+        path="/spaces/get_related", has_required_parameters=True, has_pagination=False
+    )
+    def get_related(
+        self,
+        *,
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None,
+        space_ids: Optional[List[str]] = None,
+        space_keys: Optional[List[str]] = None,
+    ) -> Batch:
         """Gets all related resources for one or more Spaces.
 
-        :param exclude: 
+        :param exclude:
 
-        :param include: 
+        :param include:
 
         :param space_ids: IDs of the spaces that you want to get along with their related resources.
 
@@ -351,26 +438,38 @@ class Spaces(AbstractSpaces):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if exclude is not None:
-            json_payload["exclude"] = exclude
+            params["exclude"] = exclude
         if include is not None:
-            json_payload["include"] = include
+            params["include"] = include
         if space_ids is not None:
-            json_payload["space_ids"] = space_ids
+            params["space_ids"] = space_ids
         if space_keys is not None:
-            json_payload["space_keys"] = space_keys
+            params["space_keys"] = space_keys
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/get_related")
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /spaces/get_related"
+            )
 
-        res = self.client.post("/spaces/get_related", json=json_payload)
+        res = self.client.get("/spaces/get_related", params=params)
 
         return Batch.from_dict(res["batch"])
 
-    @route_metadata(path="/spaces/list", has_required_parameters=False, has_pagination=True)
-    def list(self, *, customer_key: Optional[str] = None, limit: Optional[float] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None, space_key: Optional[str] = None) -> List[Space]:
+    @route_metadata(
+        path="/spaces/list", has_required_parameters=False, has_pagination=True
+    )
+    def list(
+        self,
+        *,
+        customer_key: Optional[str] = None,
+        limit: Optional[float] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        space_key: Optional[str] = None,
+    ) -> List[Space]:
         """Returns a list of all spaces.
 
         :param customer_key: Customer key for which you want to list spaces.
@@ -401,8 +500,14 @@ class Spaces(AbstractSpaces):
 
         return [Space.from_dict(item) for item in res["spaces"]]
 
-    @route_metadata(path="/spaces/remove_acs_entrances", has_required_parameters=True, has_pagination=False)
-    def remove_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
+    @route_metadata(
+        path="/spaces/remove_acs_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def remove_acs_entrances(
+        self, *, acs_entrance_ids: List[str], space_id: str
+    ) -> None:
         """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
@@ -410,22 +515,30 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove entrances.
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
-            json_payload["acs_entrance_ids"] = acs_entrance_ids
+            params["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/remove_acs_entrances")
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_acs_entrances"
+            )
 
-        self.client.post("/spaces/remove_acs_entrances", json=json_payload)
+        self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
 
-    @route_metadata(path="/spaces/remove_connected_account", has_required_parameters=True, has_pagination=False)
-    def remove_connected_account(self, *, connected_account_id: str, space_id: str) -> None:
+    @route_metadata(
+        path="/spaces/remove_connected_account",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def remove_connected_account(
+        self, *, connected_account_id: str, space_id: str
+    ) -> None:
         """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
@@ -441,13 +554,19 @@ class Spaces(AbstractSpaces):
             params["space_id"] = space_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /spaces/remove_connected_account")
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_connected_account"
+            )
 
         self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
 
-    @route_metadata(path="/spaces/remove_devices", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/spaces/remove_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Removes devices from a specific space.
 
@@ -456,22 +575,35 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove devices.
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_ids is not None:
-            json_payload["device_ids"] = device_ids
+            params["device_ids"] = device_ids
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/remove_devices")
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /spaces/remove_devices"
+            )
 
-        self.client.post("/spaces/remove_devices", json=json_payload)
+        self.client.delete("/spaces/remove_devices", params=params)
 
         return None
 
-    @route_metadata(path="/spaces/update", has_required_parameters=False, has_pagination=False)
-    def update(self, *, acs_entrance_ids: Optional[List[str]] = None, customer_data: Optional[Dict[str, Any]] = None, device_ids: Optional[List[str]] = None, name: Optional[str] = None, space_id: Optional[str] = None, space_key: Optional[str] = None) -> Space:
+    @route_metadata(
+        path="/spaces/update", has_required_parameters=False, has_pagination=False
+    )
+    def update(
+        self,
+        *,
+        acs_entrance_ids: Optional[List[str]] = None,
+        customer_data: Optional[Dict[str, Any]] = None,
+        device_ids: Optional[List[str]] = None,
+        name: Optional[str] = None,
+        space_id: Optional[str] = None,
+        space_key: Optional[str] = None,
+    ) -> Space:
         """Updates an existing space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to set for the space. If specified, this will replace all existing entrances.

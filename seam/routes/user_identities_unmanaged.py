@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (UnmanagedUserIdentity)
+from ..resources import UnmanagedUserIdentity
 
 
 class AbstractUserIdentitiesUnmanaged(abc.ABC):
@@ -20,7 +20,14 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, created_before: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None) -> List[UnmanagedUserIdentity]:
+    def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+    ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param created_before: Timestamp by which to limit returned unmanaged user identities. Returns user identities created before this timestamp.
@@ -35,9 +42,15 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, *, is_managed: bool, user_identity_id: str, user_identity_key: Optional[str] = None) -> None:
+    def update(
+        self,
+        *,
+        is_managed: bool,
+        user_identity_id: str,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
         """Updates an unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ to make it managed.
-        
+
         This endpoint can only be used to convert unmanaged user identities to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed user identities back to unmanaged.
 
         :param is_managed: Must be set to true to convert the unmanaged user identity to managed.
@@ -55,7 +68,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         self.client = client
         self.defaults = defaults
 
-    @route_metadata(path="/user_identities/unmanaged/get", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/user_identities/unmanaged/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
     def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
         """Returns a specified unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
@@ -70,14 +87,27 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             params["user_identity_id"] = user_identity_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /user_identities/unmanaged/get")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/get"
+            )
 
         res = self.client.get("/user_identities/unmanaged/get", params=params)
 
         return UnmanagedUserIdentity.from_dict(res["user_identity"])
 
-    @route_metadata(path="/user_identities/unmanaged/list", has_required_parameters=False, has_pagination=True)
-    def list(self, *, created_before: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, search: Optional[str] = None) -> List[UnmanagedUserIdentity]:
+    @route_metadata(
+        path="/user_identities/unmanaged/list",
+        has_required_parameters=False,
+        has_pagination=True,
+    )
+    def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+    ) -> List[UnmanagedUserIdentity]:
         """Returns a list of all unmanaged `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ (where is_managed = false).
 
         :param created_before: Timestamp by which to limit returned unmanaged user identities. Returns user identities created before this timestamp.
@@ -102,12 +132,24 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         res = self.client.get("/user_identities/unmanaged/list", params=params)
 
-        return [UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]]
+        return [
+            UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
+        ]
 
-    @route_metadata(path="/user_identities/unmanaged/update", has_required_parameters=True, has_pagination=False)
-    def update(self, *, is_managed: bool, user_identity_id: str, user_identity_key: Optional[str] = None) -> None:
+    @route_metadata(
+        path="/user_identities/unmanaged/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def update(
+        self,
+        *,
+        is_managed: bool,
+        user_identity_id: str,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
         """Updates an unmanaged `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ to make it managed.
-        
+
         This endpoint can only be used to convert unmanaged user identities to managed ones by setting ``is_managed`` to ``true``. It cannot be used to convert managed user identities back to unmanaged.
 
         :param is_managed: Must be set to true to convert the unmanaged user identity to managed.
@@ -127,7 +169,9 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             json_payload["user_identity_key"] = user_identity_key
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /user_identities/unmanaged/update")
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/update"
+            )
 
         self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 

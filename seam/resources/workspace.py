@@ -12,7 +12,7 @@ class Workspace:
 
     :ivar connect_partner_name: Deprecated: Use ``company_name`` instead.
 
-    :ivar connect_webview_customization: 
+    :ivar connect_webview_customization:
 
     :ivar is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 
@@ -40,7 +40,8 @@ class Workspace:
 
         :ivar primary_button_text_color: Primary button text color for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :ivar success_message: Success message for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_."""
+        :ivar success_message: Success message for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        """
 
         inviter_logo_url: Optional[str]
         logo_shape: Optional[str]
@@ -74,8 +75,16 @@ class Workspace:
         return cls(
             company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
-            connect_webview_customization=cls.ConnectWebviewCustomization.from_dict(d.get("connect_webview_customization")) if d.get("connect_webview_customization") is not None else None,
-            is_publishable_key_auth_enabled=d.get("is_publishable_key_auth_enabled", None),
+            connect_webview_customization=(
+                cls.ConnectWebviewCustomization.from_dict(
+                    d.get("connect_webview_customization")
+                )
+                if d.get("connect_webview_customization") is not None
+                else None
+            ),
+            is_publishable_key_auth_enabled=d.get(
+                "is_publishable_key_auth_enabled", None
+            ),
             is_sandbox=d.get("is_sandbox", None),
             is_suspended=d.get("is_suspended", None),
             name=d.get("name", None),

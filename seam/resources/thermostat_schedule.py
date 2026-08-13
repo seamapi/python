@@ -38,7 +38,8 @@ class ThermostatSchedule:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str

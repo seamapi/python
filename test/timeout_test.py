@@ -90,7 +90,7 @@ def test_per_request_timeout_overrides_the_client_timeout(recording_server):
     with recording_server([(200, {"devices": []})]) as (endpoint, _):
         seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint, timeout=30)
 
-        response = seam.client.post("/devices/list", json={}, timeout=10)
+        response = seam.client.get("/devices/list", params={}, timeout=10)
 
         assert response == {"devices": []}
 
@@ -101,7 +101,9 @@ def test_seam_times_out_a_slow_request():
             "seam_apikey_token",
             endpoint=endpoint,
             timeout=0.25,
-            retries=Retry(total=0),
+            # GET is idempotent, so urllib3 would retry the read timeout and
+            # raise its own error instead of surfacing the timeout.
+            retries=Retry(total=0, read=False),
         )
 
         with pytest.raises(TimeoutException):
@@ -113,12 +115,16 @@ def slow_server():
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
-        # pylint: disable-next=invalid-name
-        def do_POST(self):
+        def serve_slowly(self):
             time.sleep(5)
             self.send_response(200)
             self.send_header("content-length", "0")
             self.end_headers()
+
+        # BaseHTTPRequestHandler dispatches on these names.
+        # pylint: disable=invalid-name
+        do_GET = serve_slowly
+        do_POST = serve_slowly
 
         def log_message(self, *args):
             pass

@@ -56,7 +56,8 @@ class Phone:
 
         :ivar assa_abloy_credential_service_metadata: ASSA ABLOY Credential Service metadata for the phone.
 
-        :ivar salto_space_credential_service_metadata: Salto Space credential service metadata for the phone."""
+        :ivar salto_space_credential_service_metadata: Salto Space credential service metadata for the phone.
+        """
 
         @dataclass
         class AssaAbloyCredentialServiceMetadata(ResourceMapping):
@@ -64,7 +65,8 @@ class Phone:
 
             :ivar endpoints: Endpoints associated with the phone.
 
-            :ivar has_active_endpoint: Indicates whether the credential service has active endpoints associated with the phone."""
+            :ivar has_active_endpoint: Indicates whether the credential service has active endpoints associated with the phone.
+            """
 
             @dataclass
             class Endpoints(ResourceMapping):
@@ -90,7 +92,9 @@ class Phone:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    endpoints=[cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []],
+                    endpoints=[
+                        cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
+                    ],
                     has_active_endpoint=d.get("has_active_endpoint", None),
                 )
 
@@ -98,7 +102,8 @@ class Phone:
         class SaltoSpaceCredentialServiceMetadata(ResourceMapping):
             """Salto Space credential service metadata for the phone.
 
-            :ivar has_active_phone: Indicates whether the credential service has an active associated phone."""
+            :ivar has_active_phone: Indicates whether the credential service has an active associated phone.
+            """
 
             has_active_phone: Optional[bool]
 
@@ -108,14 +113,30 @@ class Phone:
                     has_active_phone=d.get("has_active_phone", None),
                 )
 
-        assa_abloy_credential_service_metadata: Optional[AssaAbloyCredentialServiceMetadata]
-        salto_space_credential_service_metadata: Optional[SaltoSpaceCredentialServiceMetadata]
+        assa_abloy_credential_service_metadata: Optional[
+            AssaAbloyCredentialServiceMetadata
+        ]
+        salto_space_credential_service_metadata: Optional[
+            SaltoSpaceCredentialServiceMetadata
+        ]
 
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
-                assa_abloy_credential_service_metadata=cls.AssaAbloyCredentialServiceMetadata.from_dict(d.get("assa_abloy_credential_service_metadata")) if d.get("assa_abloy_credential_service_metadata") is not None else None,
-                salto_space_credential_service_metadata=cls.SaltoSpaceCredentialServiceMetadata.from_dict(d.get("salto_space_credential_service_metadata")) if d.get("salto_space_credential_service_metadata") is not None else None,
+                assa_abloy_credential_service_metadata=(
+                    cls.AssaAbloyCredentialServiceMetadata.from_dict(
+                        d.get("assa_abloy_credential_service_metadata")
+                    )
+                    if d.get("assa_abloy_credential_service_metadata") is not None
+                    else None
+                ),
+                salto_space_credential_service_metadata=(
+                    cls.SaltoSpaceCredentialServiceMetadata.from_dict(
+                        d.get("salto_space_credential_service_metadata")
+                    )
+                    if d.get("salto_space_credential_service_metadata") is not None
+                    else None
+                ),
             )
 
     @dataclass
@@ -161,7 +182,11 @@ class Phone:
             display_name=d.get("display_name", None),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             nickname=d.get("nickname", None),
-            properties=cls.Properties.from_dict(d.get("properties")) if d.get("properties") is not None else None,
+            properties=(
+                cls.Properties.from_dict(d.get("properties"))
+                if d.get("properties") is not None
+                else None
+            ),
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

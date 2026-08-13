@@ -70,7 +70,8 @@ class UnmanagedDevice:
 
     :ivar warnings: Array of warnings associated with the device. Each warning object within the array contains two fields: ``warning_code`` and ``message``. ``warning_code`` is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
 
-    :ivar workspace_id: Unique identifier for the Seam workspace associated with the device."""
+    :ivar workspace_id: Unique identifier for the Seam workspace associated with the device.
+    """
 
     @dataclass
     class Errors(ResourceMapping):
@@ -80,13 +81,14 @@ class UnmanagedDevice:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: 
+        :ivar is_connected_account_error:
 
-        :ivar is_device_error: 
+        :ivar is_device_error:
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_."""
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        """
 
         created_at: str
         error_code: str
@@ -116,7 +118,8 @@ class UnmanagedDevice:
 
         :ivar time_zone: Time zone of the device location.
 
-        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location."""
+        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
+        """
 
         location_name: Optional[str]
         room_name: Optional[str]
@@ -156,7 +159,8 @@ class UnmanagedDevice:
 
         :ivar online: Indicates whether the device is online.
 
-        :ivar online_access_codes_enabled: Deprecated: use device.can_program_online_access_codes Indicates whether it is currently possible to use online access codes for the device."""
+        :ivar online_access_codes_enabled: Deprecated: use device.can_program_online_access_codes Indicates whether it is currently possible to use online access codes for the device.
+        """
 
         @dataclass
         class AccessoryKeypad(ResourceMapping):
@@ -164,13 +168,14 @@ class UnmanagedDevice:
 
             :ivar battery: Keypad battery properties.
 
-            :ivar is_connected: Indicates if an accessory keypad is connected to the device."""
+            :ivar is_connected: Indicates if an accessory keypad is connected to the device.
+            """
 
             @dataclass
             class Battery(ResourceMapping):
                 """Keypad battery properties.
 
-                :ivar level: """
+                :ivar level:"""
 
                 level: float
 
@@ -186,7 +191,11 @@ class UnmanagedDevice:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    battery=cls.Battery.from_dict(d.get("battery")) if d.get("battery") is not None else None,
+                    battery=(
+                        cls.Battery.from_dict(d.get("battery"))
+                        if d.get("battery") is not None
+                        else None
+                    ),
                     is_connected=d.get("is_connected", None),
                 )
 
@@ -196,7 +205,8 @@ class UnmanagedDevice:
 
             :ivar level: Battery charge level as a value between 0 and 1, inclusive.
 
-            :ivar status: Represents the current status of the battery charge level. Values are ``critical``, which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; ``low``, which signifies that the battery is under the preferred threshold and should be charged soon; ``good``, which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and ``full``, which represents a battery that is fully charged, providing the maximum duration of usage."""
+            :ivar status: Represents the current status of the battery charge level. Values are ``critical``, which indicates an extremely low level, suggesting imminent shutdown or an urgent need for charging; ``low``, which signifies that the battery is under the preferred threshold and should be charged soon; ``good``, which denotes a satisfactory charge level, adequate for normal use without the immediate need for recharging; and ``full``, which represents a battery that is fully charged, providing the maximum duration of usage.
+            """
 
             level: float
             status: str
@@ -224,7 +234,8 @@ class UnmanagedDevice:
 
             :ivar offline_access_codes_supported: Deprecated: use device.can_program_offline_access_codes.
 
-            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes."""
+            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes.
+            """
 
             accessory_keypad_supported: Optional[bool]
             can_connect_accessory_keypad: Optional[bool]
@@ -237,13 +248,21 @@ class UnmanagedDevice:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    accessory_keypad_supported=d.get("accessory_keypad_supported", None),
-                    can_connect_accessory_keypad=d.get("can_connect_accessory_keypad", None),
+                    accessory_keypad_supported=d.get(
+                        "accessory_keypad_supported", None
+                    ),
+                    can_connect_accessory_keypad=d.get(
+                        "can_connect_accessory_keypad", None
+                    ),
                     display_name=d.get("display_name", None),
                     has_built_in_keypad=d.get("has_built_in_keypad", None),
                     manufacturer_display_name=d.get("manufacturer_display_name", None),
-                    offline_access_codes_supported=d.get("offline_access_codes_supported", None),
-                    online_access_codes_supported=d.get("online_access_codes_supported", None),
+                    offline_access_codes_supported=d.get(
+                        "offline_access_codes_supported", None
+                    ),
+                    online_access_codes_supported=d.get(
+                        "online_access_codes_supported", None
+                    ),
                 )
 
         accessory_keypad: Optional[AccessoryKeypad]
@@ -261,15 +280,29 @@ class UnmanagedDevice:
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
-                accessory_keypad=cls.AccessoryKeypad.from_dict(d.get("accessory_keypad")) if d.get("accessory_keypad") is not None else None,
-                battery=cls.Battery.from_dict(d.get("battery")) if d.get("battery") is not None else None,
+                accessory_keypad=(
+                    cls.AccessoryKeypad.from_dict(d.get("accessory_keypad"))
+                    if d.get("accessory_keypad") is not None
+                    else None
+                ),
+                battery=(
+                    cls.Battery.from_dict(d.get("battery"))
+                    if d.get("battery") is not None
+                    else None
+                ),
                 battery_level=d.get("battery_level", None),
                 image_alt_text=d.get("image_alt_text", None),
                 image_url=d.get("image_url", None),
                 manufacturer=d.get("manufacturer", None),
-                model=cls.Model.from_dict(d.get("model")) if d.get("model") is not None else None,
+                model=(
+                    cls.Model.from_dict(d.get("model"))
+                    if d.get("model") is not None
+                    else None
+                ),
                 name=d.get("name", None),
-                offline_access_codes_enabled=d.get("offline_access_codes_enabled", None),
+                offline_access_codes_enabled=d.get(
+                    "offline_access_codes_enabled", None
+                ),
                 online=d.get("online", None),
                 online_access_codes_enabled=d.get("online_access_codes_enabled", None),
             )
@@ -286,7 +319,8 @@ class UnmanagedDevice:
 
         :ivar active_access_code_count: Number of active access codes on the device when the warning was set.
 
-        :ivar max_active_access_code_count: Maximum number of active access codes supported by the device."""
+        :ivar max_active_access_code_count: Maximum number of active access codes supported by the device.
+        """
 
         created_at: str
         message: str
@@ -301,7 +335,9 @@ class UnmanagedDevice:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
                 active_access_code_count=d.get("active_access_code_count", None),
-                max_active_access_code_count=d.get("max_active_access_code_count", None),
+                max_active_access_code_count=d.get(
+                    "max_active_access_code_count", None
+                ),
             )
 
     can_configure_auto_lock: Optional[bool]
@@ -344,19 +380,33 @@ class UnmanagedDevice:
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
-            can_program_offline_access_codes=d.get("can_program_offline_access_codes", None),
-            can_program_online_access_codes=d.get("can_program_online_access_codes", None),
-            can_program_thermostat_programs_as_different_each_day=d.get("can_program_thermostat_programs_as_different_each_day", None),
-            can_program_thermostat_programs_as_same_each_day=d.get("can_program_thermostat_programs_as_same_each_day", None),
-            can_program_thermostat_programs_as_weekday_weekend=d.get("can_program_thermostat_programs_as_weekday_weekend", None),
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
+            can_program_online_access_codes=d.get(
+                "can_program_online_access_codes", None
+            ),
+            can_program_thermostat_programs_as_different_each_day=d.get(
+                "can_program_thermostat_programs_as_different_each_day", None
+            ),
+            can_program_thermostat_programs_as_same_each_day=d.get(
+                "can_program_thermostat_programs_as_same_each_day", None
+            ),
+            can_program_thermostat_programs_as_weekday_weekend=d.get(
+                "can_program_thermostat_programs_as_weekday_weekend", None
+            ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
-            can_simulate_hub_disconnection=d.get("can_simulate_hub_disconnection", None),
-            can_simulate_paid_subscription=d.get("can_simulate_paid_subscription", None),
+            can_simulate_hub_disconnection=d.get(
+                "can_simulate_hub_disconnection", None
+            ),
+            can_simulate_paid_subscription=d.get(
+                "can_simulate_paid_subscription", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
@@ -368,8 +418,16 @@ class UnmanagedDevice:
             device_type=d.get("device_type", None),
             errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             is_managed=d.get("is_managed", None),
-            location=cls.Location.from_dict(d.get("location")) if d.get("location") is not None else None,
-            properties=cls.Properties.from_dict(d.get("properties")) if d.get("properties") is not None else None,
+            location=(
+                cls.Location.from_dict(d.get("location"))
+                if d.get("location") is not None
+                else None
+            ),
+            properties=(
+                cls.Properties.from_dict(d.get("properties"))
+                if d.get("properties") is not None
+                else None
+            ),
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             workspace_id=d.get("workspace_id", None),
         )

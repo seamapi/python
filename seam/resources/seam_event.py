@@ -8,17 +8,17 @@ from ..utils.resource_mapping import ResourceMapping
 class SeamEvent:
     """
 
-    :ivar access_code_id: 
+    :ivar access_code_id:
 
-    :ivar connected_account_custom_metadata: 
+    :ivar connected_account_custom_metadata:
 
-    :ivar connected_account_id: 
+    :ivar connected_account_id:
 
     :ivar created_at: Date and time at which the event was created.
 
-    :ivar device_custom_metadata: 
+    :ivar device_custom_metadata:
 
-    :ivar device_id: 
+    :ivar device_id:
 
     :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
 
@@ -36,13 +36,13 @@ class SeamEvent:
 
     :ivar description: Human-readable description of the change and its source.
 
-    :ivar from_: 
+    :ivar from_:
 
-    :ivar to: 
+    :ivar to:
 
     :ivar requested_mutations: Array of mutations requested on the access code, each containing the mutation type and from/to values.
 
-    :ivar code: 
+    :ivar code:
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -60,7 +60,7 @@ class SeamEvent:
 
     :ivar access_grant_id: ID of the affected Access Grant.
 
-    :ivar acs_entrance_id: 
+    :ivar acs_entrance_id:
 
     :ivar access_grant_key: Key of the affected Access Grant (if present).
 
@@ -96,11 +96,11 @@ class SeamEvent:
 
     :ivar client_session_id: ID of the affected client session.
 
-    :ivar connect_webview_id: 
+    :ivar connect_webview_id:
 
-    :ivar customer_key: 
+    :ivar customer_key:
 
-    :ivar action_attempt_id: 
+    :ivar action_attempt_id:
 
     :ivar action_type: Type of the action.
 
@@ -112,7 +112,7 @@ class SeamEvent:
 
     :ivar battery_status: Battery status of the affected device, calculated from the numeric ``battery_level`` value.
 
-    :ivar device_name: 
+    :ivar device_name:
 
     :ivar minut_metadata: Metadata from Minut.
 
@@ -128,11 +128,11 @@ class SeamEvent:
 
     :ivar access_code_is_managed: Whether the access code is managed by Seam (true) or unmanaged (false). Only present when access_code_id is set.
 
-    :ivar is_via_bluetooth: 
+    :ivar is_via_bluetooth:
 
-    :ivar is_via_nfc: 
+    :ivar is_via_nfc:
 
-    :ivar method: 
+    :ivar method:
 
     :ivar reason: Why access was denied, when the provider reports a determinable cause. Omitted when unknown.
 
@@ -172,15 +172,15 @@ class SeamEvent:
 
     :ivar activation_reason: The reason the camera was activated.
 
-    :ivar image_url: 
+    :ivar image_url:
 
     :ivar motion_sub_type: Sub-type of motion detected, if available.
 
-    :ivar video_url: 
+    :ivar video_url:
 
-    :ivar acs_entrance_ids: 
+    :ivar acs_entrance_ids:
 
-    :ivar device_ids: 
+    :ivar device_ids:
 
     :ivar space_id: ID of the affected space.
 
@@ -268,7 +268,8 @@ class SeamEvent:
 
         :ivar mutation_code: Code identifying the type of mutation requested, such as ``updating_name``, ``updating_code``, ``updating_time_frame``, or ``deleting``.
 
-        :ivar to: New property values after the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``."""
+        :ivar to: New property values after the requested change. Keys depend on the mutation type. Absent for non-property mutations like ``deleting``.
+        """
 
         from_: Optional[Dict[str, Any]]
         mutation_code: str
@@ -290,7 +291,8 @@ class SeamEvent:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -312,7 +314,8 @@ class SeamEvent:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
 
         created_at: str
         message: str
@@ -334,7 +337,8 @@ class SeamEvent:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -356,7 +360,8 @@ class SeamEvent:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
 
         created_at: str
         message: str
@@ -378,7 +383,8 @@ class SeamEvent:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -400,7 +406,8 @@ class SeamEvent:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
 
         created_at: str
         message: str
@@ -422,7 +429,8 @@ class SeamEvent:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it."""
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
 
         created_at: str
         error_code: str
@@ -444,7 +452,8 @@ class SeamEvent:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue."""
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
 
         created_at: str
         message: str
@@ -464,7 +473,8 @@ class SeamEvent:
 
         :ivar message: Human-readable explanation of why access was denied.
 
-        :ivar reason_code: Normalized reason a lock denied access. Provider-agnostic; not all providers report every value."""
+        :ivar reason_code: Normalized reason a lock denied access. Provider-agnostic; not all providers report every value.
+        """
 
         message: str
         reason_code: str
@@ -570,7 +580,9 @@ class SeamEvent:
     def from_dict(cls, d: Any):
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=DeepAttrDict(d.get("connected_account_custom_metadata", None)),
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
@@ -581,18 +593,42 @@ class SeamEvent:
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
             change_reason=d.get("change_reason", None),
-            changed_properties=[cls.ChangedProperties.from_dict(i) for i in d.get("changed_properties") or []],
+            changed_properties=[
+                cls.ChangedProperties.from_dict(i)
+                for i in d.get("changed_properties") or []
+            ],
             description=d.get("description", None),
-            from_=cls.From.from_dict(d.get("from")) if d.get("from") is not None else None,
+            from_=(
+                cls.From.from_dict(d.get("from")) if d.get("from") is not None else None
+            ),
             to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
-            requested_mutations=[cls.RequestedMutations.from_dict(i) for i in d.get("requested_mutations") or []],
+            requested_mutations=[
+                cls.RequestedMutations.from_dict(i)
+                for i in d.get("requested_mutations") or []
+            ],
             code=d.get("code", None),
-            access_code_errors=[cls.AccessCodeErrors.from_dict(i) for i in d.get("access_code_errors") or []],
-            access_code_warnings=[cls.AccessCodeWarnings.from_dict(i) for i in d.get("access_code_warnings") or []],
-            connected_account_errors=[cls.ConnectedAccountErrors.from_dict(i) for i in d.get("connected_account_errors") or []],
-            connected_account_warnings=[cls.ConnectedAccountWarnings.from_dict(i) for i in d.get("connected_account_warnings") or []],
-            device_errors=[cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []],
-            device_warnings=[cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []],
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             backup_access_code_id=d.get("backup_access_code_id", None),
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
@@ -606,8 +642,14 @@ class SeamEvent:
             access_method_id=d.get("access_method_id", None),
             is_backup_code=d.get("is_backup_code", None),
             acs_system_id=d.get("acs_system_id", None),
-            acs_system_errors=[cls.AcsSystemErrors.from_dict(i) for i in d.get("acs_system_errors") or []],
-            acs_system_warnings=[cls.AcsSystemWarnings.from_dict(i) for i in d.get("acs_system_warnings") or []],
+            acs_system_errors=[
+                cls.AcsSystemErrors.from_dict(i)
+                for i in d.get("acs_system_errors") or []
+            ],
+            acs_system_warnings=[
+                cls.AcsSystemWarnings.from_dict(i)
+                for i in d.get("acs_system_warnings") or []
+            ],
             acs_credential_id=d.get("acs_credential_id", None),
             acs_user_id=d.get("acs_user_id", None),
             acs_encoder_id=d.get("acs_encoder_id", None),
@@ -632,7 +674,11 @@ class SeamEvent:
             is_via_bluetooth=d.get("is_via_bluetooth", None),
             is_via_nfc=d.get("is_via_nfc", None),
             method=d.get("method", None),
-            reason=cls.Reason.from_dict(d.get("reason")) if d.get("reason") is not None else None,
+            reason=(
+                cls.Reason.from_dict(d.get("reason"))
+                if d.get("reason") is not None
+                else None
+            ),
             climate_preset_key=d.get("climate_preset_key", None),
             is_fallback_climate_preset=d.get("is_fallback_climate_preset", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
@@ -649,7 +695,9 @@ class SeamEvent:
             upper_limit_celsius=d.get("upper_limit_celsius", None),
             upper_limit_fahrenheit=d.get("upper_limit_fahrenheit", None),
             desired_temperature_celsius=d.get("desired_temperature_celsius", None),
-            desired_temperature_fahrenheit=d.get("desired_temperature_fahrenheit", None),
+            desired_temperature_fahrenheit=d.get(
+                "desired_temperature_fahrenheit", None
+            ),
             activation_reason=d.get("activation_reason", None),
             image_url=d.get("image_url", None),
             motion_sub_type=d.get("motion_sub_type", None),

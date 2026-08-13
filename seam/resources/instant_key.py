@@ -7,7 +7,7 @@ from ..utils.resource_mapping import ResourceMapping
 @dataclass
 class InstantKey:
     """Represents a Seam Instant Key. For issuing Bluetooth mobile keys, Instant Keys are the fastest way to share access. With a single API call, you can create a mobile key and send it through text or email or embed it in your own app.
-    
+
     There’s no app to install, nor account to create. Your user just taps a link and gets a lightweight, native-feeling experience using iOS App Clip or Instant Apps on Android. Further, Instant Keys work offline, so even in areas with poor cellular or Wi-Fi, like elevator banks or concrete-walled hallways, the Instant Keys still work.
 
     :ivar client_session_id: ID of the client session associated with the Instant Key.
@@ -65,7 +65,11 @@ class InstantKey:
         return cls(
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
-            customization=cls.Customization.from_dict(d.get("customization")) if d.get("customization") is not None else None,
+            customization=(
+                cls.Customization.from_dict(d.get("customization"))
+                if d.get("customization") is not None
+                else None
+            ),
             customization_profile_id=d.get("customization_profile_id", None),
             expires_at=d.get("expires_at", None),
             instant_key_id=d.get("instant_key_id", None),

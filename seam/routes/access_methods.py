@@ -3,8 +3,11 @@ import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import (ActionAttempt,AccessMethod,Batch)
-from .access_methods_unmanaged import AbstractAccessMethodsUnmanaged, AccessMethodsUnmanaged
+from ..resources import ActionAttempt, AccessMethod, Batch
+from .access_methods_unmanaged import (
+    AbstractAccessMethodsUnmanaged,
+    AccessMethodsUnmanaged,
+)
 from ..modules.action_attempts import resolve_action_attempt
 
 
@@ -16,7 +19,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def assign_card(self, *, access_method_id: str, card_number: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    def assign_card(
+        self,
+        *,
+        access_method_id: str,
+        card_number: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
         :param access_method_id: ID of the ``access_method`` to assign the credential to.
@@ -31,7 +40,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, *, access_method_id: Optional[str] = None, access_grant_id: Optional[str] = None, reservation_key: Optional[str] = None) -> None:
+    def delete(
+        self,
+        *,
+        access_method_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        reservation_key: Optional[str] = None,
+    ) -> None:
         """Deletes an access method.
 
         :param access_method_id: ID of access method to delete.
@@ -44,7 +59,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def encode(self, *, access_method_id: str, acs_encoder_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    def encode(
+        self,
+        *,
+        access_method_id: str,
+        acs_encoder_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
@@ -70,14 +91,20 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get_related(self, *, access_method_ids: List[str], exclude: Optional[List[str]] = None, include: Optional[List[str]] = None) -> Batch:
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None,
+    ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
         :param access_method_ids: IDs of the access methods that you want to get along with their related resources.
 
-        :param exclude: 
+        :param exclude:
 
-        :param include: 
+        :param include:
 
         :returns: OK
 
@@ -85,7 +112,18 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def list(self, *, access_code_id: Optional[str] = None, access_grant_id: Optional[str] = None, access_grant_key: Optional[str] = None, acs_entrance_id: Optional[str] = None, device_id: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, space_id: Optional[str] = None) -> List[AccessMethod]:
+    def list(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        space_id: Optional[str] = None,
+    ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
 
         :param access_code_id: ID of the access code by which to filter the returned access methods. Must be combined with ``access_grant_id``, ``access_grant_key``, or ``acs_entrance_id``.
@@ -110,7 +148,13 @@ class AbstractAccessMethods(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def unlock_door(self, *, access_method_id: str, acs_entrance_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    def unlock_door(
+        self,
+        *,
+        access_method_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
@@ -135,8 +179,18 @@ class AccessMethods(AbstractAccessMethods):
     def unmanaged(self) -> AccessMethodsUnmanaged:
         return self._unmanaged
 
-    @route_metadata(path="/access_methods/assign_card", has_required_parameters=True, has_pagination=False)
-    def assign_card(self, *, access_method_id: str, card_number: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    @route_metadata(
+        path="/access_methods/assign_card",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def assign_card(
+        self,
+        *,
+        access_method_id: str,
+        card_number: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Assigns a pre-registered card credential, identified by ``card_number``, to a card-mode access method. Use this endpoint for access systems that use pre-registered cards, where a physical card must be associated with an access method before it can be used for access. Assigning a card credential also triggers issuance of the access method.
 
         :param access_method_id: ID of the ``access_method`` to assign the credential to.
@@ -156,7 +210,9 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["card_number"] = card_number
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /access_methods/assign_card")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/assign_card"
+            )
 
         res = self.client.post("/access_methods/assign_card", json=json_payload)
 
@@ -169,11 +225,21 @@ class AccessMethods(AbstractAccessMethods):
         return resolve_action_attempt(
             client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
-            wait_for_action_attempt=wait_for_action_attempt
+            wait_for_action_attempt=wait_for_action_attempt,
         )
 
-    @route_metadata(path="/access_methods/delete", has_required_parameters=True, has_pagination=False)
-    def delete(self, *, access_method_id: Optional[str] = None, access_grant_id: Optional[str] = None, reservation_key: Optional[str] = None) -> None:
+    @route_metadata(
+        path="/access_methods/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def delete(
+        self,
+        *,
+        access_method_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        reservation_key: Optional[str] = None,
+    ) -> None:
         """Deletes an access method.
 
         :param access_method_id: ID of access method to delete.
@@ -193,14 +259,26 @@ class AccessMethods(AbstractAccessMethods):
             params["reservation_key"] = reservation_key
 
         if not params:
-            raise ValueError("At least one parameter is required for /access_methods/delete")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/delete"
+            )
 
         self.client.delete("/access_methods/delete", params=params)
 
         return None
 
-    @route_metadata(path="/access_methods/encode", has_required_parameters=True, has_pagination=False)
-    def encode(self, *, access_method_id: str, acs_encoder_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    @route_metadata(
+        path="/access_methods/encode",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def encode(
+        self,
+        *,
+        access_method_id: str,
+        acs_encoder_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
@@ -220,7 +298,9 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["acs_encoder_id"] = acs_encoder_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /access_methods/encode")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/encode"
+            )
 
         res = self.client.post("/access_methods/encode", json=json_payload)
 
@@ -233,10 +313,12 @@ class AccessMethods(AbstractAccessMethods):
         return resolve_action_attempt(
             client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
-            wait_for_action_attempt=wait_for_action_attempt
+            wait_for_action_attempt=wait_for_action_attempt,
         )
 
-    @route_metadata(path="/access_methods/get", has_required_parameters=True, has_pagination=False)
+    @route_metadata(
+        path="/access_methods/get", has_required_parameters=True, has_pagination=False
+    )
     def get(self, *, access_method_id: str) -> AccessMethod:
         """Gets an access method.
 
@@ -251,43 +333,70 @@ class AccessMethods(AbstractAccessMethods):
             params["access_method_id"] = access_method_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /access_methods/get")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get"
+            )
 
         res = self.client.get("/access_methods/get", params=params)
 
         return AccessMethod.from_dict(res["access_method"])
 
-    @route_metadata(path="/access_methods/get_related", has_required_parameters=True, has_pagination=False)
-    def get_related(self, *, access_method_ids: List[str], exclude: Optional[List[str]] = None, include: Optional[List[str]] = None) -> Batch:
+    @route_metadata(
+        path="/access_methods/get_related",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def get_related(
+        self,
+        *,
+        access_method_ids: List[str],
+        exclude: Optional[List[str]] = None,
+        include: Optional[List[str]] = None,
+    ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
         :param access_method_ids: IDs of the access methods that you want to get along with their related resources.
 
-        :param exclude: 
+        :param exclude:
 
-        :param include: 
+        :param include:
 
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_ids is not None:
-            json_payload["access_method_ids"] = access_method_ids
+            params["access_method_ids"] = access_method_ids
         if exclude is not None:
-            json_payload["exclude"] = exclude
+            params["exclude"] = exclude
         if include is not None:
-            json_payload["include"] = include
+            params["include"] = include
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /access_methods/get_related")
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get_related"
+            )
 
-        res = self.client.post("/access_methods/get_related", json=json_payload)
+        res = self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(res["batch"])
 
-    @route_metadata(path="/access_methods/list", has_required_parameters=True, has_pagination=True)
-    def list(self, *, access_code_id: Optional[str] = None, access_grant_id: Optional[str] = None, access_grant_key: Optional[str] = None, acs_entrance_id: Optional[str] = None, device_id: Optional[str] = None, limit: Optional[int] = None, page_cursor: Optional[Union[str, Null]] = None, space_id: Optional[str] = None) -> List[AccessMethod]:
+    @route_metadata(
+        path="/access_methods/list", has_required_parameters=True, has_pagination=True
+    )
+    def list(
+        self,
+        *,
+        access_code_id: Optional[str] = None,
+        access_grant_id: Optional[str] = None,
+        access_grant_key: Optional[str] = None,
+        acs_entrance_id: Optional[str] = None,
+        device_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        space_id: Optional[str] = None,
+    ) -> List[AccessMethod]:
         """Lists all access methods, usually filtered by Access Grant.
 
         :param access_code_id: ID of the access code by which to filter the returned access methods. Must be combined with ``access_grant_id``, ``access_grant_key``, or ``acs_entrance_id``.
@@ -329,14 +438,26 @@ class AccessMethods(AbstractAccessMethods):
             params["space_id"] = space_id
 
         if not params:
-            raise ValueError("At least one parameter is required for /access_methods/list")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/list"
+            )
 
         res = self.client.get("/access_methods/list", params=params)
 
         return [AccessMethod.from_dict(item) for item in res["access_methods"]]
 
-    @route_metadata(path="/access_methods/unlock_door", has_required_parameters=True, has_pagination=False)
-    def unlock_door(self, *, access_method_id: str, acs_entrance_id: str, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None) -> ActionAttempt:
+    @route_metadata(
+        path="/access_methods/unlock_door",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def unlock_door(
+        self,
+        *,
+        access_method_id: str,
+        acs_entrance_id: str,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
+    ) -> ActionAttempt:
         """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
@@ -356,7 +477,9 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["acs_entrance_id"] = acs_entrance_id
 
         if not json_payload:
-            raise ValueError("At least one parameter is required for /access_methods/unlock_door")
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unlock_door"
+            )
 
         res = self.client.post("/access_methods/unlock_door", json=json_payload)
 
@@ -369,5 +492,5 @@ class AccessMethods(AbstractAccessMethods):
         return resolve_action_attempt(
             client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
-            wait_for_action_attempt=wait_for_action_attempt
+            wait_for_action_attempt=wait_for_action_attempt,
         )

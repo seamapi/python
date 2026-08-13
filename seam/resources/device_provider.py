@@ -54,7 +54,8 @@ class DeviceProvider:
 
     :ivar image_url: Image URL for the device provider.
 
-    :ivar provider_categories: List of provider categories to which the device provider belongs, such as ``stable``, ``consumer_smartlocks``, ``thermostats``, and so on."""
+    :ivar provider_categories: List of provider categories to which the device provider belongs, such as ``stable``, ``consumer_smartlocks``, ``thermostats``, and so on.
+    """
 
     can_configure_auto_lock: Optional[bool]
     can_hvac_cool: Optional[bool]
@@ -88,19 +89,33 @@ class DeviceProvider:
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
-            can_program_offline_access_codes=d.get("can_program_offline_access_codes", None),
-            can_program_online_access_codes=d.get("can_program_online_access_codes", None),
-            can_program_thermostat_programs_as_different_each_day=d.get("can_program_thermostat_programs_as_different_each_day", None),
-            can_program_thermostat_programs_as_same_each_day=d.get("can_program_thermostat_programs_as_same_each_day", None),
-            can_program_thermostat_programs_as_weekday_weekend=d.get("can_program_thermostat_programs_as_weekday_weekend", None),
+            can_program_offline_access_codes=d.get(
+                "can_program_offline_access_codes", None
+            ),
+            can_program_online_access_codes=d.get(
+                "can_program_online_access_codes", None
+            ),
+            can_program_thermostat_programs_as_different_each_day=d.get(
+                "can_program_thermostat_programs_as_different_each_day", None
+            ),
+            can_program_thermostat_programs_as_same_each_day=d.get(
+                "can_program_thermostat_programs_as_same_each_day", None
+            ),
+            can_program_thermostat_programs_as_weekday_weekend=d.get(
+                "can_program_thermostat_programs_as_weekday_weekend", None
+            ),
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),
-            can_simulate_hub_disconnection=d.get("can_simulate_hub_disconnection", None),
-            can_simulate_paid_subscription=d.get("can_simulate_paid_subscription", None),
+            can_simulate_hub_disconnection=d.get(
+                "can_simulate_hub_disconnection", None
+            ),
+            can_simulate_paid_subscription=d.get(
+                "can_simulate_paid_subscription", None
+            ),
             can_simulate_removal=d.get("can_simulate_removal", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
