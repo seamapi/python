@@ -59,17 +59,9 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         custom_headers = options.pop("headers", {})
 
         if "transport" not in options:
-            if retries is None:
-                retry = DEFAULT_RETRIES
-            else:
-                # Which HTTP methods the Seam API uses is not part of the
-                # SDK's public API, so a configured retry policy must apply
-                # to API requests without naming their methods.
-                retry = retries.copy_with(
-                    allowed_methods=[*retries.allowed_methods, "POST"]
-                )
-
-            options["transport"] = RetryTransport(retry=retry)
+            options["transport"] = RetryTransport(
+                retry=DEFAULT_RETRIES if retries is None else retries
+            )
 
         super().__init__(**options)
 
