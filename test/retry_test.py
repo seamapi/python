@@ -37,11 +37,6 @@ def test_default_retry_backoff_ranges(monkeypatch):
     assert second_retry.backoff_strategy() == pytest.approx(0.48)
 
 
-# The retries option has no effect on API requests because the Seam API
-# uses POST, which httpx-retries does not treat as retryable. A follow-up
-# PR will apply the retry policy to API requests without exposing the
-# HTTP method in the SDK's public API, then remove the xfail markers.
-@pytest.mark.xfail(reason="TODO: Apply the retry policy to API requests")
 def test_seam_retries_service_unavailable_responses(recording_server):
     expected_retry_count = 2
     responses = [SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE, DEVICES]
@@ -52,13 +47,13 @@ def test_seam_retries_service_unavailable_responses(recording_server):
             endpoint=endpoint,
             retries=retry_policy(total=expected_retry_count),
         )
-        devices = seam.devices.list()
+        # TODO: Use seam.devices.list() once the generated SDK route uses GET.
+        devices = seam.client.get("/devices/list")["devices"]
 
     assert len(devices) == 1
     assert len(requests) == expected_retry_count + 1
 
 
-@pytest.mark.xfail(reason="TODO: Apply the retry policy to API requests")
 def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
     expected_retry_count = 1
 
@@ -70,7 +65,8 @@ def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
         )
 
         with pytest.raises(HTTPStatusError) as exc_info:
-            seam.devices.list()
+            # TODO: Use seam.devices.list() once the generated SDK route uses GET.
+            seam.client.get("/devices/list")
 
     assert exc_info.value.response.status_code == 503
     assert len(requests) == expected_retry_count + 1
@@ -83,7 +79,8 @@ def test_seam_does_not_retry_when_retries_are_disabled(recording_server):
         )
 
         with pytest.raises(HTTPStatusError) as exc_info:
-            seam.devices.list()
+            # TODO: Use seam.devices.list() once the generated SDK route uses GET.
+            seam.client.get("/devices/list")
 
     assert exc_info.value.response.status_code == 503
     assert len(requests) == 1

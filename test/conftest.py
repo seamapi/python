@@ -71,7 +71,14 @@ def recording_server(responses):
         protocol_version = "HTTP/1.1"
 
         # pylint: disable-next=invalid-name
+        def do_GET(self):
+            self._handle_request()
+
+        # pylint: disable-next=invalid-name
         def do_POST(self):
+            self._handle_request()
+
+        def _handle_request(self):
             content_length = int(self.headers.get("content-length", 0))
             raw_body = self.rfile.read(content_length)
 
