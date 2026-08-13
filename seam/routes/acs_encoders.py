@@ -159,16 +159,6 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_encoder_id is not None,
-                access_method_id is not None,
-                acs_credential_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/encode_credential"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -177,6 +167,11 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/encode_credential"
+            )
 
         res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
 
@@ -203,12 +198,13 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_encoder_id is not None]):
-            raise ValueError("At least one parameter is required for /acs/encoders/get")
         params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             params["acs_encoder_id"] = acs_encoder_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /acs/encoders/get")
 
         res = self.client.get("/acs/encoders/get", params=params)
 
@@ -279,16 +275,17 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_encoder_id is not None, salto_ks_metadata is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_credential"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
         if salto_ks_metadata is not None:
             json_payload["salto_ks_metadata"] = salto_ks_metadata
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/scan_credential"
+            )
 
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
@@ -333,17 +330,6 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_encoder_id is not None,
-                acs_user_id is not None,
-                salto_ks_metadata is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_to_assign_credential"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -354,6 +340,11 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/scan_to_assign_credential"
+            )
 
         res = self.client.post(
             "/acs/encoders/scan_to_assign_credential", json=json_payload

@@ -147,20 +147,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                climate_preset_key is not None,
-                device_id is not None,
-                ends_at is not None,
-                starts_at is not None,
-                is_override_allowed is not None,
-                max_override_period_minutes is not None,
-                name is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -178,6 +164,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if name is not None:
             json_payload["name"] = name
 
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/create"
+            )
+
         res = self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(res["thermostat_schedule"])
@@ -193,14 +184,15 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([thermostat_schedule_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/delete"
-            )
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/delete"
+            )
 
         self.client.delete("/thermostats/schedules/delete", params=params)
 
@@ -219,14 +211,15 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([thermostat_schedule_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/get"
-            )
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/get"
+            )
 
         res = self.client.get("/thermostats/schedules/get", params=params)
 
@@ -249,16 +242,17 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, user_identifier_key is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/list"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/list"
+            )
 
         res = self.client.get("/thermostats/schedules/list", params=params)
 
@@ -299,20 +293,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                thermostat_schedule_id is not None,
-                climate_preset_key is not None,
-                ends_at is not None,
-                is_override_allowed is not None,
-                max_override_period_minutes is not None,
-                name is not None,
-                starts_at is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -329,6 +309,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/schedules/update"
+            )
 
         self.client.patch("/thermostats/schedules/update", json=json_payload)
 

@@ -88,14 +88,15 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate connecting to Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/connect"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/connect"
+            )
 
         self.client.post("/devices/simulate/connect", json=json_payload)
 
@@ -115,14 +116,15 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device whose hub you want to reconnect.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/connect_to_hub"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/connect_to_hub"
+            )
 
         self.client.post("/devices/simulate/connect_to_hub", json=json_payload)
 
@@ -139,14 +141,15 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/disconnect"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/disconnect"
+            )
 
         self.client.post("/devices/simulate/disconnect", json=json_payload)
 
@@ -167,14 +170,15 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device whose hub you want to disconnect.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/disconnect_from_hub"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/disconnect_from_hub"
+            )
 
         self.client.post("/devices/simulate/disconnect_from_hub", json=json_payload)
 
@@ -195,16 +199,17 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param is_expired:
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, is_expired is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/paid_subscription"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
         if is_expired is not None:
             json_payload["is_expired"] = is_expired
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/paid_subscription"
+            )
 
         self.client.post("/devices/simulate/paid_subscription", json=json_payload)
 
@@ -221,14 +226,15 @@ class DevicesSimulate(AbstractDevicesSimulate):
         :param device_id: ID of the device that you want to simulate removing from Seam.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/simulate/remove"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/simulate/remove"
+            )
 
         self.client.post("/devices/simulate/remove", json=json_payload)
 

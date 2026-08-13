@@ -157,16 +157,6 @@ class Locks(AbstractLocks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                auto_lock_enabled is not None,
-                device_id is not None,
-                auto_lock_delay_seconds is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /locks/configure_auto_lock"
-            )
         json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
@@ -175,6 +165,11 @@ class Locks(AbstractLocks):
             json_payload["device_id"] = device_id
         if auto_lock_delay_seconds is not None:
             json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /locks/configure_auto_lock"
+            )
 
         res = self.client.post("/locks/configure_auto_lock", json=json_payload)
 
@@ -208,14 +203,15 @@ class Locks(AbstractLocks):
 
         .. deprecated::
            Use ``/devices/get`` instead."""
-        if not any([device_id is not None, name is not None]):
-            raise ValueError("At least one parameter is required for /locks/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
+
+        if not params:
+            raise ValueError("At least one parameter is required for /locks/get")
 
         res = self.client.get("/locks/get", params=params)
 
@@ -286,12 +282,13 @@ class Locks(AbstractLocks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError("At least one parameter is required for /locks/lock_door")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /locks/lock_door")
 
         res = self.client.post("/locks/lock_door", json=json_payload)
 
@@ -325,14 +322,15 @@ class Locks(AbstractLocks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /locks/unlock_door"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /locks/unlock_door"
+            )
 
         res = self.client.post("/locks/unlock_door", json=json_payload)
 

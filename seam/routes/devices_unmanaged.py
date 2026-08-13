@@ -122,16 +122,17 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, name is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/get"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /devices/unmanaged/get"
+            )
 
         res = self.client.get("/devices/unmanaged/get", params=params)
 
@@ -241,12 +242,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [device_id is not None, custom_metadata is not None, is_managed is not None]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -255,6 +250,11 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/unmanaged/update"
+            )
 
         self.client.patch("/devices/unmanaged/update", json=json_payload)
 

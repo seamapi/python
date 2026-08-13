@@ -457,16 +457,17 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([climate_preset_key is not None, device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/activate_climate_preset"
-            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/activate_climate_preset"
+            )
 
         res = self.client.post(
             "/thermostats/activate_climate_preset", json=json_payload
@@ -508,14 +509,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                cooling_set_point_celsius is not None,
-                cooling_set_point_fahrenheit is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /thermostats/cool")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -524,6 +517,9 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /thermostats/cool")
 
         res = self.client.post("/thermostats/cool", json=json_payload)
 
@@ -587,25 +583,6 @@ class Thermostats(AbstractThermostats):
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                climate_preset_key is not None,
-                device_id is not None,
-                climate_preset_mode is not None,
-                cooling_set_point_celsius is not None,
-                cooling_set_point_fahrenheit is not None,
-                ecobee_metadata is not None,
-                fan_mode_setting is not None,
-                heating_set_point_celsius is not None,
-                heating_set_point_fahrenheit is not None,
-                hvac_mode_setting is not None,
-                manual_override_allowed is not None,
-                name is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/create_climate_preset"
-            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -633,6 +610,11 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/create_climate_preset"
+            )
+
         self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
         return None
@@ -650,16 +632,17 @@ class Thermostats(AbstractThermostats):
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([climate_preset_key is not None, device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/delete_climate_preset"
-            )
         params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             params["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/delete_climate_preset"
+            )
 
         self.client.delete("/thermostats/delete_climate_preset", params=params)
 
@@ -689,14 +672,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                heating_set_point_celsius is not None,
-                heating_set_point_fahrenheit is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /thermostats/heat")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -705,6 +680,9 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /thermostats/heat")
 
         res = self.client.post("/thermostats/heat", json=json_payload)
 
@@ -752,18 +730,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                cooling_set_point_celsius is not None,
-                cooling_set_point_fahrenheit is not None,
-                heating_set_point_celsius is not None,
-                heating_set_point_fahrenheit is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/heat_cool"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -776,6 +742,11 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/heat_cool"
+            )
 
         res = self.client.post("/thermostats/heat_cool", json=json_payload)
 
@@ -856,12 +827,13 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError("At least one parameter is required for /thermostats/off")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /thermostats/off")
 
         res = self.client.post("/thermostats/off", json=json_payload)
 
@@ -892,16 +864,17 @@ class Thermostats(AbstractThermostats):
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([climate_preset_key is not None, device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fallback_climate_preset"
-            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_fallback_climate_preset"
+            )
 
         self.client.post("/thermostats/set_fallback_climate_preset", json=json_payload)
 
@@ -933,12 +906,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [device_id is not None, fan_mode is not None, fan_mode_setting is not None]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fan_mode"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -947,6 +914,11 @@ class Thermostats(AbstractThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_fan_mode"
+            )
 
         res = self.client.post("/thermostats/set_fan_mode", json=json_payload)
 
@@ -997,19 +969,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                hvac_mode_setting is not None,
-                cooling_set_point_celsius is not None,
-                cooling_set_point_fahrenheit is not None,
-                heating_set_point_celsius is not None,
-                heating_set_point_fahrenheit is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_hvac_mode"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1024,6 +983,11 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_hvac_mode"
+            )
 
         res = self.client.post("/thermostats/set_hvac_mode", json=json_payload)
 
@@ -1066,18 +1030,6 @@ class Thermostats(AbstractThermostats):
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                lower_limit_celsius is not None,
-                lower_limit_fahrenheit is not None,
-                upper_limit_celsius is not None,
-                upper_limit_fahrenheit is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_temperature_threshold"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1090,6 +1042,11 @@ class Thermostats(AbstractThermostats):
             json_payload["upper_limit_celsius"] = upper_limit_celsius
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/set_temperature_threshold"
+            )
 
         self.client.patch("/thermostats/set_temperature_threshold", json=json_payload)
 
@@ -1143,25 +1100,6 @@ class Thermostats(AbstractThermostats):
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                climate_preset_key is not None,
-                device_id is not None,
-                climate_preset_mode is not None,
-                cooling_set_point_celsius is not None,
-                cooling_set_point_fahrenheit is not None,
-                ecobee_metadata is not None,
-                fan_mode_setting is not None,
-                heating_set_point_celsius is not None,
-                heating_set_point_fahrenheit is not None,
-                hvac_mode_setting is not None,
-                manual_override_allowed is not None,
-                name is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_climate_preset"
-            )
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1188,6 +1126,11 @@ class Thermostats(AbstractThermostats):
             json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/update_climate_preset"
+            )
 
         self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
@@ -1234,21 +1177,6 @@ class Thermostats(AbstractThermostats):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                friday_program_id is not None,
-                monday_program_id is not None,
-                saturday_program_id is not None,
-                sunday_program_id is not None,
-                thursday_program_id is not None,
-                tuesday_program_id is not None,
-                wednesday_program_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_weekly_program"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1267,6 +1195,11 @@ class Thermostats(AbstractThermostats):
             json_payload["tuesday_program_id"] = tuesday_program_id
         if wednesday_program_id is not None:
             json_payload["wednesday_program_id"] = wednesday_program_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/update_weekly_program"
+            )
 
         res = self.client.post("/thermostats/update_weekly_program", json=json_payload)
 

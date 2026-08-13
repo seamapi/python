@@ -449,33 +449,6 @@ class Customers(AbstractCustomers):
         :param users: List of users.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                customer_key is not None,
-                access_grants is not None,
-                bookings is not None,
-                buildings is not None,
-                common_areas is not None,
-                facilities is not None,
-                guests is not None,
-                listings is not None,
-                properties is not None,
-                property_listings is not None,
-                reservations is not None,
-                residents is not None,
-                rooms is not None,
-                sites is not None,
-                spaces is not None,
-                staff_members is not None,
-                tenants is not None,
-                units is not None,
-                user_identities is not None,
-                users is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /customers/push_data"
-            )
         json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:
@@ -518,6 +491,11 @@ class Customers(AbstractCustomers):
             json_payload["user_identities"] = user_identities
         if users is not None:
             json_payload["users"] = users
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /customers/push_data"
+            )
 
         self.client.post("/customers/push_data", json=json_payload)
 

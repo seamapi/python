@@ -76,16 +76,17 @@ class LocksSimulate(AbstractLocksSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([code is not None, device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/keypad_code_entry"
-            )
         json_payload: Dict[str, Any] = {}
 
         if code is not None:
             json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /locks/simulate/keypad_code_entry"
+            )
 
         res = self.client.post("/locks/simulate/keypad_code_entry", json=json_payload)
 
@@ -121,14 +122,15 @@ class LocksSimulate(AbstractLocksSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/manual_lock_via_keypad"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /locks/simulate/manual_lock_via_keypad"
+            )
 
         res = self.client.post(
             "/locks/simulate/manual_lock_via_keypad", json=json_payload

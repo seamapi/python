@@ -58,14 +58,15 @@ class InstantKeys(AbstractInstantKeys):
         :param instant_key_id: ID of the Instant Key that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([instant_key_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /instant_keys/delete"
-            )
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /instant_keys/delete"
+            )
 
         self.client.delete("/instant_keys/delete", params=params)
 
@@ -89,14 +90,15 @@ class InstantKeys(AbstractInstantKeys):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([instant_key_id is not None, instant_key_url is not None]):
-            raise ValueError("At least one parameter is required for /instant_keys/get")
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
         if instant_key_url is not None:
             params["instant_key_url"] = instant_key_url
+
+        if not params:
+            raise ValueError("At least one parameter is required for /instant_keys/get")
 
         res = self.client.get("/instant_keys/get", params=params)
 

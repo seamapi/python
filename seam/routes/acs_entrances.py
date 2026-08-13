@@ -134,14 +134,15 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_entrance_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/get"
-            )
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/get"
+            )
 
         res = self.client.get("/acs/entrances/get", params=params)
 
@@ -168,16 +169,6 @@ class AcsEntrances(AbstractAcsEntrances):
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_entrance_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/grant_access"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -186,6 +177,11 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/grant_access"
+            )
 
         self.client.post("/acs/entrances/grant_access", json=json_payload)
 
@@ -280,16 +276,17 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_entrance_id is not None, include_if is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/list_credentials_with_access"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
             json_payload["include_if"] = include_if
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/list_credentials_with_access"
+            )
 
         res = self.client.post(
             "/acs/entrances/list_credentials_with_access", json=json_payload
@@ -318,16 +315,17 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_credential_id is not None, acs_entrance_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/unlock"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/entrances/unlock"
+            )
 
         res = self.client.post("/acs/entrances/unlock", json=json_payload)
 

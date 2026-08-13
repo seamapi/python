@@ -77,14 +77,15 @@ class Webhooks(AbstractWebhooks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([url is not None, event_types is not None]):
-            raise ValueError("At least one parameter is required for /webhooks/create")
         json_payload: Dict[str, Any] = {}
 
         if url is not None:
             json_payload["url"] = url
         if event_types is not None:
             json_payload["event_types"] = event_types
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /webhooks/create")
 
         res = self.client.post("/webhooks/create", json=json_payload)
 
@@ -99,12 +100,13 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([webhook_id is not None]):
-            raise ValueError("At least one parameter is required for /webhooks/delete")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /webhooks/delete")
 
         self.client.delete("/webhooks/delete", params=params)
 
@@ -121,12 +123,13 @@ class Webhooks(AbstractWebhooks):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([webhook_id is not None]):
-            raise ValueError("At least one parameter is required for /webhooks/get")
         params: Dict[str, Any] = {}
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /webhooks/get")
 
         res = self.client.get("/webhooks/get", params=params)
 
@@ -156,14 +159,15 @@ class Webhooks(AbstractWebhooks):
         :param webhook_id: ID of the webhook that you want to update.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([event_types is not None, webhook_id is not None]):
-            raise ValueError("At least one parameter is required for /webhooks/update")
         json_payload: Dict[str, Any] = {}
 
         if event_types is not None:
             json_payload["event_types"] = event_types
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /webhooks/update")
 
         self.client.put("/webhooks/update", json=json_payload)
 

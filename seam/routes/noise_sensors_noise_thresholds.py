@@ -139,19 +139,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                ends_daily_at is not None,
-                starts_daily_at is not None,
-                name is not None,
-                noise_threshold_decibels is not None,
-                noise_threshold_nrs is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -166,6 +153,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_decibels"] = noise_threshold_decibels
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
+            )
 
         res = self.client.post(
             "/noise_sensors/noise_thresholds/create", json=json_payload
@@ -186,16 +178,17 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param noise_threshold_id: ID of the noise threshold that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, noise_threshold_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
+            )
 
         self.client.delete("/noise_sensors/noise_thresholds/delete", params=params)
 
@@ -214,14 +207,15 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([noise_threshold_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
-            )
         params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
+            )
 
         res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
@@ -240,14 +234,15 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
+            )
 
         res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
@@ -286,20 +281,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param starts_daily_at: Time at which the noise threshold should become active daily.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                noise_threshold_id is not None,
-                ends_daily_at is not None,
-                name is not None,
-                noise_threshold_decibels is not None,
-                noise_threshold_nrs is not None,
-                starts_daily_at is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -316,6 +297,11 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
+            )
 
         self.client.put("/noise_sensors/noise_thresholds/update", json=json_payload)
 

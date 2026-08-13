@@ -49,10 +49,6 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([code is not None, device_id is not None, name is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/simulate/create_unmanaged_access_code"
-            )
         json_payload: Dict[str, Any] = {}
 
         if code is not None:
@@ -61,6 +57,11 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             json_payload["device_id"] = device_id
         if name is not None:
             json_payload["name"] = name
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/simulate/create_unmanaged_access_code"
+            )
 
         res = self.client.post(
             "/access_codes/simulate/create_unmanaged_access_code", json=json_payload

@@ -32,14 +32,15 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
         :param device_id: ID of the device for which you want to simulate the triggering of a noise threshold.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/simulate/trigger_noise_threshold"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /noise_sensors/simulate/trigger_noise_threshold"
+            )
 
         self.client.post(
             "/noise_sensors/simulate/trigger_noise_threshold", json=json_payload

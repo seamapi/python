@@ -150,23 +150,6 @@ class Workspaces(AbstractWorkspaces):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                name is not None,
-                company_name is not None,
-                connect_partner_name is not None,
-                connect_webview_customization is not None,
-                is_sandbox is not None,
-                organization_id is not None,
-                webview_logo_shape is not None,
-                webview_primary_button_color is not None,
-                webview_primary_button_text_color is not None,
-                webview_success_message is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /workspaces/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -193,6 +176,11 @@ class Workspaces(AbstractWorkspaces):
             )
         if webview_success_message is not None:
             json_payload["webview_success_message"] = webview_success_message
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /workspaces/create"
+            )
 
         res = self.client.post("/workspaces/create", json=json_payload)
 

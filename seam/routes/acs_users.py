@@ -285,16 +285,17 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to add to an access group.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_access_group_id is not None, acs_user_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/add_to_access_group"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/add_to_access_group"
+            )
 
         self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
@@ -336,19 +337,6 @@ class AcsUsers(AbstractAcsUsers):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                full_name is not None,
-                access_schedule is not None,
-                acs_access_group_ids is not None,
-                email is not None,
-                email_address is not None,
-                phone_number is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/create")
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -367,6 +355,9 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /acs/users/create")
 
         res = self.client.post("/acs/users/create", json=json_payload)
 
@@ -391,14 +382,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to delete. You must provide either acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/delete")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -407,6 +390,9 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /acs/users/delete")
 
         self.client.delete("/acs/users/delete", params=params)
 
@@ -433,14 +419,6 @@ class AcsUsers(AbstractAcsUsers):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_user_id is not None,
-                acs_system_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/get")
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -449,6 +427,9 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /acs/users/get")
 
         res = self.client.get("/acs/users/get", params=params)
 
@@ -534,16 +515,6 @@ class AcsUsers(AbstractAcsUsers):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/list_accessible_entrances"
-            )
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -552,6 +523,11 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/list_accessible_entrances"
+            )
 
         res = self.client.get("/acs/users/list_accessible_entrances", params=params)
 
@@ -578,16 +554,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_access_group_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/remove_from_access_group"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -596,6 +562,11 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/remove_from_access_group"
+            )
 
         self.client.delete("/acs/users/remove_from_access_group", params=params)
 
@@ -622,16 +593,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity for whom you want to revoke access. You can only provide acs_user_id or user_identity_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -640,6 +601,11 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
+            )
 
         self.client.post("/acs/users/revoke_access_to_all_entrances", json=json_payload)
 
@@ -664,16 +630,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to suspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/suspend"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -682,6 +638,11 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/suspend"
+            )
 
         self.client.post("/acs/users/suspend", json=json_payload)
 
@@ -706,16 +667,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to unsuspend. You can only provide acs_user_id or the combination of acs_system_id and user_identity_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/unsuspend"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -724,6 +675,11 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/users/unsuspend"
+            )
 
         self.client.post("/acs/users/unsuspend", json=json_payload)
 
@@ -766,20 +722,6 @@ class AcsUsers(AbstractAcsUsers):
         :param user_identity_id: ID of the user identity that you want to update. You can only provide acs_user_id or user_identity_id. If you provide user_identity_id, you must also provide acs_system_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_schedule is not None,
-                acs_system_id is not None,
-                acs_user_id is not None,
-                email is not None,
-                email_address is not None,
-                full_name is not None,
-                hid_acs_system_id is not None,
-                phone_number is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/update")
         json_payload: Dict[str, Any] = {}
 
         if access_schedule is not None:
@@ -800,6 +742,9 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /acs/users/update")
 
         self.client.patch("/acs/users/update", json=json_payload)
 

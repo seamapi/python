@@ -61,14 +61,15 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_method_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/get"
-            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unmanaged/get"
+            )
 
         res = self.client.get("/access_methods/unmanaged/get", params=params)
 
@@ -100,17 +101,6 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_grant_id is not None,
-                acs_entrance_id is not None,
-                device_id is not None,
-                space_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/list"
-            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -121,6 +111,11 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
             params["device_id"] = device_id
         if space_id is not None:
             params["space_id"] = space_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unmanaged/list"
+            )
 
         res = self.client.get("/access_methods/unmanaged/list", params=params)
 

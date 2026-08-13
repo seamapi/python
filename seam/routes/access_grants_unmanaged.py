@@ -88,14 +88,15 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_grant_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/unmanaged/get"
-            )
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_grants/unmanaged/get"
+            )
 
         res = self.client.get("/access_grants/unmanaged/get", params=params)
 
@@ -175,16 +176,6 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param access_grant_key: Unique key for the access grant. If not provided, the existing key will be preserved.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_grant_id is not None,
-                is_managed is not None,
-                access_grant_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/unmanaged/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -193,6 +184,11 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             json_payload["is_managed"] = is_managed
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_grants/unmanaged/update"
+            )
 
         self.client.patch("/access_grants/unmanaged/update", json=json_payload)
 

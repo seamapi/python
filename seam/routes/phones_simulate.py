@@ -63,17 +63,6 @@ class PhonesSimulate(AbstractPhonesSimulate):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                user_identity_id is not None,
-                assa_abloy_metadata is not None,
-                custom_sdk_installation_id is not None,
-                phone_metadata is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
-            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -84,6 +73,11 @@ class PhonesSimulate(AbstractPhonesSimulate):
             json_payload["custom_sdk_installation_id"] = custom_sdk_installation_id
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
+            )
 
         res = self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload

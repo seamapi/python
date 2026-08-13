@@ -83,10 +83,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, name is not None, periods is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -95,6 +91,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["name"] = name
         if periods is not None:
             json_payload["periods"] = periods
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/create"
+            )
 
         res = self.client.post("/thermostats/daily_programs/create", json=json_payload)
 
@@ -111,14 +112,15 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([thermostat_daily_program_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/delete"
-            )
         params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
             params["thermostat_daily_program_id"] = thermostat_daily_program_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/delete"
+            )
 
         self.client.delete("/thermostats/daily_programs/delete", params=params)
 
@@ -150,16 +152,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                name is not None,
-                periods is not None,
-                thermostat_daily_program_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -168,6 +160,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["periods"] = periods
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /thermostats/daily_programs/update"
+            )
 
         res = self.client.patch("/thermostats/daily_programs/update", json=json_payload)
 

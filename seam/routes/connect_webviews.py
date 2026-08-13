@@ -201,14 +201,15 @@ class ConnectWebviews(AbstractConnectWebviews):
         :param connect_webview_id: ID of the Connect Webview that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connect_webview_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/delete"
-            )
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /connect_webviews/delete"
+            )
 
         self.client.delete("/connect_webviews/delete", params=params)
 
@@ -227,14 +228,15 @@ class ConnectWebviews(AbstractConnectWebviews):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connect_webview_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/get"
-            )
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /connect_webviews/get"
+            )
 
         res = self.client.get("/connect_webviews/get", params=params)
 

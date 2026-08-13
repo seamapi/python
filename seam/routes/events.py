@@ -151,10 +151,6 @@ class Events(AbstractEvents):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [event_id is not None, device_id is not None, event_type is not None]
-        ):
-            raise ValueError("At least one parameter is required for /events/get")
         params: Dict[str, Any] = {}
 
         if event_id is not None:
@@ -163,6 +159,9 @@ class Events(AbstractEvents):
             params["device_id"] = device_id
         if event_type is not None:
             params["event_type"] = event_type
+
+        if not params:
+            raise ValueError("At least one parameter is required for /events/get")
 
         res = self.client.get("/events/get", params=params)
 
@@ -264,39 +263,6 @@ class Events(AbstractEvents):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_id is not None,
-                access_code_ids is not None,
-                access_grant_id is not None,
-                access_grant_ids is not None,
-                access_method_id is not None,
-                access_method_ids is not None,
-                acs_access_group_id is not None,
-                acs_credential_id is not None,
-                acs_encoder_id is not None,
-                acs_entrance_id is not None,
-                acs_system_id is not None,
-                acs_system_ids is not None,
-                acs_user_id is not None,
-                between is not None,
-                connect_webview_id is not None,
-                connected_account_id is not None,
-                customer_key is not None,
-                device_id is not None,
-                device_ids is not None,
-                event_ids is not None,
-                event_type is not None,
-                event_types is not None,
-                limit is not None,
-                since is not None,
-                space_id is not None,
-                space_ids is not None,
-                unstable_offset is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /events/list")
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -355,6 +321,9 @@ class Events(AbstractEvents):
             json_payload["unstable_offset"] = unstable_offset
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /events/list")
 
         res = self.client.post("/events/list", json=json_payload)
 

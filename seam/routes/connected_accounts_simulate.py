@@ -32,14 +32,15 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connected_account_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/simulate/disconnect"
-            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/simulate/disconnect"
+            )
 
         self.client.post("/connected_accounts/simulate/disconnect", json=json_payload)
 

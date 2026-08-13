@@ -1,16 +1,17 @@
     @route_metadata(path="{{path}}", has_required_parameters={{#if hasRequiredParameters}}True{{else}}False{{/if}}, has_pagination={{#if hasPagination}}True{{else}}False{{/if}})
     def {{> method-signature}}:
         """{{> method-docstring}}"""
-{{#if hasRequiredParameters}}
-        if not any([{{#each params}}{{name}} is not None{{#unless @last}}, {{/unless}}{{/each}}]):
-            raise ValueError("At least one parameter is required for {{path}}")
-{{/if}}
         {{payloadVar}}: Dict[str, Any] = {}
 
 {{#each params}}
         if {{name}} is not None:
             {{../payloadVar}}["{{name}}"] = {{name}}
 {{/each}}
+{{#if hasRequiredParameters}}
+
+        if not {{payloadVar}}:
+            raise ValueError("At least one parameter is required for {{path}}")
+{{/if}}
 
         {{#unless (eq returnType "None")}}res = {{/unless}}self.client.{{httpVerb}}("{{path}}", {{payloadArg}}={{payloadVar}})
 {{#if (eq returnType "ActionAttempt")}}

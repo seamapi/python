@@ -103,16 +103,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_encoder_id is not None,
-                error_code is not None,
-                acs_credential_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_fail"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -121,6 +111,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["error_code"] = error_code
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_fail"
+            )
 
         self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_fail", json=json_payload
@@ -143,16 +138,17 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param scenario: Scenario to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_encoder_id is not None, scenario is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_succeed"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
         if scenario is not None:
             json_payload["scenario"] = scenario
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/simulate/next_credential_encode_will_succeed"
+            )
 
         self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_succeed",
@@ -182,16 +178,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param acs_credential_id_on_seam:
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_encoder_id is not None,
-                error_code is not None,
-                acs_credential_id_on_seam is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_fail"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -200,6 +186,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["error_code"] = error_code
         if acs_credential_id_on_seam is not None:
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_fail"
+            )
 
         self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_fail", json=json_payload
@@ -228,16 +219,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         :param scenario: Scenario to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_encoder_id is not None,
-                acs_credential_id_on_seam is not None,
-                scenario is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_succeed"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -246,6 +227,11 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
         if scenario is not None:
             json_payload["scenario"] = scenario
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/encoders/simulate/next_credential_scan_will_succeed"
+            )
 
         self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_succeed",

@@ -207,16 +207,6 @@ class AcsCredentials(AbstractAcsCredentials):
         :param user_identity_id: ID of the user identity to whom you want to assign a credential. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the credential belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_credential_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/assign"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -225,6 +215,11 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/assign"
+            )
 
         self.client.patch("/acs/credentials/assign", json=json_payload)
 
@@ -283,26 +278,6 @@ class AcsCredentials(AbstractAcsCredentials):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_method is not None,
-                acs_system_id is not None,
-                acs_user_id is not None,
-                allowed_acs_entrance_ids is not None,
-                assa_abloy_vostio_metadata is not None,
-                code is not None,
-                credential_manager_acs_system_id is not None,
-                ends_at is not None,
-                is_multi_phone_sync_credential is not None,
-                salto_space_metadata is not None,
-                starts_at is not None,
-                user_identity_id is not None,
-                visionline_metadata is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_method is not None:
@@ -336,6 +311,11 @@ class AcsCredentials(AbstractAcsCredentials):
         if visionline_metadata is not None:
             json_payload["visionline_metadata"] = visionline_metadata
 
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/create"
+            )
+
         res = self.client.post("/acs/credentials/create", json=json_payload)
 
         return AcsCredential.from_dict(res["acs_credential"])
@@ -351,14 +331,15 @@ class AcsCredentials(AbstractAcsCredentials):
         :param acs_credential_id: ID of the credential that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_credential_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/delete"
-            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/delete"
+            )
 
         self.client.delete("/acs/credentials/delete", params=params)
 
@@ -375,14 +356,15 @@ class AcsCredentials(AbstractAcsCredentials):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_credential_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/get"
-            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/get"
+            )
 
         res = self.client.get("/acs/credentials/get", params=params)
 
@@ -458,14 +440,15 @@ class AcsCredentials(AbstractAcsCredentials):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_credential_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/list_accessible_entrances"
-            )
         params: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/list_accessible_entrances"
+            )
 
         res = self.client.get(
             "/acs/credentials/list_accessible_entrances", params=params
@@ -494,16 +477,6 @@ class AcsCredentials(AbstractAcsCredentials):
         :param user_identity_id: ID of the user identity from which you want to unassign a credential. You can only provide one of acs_user_id or user_identity_id.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_credential_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/unassign"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -512,6 +485,11 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/unassign"
+            )
 
         self.client.patch("/acs/credentials/unassign", json=json_payload)
 
@@ -538,12 +516,6 @@ class AcsCredentials(AbstractAcsCredentials):
         :param ends_at: Replacement date and time at which the validity of the credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after the ``starts_at`` value that you set when creating the credential.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [acs_credential_id is not None, code is not None, ends_at is not None]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/credentials/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
@@ -552,6 +524,11 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["code"] = code
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/credentials/update"
+            )
 
         self.client.patch("/acs/credentials/update", json=json_payload)
 

@@ -138,14 +138,15 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param connected_account_id: ID of the connected account that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connected_account_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/delete"
-            )
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/delete"
+            )
 
         self.client.delete("/connected_accounts/delete", params=params)
 
@@ -168,16 +169,17 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connected_account_id is not None, email is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/get"
-            )
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
         if email is not None:
             params["email"] = email
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/get"
+            )
 
         res = self.client.get("/connected_accounts/get", params=params)
 
@@ -248,14 +250,15 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param connected_account_id: ID of the connected account that you want to sync.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([connected_account_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/sync"
-            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/sync"
+            )
 
         self.client.post("/connected_accounts/sync", json=json_payload)
 
@@ -291,19 +294,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                connected_account_id is not None,
-                accepted_capabilities is not None,
-                automatically_manage_new_devices is not None,
-                custom_metadata is not None,
-                customer_key is not None,
-                display_name is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -320,6 +310,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["customer_key"] = customer_key
         if display_name is not None:
             json_payload["display_name"] = display_name
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /connected_accounts/update"
+            )
 
         self.client.patch("/connected_accounts/update", json=json_payload)
 

@@ -234,14 +234,15 @@ class ClientSessions(AbstractClientSessions):
         :param client_session_id: ID of the client session that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([client_session_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/delete"
-            )
         params: Dict[str, Any] = {}
 
         if client_session_id is not None:
             params["client_session_id"] = client_session_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/delete"
+            )
 
         self.client.delete("/client_sessions/delete", params=params)
 
@@ -353,19 +354,6 @@ class ClientSessions(AbstractClientSessions):
         :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                client_session_id is not None,
-                connect_webview_ids is not None,
-                connected_account_ids is not None,
-                user_identifier_key is not None,
-                user_identity_id is not None,
-                user_identity_ids is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/grant_access"
-            )
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
@@ -380,6 +368,11 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/grant_access"
+            )
 
         self.client.patch("/client_sessions/grant_access", json=json_payload)
 
@@ -442,14 +435,15 @@ class ClientSessions(AbstractClientSessions):
         :param client_session_id: ID of the client session that you want to revoke.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([client_session_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/revoke"
-            )
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /client_sessions/revoke"
+            )
 
         self.client.post("/client_sessions/revoke", json=json_payload)
 

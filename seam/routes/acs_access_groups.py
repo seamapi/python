@@ -138,16 +138,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_access_group_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/add_user"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -156,6 +146,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/add_user"
+            )
 
         self.client.put("/acs/access_groups/add_user", json=json_payload)
 
@@ -172,14 +167,15 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_access_group_id: ID of the access group that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_access_group_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/delete"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/delete"
+            )
 
         self.client.delete("/acs/access_groups/delete", params=params)
 
@@ -198,14 +194,15 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_access_group_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/get"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/get"
+            )
 
         res = self.client.get("/acs/access_groups/get", params=params)
 
@@ -265,14 +262,15 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_access_group_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
+            )
 
         res = self.client.get(
             "/acs/access_groups/list_accessible_entrances", params=params
@@ -293,14 +291,15 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_access_group_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_users"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_users"
+            )
 
         res = self.client.get("/acs/access_groups/list_users", params=params)
 
@@ -327,16 +326,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_access_group_id is not None,
-                acs_user_id is not None,
-                user_identity_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/remove_user"
-            )
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -345,6 +334,11 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/remove_user"
+            )
 
         self.client.delete("/acs/access_groups/remove_user", params=params)
 

@@ -69,14 +69,15 @@ class Phones(AbstractPhones):
         :param device_id: Device ID of the phone that you want to deactivate.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /phones/deactivate"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /phones/deactivate"
+            )
 
         self.client.delete("/phones/deactivate", params=params)
 
@@ -93,12 +94,13 @@ class Phones(AbstractPhones):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError("At least one parameter is required for /phones/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /phones/get")
 
         res = self.client.get("/phones/get", params=params)
 

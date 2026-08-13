@@ -90,12 +90,13 @@ class AcsSystems(AbstractAcsSystems):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_system_id is not None]):
-            raise ValueError("At least one parameter is required for /acs/systems/get")
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /acs/systems/get")
 
         res = self.client.get("/acs/systems/get", params=params)
 
@@ -152,14 +153,15 @@ class AcsSystems(AbstractAcsSystems):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_system_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
-            )
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
+            )
 
         res = self.client.get(
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
@@ -188,16 +190,6 @@ class AcsSystems(AbstractAcsSystems):
         :param acs_entrances: Array of ACS entrances to report
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_system_id is not None,
-                acs_encoders is not None,
-                acs_entrances is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/report_devices"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -206,6 +198,11 @@ class AcsSystems(AbstractAcsSystems):
             json_payload["acs_encoders"] = acs_encoders
         if acs_entrances is not None:
             json_payload["acs_entrances"] = acs_entrances
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/systems/report_devices"
+            )
 
         self.client.post("/acs/systems/report_devices", json=json_payload)
 

@@ -285,16 +285,6 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                acs_user_id is not None,
-                user_identity_id is not None,
-                user_identity_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/add_acs_user"
-            )
         json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -303,6 +293,11 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/add_acs_user"
+            )
 
         self.client.put("/user_identities/add_acs_user", json=json_payload)
 
@@ -363,14 +358,15 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/delete"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/delete"
+            )
 
         self.client.delete("/user_identities/delete", params=params)
 
@@ -399,16 +395,6 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                user_identity_id is not None,
-                customization_profile_id is not None,
-                max_use_count is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/generate_instant_key"
-            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -417,6 +403,11 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/generate_instant_key"
+            )
 
         res = self.client.post(
             "/user_identities/generate_instant_key", json=json_payload
@@ -442,16 +433,17 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None, user_identity_key is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/get"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             params["user_identity_key"] = user_identity_key
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/get"
+            )
 
         res = self.client.get("/user_identities/get", params=params)
 
@@ -470,16 +462,17 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/grant_access_to_device"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/grant_access_to_device"
+            )
 
         self.client.put("/user_identities/grant_access_to_device", json=json_payload)
 
@@ -547,14 +540,15 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_devices"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_devices"
+            )
 
         res = self.client.get("/user_identities/list_accessible_devices", params=params)
 
@@ -573,14 +567,15 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_entrances"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_entrances"
+            )
 
         res = self.client.get(
             "/user_identities/list_accessible_entrances", params=params
@@ -601,14 +596,15 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_systems"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_systems"
+            )
 
         res = self.client.get("/user_identities/list_acs_systems", params=params)
 
@@ -627,14 +623,15 @@ class UserIdentities(AbstractUserIdentities):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_users"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_users"
+            )
 
         res = self.client.get("/user_identities/list_acs_users", params=params)
 
@@ -653,16 +650,17 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([acs_user_id is not None, user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/remove_acs_user"
-            )
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/remove_acs_user"
+            )
 
         self.client.delete("/user_identities/remove_acs_user", params=params)
 
@@ -681,16 +679,17 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/revoke_access_to_device"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/revoke_access_to_device"
+            )
 
         self.client.delete("/user_identities/revoke_access_to_device", params=params)
 
@@ -723,18 +722,6 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_key: Unique key for the user identity.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                user_identity_id is not None,
-                email_address is not None,
-                full_name is not None,
-                phone_number is not None,
-                user_identity_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -747,6 +734,11 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/update"
+            )
 
         self.client.patch("/user_identities/update", json=json_payload)
 

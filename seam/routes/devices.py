@@ -181,14 +181,15 @@ class Devices(AbstractDevices):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None, name is not None]):
-            raise ValueError("At least one parameter is required for /devices/get")
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
+
+        if not params:
+            raise ValueError("At least one parameter is required for /devices/get")
 
         res = self.client.get("/devices/get", params=params)
 
@@ -328,14 +329,15 @@ class Devices(AbstractDevices):
         :param devices: Array of devices with provider metadata to update
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([devices is not None]):
-            raise ValueError(
-                "At least one parameter is required for /devices/report_provider_metadata"
-            )
         json_payload: Dict[str, Any] = {}
 
         if devices is not None:
             json_payload["devices"] = devices
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /devices/report_provider_metadata"
+            )
 
         self.client.post("/devices/report_provider_metadata", json=json_payload)
 
@@ -371,17 +373,6 @@ class Devices(AbstractDevices):
         :param properties:
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                backup_access_code_pool_enabled is not None,
-                custom_metadata is not None,
-                is_managed is not None,
-                name is not None,
-                properties is not None,
-            ]
-        ):
-            raise ValueError("At least one parameter is required for /devices/update")
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -398,6 +389,9 @@ class Devices(AbstractDevices):
             json_payload["name"] = name
         if properties is not None:
             json_payload["properties"] = properties
+
+        if not json_payload:
+            raise ValueError("At least one parameter is required for /devices/update")
 
         self.client.patch("/devices/update", json=json_payload)
 

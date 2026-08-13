@@ -201,16 +201,17 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_method_id is not None, card_number is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/assign_card"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if card_number is not None:
             json_payload["card_number"] = card_number
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/assign_card"
+            )
 
         res = self.client.post("/access_methods/assign_card", json=json_payload)
 
@@ -247,16 +248,6 @@ class AccessMethods(AbstractAccessMethods):
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_method_id is not None,
-                access_grant_id is not None,
-                reservation_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/delete"
-            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
@@ -265,6 +256,11 @@ class AccessMethods(AbstractAccessMethods):
             params["access_grant_id"] = access_grant_id
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/delete"
+            )
 
         self.client.delete("/access_methods/delete", params=params)
 
@@ -293,16 +289,17 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_method_id is not None, acs_encoder_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/encode"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/encode"
+            )
 
         res = self.client.post("/access_methods/encode", json=json_payload)
 
@@ -329,14 +326,15 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_method_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get"
-            )
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get"
+            )
 
         res = self.client.get("/access_methods/get", params=params)
 
@@ -365,12 +363,6 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [access_method_ids is not None, exclude is not None, include is not None]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get_related"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_ids is not None:
@@ -379,6 +371,11 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["exclude"] = exclude
         if include is not None:
             json_payload["include"] = include
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/get_related"
+            )
 
         res = self.client.post("/access_methods/get_related", json=json_payload)
 
@@ -420,21 +417,6 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_id is not None,
-                access_grant_id is not None,
-                access_grant_key is not None,
-                acs_entrance_id is not None,
-                device_id is not None,
-                limit is not None,
-                page_cursor is not None,
-                space_id is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/list"
-            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -453,6 +435,11 @@ class AccessMethods(AbstractAccessMethods):
             params["page_cursor"] = page_cursor
         if space_id is not None:
             params["space_id"] = space_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/list"
+            )
 
         res = self.client.get("/access_methods/list", params=params)
 
@@ -481,16 +468,17 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_method_id is not None, acs_entrance_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unlock_door"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_methods/unlock_door"
+            )
 
         res = self.client.post("/access_methods/unlock_door", json=json_payload)
 

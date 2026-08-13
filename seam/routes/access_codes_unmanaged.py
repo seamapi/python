@@ -151,17 +151,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the access code is allowed.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_id is not None,
-                allow_external_modification is not None,
-                force is not None,
-                is_external_modification_allowed is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/convert_to_managed"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -173,6 +162,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if is_external_modification_allowed is not None:
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
+            )
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/convert_to_managed"
             )
 
         self.client.patch(
@@ -192,14 +186,15 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param access_code_id: ID of the unmanaged access code that you want to delete.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_code_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/delete"
-            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
             params["access_code_id"] = access_code_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/delete"
+            )
 
         self.client.delete("/access_codes/unmanaged/delete", params=params)
 
@@ -230,12 +225,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [access_code_id is not None, code is not None, device_id is not None]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/get"
-            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -244,6 +233,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/get"
+            )
 
         res = self.client.get("/access_codes/unmanaged/get", params=params)
 
@@ -278,18 +272,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                limit is not None,
-                page_cursor is not None,
-                search is not None,
-                user_identifier_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/list"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -302,6 +284,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/list"
+            )
 
         res = self.client.get("/access_codes/unmanaged/list", params=params)
 
@@ -334,18 +321,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         :param is_external_modification_allowed: Indicates whether `external modification <https://docs.seam.co/low-level-apis/smart-locks/access-codes#external-modification>`_ of the code is allowed.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_id is not None,
-                is_managed is not None,
-                allow_external_modification is not None,
-                force is not None,
-                is_external_modification_allowed is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -359,6 +334,11 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
         if is_external_modification_allowed is not None:
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
+            )
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/unmanaged/update"
             )
 
         self.client.patch("/access_codes/unmanaged/update", json=json_payload)

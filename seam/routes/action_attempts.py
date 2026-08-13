@@ -72,14 +72,15 @@ class ActionAttempts(AbstractActionAttempts):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([action_attempt_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /action_attempts/get"
+            )
 
         res = self.client.get("/action_attempts/get", params=params)
 

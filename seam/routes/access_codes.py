@@ -446,29 +446,6 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                allow_external_modification is not None,
-                attempt_for_offline_device is not None,
-                code is not None,
-                common_code_key is not None,
-                ends_at is not None,
-                is_external_modification_allowed is not None,
-                is_offline_access_code is not None,
-                is_one_time_use is not None,
-                max_time_rounding is not None,
-                name is not None,
-                prefer_native_scheduling is not None,
-                preferred_code_length is not None,
-                starts_at is not None,
-                use_backup_access_code_pool is not None,
-                use_offline_access_code is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -505,6 +482,11 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/create"
+            )
 
         res = self.client.post("/access_codes/create", json=json_payload)
 
@@ -576,25 +558,6 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_ids is not None,
-                allow_external_modification is not None,
-                attempt_for_offline_device is not None,
-                behavior_when_code_cannot_be_shared is not None,
-                code is not None,
-                ends_at is not None,
-                is_external_modification_allowed is not None,
-                name is not None,
-                prefer_native_scheduling is not None,
-                preferred_code_length is not None,
-                starts_at is not None,
-                use_backup_access_code_pool is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create_multiple"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -626,6 +589,11 @@ class AccessCodes(AbstractAccessCodes):
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
 
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/create_multiple"
+            )
+
         res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
@@ -641,16 +609,17 @@ class AccessCodes(AbstractAccessCodes):
         :param device_id: ID of the device for which you want to delete the access code.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_code_id is not None, device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/delete"
-            )
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
             params["access_code_id"] = access_code_id
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/delete"
+            )
 
         self.client.delete("/access_codes/delete", params=params)
 
@@ -669,14 +638,15 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([device_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/generate_code"
-            )
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/generate_code"
+            )
 
         res = self.client.get("/access_codes/generate_code", params=params)
 
@@ -705,10 +675,6 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [access_code_id is not None, code is not None, device_id is not None]
-        ):
-            raise ValueError("At least one parameter is required for /access_codes/get")
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -717,6 +683,9 @@ class AccessCodes(AbstractAccessCodes):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
+
+        if not params:
+            raise ValueError("At least one parameter is required for /access_codes/get")
 
         res = self.client.get("/access_codes/get", params=params)
 
@@ -766,23 +735,6 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_ids is not None,
-                access_grant_id is not None,
-                access_grant_key is not None,
-                access_method_id is not None,
-                customer_key is not None,
-                device_id is not None,
-                limit is not None,
-                page_cursor is not None,
-                search is not None,
-                user_identifier_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/list"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_ids is not None:
@@ -805,6 +757,11 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["search"] = search
         if user_identifier_key is not None:
             json_payload["user_identifier_key"] = user_identifier_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/list"
+            )
 
         res = self.client.post("/access_codes/list", json=json_payload)
 
@@ -831,14 +788,15 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([access_code_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/pull_backup_access_code"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/pull_backup_access_code"
+            )
 
         res = self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
@@ -872,17 +830,6 @@ class AccessCodes(AbstractAccessCodes):
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                device_id is not None,
-                max_code_length is not None,
-                min_code_length is not None,
-                supported_code_lengths is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/report_device_constraints"
-            )
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -893,6 +840,11 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["min_code_length"] = min_code_length
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/report_device_constraints"
+            )
 
         self.client.post("/access_codes/report_device_constraints", json=json_payload)
 
@@ -949,24 +901,6 @@ class AccessCodes(AbstractAccessCodes):
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                access_code_id is not None,
-                allow_external_modification is not None,
-                attempt_for_offline_device is not None,
-                code is not None,
-                device_id is not None,
-                ends_at is not None,
-                is_external_modification_allowed is not None,
-                is_managed is not None,
-                name is not None,
-                starts_at is not None,
-                type is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -993,6 +927,11 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/update"
+            )
 
         self.client.put("/access_codes/update", json=json_payload)
 
@@ -1032,17 +971,6 @@ class AccessCodes(AbstractAccessCodes):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                common_code_key is not None,
-                ends_at is not None,
-                name is not None,
-                starts_at is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update_multiple"
-            )
         json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:
@@ -1053,6 +981,11 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /access_codes/update_multiple"
+            )
 
         self.client.patch("/access_codes/update_multiple", json=json_payload)
 

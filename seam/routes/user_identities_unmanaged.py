@@ -80,14 +80,15 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any([user_identity_id is not None]):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/get"
-            )
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/get"
+            )
 
         res = self.client.get("/user_identities/unmanaged/get", params=params)
 
@@ -157,16 +158,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
 
         :raises ValueError: At least one parameter must be provided."""
-        if not any(
-            [
-                is_managed is not None,
-                user_identity_id is not None,
-                user_identity_key is not None,
-            ]
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/update"
-            )
         json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:
@@ -175,6 +166,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/unmanaged/update"
+            )
 
         self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 
