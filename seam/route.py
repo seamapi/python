@@ -1,6 +1,5 @@
 from typing import Any, Callable, TypeVar, cast
 
-
 F = TypeVar("F", bound=Callable)
 
 
