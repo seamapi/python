@@ -14,13 +14,13 @@ class DeepAttrDict(dict):
     def __setitem__(self, key, value):
         if isinstance(value, dict) and not isinstance(value, DeepAttrDict):
             value = DeepAttrDict(value)
-        super(DeepAttrDict, self).__setitem__(key, value)
+        super().__setitem__(key, value)
 
     def __getitem__(self, key):
         found = self.get(key, DeepAttrDict.MARKER)
         if found is DeepAttrDict.MARKER:
             found = DeepAttrDict()
-            super(DeepAttrDict, self).__setitem__(key, found)
+            super().__setitem__(key, found)
         return found
 
     __setattr__, __getattr__ = __setitem__, __getitem__
