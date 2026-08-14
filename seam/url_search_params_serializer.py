@@ -216,11 +216,13 @@ class UrlSearchParams:
         return iter(self._pairs)
 
 
-def serialize_url_search_params(params: Params) -> str:
+def serialize_url_search_params(params: Params, *, strict: bool = False) -> str:
     """Serializes params to a URL search param query string.
 
     :param params: The params to serialize
     :type params: Mapping[str, Any]
+    :param strict: Whether to add ``_strict=true`` to non-empty query strings
+    :type strict: bool
 
     :returns: The query string, without a leading ``?``
 
@@ -228,12 +230,14 @@ def serialize_url_search_params(params: Params) -> str:
     """
 
     search_params = UrlSearchParams()
-    update_url_search_params(search_params, params)
+    update_url_search_params(search_params, params, strict=strict)
 
     return search_params.to_string()
 
 
-def update_url_search_params(search_params: UrlSearchParams, params: Params) -> None:
+def update_url_search_params(
+    search_params: UrlSearchParams, params: Params, *, strict: bool = False
+) -> None:
     """Updates existing URL search params with serialized params.
 
     Existing params are preserved unless overwritten by a serialized param.
@@ -243,12 +247,19 @@ def update_url_search_params(search_params: UrlSearchParams, params: Params) -> 
     :type search_params: UrlSearchParams
     :param params: The params to serialize
     :type params: Mapping[str, Any]
+    :param strict: Whether to add ``_strict=true`` when the result is non-empty
+    :type strict: bool
 
     :raises UnserializableParamError: If any param could not be serialized
     """
 
     _nested_update_url_search_params(search_params, params, [])
+
     search_params.sort()
+
+    if strict and len(search_params) > 0:
+        search_params.delete("_strict")
+        search_params.append("_strict", "true")
 
 
 def _nested_update_url_search_params(
