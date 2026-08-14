@@ -16,6 +16,16 @@ def test_serializes_empty_object():
     assert serialize_url_search_params({}) == ""
 
 
+def test_strict_mode_adds_strict_to_non_empty_query_strings():
+    assert serialize_url_search_params({}, strict=True) == ""
+    assert serialize_url_search_params({"foo": "d"}, strict=True) == (
+        "foo=d&_strict=true"
+    )
+    assert (
+        serialize_url_search_params({"_strict": False}, strict=True) == "_strict=true"
+    )
+
+
 def test_serializes_string():
     assert serialize_url_search_params({"foo": "d"}) == "foo=d"
     assert serialize_url_search_params({"foo": "null"}) == "foo=null"

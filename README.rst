@@ -577,7 +577,13 @@ Serializing URL search params
 
 The Seam API parses URL search params as complex types.
 If you call it with your own HTTP client,
-``serialize_url_search_params`` is exported for that purpose:
+``serialize_url_search_params`` is exported for that purpose.
+
+.. note::
+
+  The ``_strict=true`` parameter is added to any non-empty query so the Seam API
+  uses strict, schema-aware parsing. A query with no serializable params remains
+  empty.
 
 .. code-block:: python
 
@@ -604,10 +610,10 @@ as `URLSearchParams`_ does for the `reference implementation`_:
   update_url_search_params(search_params, {"device_ids": ["device1", "device2"]})
 
   list(search_params)
-  # => [('device_ids', 'device1'), ('device_ids', 'device2')]
+  # => [('device_ids', 'device1'), ('device_ids', 'device2'), ('_strict', 'true')]
 
   str(search_params)
-  # => 'device_ids=device1&device_ids=device2'
+  # => 'device_ids=device1&device_ids=device2&_strict=true'
 
 Pass either the query string or the pairs to your HTTP client.
 A client may percent-encode a few characters differently than

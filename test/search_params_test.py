@@ -31,6 +31,7 @@ def test_client_serializes_search_params(recording_server):
         "&device_ids=device1"
         "&device_ids=device2"
         "&limit=20"
+        "&_strict=true"
     )
 
 
@@ -48,7 +49,7 @@ def test_client_does_not_reencode_the_serialized_search_params(recording_server)
 
     [request] = requests
 
-    assert request["query"] == "search=a+*%7E+b"
+    assert request["query"] == "search=a+*%7E+b&_strict=true"
 
 
 def test_client_omits_search_params_set_to_none(recording_server):
@@ -59,7 +60,7 @@ def test_client_omits_search_params_set_to_none(recording_server):
 
     [request] = requests
 
-    assert request["query"] == "limit=20"
+    assert request["query"] == "limit=20&_strict=true"
 
 
 def test_client_serializes_search_params_set_to_null(recording_server):
@@ -70,7 +71,7 @@ def test_client_serializes_search_params_set_to_null(recording_server):
 
     [request] = requests
 
-    assert request["query"] == "limit=20&search="
+    assert request["query"] == "limit=20&search=&_strict=true"
 
 
 def test_client_sends_no_query_string_without_search_params(recording_server):
@@ -93,8 +94,8 @@ def test_client_serializes_search_params_of_every_verb(recording_server):
         seam.client.delete("/access_codes/delete", params={"sync": True})
 
     assert [(request["method"], request["query"]) for request in requests] == [
-        ("GET", "device_ids=device1"),
-        ("DELETE", "sync=true"),
+        ("GET", "device_ids=device1&_strict=true"),
+        ("DELETE", "sync=true&_strict=true"),
     ]
 
 
@@ -173,4 +174,4 @@ def test_client_serializes_the_search_params_of_a_generated_route(recording_serv
 
     assert request["method"] == "GET"
     assert request["path"] == "/devices/get"
-    assert request["query"] == "name=Front+Door"
+    assert request["query"] == "name=Front+Door&_strict=true"
