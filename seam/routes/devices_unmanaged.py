@@ -80,7 +80,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         self,
         *,
         device_id: str,
-        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
@@ -229,7 +229,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         self,
         *,
         device_id: str,
-        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.

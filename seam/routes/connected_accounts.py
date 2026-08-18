@@ -49,7 +49,7 @@ class AbstractConnectedAccounts(abc.ABC):
     def list(
         self,
         *,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        custom_metadata_has: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -92,7 +92,7 @@ class AbstractConnectedAccounts(abc.ABC):
         connected_account_id: str,
         accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:
@@ -194,7 +194,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     def list(
         self,
         *,
-        custom_metadata_has: Optional[Dict[str, Any]] = None,
+        custom_metadata_has: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -276,7 +276,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         connected_account_id: str,
         accepted_capabilities: Optional[List[str]] = None,
         automatically_manage_new_devices: Optional[bool] = None,
-        custom_metadata: Optional[Dict[str, Any]] = None,
+        custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:

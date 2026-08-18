@@ -120,6 +120,25 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
     return merged
   }
 
+  if (first.format === 'record' && 'valueTypes' in first) {
+    const valueTypes = occurrences.some(
+      (occurrence) =>
+        !('valueTypes' in occurrence) || occurrence.valueTypes == null,
+    )
+      ? undefined
+      : [
+          ...new Set(
+            occurrences.flatMap((occurrence) =>
+              'valueTypes' in occurrence ? (occurrence.valueTypes ?? []) : [],
+            ),
+          ),
+        ]
+    const merged = { ...first, ...docs }
+    if (valueTypes == null) delete merged.valueTypes
+    else merged.valueTypes = valueTypes
+    return merged
+  }
+
   if (first.format === 'object') {
     return {
       ...first,

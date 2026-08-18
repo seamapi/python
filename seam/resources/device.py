@@ -3275,7 +3275,7 @@ class Device:
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
-    custom_metadata: Dict[str, Any]
+    custom_metadata: Dict[str, Union[str, bool]]
     device_id: str
     device_manufacturer: Optional[DeviceManufacturer]
     device_provider: Optional[DeviceProvider]

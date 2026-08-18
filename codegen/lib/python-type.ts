@@ -9,6 +9,10 @@ type ListItemFormat = Extract<
   { format: 'list' }
 >['itemFormat']
 
+type RecordValueType = NonNullable<
+  Extract<Parameter, { format: 'record' }>['valueTypes']
+>[number]
+
 export const mapParameterToPythonType = (parameter: Parameter): string => {
   if (parameter.format === 'list') {
     return `List[${mapListItemFormatToPythonType(parameter.itemFormat)}]`
@@ -20,6 +24,10 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
 
   if (parameter.format === 'boolean') {
     return mapBooleanToPythonType(parameter.values)
+  }
+
+  if (parameter.format === 'record') {
+    return mapRecordToPythonType(parameter.valueTypes)
   }
 
   return mapScalarFormatToPythonType(parameter.format)
@@ -65,6 +73,10 @@ export const mapRequiredPropertyToPythonType = (
     return 'List[Dict[str, Any]]'
   }
 
+  if (property.format === 'record' && 'valueTypes' in property) {
+    return mapRecordToPythonType(property.valueTypes)
+  }
+
   if (property.format === 'object' && nestedClassName != null) {
     return nestedClassName
   }
@@ -76,6 +88,36 @@ const mapBooleanToPythonType = (values?: boolean[]): string =>
   values == null || values.length === 0
     ? 'bool'
     : `Literal[${values.map((value) => (value ? 'True' : 'False')).join(', ')}]`
+
+const mapRecordToPythonType = (valueTypes?: RecordValueType[]): string => {
+  const types = valueTypes?.map(mapJsonSchemaTypeToPythonType) ?? []
+  const valueType =
+    types.length === 0
+      ? 'Any'
+      : types.length === 1
+        ? (types[0] ?? 'Any')
+        : `Union[${types.join(', ')}]`
+  return `Dict[str, ${valueType}]`
+}
+
+const mapJsonSchemaTypeToPythonType = (type: RecordValueType): string => {
+  switch (type) {
+    case 'string':
+      return 'str'
+    case 'number':
+      return 'float'
+    case 'integer':
+      return 'int'
+    case 'boolean':
+      return 'bool'
+    case 'object':
+      return 'Dict[str, Any]'
+    case 'array':
+      return 'List[Any]'
+    default:
+      throw new Error(`Unsupported JSON Schema type: ${type}`)
+  }
+}
 
 const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
   switch (format) {
