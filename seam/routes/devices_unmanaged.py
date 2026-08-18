@@ -1,4 +1,4 @@
-from typing import Optional, Any, List, Dict, Union
+from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
@@ -81,7 +81,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         *,
         device_id: str,
         custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None,
+        is_managed: Optional[Literal[True]] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
@@ -230,7 +230,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         *,
         device_id: str,
         custom_metadata: Optional[Dict[str, Any]] = None,
-        is_managed: Optional[bool] = None,
+        is_managed: Optional[Literal[True]] = None,
     ) -> None:
         """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 

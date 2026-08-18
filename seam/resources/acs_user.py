@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -304,7 +304,7 @@ class AcsUser:
     external_type_display_name: Optional[str]
     full_name: Optional[str]
     hid_acs_system_id: Optional[str]
-    is_managed: bool
+    is_managed: Literal[True]
     is_suspended: Optional[bool]
     pending_mutations: Optional[List[PendingMutations]]
     phone_number: Optional[str]

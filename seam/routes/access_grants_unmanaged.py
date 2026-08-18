@@ -1,4 +1,4 @@
-from typing import Optional, Any, List, Dict, Union
+from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
@@ -52,7 +52,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         self,
         *,
         access_grant_id: str,
-        is_managed: bool,
+        is_managed: Literal[True],
         access_grant_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.
@@ -161,7 +161,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         self,
         *,
         access_grant_id: str,
-        is_managed: bool,
+        is_managed: Literal[True],
         access_grant_key: Optional[str] = None,
     ) -> None:
         """Updates an unmanaged Access Grant to make it managed.

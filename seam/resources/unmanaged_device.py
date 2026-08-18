@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -93,7 +93,7 @@ class UnmanagedDevice:
         created_at: str
         error_code: str
         is_connected_account_error: Optional[bool]
-        is_device_error: Optional[bool]
+        is_device_error: Optional[Literal[False, True]]
         message: str
         is_bridge_error: Optional[bool]
 
@@ -367,7 +367,7 @@ class UnmanagedDevice:
     device_id: str
     device_type: str
     errors: List[Errors]
-    is_managed: bool
+    is_managed: Literal[False]
     location: Optional[Location]
     properties: Optional[Properties]
     warnings: List[Warnings]

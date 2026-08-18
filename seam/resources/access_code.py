@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -159,14 +159,14 @@ class AccessCode:
 
         created_at: Optional[str]
         error_code: str
-        is_access_code_error: Optional[bool]
+        is_access_code_error: Optional[Literal[True]]
         message: str
         managed_access_code_id: Optional[str]
         unmanaged_access_code_id: Optional[str]
         change_type: Optional[str]
         modified_fields: Optional[List[ModifiedFields]]
         is_connected_account_error: Optional[bool]
-        is_device_error: Optional[bool]
+        is_device_error: Optional[Literal[False, True]]
         is_bridge_error: Optional[bool]
 
         @classmethod
@@ -345,7 +345,7 @@ class AccessCode:
     is_backup: Optional[bool]
     is_backup_access_code_available: bool
     is_external_modification_allowed: bool
-    is_managed: bool
+    is_managed: Literal[True]
     is_offline_access_code: bool
     is_one_time_use: bool
     is_scheduled_on_device: Optional[bool]

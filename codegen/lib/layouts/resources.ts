@@ -107,6 +107,19 @@ const mergeOccurrences = (occurrences: Property[], path: string): Property => {
     )
   }
 
+  if (first.format === 'boolean') {
+    const booleans = occurrences as Array<
+      Extract<Property, { format: 'boolean' }>
+    >
+    const values = booleans.some(({ values }) => values == null)
+      ? undefined
+      : [...new Set(booleans.flatMap(({ values }) => values ?? []))]
+    const merged = { ...first, ...docs }
+    if (values == null) delete merged.values
+    else merged.values = values
+    return merged
+  }
+
   if (first.format === 'object') {
     return {
       ...first,

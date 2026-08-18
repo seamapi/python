@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -223,7 +223,7 @@ class AcsAccessGroup:
     errors: List[Errors]
     external_type: str
     external_type_display_name: str
-    is_managed: bool
+    is_managed: Literal[True]
     name: str
     pending_mutations: List[PendingMutations]
     warnings: List[Warnings]

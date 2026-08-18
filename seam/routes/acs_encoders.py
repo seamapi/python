@@ -1,4 +1,4 @@
-from typing import Optional, Any, List, Dict, Union
+from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient
 from ..route import route_metadata
