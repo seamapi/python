@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -145,14 +145,14 @@ class UnmanagedAccessCode:
 
         created_at: Optional[str]
         error_code: str
-        is_access_code_error: Optional[bool]
+        is_access_code_error: Optional[Literal[True]]
         message: str
         managed_access_code_id: Optional[str]
         unmanaged_access_code_id: Optional[str]
         change_type: Optional[str]
         modified_fields: Optional[List[ModifiedFields]]
         is_connected_account_error: Optional[bool]
-        is_device_error: Optional[bool]
+        is_device_error: Optional[Literal[False, True]]
         is_bridge_error: Optional[bool]
 
         @classmethod
@@ -231,15 +231,15 @@ class UnmanagedAccessCode:
             )
 
     access_code_id: str
-    cannot_be_managed: Optional[bool]
-    cannot_delete_unmanaged_access_code: Optional[bool]
+    cannot_be_managed: Optional[Literal[True]]
+    cannot_delete_unmanaged_access_code: Optional[Literal[True]]
     code: Optional[str]
     created_at: str
     device_id: str
     dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
     ends_at: Optional[str]
     errors: List[Errors]
-    is_managed: bool
+    is_managed: Literal[False]
     name: Optional[str]
     starts_at: Optional[str]
     status: str

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -238,7 +238,7 @@ class AcsCredential:
     external_type_display_name: Optional[str]
     is_issued: Optional[bool]
     is_latest_desired_state_synced_with_provider: Optional[bool]
-    is_managed: bool
+    is_managed: Literal[True]
     is_multi_phone_sync_credential: Optional[bool]
     is_one_time_use: Optional[bool]
     issued_at: Optional[str]

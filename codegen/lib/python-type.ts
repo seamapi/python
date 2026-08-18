@@ -18,6 +18,10 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
     return parameter.isInt ? 'int' : 'float'
   }
 
+  if (parameter.format === 'boolean') {
+    return mapBooleanToPythonType(parameter.values)
+  }
+
   return mapScalarFormatToPythonType(parameter.format)
 }
 
@@ -51,6 +55,10 @@ export const mapRequiredPropertyToPythonType = (
     return property.isInt ? 'int' : 'float'
   }
 
+  if (property.format === 'boolean') {
+    return mapBooleanToPythonType(property.values)
+  }
+
   // Batch resource properties are lists of the named resource on the wire,
   // though the blueprint types them as records.
   if (property.format === 'record' && 'resourceType' in property) {
@@ -63,6 +71,11 @@ export const mapRequiredPropertyToPythonType = (
 
   return mapScalarFormatToPythonType(property.format)
 }
+
+const mapBooleanToPythonType = (values?: boolean[]): string =>
+  values == null || values.length === 0
+    ? 'bool'
+    : `Literal[${values.map((value) => (value ? 'True' : 'False')).join(', ')}]`
 
 const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
   switch (format) {
