@@ -254,42 +254,42 @@ class Devices(AbstractDevices):
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+            params["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if connected_account_ids is not None:
-            json_payload["connected_account_ids"] = connected_account_ids
+            params["connected_account_ids"] = connected_account_ids
         if created_before is not None:
-            json_payload["created_before"] = created_before
+            params["created_before"] = created_before
         if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
+            params["custom_metadata_has"] = custom_metadata_has
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if device_ids is not None:
-            json_payload["device_ids"] = device_ids
+            params["device_ids"] = device_ids
         if device_type is not None:
-            json_payload["device_type"] = device_type
+            params["device_type"] = device_type
         if device_types is not None:
-            json_payload["device_types"] = device_types
+            params["device_types"] = device_types
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if manufacturer is not None:
-            json_payload["manufacturer"] = manufacturer
+            params["manufacturer"] = manufacturer
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
         if unstable_location_id is not None:
-            json_payload["unstable_location_id"] = unstable_location_id
+            params["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/devices/list", json=json_payload)
+        res = self.client.get("/devices/list", params=params)
 
         return [Device.from_dict(item) for item in res["devices"]]
 

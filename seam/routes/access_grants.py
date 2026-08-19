@@ -407,23 +407,23 @@ class AccessGrants(AbstractAccessGrants):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_ids is not None:
-            json_payload["access_grant_ids"] = access_grant_ids
+            params["access_grant_ids"] = access_grant_ids
         if access_grant_keys is not None:
-            json_payload["access_grant_keys"] = access_grant_keys
+            params["access_grant_keys"] = access_grant_keys
         if exclude is not None:
-            json_payload["exclude"] = exclude
+            params["exclude"] = exclude
         if include is not None:
-            json_payload["include"] = include
+            params["include"] = include
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /access_grants/get_related"
             )
 
-        res = self.client.post("/access_grants/get_related", json=json_payload)
+        res = self.client.get("/access_grants/get_related", params=params)
 
         return Batch.from_dict(res["batch"])
 
@@ -476,36 +476,36 @@ class AccessGrants(AbstractAccessGrants):
         :param user_identity_id: ID of user identity by which you want to filter the list of Access Grants.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_id is not None:
-            json_payload["access_code_id"] = access_code_id
+            params["access_code_id"] = access_code_id
         if access_grant_ids is not None:
-            json_payload["access_grant_ids"] = access_grant_ids
+            params["access_grant_ids"] = access_grant_ids
         if access_grant_key is not None:
-            json_payload["access_grant_key"] = access_grant_key
+            params["access_grant_key"] = access_grant_key
         if acs_entrance_id is not None:
-            json_payload["acs_entrance_id"] = acs_entrance_id
+            params["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if location_id is not None:
-            json_payload["location_id"] = location_id
+            params["location_id"] = location_id
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if reservation_key is not None:
-            json_payload["reservation_key"] = reservation_key
+            params["reservation_key"] = reservation_key
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
         if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
+            params["user_identity_id"] = user_identity_id
 
-        res = self.client.post("/access_grants/list", json=json_payload)
+        res = self.client.get("/access_grants/list", params=params)
 
         return [AccessGrant.from_dict(item) for item in res["access_grants"]]
 

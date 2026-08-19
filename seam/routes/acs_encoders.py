@@ -236,20 +236,20 @@ class AcsEncoders(AbstractAcsEncoders):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if acs_system_ids is not None:
-            json_payload["acs_system_ids"] = acs_system_ids
+            params["acs_system_ids"] = acs_system_ids
         if acs_encoder_ids is not None:
-            json_payload["acs_encoder_ids"] = acs_encoder_ids
+            params["acs_encoder_ids"] = acs_encoder_ids
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
 
-        res = self.client.post("/acs/encoders/list", json=json_payload)
+        res = self.client.get("/acs/encoders/list", params=params)
 
         return [AcsEncoder.from_dict(item) for item in res["acs_encoders"]]
 

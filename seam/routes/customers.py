@@ -334,48 +334,48 @@ class Customers(AbstractCustomers):
         :param user_identity_keys: List of user identity keys to delete.
 
         :param user_keys: List of user keys to delete."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_grant_keys is not None:
-            json_payload["access_grant_keys"] = access_grant_keys
+            params["access_grant_keys"] = access_grant_keys
         if booking_keys is not None:
-            json_payload["booking_keys"] = booking_keys
+            params["booking_keys"] = booking_keys
         if building_keys is not None:
-            json_payload["building_keys"] = building_keys
+            params["building_keys"] = building_keys
         if common_area_keys is not None:
-            json_payload["common_area_keys"] = common_area_keys
+            params["common_area_keys"] = common_area_keys
         if customer_keys is not None:
-            json_payload["customer_keys"] = customer_keys
+            params["customer_keys"] = customer_keys
         if facility_keys is not None:
-            json_payload["facility_keys"] = facility_keys
+            params["facility_keys"] = facility_keys
         if guest_keys is not None:
-            json_payload["guest_keys"] = guest_keys
+            params["guest_keys"] = guest_keys
         if listing_keys is not None:
-            json_payload["listing_keys"] = listing_keys
+            params["listing_keys"] = listing_keys
         if property_keys is not None:
-            json_payload["property_keys"] = property_keys
+            params["property_keys"] = property_keys
         if property_listing_keys is not None:
-            json_payload["property_listing_keys"] = property_listing_keys
+            params["property_listing_keys"] = property_listing_keys
         if reservation_keys is not None:
-            json_payload["reservation_keys"] = reservation_keys
+            params["reservation_keys"] = reservation_keys
         if resident_keys is not None:
-            json_payload["resident_keys"] = resident_keys
+            params["resident_keys"] = resident_keys
         if room_keys is not None:
-            json_payload["room_keys"] = room_keys
+            params["room_keys"] = room_keys
         if space_keys is not None:
-            json_payload["space_keys"] = space_keys
+            params["space_keys"] = space_keys
         if staff_member_keys is not None:
-            json_payload["staff_member_keys"] = staff_member_keys
+            params["staff_member_keys"] = staff_member_keys
         if tenant_keys is not None:
-            json_payload["tenant_keys"] = tenant_keys
+            params["tenant_keys"] = tenant_keys
         if unit_keys is not None:
-            json_payload["unit_keys"] = unit_keys
+            params["unit_keys"] = unit_keys
         if user_identity_keys is not None:
-            json_payload["user_identity_keys"] = user_identity_keys
+            params["user_identity_keys"] = user_identity_keys
         if user_keys is not None:
-            json_payload["user_keys"] = user_keys
+            params["user_keys"] = user_keys
 
-        self.client.post("/customers/delete_data", json=json_payload)
+        self.client.delete("/customers/delete_data", params=params)
 
         return None
 

@@ -28,8 +28,8 @@
     }
   },
   "devDependencies": {
-    "@seamapi/blueprint": "^1.7.0",
-    "@seamapi/fake-seam-connect": "1.86.0",
+    "@seamapi/blueprint": "^1.8.0",
+    "@seamapi/fake-seam-connect": "2.0.4",
     "@seamapi/smith": "^1.1.0",
     "@seamapi/types": "1.1001.0",
     "change-case": "^5.4.4",

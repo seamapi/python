@@ -47,8 +47,7 @@ def test_seam_retries_service_unavailable_responses(recording_server):
             endpoint=endpoint,
             retries=retry_policy(total=expected_retry_count),
         )
-        # TODO: Use seam.devices.list() once the generated SDK route uses GET.
-        devices = seam.client.get("/devices/list")["devices"]
+        devices = seam.devices.list()
 
     assert len(devices) == 1
     assert len(requests) == expected_retry_count + 1
@@ -65,8 +64,7 @@ def test_seam_stops_retrying_once_retries_are_exhausted(recording_server):
         )
 
         with pytest.raises(HTTPStatusError) as exc_info:
-            # TODO: Use seam.devices.list() once the generated SDK route uses GET.
-            seam.client.get("/devices/list")
+            seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
     assert len(requests) == expected_retry_count + 1
@@ -79,8 +77,7 @@ def test_seam_does_not_retry_when_retries_are_disabled(recording_server):
         )
 
         with pytest.raises(HTTPStatusError) as exc_info:
-            # TODO: Use seam.devices.list() once the generated SDK route uses GET.
-            seam.client.get("/devices/list")
+            seam.devices.list()
 
     assert exc_info.value.response.status_code == 503
     assert len(requests) == 1

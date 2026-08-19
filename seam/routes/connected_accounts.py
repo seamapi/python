@@ -219,24 +219,24 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param user_identifier_key: Your user ID for the user by which you want to filter connected accounts.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if custom_metadata_has is not None:
-            json_payload["custom_metadata_has"] = custom_metadata_has
+            params["custom_metadata_has"] = custom_metadata_has
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        res = self.client.post("/connected_accounts/list", json=json_payload)
+        res = self.client.get("/connected_accounts/list", params=params)
 
         return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
 
