@@ -1,8 +1,14 @@
 # mypy: warn_unused_ignores=True
 
-from typing import Literal, assert_type
+from typing import Any, Dict, Literal, Union, assert_type
 
-from seam.resources import AccessCode, ActionAttempt, UnmanagedAccessCode
+from seam.resources import (
+    AccessCode,
+    ActionAttempt,
+    Device,
+    SeamEvent,
+    UnmanagedAccessCode,
+)
 
 
 def _assert_access_code_narrowing(
@@ -25,6 +31,15 @@ def _assert_boolean_shapes(
     assert_type(credential.is_managed, Literal[True, False])
 
 
+def _assert_record_value_types(device: Device, event: SeamEvent) -> None:
+    assert_type(device.custom_metadata, Dict[str, Union[str, bool]])
+    assert_type(
+        event.connected_account_custom_metadata,
+        Dict[str, Union[str, bool]] | None,
+    )
+    assert_type(event.minut_metadata, Dict[str, Any] | None)
+
+
 def _assert_opposite_literal_is_rejected(code: UnmanagedAccessCode) -> None:
     code.is_managed = True  # type: ignore[assignment]
 
@@ -32,4 +47,5 @@ def _assert_opposite_literal_is_rejected(code: UnmanagedAccessCode) -> None:
 def test_access_code_resources_narrow_on_is_managed():
     assert callable(_assert_access_code_narrowing)
     assert callable(_assert_boolean_shapes)
+    assert callable(_assert_record_value_types)
     assert callable(_assert_opposite_literal_is_rejected)

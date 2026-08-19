@@ -363,7 +363,7 @@ class UnmanagedDevice:
     capabilities_supported: List[str]
     connected_account_id: str
     created_at: str
-    custom_metadata: Dict[str, Any]
+    custom_metadata: Dict[str, Union[str, bool]]
     device_id: str
     device_type: str
     errors: List[Errors]

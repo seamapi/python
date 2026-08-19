@@ -243,7 +243,7 @@ class ConnectedAccount:
     automatically_manage_new_devices: bool
     connected_account_id: str
     created_at: Optional[str]
-    custom_metadata: Dict[str, Any]
+    custom_metadata: Dict[str, Union[str, bool]]
     customer_key: Optional[str]
     default_checkin_time: Optional[str]
     default_checkout_time: Optional[str]
