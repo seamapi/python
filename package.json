@@ -2,7 +2,6 @@
   "name": "@seamapi/python",
   "private": true,
   "type": "module",
-  "packageManager": "npm@11.19.0",
   "scripts": {
     "generate": "tsx codegen/smith.ts",
     "pregenerate": "node generate-readme-toc.js",
@@ -28,6 +27,7 @@
       "version": "^11.0.0 || ^10.9.4"
     }
   },
+  "packageManager": "npm@11.19.0",
   "devDependencies": {
     "@seamapi/blueprint": "^1.8.0",
     "@seamapi/fake-seam-connect": "2.0.4",
