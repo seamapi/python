@@ -364,21 +364,21 @@ class AccessMethods(AbstractAccessMethods):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_ids is not None:
-            json_payload["access_method_ids"] = access_method_ids
+            params["access_method_ids"] = access_method_ids
         if exclude is not None:
-            json_payload["exclude"] = exclude
+            params["exclude"] = exclude
         if include is not None:
-            json_payload["include"] = include
+            params["include"] = include
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /access_methods/get_related"
             )
 
-        res = self.client.post("/access_methods/get_related", json=json_payload)
+        res = self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(res["batch"])
 

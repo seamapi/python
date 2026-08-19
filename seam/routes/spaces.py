@@ -438,23 +438,23 @@ class Spaces(AbstractSpaces):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if exclude is not None:
-            json_payload["exclude"] = exclude
+            params["exclude"] = exclude
         if include is not None:
-            json_payload["include"] = include
+            params["include"] = include
         if space_ids is not None:
-            json_payload["space_ids"] = space_ids
+            params["space_ids"] = space_ids
         if space_keys is not None:
-            json_payload["space_keys"] = space_keys
+            params["space_keys"] = space_keys
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /spaces/get_related"
             )
 
-        res = self.client.post("/spaces/get_related", json=json_payload)
+        res = self.client.get("/spaces/get_related", params=params)
 
         return Batch.from_dict(res["batch"])
 
@@ -515,19 +515,19 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove entrances.
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
-            json_payload["acs_entrance_ids"] = acs_entrance_ids
+            params["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /spaces/remove_acs_entrances"
             )
 
-        self.client.post("/spaces/remove_acs_entrances", json=json_payload)
+        self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
 
@@ -575,19 +575,19 @@ class Spaces(AbstractSpaces):
         :param space_id: ID of the space from which you want to remove devices.
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if device_ids is not None:
-            json_payload["device_ids"] = device_ids
+            params["device_ids"] = device_ids
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /spaces/remove_devices"
             )
 
-        self.client.post("/spaces/remove_devices", json=json_payload)
+        self.client.delete("/spaces/remove_devices", params=params)
 
         return None
 

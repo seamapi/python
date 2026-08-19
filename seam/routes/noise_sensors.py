@@ -96,21 +96,21 @@ class NoiseSensors(AbstractNoiseSensors):
         :param manufacturer: Manufacturers of the noise sensors that you want to list.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
-            json_payload["connect_webview_id"] = connect_webview_id
+            params["connect_webview_id"] = connect_webview_id
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if device_type is not None:
-            json_payload["device_type"] = device_type
+            params["device_type"] = device_type
         if device_types is not None:
-            json_payload["device_types"] = device_types
+            params["device_types"] = device_types
         if manufacturer is not None:
-            json_payload["manufacturer"] = manufacturer
+            params["manufacturer"] = manufacturer
 
-        res = self.client.post("/noise_sensors/list", json=json_payload)
+        res = self.client.get("/noise_sensors/list", params=params)
 
         return [Device.from_dict(item) for item in res["devices"]]

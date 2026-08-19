@@ -736,35 +736,35 @@ class AccessCodes(AbstractAccessCodes):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_code_ids is not None:
-            json_payload["access_code_ids"] = access_code_ids
+            params["access_code_ids"] = access_code_ids
         if access_grant_id is not None:
-            json_payload["access_grant_id"] = access_grant_id
+            params["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
-            json_payload["access_grant_key"] = access_grant_key
+            params["access_grant_key"] = access_grant_key
         if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
+            params["access_method_id"] = access_method_id
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if device_id is not None:
-            json_payload["device_id"] = device_id
+            params["device_id"] = device_id
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if user_identifier_key is not None:
-            json_payload["user_identifier_key"] = user_identifier_key
+            params["user_identifier_key"] = user_identifier_key
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /access_codes/list"
             )
 
-        res = self.client.post("/access_codes/list", json=json_payload)
+        res = self.client.get("/access_codes/list", params=params)
 
         return [AccessCode.from_dict(item) for item in res["access_codes"]]
 

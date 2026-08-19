@@ -507,24 +507,24 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_ids: Array of user identity IDs by which to filter the list of user identities.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if created_before is not None:
-            json_payload["created_before"] = created_before
+            params["created_before"] = created_before
         if credential_manager_acs_system_id is not None:
-            json_payload["credential_manager_acs_system_id"] = (
+            params["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
+            params["user_identity_ids"] = user_identity_ids
 
-        res = self.client.post("/user_identities/list", json=json_payload)
+        res = self.client.get("/user_identities/list", params=params)
 
         return [UserIdentity.from_dict(item) for item in res["user_identities"]]
 

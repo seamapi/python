@@ -231,32 +231,32 @@ class AcsEntrances(AbstractAcsEntrances):
         :param space_id: ID of the space for which you want to list entrances.
 
         :returns: OK"""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if access_method_id is not None:
-            json_payload["access_method_id"] = access_method_id
+            params["access_method_id"] = access_method_id
         if acs_credential_id is not None:
-            json_payload["acs_credential_id"] = acs_credential_id
+            params["acs_credential_id"] = acs_credential_id
         if acs_entrance_ids is not None:
-            json_payload["acs_entrance_ids"] = acs_entrance_ids
+            params["acs_entrance_ids"] = acs_entrance_ids
         if acs_system_id is not None:
-            json_payload["acs_system_id"] = acs_system_id
+            params["acs_system_id"] = acs_system_id
         if connected_account_id is not None:
-            json_payload["connected_account_id"] = connected_account_id
+            params["connected_account_id"] = connected_account_id
         if customer_key is not None:
-            json_payload["customer_key"] = customer_key
+            params["customer_key"] = customer_key
         if limit is not None:
-            json_payload["limit"] = limit
+            params["limit"] = limit
         if location_id is not None:
-            json_payload["location_id"] = location_id
+            params["location_id"] = location_id
         if page_cursor is not None:
-            json_payload["page_cursor"] = page_cursor
+            params["page_cursor"] = page_cursor
         if search is not None:
-            json_payload["search"] = search
+            params["search"] = search
         if space_id is not None:
-            json_payload["space_id"] = space_id
+            params["space_id"] = space_id
 
-        res = self.client.post("/acs/entrances/list", json=json_payload)
+        res = self.client.get("/acs/entrances/list", params=params)
 
         return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
 
@@ -277,20 +277,20 @@ class AcsEntrances(AbstractAcsEntrances):
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
-        json_payload: Dict[str, Any] = {}
+        params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
-            json_payload["acs_entrance_id"] = acs_entrance_id
+            params["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
-            json_payload["include_if"] = include_if
+            params["include_if"] = include_if
 
-        if not json_payload:
+        if not params:
             raise ValueError(
                 "At least one parameter is required for /acs/entrances/list_credentials_with_access"
             )
 
-        res = self.client.post(
-            "/acs/entrances/list_credentials_with_access", json=json_payload
+        res = self.client.get(
+            "/acs/entrances/list_credentials_with_access", params=params
         )
 
         return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
