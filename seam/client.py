@@ -48,7 +48,59 @@ class AbstractSeamHttpClient(abc.ABC):
         raise NotImplementedError
 
 
-class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
+def _build_client_options(
+    base_url: str,
+    timeout: Optional[float],
+    httpx_options: Optional[Dict[str, Any]],
+    kwargs: Dict[str, Any],
+) -> Dict[str, Any]:
+    return {
+        "base_url": base_url,
+        "timeout": timeout,
+        **kwargs,
+        **(httpx_options or {}),
+    }
+
+
+class SeamHttpResponseHandler:
+    def _handle_response(self, response: Response):
+        if not 200 <= response.status_code < 300:
+            self._handle_error_response(response)
+
+        if "application/json" in response.headers.get("content-type", ""):
+            return response.json()
+
+        return response.text
+
+    def _handle_error_response(self, response: Response):
+        status_code = response.status_code
+        request_id = response.headers.get("seam-request-id")
+
+        if status_code == 401:
+            raise SeamHttpUnauthorizedError(request_id)
+
+        if not is_api_error_response(response):
+            response.raise_for_status()
+
+        error = response.json().get("error", {})
+        error_type = error.get("type", "unknown_error")
+        error_message = error.get("message", "Unknown error")
+        error_data = error.get("data", None)
+
+        error_details = {
+            "type": error_type,
+            "message": error_message,
+            "data": error_data,
+        }
+
+        if error_type == "invalid_input":
+            error_details["validation_errors"] = error.get("validation_errors")
+            raise SeamHttpInvalidInputError(error_details, status_code, request_id)
+
+        raise SeamHttpApiError(error_details, status_code, request_id)
+
+
+class SeamHttpClient(httpx.Client, SeamHttpResponseHandler, AbstractSeamHttpClient):
     def __init__(
         self,
         base_url: str,
@@ -58,12 +110,7 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
         httpx_options: Optional[Dict[str, Any]] = None,
         **kwargs,
     ):
-        options = {
-            "base_url": base_url,
-            "timeout": timeout,
-            **kwargs,
-            **(httpx_options or {}),
-        }
+        options = _build_client_options(base_url, timeout, httpx_options, kwargs)
 
         custom_headers = options.pop("headers", {})
         self._retry_policy = DEFAULT_RETRIES if retries is None else retries
@@ -115,41 +162,66 @@ class SeamHttpClient(httpx.Client, AbstractSeamHttpClient):
 
         return self._handle_response(response)
 
-    def _handle_response(self, response: Response):
-        if not 200 <= response.status_code < 300:
-            self._handle_error_response(response)
 
-        if "application/json" in response.headers.get("content-type", ""):
-            return response.json()
+class AsyncSeamHttpClient(
+    httpx.AsyncClient, SeamHttpResponseHandler, AbstractSeamHttpClient
+):
+    def __init__(
+        self,
+        base_url: str,
+        auth_headers: Dict[str, str],
+        retries: Optional[Retry] = DEFAULT_RETRIES,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+        **kwargs,
+    ):
+        options = _build_client_options(base_url, timeout, httpx_options, kwargs)
 
-        return response.text
+        custom_headers = options.pop("headers", {})
+        self._retry_policy = DEFAULT_RETRIES if retries is None else retries
 
-    def _handle_error_response(self, response: Response):
-        status_code = response.status_code
-        request_id = response.headers.get("seam-request-id")
+        super().__init__(**options)
 
-        if status_code == 401:
-            raise SeamHttpUnauthorizedError(request_id)
+        headers = {**auth_headers, **custom_headers, **SDK_HEADERS}
+        self.headers.update(headers)
 
-        if not is_api_error_response(response):
-            response.raise_for_status()
+    def _init_transport(self, *args, **kwargs) -> httpx.AsyncBaseTransport:
+        transport = super()._init_transport(*args, **kwargs)
 
-        error = response.json().get("error", {})
-        error_type = error.get("type", "unknown_error")
-        error_message = error.get("message", "Unknown error")
-        error_data = error.get("data", None)
+        if kwargs.get("transport") is not None:
+            return transport
 
-        error_details = {
-            "type": error_type,
-            "message": error_message,
-            "data": error_data,
-        }
+        return RetryTransport(transport=transport, retry=self._retry_policy)
 
-        if error_type == "invalid_input":
-            error_details["validation_errors"] = error.get("validation_errors")
-            raise SeamHttpInvalidInputError(error_details, status_code, request_id)
+    def _init_proxy_transport(self, *args, **kwargs) -> httpx.AsyncBaseTransport:
+        transport = super()._init_proxy_transport(*args, **kwargs)
+        return RetryTransport(transport=transport, retry=self._retry_policy)
 
-        raise SeamHttpApiError(error_details, status_code, request_id)
+    async def get(self, url, **kwargs) -> Any:
+        return await self.request("GET", url, **kwargs)
+
+    async def post(self, url, data=None, json=None, **kwargs) -> Any:
+        return await self.request("POST", url, data=data, json=json, **kwargs)
+
+    async def put(self, url, data=None, json=None, **kwargs) -> Any:
+        return await self.request("PUT", url, data=data, json=json, **kwargs)
+
+    async def patch(self, url, data=None, json=None, **kwargs) -> Any:
+        return await self.request("PATCH", url, data=data, json=json, **kwargs)
+
+    async def delete(self, url, json=None, **kwargs) -> Any:
+        return await self.request("DELETE", url, json=json, **kwargs)
+
+    async def request(self, method, url, *args, **kwargs) -> Any:
+        if isinstance(kwargs.get("params"), Mapping):
+            url = with_search_params(url, kwargs.pop("params"))
+
+        if "json" in kwargs:
+            kwargs["json"] = replace_null(kwargs["json"])
+
+        response = await super().request(method, url, *args, **kwargs)
+
+        return self._handle_response(response)
 
 
 def with_search_params(url: Any, params: Mapping[str, Any]) -> Any:

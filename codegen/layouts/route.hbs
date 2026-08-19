@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Literal, Union
 import abc
-from ..client import SeamHttpClient
+from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 {{#if importNull}}
 from ..null import Null
@@ -9,14 +9,17 @@ from ..null import Null
 from ..resources import ({{#each resourceClasses}}{{this}}{{#unless @last}},{{/unless}}{{/each}})
 {{/if}}
 {{#each childClasses}}
-from .{{module}} import {{abstractClassName}}, {{className}}
+from .{{module}} import {{abstractClassName}}, {{className}}, {{asyncAbstractClassName}}, {{asyncClassName}}
 {{/each}}
 {{#if importResolveActionAttempt}}
-from ..modules.action_attempts import resolve_action_attempt
+from ..modules.action_attempts import resolve_action_attempt, resolve_action_attempt_async
 {{/if}}
 
 
 {{> abstract-route-class abstractClass}}
+
+
+{{> abstract-route-class asyncAbstractClass}}
 
 
 class {{className}}({{abstractClassName}}):
@@ -39,4 +42,27 @@ class {{className}}({{abstractClassName}}):
 {{#each methods}}
 
 {{> route-method}}
+{{/each}}
+
+
+class {{asyncClassName}}({{asyncAbstractClassName}}):
+{{#if isDeprecated}}
+    """.. deprecated::
+       This route is deprecated."""
+{{/if}}
+    def __init__(self, client: AsyncSeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+{{#each childClasses}}
+        self._{{namespace}} = {{asyncClassName}}(client=client, defaults=defaults)
+{{/each}}
+{{#each childClasses}}
+
+    @property
+    def {{namespace}}(self) -> {{asyncClassName}}:
+        return self._{{namespace}}
+{{/each}}
+{{#each methods}}
+
+{{> route-method isAsync=true}}
 {{/each}}

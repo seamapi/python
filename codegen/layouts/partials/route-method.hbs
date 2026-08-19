@@ -1,5 +1,5 @@
     @route_metadata(path="{{path}}", has_required_parameters={{#if hasRequiredParameters}}True{{else}}False{{/if}}, has_pagination={{#if hasPagination}}True{{else}}False{{/if}})
-    def {{> method-signature}}:
+    {{#if isAsync}}async {{/if}}def {{> method-signature}}:
         """{{> method-docstring}}"""
         {{payloadVar}}: Dict[str, Any] = {}
 
@@ -13,7 +13,7 @@
             raise ValueError("At least one parameter is required for {{path}}")
 {{/if}}
 
-        {{#unless (eq returnType "None")}}res = {{/unless}}self.client.{{httpVerb}}("{{path}}", {{payloadArg}}={{payloadVar}})
+        {{#unless (eq returnType "None")}}res = {{/unless}}{{#if isAsync}}await {{/if}}self.client.{{httpVerb}}("{{path}}", {{payloadArg}}={{payloadVar}})
 {{#if (eq returnType "ActionAttempt")}}
 
         wait_for_action_attempt = (
@@ -22,7 +22,7 @@
             else wait_for_action_attempt
         )
 
-        return resolve_action_attempt(
+        return {{#if isAsync}}await resolve_action_attempt_async{{else}}resolve_action_attempt{{/if}}(
             client=self.client,
             action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt

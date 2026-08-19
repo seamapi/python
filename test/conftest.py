@@ -12,7 +12,7 @@ from urllib.request import urlopen
 
 import pytest
 
-from seam import Seam
+from seam import AsyncSeam, Seam
 
 SERVER_STARTUP_TIMEOUT = 30
 SERVER_SHUTDOWN_TIMEOUT = 10
@@ -41,6 +41,16 @@ def seam_fixture(server):
     endpoint, seed = server
 
     return Seam(api_key=seed["seam_apikey1_token"], endpoint=endpoint)
+
+
+@pytest.fixture(name="async_seam")
+async def async_seam_fixture(server):
+    """Return an AsyncSeam client authorized against a fake Seam Connect server."""
+
+    endpoint, seed = server
+
+    async with AsyncSeam(api_key=seed["seam_apikey1_token"], endpoint=endpoint) as seam:
+        yield seam
 
 
 @pytest.fixture(name="recording_server")

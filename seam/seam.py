@@ -4,10 +4,10 @@ from httpx_retries import Retry
 
 from .constants import DEFAULT_TIMEOUT
 from .parse_options import parse_options
-from .routes import Routes
-from .models import AbstractSeam
-from .client import SeamHttpClient
-from .paginator import SeamPaginator
+from .routes import AsyncRoutes, Routes
+from .models import AbstractAsyncSeam, AbstractSeam
+from .client import AsyncSeamHttpClient, SeamHttpClient
+from .paginator import AsyncSeamPaginator, SeamPaginator
 
 
 class Seam(AbstractSeam):
@@ -140,6 +140,16 @@ class Seam(AbstractSeam):
 
         return SeamPaginator(self.client, request, params)
 
+    def close(self) -> None:
+        """Close the underlying HTTP client and its connection pool."""
+        self.client.close()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        self.close()
+
     @classmethod
     def from_api_key(
         cls,
@@ -218,6 +228,232 @@ class Seam(AbstractSeam):
         :Example:
 
         >>> seam = Seam.from_personal_access_token("your-token-here", "workspace-id")
+        """
+        return cls(
+            personal_access_token=personal_access_token,
+            workspace_id=workspace_id,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
+            timeout=timeout,
+            httpx_options=httpx_options,
+        )
+
+
+class AsyncSeam(AbstractAsyncSeam):
+    """Async variant of :class:`Seam` for use inside an event loop.
+
+    Exposes the same route namespaces and method signatures as :class:`Seam`,
+    but every API method is a coroutine that must be awaited. Use it as an
+    async context manager, or call :meth:`close` when done, to release the
+    underlying connection pool.
+
+    :ivar defaults: Default settings for API requests
+    :vartype defaults: Dict[str, Any]
+    :ivar client: The async HTTP client used for making API requests
+    :vartype client: AsyncSeamHttpClient
+    :ivar wait_for_action_attempt: Controls whether to wait for an action
+        attempt to complete
+    :vartype wait_for_action_attempt: Union[bool, Dict[str, float]]
+
+    For more information about the Seam API, visit https://docs.seam.co/
+    """
+
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        *,
+        personal_access_token: Optional[str] = None,
+        workspace_id: Optional[str] = None,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+    ):
+        """Initialize an AsyncSeam client instance.
+
+        Accepts the same options as :class:`Seam`. The constructor performs no
+        I/O, so it may be called outside an event loop.
+
+        :param api_key: The API key for authenticating with Seam. Mutually
+            exclusive with personal_access_token. Read from the SEAM_API_KEY
+            environment variable when omitted
+        :type api_key: Optional[str]
+        :param personal_access_token: A personal access token for
+            authenticating with Seam. Mutually exclusive with api_key. Read
+            from the SEAM_PERSONAL_ACCESS_TOKEN environment variable when
+            omitted
+        :type personal_access_token: Optional[str]
+        :param workspace_id: The ID of the workspace to interact with.
+            Required when using a personal access token. Read from the
+            SEAM_WORKSPACE_ID environment variable when omitted
+        :type workspace_id: Optional[str]
+        :param endpoint: The custom API endpoint URL. If not provided, the
+            default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[httpx_retries.Retry]
+        :param timeout: The request timeout in seconds. Defaults to 30
+            seconds. Pass None for no timeout
+        :type timeout: Optional[float]
+        :param httpx_options: Options passed through to the underlying
+            httpx AsyncClient, for control the other options do not cover
+        :type httpx_options: Optional[Dict[str, Any]]
+
+        :raises SeamInvalidOptionsError: If neither api_key nor
+            personal_access_token is provided, or if workspace_id is missing
+            when using a personal access token
+        :raises SeamInvalidTokenError: If the provided API key or personal
+            access token format is invalid
+        """
+
+        self.wait_for_action_attempt = wait_for_action_attempt
+        auth_headers, endpoint = parse_options(
+            api_key=api_key,
+            personal_access_token=personal_access_token,
+            workspace_id=workspace_id,
+            endpoint=endpoint,
+        )
+        self.defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+
+        self.client = AsyncSeamHttpClient(
+            base_url=endpoint,
+            auth_headers=auth_headers,
+            retries=retries,
+            timeout=timeout,
+            httpx_options=httpx_options,
+        )
+
+        # AsyncSeam and AsyncRoutes are siblings under AbstractAsyncRoutes
+        # rather than parent and child, so borrowing this initializer to
+        # attach the route namespaces passes a self the signature does not
+        # admit.
+        AsyncRoutes.__init__(self, client=self.client, defaults=self.defaults)  # type: ignore[arg-type]
+
+    def create_paginator(
+        self, request: Callable, params: Optional[Dict[str, Any]] = None, /
+    ) -> AsyncSeamPaginator:
+        """
+        Creates an AsyncSeamPaginator instance for iterating through list endpoints.
+
+        This is a helper method to simplify the process of paginating through
+        API results.
+
+        Args:
+            request: The API route method function to call for fetching pages
+                (e.g., connected_accounts.list).
+            params: Optional dictionary of initial parameters to pass to the request
+                function.
+
+        Returns:
+            An initialized paginator object ready to fetch pages.
+
+        Example:
+            >>> connected_accounts_paginator = seam.create_paginator(seam.connected_accounts.list)
+            >>> async for connected_account in connected_accounts_paginator.flatten():
+            >>>     print(connected_account.account_type_display_name)
+        """
+        if not getattr(request, "__seam_has_pagination__", False):
+            raise ValueError("Cannot create a paginator for a non-paginated endpoint")
+
+        has_required_parameters = getattr(
+            request, "__seam_has_required_parameters__", False
+        )
+        if has_required_parameters and (
+            not params or not any(value is not None for value in params.values())
+        ):
+            path = getattr(request, "__seam_path__", "this endpoint")
+            raise ValueError(f"At least one parameter is required for {path}")
+
+        return AsyncSeamPaginator(self.client, request, params)
+
+    async def close(self) -> None:
+        """Close the underlying HTTP client and its connection pool."""
+        await self.client.aclose()
+
+    async def __aenter__(self) -> Self:
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+        await self.close()
+
+    @classmethod
+    def from_api_key(
+        cls,
+        api_key: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+    ) -> Self:
+        """Create an AsyncSeam instance using an API key.
+
+        :param api_key: The API key for authenticating with Seam
+        :type api_key: str
+        :param endpoint: The custom API endpoint URL. If not provided, the
+            default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :return: A new instance of the AsyncSeam class authenticated with the
+            provided API key
+        :rtype: Self
+
+        :Example:
+
+        >>> seam = AsyncSeam.from_api_key("your-api-key-here")
+        """
+        return cls(
+            api_key,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
+            timeout=timeout,
+            httpx_options=httpx_options,
+        )
+
+    @classmethod
+    def from_personal_access_token(
+        cls,
+        personal_access_token: str,
+        workspace_id: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+    ) -> Self:
+        """Create an AsyncSeam instance using a personal access token.
+
+        :param personal_access_token: The personal access token for
+            authenticating with Seam
+        :type personal_access_token: str
+        :param workspace_id: The ID of the workspace to interact with
+        :type workspace_id: str
+        :param endpoint: The custom API endpoint URL. If not provided, the
+            default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :return: A new instance of the AsyncSeam class authenticated with the
+            provided personal access token
+        :rtype: Self
+
+        :Example:
+
+        >>> seam = AsyncSeam.from_personal_access_token("your-token-here", "workspace-id")
         """
         return cls(
             personal_access_token=personal_access_token,
