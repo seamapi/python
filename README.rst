@@ -59,6 +59,8 @@ Contents
 
     * `Return all resources across all pages as a list`_
 
+  * `Asynchronous Usage`_
+
   * `Requests without a Workspace in Scope`_
 
     * `Personal Access Token without a Workspace`_
@@ -427,6 +429,62 @@ Return all resources across all pages as a list
   paginator = seam.create_paginator(seam.devices.list, {"limit": 20})
 
   all_devices = paginator.flatten_to_list()
+
+Asynchronous Usage
+~~~~~~~~~~~~~~~~~~
+
+Use ``AsyncSeam`` inside an event loop, e.g., with asyncio-based
+frameworks such as FastAPI.
+It accepts the same options and exposes the same API methods as ``Seam``,
+except every API method is a coroutine that must be awaited.
+
+Use the client as an async context manager,
+or call ``await seam.close()`` when done,
+to release the underlying connection pool.
+
+.. code-block:: python
+
+  import asyncio
+
+  from seam import AsyncSeam
+
+
+  async def main():
+      async with AsyncSeam() as seam:
+          devices = await seam.devices.list()
+
+          lock = await seam.locks.get(name="Front Door")
+          await seam.locks.unlock_door(device_id=lock.device_id)
+
+
+  asyncio.run(main())
+
+Requests run concurrently with the standard asyncio tools.
+
+.. code-block:: python
+
+  async def list_resources(seam):
+      return await asyncio.gather(
+          seam.devices.list(),
+          seam.connected_accounts.list(),
+      )
+
+Paginate with the same ``create_paginator`` helper.
+The paginator methods are coroutines,
+and ``flatten`` returns an async generator.
+
+.. code-block:: python
+
+  async def list_connected_accounts(seam):
+      paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 20})
+
+      connected_accounts, pagination = await paginator.first_page()
+
+      async for account in paginator.flatten():
+          print(account.account_type_display_name)
+
+The ``AsyncSeamWithoutWorkspace`` client is the equivalent async variant of
+``SeamWithoutWorkspace``.
 
 Requests without a Workspace in Scope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

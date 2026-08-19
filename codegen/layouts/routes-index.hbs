@@ -1,17 +1,27 @@
 from typing import Any, Dict
 import abc
 from dataclasses import dataclass
-from ..client import SeamHttpClient
+from ..client import SeamHttpClient, AsyncSeamHttpClient
 {{#each namespaces}}
-from .{{namespace}} import {{abstractClassName}}, {{className}}
+from .{{namespace}} import {{abstractClassName}}, {{className}}, {{asyncAbstractClassName}}, {{asyncClassName}}
 {{/each}}
 
 
-{{> abstract-routes}}
+{{> abstract-routes abstractRoutes}}
+
+
+{{> abstract-routes asyncAbstractRoutes}}
 
 
 class Routes(AbstractRoutes):
     def __init__(self, client: SeamHttpClient, defaults: Dict[str, Any]):
 {{#each namespaces}}
         self.{{namespace}} = {{className}}(client=client, defaults=defaults)
+{{/each}}
+
+
+class AsyncRoutes(AbstractAsyncRoutes):
+    def __init__(self, client: AsyncSeamHttpClient, defaults: Dict[str, Any]):
+{{#each namespaces}}
+        self.{{namespace}} = {{asyncClassName}}(client=client, defaults=defaults)
 {{/each}}

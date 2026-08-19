@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Literal, Union
 import abc
-from ..client import SeamHttpClient
+from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import (
@@ -14,6 +14,8 @@ from ..resources import (
 from .user_identities_unmanaged import (
     AbstractUserIdentitiesUnmanaged,
     UserIdentitiesUnmanaged,
+    AbstractAsyncUserIdentitiesUnmanaged,
+    AsyncUserIdentitiesUnmanaged,
 )
 
 
@@ -227,6 +229,246 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def update(
+        self,
+        *,
+        user_identity_id: str,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
+    ) -> None:
+        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity that you want to update.
+
+        :param email_address: Unique email address for the user identity.
+
+        :param full_name: Full name of the user associated with the user identity.
+
+        :param phone_number: Unique phone number for the user identity.
+
+        :param user_identity_key: Unique key for the user identity.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+
+class AbstractAsyncUserIdentities(abc.ABC):
+
+    @property
+    @abc.abstractmethod
+    def unmanaged(self) -> AbstractAsyncUserIdentitiesUnmanaged:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def add_acs_user(
+        self,
+        *,
+        acs_user_id: str,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
+
+        If ``user_identity_key`` is provided, but the user identity doesn't exist, a new user identity will be created automatically using information from the ACS user.
+
+        :param acs_user_id: ID of the access system user that you want to add to the user identity.
+
+        :param user_identity_id: ID of the user identity to which you want to add an access system user.
+
+        :param user_identity_key: Key of the user identity to which you want to add an access system user.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def create(
+        self,
+        *,
+        acs_system_ids: Optional[List[str]] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
+    ) -> UserIdentity:
+        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param email_address: Unique email address for the new user identity.
+
+        :param full_name: Full name of the user associated with the new user identity.
+
+        :param phone_number: Unique phone number for the new user identity in E.164 format (for example, +15555550100).
+
+        :param user_identity_key: Unique key for the new user identity.
+
+        :returns: OK"""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def delete(self, *, user_identity_id: str) -> None:
+        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+
+        :param user_identity_id: ID of the user identity that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def generate_instant_key(
+        self,
+        *,
+        user_identity_id: str,
+        customization_profile_id: Optional[str] = None,
+        max_use_count: Optional[float] = None,
+    ) -> InstantKey:
+        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to generate an instant key.
+
+        :param customization_profile_id:
+
+        :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def get(
+        self,
+        *,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> UserIdentity:
+        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity that you want to get.
+
+        :param user_identity_key:
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def grant_access_to_device(
+        self, *, device_id: str, user_identity_id: str
+    ) -> None:
+        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+
+        :param device_id: ID of the managed device to which you want to grant access to the user identity.
+
+        :param user_identity_id: ID of the user identity that you want to grant access to a device.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        credential_manager_acs_system_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> List[UserIdentity]:
+        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
+
+        :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param search: String for which to search. Filters returned user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address`` or ``user_identity_id``.
+
+        :param user_identity_ids: Array of user identity IDs by which to filter the list of user identities.
+
+        :returns: OK"""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
+        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_accessible_entrances(
+        self, *, user_identity_id: str
+    ) -> List[AcsEntrance]:
+        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
+        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param acs_user_id: ID of the access system user that you want to remove from the user identity..
+
+        :param user_identity_id: ID of the user identity from which you want to remove an access system user.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def revoke_access_to_device(
+        self, *, device_id: str, user_identity_id: str
+    ) -> None:
+        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param device_id: ID of the managed device to which you want to revoke access from the user identity.
+
+        :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def update(
         self,
         *,
         user_identity_id: str,
@@ -742,5 +984,512 @@ class UserIdentities(AbstractUserIdentities):
             )
 
         self.client.patch("/user_identities/update", json=json_payload)
+
+        return None
+
+
+class AsyncUserIdentities(AbstractAsyncUserIdentities):
+    def __init__(self, client: AsyncSeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+        self._unmanaged = AsyncUserIdentitiesUnmanaged(client=client, defaults=defaults)
+
+    @property
+    def unmanaged(self) -> AsyncUserIdentitiesUnmanaged:
+        return self._unmanaged
+
+    @route_metadata(
+        path="/user_identities/add_acs_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def add_acs_user(
+        self,
+        *,
+        acs_user_id: str,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
+
+        If ``user_identity_key`` is provided, but the user identity doesn't exist, a new user identity will be created automatically using information from the ACS user.
+
+        :param acs_user_id: ID of the access system user that you want to add to the user identity.
+
+        :param user_identity_id: ID of the user identity to which you want to add an access system user.
+
+        :param user_identity_key: Key of the user identity to which you want to add an access system user.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if acs_user_id is not None:
+            json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/add_acs_user"
+            )
+
+        await self.client.put("/user_identities/add_acs_user", json=json_payload)
+
+        return None
+
+    @route_metadata(
+        path="/user_identities/create",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    async def create(
+        self,
+        *,
+        acs_system_ids: Optional[List[str]] = None,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
+    ) -> UserIdentity:
+        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param email_address: Unique email address for the new user identity.
+
+        :param full_name: Full name of the user associated with the new user identity.
+
+        :param phone_number: Unique phone number for the new user identity in E.164 format (for example, +15555550100).
+
+        :param user_identity_key: Unique key for the new user identity.
+
+        :returns: OK"""
+        json_payload: Dict[str, Any] = {}
+
+        if acs_system_ids is not None:
+            json_payload["acs_system_ids"] = acs_system_ids
+        if email_address is not None:
+            json_payload["email_address"] = email_address
+        if full_name is not None:
+            json_payload["full_name"] = full_name
+        if phone_number is not None:
+            json_payload["phone_number"] = phone_number
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
+
+        res = await self.client.post("/user_identities/create", json=json_payload)
+
+        return UserIdentity.from_dict(res["user_identity"])
+
+    @route_metadata(
+        path="/user_identities/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def delete(self, *, user_identity_id: str) -> None:
+        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+
+        :param user_identity_id: ID of the user identity that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/delete"
+            )
+
+        await self.client.delete("/user_identities/delete", params=params)
+
+        return None
+
+    @route_metadata(
+        path="/user_identities/generate_instant_key",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def generate_instant_key(
+        self,
+        *,
+        user_identity_id: str,
+        customization_profile_id: Optional[str] = None,
+        max_use_count: Optional[float] = None,
+    ) -> InstantKey:
+        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to generate an instant key.
+
+        :param customization_profile_id:
+
+        :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
+        if max_use_count is not None:
+            json_payload["max_use_count"] = max_use_count
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/generate_instant_key"
+            )
+
+        res = await self.client.post(
+            "/user_identities/generate_instant_key", json=json_payload
+        )
+
+        return InstantKey.from_dict(res["instant_key"])
+
+    @route_metadata(
+        path="/user_identities/get", has_required_parameters=True, has_pagination=False
+    )
+    async def get(
+        self,
+        *,
+        user_identity_id: Optional[str] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> UserIdentity:
+        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity that you want to get.
+
+        :param user_identity_key:
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+        if user_identity_key is not None:
+            params["user_identity_key"] = user_identity_key
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/get"
+            )
+
+        res = await self.client.get("/user_identities/get", params=params)
+
+        return UserIdentity.from_dict(res["user_identity"])
+
+    @route_metadata(
+        path="/user_identities/grant_access_to_device",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def grant_access_to_device(
+        self, *, device_id: str, user_identity_id: str
+    ) -> None:
+        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+
+        :param device_id: ID of the managed device to which you want to grant access to the user identity.
+
+        :param user_identity_id: ID of the user identity that you want to grant access to a device.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if device_id is not None:
+            json_payload["device_id"] = device_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/grant_access_to_device"
+            )
+
+        await self.client.put(
+            "/user_identities/grant_access_to_device", json=json_payload
+        )
+
+        return None
+
+    @route_metadata(
+        path="/user_identities/list", has_required_parameters=False, has_pagination=True
+    )
+    async def list(
+        self,
+        *,
+        created_before: Optional[str] = None,
+        credential_manager_acs_system_id: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
+        search: Optional[str] = None,
+        user_identity_ids: Optional[List[str]] = None,
+    ) -> List[UserIdentity]:
+        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
+
+        :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
+
+        :param search: String for which to search. Filters returned user identities to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address`` or ``user_identity_id``.
+
+        :param user_identity_ids: Array of user identity IDs by which to filter the list of user identities.
+
+        :returns: OK"""
+        params: Dict[str, Any] = {}
+
+        if created_before is not None:
+            params["created_before"] = created_before
+        if credential_manager_acs_system_id is not None:
+            params["credential_manager_acs_system_id"] = (
+                credential_manager_acs_system_id
+            )
+        if limit is not None:
+            params["limit"] = limit
+        if page_cursor is not None:
+            params["page_cursor"] = page_cursor
+        if search is not None:
+            params["search"] = search
+        if user_identity_ids is not None:
+            params["user_identity_ids"] = user_identity_ids
+
+        res = await self.client.get("/user_identities/list", params=params)
+
+        return [UserIdentity.from_dict(item) for item in res["user_identities"]]
+
+    @route_metadata(
+        path="/user_identities/list_accessible_devices",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
+        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_devices"
+            )
+
+        res = await self.client.get(
+            "/user_identities/list_accessible_devices", params=params
+        )
+
+        return [Device.from_dict(item) for item in res["devices"]]
+
+    @route_metadata(
+        path="/user_identities/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_accessible_entrances(
+        self, *, user_identity_id: str
+    ) -> List[AcsEntrance]:
+        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_accessible_entrances"
+            )
+
+        res = await self.client.get(
+            "/user_identities/list_accessible_entrances", params=params
+        )
+
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+
+    @route_metadata(
+        path="/user_identities/list_acs_systems",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
+        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_systems"
+            )
+
+        res = await self.client.get("/user_identities/list_acs_systems", params=params)
+
+        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+
+    @route_metadata(
+        path="/user_identities/list_acs_users",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/list_acs_users"
+            )
+
+        res = await self.client.get("/user_identities/list_acs_users", params=params)
+
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+
+    @route_metadata(
+        path="/user_identities/remove_acs_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param acs_user_id: ID of the access system user that you want to remove from the user identity..
+
+        :param user_identity_id: ID of the user identity from which you want to remove an access system user.
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_user_id is not None:
+            params["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/remove_acs_user"
+            )
+
+        await self.client.delete("/user_identities/remove_acs_user", params=params)
+
+        return None
+
+    @route_metadata(
+        path="/user_identities/revoke_access_to_device",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def revoke_access_to_device(
+        self, *, device_id: str, user_identity_id: str
+    ) -> None:
+        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param device_id: ID of the managed device to which you want to revoke access from the user identity.
+
+        :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if device_id is not None:
+            params["device_id"] = device_id
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/revoke_access_to_device"
+            )
+
+        await self.client.delete(
+            "/user_identities/revoke_access_to_device", params=params
+        )
+
+        return None
+
+    @route_metadata(
+        path="/user_identities/update",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def update(
+        self,
+        *,
+        user_identity_id: str,
+        email_address: Optional[Union[str, Null]] = None,
+        full_name: Optional[Union[str, Null]] = None,
+        phone_number: Optional[Union[str, Null]] = None,
+        user_identity_key: Optional[Union[str, Null]] = None,
+    ) -> None:
+        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+
+        :param user_identity_id: ID of the user identity that you want to update.
+
+        :param email_address: Unique email address for the user identity.
+
+        :param full_name: Full name of the user associated with the user identity.
+
+        :param phone_number: Unique phone number for the user identity.
+
+        :param user_identity_key: Unique key for the user identity.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if email_address is not None:
+            json_payload["email_address"] = email_address
+        if full_name is not None:
+            json_payload["full_name"] = full_name
+        if phone_number is not None:
+            json_payload["phone_number"] = phone_number
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/update"
+            )
+
+        await self.client.patch("/user_identities/update", json=json_payload)
 
         return None

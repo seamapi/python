@@ -4,9 +4,9 @@ from httpx_retries import Retry
 
 from .constants import DEFAULT_TIMEOUT
 from .parse_options import parse_without_workspace_options
-from .client import SeamHttpClient
-from .models import AbstractSeamWithoutWorkspace
-from .routes.workspaces import Workspaces
+from .client import AsyncSeamHttpClient, SeamHttpClient
+from .models import AbstractAsyncSeamWithoutWorkspace, AbstractSeamWithoutWorkspace
+from .routes.workspaces import AsyncWorkspaces, Workspaces
 
 
 class WorkspacesProxy:
@@ -142,3 +142,156 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             timeout=timeout,
             httpx_options=httpx_options,
         )
+
+    def close(self) -> None:
+        """Close the underlying HTTP client and its connection pool."""
+        self.client.close()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        self.close()
+
+
+class AsyncWorkspacesProxy:
+    """Proxy to expose only the 'create' and 'list' methods of AsyncWorkspaces."""
+
+    def __init__(self, workspaces):
+        self._workspaces = workspaces
+
+    async def list(self, **kwargs):
+        return await self._workspaces.list(**kwargs)
+
+    async def create(self, **kwargs):
+        return await self._workspaces.create(**kwargs)
+
+
+class AsyncSeamWithoutWorkspace(AbstractAsyncSeamWithoutWorkspace):
+    """Async variant of :class:`SeamWithoutWorkspace` for use inside an event loop.
+
+    Exposes the same workspace operations, but every API method is a coroutine
+    that must be awaited. Use it as an async context manager, or call
+    :meth:`close` when done, to release the underlying connection pool.
+
+    :ivar wait_for_action_attempt: Controls whether to wait for an action
+        attempt to complete
+    :vartype wait_for_action_attempt: Union[bool, Dict[str, float]]
+    :ivar client: The async HTTP client used for making API requests
+    :vartype client: AsyncSeamHttpClient
+    :ivar workspaces: Proxy to access workspace-related operations
+    :vartype workspaces: AsyncWorkspacesProxy
+    """
+
+    def __init__(
+        self,
+        personal_access_token: Optional[str] = None,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+    ):
+        """
+        Initialize an AsyncSeamWithoutWorkspace client instance.
+
+        Accepts the same options as :class:`SeamWithoutWorkspace`. The
+        constructor performs no I/O, so it may be called outside an event
+        loop.
+
+        :param personal_access_token: A personal access token for
+            authenticating with Seam. Read from the
+            SEAM_PERSONAL_ACCESS_TOKEN environment variable when omitted
+        :type personal_access_token: Optional[str]
+        :param endpoint: The custom API endpoint URL. If not provided,
+            the default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[httpx_retries.Retry]
+        :param timeout: The request timeout in seconds. Defaults to 30
+            seconds. Pass None for no timeout
+        :type timeout: Optional[float]
+        :param httpx_options: Options passed through to the underlying
+            httpx AsyncClient, for control the other options do not cover
+        :type httpx_options: Optional[Dict[str, Any]]
+
+        :raises SeamInvalidOptionsError: If no personal_access_token is provided
+            and the SEAM_PERSONAL_ACCESS_TOKEN environment variable is not set
+        :raises SeamInvalidTokenError: If the provided personal access token format is invalid
+        """
+
+        self.wait_for_action_attempt = wait_for_action_attempt
+        auth_headers, endpoint = parse_without_workspace_options(
+            personal_access_token=personal_access_token,
+            endpoint=endpoint,
+        )
+
+        self.client = AsyncSeamHttpClient(
+            base_url=endpoint,
+            auth_headers=auth_headers,
+            retries=retries,
+            timeout=timeout,
+            httpx_options=httpx_options,
+        )
+
+        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+
+        self._workspaces = AsyncWorkspaces(client=self.client, defaults=defaults)
+        self.workspaces = AsyncWorkspacesProxy(self._workspaces)
+
+    @classmethod
+    def from_personal_access_token(
+        cls,
+        personal_access_token: str,
+        *,
+        endpoint: Optional[str] = None,
+        wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = True,
+        retries: Optional[Retry] = None,
+        timeout: Optional[float] = DEFAULT_TIMEOUT,
+        httpx_options: Optional[Dict[str, Any]] = None,
+    ) -> Self:
+        """
+        Create an AsyncSeamWithoutWorkspace instance using a personal access token.
+
+        :param personal_access_token: The personal access token for authenticating with Seam
+        :type personal_access_token: str
+        :param endpoint: The custom API endpoint URL. If not provided, the default Seam API endpoint will be used
+        :type endpoint: Optional[str]
+        :param wait_for_action_attempt: Controls whether to wait for an
+            action attempt to complete. Can be a boolean or a dictionary with
+            'timeout' and 'poll_interval' keys
+        :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
+        :param retries: Configuration for retry behavior on failed requests
+        :type retries: Optional[httpx_retries.Retry]
+        :return: A new instance of the AsyncSeamWithoutWorkspace class
+            authenticated with the provided personal access token
+        :rtype: Self
+
+        :Example:
+
+        >>> seam = AsyncSeamWithoutWorkspace.from_personal_access_token("your-personal-access-token-here")
+        """
+
+        return cls(
+            personal_access_token=personal_access_token,
+            endpoint=endpoint,
+            wait_for_action_attempt=wait_for_action_attempt,
+            retries=retries,
+            timeout=timeout,
+            httpx_options=httpx_options,
+        )
+
+    async def close(self) -> None:
+        """Close the underlying HTTP client and its connection pool."""
+        await self.client.aclose()
+
+    async def __aenter__(self) -> Self:
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+        await self.close()

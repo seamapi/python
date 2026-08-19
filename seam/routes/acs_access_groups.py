@@ -1,6 +1,6 @@
 from typing import Optional, Any, List, Dict, Literal, Union
 import abc
-from ..client import SeamHttpClient
+from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import AcsAccessGroup, AcsEntrance, AcsUser
 
@@ -94,6 +94,113 @@ class AbstractAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
     def remove_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to remove from an access group.
+
+        :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+
+class AbstractAsyncAcsAccessGroups(abc.ABC):
+
+    @abc.abstractmethod
+    async def add_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group to which you want to add an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def delete(self, *, acs_access_group_id: str) -> None:
+        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
+        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group that you want to get.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> List[AcsAccessGroup]:
+        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
+
+        :param acs_user_id: ID of the access system user for which you want to retrieve all access groups.
+
+        :param search: String for which to search. Filters returned access groups to include all records that satisfy a partial match using ``name`` or ``acs_access_group_id``.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access groups.
+
+        :returns: OK"""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_accessible_entrances(
+        self, *, acs_access_group_id: str
+    ) -> List[AcsEntrance]:
+        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def remove_user(
         self,
         *,
         acs_access_group_id: str,
@@ -341,5 +448,238 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             )
 
         self.client.delete("/acs/access_groups/remove_user", params=params)
+
+        return None
+
+
+class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
+    def __init__(self, client: AsyncSeamHttpClient, defaults: Dict[str, Any]):
+        self.client = client
+        self.defaults = defaults
+
+    @route_metadata(
+        path="/acs/access_groups/add_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def add_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> None:
+        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group to which you want to add an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
+
+        :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            json_payload["acs_access_group_id"] = acs_access_group_id
+        if acs_user_id is not None:
+            json_payload["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/add_user"
+            )
+
+        await self.client.put("/acs/access_groups/add_user", json=json_payload)
+
+        return None
+
+    @route_metadata(
+        path="/acs/access_groups/delete",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def delete(self, *, acs_access_group_id: str) -> None:
+        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group that you want to delete.
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/delete"
+            )
+
+        await self.client.delete("/acs/access_groups/delete", params=params)
+
+        return None
+
+    @route_metadata(
+        path="/acs/access_groups/get",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
+        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group that you want to get.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/get"
+            )
+
+        res = await self.client.get("/acs/access_groups/get", params=params)
+
+        return AcsAccessGroup.from_dict(res["acs_access_group"])
+
+    @route_metadata(
+        path="/acs/access_groups/list",
+        has_required_parameters=False,
+        has_pagination=False,
+    )
+    async def list(
+        self,
+        *,
+        acs_system_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
+        search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> List[AcsAccessGroup]:
+        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
+
+        :param acs_user_id: ID of the access system user for which you want to retrieve all access groups.
+
+        :param search: String for which to search. Filters returned access groups to include all records that satisfy a partial match using ``name`` or ``acs_access_group_id``.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all access groups.
+
+        :returns: OK"""
+        params: Dict[str, Any] = {}
+
+        if acs_system_id is not None:
+            params["acs_system_id"] = acs_system_id
+        if acs_user_id is not None:
+            params["acs_user_id"] = acs_user_id
+        if search is not None:
+            params["search"] = search
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        res = await self.client.get("/acs/access_groups/list", params=params)
+
+        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+
+    @route_metadata(
+        path="/acs/access_groups/list_accessible_entrances",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_accessible_entrances(
+        self, *, acs_access_group_id: str
+    ) -> List[AcsEntrance]:
+        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
+            )
+
+        res = await self.client.get(
+            "/acs/access_groups/list_accessible_entrances", params=params
+        )
+
+        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+
+    @route_metadata(
+        path="/acs/access_groups/list_users",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
+        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
+
+        :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            params["acs_access_group_id"] = acs_access_group_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/list_users"
+            )
+
+        res = await self.client.get("/acs/access_groups/list_users", params=params)
+
+        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+
+    @route_metadata(
+        path="/acs/access_groups/remove_user",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def remove_user(
+        self,
+        *,
+        acs_access_group_id: str,
+        acs_user_id: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
+    ) -> None:
+        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+
+        :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
+
+        :param acs_user_id: ID of the access system user that you want to remove from an access group.
+
+        :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
+
+        :raises ValueError: At least one parameter must be provided."""
+        params: Dict[str, Any] = {}
+
+        if acs_access_group_id is not None:
+            params["acs_access_group_id"] = acs_access_group_id
+        if acs_user_id is not None:
+            params["acs_user_id"] = acs_user_id
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
+
+        if not params:
+            raise ValueError(
+                "At least one parameter is required for /acs/access_groups/remove_user"
+            )
+
+        await self.client.delete("/acs/access_groups/remove_user", params=params)
 
         return None

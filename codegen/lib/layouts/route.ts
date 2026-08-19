@@ -35,6 +35,7 @@ export interface MethodLayoutContext {
 
 export interface AbstractClassLayoutContext {
   className: string
+  isAsync: boolean
   isDeprecated: boolean
   showPass: boolean
   childProperties: Array<{ namespace: string; abstractClassName: string }>
@@ -44,13 +45,18 @@ export interface AbstractClassLayoutContext {
 export interface RouteLayoutContext {
   className: string
   abstractClassName: string
+  asyncClassName: string
+  asyncAbstractClassName: string
   isDeprecated: boolean
   abstractClass: AbstractClassLayoutContext
+  asyncAbstractClass: AbstractClassLayoutContext
   resourceClasses: string[]
   childClasses: Array<{
     namespace: string
     className: string
     abstractClassName: string
+    asyncClassName: string
+    asyncAbstractClassName: string
     module: string
   }>
   importResolveActionAttempt: boolean
@@ -109,24 +115,42 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   )
 
   const abstractClassName = `Abstract${cls.name}`
+  const asyncClassName = `Async${cls.name}`
+  const asyncAbstractClassName = `AbstractAsync${cls.name}`
   const methods = cls.methods.map(getMethodLayoutContext)
 
   const importNull = methods.some(({ params }) =>
     params.some(({ isNullable }) => isNullable),
   )
 
+  const showPass =
+    cls.methods.length === 0 && cls.childClassIdentifiers.length === 0
+
   return {
     className: cls.name,
     abstractClassName,
+    asyncClassName,
+    asyncAbstractClassName,
     isDeprecated: cls.isDeprecated,
     abstractClass: {
       className: abstractClassName,
+      isAsync: false,
       isDeprecated: cls.isDeprecated,
-      showPass:
-        cls.methods.length === 0 && cls.childClassIdentifiers.length === 0,
+      showPass,
       childProperties: cls.childClassIdentifiers.map((identifier) => ({
         namespace: identifier.namespace,
         abstractClassName: `Abstract${identifier.className}`,
+      })),
+      methods,
+    },
+    asyncAbstractClass: {
+      className: asyncAbstractClassName,
+      isAsync: true,
+      isDeprecated: cls.isDeprecated,
+      showPass,
+      childProperties: cls.childClassIdentifiers.map((identifier) => ({
+        namespace: identifier.namespace,
+        abstractClassName: `AbstractAsync${identifier.className}`,
       })),
       methods,
     },
@@ -135,6 +159,8 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
       namespace: identifier.namespace,
       className: identifier.className,
       abstractClassName: `Abstract${identifier.className}`,
+      asyncClassName: `Async${identifier.className}`,
+      asyncAbstractClassName: `AbstractAsync${identifier.className}`,
       module: `${cls.namespace}_${identifier.namespace}`,
     })),
     importResolveActionAttempt,

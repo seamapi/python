@@ -16,7 +16,7 @@ class {{className}}(abc.ABC):
 {{#each methods}}
 
     @abc.abstractmethod
-    def {{> method-signature}}:
+    {{#if ../isAsync}}async {{/if}}def {{> method-signature}}:
         """{{> method-docstring}}"""
         raise NotImplementedError()
 {{/each}}
