@@ -164,7 +164,7 @@ class Phone:
     created_at: str
     custom_metadata: Dict[str, Union[str, bool]]
     device_id: str
-    device_type: str
+    device_type: Literal["ios_phone", "android_phone"]
     display_name: str
     errors: List[Errors]
     nickname: Optional[str]

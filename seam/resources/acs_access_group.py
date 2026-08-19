@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class AcsAccessGroup:
     """Group that defines the entrances to which a set of users has access and, in some cases, the access schedule for these entrances and users.
@@ -64,8 +71,8 @@ class AcsAccessGroup:
             )
 
     @dataclass
-    class Errors(ResourceMapping):
-        """Errors associated with the ``acs_access_group``.
+    class FailedToCreateOnAcsSystemError(ResourceMapping):
+        """Indicates that the `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_ was not created on the `access system <https://docs.seam.co/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -75,7 +82,7 @@ class AcsAccessGroup:
         """
 
         created_at: str
-        error_code: str
+        error_code: Literal["failed_to_create_on_acs_system"]
         message: str
 
         @classmethod
@@ -87,91 +94,19 @@ class AcsAccessGroup:
             )
 
     @dataclass
-    class PendingMutations(ResourceMapping):
-        """Collection of pending mutations for the access group. Represents operations that have been requested but not yet completed on the integrated access system.
+    class CreatingPendingMutation(ResourceMapping):
+        """Seam is in the process of pushing an access group creation to the integrated access system.
 
         :ivar created_at: Date and time at which the mutation was created.
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code:
-
-        :ivar from_:
-
-        :ivar to:
-
-        :ivar acs_user_id: ID of the user involved in the scheduled change.
-
-        :ivar variant: Whether the user is scheduled to be added to or removed from this access group.
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing an access group creation to the integrated access system.
         """
-
-        @dataclass
-        class From(ResourceMapping):
-            """
-
-            :ivar name: Name of the access group.
-
-            :ivar ends_at: Ending time for the access schedule.
-
-            :ivar starts_at: Starting time for the access schedule.
-
-            :ivar acs_user_id: Old user ID.
-
-            :ivar acs_entrance_id: Old entrance ID."""
-
-            name: Optional[str]
-            ends_at: Optional[str]
-            starts_at: Optional[str]
-            acs_user_id: Optional[str]
-            acs_entrance_id: Optional[str]
-
-            @classmethod
-            def from_dict(cls, d: Any):
-                return cls(
-                    name=d.get("name", None),
-                    ends_at=d.get("ends_at", None),
-                    starts_at=d.get("starts_at", None),
-                    acs_user_id=d.get("acs_user_id", None),
-                    acs_entrance_id=d.get("acs_entrance_id", None),
-                )
-
-        @dataclass
-        class To(ResourceMapping):
-            """
-
-            :ivar name: Name of the access group.
-
-            :ivar ends_at: Ending time for the access schedule.
-
-            :ivar starts_at: Starting time for the access schedule.
-
-            :ivar acs_user_id: New user ID.
-
-            :ivar acs_entrance_id: New entrance ID."""
-
-            name: Optional[str]
-            ends_at: Optional[str]
-            starts_at: Optional[str]
-            acs_user_id: Optional[str]
-            acs_entrance_id: Optional[str]
-
-            @classmethod
-            def from_dict(cls, d: Any):
-                return cls(
-                    name=d.get("name", None),
-                    ends_at=d.get("ends_at", None),
-                    starts_at=d.get("starts_at", None),
-                    acs_user_id=d.get("acs_user_id", None),
-                    acs_entrance_id=d.get("acs_entrance_id", None),
-                )
 
         created_at: str
         message: str
-        mutation_code: str
-        from_: Optional[From]
-        to: Optional[To]
-        acs_user_id: Optional[str]
-        variant: Optional[str]
+        mutation_code: Literal["creating"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -179,13 +114,338 @@ class AcsAccessGroup:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
+            )
+
+    @dataclass
+    class DeletingPendingMutation(ResourceMapping):
+        """Seam is in the process of pushing an access group deletion to the integrated access system.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing an access group deletion to the integrated access system.
+        """
+
+        created_at: str
+        message: str
+        mutation_code: Literal["deleting"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+            )
+
+    @dataclass
+    class DeferringDeletionPendingMutation(ResourceMapping):
+        """This access group is scheduled for automatic deletion when its access window expires.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that this access group is scheduled for automatic deletion when its access window expires.
+        """
+
+        created_at: str
+        message: str
+        mutation_code: Literal["deferring_deletion"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+            )
+
+    @dataclass
+    class UpdatingGroupInformationPendingMutation(ResourceMapping):
+        """Seam is in the process of pushing an access group information update to the integrated access system.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar from_: Old access group information.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing updated access group information to the integrated access system.
+
+        :ivar to: New access group information."""
+
+        @dataclass
+        class From(ResourceMapping):
+            """Old access group information.
+
+            :ivar name: Name of the access group."""
+
+            name: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    name=d.get("name", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """New access group information.
+
+            :ivar name: Name of the access group."""
+
+            name: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    name=d.get("name", None),
+                )
+
+        created_at: str
+        from_: Optional[From]
+        message: str
+        mutation_code: Literal["updating_group_information"]
+        to: Optional[To]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
                 from_=(
                     cls.From.from_dict(d.get("from"))
                     if d.get("from") is not None
                     else None
                 ),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class UpdatingAccessSchedulePendingMutation(ResourceMapping):
+        """Seam is in the process of pushing an access schedule update to the integrated access system.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar from_: Old access schedule information.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing updated access schedule information to the integrated access system.
+
+        :ivar to: New access schedule information."""
+
+        @dataclass
+        class From(ResourceMapping):
+            """Old access schedule information.
+
+            :ivar ends_at: Ending time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule."""
+
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """New access schedule information.
+
+            :ivar ends_at: Ending time for the access schedule.
+
+            :ivar starts_at: Starting time for the access schedule."""
+
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        created_at: str
+        from_: Optional[From]
+        message: str
+        mutation_code: Literal["updating_access_schedule"]
+        to: Optional[To]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class UpdatingUserMembershipPendingMutation(ResourceMapping):
+        """Seam is in the process of pushing a user membership update to the integrated access system.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar from_: Old user membership.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing updated user membership information to the integrated access system.
+
+        :ivar to: New user membership."""
+
+        @dataclass
+        class From(ResourceMapping):
+            """Old user membership.
+
+            :ivar acs_user_id: Old user ID."""
+
+            acs_user_id: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    acs_user_id=d.get("acs_user_id", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """New user membership.
+
+            :ivar acs_user_id: New user ID."""
+
+            acs_user_id: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    acs_user_id=d.get("acs_user_id", None),
+                )
+
+        created_at: str
+        from_: Optional[From]
+        message: str
+        mutation_code: Literal["updating_user_membership"]
+        to: Optional[To]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class UpdatingEntranceMembershipPendingMutation(ResourceMapping):
+        """Seam is in the process of pushing an entrance membership update to the integrated access system.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar from_: Old entrance membership.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of pushing updated entrance membership information to the integrated access system.
+
+        :ivar to: New entrance membership."""
+
+        @dataclass
+        class From(ResourceMapping):
+            """Old entrance membership.
+
+            :ivar acs_entrance_id: Old entrance ID."""
+
+            acs_entrance_id: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    acs_entrance_id=d.get("acs_entrance_id", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """New entrance membership.
+
+            :ivar acs_entrance_id: New entrance ID."""
+
+            acs_entrance_id: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    acs_entrance_id=d.get("acs_entrance_id", None),
+                )
+
+        created_at: str
+        from_: Optional[From]
+        message: str
+        mutation_code: Literal["updating_entrance_membership"]
+        to: Optional[To]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class DeferringUserMembershipUpdatePendingMutation(ResourceMapping):
+        """A scheduled user membership change is pending for this access group.
+
+        :ivar acs_user_id: ID of the user involved in the scheduled change.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that a scheduled user membership change is pending for this access group.
+
+        :ivar variant: Whether the user is scheduled to be added to or removed from this access group.
+        """
+
+        acs_user_id: str
+        created_at: str
+        message: str
+        mutation_code: Literal["deferring_user_membership_update"]
+        variant: Literal["adding", "removing"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
                 acs_user_id=d.get("acs_user_id", None),
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
                 variant=d.get("variant", None),
             )
 
@@ -202,7 +462,7 @@ class AcsAccessGroup:
 
         created_at: str
         message: str
-        warning_code: str
+        warning_code: Literal["unknown_issue_with_acs_access_group", "being_deleted"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -212,7 +472,44 @@ class AcsAccessGroup:
                 warning_code=d.get("warning_code", None),
             )
 
-    access_group_type: str
+    Errors = Union[FailedToCreateOnAcsSystemError]
+    _ErrorsVariants = {
+        "failed_to_create_on_acs_system": FailedToCreateOnAcsSystemError,
+    }
+
+    PendingMutations = Union[
+        CreatingPendingMutation,
+        DeletingPendingMutation,
+        DeferringDeletionPendingMutation,
+        UpdatingGroupInformationPendingMutation,
+        UpdatingAccessSchedulePendingMutation,
+        UpdatingUserMembershipPendingMutation,
+        UpdatingEntranceMembershipPendingMutation,
+        DeferringUserMembershipUpdatePendingMutation,
+    ]
+    _PendingMutationsVariants = {
+        "creating": CreatingPendingMutation,
+        "deleting": DeletingPendingMutation,
+        "deferring_deletion": DeferringDeletionPendingMutation,
+        "updating_group_information": UpdatingGroupInformationPendingMutation,
+        "updating_access_schedule": UpdatingAccessSchedulePendingMutation,
+        "updating_user_membership": UpdatingUserMembershipPendingMutation,
+        "updating_entrance_membership": UpdatingEntranceMembershipPendingMutation,
+        "deferring_user_membership_update": DeferringUserMembershipUpdatePendingMutation,
+    }
+
+    access_group_type: Literal[
+        "pti_unit",
+        "pti_access_level",
+        "salto_ks_access_group",
+        "brivo_group",
+        "salto_space_group",
+        "dormakaba_community_access_group",
+        "dormakaba_ambiance_access_group",
+        "avigilon_alta_group",
+        "kisi_access_group",
+        "akiles_member_group",
+    ]
     access_group_type_display_name: str
     access_schedule: Optional[AccessSchedule]
     acs_access_group_id: str
@@ -221,7 +518,18 @@ class AcsAccessGroup:
     created_at: str
     display_name: str
     errors: List[Errors]
-    external_type: str
+    external_type: Literal[
+        "pti_unit",
+        "pti_access_level",
+        "salto_ks_access_group",
+        "brivo_group",
+        "salto_space_group",
+        "dormakaba_community_access_group",
+        "dormakaba_ambiance_access_group",
+        "avigilon_alta_group",
+        "kisi_access_group",
+        "akiles_member_group",
+    ]
     external_type_display_name: str
     is_managed: Literal[True]
     name: str
@@ -246,13 +554,18 @@ class AcsAccessGroup:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
             pending_mutations=[
-                cls.PendingMutations.from_dict(i)
+                _from_discriminated_dict(
+                    i, cls._PendingMutationsVariants, "mutation_code"
+                )
                 for i in d.get("pending_mutations") or []
             ],
             warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],

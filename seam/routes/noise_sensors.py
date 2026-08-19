@@ -36,9 +36,13 @@ class AbstractNoiseSensors(abc.ABC):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal["noiseaware_activity_zone", "minut_sensor"]
+        ] = None,
+        device_types: Optional[
+            List[Literal["noiseaware_activity_zone", "minut_sensor"]]
+        ] = None,
+        manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -77,9 +81,13 @@ class AbstractAsyncNoiseSensors(abc.ABC):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal["noiseaware_activity_zone", "minut_sensor"]
+        ] = None,
+        device_types: Optional[
+            List[Literal["noiseaware_activity_zone", "minut_sensor"]]
+        ] = None,
+        manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -125,9 +133,13 @@ class NoiseSensors(AbstractNoiseSensors):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal["noiseaware_activity_zone", "minut_sensor"]
+        ] = None,
+        device_types: Optional[
+            List[Literal["noiseaware_activity_zone", "minut_sensor"]]
+        ] = None,
+        manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 
@@ -190,9 +202,13 @@ class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal["noiseaware_activity_zone", "minut_sensor"]
+        ] = None,
+        device_types: Optional[
+            List[Literal["noiseaware_activity_zone", "minut_sensor"]]
+        ] = None,
+        manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
         """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
 

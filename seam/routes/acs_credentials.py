@@ -31,7 +31,7 @@ class AbstractAcsCredentials(abc.ABC):
     def create(
         self,
         *,
-        access_method: str,
+        access_method: Literal["code", "card", "mobile_key", "cloud_key"],
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
@@ -207,7 +207,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
     async def create(
         self,
         *,
-        access_method: str,
+        access_method: Literal["code", "card", "mobile_key", "cloud_key"],
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
@@ -412,7 +412,7 @@ class AcsCredentials(AbstractAcsCredentials):
     def create(
         self,
         *,
-        access_method: str,
+        access_method: Literal["code", "card", "mobile_key", "cloud_key"],
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         allowed_acs_entrance_ids: Optional[List[str]] = None,
@@ -766,7 +766,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
     async def create(
         self,
         *,
-        access_method: str,
+        access_method: Literal["code", "card", "mobile_key", "cloud_key"],
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
         allowed_acs_entrance_ids: Optional[List[str]] = None,

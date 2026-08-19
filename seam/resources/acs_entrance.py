@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class AcsEntrance:
     """Represents an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
@@ -122,7 +129,9 @@ class AcsEntrance:
 
         door_name: Optional[str]
         door_number: Optional[float]
-        door_type: Optional[str]
+        door_type: Optional[
+            Literal["CommonDoor", "EntranceDoor", "GuestDoor", "Elevator"]
+        ]
         pms_id: Optional[str]
         stand_open: Optional[bool]
 
@@ -393,7 +402,9 @@ class AcsEntrance:
             """
 
             visionline_door_profile_id: Optional[str]
-            visionline_door_profile_type: Optional[str]
+            visionline_door_profile_type: Optional[
+                Literal["BLE", "commonDoor", "touch"]
+            ]
 
             @classmethod
             def from_dict(cls, d: Any):
@@ -406,7 +417,9 @@ class AcsEntrance:
                     ),
                 )
 
-        door_category: Optional[str]
+        door_category: Optional[
+            Literal["entrance", "guest", "elevator reader", "common", "common (PMS)"]
+        ]
         door_name: Optional[str]
         profiles: Optional[List[Profiles]]
 
@@ -419,8 +432,8 @@ class AcsEntrance:
             )
 
     @dataclass
-    class Warnings(ResourceMapping):
-        """Warnings associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    class SaltoKsEntranceAccessCodeSupportRemovedWarning(ResourceMapping):
+        """Indicates that a change in the reported device model has been detected for this Salto KS entrance, which may occur after an IQ hub reset. Access code support may be affected. See https://help.getseam.com/articles/5098842588-salto-ks-lock-loses-access-code-support for troubleshooting steps.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -431,7 +444,7 @@ class AcsEntrance:
 
         created_at: str
         message: str
-        warning_code: str
+        warning_code: Literal["salto_ks_entrance_access_code_support_removed"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -440,6 +453,113 @@ class AcsEntrance:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
             )
+
+    @dataclass
+    class EntranceSharesZoneWarning(ResourceMapping):
+        """Indicates that this entrance shares a zone with other entrances in Avigilon Alta and cannot be added to an access group individually.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["entrance_shares_zone"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class EntranceSetupRequiredWarning(ResourceMapping):
+        """Indicates that this entrance requires additional configuration in the access control system before Seam can fully manage it.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["entrance_setup_required"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class SaltoKsPrivacyModeWarning(ResourceMapping):
+        """Indicates that this entrance is in privacy mode. When privacy mode is enabled, access codes, mobile keys, and remote unlocks will not work unless the user has admin access.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["salto_ks_privacy_mode"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class PrivacyModeWarning(ResourceMapping):
+        """Indicates that this entrance is in privacy mode. When privacy mode is enabled, access codes, mobile keys, and remote unlocks will not work unless the user has admin access.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["privacy_mode"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Warnings = Union[
+        SaltoKsEntranceAccessCodeSupportRemovedWarning,
+        EntranceSharesZoneWarning,
+        EntranceSetupRequiredWarning,
+        SaltoKsPrivacyModeWarning,
+        PrivacyModeWarning,
+    ]
+    _WarningsVariants = {
+        "salto_ks_entrance_access_code_support_removed": SaltoKsEntranceAccessCodeSupportRemovedWarning,
+        "entrance_shares_zone": EntranceSharesZoneWarning,
+        "entrance_setup_required": EntranceSetupRequiredWarning,
+        "salto_ks_privacy_mode": SaltoKsPrivacyModeWarning,
+        "privacy_mode": PrivacyModeWarning,
+    }
 
     acs_entrance_id: str
     acs_system_id: str
@@ -544,5 +664,8 @@ class AcsEntrance:
                 if d.get("visionline_metadata") is not None
                 else None
             ),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
         )

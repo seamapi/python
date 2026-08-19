@@ -104,8 +104,30 @@ class AbstractSpaces(abc.ABC):
     def get_related(
         self,
         *,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
     ) -> Batch:
@@ -315,8 +337,30 @@ class AbstractAsyncSpaces(abc.ABC):
     async def get_related(
         self,
         *,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
     ) -> Batch:
@@ -631,8 +675,30 @@ class Spaces(AbstractSpaces):
     def get_related(
         self,
         *,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
     ) -> Batch:
@@ -1057,8 +1123,30 @@ class AsyncSpaces(AbstractAsyncSpaces):
     async def get_related(
         self,
         *,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
     ) -> Batch:

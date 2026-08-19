@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import ActionAttempt, Device
+from ..resources import ActionAttempt, Device, action_attempt_from_dict
 from .thermostats_daily_programs import (
     AbstractThermostatsDailyPrograms,
     ThermostatsDailyPrograms,
@@ -96,14 +96,18 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -208,9 +212,33 @@ class AbstractThermostats(abc.ABC):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal[
+                "ecobee_thermostat",
+                "nest_thermostat",
+                "honeywell_resideo_thermostat",
+                "tado_thermostat",
+                "sensi_thermostat",
+                "smartthings_thermostat",
+            ]
+        ] = None,
+        device_types: Optional[
+            List[
+                Literal[
+                    "ecobee_thermostat",
+                    "nest_thermostat",
+                    "honeywell_resideo_thermostat",
+                    "tado_thermostat",
+                    "sensi_thermostat",
+                    "smartthings_thermostat",
+                ]
+            ]
+        ] = None,
+        manufacturer: Optional[
+            Literal[
+                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+            ]
+        ] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -265,8 +293,8 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        fan_mode: Optional[str] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode: Optional[Literal["auto", "on", "circulate"]] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -289,7 +317,7 @@ class AbstractThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        hvac_mode_setting: str,
+        hvac_mode_setting: Literal["off", "cool", "heat", "heat_cool", "eco"],
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -348,14 +376,18 @@ class AbstractThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -496,14 +528,18 @@ class AbstractAsyncThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -610,9 +646,33 @@ class AbstractAsyncThermostats(abc.ABC):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal[
+                "ecobee_thermostat",
+                "nest_thermostat",
+                "honeywell_resideo_thermostat",
+                "tado_thermostat",
+                "sensi_thermostat",
+                "smartthings_thermostat",
+            ]
+        ] = None,
+        device_types: Optional[
+            List[
+                Literal[
+                    "ecobee_thermostat",
+                    "nest_thermostat",
+                    "honeywell_resideo_thermostat",
+                    "tado_thermostat",
+                    "sensi_thermostat",
+                    "smartthings_thermostat",
+                ]
+            ]
+        ] = None,
+        manufacturer: Optional[
+            Literal[
+                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+            ]
+        ] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -667,8 +727,8 @@ class AbstractAsyncThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        fan_mode: Optional[str] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode: Optional[Literal["auto", "on", "circulate"]] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -691,7 +751,7 @@ class AbstractAsyncThermostats(abc.ABC):
         self,
         *,
         device_id: str,
-        hvac_mode_setting: str,
+        hvac_mode_setting: Literal["off", "cool", "heat", "heat_cool", "eco"],
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -750,14 +810,18 @@ class AbstractAsyncThermostats(abc.ABC):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -899,7 +963,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -949,7 +1013,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -963,14 +1027,18 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -1112,7 +1180,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1176,7 +1244,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1189,9 +1257,33 @@ class Thermostats(AbstractThermostats):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal[
+                "ecobee_thermostat",
+                "nest_thermostat",
+                "honeywell_resideo_thermostat",
+                "tado_thermostat",
+                "sensi_thermostat",
+                "smartthings_thermostat",
+            ]
+        ] = None,
+        device_types: Optional[
+            List[
+                Literal[
+                    "ecobee_thermostat",
+                    "nest_thermostat",
+                    "honeywell_resideo_thermostat",
+                    "tado_thermostat",
+                    "sensi_thermostat",
+                    "smartthings_thermostat",
+                ]
+            ]
+        ] = None,
+        manufacturer: Optional[
+            Literal[
+                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+            ]
+        ] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -1263,7 +1355,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1307,8 +1399,8 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        fan_mode: Optional[str] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode: Optional[Literal["auto", "on", "circulate"]] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -1348,7 +1440,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1361,7 +1453,7 @@ class Thermostats(AbstractThermostats):
         self,
         *,
         device_id: str,
-        hvac_mode_setting: str,
+        hvac_mode_setting: Literal["off", "cool", "heat", "heat_cool", "eco"],
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -1417,7 +1509,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1480,14 +1572,18 @@ class Thermostats(AbstractThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -1629,7 +1725,7 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1703,7 +1799,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1753,7 +1849,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1767,14 +1863,18 @@ class AsyncThermostats(AbstractAsyncThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -1918,7 +2018,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1982,7 +2082,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1995,9 +2095,33 @@ class AsyncThermostats(AbstractAsyncThermostats):
         connect_webview_id: Optional[str] = None,
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
-        device_type: Optional[str] = None,
-        device_types: Optional[List[str]] = None,
-        manufacturer: Optional[str] = None,
+        device_type: Optional[
+            Literal[
+                "ecobee_thermostat",
+                "nest_thermostat",
+                "honeywell_resideo_thermostat",
+                "tado_thermostat",
+                "sensi_thermostat",
+                "smartthings_thermostat",
+            ]
+        ] = None,
+        device_types: Optional[
+            List[
+                Literal[
+                    "ecobee_thermostat",
+                    "nest_thermostat",
+                    "honeywell_resideo_thermostat",
+                    "tado_thermostat",
+                    "sensi_thermostat",
+                    "smartthings_thermostat",
+                ]
+            ]
+        ] = None,
+        manufacturer: Optional[
+            Literal[
+                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+            ]
+        ] = None,
     ) -> List[Device]:
         """Returns a list of all `thermostats <https://docs.seam.co/capability-guides/thermostats>`_.
 
@@ -2069,7 +2193,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2115,8 +2239,8 @@ class AsyncThermostats(AbstractAsyncThermostats):
         self,
         *,
         device_id: str,
-        fan_mode: Optional[str] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode: Optional[Literal["auto", "on", "circulate"]] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
         """Sets the `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
@@ -2156,7 +2280,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2169,7 +2293,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         self,
         *,
         device_id: str,
-        hvac_mode_setting: str,
+        hvac_mode_setting: Literal["off", "cool", "heat", "heat_cool", "eco"],
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         heating_set_point_celsius: Optional[float] = None,
@@ -2225,7 +2349,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2290,14 +2414,18 @@ class AsyncThermostats(AbstractAsyncThermostats):
         *,
         climate_preset_key: str,
         device_id: str,
-        climate_preset_mode: Optional[str] = None,
+        climate_preset_mode: Optional[
+            Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
+        ] = None,
         cooling_set_point_celsius: Optional[float] = None,
         cooling_set_point_fahrenheit: Optional[float] = None,
         ecobee_metadata: Optional[Dict[str, Any]] = None,
-        fan_mode_setting: Optional[str] = None,
+        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]] = None,
         heating_set_point_celsius: Optional[float] = None,
         heating_set_point_fahrenheit: Optional[float] = None,
-        hvac_mode_setting: Optional[str] = None,
+        hvac_mode_setting: Optional[
+            Literal["off", "heat", "cool", "heat_cool", "eco"]
+        ] = None,
         manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
@@ -2441,6 +2569,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )

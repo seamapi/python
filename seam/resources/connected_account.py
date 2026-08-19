@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class ConnectedAccount:
     """Represents a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_. A connected account is an external third-party account to which your user has authorized Seam to get access, for example, an August account with a list of door locks.
@@ -45,8 +52,70 @@ class ConnectedAccount:
     :ivar warnings: Warnings associated with the connected account."""
 
     @dataclass
-    class Errors(ResourceMapping):
-        """Errors associated with the connected account.
+    class AccountDisconnectedError(ResourceMapping):
+        """Indicates that the account is disconnected.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+
+        :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["account_disconnected"]
+        is_bridge_error: Optional[bool]
+        is_connected_account_error: Optional[bool]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_bridge_error=d.get("is_bridge_error", None),
+                is_connected_account_error=d.get("is_connected_account_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class BridgeDisconnectedError(ResourceMapping):
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+
+        :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["bridge_disconnected"]
+        is_bridge_error: Optional[bool]
+        is_connected_account_error: Optional[bool]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_bridge_error=d.get("is_bridge_error", None),
+                is_connected_account_error=d.get("is_connected_account_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class SaltoKsSubscriptionLimitExceededError(ResourceMapping):
+        """Indicates that the maximum number of users allowed for the site has been reached. This means that new access codes cannot be created. Contact Salto support to increase the user limit.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -108,7 +177,7 @@ class ConnectedAccount:
                 )
 
         created_at: str
-        error_code: str
+        error_code: Literal["salto_ks_subscription_limit_exceeded"]
         is_bridge_error: Optional[bool]
         is_connected_account_error: Optional[bool]
         message: str
@@ -127,6 +196,37 @@ class ConnectedAccount:
                     if d.get("salto_ks_metadata") is not None
                     else None
                 ),
+            )
+
+    @dataclass
+    class DormakabaSitesDisconnectedError(ResourceMapping):
+        """Indicates that one or more dormakaba sites associated with the connected account could not be connected. Contact dormakaba support.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+
+        :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["dormakaba_sites_disconnected"]
+        is_bridge_error: Optional[bool]
+        is_connected_account_error: Optional[bool]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_bridge_error=d.get("is_bridge_error", None),
+                is_connected_account_error=d.get("is_connected_account_error", None),
+                message=d.get("message", None),
             )
 
     @dataclass
@@ -161,16 +261,62 @@ class ConnectedAccount:
             )
 
     @dataclass
-    class Warnings(ResourceMapping):
-        """Warnings associated with the connected account.
+    class ScheduledMaintenanceWindowWarning(ResourceMapping):
+        """Indicates that scheduled downtime is planned for the connected account.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["scheduled_maintenance_window"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UnknownIssueWithConnectedAccountWarning(ResourceMapping):
+        """Indicates that an unknown issue occurred while syncing the state of the connected account with the provider. This issue may affect the proper functioning of one or more resources in the account.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["unknown_issue_with_connected_account"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class SaltoKsSubscriptionLimitAlmostReachedWarning(ResourceMapping):
+        """Indicates that the Salto KS site has exceeded 80% of the maximum number of allowed users. Increase your subscription limit or delete some users from your site.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
         :ivar salto_ks_metadata: Salto KS metadata associated with the connected account that has a warning.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
         """
 
         @dataclass
@@ -221,8 +367,36 @@ class ConnectedAccount:
 
         created_at: str
         message: str
-        warning_code: str
         salto_ks_metadata: Optional[SaltoKsMetadata]
+        warning_code: Literal["salto_ks_subscription_limit_almost_reached"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                salto_ks_metadata=(
+                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                    if d.get("salto_ks_metadata") is not None
+                    else None
+                ),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class AccountReauthorizationRequestedWarning(ResourceMapping):
+        """Indicates that the Connected Account requires reauthorization using a new Connect Webview. The account is still connected, but cannot access new features. Delaying reauthorization too long will eventually cause the Connected Account to become disconnected.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["account_reauthorization_requested"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -230,14 +404,137 @@ class ConnectedAccount:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
-                ),
             )
 
-    accepted_capabilities: List[str]
+    @dataclass
+    class BeingDeletedWarning(ResourceMapping):
+        """Indicates that the connected account is currently being deleted. All devices, access codes, and other resources associated with this account are in the process of being removed from Seam.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["being_deleted"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class ProviderServiceUnavailableWarning(ResourceMapping):
+        """Indicates that the connected account's provider service is temporarily unavailable. Seam will automatically retry and reconnect when the service becomes available again.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["provider_service_unavailable"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class SetupRequiredWarning(ResourceMapping):
+        """Indicates that the connected account requires additional setup before it can be fully operational. Follow the instructions in the warning message to complete the setup.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["setup_required"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class DormakabaSitesUnapprovedWarning(ResourceMapping):
+        """Indicates that one or more dormakaba sites associated with the connected account are not approved. Contact support@getseam.com to finish setting up your account.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["dormakaba_sites_unapproved"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Errors = Union[
+        AccountDisconnectedError,
+        BridgeDisconnectedError,
+        SaltoKsSubscriptionLimitExceededError,
+        DormakabaSitesDisconnectedError,
+    ]
+    _ErrorsVariants = {
+        "account_disconnected": AccountDisconnectedError,
+        "bridge_disconnected": BridgeDisconnectedError,
+        "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
+        "dormakaba_sites_disconnected": DormakabaSitesDisconnectedError,
+    }
+
+    Warnings = Union[
+        ScheduledMaintenanceWindowWarning,
+        UnknownIssueWithConnectedAccountWarning,
+        SaltoKsSubscriptionLimitAlmostReachedWarning,
+        AccountReauthorizationRequestedWarning,
+        BeingDeletedWarning,
+        ProviderServiceUnavailableWarning,
+        SetupRequiredWarning,
+        DormakabaSitesUnapprovedWarning,
+    ]
+    _WarningsVariants = {
+        "scheduled_maintenance_window": ScheduledMaintenanceWindowWarning,
+        "unknown_issue_with_connected_account": UnknownIssueWithConnectedAccountWarning,
+        "salto_ks_subscription_limit_almost_reached": SaltoKsSubscriptionLimitAlmostReachedWarning,
+        "account_reauthorization_requested": AccountReauthorizationRequestedWarning,
+        "being_deleted": BeingDeletedWarning,
+        "provider_service_unavailable": ProviderServiceUnavailableWarning,
+        "setup_required": SetupRequiredWarning,
+        "dormakaba_sites_unapproved": DormakabaSitesUnapprovedWarning,
+    }
+
+    accepted_capabilities: List[
+        Literal["lock", "thermostat", "noise_sensor", "access_control", "camera"]
+    ]
     account_type: Optional[str]
     account_type_display_name: str
     automatically_manage_new_devices: bool
@@ -272,7 +569,10 @@ class ConnectedAccount:
             default_checkin_time=d.get("default_checkin_time", None),
             default_checkout_time=d.get("default_checkout_time", None),
             display_name=d.get("display_name", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             ical_feed_origin=d.get("ical_feed_origin", None),
             ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
@@ -282,5 +582,8 @@ class ConnectedAccount:
                 if d.get("user_identifier") is not None
                 else None
             ),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
         )

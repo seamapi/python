@@ -1,6 +1,6 @@
 from typing import Dict
 from svix.webhooks import Webhook
-from .resources import SeamEvent
+from .resources import SeamEvent, seam_event_from_dict
 
 
 class SeamWebhook:
@@ -30,4 +30,4 @@ class SeamWebhook:
         normalized_headers = {k.lower(): v for k, v in headers.items()}
         res = self._webhook.verify(payload, normalized_headers)
 
-        return SeamEvent.from_dict(res)
+        return seam_event_from_dict(res)

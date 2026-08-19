@@ -44,7 +44,7 @@ class Workspace:
         """
 
         inviter_logo_url: Optional[str]
-        logo_shape: Optional[str]
+        logo_shape: Optional[Literal["circle", "square"]]
         primary_button_color: Optional[str]
         primary_button_text_color: Optional[str]
         success_message: Optional[str]

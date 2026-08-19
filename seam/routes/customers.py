@@ -18,8 +18,21 @@ class AbstractCustomers(abc.ABC):
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        navigation_mode: Optional[str] = None,
+        locale: Optional[
+            Literal[
+                "en-US",
+                "pt-PT",
+                "fr-FR",
+                "it-IT",
+                "es-ES",
+                "de-DE",
+                "nl-NL",
+                "el-GR",
+                "pl-PL",
+                "ru-RU",
+            ]
+        ] = None,
+        navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
@@ -200,8 +213,21 @@ class AbstractAsyncCustomers(abc.ABC):
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        navigation_mode: Optional[str] = None,
+        locale: Optional[
+            Literal[
+                "en-US",
+                "pt-PT",
+                "fr-FR",
+                "it-IT",
+                "es-ES",
+                "de-DE",
+                "nl-NL",
+                "el-GR",
+                "pl-PL",
+                "ru-RU",
+            ]
+        ] = None,
+        navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
@@ -389,8 +415,21 @@ class Customers(AbstractCustomers):
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        navigation_mode: Optional[str] = None,
+        locale: Optional[
+            Literal[
+                "en-US",
+                "pt-PT",
+                "fr-FR",
+                "it-IT",
+                "es-ES",
+                "de-DE",
+                "nl-NL",
+                "el-GR",
+                "pl-PL",
+                "ru-RU",
+            ]
+        ] = None,
+        navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
@@ -704,8 +743,21 @@ class AsyncCustomers(AbstractAsyncCustomers):
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
         landing_page: Optional[Dict[str, Any]] = None,
-        locale: Optional[str] = None,
-        navigation_mode: Optional[str] = None,
+        locale: Optional[
+            Literal[
+                "en-US",
+                "pt-PT",
+                "fr-FR",
+                "it-IT",
+                "es-ES",
+                "de-DE",
+                "nl-NL",
+                "el-GR",
+                "pl-PL",
+                "ru-RU",
+            ]
+        ] = None,
+        navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
         customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:

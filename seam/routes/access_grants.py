@@ -109,8 +109,34 @@ class AbstractAccessGrants(abc.ABC):
         *,
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
@@ -314,8 +340,34 @@ class AbstractAsyncAccessGrants(abc.ABC):
         *,
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
@@ -598,8 +650,34 @@ class AccessGrants(AbstractAccessGrants):
         *,
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
@@ -975,8 +1053,34 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         *,
         access_grant_ids: Optional[List[str]] = None,
         access_grant_keys: Optional[List[str]] = None,
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "connected_accounts",
+                    "acs_systems",
+                    "user_identities",
+                    "acs_access_groups",
+                    "access_methods",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Grants.
 
