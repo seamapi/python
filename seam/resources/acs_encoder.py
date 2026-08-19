@@ -48,7 +48,7 @@ class AcsEncoder:
         """
 
         created_at: str
-        error_code: str
+        error_code: Literal["acs_encoder_removed"]
         message: str
 
         @classmethod

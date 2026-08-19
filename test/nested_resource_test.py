@@ -1,20 +1,29 @@
 """Regression tests for generated nested resource types."""
 
 import dataclasses
+from typing import Any, cast
 
 import pytest
 
 import seam.resources.device as device_module
 from seam.resources.acs_user import AcsUser
-from seam.resources.action_attempt import ActionAttempt
+from seam.resources.action_attempt import (
+    LockDoorActionAttempt,
+    ScanCredentialActionAttempt,
+    action_attempt_from_dict,
+)
 from seam.resources.device import Device
+from seam.resources.seam_event import (
+    AccessCodeCreatedEvent,
+    seam_event_from_dict,
+)
 
 
 def test_nested_objects_are_typed_and_drop_unknown_fields():
     device = Device.from_dict(
         {
             "properties": {"locked": True, "future_api_field": "ignored"},
-            "errors": [{"error_code": "offline", "message": "Offline"}],
+            "errors": [{"error_code": "device_offline", "message": "Offline"}],
             "custom_metadata": {"arbitrary": {"future": True}},
         }
     )
@@ -22,8 +31,8 @@ def test_nested_objects_are_typed_and_drop_unknown_fields():
     assert isinstance(device.properties, Device.Properties)
     assert device.properties.locked is True
     assert not hasattr(device.properties, "future_api_field")
-    assert isinstance(device.errors[0], Device.Errors)
-    assert device.errors[0].error_code == "offline"
+    assert isinstance(device.errors[0], Device.DeviceOfflineError)
+    assert device.errors[0].error_code == "device_offline"
     assert device.custom_metadata["arbitrary"]["future"] is True
 
 
@@ -48,55 +57,68 @@ def test_missing_nested_values_use_stable_defaults():
     assert len(device.errors) == 0
 
 
+def test_event_union_dispatches_and_keeps_unknown_events_readable():
+    event = seam_event_from_dict({"event_type": "access_code.created"})
+    unknown = cast(
+        Any,
+        seam_event_from_dict(
+            {"event_type": "future.event", "future_api_field": "kept"}
+        ),
+    )
+
+    assert isinstance(event, AccessCodeCreatedEvent)
+    assert unknown.event_type == "future.event"
+    assert unknown.future_api_field == "kept"
+
+
 def test_action_attempt_union_hydrates_nested_result_and_error():
-    attempt = ActionAttempt.from_dict(
+    attempt = action_attempt_from_dict(
         {
+            "action_type": "LOCK_DOOR",
             "result": {"was_confirmed_by_device": True},
             "error": {"message": "failed", "type": "device_error"},
         }
     )
 
-    assert isinstance(attempt.result, ActionAttempt.Result)
+    assert isinstance(attempt, LockDoorActionAttempt)
+    assert isinstance(attempt.result, LockDoorActionAttempt.Result)
     assert attempt.result.was_confirmed_by_device is True
-    assert isinstance(attempt.error, ActionAttempt.Error)
+    assert isinstance(attempt.error, LockDoorActionAttempt.Error)
     assert attempt.error.message == "failed"
 
-
-def test_merged_variants_keep_every_variant_field():
-    result_fields = {f.name for f in dataclasses.fields(ActionAttempt.Result)}
-
-    assert "was_confirmed_by_device" in result_fields
-    assert "acs_credential_on_encoder" in result_fields
-    assert "instant_key_url" in result_fields
-
-    encoded = ActionAttempt.from_dict(
-        {
-            "action_type": "ENCODE_ACS_CREDENTIAL",
-            "result": {
-                "acs_credential_on_encoder": {"card_number": "123"},
-                "acs_credential_on_seam": {"acs_credential_id": "cred_1"},
-            },
-        }
+    pending = action_attempt_from_dict(
+        {"action_type": "LOCK_DOOR", "status": "pending"}
     )
-    assert encoded.result.acs_credential_on_encoder.card_number == "123"
-    assert encoded.result.acs_credential_on_seam.acs_credential_id == "cred_1"
-
-    instant_key = ActionAttempt.from_dict(
-        {
-            "action_type": "CREATE_INSTANT_KEY",
-            "result": {"instant_key_url": "https://x"},
-        }
-    )
-    assert instant_key.result.instant_key_url == "https://x"
+    assert pending.error is None
+    assert pending.result is None
 
 
-def test_merged_variants_recurse_into_nested_objects():
-    from_fields = {f.name for f in dataclasses.fields(AcsUser.PendingMutations.From)}
+def test_action_attempt_variants_keep_distinct_result_shapes():
+    lock_fields = {f.name for f in dataclasses.fields(LockDoorActionAttempt.Result)}
+    scan_fields = {
+        f.name for f in dataclasses.fields(ScanCredentialActionAttempt.Result)
+    }
 
-    assert "full_name" in from_fields
-    assert "starts_at" in from_fields
-    assert "is_suspended" in from_fields
-    assert "acs_access_group_id" in from_fields
+    assert "was_confirmed_by_device" in lock_fields
+    assert "acs_credential_on_encoder" not in lock_fields
+    assert "acs_credential_on_encoder" in scan_fields
+    assert "was_confirmed_by_device" not in scan_fields
+
+
+def test_discriminated_list_variants_keep_distinct_nested_objects():
+    information_fields = {
+        f.name
+        for f in dataclasses.fields(AcsUser.UpdatingUserInformationPendingMutation.From)
+    }
+    schedule_fields = {
+        f.name
+        for f in dataclasses.fields(AcsUser.UpdatingAccessSchedulePendingMutation.From)
+    }
+
+    assert "full_name" in information_fields
+    assert "starts_at" not in information_fields
+    assert "starts_at" in schedule_fields
+    assert "full_name" not in schedule_fields
 
 
 def test_same_named_nested_objects_keep_distinct_shapes():

@@ -15,7 +15,11 @@ type RecordValueType = NonNullable<
 
 export const mapParameterToPythonType = (parameter: Parameter): string => {
   if (parameter.format === 'list') {
-    return `List[${mapListItemFormatToPythonType(parameter.itemFormat)}]`
+    const itemType =
+      parameter.itemFormat === 'enum'
+        ? mapEnumToPythonType(parameter.itemEnumValues)
+        : mapListItemFormatToPythonType(parameter.itemFormat)
+    return `List[${itemType}]`
   }
 
   if (parameter.format === 'number') {
@@ -28,6 +32,10 @@ export const mapParameterToPythonType = (parameter: Parameter): string => {
 
   if (parameter.format === 'record') {
     return mapRecordToPythonType(parameter.valueTypes)
+  }
+
+  if (parameter.format === 'enum') {
+    return mapEnumToPythonType(parameter.values)
   }
 
   return mapScalarFormatToPythonType(parameter.format)
@@ -54,9 +62,12 @@ export const mapRequiredPropertyToPythonType = (
   nestedClassName?: string,
 ): string => {
   if (property.format === 'list') {
-    return `List[${
-      nestedClassName ?? mapListItemFormatToPythonType(property.itemFormat)
-    }]`
+    if (nestedClassName != null) return `List[${nestedClassName}]`
+    const itemType =
+      property.itemFormat === 'enum'
+        ? mapEnumToPythonType(property.itemEnumValues)
+        : mapListItemFormatToPythonType(property.itemFormat)
+    return `List[${itemType}]`
   }
 
   if (property.format === 'number') {
@@ -81,8 +92,19 @@ export const mapRequiredPropertyToPythonType = (
     return nestedClassName
   }
 
+  if (property.format === 'enum') {
+    return mapEnumToPythonType(property.values)
+  }
+
   return mapScalarFormatToPythonType(property.format)
 }
+
+const mapEnumToPythonType = (
+  values: Array<{ name: string }> | undefined,
+): string =>
+  values == null || values.length === 0
+    ? 'str'
+    : `Literal[${values.map(({ name }) => JSON.stringify(name)).join(', ')}]`
 
 const mapBooleanToPythonType = (values?: boolean[]): string =>
   values == null || values.length === 0
@@ -137,7 +159,11 @@ const mapScalarFormatToPythonType = (format: ScalarFormat): string => {
   }
 }
 
-const mapListItemFormatToPythonType = (itemFormat: ListItemFormat): string =>
-  itemFormat === 'discriminated_object'
-    ? 'Dict[str, Any]'
-    : mapScalarFormatToPythonType(itemFormat)
+const mapListItemFormatToPythonType = (itemFormat: ListItemFormat): string => {
+  if (itemFormat === 'discriminated_object') {
+    throw new Error(
+      'Discriminated object lists require generated variant classes.',
+    )
+  }
+  return mapScalarFormatToPythonType(itemFormat)
+}

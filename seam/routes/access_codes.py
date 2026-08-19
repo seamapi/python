@@ -43,7 +43,7 @@ class AbstractAccessCodes(abc.ABC):
         is_external_modification_allowed: Optional[bool] = None,
         is_offline_access_code: Optional[bool] = None,
         is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
+        max_time_rounding: Optional[Literal["1hour", "1day", "1h", "1d"]] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
@@ -103,7 +103,9 @@ class AbstractAccessCodes(abc.ABC):
         device_ids: List[str],
         allow_external_modification: Optional[bool] = None,
         attempt_for_offline_device: Optional[bool] = None,
-        behavior_when_code_cannot_be_shared: Optional[str] = None,
+        behavior_when_code_cannot_be_shared: Optional[
+            Literal["throw", "create_random_code"]
+        ] = None,
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
@@ -306,7 +308,7 @@ class AbstractAccessCodes(abc.ABC):
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
-        type: Optional[str] = None,
+        type: Optional[Literal["ongoing", "time_bound"]] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -401,7 +403,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         is_external_modification_allowed: Optional[bool] = None,
         is_offline_access_code: Optional[bool] = None,
         is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
+        max_time_rounding: Optional[Literal["1hour", "1day", "1h", "1d"]] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
@@ -461,7 +463,9 @@ class AbstractAsyncAccessCodes(abc.ABC):
         device_ids: List[str],
         allow_external_modification: Optional[bool] = None,
         attempt_for_offline_device: Optional[bool] = None,
-        behavior_when_code_cannot_be_shared: Optional[str] = None,
+        behavior_when_code_cannot_be_shared: Optional[
+            Literal["throw", "create_random_code"]
+        ] = None,
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
@@ -666,7 +670,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
-        type: Optional[str] = None,
+        type: Optional[Literal["ongoing", "time_bound"]] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -766,7 +770,7 @@ class AccessCodes(AbstractAccessCodes):
         is_external_modification_allowed: Optional[bool] = None,
         is_offline_access_code: Optional[bool] = None,
         is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
+        max_time_rounding: Optional[Literal["1hour", "1day", "1h", "1d"]] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
@@ -874,7 +878,9 @@ class AccessCodes(AbstractAccessCodes):
         device_ids: List[str],
         allow_external_modification: Optional[bool] = None,
         attempt_for_offline_device: Optional[bool] = None,
-        behavior_when_code_cannot_be_shared: Optional[str] = None,
+        behavior_when_code_cannot_be_shared: Optional[
+            Literal["throw", "create_random_code"]
+        ] = None,
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
@@ -1237,7 +1243,7 @@ class AccessCodes(AbstractAccessCodes):
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
-        type: Optional[str] = None,
+        type: Optional[Literal["ongoing", "time_bound"]] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 
@@ -1393,7 +1399,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         is_external_modification_allowed: Optional[bool] = None,
         is_offline_access_code: Optional[bool] = None,
         is_one_time_use: Optional[bool] = None,
-        max_time_rounding: Optional[str] = None,
+        max_time_rounding: Optional[Literal["1hour", "1day", "1h", "1d"]] = None,
         name: Optional[str] = None,
         prefer_native_scheduling: Optional[bool] = None,
         preferred_code_length: Optional[float] = None,
@@ -1501,7 +1507,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         device_ids: List[str],
         allow_external_modification: Optional[bool] = None,
         attempt_for_offline_device: Optional[bool] = None,
-        behavior_when_code_cannot_be_shared: Optional[str] = None,
+        behavior_when_code_cannot_be_shared: Optional[
+            Literal["throw", "create_random_code"]
+        ] = None,
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
         is_external_modification_allowed: Optional[bool] = None,
@@ -1868,7 +1876,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         is_managed: Optional[bool] = None,
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
-        type: Optional[str] = None,
+        type: Optional[Literal["ongoing", "time_bound"]] = None,
     ) -> None:
         """Updates a specified active or upcoming `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
 

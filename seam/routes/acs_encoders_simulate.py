@@ -11,7 +11,14 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "encoding_interrupted",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -27,7 +34,10 @@ class AbstractAcsEncodersSimulate(abc.ABC):
 
     @abc.abstractmethod
     def next_credential_encode_will_succeed(
-        self, *, acs_encoder_id: str, scenario: Optional[str] = None
+        self,
+        *,
+        acs_encoder_id: str,
+        scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -43,7 +53,13 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -63,7 +79,14 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         *,
         acs_encoder_id: str,
         acs_credential_id_on_seam: Optional[str] = None,
-        scenario: Optional[str] = None,
+        scenario: Optional[
+            Literal[
+                "credential_exists_on_seam",
+                "credential_on_encoder_needs_update",
+                "credential_does_not_exist_on_seam",
+                "credential_on_encoder_is_empty",
+            ]
+        ] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -84,7 +107,14 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "encoding_interrupted",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -100,7 +130,10 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
 
     @abc.abstractmethod
     async def next_credential_encode_will_succeed(
-        self, *, acs_encoder_id: str, scenario: Optional[str] = None
+        self,
+        *,
+        acs_encoder_id: str,
+        scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -116,7 +149,13 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -136,7 +175,14 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         *,
         acs_encoder_id: str,
         acs_credential_id_on_seam: Optional[str] = None,
-        scenario: Optional[str] = None,
+        scenario: Optional[
+            Literal[
+                "credential_exists_on_seam",
+                "credential_on_encoder_needs_update",
+                "credential_does_not_exist_on_seam",
+                "credential_on_encoder_is_empty",
+            ]
+        ] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -164,7 +210,14 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "encoding_interrupted",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -202,7 +255,10 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         has_pagination=False,
     )
     def next_credential_encode_will_succeed(
-        self, *, acs_encoder_id: str, scenario: Optional[str] = None
+        self,
+        *,
+        acs_encoder_id: str,
+        scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -239,7 +295,13 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -281,7 +343,14 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         *,
         acs_encoder_id: str,
         acs_credential_id_on_seam: Optional[str] = None,
-        scenario: Optional[str] = None,
+        scenario: Optional[
+            Literal[
+                "credential_exists_on_seam",
+                "credential_on_encoder_needs_update",
+                "credential_does_not_exist_on_seam",
+                "credential_on_encoder_is_empty",
+            ]
+        ] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -328,7 +397,14 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "encoding_interrupted",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -366,7 +442,10 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         has_pagination=False,
     )
     async def next_credential_encode_will_succeed(
-        self, *, acs_encoder_id: str, scenario: Optional[str] = None
+        self,
+        *,
+        acs_encoder_id: str,
+        scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
@@ -403,7 +482,13 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
-        error_code: Optional[str] = None,
+        error_code: Optional[
+            Literal[
+                "no_credential_on_encoder",
+                "uncategorized_error",
+                "action_attempt_expired",
+            ]
+        ] = None,
         acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
@@ -445,7 +530,14 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         *,
         acs_encoder_id: str,
         acs_credential_id_on_seam: Optional[str] = None,
-        scenario: Optional[str] = None,
+        scenario: Optional[
+            Literal[
+                "credential_exists_on_seam",
+                "credential_on_encoder_needs_update",
+                "credential_does_not_exist_on_seam",
+                "credential_on_encoder_is_empty",
+            ]
+        ] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 

@@ -3,7 +3,12 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import AcsEntrance, AcsCredential, ActionAttempt
+from ..resources import (
+    AcsEntrance,
+    AcsCredential,
+    ActionAttempt,
+    action_attempt_from_dict,
+)
 from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
@@ -87,7 +92,10 @@ class AbstractAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
     def list_credentials_with_access(
-        self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
+        self,
+        *,
+        acs_entrance_id: str,
+        include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -199,7 +207,10 @@ class AbstractAsyncAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
     async def list_credentials_with_access(
-        self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
+        self,
+        *,
+        acs_entrance_id: str,
+        include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -381,7 +392,10 @@ class AcsEntrances(AbstractAcsEntrances):
         has_pagination=False,
     )
     def list_credentials_with_access(
-        self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
+        self,
+        *,
+        acs_entrance_id: str,
+        include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -453,7 +467,7 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -605,7 +619,10 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         has_pagination=False,
     )
     async def list_credentials_with_access(
-        self, *, acs_entrance_id: str, include_if: Optional[List[str]] = None
+        self,
+        *,
+        acs_entrance_id: str,
+        include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -677,6 +694,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )

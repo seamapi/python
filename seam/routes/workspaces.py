@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import Workspace, ActionAttempt
+from ..resources import Workspace, ActionAttempt, action_attempt_from_dict
 from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
@@ -22,7 +22,7 @@ class AbstractWorkspaces(abc.ABC):
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[str] = None,
+        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
@@ -119,7 +119,7 @@ class AbstractAsyncWorkspaces(abc.ABC):
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[str] = None,
+        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
@@ -221,7 +221,7 @@ class Workspaces(AbstractWorkspaces):
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[str] = None,
+        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
@@ -338,7 +338,7 @@ class Workspaces(AbstractWorkspaces):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -410,7 +410,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[str] = None,
+        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
         webview_primary_button_color: Optional[str] = None,
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
@@ -527,7 +527,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 

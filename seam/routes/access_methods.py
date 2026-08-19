@@ -3,7 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
-from ..resources import ActionAttempt, AccessMethod, Batch
+from ..resources import ActionAttempt, AccessMethod, Batch, action_attempt_from_dict
 from .access_methods_unmanaged import (
     AbstractAccessMethodsUnmanaged,
     AccessMethodsUnmanaged,
@@ -100,8 +100,34 @@ class AbstractAccessMethods(abc.ABC):
         self,
         *,
         access_method_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -258,8 +284,34 @@ class AbstractAsyncAccessMethods(abc.ABC):
         self,
         *,
         access_method_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -387,7 +439,7 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -475,7 +527,7 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -513,8 +565,34 @@ class AccessMethods(AbstractAccessMethods):
         self,
         *,
         access_method_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -654,7 +732,7 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -714,7 +792,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -802,7 +880,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -840,8 +918,34 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         self,
         *,
         access_method_ids: List[str],
-        exclude: Optional[List[str]] = None,
-        include: Optional[List[str]] = None,
+        exclude: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
+        include: Optional[
+            List[
+                Literal[
+                    "spaces",
+                    "devices",
+                    "acs_entrances",
+                    "access_grants",
+                    "access_methods",
+                    "instant_keys",
+                    "client_sessions",
+                    "acs_credentials",
+                ]
+            ]
+        ] = None,
     ) -> Batch:
         """Gets all related resources for one or more Access Methods.
 
@@ -981,6 +1085,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
