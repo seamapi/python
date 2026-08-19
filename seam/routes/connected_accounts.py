@@ -92,7 +92,13 @@ class AbstractConnectedAccounts(abc.ABC):
         self,
         *,
         connected_account_id: str,
-        accepted_capabilities: Optional[List[str]] = None,
+        accepted_capabilities: Optional[
+            List[
+                Literal[
+                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                ]
+            ]
+        ] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
@@ -196,7 +202,13 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         self,
         *,
         connected_account_id: str,
-        accepted_capabilities: Optional[List[str]] = None,
+        accepted_capabilities: Optional[
+            List[
+                Literal[
+                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                ]
+            ]
+        ] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
@@ -380,7 +392,13 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         self,
         *,
         connected_account_id: str,
-        accepted_capabilities: Optional[List[str]] = None,
+        accepted_capabilities: Optional[
+            List[
+                Literal[
+                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                ]
+            ]
+        ] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,
@@ -590,7 +608,13 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         self,
         *,
         connected_account_id: str,
-        accepted_capabilities: Optional[List[str]] = None,
+        accepted_capabilities: Optional[
+            List[
+                Literal[
+                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                ]
+            ]
+        ] = None,
         automatically_manage_new_devices: Optional[bool] = None,
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         customer_key: Optional[str] = None,

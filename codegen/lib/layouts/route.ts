@@ -114,6 +114,13 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     ({ returnResource }) => returnResource === 'ActionAttempt',
   )
 
+  if (resourceClasses.includes('ActionAttempt')) {
+    resourceClasses.push('action_attempt_from_dict')
+  }
+  if (resourceClasses.includes('SeamEvent')) {
+    resourceClasses.push('seam_event_from_dict')
+  }
+
   const abstractClassName = `Abstract${cls.name}`
   const asyncClassName = `Async${cls.name}`
   const asyncAbstractClassName = `AbstractAsync${cls.name}`

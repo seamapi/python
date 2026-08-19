@@ -53,6 +53,8 @@ export const indent = (value: string, spaces: number): string =>
 export const pythonIdentifier = (name: string): string =>
   PYTHON_KEYWORDS.has(name) ? `${name}_` : name
 
+export const pythonString = (value: string): string => JSON.stringify(value)
+
 // A param the API documents as nullable may be set to the NULL sentinel, which
 // the client serializes to null. Params that are merely optional may not: they
 // are omitted by passing None, and sending null would unset a value instead.
@@ -62,3 +64,9 @@ export const nullableType = (type: string, isNullable: boolean): string =>
 export const isListType = (type: string): boolean => type.startsWith('List[')
 
 export const listItemType = (type: string): string => type.slice(5, -1)
+
+export const fromDict = (type: string): string => {
+  if (type === 'SeamEvent') return 'seam_event_from_dict'
+  if (type === 'ActionAttempt') return 'action_attempt_from_dict'
+  return `${type}.from_dict`
+}

@@ -11,20 +11,36 @@ import {
   mapRequiredPropertyToPythonType,
 } from '../python-type.js'
 
-export interface ResourceLayoutContext extends ResourceClassLayoutContext {
+export interface ResourceLayoutContext {
+  className: string
   moduleName: string
   isDeprecated: boolean
   deprecationMessage: string
+  classes: ResourceClassLayoutContext[]
+  union?: DiscriminatedUnionLayoutContext
+  hasDiscriminatedLists: boolean
+  exports: string[]
 }
 
 interface ResourceClassLayoutContext {
   className: string
   description: string
+  isDeprecated?: boolean
+  deprecationMessage?: string
   classIndent: string
   memberIndent: string
   docIndent: number
   nestedClasses: ResourceClassLayoutContext[]
+  nestedUnions: DiscriminatedUnionLayoutContext[]
   properties: ResourcePropertyLayoutContext[]
+}
+
+interface DiscriminatedUnionLayoutContext {
+  className: string
+  discriminator: string
+  fromDictName: string
+  variantsName: string
+  variants: Array<{ className: string; values: string[] }>
 }
 
 interface ResourcePropertyLayoutContext {
@@ -37,15 +53,17 @@ interface ResourcePropertyLayoutContext {
   isDictParam: boolean
   isObject: boolean
   isObjectList: boolean
+  isDiscriminatedObjectList: boolean
+  discriminator: string
 }
 
 export interface ResourcesIndexLayoutContext {
-  resources: Array<{ className: string; moduleName: string }>
+  resources: Array<{ exports: string[]; moduleName: string }>
 }
 
-// The action attempt and event variants each generate a single dataclass with
-// the union of the variant properties.
-const mergeResourceProperties = (
+// Kept public because Ruby and PHP share these exact merge semantics. Union
+// generation bypasses merging rather than changing it.
+export const mergeResourceProperties = (
   resources: Array<{ properties: Property[] }>,
 ): Property[] =>
   mergePropertyLists(resources.map(({ properties }) => properties))
@@ -223,6 +241,7 @@ const reservedClassNames = new Set([
   'DeepAttrDict',
   'Dict',
   'List',
+  'Literal',
   'Optional',
   'ResourceMapping',
   'Union',
@@ -234,13 +253,29 @@ const getNestedProperties = (property: Property): Property[] | undefined => {
   if (property.format === 'list' && property.itemFormat === 'object') {
     return property.itemProperties
   }
-  if (
-    property.format === 'list' &&
-    property.itemFormat === 'discriminated_object'
-  ) {
-    return mergeResourceProperties(property.variants)
-  }
   return undefined
+}
+
+const getDiscriminatorValues = (
+  properties: Property[],
+  discriminator: string,
+  path: string,
+): string[] => {
+  const property = properties.find(({ name }) => name === discriminator)
+  if (property?.format !== 'enum' || property.values.length === 0) {
+    throw new Error(
+      `${path} must have an enum property named ${discriminator} to generate a discriminated union.`,
+    )
+  }
+  return property.values.map(({ name }) => name)
+}
+
+const singular = (name: string): string =>
+  name.endsWith('s') ? name.slice(0, -1) : name
+
+const pythonClassName = (value: string): string => {
+  const name = pascalCase(value).replaceAll('_', '')
+  return /^[A-Z]/.test(name) ? name : `Variant${name}`
 }
 
 const buildClass = (
@@ -257,14 +292,64 @@ const buildClass = (
   }
 
   const nestedClasses: ResourceClassLayoutContext[] = []
+  const nestedUnions: DiscriminatedUnionLayoutContext[] = []
   const takenClassNames = new Set<string>()
 
   const properties = classProperties.map((property) => {
     const nestedProperties = getNestedProperties(property)
     const nestedPath = `${path}.${property.name}`
+    const isDiscriminatedObjectList =
+      property.format === 'list' &&
+      property.itemFormat === 'discriminated_object'
     let nestedClassName: string | undefined
 
-    if (nestedProperties != null) {
+    if (isDiscriminatedObjectList) {
+      nestedClassName = pascalCase(property.name)
+      if (
+        reservedClassNames.has(nestedClassName) ||
+        takenClassNames.has(nestedClassName)
+      ) {
+        throw new Error(
+          `${nestedPath} would generate a duplicate or reserved union named ${nestedClassName}.`,
+        )
+      }
+      takenClassNames.add(nestedClassName)
+      const suffix = pascalCase(singular(property.name))
+      const variants = property.variants.map((variant) => {
+        const values = getDiscriminatorValues(
+          variant.properties,
+          property.discriminator,
+          nestedPath,
+        )
+        const variantClassName = `${pythonClassName(values[0] ?? '')}${suffix}`
+        if (
+          reservedClassNames.has(variantClassName) ||
+          takenClassNames.has(variantClassName)
+        ) {
+          throw new Error(
+            `${nestedPath} would generate a duplicate or reserved nested class named ${variantClassName}.`,
+          )
+        }
+        takenClassNames.add(variantClassName)
+        nestedClasses.push(
+          buildClass(
+            variantClassName,
+            variant.description,
+            variant.properties,
+            `${nestedPath}.${values[0]}`,
+            indentation + 4,
+          ),
+        )
+        return { className: variantClassName, values }
+      })
+      nestedUnions.push({
+        className: nestedClassName,
+        discriminator: property.discriminator,
+        fromDictName: '',
+        variantsName: '',
+        variants,
+      })
+    } else if (nestedProperties != null) {
       // Each class scopes its own nested classes, so the property name alone
       // names them unambiguously.
       nestedClassName = pascalCase(property.name)
@@ -315,7 +400,12 @@ const buildClass = (
       nestedClassName: nestedClassName ?? '',
       isDictParam: requiredType.startsWith('Dict'),
       isObject,
-      isObjectList: nestedClassName != null && property.format === 'list',
+      isObjectList:
+        !isDiscriminatedObjectList &&
+        nestedClassName != null &&
+        property.format === 'list',
+      isDiscriminatedObjectList,
+      discriminator: isDiscriminatedObjectList ? property.discriminator : '',
     }
   })
 
@@ -326,7 +416,67 @@ const buildClass = (
     memberIndent: ' '.repeat(indentation + 4),
     docIndent: indentation + 4,
     nestedClasses,
+    nestedUnions,
     properties,
+  }
+}
+
+const hasDiscriminatedLists = (
+  resourceClass: ResourceClassLayoutContext,
+): boolean =>
+  resourceClass.nestedUnions.length > 0 ||
+  resourceClass.nestedClasses.some(hasDiscriminatedLists)
+
+const buildUnionResource = (
+  className: string,
+  discriminator: string,
+  fromDictName: string,
+  variants: Array<{
+    value: string
+    description: string
+    properties: Property[]
+    isDeprecated: boolean
+    deprecationMessage: string
+  }>,
+  isDeprecated: boolean,
+  deprecationMessage: string,
+): ResourceLayoutContext => {
+  const suffix = className === 'SeamEvent' ? 'Event' : 'ActionAttempt'
+  const classes = variants.map((variant) => ({
+    ...buildClass(
+      `${pythonClassName(variant.value)}${suffix}`,
+      variant.description,
+      variant.properties,
+      `${snakeCase(className)}.${variant.value}`,
+      rootIndentation,
+    ),
+    isDeprecated: variant.isDeprecated,
+    deprecationMessage: variant.deprecationMessage,
+  }))
+  const union = {
+    className,
+    discriminator,
+    fromDictName,
+    variantsName: `_${snakeCase(className).toUpperCase()}_VARIANTS`,
+    variants: classes.map((variantClass, index) => ({
+      className: variantClass.className,
+      values: [variants[index]?.value ?? ''],
+    })),
+  }
+
+  return {
+    className,
+    moduleName: snakeCase(className),
+    isDeprecated,
+    deprecationMessage,
+    classes,
+    union,
+    hasDiscriminatedLists: classes.some(hasDiscriminatedLists),
+    exports: [
+      ...classes.map(({ className: name }) => name),
+      className,
+      fromDictName,
+    ],
   }
 }
 
@@ -341,30 +491,16 @@ export const getResourceLayoutContexts = (
       isDeprecated: boolean
       deprecationMessage: string
     }
-  >()
+  >(blueprint.resources.map((resource) => [resource.resourceType, resource]))
 
-  for (const resource of blueprint.resources) {
-    models.set(resource.resourceType, resource)
+  const discriminatedResourceTypes = new Set(
+    [...blueprint.events, ...blueprint.actionAttempts].map(
+      ({ resourceType }) => resourceType,
+    ),
+  )
+  for (const resourceType of discriminatedResourceTypes) {
+    models.delete(resourceType)
   }
-
-  // The event and action attempt variants merge into a single dataclass with
-  // the union of the variant properties, overriding the base resource schema.
-  const actionAttemptModel = models.get('action_attempt')
-  models.set('action_attempt', {
-    properties: mergeResourceProperties(blueprint.actionAttempts),
-    description:
-      actionAttemptModel?.description ??
-      'An attempt to perform an action in the Seam API.',
-    isDeprecated: actionAttemptModel?.isDeprecated ?? false,
-    deprecationMessage: actionAttemptModel?.deprecationMessage ?? '',
-  })
-  const eventModel = models.get('event')
-  models.set('event', {
-    properties: mergeResourceProperties(blueprint.events),
-    description: eventModel?.description ?? 'An event emitted by the Seam API.',
-    isDeprecated: eventModel?.isDeprecated ?? false,
-    deprecationMessage: eventModel?.deprecationMessage ?? '',
-  })
 
   if (blueprint.pagination != null) {
     models.set('pagination', {
@@ -375,37 +511,83 @@ export const getResourceLayoutContexts = (
     })
   }
 
-  return [...models.entries()]
-    .map(([name, model]) => {
+  const resources: ResourceLayoutContext[] = [...models.entries()].map(
+    ([name, model]) => {
       const { properties, description, isDeprecated, deprecationMessage } =
         model
       const className = pascalCase(convertCustomResourceName(name))
-      const rootClass = buildClass(
-        className,
-        description,
-        properties,
-        name,
-        rootIndentation,
-      )
-
-      return {
-        ...rootClass,
+      const rootClass = {
+        ...buildClass(
+          className,
+          description,
+          properties,
+          name,
+          rootIndentation,
+        ),
         isDeprecated,
         deprecationMessage,
-        // Derived from the class name rather than the resource type so the
-        // module always matches the dataclass it exports (e.g. the "event"
-        // resource becomes SeamEvent in seam_event.py).
-        moduleName: snakeCase(className),
       }
-    })
-    .sort((a, b) => (a.moduleName < b.moduleName ? -1 : 1))
+
+      return {
+        className,
+        moduleName: snakeCase(className),
+        isDeprecated,
+        deprecationMessage,
+        classes: [rootClass],
+        hasDiscriminatedLists: hasDiscriminatedLists(rootClass),
+        exports: [className],
+      }
+    },
+  )
+
+  const eventModel = blueprint.resources.find(
+    ({ resourceType }) => resourceType === 'event',
+  )
+  resources.push(
+    buildUnionResource(
+      'SeamEvent',
+      'event_type',
+      'seam_event_from_dict',
+      blueprint.events.map((event) => ({
+        value: event.eventType,
+        description: event.description,
+        properties: event.properties,
+        isDeprecated: event.isDeprecated,
+        deprecationMessage: event.deprecationMessage,
+      })),
+      eventModel?.isDeprecated ?? false,
+      eventModel?.deprecationMessage ?? '',
+    ),
+  )
+
+  const actionAttemptModel = blueprint.resources.find(
+    ({ resourceType }) => resourceType === 'action_attempt',
+  )
+  resources.push(
+    buildUnionResource(
+      'ActionAttempt',
+      'action_type',
+      'action_attempt_from_dict',
+      blueprint.actionAttempts.map((attempt) => ({
+        value: attempt.actionAttemptType,
+        description: attempt.description,
+        properties: attempt.properties,
+        isDeprecated: attempt.isDeprecated,
+        deprecationMessage: attempt.deprecationMessage,
+      })),
+      actionAttemptModel?.isDeprecated ?? false,
+      actionAttemptModel?.deprecationMessage ?? '',
+    ),
+  )
+
+  return resources.sort((a, b) => (a.moduleName < b.moduleName ? -1 : 1))
 }
 
 export const setResourcesIndexLayoutContext = (
   resources: ResourceLayoutContext[],
 ): ResourcesIndexLayoutContext => ({
-  resources: resources.map(({ className, moduleName }) => ({
-    className,
+  resources: resources.map(({ exports, moduleName }) => ({
+    exports,
     moduleName,
   })),
 })

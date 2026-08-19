@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class UserIdentity:
     """Represents a `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with an application user account.
@@ -31,8 +38,8 @@ class UserIdentity:
     :ivar workspace_id: ID of the workspace that contains the user identity."""
 
     @dataclass
-    class Errors(ResourceMapping):
-        """Array of errors associated with the user identity. Each error object within the array contains fields like "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
+    class IssueWithAcsUserError(ResourceMapping):
+        """Indicates that there is an issue with an access system user associated with this user identity.
 
         :ivar acs_system_id: ID of the access system that the user identity is associated with.
 
@@ -48,7 +55,7 @@ class UserIdentity:
         acs_system_id: str
         acs_user_id: str
         created_at: str
-        error_code: str
+        error_code: Literal["issue_with_acs_user"]
         message: str
 
         @classmethod
@@ -62,8 +69,8 @@ class UserIdentity:
             )
 
     @dataclass
-    class Warnings(ResourceMapping):
-        """Array of warnings associated with the user identity. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
+    class BeingDeletedWarning(ResourceMapping):
+        """Indicates that the user identity is currently being deleted.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -74,7 +81,7 @@ class UserIdentity:
 
         created_at: str
         message: str
-        warning_code: str
+        warning_code: Literal["being_deleted"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -83,6 +90,40 @@ class UserIdentity:
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
             )
+
+    @dataclass
+    class AcsUserProfileDoesNotMatchUserIdentityWarning(ResourceMapping):
+        """Indicates that the ACS user's profile does not match the user identity's profile
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["acs_user_profile_does_not_match_user_identity"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Errors = Union[IssueWithAcsUserError]
+    _ErrorsVariants = {
+        "issue_with_acs_user": IssueWithAcsUserError,
+    }
+
+    Warnings = Union[BeingDeletedWarning, AcsUserProfileDoesNotMatchUserIdentityWarning]
+    _WarningsVariants = {
+        "being_deleted": BeingDeletedWarning,
+        "acs_user_profile_does_not_match_user_identity": AcsUserProfileDoesNotMatchUserIdentityWarning,
+    }
 
     acs_user_ids: List[str]
     created_at: str
@@ -103,11 +144,17 @@ class UserIdentity:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             email_address=d.get("email_address", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             full_name=d.get("full_name", None),
             phone_number=d.get("phone_number", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_key=d.get("user_identity_key", None),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

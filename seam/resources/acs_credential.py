@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class AcsCredential:
     """Means by which an `access control system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ gains access at an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_. The ``acs_credential`` object represents a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ that provides an ACS user access within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
@@ -168,7 +175,7 @@ class AcsCredential:
         """
 
         auto_join: Optional[bool]
-        card_function_type: Optional[str]
+        card_function_type: Optional[Literal["guest", "staff"]]
         card_id: Optional[str]
         common_acs_entrance_ids: Optional[List[str]]
         credential_id: Optional[str]
@@ -190,25 +197,19 @@ class AcsCredential:
             )
 
     @dataclass
-    class Warnings(ResourceMapping):
-        """Warnings associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    class WaitingToBeIssuedWarning(ResourceMapping):
+        """Indicates that the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is waiting to be issued.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-
-        :ivar new_code: The PIN code that was assigned instead.
-
-        :ivar original_code: The originally requested PIN code that could not be used.
         """
 
         created_at: str
         message: str
-        warning_code: str
-        new_code: Optional[str]
-        original_code: Optional[str]
+        warning_code: Literal["waiting_to_be_issued"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -216,11 +217,174 @@ class AcsCredential:
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
-                new_code=d.get("new_code", None),
-                original_code=d.get("original_code", None),
             )
 
-    access_method: str
+    @dataclass
+    class ScheduleExternallyModifiedWarning(ResourceMapping):
+        """Indicates that the schedule of one of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_'s children was modified externally.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["schedule_externally_modified"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class ScheduleModifiedWarning(ResourceMapping):
+        """Indicates that the schedule of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was modified to avoid creating a credential with a start date in the past.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["schedule_modified"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class BeingDeletedWarning(ResourceMapping):
+        """Indicates that the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is being deleted.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["being_deleted"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UnknownIssueWithAcsCredentialWarning(ResourceMapping):
+        """An unknown issue occurred while syncing the state of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with the provider. This issue may affect the proper functioning of the credential.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["unknown_issue_with_acs_credential"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class NeedsToBeReissuedWarning(ResourceMapping):
+        """Access permissions for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ have changed. `Reissue <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners/creating-and-encoding-card-based-credentials>`_ (re-encode) the credential. This issue may affect the proper functioning of the credential.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["needs_to_be_reissued"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class RequestedCodeUnavailableWarning(ResourceMapping):
+        """Indicates that the requested PIN code could not be used, so the access system assigned a different code. Give the guest the assigned code.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar new_code: The PIN code that was assigned instead.
+
+        :ivar original_code: The originally requested PIN code that could not be used.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        new_code: str
+        original_code: str
+        warning_code: Literal["requested_code_unavailable"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                new_code=d.get("new_code", None),
+                original_code=d.get("original_code", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Warnings = Union[
+        WaitingToBeIssuedWarning,
+        ScheduleExternallyModifiedWarning,
+        ScheduleModifiedWarning,
+        BeingDeletedWarning,
+        UnknownIssueWithAcsCredentialWarning,
+        NeedsToBeReissuedWarning,
+        RequestedCodeUnavailableWarning,
+    ]
+    _WarningsVariants = {
+        "waiting_to_be_issued": WaitingToBeIssuedWarning,
+        "schedule_externally_modified": ScheduleExternallyModifiedWarning,
+        "schedule_modified": ScheduleModifiedWarning,
+        "being_deleted": BeingDeletedWarning,
+        "unknown_issue_with_acs_credential": UnknownIssueWithAcsCredentialWarning,
+        "needs_to_be_reissued": NeedsToBeReissuedWarning,
+        "requested_code_unavailable": RequestedCodeUnavailableWarning,
+    }
+
+    access_method: Literal["code", "card", "mobile_key", "cloud_key"]
     acs_credential_id: str
     acs_credential_pool_id: Optional[str]
     acs_system_id: str
@@ -234,7 +398,24 @@ class AcsCredential:
     display_name: str
     ends_at: Optional[str]
     errors: List[Errors]
-    external_type: Optional[str]
+    external_type: Optional[
+        Literal[
+            "pti_card",
+            "brivo_credential",
+            "hid_credential",
+            "visionline_card",
+            "salto_ks_credential",
+            "assa_abloy_vostio_key",
+            "salto_space_key",
+            "latch_access",
+            "dormakaba_ambiance_credential",
+            "hotek_card",
+            "salto_ks_tag",
+            "avigilon_alta_credential",
+            "kisi_credential",
+            "akiles_credential",
+        ]
+    ]
     external_type_display_name: Optional[str]
     is_issued: Optional[bool]
     is_latest_desired_state_synced_with_provider: Optional[bool]
@@ -300,6 +481,9 @@ class AcsCredential:
                 if d.get("visionline_metadata") is not None
                 else None
             ),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

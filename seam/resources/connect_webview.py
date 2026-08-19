@@ -56,7 +56,9 @@ class ConnectWebview:
 
     :ivar workspace_id: ID of the workspace that contains the Connect Webview."""
 
-    accepted_capabilities: List[str]
+    accepted_capabilities: List[
+        Literal["lock", "thermostat", "noise_sensor", "access_control", "camera"]
+    ]
     accepted_providers: List[str]
     any_provider_allowed: bool
     authorized_at: Optional[str]
@@ -68,10 +70,10 @@ class ConnectWebview:
     custom_redirect_failure_url: Optional[str]
     custom_redirect_url: Optional[str]
     customer_key: Optional[str]
-    device_selection_mode: str
+    device_selection_mode: Literal["none", "single", "multiple"]
     login_successful: bool
     selected_provider: Optional[str]
-    status: str
+    status: Literal["pending", "failed", "authorized"]
     url: str
     wait_for_device_creation: bool
     workspace_id: str

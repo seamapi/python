@@ -2,7 +2,7 @@ from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
-from ..resources import ActionAttempt
+from ..resources import ActionAttempt, action_attempt_from_dict
 from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
@@ -143,7 +143,7 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -189,7 +189,7 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -246,7 +246,7 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -292,6 +292,6 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=ActionAttempt.from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(res["action_attempt"]),
             wait_for_action_attempt=wait_for_action_attempt,
         )

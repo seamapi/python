@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class AccessGrant:
     """Represents an Access Grant. Access Grants enable you to grant a user identity access to spaces, entrances, and devices through one or more access methods, such as mobile keys, plastic cards, and PIN codes. You can create an Access Grant for an existing user identity, or you can create a new user identity *while* creating the new Access Grant.
@@ -49,8 +56,8 @@ class AccessGrant:
     :ivar workspace_id: ID of the Seam workspace associated with the Access Grant."""
 
     @dataclass
-    class Errors(ResourceMapping):
-        """Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+    class CannotCreateRequestedAccessMethodsError(ResourceMapping):
+        """Indicates that Seam could not create one or more of the requested access methods for the access grant.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -62,7 +69,7 @@ class AccessGrant:
         """
 
         created_at: str
-        error_code: str
+        error_code: Literal["cannot_create_requested_access_methods"]
         message: str
         missing_device_ids: Optional[List[str]]
 
@@ -76,75 +83,56 @@ class AccessGrant:
             )
 
     @dataclass
-    class PendingMutations(ResourceMapping):
-        """List of pending mutations for the access grant. This shows updates that are in progress.
+    class UpdatingSpacesPendingMutation(ResourceMapping):
+        """Seam is in the process of updating the devices/spaces associated with this access grant.
 
         :ivar created_at: Date and time at which the mutation was created.
 
-        :ivar from_:
+        :ivar from_: Previous location configuration.
 
         :ivar message: Detailed description of the mutation.
 
-        :ivar mutation_code:
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of updating the spaces (devices) associated with this access grant.
 
-        :ivar to:
-
-        :ivar access_method_ids: IDs of the access methods being updated."""
+        :ivar to: New location configuration."""
 
         @dataclass
         class From(ResourceMapping):
-            """
+            """Previous location configuration.
 
-            :ivar device_ids: Previous device IDs where access codes existed.
+            :ivar device_ids: Previous device IDs where access codes existed."""
 
-            :ivar ends_at: Previous end time for access.
-
-            :ivar starts_at: Previous start time for access."""
-
-            device_ids: Optional[List[str]]
-            ends_at: Optional[str]
-            starts_at: Optional[str]
+            device_ids: List[str]
 
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
                     device_ids=d.get("device_ids", None),
-                    ends_at=d.get("ends_at", None),
-                    starts_at=d.get("starts_at", None),
                 )
 
         @dataclass
         class To(ResourceMapping):
-            """
+            """New location configuration.
 
             :ivar common_code_key: Common code key to ensure PIN code reuse across devices.
 
-            :ivar device_ids: New device IDs where access codes should be created.
-
-            :ivar ends_at: New end time for access.
-
-            :ivar starts_at: New start time for access."""
+            :ivar device_ids: New device IDs where access codes should be created."""
 
             common_code_key: Optional[str]
-            device_ids: Optional[List[str]]
-            ends_at: Optional[str]
-            starts_at: Optional[str]
+            device_ids: List[str]
 
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
                     common_code_key=d.get("common_code_key", None),
                     device_ids=d.get("device_ids", None),
-                    ends_at=d.get("ends_at", None),
-                    starts_at=d.get("starts_at", None),
                 )
 
         created_at: str
         from_: Optional[From]
         message: str
-        mutation_code: str
+        mutation_code: Literal["updating_spaces"]
         to: Optional[To]
-        access_method_ids: Optional[List[str]]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -158,7 +146,80 @@ class AccessGrant:
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
                 to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+            )
+
+    @dataclass
+    class UpdatingAccessTimesPendingMutation(ResourceMapping):
+        """Seam is in the process of updating the access times for this access grant.
+
+        :ivar access_method_ids: IDs of the access methods being updated.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar from_: Previous access time configuration.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that Seam is in the process of updating the access times for this access grant.
+
+        :ivar to: New access time configuration."""
+
+        @dataclass
+        class From(ResourceMapping):
+            """Previous access time configuration.
+
+            :ivar ends_at: Previous end time for access.
+
+            :ivar starts_at: Previous start time for access."""
+
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        @dataclass
+        class To(ResourceMapping):
+            """New access time configuration.
+
+            :ivar ends_at: New end time for access.
+
+            :ivar starts_at: New start time for access."""
+
+            ends_at: Optional[str]
+            starts_at: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    ends_at=d.get("ends_at", None),
+                    starts_at=d.get("starts_at", None),
+                )
+
+        access_method_ids: List[str]
+        created_at: str
+        from_: Optional[From]
+        message: str
+        mutation_code: Literal["updating_access_times"]
+        to: Optional[To]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
                 access_method_ids=d.get("access_method_ids", None),
+                created_at=d.get("created_at", None),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -183,7 +244,7 @@ class AccessGrant:
         created_at: str
         display_name: str
         instant_key_max_use_count: Optional[int]
-        mode: str
+        mode: Literal["code", "card", "mobile_key", "cloud_key"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -197,26 +258,62 @@ class AccessGrant:
             )
 
     @dataclass
-    class Warnings(ResourceMapping):
-        """Warnings associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+    class BeingDeletedWarning(ResourceMapping):
+        """Indicates that the `access grant <https://docs.seam.co/use-cases/granting-access>`_ is being deleted.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["being_deleted"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UnderprovisionedAccessWarning(ResourceMapping):
+        """Indicates that the access grant should have access to more locations than it currently does. Access methods are being created for the missing locations.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["underprovisioned_access"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class OverprovisionedAccessWarning(ResourceMapping):
+        """Indicates that the access grant has access to locations it should not have. Access methods are being removed from the extra locations.
+
+        :ivar created_at: Date and time at which Seam created the warning.
 
         :ivar failed_devices: Devices whose access codes could not be revoked during reconciliation. Present when the provider does not support revoking an offline access code (e.g. Dormakaba oracode with exhausted override budget).
 
-        :ivar access_method_ids: IDs of the access methods being updated.
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar device_id:
-
-        :ivar new_code: The new PIN code that was assigned instead.
-
-        :ivar original_code: The originally requested PIN code that was unavailable.
-
-        :ivar reason: Specific reason why the grant's times are not programmable on the device.
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
         """
 
         @dataclass
@@ -242,31 +339,175 @@ class AccessGrant:
                 )
 
         created_at: str
-        message: str
-        warning_code: str
         failed_devices: Optional[List[FailedDevices]]
-        access_method_ids: Optional[List[str]]
-        device_id: Optional[str]
-        new_code: Optional[str]
-        original_code: Optional[str]
-        reason: Optional[str]
+        message: str
+        warning_code: Literal["overprovisioned_access"]
 
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
-                message=d.get("message", None),
-                warning_code=d.get("warning_code", None),
                 failed_devices=[
                     cls.FailedDevices.from_dict(i)
                     for i in d.get("failed_devices") or []
                 ],
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UpdatingAccessTimesWarning(ResourceMapping):
+        """Indicates that the access times for this `access grant <https://docs.seam.co/use-cases/granting-access>`_ are being updated.
+
+        :ivar access_method_ids: IDs of the access methods being updated.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        access_method_ids: List[str]
+        created_at: str
+        message: str
+        warning_code: Literal["updating_access_times"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
                 access_method_ids=d.get("access_method_ids", None),
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class RequestedCodeUnavailableWarning(ResourceMapping):
+        """Indicates that the requested PIN code was already in use on a device, so a different code was assigned.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar device_id: ID of the device where the requested code was unavailable.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar new_code: The new PIN code that was assigned instead.
+
+        :ivar original_code: The originally requested PIN code that was unavailable.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        device_id: str
+        message: str
+        new_code: str
+        original_code: str
+        warning_code: Literal["requested_code_unavailable"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
                 device_id=d.get("device_id", None),
+                message=d.get("message", None),
                 new_code=d.get("new_code", None),
                 original_code=d.get("original_code", None),
-                reason=d.get("reason", None),
+                warning_code=d.get("warning_code", None),
             )
+
+    @dataclass
+    class DeviceDoesNotSupportAccessCodesWarning(ResourceMapping):
+        """Indicates that a device in the access grant does not support access codes and was excluded from code materialization.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar device_id: ID of the device that does not support access codes.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        device_id: str
+        message: str
+        warning_code: Literal["device_does_not_support_access_codes"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                device_id=d.get("device_id", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class DeviceTimeConstraintsViolatedWarning(ResourceMapping):
+        """Indicates that a device in the access grant cannot program an access code for the grant's time range because of device-specific time constraints.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar device_id: ID of the device whose time constraints the access grant violates.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar reason: Specific reason why the grant's times are not programmable on the device.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        device_id: str
+        message: str
+        reason: Literal[
+            "duration_exceeds_max", "times_do_not_match_slots", "ongoing_not_supported"
+        ]
+        warning_code: Literal["device_time_constraints_violated"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                device_id=d.get("device_id", None),
+                message=d.get("message", None),
+                reason=d.get("reason", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Errors = Union[CannotCreateRequestedAccessMethodsError]
+    _ErrorsVariants = {
+        "cannot_create_requested_access_methods": CannotCreateRequestedAccessMethodsError,
+    }
+
+    PendingMutations = Union[
+        UpdatingSpacesPendingMutation, UpdatingAccessTimesPendingMutation
+    ]
+    _PendingMutationsVariants = {
+        "updating_spaces": UpdatingSpacesPendingMutation,
+        "updating_access_times": UpdatingAccessTimesPendingMutation,
+    }
+
+    Warnings = Union[
+        BeingDeletedWarning,
+        UnderprovisionedAccessWarning,
+        OverprovisionedAccessWarning,
+        UpdatingAccessTimesWarning,
+        RequestedCodeUnavailableWarning,
+        DeviceDoesNotSupportAccessCodesWarning,
+        DeviceTimeConstraintsViolatedWarning,
+    ]
+    _WarningsVariants = {
+        "being_deleted": BeingDeletedWarning,
+        "underprovisioned_access": UnderprovisionedAccessWarning,
+        "overprovisioned_access": OverprovisionedAccessWarning,
+        "updating_access_times": UpdatingAccessTimesWarning,
+        "requested_code_unavailable": RequestedCodeUnavailableWarning,
+        "device_does_not_support_access_codes": DeviceDoesNotSupportAccessCodesWarning,
+        "device_time_constraints_violated": DeviceTimeConstraintsViolatedWarning,
+    }
 
     access_grant_id: str
     access_grant_key: Optional[str]
@@ -300,12 +541,17 @@ class AccessGrant:
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             instant_key_url=d.get("instant_key_url", None),
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
             pending_mutations=[
-                cls.PendingMutations.from_dict(i)
+                _from_discriminated_dict(
+                    i, cls._PendingMutationsVariants, "mutation_code"
+                )
                 for i in d.get("pending_mutations") or []
             ],
             requested_access_methods=[
@@ -316,6 +562,9 @@ class AccessGrant:
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )
