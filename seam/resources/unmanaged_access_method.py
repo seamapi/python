@@ -23,6 +23,8 @@ class UnmanagedAccessMethod:
 
     :ivar display_name: Display name of the access method.
 
+    :ivar display_status: Human-readable sentence describing where the access method sits in its relationship with the device or access system, for example ``Awaiting encoding``. For display only. The wording is not stable and is not an enumeration — it may change at any time, so never compare against or branch on it. To make decisions, read ``is_issued``, ``errors``, and ``pending_mutations``.
+
     :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
 
     :ivar is_assignment_required: Indicates whether an existing card credential must be assigned to this access method before it can be issued. Only applies to card-mode access methods on systems that support credential assignment.
@@ -391,6 +393,7 @@ class UnmanagedAccessMethod:
     code: Optional[str]
     created_at: str
     display_name: str
+    display_status: str
     errors: List[Errors]
     is_assignment_required: Optional[bool]
     is_encoding_required: Optional[bool]
@@ -410,6 +413,7 @@ class UnmanagedAccessMethod:
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
+            display_status=d.get("display_status", None),
             errors=[
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
                 for i in d.get("errors") or []
