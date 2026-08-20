@@ -62,19 +62,19 @@ class AbstractAcsEncoders(abc.ABC):
     def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
+        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
+
         :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
 
         :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
 
         :param limit: Number of encoders to return.
 
@@ -178,19 +178,19 @@ class AbstractAsyncAcsEncoders(abc.ABC):
     async def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
+        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
+
         :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
 
         :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
 
         :param limit: Number of encoders to return.
 
@@ -341,19 +341,19 @@ class AcsEncoders(AbstractAcsEncoders):
     def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
+        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
+
         :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
 
         :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
 
         :param limit: Number of encoders to return.
 
@@ -362,12 +362,12 @@ class AcsEncoders(AbstractAcsEncoders):
         :returns: OK"""
         params: Dict[str, Any] = {}
 
+        if acs_encoder_ids is not None:
+            params["acs_encoder_ids"] = acs_encoder_ids
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
         if acs_system_ids is not None:
             params["acs_system_ids"] = acs_system_ids
-        if acs_encoder_ids is not None:
-            params["acs_encoder_ids"] = acs_encoder_ids
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -583,19 +583,19 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
     async def list(
         self,
         *,
+        acs_encoder_ids: Optional[List[str]] = None,
         acs_system_id: Optional[str] = None,
         acs_system_ids: Optional[List[str]] = None,
-        acs_encoder_ids: Optional[List[str]] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[AcsEncoder]:
         """Returns a list of all `encoders <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
+        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
+
         :param acs_system_id: ID of the access system for which you want to retrieve all encoders.
 
         :param acs_system_ids: IDs of the access systems for which you want to retrieve all encoders.
-
-        :param acs_encoder_ids: IDs of the encoders that you want to retrieve.
 
         :param limit: Number of encoders to return.
 
@@ -604,12 +604,12 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
         :returns: OK"""
         params: Dict[str, Any] = {}
 
+        if acs_encoder_ids is not None:
+            params["acs_encoder_ids"] = acs_encoder_ids
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
         if acs_system_ids is not None:
             params["acs_system_ids"] = acs_system_ids
-        if acs_encoder_ids is not None:
-            params["acs_encoder_ids"] = acs_encoder_ids
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:

@@ -27,6 +27,8 @@ class AccessMethod:
 
     :ivar display_name: Display name of the access method.
 
+    :ivar display_status: Human-readable sentence describing where the access method sits in its relationship with the device or access system, for example ``Awaiting encoding``. For display only. The wording is not stable and is not an enumeration — it may change at any time, so never compare against or branch on it. To make decisions, read ``is_issued``, ``errors``, and ``pending_mutations``.
+
     :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
 
     :ivar instant_key_url: URL of the Instant Key for mobile key access methods.
@@ -399,6 +401,7 @@ class AccessMethod:
     created_at: str
     customization_profile_id: Optional[str]
     display_name: str
+    display_status: str
     errors: List[Errors]
     instant_key_url: Optional[str]
     is_assignment_required: Optional[bool]
@@ -421,6 +424,7 @@ class AccessMethod:
             created_at=d.get("created_at", None),
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
+            display_status=d.get("display_status", None),
             errors=[
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
                 for i in d.get("errors") or []

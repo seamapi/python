@@ -102,22 +102,20 @@ class AbstractAcsCredentials(abc.ABC):
     def list(
         self,
         *,
-        acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
-
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
-        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
 
         :param created_before: Date and time, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format, before which events to return were created.
 
@@ -128,6 +126,8 @@ class AbstractAcsCredentials(abc.ABC):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -278,22 +278,20 @@ class AbstractAsyncAcsCredentials(abc.ABC):
     async def list(
         self,
         *,
-        acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
-
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
-        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
 
         :param created_before: Date and time, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format, before which events to return were created.
 
@@ -304,6 +302,8 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
+
+        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -555,22 +555,20 @@ class AcsCredentials(AbstractAcsCredentials):
     def list(
         self,
         *,
-        acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
-
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
-        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
 
         :param created_before: Date and time, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format, before which events to return were created.
 
@@ -582,15 +580,15 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
 
+        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+
         :returns: OK"""
         params: Dict[str, Any] = {}
 
-        if acs_user_id is not None:
-            params["acs_user_id"] = acs_user_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-        if user_identity_id is not None:
-            params["user_identity_id"] = user_identity_id
+        if acs_user_id is not None:
+            params["acs_user_id"] = acs_user_id
         if created_before is not None:
             params["created_before"] = created_before
         if is_multi_phone_sync_credential is not None:
@@ -601,6 +599,8 @@ class AcsCredentials(AbstractAcsCredentials):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
 
         res = self.client.get("/acs/credentials/list", params=params)
 
@@ -909,22 +909,20 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
     async def list(
         self,
         *,
-        acs_user_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        acs_user_id: Optional[str] = None,
         created_before: Optional[str] = None,
         is_multi_phone_sync_credential: Optional[bool] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
+        user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
         """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
 
-        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
-
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
-        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+        :param acs_user_id: ID of the access system user for which you want to retrieve all credentials.
 
         :param created_before: Date and time, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format, before which events to return were created.
 
@@ -936,15 +934,15 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         :param search: String for which to search. Filters returned credentials to include all records that satisfy a partial match using ``display_name``, ``code``, ``card_number``, ``acs_user_id`` or ``acs_credential_id``.
 
+        :param user_identity_id: ID of the user identity for which you want to retrieve all credentials.
+
         :returns: OK"""
         params: Dict[str, Any] = {}
 
-        if acs_user_id is not None:
-            params["acs_user_id"] = acs_user_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-        if user_identity_id is not None:
-            params["user_identity_id"] = user_identity_id
+        if acs_user_id is not None:
+            params["acs_user_id"] = acs_user_id
         if created_before is not None:
             params["created_before"] = created_before
         if is_multi_phone_sync_credential is not None:
@@ -955,6 +953,8 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
+        if user_identity_id is not None:
+            params["user_identity_id"] = user_identity_id
 
         res = await self.client.get("/acs/credentials/list", params=params)
 

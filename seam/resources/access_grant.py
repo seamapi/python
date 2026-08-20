@@ -29,6 +29,8 @@ class AccessGrant:
 
     :ivar display_name: Display name of the Access Grant.
 
+    :ivar display_status: Human-readable sentence answering whether the user can currently get in, for example ``Awaiting encoding`` on an access method or ``Upcoming`` here. For display only. The wording is not stable and is not an enumeration — it may change at any time, so never compare against or branch on it. To make decisions, read ``starts_at``, ``ends_at``, ``errors``, and the access methods' own fields.
+
     :ivar ends_at: Date and time at which the Access Grant ends.
 
     :ivar errors: Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
@@ -516,6 +518,7 @@ class AccessGrant:
     created_at: str
     customization_profile_id: Optional[str]
     display_name: str
+    display_status: str
     ends_at: Optional[str]
     errors: List[Errors]
     instant_key_url: Optional[str]
@@ -540,6 +543,7 @@ class AccessGrant:
             created_at=d.get("created_at", None),
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
+            display_status=d.get("display_status", None),
             ends_at=d.get("ends_at", None),
             errors=[
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
