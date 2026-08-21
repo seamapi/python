@@ -346,6 +346,33 @@ class AccessCode:
             )
 
     @dataclass
+    class CodeConstraintsViolatedError(ResourceMapping):
+        """The code cannot be set on the device because it violates the device's code constraints (for example, its length, digits, or a too-simple value). The code will not be retried until you change it. See the device's ``code_constraints`` and ``supported_code_lengths``.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_access_code_error: Indicates that this is an access code error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: Optional[str]
+        error_code: Literal["code_constraints_violated"]
+        is_access_code_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_access_code_error=d.get("is_access_code_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
     class AccountDisconnectedError(ResourceMapping):
         """Indicates that the account is disconnected.
 
@@ -1304,6 +1331,7 @@ class AccessCode:
         NoSpaceForAccessCodeOnDeviceError,
         ConflictingExternalModificationError,
         AccessCodeInactiveError,
+        CodeConstraintsViolatedError,
         AccountDisconnectedError,
         SaltoKsSubscriptionLimitExceededError,
         InsufficientPermissionsError,
@@ -1327,6 +1355,7 @@ class AccessCode:
         "no_space_for_access_code_on_device": NoSpaceForAccessCodeOnDeviceError,
         "conflicting_external_modification": ConflictingExternalModificationError,
         "access_code_inactive": AccessCodeInactiveError,
+        "code_constraints_violated": CodeConstraintsViolatedError,
         "account_disconnected": AccountDisconnectedError,
         "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
         "insufficient_permissions": InsufficientPermissionsError,

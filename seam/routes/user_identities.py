@@ -206,6 +206,34 @@ class AbstractUserIdentities(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
+    def merge(
+        self,
+        *,
+        merged_user_identity_ids: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
+        merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+
+        The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
+
+        Access grants, access system users, client sessions and other resources belonging to the merged user identities are moved to the primary user identity.
+
+        Identify the user identities either by ID or by key, but not both in the same request. Repeating a merge that has already been applied makes no further changes.
+
+        :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
+
+        :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_key: Key of the primary user identity to keep.
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
     def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
         """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
@@ -439,6 +467,34 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
         :returns: OK
+
+        :raises ValueError: At least one parameter must be provided."""
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    async def merge(
+        self,
+        *,
+        merged_user_identity_ids: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
+        merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+
+        The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
+
+        Access grants, access system users, client sessions and other resources belonging to the merged user identities are moved to the primary user identity.
+
+        Identify the user identities either by ID or by key, but not both in the same request. Repeating a merge that has already been applied makes no further changes.
+
+        :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
+
+        :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_key: Key of the primary user identity to keep.
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -879,6 +935,56 @@ class UserIdentities(AbstractUserIdentities):
         res = self.client.get("/user_identities/list_acs_users", params=params)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
+
+    @route_metadata(
+        path="/user_identities/merge",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    def merge(
+        self,
+        *,
+        merged_user_identity_ids: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
+        merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+
+        The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
+
+        Access grants, access system users, client sessions and other resources belonging to the merged user identities are moved to the primary user identity.
+
+        Identify the user identities either by ID or by key, but not both in the same request. Repeating a merge that has already been applied makes no further changes.
+
+        :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
+
+        :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_key: Key of the primary user identity to keep.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if merged_user_identity_ids is not None:
+            json_payload["merged_user_identity_ids"] = merged_user_identity_ids
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if merged_user_identity_keys is not None:
+            json_payload["merged_user_identity_keys"] = merged_user_identity_keys
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/merge"
+            )
+
+        self.client.post("/user_identities/merge", json=json_payload)
+
+        return None
 
     @route_metadata(
         path="/user_identities/remove_acs_user",
@@ -1382,6 +1488,56 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         res = await self.client.get("/user_identities/list_acs_users", params=params)
 
         return [AcsUser.from_dict(item) for item in res["acs_users"]]
+
+    @route_metadata(
+        path="/user_identities/merge",
+        has_required_parameters=True,
+        has_pagination=False,
+    )
+    async def merge(
+        self,
+        *,
+        merged_user_identity_ids: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
+        merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_key: Optional[str] = None,
+    ) -> None:
+        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+
+        The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
+
+        Access grants, access system users, client sessions and other resources belonging to the merged user identities are moved to the primary user identity.
+
+        Identify the user identities either by ID or by key, but not both in the same request. Repeating a merge that has already been applied makes no further changes.
+
+        :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
+
+        :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_key: Key of the primary user identity to keep.
+
+        :raises ValueError: At least one parameter must be provided."""
+        json_payload: Dict[str, Any] = {}
+
+        if merged_user_identity_ids is not None:
+            json_payload["merged_user_identity_ids"] = merged_user_identity_ids
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
+        if merged_user_identity_keys is not None:
+            json_payload["merged_user_identity_keys"] = merged_user_identity_keys
+        if user_identity_key is not None:
+            json_payload["user_identity_key"] = user_identity_key
+
+        if not json_payload:
+            raise ValueError(
+                "At least one parameter is required for /user_identities/merge"
+            )
+
+        await self.client.post("/user_identities/merge", json=json_payload)
+
+        return None
 
     @route_metadata(
         path="/user_identities/remove_acs_user",

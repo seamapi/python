@@ -27,6 +27,10 @@ class UserIdentity:
 
     :ivar full_name: Full name of the user associated with the user identity.
 
+    :ivar merged_user_identity_ids: IDs that other user identities used to have before they were merged into this user identity. Looking up any of them returns this user identity.
+
+    :ivar merged_user_identity_keys: Keys that other user identities used to have before they were merged into this user identity. Looking up any of them returns this user identity.
+
     :ivar phone_number: Unique phone number for the user identity in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, +15555550100).
 
     :ivar user_identity_id: ID of the user identity.
@@ -131,6 +135,8 @@ class UserIdentity:
     email_address: Optional[str]
     errors: List[Errors]
     full_name: Optional[str]
+    merged_user_identity_ids: List[str]
+    merged_user_identity_keys: List[str]
     phone_number: Optional[str]
     user_identity_id: str
     user_identity_key: Optional[str]
@@ -149,6 +155,8 @@ class UserIdentity:
                 for i in d.get("errors") or []
             ],
             full_name=d.get("full_name", None),
+            merged_user_identity_ids=d.get("merged_user_identity_ids", None),
+            merged_user_identity_keys=d.get("merged_user_identity_keys", None),
             phone_number=d.get("phone_number", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_key=d.get("user_identity_key", None),

@@ -227,7 +227,7 @@ class AbstractDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -310,7 +310,7 @@ class AbstractDevices(abc.ABC):
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -531,7 +531,7 @@ class AbstractAsyncDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -614,7 +614,7 @@ class AbstractAsyncDevices(abc.ABC):
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -854,7 +854,7 @@ class Devices(AbstractDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -1003,7 +1003,7 @@ class Devices(AbstractDevices):
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -1265,7 +1265,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -1414,7 +1414,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 

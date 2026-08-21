@@ -1296,7 +1296,11 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
     :ivar occurred_at: Date and time at which the event occurred.
 
-    :ivar workspace_id: ID of the workspace associated with the event."""
+    :ivar workspace_id: ID of the workspace associated with the event.
+
+    .. deprecated::
+       Seam no longer emits this event. Use ``access_code.failed_to_remove_from_device`` instead.
+    """
 
     @dataclass
     class AccessCodeErrors(ResourceMapping):
