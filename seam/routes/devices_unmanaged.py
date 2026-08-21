@@ -238,7 +238,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
 
         :param device_id: ID of the unmanaged device that you want to update.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
 
@@ -478,7 +478,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
 
         :param device_id: ID of the unmanaged device that you want to update.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
 
@@ -776,7 +776,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         :param device_id: ID of the unmanaged device that you want to update.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
 
@@ -1090,7 +1090,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
 
         :param device_id: ID of the unmanaged device that you want to update.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
 

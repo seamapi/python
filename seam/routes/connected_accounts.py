@@ -61,7 +61,7 @@ class AbstractConnectedAccounts(abc.ABC):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -112,7 +112,7 @@ class AbstractConnectedAccounts(abc.ABC):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -171,7 +171,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -222,7 +222,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -322,7 +322,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -412,7 +412,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -538,7 +538,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -628,7 +628,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 

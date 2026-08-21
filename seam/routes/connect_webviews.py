@@ -128,7 +128,7 @@ class AbstractConnectWebviews(abc.ABC):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
 
@@ -182,7 +182,7 @@ class AbstractConnectWebviews(abc.ABC):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -320,7 +320,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
 
@@ -374,7 +374,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -519,7 +519,7 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
 
@@ -634,7 +634,7 @@ class ConnectWebviews(AbstractConnectWebviews):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -796,7 +796,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. See also: `Customize the Behavior Settings of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-behavior-settings-of-your-connect-webviews>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs. `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_.
+        :param custom_metadata: Custom metadata that you want to associate with the Connect Webview. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_ enables you to store custom information, like customer details or internal IDs from your application. The custom metadata is then transferred to any `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ that were connected using the Connect Webview, making it easy to find and filter these resources in your `workspace <https://docs.seam.co/core-concepts/workspaces>`_. You can also `filter Connect Webviews by custom metadata <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param custom_redirect_failure_url: Alternative URL that you want to redirect the user to on an error. If you do not set this parameter, the Connect Webview falls back to the ``custom_redirect_url``.
 
@@ -911,7 +911,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
