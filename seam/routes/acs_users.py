@@ -106,9 +106,9 @@ class AbstractAcsUsers(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
+        user_identity_email_address: Optional[Union[str, Null]] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
+        user_identity_phone_number: Optional[Union[str, Null]] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -122,11 +122,11 @@ class AbstractAcsUsers(abc.ABC):
 
         :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
 
-        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users. Specify ``null`` to retrieve access system users whose user identity has no email address.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``). Specify ``null`` to retrieve access system users whose user identity has no phone number.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -366,9 +366,9 @@ class AbstractAsyncAcsUsers(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
+        user_identity_email_address: Optional[Union[str, Null]] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
+        user_identity_phone_number: Optional[Union[str, Null]] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -382,11 +382,11 @@ class AbstractAsyncAcsUsers(abc.ABC):
 
         :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
 
-        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users. Specify ``null`` to retrieve access system users whose user identity has no email address.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``). Specify ``null`` to retrieve access system users whose user identity has no phone number.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -707,9 +707,9 @@ class AcsUsers(AbstractAcsUsers):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
+        user_identity_email_address: Optional[Union[str, Null]] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
+        user_identity_phone_number: Optional[Union[str, Null]] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -723,11 +723,11 @@ class AcsUsers(AbstractAcsUsers):
 
         :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
 
-        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users. Specify ``null`` to retrieve access system users whose user identity has no email address.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``). Specify ``null`` to retrieve access system users whose user identity has no phone number.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -1193,9 +1193,9 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
-        user_identity_email_address: Optional[str] = None,
+        user_identity_email_address: Optional[Union[str, Null]] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_phone_number: Optional[str] = None,
+        user_identity_phone_number: Optional[Union[str, Null]] = None,
     ) -> List[AcsUser]:
         """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
 
@@ -1209,11 +1209,11 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         :param search: String for which to search. Filters returned access system users to include all records that satisfy a partial match using ``full_name``, ``phone_number``, ``email_address``, ``acs_user_id``, ``user_identity_id``, ``user_identity_full_name`` or ``user_identity_phone_number``.
 
-        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users.
+        :param user_identity_email_address: Email address of the user identity for which you want to retrieve all access system users. Specify ``null`` to retrieve access system users whose user identity has no email address.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``).
+        :param user_identity_phone_number: Phone number of the user identity for which you want to retrieve all access system users, in `E.164 format <https://www.itu.int/rec/T-REC-E.164/en>`_ (for example, ``+15555550100``). Specify ``null`` to retrieve access system users whose user identity has no phone number.
 
         :returns: OK"""
         params: Dict[str, Any] = {}

@@ -169,7 +169,6 @@ class AbstractDevices(abc.ABC):
                 "keywe",
                 "kwikset",
                 "linear",
-                "lockly",
                 "nuki",
                 "philia",
                 "salto",
@@ -192,6 +191,7 @@ class AbstractDevices(abc.ABC):
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
+                "lockly",
                 "minut",
                 "nest",
                 "noiseaware",
@@ -227,7 +227,7 @@ class AbstractDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -473,7 +473,6 @@ class AbstractAsyncDevices(abc.ABC):
                 "keywe",
                 "kwikset",
                 "linear",
-                "lockly",
                 "nuki",
                 "philia",
                 "salto",
@@ -496,6 +495,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
+                "lockly",
                 "minut",
                 "nest",
                 "noiseaware",
@@ -531,7 +531,7 @@ class AbstractAsyncDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -796,7 +796,6 @@ class Devices(AbstractDevices):
                 "keywe",
                 "kwikset",
                 "linear",
-                "lockly",
                 "nuki",
                 "philia",
                 "salto",
@@ -819,6 +818,7 @@ class Devices(AbstractDevices):
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
+                "lockly",
                 "minut",
                 "nest",
                 "noiseaware",
@@ -854,7 +854,7 @@ class Devices(AbstractDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -1207,7 +1207,6 @@ class AsyncDevices(AbstractAsyncDevices):
                 "keywe",
                 "kwikset",
                 "linear",
-                "lockly",
                 "nuki",
                 "philia",
                 "salto",
@@ -1230,6 +1229,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
+                "lockly",
                 "minut",
                 "nest",
                 "noiseaware",
@@ -1265,7 +1265,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 

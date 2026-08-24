@@ -182,7 +182,7 @@ class AbstractConnectWebviews(abc.ABC):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -374,7 +374,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -634,7 +634,7 @@ class ConnectWebviews(AbstractConnectWebviews):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 
@@ -911,7 +911,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
     ) -> List[ConnectWebview]:
         """Returns a list of all `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to `filter Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/filtering-connect-webviews-by-custom-metadata>`_. Returns Connect Webviews with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list connect webviews.
 

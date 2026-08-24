@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import ClientSession
 
 
@@ -127,20 +128,20 @@ class AbstractClientSessions(abc.ABC):
         self,
         *,
         client_session_id: Optional[str] = None,
-        connect_webview_id: Optional[str] = None,
+        connect_webview_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
 
-        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
+        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
-        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
+        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a user identity.
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 
@@ -281,20 +282,20 @@ class AbstractAsyncClientSessions(abc.ABC):
         self,
         *,
         client_session_id: Optional[str] = None,
-        connect_webview_id: Optional[str] = None,
+        connect_webview_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
 
-        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
+        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
-        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
+        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a user identity.
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 
@@ -541,20 +542,20 @@ class ClientSessions(AbstractClientSessions):
         self,
         *,
         client_session_id: Optional[str] = None,
-        connect_webview_id: Optional[str] = None,
+        connect_webview_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
 
-        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
+        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
-        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
+        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a user identity.
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 
@@ -834,20 +835,20 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         self,
         *,
         client_session_id: Optional[str] = None,
-        connect_webview_id: Optional[str] = None,
+        connect_webview_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
-        user_identity_id: Optional[str] = None,
+        user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
     ) -> List[ClientSession]:
         """Returns a list of all `client sessions <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
         :param client_session_id: ID of the client session that you want to retrieve.
 
-        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions.
+        :param connect_webview_id: ID of the `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
-        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions.
+        :param user_identity_id: ID of the `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a user identity.
 
         :param without_user_identifier_key: Indicates whether to retrieve only client sessions without associated user identifier keys.
 

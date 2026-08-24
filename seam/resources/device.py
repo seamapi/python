@@ -2058,14 +2058,11 @@ class Device:
 
             :ivar dual_setpoints_not_supported: Set to true when the device does not support the /dual-setpoints API endpoint.
 
-            :ivar enforced_setpoint_range_celsius: Enforced setpoint range in Celsius for a Sensi device, derived from an OutOfRange API error.
-
             :ivar product_type: Product type for a Sensi device."""
 
             device_id: Optional[str]
             device_name: Optional[str]
             dual_setpoints_not_supported: Optional[bool]
-            enforced_setpoint_range_celsius: Optional[List[float]]
             product_type: Optional[str]
 
             @classmethod
@@ -2075,9 +2072,6 @@ class Device:
                     device_name=d.get("device_name", None),
                     dual_setpoints_not_supported=d.get(
                         "dual_setpoints_not_supported", None
-                    ),
-                    enforced_setpoint_range_celsius=d.get(
-                        "enforced_setpoint_range_celsius", None
                     ),
                     product_type=d.get("product_type", None),
                 )
@@ -4196,6 +4190,29 @@ class Device:
             )
 
     @dataclass
+    class AccessoryKeypadLowBatteryWarning(ResourceMapping):
+        """Indicates that the accessory keypad paired with this lock has a low or critically low battery. Replace its batteries so guests can keep entering their access codes.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["accessory_keypad_low_battery"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class UnreliableOnlineStatusWarning(ResourceMapping):
         """Indicates that the device may optimistically be reported as online because the provider does not reliably report its online status.
 
@@ -4310,6 +4327,7 @@ class Device:
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
+        AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
     ]
@@ -4339,6 +4357,7 @@ class Device:
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
+        "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
     }

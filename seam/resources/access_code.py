@@ -373,6 +373,87 @@ class AccessCode:
             )
 
     @dataclass
+    class FailedToIssueError(ResourceMapping):
+        """Seam was unable to issue this access code before its start time, so the recipient may be unable to unlock the device. This usually points to a problem that needs attention, such as an offline or disconnected device. Seam keeps retrying, and this error clears automatically if the access code is eventually issued.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_access_code_error: Indicates that this is an access code error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: Optional[str]
+        error_code: Literal["failed_to_issue"]
+        is_access_code_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_access_code_error=d.get("is_access_code_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class FailedToUpdateError(ResourceMapping):
+        """Seam was unable to apply this access code's requested update to the device, so the code on the device does not match its requested state. Seam keeps retrying, and this error clears automatically once the update is applied.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_access_code_error: Indicates that this is an access code error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: Optional[str]
+        error_code: Literal["failed_to_update"]
+        is_access_code_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_access_code_error=d.get("is_access_code_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class FailedToExpireError(ResourceMapping):
+        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to remove it, and this error clears automatically once the access code is no longer active.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_access_code_error: Indicates that this is an access code error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: Optional[str]
+        error_code: Literal["failed_to_expire"]
+        is_access_code_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_access_code_error=d.get("is_access_code_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
     class AccountDisconnectedError(ResourceMapping):
         """Indicates that the account is disconnected.
 
@@ -1186,6 +1267,29 @@ class AccessCode:
             )
 
     @dataclass
+    class DelayInIssuingWarning(ResourceMapping):
+        """Seam has not yet issued this access code, even though its start time is approaching, so access may not be ready when the recipient arrives. Seam is still attempting to issue it, and this warning clears automatically once issuance succeeds.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: Optional[str]
+        message: str
+        warning_code: Literal["delay_in_issuing"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class ThirdPartyIntegrationDetectedWarning(ResourceMapping):
         """Third-party integration detected that may cause access codes to fail.
 
@@ -1332,6 +1436,9 @@ class AccessCode:
         ConflictingExternalModificationError,
         AccessCodeInactiveError,
         CodeConstraintsViolatedError,
+        FailedToIssueError,
+        FailedToUpdateError,
+        FailedToExpireError,
         AccountDisconnectedError,
         SaltoKsSubscriptionLimitExceededError,
         InsufficientPermissionsError,
@@ -1356,6 +1463,9 @@ class AccessCode:
         "conflicting_external_modification": ConflictingExternalModificationError,
         "access_code_inactive": AccessCodeInactiveError,
         "code_constraints_violated": CodeConstraintsViolatedError,
+        "failed_to_issue": FailedToIssueError,
+        "failed_to_update": FailedToUpdateError,
+        "failed_to_expire": FailedToExpireError,
         "account_disconnected": AccountDisconnectedError,
         "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
         "insufficient_permissions": InsufficientPermissionsError,
@@ -1395,6 +1505,7 @@ class AccessCode:
         ExternalModificationInEffectWarning,
         DelayInSettingOnDeviceWarning,
         DelayInRemovingFromDeviceWarning,
+        DelayInIssuingWarning,
         ThirdPartyIntegrationDetectedWarning,
         IglooAlgopinMustBeUsedWithin24HoursWarning,
         ManagementTransferredWarning,
@@ -1408,6 +1519,7 @@ class AccessCode:
         "external_modification_in_effect": ExternalModificationInEffectWarning,
         "delay_in_setting_on_device": DelayInSettingOnDeviceWarning,
         "delay_in_removing_from_device": DelayInRemovingFromDeviceWarning,
+        "delay_in_issuing": DelayInIssuingWarning,
         "third_party_integration_detected": ThirdPartyIntegrationDetectedWarning,
         "igloo_algopin_must_be_used_within_24_hours": IglooAlgopinMustBeUsedWithin24HoursWarning,
         "management_transferred": ManagementTransferredWarning,
