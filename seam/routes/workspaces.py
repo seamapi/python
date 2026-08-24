@@ -31,9 +31,9 @@ class AbstractWorkspaces(abc.ABC):
 
         :param name: Name of the new workspace.
 
-        :param company_name: Company name for the new workspace.
+        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
-        :param connect_partner_name: Deprecated: Use ``company_name`` instead. Connect partner name for the new workspace.
+        :param connect_partner_name: Connect partner name for the new workspace.
 
         :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
@@ -128,9 +128,9 @@ class AbstractAsyncWorkspaces(abc.ABC):
 
         :param name: Name of the new workspace.
 
-        :param company_name: Company name for the new workspace.
+        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
-        :param connect_partner_name: Deprecated: Use ``company_name`` instead. Connect partner name for the new workspace.
+        :param connect_partner_name: Connect partner name for the new workspace.
 
         :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
@@ -230,9 +230,9 @@ class Workspaces(AbstractWorkspaces):
 
         :param name: Name of the new workspace.
 
-        :param company_name: Company name for the new workspace.
+        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
-        :param connect_partner_name: Deprecated: Use ``company_name`` instead. Connect partner name for the new workspace.
+        :param connect_partner_name: Connect partner name for the new workspace.
 
         :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
@@ -419,9 +419,9 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         :param name: Name of the new workspace.
 
-        :param company_name: Company name for the new workspace.
+        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
-        :param connect_partner_name: Deprecated: Use ``company_name`` instead. Connect partner name for the new workspace.
+        :param connect_partner_name: Connect partner name for the new workspace.
 
         :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 

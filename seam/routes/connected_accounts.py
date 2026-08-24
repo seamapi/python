@@ -61,7 +61,7 @@ class AbstractConnectedAccounts(abc.ABC):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -171,7 +171,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -322,7 +322,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 
@@ -538,7 +538,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
     ) -> List[ConnectedAccount]:
         """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
 
-        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify an empty string to match a key that is unset or set to an empty string.
+        :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key by which you want to filter connected accounts.
 

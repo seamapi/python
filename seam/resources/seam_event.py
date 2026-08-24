@@ -5558,6 +5558,8 @@ class DeviceLowBatteryEvent:
 
     :ivar battery_level: Number in the range 0 to 1.0 indicating the amount of battery in the affected device, as reported by the device.
 
+    :ivar battery_source: Battery that dropped below the low threshold. ``lock``: the lock's own battery. ``accessory_keypad``: a paired accessory keypad's battery. Omitted for events emitted before this field existed, which always refer to the lock's own battery.
+
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
     :ivar connected_account_id: ID of the connected account associated with the event.
@@ -5581,6 +5583,7 @@ class DeviceLowBatteryEvent:
     :ivar workspace_id: ID of the workspace associated with the event."""
 
     battery_level: float
+    battery_source: Optional[Literal["lock", "accessory_keypad"]]
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
@@ -5597,6 +5600,7 @@ class DeviceLowBatteryEvent:
     def from_dict(cls, d: Any):
         return cls(
             battery_level=d.get("battery_level", None),
+            battery_source=d.get("battery_source", None),
             connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),

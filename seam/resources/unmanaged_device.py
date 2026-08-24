@@ -67,6 +67,8 @@ class UnmanagedDevice:
 
     :ivar device_type: Type of the device.
 
+    :ivar display_name: Display name of the device, defaults to nickname (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the device easily, especially when there are numerous devices.
+
     :ivar errors: Array of errors associated with the device. Each error object within the array contains two fields: ``error_code`` and ``message``. ``error_code`` is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
 
     :ivar is_managed: Indicates that Seam does not manage the device.
@@ -1253,6 +1255,29 @@ class UnmanagedDevice:
             )
 
     @dataclass
+    class AccessoryKeypadLowBatteryWarning(ResourceMapping):
+        """Indicates that the accessory keypad paired with this lock has a low or critically low battery. Replace its batteries so guests can keep entering their access codes.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["accessory_keypad_low_battery"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class UnreliableOnlineStatusWarning(ResourceMapping):
         """Indicates that the device may optimistically be reported as online because the provider does not reliably report its online status.
 
@@ -1367,6 +1392,7 @@ class UnmanagedDevice:
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
+        AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
     ]
@@ -1396,6 +1422,7 @@ class UnmanagedDevice:
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
+        "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
     }
@@ -1474,6 +1501,7 @@ class UnmanagedDevice:
         "android_phone",
         "ring_camera",
     ]
+    display_name: str
     errors: List[Errors]
     is_managed: Literal[False]
     location: Optional[Location]
@@ -1524,6 +1552,7 @@ class UnmanagedDevice:
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
             device_type=d.get("device_type", None),
+            display_name=d.get("display_name", None),
             errors=[
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
                 for i in d.get("errors") or []
