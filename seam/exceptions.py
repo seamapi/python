@@ -1,5 +1,14 @@
+from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 from .resources import ActionAttempt
+
+
+@dataclass(frozen=True)
+class SeamValidationError:
+    """A request parameter that failed validation and its error messages."""
+
+    parameter_name: str
+    error_messages: List[str]
 
 
 # HTTP
@@ -87,6 +96,18 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
         super().__init__(error, status_code, request_id)
         self.code = "invalid_input"
         self._validation_errors = error.get("validation_errors") or {}
+
+    @property
+    def validation_errors(self) -> List[SeamValidationError]:
+        """Validation errors, one entry per failed request parameter."""
+
+        return [
+            SeamValidationError(
+                param_name, self.get_validation_error_messages(param_name)
+            )
+            for param_name in self._validation_errors
+            if param_name != "_errors"
+        ]
 
     def get_validation_error_messages(self, param_name: str) -> List[str]:
         """
