@@ -1310,7 +1310,7 @@ class AccessCodes(AbstractAccessCodes):
                 "At least one parameter is required for /access_codes/update"
             )
 
-        self.client.put("/access_codes/update", json=json_payload)
+        self.client.patch("/access_codes/update", json=json_payload)
 
         return None
 
@@ -1943,7 +1943,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
                 "At least one parameter is required for /access_codes/update"
             )
 
-        await self.client.put("/access_codes/update", json=json_payload)
+        await self.client.patch("/access_codes/update", json=json_payload)
 
         return None
 

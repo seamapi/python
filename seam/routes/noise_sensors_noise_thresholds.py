@@ -400,7 +400,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
                 "At least one parameter is required for /noise_sensors/noise_thresholds/update"
             )
 
-        self.client.put("/noise_sensors/noise_thresholds/update", json=json_payload)
+        self.client.patch("/noise_sensors/noise_thresholds/update", json=json_payload)
 
         return None
 
@@ -612,7 +612,7 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
                 "At least one parameter is required for /noise_sensors/noise_thresholds/update"
             )
 
-        await self.client.put(
+        await self.client.patch(
             "/noise_sensors/noise_thresholds/update", json=json_payload
         )
 

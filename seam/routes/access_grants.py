@@ -24,8 +24,6 @@ class AbstractAccessGrants(abc.ABC):
         self,
         *,
         requested_access_methods: List[Dict[str, Any]],
-        user_identity_id: Optional[str] = None,
-        user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         customization_profile_id: Optional[str] = None,
@@ -38,14 +36,12 @@ class AbstractAccessGrants(abc.ABC):
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-
-        :param user_identity_id: ID of user identity for whom access is being granted.
-
-        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
@@ -70,6 +66,10 @@ class AbstractAccessGrants(abc.ABC):
         :param space_keys: Set of keys of existing spaces to which access is being granted.
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
 
         :returns: OK
 
@@ -255,8 +255,6 @@ class AbstractAsyncAccessGrants(abc.ABC):
         self,
         *,
         requested_access_methods: List[Dict[str, Any]],
-        user_identity_id: Optional[str] = None,
-        user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         customization_profile_id: Optional[str] = None,
@@ -269,14 +267,12 @@ class AbstractAsyncAccessGrants(abc.ABC):
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-
-        :param user_identity_id: ID of user identity for whom access is being granted.
-
-        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
@@ -301,6 +297,10 @@ class AbstractAsyncAccessGrants(abc.ABC):
         :param space_keys: Set of keys of existing spaces to which access is being granted.
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
 
         :returns: OK
 
@@ -491,8 +491,6 @@ class AccessGrants(AbstractAccessGrants):
         self,
         *,
         requested_access_methods: List[Dict[str, Any]],
-        user_identity_id: Optional[str] = None,
-        user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         customization_profile_id: Optional[str] = None,
@@ -505,14 +503,12 @@ class AccessGrants(AbstractAccessGrants):
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-
-        :param user_identity_id: ID of user identity for whom access is being granted.
-
-        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
@@ -538,6 +534,10 @@ class AccessGrants(AbstractAccessGrants):
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
+
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
@@ -545,10 +545,6 @@ class AccessGrants(AbstractAccessGrants):
 
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
-        if user_identity is not None:
-            json_payload["user_identity"] = user_identity
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_ids is not None:
@@ -573,6 +569,10 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["space_keys"] = space_keys
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+        if user_identity is not None:
+            json_payload["user_identity"] = user_identity
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         if not json_payload:
             raise ValueError(
@@ -894,8 +894,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         self,
         *,
         requested_access_methods: List[Dict[str, Any]],
-        user_identity_id: Optional[str] = None,
-        user_identity: Optional[Dict[str, Any]] = None,
         access_grant_key: Optional[str] = None,
         acs_entrance_ids: Optional[List[str]] = None,
         customization_profile_id: Optional[str] = None,
@@ -908,14 +906,12 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         space_ids: Optional[List[str]] = None,
         space_keys: Optional[List[str]] = None,
         starts_at: Optional[str] = None,
+        user_identity: Optional[Dict[str, Any]] = None,
+        user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
         """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
-
-        :param user_identity_id: ID of user identity for whom access is being granted.
-
-        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
@@ -941,6 +937,10 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         :param starts_at: Date and time at which the validity of the new grant starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
+        :param user_identity: When used, creates a new user identity with the given details, and grants them access.
+
+        :param user_identity_id: ID of user identity for whom access is being granted.
+
         :returns: OK
 
         :raises ValueError: At least one parameter must be provided."""
@@ -948,10 +948,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
-        if user_identity is not None:
-            json_payload["user_identity"] = user_identity
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
         if acs_entrance_ids is not None:
@@ -976,6 +972,10 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             json_payload["space_keys"] = space_keys
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
+        if user_identity is not None:
+            json_payload["user_identity"] = user_identity
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
 
         if not json_payload:
             raise ValueError(

@@ -11,6 +11,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -19,15 +20,14 @@ class AbstractAcsEncodersSimulate(abc.ABC):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param error_code: Code of the error to simulate.
-
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
+
+        :param error_code: Code of the error to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -53,6 +53,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id_on_seam: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -60,15 +61,14 @@ class AbstractAcsEncodersSimulate(abc.ABC):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
-        :param error_code:
-
         :param acs_credential_id_on_seam:
+
+        :param error_code:
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -107,6 +107,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -115,15 +116,14 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param error_code: Code of the error to simulate.
-
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
+
+        :param error_code: Code of the error to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -149,6 +149,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id_on_seam: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -156,15 +157,14 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
-        :param error_code:
-
         :param acs_credential_id_on_seam:
+
+        :param error_code:
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -210,6 +210,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -218,25 +219,24 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param error_code: Code of the error to simulate.
-
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
+
+        :param error_code: Code of the error to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-        if error_code is not None:
-            json_payload["error_code"] = error_code
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
+        if error_code is not None:
+            json_payload["error_code"] = error_code
 
         if not json_payload:
             raise ValueError(
@@ -295,6 +295,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id_on_seam: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -302,25 +303,24 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
-        :param error_code:
-
         :param acs_credential_id_on_seam:
+
+        :param error_code:
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-        if error_code is not None:
-            json_payload["error_code"] = error_code
         if acs_credential_id_on_seam is not None:
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
+        if error_code is not None:
+            json_payload["error_code"] = error_code
 
         if not json_payload:
             raise ValueError(
@@ -397,6 +397,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -405,25 +406,24 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
-        :param error_code: Code of the error to simulate.
-
         :param acs_credential_id: ID of the ``acs_credential`` that will fail to be encoded onto a card in the next request.
+
+        :param error_code: Code of the error to simulate.
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-        if error_code is not None:
-            json_payload["error_code"] = error_code
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
+        if error_code is not None:
+            json_payload["error_code"] = error_code
 
         if not json_payload:
             raise ValueError(
@@ -482,6 +482,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         self,
         *,
         acs_encoder_id: str,
+        acs_credential_id_on_seam: Optional[str] = None,
         error_code: Optional[
             Literal[
                 "no_credential_on_encoder",
@@ -489,25 +490,24 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
                 "action_attempt_expired",
             ]
         ] = None,
-        acs_credential_id_on_seam: Optional[str] = None,
     ) -> None:
         """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
-        :param error_code:
-
         :param acs_credential_id_on_seam:
+
+        :param error_code:
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-        if error_code is not None:
-            json_payload["error_code"] = error_code
         if acs_credential_id_on_seam is not None:
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
+        if error_code is not None:
+            json_payload["error_code"] = error_code
 
         if not json_payload:
             raise ValueError(
