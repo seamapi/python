@@ -5556,9 +5556,9 @@ class DeviceTamperedEvent:
 class DeviceLowBatteryEvent:
     """A device battery level dropped below the low threshold.
 
-    :ivar battery_level: Number in the range 0 to 1.0 indicating the amount of battery in the affected device, as reported by the device.
+    :ivar accessory_keypad_battery_level: Number in the range 0 to 1.0 indicating the battery level of the affected device's paired accessory keypad, when the device has one and its level is known.
 
-    :ivar battery_source: Battery that dropped below the low threshold. ``lock``: the lock's own battery. ``accessory_keypad``: a paired accessory keypad's battery. Omitted for events emitted before this field existed, which always refer to the lock's own battery.
+    :ivar battery_level: Deprecated: Use device_battery_level and accessory_keypad_battery_level, which distinguish the device's own battery from a paired accessory keypad's battery. Number in the range 0 to 1.0 indicating the level of the battery whose drop triggered this event.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5567,6 +5567,8 @@ class DeviceLowBatteryEvent:
     :ivar created_at: Date and time at which the event was created.
 
     :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_battery_level: Number in the range 0 to 1.0 indicating the affected device's own battery level, when known.
 
     :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
 
@@ -5582,12 +5584,13 @@ class DeviceLowBatteryEvent:
 
     :ivar workspace_id: ID of the workspace associated with the event."""
 
+    accessory_keypad_battery_level: Optional[float]
     battery_level: float
-    battery_source: Optional[Literal["lock", "accessory_keypad"]]
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
     customer_key: Optional[str]
+    device_battery_level: Optional[float]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
     event_description: Optional[str]
@@ -5599,14 +5602,17 @@ class DeviceLowBatteryEvent:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
+            accessory_keypad_battery_level=d.get(
+                "accessory_keypad_battery_level", None
+            ),
             battery_level=d.get("battery_level", None),
-            battery_source=d.get("battery_source", None),
             connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
+            device_battery_level=d.get("device_battery_level", None),
             device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),

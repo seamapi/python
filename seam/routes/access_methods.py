@@ -48,15 +48,15 @@ class AbstractAccessMethods(abc.ABC):
     def delete(
         self,
         *,
-        access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
+        access_method_id: Optional[str] = None,
         reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
-        :param access_method_id: ID of access method to delete.
-
         :param access_grant_id: ID of access grant whose access methods should be deleted.
+
+        :param access_method_id: ID of access method to delete.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
@@ -232,15 +232,15 @@ class AbstractAsyncAccessMethods(abc.ABC):
     async def delete(
         self,
         *,
-        access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
+        access_method_id: Optional[str] = None,
         reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
-        :param access_method_id: ID of access method to delete.
-
         :param access_grant_id: ID of access grant whose access methods should be deleted.
+
+        :param access_method_id: ID of access method to delete.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
@@ -451,25 +451,25 @@ class AccessMethods(AbstractAccessMethods):
     def delete(
         self,
         *,
-        access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
+        access_method_id: Optional[str] = None,
         reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
-        :param access_method_id: ID of access method to delete.
-
         :param access_grant_id: ID of access grant whose access methods should be deleted.
+
+        :param access_method_id: ID of access method to delete.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
         :raises ValueError: At least one parameter must be provided."""
         params: Dict[str, Any] = {}
 
-        if access_method_id is not None:
-            params["access_method_id"] = access_method_id
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
+        if access_method_id is not None:
+            params["access_method_id"] = access_method_id
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
 
@@ -804,25 +804,25 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
     async def delete(
         self,
         *,
-        access_method_id: Optional[str] = None,
         access_grant_id: Optional[str] = None,
+        access_method_id: Optional[str] = None,
         reservation_key: Optional[str] = None,
     ) -> None:
         """Deletes an access method.
 
-        :param access_method_id: ID of access method to delete.
-
         :param access_grant_id: ID of access grant whose access methods should be deleted.
+
+        :param access_method_id: ID of access method to delete.
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
         :raises ValueError: At least one parameter must be provided."""
         params: Dict[str, Any] = {}
 
-        if access_method_id is not None:
-            params["access_method_id"] = access_method_id
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
+        if access_method_id is not None:
+            params["access_method_id"] = access_method_id
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
 

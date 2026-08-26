@@ -210,8 +210,8 @@ class AbstractUserIdentities(abc.ABC):
         self,
         *,
         merged_user_identity_ids: Optional[List[str]] = None,
-        user_identity_id: Optional[str] = None,
         merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
         """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
@@ -224,9 +224,9 @@ class AbstractUserIdentities(abc.ABC):
 
         :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
 
-        :param user_identity_id: ID of the primary user identity to keep.
-
         :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
 
         :param user_identity_key: Key of the primary user identity to keep.
 
@@ -476,8 +476,8 @@ class AbstractAsyncUserIdentities(abc.ABC):
         self,
         *,
         merged_user_identity_ids: Optional[List[str]] = None,
-        user_identity_id: Optional[str] = None,
         merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
         """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
@@ -490,9 +490,9 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
 
-        :param user_identity_id: ID of the primary user identity to keep.
-
         :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
 
         :param user_identity_key: Key of the primary user identity to keep.
 
@@ -945,8 +945,8 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         merged_user_identity_ids: Optional[List[str]] = None,
-        user_identity_id: Optional[str] = None,
         merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
         """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
@@ -959,9 +959,9 @@ class UserIdentities(AbstractUserIdentities):
 
         :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
 
-        :param user_identity_id: ID of the primary user identity to keep.
-
         :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
 
         :param user_identity_key: Key of the primary user identity to keep.
 
@@ -970,10 +970,10 @@ class UserIdentities(AbstractUserIdentities):
 
         if merged_user_identity_ids is not None:
             json_payload["merged_user_identity_ids"] = merged_user_identity_ids
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if merged_user_identity_keys is not None:
             json_payload["merged_user_identity_keys"] = merged_user_identity_keys
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
@@ -1498,8 +1498,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         self,
         *,
         merged_user_identity_ids: Optional[List[str]] = None,
-        user_identity_id: Optional[str] = None,
         merged_user_identity_keys: Optional[List[str]] = None,
+        user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
         """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
@@ -1512,9 +1512,9 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param merged_user_identity_ids: IDs of the user identities to merge into the primary user identity. These user identities are deleted.
 
-        :param user_identity_id: ID of the primary user identity to keep.
-
         :param merged_user_identity_keys: Keys of the user identities to merge into the primary user identity. These user identities are deleted.
+
+        :param user_identity_id: ID of the primary user identity to keep.
 
         :param user_identity_key: Key of the primary user identity to keep.
 
@@ -1523,10 +1523,10 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if merged_user_identity_ids is not None:
             json_payload["merged_user_identity_ids"] = merged_user_identity_ids
-        if user_identity_id is not None:
-            json_payload["user_identity_id"] = user_identity_id
         if merged_user_identity_keys is not None:
             json_payload["merged_user_identity_keys"] = merged_user_identity_keys
+        if user_identity_id is not None:
+            json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 

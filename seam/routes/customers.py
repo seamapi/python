@@ -11,6 +11,7 @@ class AbstractCustomers(abc.ABC):
     def create_portal(
         self,
         *,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
         deep_link: Optional[Dict[str, Any]] = None,
@@ -34,9 +35,10 @@ class AbstractCustomers(abc.ABC):
         ] = None,
         navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
+
+        :param customer_data:
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
@@ -57,8 +59,6 @@ class AbstractCustomers(abc.ABC):
         :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
-
-        :param customer_data:
 
         :returns: OK"""
         raise NotImplementedError()
@@ -206,6 +206,7 @@ class AbstractAsyncCustomers(abc.ABC):
     async def create_portal(
         self,
         *,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
         deep_link: Optional[Dict[str, Any]] = None,
@@ -229,9 +230,10 @@ class AbstractAsyncCustomers(abc.ABC):
         ] = None,
         navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
+
+        :param customer_data:
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
@@ -252,8 +254,6 @@ class AbstractAsyncCustomers(abc.ABC):
         :param navigation_mode: Navigation mode for the portal. 'restricted' tells frontend to hide navigation UI, typically used for embedded deep links.
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
-
-        :param customer_data:
 
         :returns: OK"""
         raise NotImplementedError()
@@ -408,6 +408,7 @@ class Customers(AbstractCustomers):
     def create_portal(
         self,
         *,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
         deep_link: Optional[Dict[str, Any]] = None,
@@ -431,9 +432,10 @@ class Customers(AbstractCustomers):
         ] = None,
         navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
+
+        :param customer_data:
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
@@ -455,11 +457,11 @@ class Customers(AbstractCustomers):
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
 
-        :param customer_data:
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
+        if customer_data is not None:
+            json_payload["customer_data"] = customer_data
         if customer_resources_filters is not None:
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
@@ -480,8 +482,6 @@ class Customers(AbstractCustomers):
             json_payload["navigation_mode"] = navigation_mode
         if read_only is not None:
             json_payload["read_only"] = read_only
-        if customer_data is not None:
-            json_payload["customer_data"] = customer_data
 
         res = self.client.post("/customers/create_portal", json=json_payload)
 
@@ -736,6 +736,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
     async def create_portal(
         self,
         *,
+        customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
         deep_link: Optional[Dict[str, Any]] = None,
@@ -759,9 +760,10 @@ class AsyncCustomers(AbstractAsyncCustomers):
         ] = None,
         navigation_mode: Optional[Literal["full", "restricted"]] = None,
         read_only: Optional[bool] = None,
-        customer_data: Optional[Dict[str, Any]] = None,
     ) -> CustomerPortal:
         """Creates a new customer portal magic link with configurable features.
+
+        :param customer_data:
 
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
@@ -783,11 +785,11 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
         :param read_only: Whether the portal is read-only. When true, the customer can browse the portal but cannot perform any mutating action; write requests made with the portal's client session are rejected.
 
-        :param customer_data:
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
+        if customer_data is not None:
+            json_payload["customer_data"] = customer_data
         if customer_resources_filters is not None:
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
@@ -808,8 +810,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["navigation_mode"] = navigation_mode
         if read_only is not None:
             json_payload["read_only"] = read_only
-        if customer_data is not None:
-            json_payload["customer_data"] = customer_data
 
         res = await self.client.post("/customers/create_portal", json=json_payload)
 

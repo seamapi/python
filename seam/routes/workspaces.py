@@ -39,7 +39,7 @@ class AbstractWorkspaces(abc.ABC):
 
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -136,7 +136,7 @@ class AbstractAsyncWorkspaces(abc.ABC):
 
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -238,7 +238,7 @@ class Workspaces(AbstractWorkspaces):
 
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -427,7 +427,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
