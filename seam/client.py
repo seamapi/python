@@ -14,6 +14,7 @@ from .exceptions import (
     SeamHttpUnauthorizedError,
 )
 from .null import replace_null
+from .options import SeamInvalidOptionsError
 from .strict_url_search_params_serializer import serialize_url_search_params
 
 SDK_HEADERS = {
@@ -105,7 +106,7 @@ class SeamHttpClient(httpx.Client, SeamHttpResponseHandler, AbstractSeamHttpClie
         self,
         base_url: str,
         auth_headers: Dict[str, str],
-        retries: Optional[Retry] = DEFAULT_RETRIES,
+        retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
         httpx_options: Optional[Dict[str, Any]] = None,
         **kwargs,
@@ -113,6 +114,16 @@ class SeamHttpClient(httpx.Client, SeamHttpResponseHandler, AbstractSeamHttpClie
         options = _build_client_options(base_url, timeout, httpx_options, kwargs)
 
         custom_headers = options.pop("headers", {})
+
+        if retries is not None and (
+            options.get("transport") is not None or options.get("mounts") is not None
+        ):
+            raise SeamInvalidOptionsError(
+                "The retries option cannot be combined with a custom transport "
+                "or mounts, which bypass the retry transport; wrap your "
+                "transport with httpx_retries.RetryTransport instead"
+            )
+
         self._retry_policy = DEFAULT_RETRIES if retries is None else retries
 
         super().__init__(**options)
@@ -170,7 +181,7 @@ class AsyncSeamHttpClient(
         self,
         base_url: str,
         auth_headers: Dict[str, str],
-        retries: Optional[Retry] = DEFAULT_RETRIES,
+        retries: Optional[Retry] = None,
         timeout: Optional[float] = DEFAULT_TIMEOUT,
         httpx_options: Optional[Dict[str, Any]] = None,
         **kwargs,
@@ -178,6 +189,16 @@ class AsyncSeamHttpClient(
         options = _build_client_options(base_url, timeout, httpx_options, kwargs)
 
         custom_headers = options.pop("headers", {})
+
+        if retries is not None and (
+            options.get("transport") is not None or options.get("mounts") is not None
+        ):
+            raise SeamInvalidOptionsError(
+                "The retries option cannot be combined with a custom transport "
+                "or mounts, which bypass the retry transport; wrap your "
+                "transport with httpx_retries.RetryTransport instead"
+            )
+
         self._retry_policy = DEFAULT_RETRIES if retries is None else retries
 
         super().__init__(**options)
