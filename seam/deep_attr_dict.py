@@ -1,6 +1,10 @@
-# https://stackoverflow.com/a/3031270/559475
 class DeepAttrDict(dict):
-    MARKER = object()
+    """A dict whose keys are also readable as attributes, nested dicts included.
+
+    Reading a missing key raises like a plain dict: KeyError when indexing,
+    AttributeError for attribute access. Probe for optional keys with
+    ``.get()``, ``in``, or ``hasattr``.
+    """
 
     def __init__(self, value=None):
         if value is None:
@@ -16,11 +20,12 @@ class DeepAttrDict(dict):
             value = DeepAttrDict(value)
         super().__setitem__(key, value)
 
-    def __getitem__(self, key):
-        found = self.get(key, DeepAttrDict.MARKER)
-        if found is DeepAttrDict.MARKER:
-            found = DeepAttrDict()
-            super().__setitem__(key, found)
-        return found
+    __setattr__ = __setitem__
 
-    __setattr__, __getattr__ = __setitem__, __getitem__
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            # Raise AttributeError so hasattr, getattr defaults, and
+            # copy/pickle protocol probes behave like any other object.
+            raise AttributeError(key) from None
