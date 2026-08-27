@@ -1,7 +1,9 @@
 import pytest
 
 from seam import Seam
+from seam.pagination import Pagination
 from seam.paginator import SeamPaginator
+from seam.resources import Pagination as ResourcePagination
 
 
 def test_create_paginator_returns_a_paginator(seam: Seam):
@@ -82,3 +84,13 @@ def test_paginator_flatten(seam: Seam):
 
     assert len(collected_accounts) > 1
     assert len(collected_accounts) == len(all_connected_accounts)
+
+
+def test_paginator_returns_the_generated_pagination_resource(seam: Seam):
+    assert Pagination is ResourcePagination
+
+    paginator = seam.create_paginator(seam.connected_accounts.list, {"limit": 2})
+    _, pagination = paginator.first_page()
+
+    assert isinstance(pagination, ResourcePagination)
+    assert pagination.has_next_page is True
