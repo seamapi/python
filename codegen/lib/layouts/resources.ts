@@ -260,11 +260,6 @@ const reservedClassNames = new Set([
   'dataclass',
 ])
 
-// Markers set when an action attempt is expanded into per-status variants.
-// A property whose actionAttemptStatuses annotation does not list the
-// variant's status is rendered as None; one whose annotation does list it is
-// genuinely present for that status, so it sheds the forced optionality that
-// nested objects otherwise get.
 type StatusAnnotatedProperty = Property & {
   renderAsNone?: boolean
   presentForStatus?: boolean
@@ -325,8 +320,6 @@ const buildClass = (
 
   const properties = classProperties.map((property) => {
     if (isRenderedAsNone(property)) {
-      // The property is typed None in this status variant, so no nested
-      // classes are generated for it: nothing could reference them.
       return {
         name: property.name,
         description: property.description,
@@ -426,14 +419,6 @@ const buildClass = (
     }
 
     const isObject = nestedClassName != null && property.format === 'object'
-    // A nested object is read as None whenever the payload omits it, and the
-    // schema alone is not a reliable guide to when that happens: an action
-    // attempt documents both error and result as required, yet a pending one
-    // carries neither. Constructing them unconditionally would fail on those
-    // payloads, so from_dict keeps its None fallback and the field stays
-    // Optional. The exception is a status-annotated property in a variant
-    // whose status the annotation lists: the annotation guarantees it is
-    // present there, so it keeps the optionality the schema declares.
     const isRequiredObject =
       isObject &&
       isPresentForStatus(property) &&
@@ -496,8 +481,6 @@ interface UnionVariant {
   deprecationMessage: string
 }
 
-// Group the class names of a union's variants by one of the discriminator
-// values, so each group becomes a Union alias over the classes that share it.
 const buildUnionAliases = (
   variants: Array<{ className: string; groupValue: string | undefined }>,
   suffix: string,
@@ -548,9 +531,6 @@ const buildUnionResource = (
     }
   })
 
-  // With a secondary discriminator, a class covers one value pair, so aliases
-  // name the unions over each single value: one per primary value and one per
-  // secondary value.
   const aliases =
     secondaryDiscriminator == null
       ? []
@@ -613,11 +593,6 @@ const buildUnionResource = (
   }
 }
 
-// Expand an action attempt into one union variant per status from its status
-// enum. In each variant, the status enum is filtered to the single status; a
-// property whose actionAttemptStatuses annotation lists the status is marked
-// present, and one whose annotation does not list it is rendered as None.
-// Properties without the annotation are rendered unchanged for every status.
 const expandActionAttemptByStatus = (
   attempt: Blueprint['actionAttempts'][number],
 ): UnionVariant[] => {
