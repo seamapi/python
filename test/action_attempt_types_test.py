@@ -1,13 +1,5 @@
 # mypy: warn_unused_ignores=True
 
-"""Static and runtime checks for status-discriminated action attempts.
-
-The ``_assert_*`` functions are compile-time tests: mypy checks that
-narrowing on ``status`` recovers the per-status classes, and the
-``type: ignore`` comments assert that the flagged expressions are type
-errors, since an ignore that suppresses nothing fails the mypy run here.
-"""
-
 from typing import Any, Literal, assert_type, cast
 
 from seam.client import SeamHttpClient
