@@ -13,6 +13,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsEntrances(abc.ABC):
@@ -273,7 +275,7 @@ class AcsEntrances(AbstractAcsEntrances):
 
         res = self.client.get("/acs/entrances/get", params=params)
 
-        return AcsEntrance.from_dict(res["acs_entrance"])
+        return AcsEntrance.from_dict(unwrap(res, "acs_entrance", "/acs/entrances/get"))
 
     @route_metadata(
         path="/acs/entrances/grant_access",
@@ -384,7 +386,10 @@ class AcsEntrances(AbstractAcsEntrances):
 
         res = self.client.get("/acs/entrances/list", params=params)
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
+        ]
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",
@@ -422,7 +427,12 @@ class AcsEntrances(AbstractAcsEntrances):
             "/acs/entrances/list_credentials_with_access", params=params
         )
 
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+        return [
+            AcsCredential.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_credentials", "/acs/entrances/list_credentials_with_access"
+            )
+        ]
 
     @route_metadata(
         path="/acs/entrances/unlock", has_required_parameters=True, has_pagination=False
@@ -467,7 +477,9 @@ class AcsEntrances(AbstractAcsEntrances):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/entrances/unlock")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -500,7 +512,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         res = await self.client.get("/acs/entrances/get", params=params)
 
-        return AcsEntrance.from_dict(res["acs_entrance"])
+        return AcsEntrance.from_dict(unwrap(res, "acs_entrance", "/acs/entrances/get"))
 
     @route_metadata(
         path="/acs/entrances/grant_access",
@@ -611,7 +623,10 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         res = await self.client.get("/acs/entrances/list", params=params)
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
+        ]
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",
@@ -649,7 +664,12 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             "/acs/entrances/list_credentials_with_access", params=params
         )
 
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+        return [
+            AcsCredential.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_credentials", "/acs/entrances/list_credentials_with_access"
+            )
+        ]
 
     @route_metadata(
         path="/acs/entrances/unlock", has_required_parameters=True, has_pagination=False
@@ -694,6 +714,8 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/entrances/unlock")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

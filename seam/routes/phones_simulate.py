@@ -3,6 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import Phone
+from ..response import unwrap
 
 
 class AbstractPhonesSimulate(abc.ABC):
@@ -110,7 +111,9 @@ class PhonesSimulate(AbstractPhonesSimulate):
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(
+            unwrap(res, "phone", "/phones/simulate/create_sandbox_phone")
+        )
 
 
 class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
@@ -164,4 +167,6 @@ class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(
+            unwrap(res, "phone", "/phones/simulate/create_sandbox_phone")
+        )

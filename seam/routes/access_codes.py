@@ -16,6 +16,8 @@ from .access_codes_unmanaged import (
     AbstractAsyncAccessCodesUnmanaged,
     AsyncAccessCodesUnmanaged,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessCodes(abc.ABC):
@@ -865,7 +867,7 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.post("/access_codes/create", json=json_payload)
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
 
     @route_metadata(
         path="/access_codes/create_multiple",
@@ -973,7 +975,12 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
-        return [AccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            AccessCode.from_dict(item)
+            for item in unwrap_list(
+                res, "access_codes", "/access_codes/create_multiple"
+            )
+        ]
 
     @route_metadata(
         path="/access_codes/delete", has_required_parameters=True, has_pagination=False
@@ -1027,7 +1034,9 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.get("/access_codes/generate_code", params=params)
 
-        return AccessCode.from_dict(res["generated_code"])
+        return AccessCode.from_dict(
+            unwrap(res, "generated_code", "/access_codes/generate_code")
+        )
 
     @route_metadata(
         path="/access_codes/get", has_required_parameters=True, has_pagination=False
@@ -1066,7 +1075,7 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.get("/access_codes/get", params=params)
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
         path="/access_codes/list", has_required_parameters=True, has_pagination=True
@@ -1142,7 +1151,10 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.get("/access_codes/list", params=params)
 
-        return [AccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            AccessCode.from_dict(item)
+            for item in unwrap_list(res, "access_codes", "/access_codes/list")
+        ]
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",
@@ -1179,7 +1191,9 @@ class AccessCodes(AbstractAccessCodes):
             "/access_codes/pull_backup_access_code", json=json_payload
         )
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(
+            unwrap(res, "access_code", "/access_codes/pull_backup_access_code")
+        )
 
     @route_metadata(
         path="/access_codes/report_device_constraints",
@@ -1494,7 +1508,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.post("/access_codes/create", json=json_payload)
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
 
     @route_metadata(
         path="/access_codes/create_multiple",
@@ -1602,7 +1616,12 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.put("/access_codes/create_multiple", json=json_payload)
 
-        return [AccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            AccessCode.from_dict(item)
+            for item in unwrap_list(
+                res, "access_codes", "/access_codes/create_multiple"
+            )
+        ]
 
     @route_metadata(
         path="/access_codes/delete", has_required_parameters=True, has_pagination=False
@@ -1658,7 +1677,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.get("/access_codes/generate_code", params=params)
 
-        return AccessCode.from_dict(res["generated_code"])
+        return AccessCode.from_dict(
+            unwrap(res, "generated_code", "/access_codes/generate_code")
+        )
 
     @route_metadata(
         path="/access_codes/get", has_required_parameters=True, has_pagination=False
@@ -1697,7 +1718,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.get("/access_codes/get", params=params)
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
         path="/access_codes/list", has_required_parameters=True, has_pagination=True
@@ -1773,7 +1794,10 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.get("/access_codes/list", params=params)
 
-        return [AccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            AccessCode.from_dict(item)
+            for item in unwrap_list(res, "access_codes", "/access_codes/list")
+        ]
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",
@@ -1810,7 +1834,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             "/access_codes/pull_backup_access_code", json=json_payload
         )
 
-        return AccessCode.from_dict(res["access_code"])
+        return AccessCode.from_dict(
+            unwrap(res, "access_code", "/access_codes/pull_backup_access_code")
+        )
 
     @route_metadata(
         path="/access_codes/report_device_constraints",

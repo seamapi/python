@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import ClientSession
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractClientSessions(abc.ABC):
@@ -376,7 +378,9 @@ class ClientSessions(AbstractClientSessions):
 
         res = self.client.put("/client_sessions/create", json=json_payload)
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/create")
+        )
 
     @route_metadata(
         path="/client_sessions/delete",
@@ -428,7 +432,9 @@ class ClientSessions(AbstractClientSessions):
 
         res = self.client.get("/client_sessions/get", params=params)
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/get")
+        )
 
     @route_metadata(
         path="/client_sessions/get_or_create",
@@ -477,7 +483,9 @@ class ClientSessions(AbstractClientSessions):
 
         res = self.client.post("/client_sessions/get_or_create", json=json_payload)
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/get_or_create")
+        )
 
     @route_metadata(
         path="/client_sessions/grant_access",
@@ -575,7 +583,10 @@ class ClientSessions(AbstractClientSessions):
 
         res = self.client.get("/client_sessions/list", params=params)
 
-        return [ClientSession.from_dict(item) for item in res["client_sessions"]]
+        return [
+            ClientSession.from_dict(item)
+            for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
+        ]
 
     @route_metadata(
         path="/client_sessions/revoke",
@@ -667,7 +678,9 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         res = await self.client.put("/client_sessions/create", json=json_payload)
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/create")
+        )
 
     @route_metadata(
         path="/client_sessions/delete",
@@ -719,7 +732,9 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         res = await self.client.get("/client_sessions/get", params=params)
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/get")
+        )
 
     @route_metadata(
         path="/client_sessions/get_or_create",
@@ -770,7 +785,9 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             "/client_sessions/get_or_create", json=json_payload
         )
 
-        return ClientSession.from_dict(res["client_session"])
+        return ClientSession.from_dict(
+            unwrap(res, "client_session", "/client_sessions/get_or_create")
+        )
 
     @route_metadata(
         path="/client_sessions/grant_access",
@@ -868,7 +885,10 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         res = await self.client.get("/client_sessions/list", params=params)
 
-        return [ClientSession.from_dict(item) for item in res["client_sessions"]]
+        return [
+            ClientSession.from_dict(item)
+            for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
+        ]
 
     @route_metadata(
         path="/client_sessions/revoke",

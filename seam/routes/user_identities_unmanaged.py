@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import UnmanagedUserIdentity
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractUserIdentitiesUnmanaged(abc.ABC):
@@ -150,7 +152,9 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         res = self.client.get("/user_identities/unmanaged/get", params=params)
 
-        return UnmanagedUserIdentity.from_dict(res["user_identity"])
+        return UnmanagedUserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/unmanaged/get")
+        )
 
     @route_metadata(
         path="/user_identities/unmanaged/list",
@@ -190,7 +194,10 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         res = self.client.get("/user_identities/unmanaged/list", params=params)
 
         return [
-            UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
+            UnmanagedUserIdentity.from_dict(item)
+            for item in unwrap_list(
+                res, "user_identities", "/user_identities/unmanaged/list"
+            )
         ]
 
     @route_metadata(
@@ -265,7 +272,9 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
         res = await self.client.get("/user_identities/unmanaged/get", params=params)
 
-        return UnmanagedUserIdentity.from_dict(res["user_identity"])
+        return UnmanagedUserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/unmanaged/get")
+        )
 
     @route_metadata(
         path="/user_identities/unmanaged/list",
@@ -305,7 +314,10 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
         res = await self.client.get("/user_identities/unmanaged/list", params=params)
 
         return [
-            UnmanagedUserIdentity.from_dict(item) for item in res["user_identities"]
+            UnmanagedUserIdentity.from_dict(item)
+            for item in unwrap_list(
+                res, "user_identities", "/user_identities/unmanaged/list"
+            )
         ]
 
     @route_metadata(

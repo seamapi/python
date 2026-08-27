@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import AcsAccessGroup, AcsEntrance, AcsUser
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsAccessGroups(abc.ABC):
@@ -313,7 +315,9 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         res = self.client.get("/acs/access_groups/get", params=params)
 
-        return AcsAccessGroup.from_dict(res["acs_access_group"])
+        return AcsAccessGroup.from_dict(
+            unwrap(res, "acs_access_group", "/acs/access_groups/get")
+        )
 
     @route_metadata(
         path="/acs/access_groups/list",
@@ -352,7 +356,10 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         res = self.client.get("/acs/access_groups/list", params=params)
 
-        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+        return [
+            AcsAccessGroup.from_dict(item)
+            for item in unwrap_list(res, "acs_access_groups", "/acs/access_groups/list")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_accessible_entrances",
@@ -383,7 +390,12 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             "/acs/access_groups/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/access_groups/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_users",
@@ -410,7 +422,10 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         res = self.client.get("/acs/access_groups/list_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/access_groups/list_users")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/remove_user",
@@ -546,7 +561,9 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         res = await self.client.get("/acs/access_groups/get", params=params)
 
-        return AcsAccessGroup.from_dict(res["acs_access_group"])
+        return AcsAccessGroup.from_dict(
+            unwrap(res, "acs_access_group", "/acs/access_groups/get")
+        )
 
     @route_metadata(
         path="/acs/access_groups/list",
@@ -585,7 +602,10 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         res = await self.client.get("/acs/access_groups/list", params=params)
 
-        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+        return [
+            AcsAccessGroup.from_dict(item)
+            for item in unwrap_list(res, "acs_access_groups", "/acs/access_groups/list")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_accessible_entrances",
@@ -616,7 +636,12 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
             "/acs/access_groups/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/access_groups/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_users",
@@ -643,7 +668,10 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         res = await self.client.get("/acs/access_groups/list_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/access_groups/list_users")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/remove_user",

@@ -6,6 +6,7 @@ from ..client import AsyncSeamHttpClient, SeamHttpClient
 from ..exceptions import SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
 from ..options import SeamInvalidOptionsError
 from ..resources import ActionAttempt, SuccessActionAttempt, action_attempt_from_dict
+from ..response import unwrap
 
 TIMEOUT = 5.0
 POLLING_INTERVAL = 0.5
@@ -72,7 +73,9 @@ def get_action_attempt(client: SeamHttpClient, action_attempt_id: str) -> Action
         "/action_attempts/get", params={"action_attempt_id": action_attempt_id}
     )
 
-    return action_attempt_from_dict(res["action_attempt"])
+    return action_attempt_from_dict(
+        unwrap(res, "action_attempt", "/action_attempts/get")
+    )
 
 
 def poll_until_ready(
@@ -142,7 +145,9 @@ async def get_action_attempt_async(
         "/action_attempts/get", params={"action_attempt_id": action_attempt_id}
     )
 
-    return action_attempt_from_dict(res["action_attempt"])
+    return action_attempt_from_dict(
+        unwrap(res, "action_attempt", "/action_attempts/get")
+    )
 
 
 async def poll_until_ready_async(

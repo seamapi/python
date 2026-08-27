@@ -7,6 +7,7 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
 
 
 class AbstractThermostatsDailyPrograms(abc.ABC):
@@ -155,7 +156,11 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         res = self.client.post("/thermostats/daily_programs/create", json=json_payload)
 
-        return ThermostatDailyProgram.from_dict(res["thermostat_daily_program"])
+        return ThermostatDailyProgram.from_dict(
+            unwrap(
+                res, "thermostat_daily_program", "/thermostats/daily_programs/create"
+            )
+        )
 
     @route_metadata(
         path="/thermostats/daily_programs/delete",
@@ -232,7 +237,9 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/daily_programs/update")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -279,7 +286,11 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
             "/thermostats/daily_programs/create", json=json_payload
         )
 
-        return ThermostatDailyProgram.from_dict(res["thermostat_daily_program"])
+        return ThermostatDailyProgram.from_dict(
+            unwrap(
+                res, "thermostat_daily_program", "/thermostats/daily_programs/create"
+            )
+        )
 
     @route_metadata(
         path="/thermostats/daily_programs/delete",
@@ -358,6 +369,8 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/daily_programs/update")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

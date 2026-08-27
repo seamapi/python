@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+from json import JSONDecodeError
 from typing import Any, Dict, Optional
 from importlib.metadata import version
 import abc
@@ -68,7 +69,13 @@ class SeamHttpResponseHandler:
             self._handle_error_response(response)
 
         if "application/json" in response.headers.get("content-type", ""):
-            return response.json()
+            try:
+                return response.json()
+            except JSONDecodeError:
+                # A body that lies about its content type is handed on as
+                # text, so readers report an invalid response instead of
+                # leaking a decode error.
+                return response.text
 
         return response.text
 

@@ -14,6 +14,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessMethods(abc.ABC):
@@ -439,7 +441,9 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/assign_card")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -527,7 +531,9 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/encode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -554,7 +560,9 @@ class AccessMethods(AbstractAccessMethods):
 
         res = self.client.get("/access_methods/get", params=params)
 
-        return AccessMethod.from_dict(res["access_method"])
+        return AccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/get")
+        )
 
     @route_metadata(
         path="/access_methods/get_related",
@@ -621,7 +629,7 @@ class AccessMethods(AbstractAccessMethods):
 
         res = self.client.get("/access_methods/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
 
     @route_metadata(
         path="/access_methods/list", has_required_parameters=True, has_pagination=True
@@ -685,7 +693,10 @@ class AccessMethods(AbstractAccessMethods):
 
         res = self.client.get("/access_methods/list", params=params)
 
-        return [AccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            AccessMethod.from_dict(item)
+            for item in unwrap_list(res, "access_methods", "/access_methods/list")
+        ]
 
     @route_metadata(
         path="/access_methods/unlock_door",
@@ -732,7 +743,9 @@ class AccessMethods(AbstractAccessMethods):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/unlock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -792,7 +805,9 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/assign_card")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -880,7 +895,9 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/encode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -907,7 +924,9 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         res = await self.client.get("/access_methods/get", params=params)
 
-        return AccessMethod.from_dict(res["access_method"])
+        return AccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/get")
+        )
 
     @route_metadata(
         path="/access_methods/get_related",
@@ -974,7 +993,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         res = await self.client.get("/access_methods/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
 
     @route_metadata(
         path="/access_methods/list", has_required_parameters=True, has_pagination=True
@@ -1038,7 +1057,10 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         res = await self.client.get("/access_methods/list", params=params)
 
-        return [AccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            AccessMethod.from_dict(item)
+            for item in unwrap_list(res, "access_methods", "/access_methods/list")
+        ]
 
     @route_metadata(
         path="/access_methods/unlock_door",
@@ -1085,6 +1107,8 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/access_methods/unlock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

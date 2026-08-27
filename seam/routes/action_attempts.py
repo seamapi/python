@@ -8,6 +8,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractActionAttempts(abc.ABC):
@@ -139,7 +141,9 @@ class ActionAttempts(AbstractActionAttempts):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/action_attempts/get")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -178,7 +182,10 @@ class ActionAttempts(AbstractActionAttempts):
 
         res = self.client.get("/action_attempts/list", params=params)
 
-        return [action_attempt_from_dict(item) for item in res["action_attempts"]]
+        return [
+            action_attempt_from_dict(item)
+            for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+        ]
 
 
 class AsyncActionAttempts(AbstractAsyncActionAttempts):
@@ -224,7 +231,9 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/action_attempts/get")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -263,4 +272,7 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         res = await self.client.get("/action_attempts/list", params=params)
 
-        return [action_attempt_from_dict(item) for item in res["action_attempts"]]
+        return [
+            action_attempt_from_dict(item)
+            for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+        ]

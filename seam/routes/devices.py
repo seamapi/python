@@ -16,6 +16,8 @@ from .devices_unmanaged import (
     AbstractAsyncDevicesUnmanaged,
     AsyncDevicesUnmanaged,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractDevices(abc.ABC):
@@ -670,7 +672,7 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/devices/get"))
 
     @route_metadata(
         path="/devices/list", has_required_parameters=False, has_pagination=True
@@ -916,7 +918,10 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/devices/list")
+        ]
 
     @route_metadata(
         path="/devices/list_device_providers",
@@ -955,7 +960,12 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/list_device_providers", params=params)
 
-        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
+        return [
+            DeviceProvider.from_dict(item)
+            for item in unwrap_list(
+                res, "device_providers", "/devices/list_device_providers"
+            )
+        ]
 
     @route_metadata(
         path="/devices/report_provider_metadata",
@@ -1081,7 +1091,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/devices/get"))
 
     @route_metadata(
         path="/devices/list", has_required_parameters=False, has_pagination=True
@@ -1327,7 +1337,10 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/devices/list")
+        ]
 
     @route_metadata(
         path="/devices/list_device_providers",
@@ -1366,7 +1379,12 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/list_device_providers", params=params)
 
-        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
+        return [
+            DeviceProvider.from_dict(item)
+            for item in unwrap_list(
+                res, "device_providers", "/devices/list_device_providers"
+            )
+        ]
 
     @route_metadata(
         path="/devices/report_provider_metadata",

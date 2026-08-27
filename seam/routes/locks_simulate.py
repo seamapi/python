@@ -7,6 +7,7 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
 
 
 class AbstractLocksSimulate(abc.ABC):
@@ -143,7 +144,9 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/keypad_code_entry")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -189,7 +192,9 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/manual_lock_via_keypad")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -246,7 +251,9 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/keypad_code_entry")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -292,6 +299,8 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/manual_lock_via_keypad")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

@@ -14,6 +14,12 @@ from .{{module}} import {{abstractClassName}}, {{className}}, {{asyncAbstractCla
 {{#if importResolveActionAttempt}}
 from ..modules.action_attempts import resolve_action_attempt, resolve_action_attempt_async
 {{/if}}
+{{#if importUnwrap}}
+from ..response import unwrap
+{{/if}}
+{{#if importUnwrapList}}
+from ..response import unwrap_list
+{{/if}}
 
 
 {{> abstract-route-class abstractClass}}

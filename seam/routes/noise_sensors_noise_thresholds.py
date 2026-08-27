@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import NoiseThreshold
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
@@ -260,7 +262,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/create")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/delete",
@@ -316,7 +320,9 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/get")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/list",
@@ -343,7 +349,12 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
-        return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
+        return [
+            NoiseThreshold.from_dict(item)
+            for item in unwrap_list(
+                res, "noise_thresholds", "/noise_sensors/noise_thresholds/list"
+            )
+        ]
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/update",
@@ -466,7 +477,9 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/create")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/delete",
@@ -526,7 +539,9 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             "/noise_sensors/noise_thresholds/get", params=params
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/get")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/list",
@@ -555,7 +570,12 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             "/noise_sensors/noise_thresholds/list", params=params
         )
 
-        return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
+        return [
+            NoiseThreshold.from_dict(item)
+            for item in unwrap_list(
+                res, "noise_thresholds", "/noise_sensors/noise_thresholds/list"
+            )
+        ]
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/update",

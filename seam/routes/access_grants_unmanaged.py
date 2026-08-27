@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import UnmanagedAccessGrant
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessGrantsUnmanaged(abc.ABC):
@@ -166,7 +168,9 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         res = self.client.get("/access_grants/unmanaged/get", params=params)
 
-        return UnmanagedAccessGrant.from_dict(res["access_grant"])
+        return UnmanagedAccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_grants/unmanaged/list",
@@ -215,7 +219,12 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         res = self.client.get("/access_grants/unmanaged/list", params=params)
 
-        return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
+        return [
+            UnmanagedAccessGrant.from_dict(item)
+            for item in unwrap_list(
+                res, "access_grants", "/access_grants/unmanaged/list"
+            )
+        ]
 
     @route_metadata(
         path="/access_grants/unmanaged/update",
@@ -291,7 +300,9 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
 
         res = await self.client.get("/access_grants/unmanaged/get", params=params)
 
-        return UnmanagedAccessGrant.from_dict(res["access_grant"])
+        return UnmanagedAccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_grants/unmanaged/list",
@@ -340,7 +351,12 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
 
         res = await self.client.get("/access_grants/unmanaged/list", params=params)
 
-        return [UnmanagedAccessGrant.from_dict(item) for item in res["access_grants"]]
+        return [
+            UnmanagedAccessGrant.from_dict(item)
+            for item in unwrap_list(
+                res, "access_grants", "/access_grants/unmanaged/list"
+            )
+        ]
 
     @route_metadata(
         path="/access_grants/unmanaged/update",

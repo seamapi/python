@@ -9,6 +9,8 @@ from .phones_simulate import (
     AbstractAsyncPhonesSimulate,
     AsyncPhonesSimulate,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractPhones(abc.ABC):
@@ -153,7 +155,7 @@ class Phones(AbstractPhones):
 
         res = self.client.get("/phones/get", params=params)
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
 
     @route_metadata(
         path="/phones/list", has_required_parameters=False, has_pagination=False
@@ -180,7 +182,9 @@ class Phones(AbstractPhones):
 
         res = self.client.get("/phones/list", params=params)
 
-        return [Phone.from_dict(item) for item in res["phones"]]
+        return [
+            Phone.from_dict(item) for item in unwrap_list(res, "phones", "/phones/list")
+        ]
 
 
 class AsyncPhones(AbstractAsyncPhones):
@@ -237,7 +241,7 @@ class AsyncPhones(AbstractAsyncPhones):
 
         res = await self.client.get("/phones/get", params=params)
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
 
     @route_metadata(
         path="/phones/list", has_required_parameters=False, has_pagination=False
@@ -264,4 +268,6 @@ class AsyncPhones(AbstractAsyncPhones):
 
         res = await self.client.get("/phones/list", params=params)
 
-        return [Phone.from_dict(item) for item in res["phones"]]
+        return [
+            Phone.from_dict(item) for item in unwrap_list(res, "phones", "/phones/list")
+        ]

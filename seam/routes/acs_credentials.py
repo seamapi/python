@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import AcsCredential, AcsEntrance
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsCredentials(abc.ABC):
@@ -497,7 +499,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         res = self.client.post("/acs/credentials/create", json=json_payload)
 
-        return AcsCredential.from_dict(res["acs_credential"])
+        return AcsCredential.from_dict(
+            unwrap(res, "acs_credential", "/acs/credentials/create")
+        )
 
     @route_metadata(
         path="/acs/credentials/delete",
@@ -547,7 +551,9 @@ class AcsCredentials(AbstractAcsCredentials):
 
         res = self.client.get("/acs/credentials/get", params=params)
 
-        return AcsCredential.from_dict(res["acs_credential"])
+        return AcsCredential.from_dict(
+            unwrap(res, "acs_credential", "/acs/credentials/get")
+        )
 
     @route_metadata(
         path="/acs/credentials/list", has_required_parameters=False, has_pagination=True
@@ -604,7 +610,10 @@ class AcsCredentials(AbstractAcsCredentials):
 
         res = self.client.get("/acs/credentials/list", params=params)
 
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+        return [
+            AcsCredential.from_dict(item)
+            for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
+        ]
 
     @route_metadata(
         path="/acs/credentials/list_accessible_entrances",
@@ -633,7 +642,12 @@ class AcsCredentials(AbstractAcsCredentials):
             "/acs/credentials/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/credentials/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/credentials/unassign",
@@ -851,7 +865,9 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         res = await self.client.post("/acs/credentials/create", json=json_payload)
 
-        return AcsCredential.from_dict(res["acs_credential"])
+        return AcsCredential.from_dict(
+            unwrap(res, "acs_credential", "/acs/credentials/create")
+        )
 
     @route_metadata(
         path="/acs/credentials/delete",
@@ -901,7 +917,9 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         res = await self.client.get("/acs/credentials/get", params=params)
 
-        return AcsCredential.from_dict(res["acs_credential"])
+        return AcsCredential.from_dict(
+            unwrap(res, "acs_credential", "/acs/credentials/get")
+        )
 
     @route_metadata(
         path="/acs/credentials/list", has_required_parameters=False, has_pagination=True
@@ -958,7 +976,10 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         res = await self.client.get("/acs/credentials/list", params=params)
 
-        return [AcsCredential.from_dict(item) for item in res["acs_credentials"]]
+        return [
+            AcsCredential.from_dict(item)
+            for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
+        ]
 
     @route_metadata(
         path="/acs/credentials/list_accessible_entrances",
@@ -989,7 +1010,12 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             "/acs/credentials/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/credentials/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/credentials/unassign",

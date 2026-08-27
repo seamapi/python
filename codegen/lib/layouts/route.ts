@@ -61,6 +61,8 @@ export interface RouteLayoutContext {
   }>
   importResolveActionAttempt: boolean
   importNull: boolean
+  importUnwrap: boolean
+  importUnwrapList: boolean
   methods: MethodLayoutContext[]
 }
 
@@ -130,6 +132,16 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     params.some(({ isNullable }) => isNullable),
   )
 
+  const importUnwrap = methods.some(
+    ({ returnPath, returnType }) =>
+      returnPath.length > 0 && !returnType.startsWith('List['),
+  )
+
+  const importUnwrapList = methods.some(
+    ({ returnPath, returnType }) =>
+      returnPath.length > 0 && returnType.startsWith('List['),
+  )
+
   const showPass =
     cls.methods.length === 0 && cls.childClassIdentifiers.length === 0
 
@@ -172,6 +184,8 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     })),
     importResolveActionAttempt,
     importNull,
+    importUnwrap,
+    importUnwrapList,
     methods,
   }
 }

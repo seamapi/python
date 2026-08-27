@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import AcsSystem
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsSystems(abc.ABC):
@@ -169,7 +171,7 @@ class AcsSystems(AbstractAcsSystems):
 
         res = self.client.get("/acs/systems/get", params=params)
 
-        return AcsSystem.from_dict(res["acs_system"])
+        return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
 
     @route_metadata(
         path="/acs/systems/list", has_required_parameters=False, has_pagination=False
@@ -203,7 +205,10 @@ class AcsSystems(AbstractAcsSystems):
 
         res = self.client.get("/acs/systems/list", params=params)
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(res, "acs_systems", "/acs/systems/list")
+        ]
 
     @route_metadata(
         path="/acs/systems/list_compatible_credential_manager_acs_systems",
@@ -236,7 +241,14 @@ class AcsSystems(AbstractAcsSystems):
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
         )
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(
+                res,
+                "acs_systems",
+                "/acs/systems/list_compatible_credential_manager_acs_systems",
+            )
+        ]
 
     @route_metadata(
         path="/acs/systems/report_devices",
@@ -304,7 +316,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         res = await self.client.get("/acs/systems/get", params=params)
 
-        return AcsSystem.from_dict(res["acs_system"])
+        return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
 
     @route_metadata(
         path="/acs/systems/list", has_required_parameters=False, has_pagination=False
@@ -338,7 +350,10 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         res = await self.client.get("/acs/systems/list", params=params)
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(res, "acs_systems", "/acs/systems/list")
+        ]
 
     @route_metadata(
         path="/acs/systems/list_compatible_credential_manager_acs_systems",
@@ -371,7 +386,14 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
         )
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(
+                res,
+                "acs_systems",
+                "/acs/systems/list_compatible_credential_manager_acs_systems",
+            )
+        ]
 
     @route_metadata(
         path="/acs/systems/report_devices",

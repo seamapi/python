@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import Space, Batch
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractSpaces(abc.ABC):
@@ -617,7 +619,7 @@ class Spaces(AbstractSpaces):
 
         res = self.client.post("/spaces/create", json=json_payload)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/create"))
 
     @route_metadata(
         path="/spaces/delete", has_required_parameters=True, has_pagination=False
@@ -667,7 +669,7 @@ class Spaces(AbstractSpaces):
 
         res = self.client.get("/spaces/get", params=params)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/get"))
 
     @route_metadata(
         path="/spaces/get_related", has_required_parameters=True, has_pagination=False
@@ -733,7 +735,7 @@ class Spaces(AbstractSpaces):
 
         res = self.client.get("/spaces/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
 
     @route_metadata(
         path="/spaces/list", has_required_parameters=False, has_pagination=True
@@ -775,7 +777,9 @@ class Spaces(AbstractSpaces):
 
         res = self.client.get("/spaces/list", params=params)
 
-        return [Space.from_dict(item) for item in res["spaces"]]
+        return [
+            Space.from_dict(item) for item in unwrap_list(res, "spaces", "/spaces/list")
+        ]
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",
@@ -913,7 +917,7 @@ class Spaces(AbstractSpaces):
 
         res = self.client.patch("/spaces/update", json=json_payload)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/update"))
 
 
 class AsyncSpaces(AbstractAsyncSpaces):
@@ -1065,7 +1069,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.post("/spaces/create", json=json_payload)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/create"))
 
     @route_metadata(
         path="/spaces/delete", has_required_parameters=True, has_pagination=False
@@ -1115,7 +1119,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.get("/spaces/get", params=params)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/get"))
 
     @route_metadata(
         path="/spaces/get_related", has_required_parameters=True, has_pagination=False
@@ -1181,7 +1185,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.get("/spaces/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
 
     @route_metadata(
         path="/spaces/list", has_required_parameters=False, has_pagination=True
@@ -1223,7 +1227,9 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.get("/spaces/list", params=params)
 
-        return [Space.from_dict(item) for item in res["spaces"]]
+        return [
+            Space.from_dict(item) for item in unwrap_list(res, "spaces", "/spaces/list")
+        ]
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",
@@ -1361,4 +1367,4 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.patch("/spaces/update", json=json_payload)
 
-        return Space.from_dict(res["space"])
+        return Space.from_dict(unwrap(res, "space", "/spaces/update"))

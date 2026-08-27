@@ -10,6 +10,8 @@ from .access_grants_unmanaged import (
     AbstractAsyncAccessGrantsUnmanaged,
     AsyncAccessGrantsUnmanaged,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessGrants(abc.ABC):
@@ -581,7 +583,9 @@ class AccessGrants(AbstractAccessGrants):
 
         res = self.client.post("/access_grants/create", json=json_payload)
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/create")
+        )
 
     @route_metadata(
         path="/access_grants/delete", has_required_parameters=True, has_pagination=False
@@ -638,7 +642,7 @@ class AccessGrants(AbstractAccessGrants):
 
         res = self.client.get("/access_grants/get", params=params)
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(unwrap(res, "access_grant", "/access_grants/get"))
 
     @route_metadata(
         path="/access_grants/get_related",
@@ -710,7 +714,7 @@ class AccessGrants(AbstractAccessGrants):
 
         res = self.client.get("/access_grants/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
 
     @route_metadata(
         path="/access_grants/list", has_required_parameters=False, has_pagination=True
@@ -792,7 +796,10 @@ class AccessGrants(AbstractAccessGrants):
 
         res = self.client.get("/access_grants/list", params=params)
 
-        return [AccessGrant.from_dict(item) for item in res["access_grants"]]
+        return [
+            AccessGrant.from_dict(item)
+            for item in unwrap_list(res, "access_grants", "/access_grants/list")
+        ]
 
     @route_metadata(
         path="/access_grants/request_access_methods",
@@ -827,7 +834,9 @@ class AccessGrants(AbstractAccessGrants):
             "/access_grants/request_access_methods", json=json_payload
         )
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/request_access_methods")
+        )
 
     @route_metadata(
         path="/access_grants/update", has_required_parameters=True, has_pagination=False
@@ -984,7 +993,9 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         res = await self.client.post("/access_grants/create", json=json_payload)
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/create")
+        )
 
     @route_metadata(
         path="/access_grants/delete", has_required_parameters=True, has_pagination=False
@@ -1041,7 +1052,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         res = await self.client.get("/access_grants/get", params=params)
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(unwrap(res, "access_grant", "/access_grants/get"))
 
     @route_metadata(
         path="/access_grants/get_related",
@@ -1113,7 +1124,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         res = await self.client.get("/access_grants/get_related", params=params)
 
-        return Batch.from_dict(res["batch"])
+        return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
 
     @route_metadata(
         path="/access_grants/list", has_required_parameters=False, has_pagination=True
@@ -1195,7 +1206,10 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         res = await self.client.get("/access_grants/list", params=params)
 
-        return [AccessGrant.from_dict(item) for item in res["access_grants"]]
+        return [
+            AccessGrant.from_dict(item)
+            for item in unwrap_list(res, "access_grants", "/access_grants/list")
+        ]
 
     @route_metadata(
         path="/access_grants/request_access_methods",
@@ -1230,7 +1244,9 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             "/access_grants/request_access_methods", json=json_payload
         )
 
-        return AccessGrant.from_dict(res["access_grant"])
+        return AccessGrant.from_dict(
+            unwrap(res, "access_grant", "/access_grants/request_access_methods")
+        )
 
     @route_metadata(
         path="/access_grants/update", has_required_parameters=True, has_pagination=False

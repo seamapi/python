@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import Webhook
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractWebhooks(abc.ABC):
@@ -145,7 +147,7 @@ class Webhooks(AbstractWebhooks):
 
         res = self.client.post("/webhooks/create", json=json_payload)
 
-        return Webhook.from_dict(res["webhook"])
+        return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/create"))
 
     @route_metadata(
         path="/webhooks/delete", has_required_parameters=True, has_pagination=False
@@ -189,7 +191,7 @@ class Webhooks(AbstractWebhooks):
 
         res = self.client.get("/webhooks/get", params=params)
 
-        return Webhook.from_dict(res["webhook"])
+        return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/get"))
 
     @route_metadata(
         path="/webhooks/list", has_required_parameters=False, has_pagination=False
@@ -202,7 +204,10 @@ class Webhooks(AbstractWebhooks):
 
         res = self.client.get("/webhooks/list", params=params)
 
-        return [Webhook.from_dict(item) for item in res["webhooks"]]
+        return [
+            Webhook.from_dict(item)
+            for item in unwrap_list(res, "webhooks", "/webhooks/list")
+        ]
 
     @route_metadata(
         path="/webhooks/update", has_required_parameters=True, has_pagination=False
@@ -262,7 +267,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
 
         res = await self.client.post("/webhooks/create", json=json_payload)
 
-        return Webhook.from_dict(res["webhook"])
+        return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/create"))
 
     @route_metadata(
         path="/webhooks/delete", has_required_parameters=True, has_pagination=False
@@ -306,7 +311,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
 
         res = await self.client.get("/webhooks/get", params=params)
 
-        return Webhook.from_dict(res["webhook"])
+        return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/get"))
 
     @route_metadata(
         path="/webhooks/list", has_required_parameters=False, has_pagination=False
@@ -319,7 +324,10 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
 
         res = await self.client.get("/webhooks/list", params=params)
 
-        return [Webhook.from_dict(item) for item in res["webhooks"]]
+        return [
+            Webhook.from_dict(item)
+            for item in unwrap_list(res, "webhooks", "/webhooks/list")
+        ]
 
     @route_metadata(
         path="/webhooks/update", has_required_parameters=True, has_pagination=False
