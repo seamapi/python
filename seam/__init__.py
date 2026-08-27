@@ -9,6 +9,7 @@ from .exceptions import (
     SeamError,
     SeamHttpApiError,
     SeamHttpInvalidResponseError,
+    SeamInvalidWebhookPayloadError,
     SeamHttpUnauthorizedError,
     SeamHttpInvalidInputError,
     SeamValidationError,
