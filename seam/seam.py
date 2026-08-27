@@ -7,6 +7,7 @@ from .parse_options import parse_options
 from .routes import AsyncRoutes, Routes
 from .models import AbstractAsyncSeam, AbstractSeam
 from .client import AsyncSeamHttpClient, SeamHttpClient
+from .modules.action_attempts import normalize_wait_for_action_attempt
 from .paginator import AsyncSeamPaginator, SeamPaginator
 
 
@@ -63,7 +64,7 @@ class Seam(AbstractSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
@@ -81,14 +82,17 @@ class Seam(AbstractSeam):
             access token format is invalid
         """
 
-        self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_options(
             api_key=api_key,
             personal_access_token=personal_access_token,
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self.defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+        self.defaults = {
+            "wait_for_action_attempt": normalize_wait_for_action_attempt(
+                wait_for_action_attempt
+            )
+        }
 
         self.client = SeamHttpClient(
             base_url=endpoint,
@@ -102,6 +106,19 @@ class Seam(AbstractSeam):
         # and child, so borrowing this initializer to attach the route
         # namespaces passes a self the signature does not admit.
         Routes.__init__(self, client=self.client, defaults=self.defaults)  # type: ignore[arg-type]
+
+    @property
+    def wait_for_action_attempt(self) -> Union[bool, Dict[str, float]]:
+        """Default wait behavior for action attempts, shared with every route."""
+        return self.defaults["wait_for_action_attempt"]
+
+    @wait_for_action_attempt.setter
+    def wait_for_action_attempt(
+        self, value: Optional[Union[bool, Dict[str, float]]]
+    ) -> None:
+        self.defaults["wait_for_action_attempt"] = normalize_wait_for_action_attempt(
+            value
+        )
 
     def create_paginator(
         self, request: Callable, params: Optional[Dict[str, Any]] = None, /
@@ -173,7 +190,7 @@ class Seam(AbstractSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :return: A new instance of the Seam class authenticated with the
             provided API key
@@ -219,7 +236,7 @@ class Seam(AbstractSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :return: A new instance of the Seam class authenticated with the
             provided personal access token
@@ -294,7 +311,7 @@ class AsyncSeam(AbstractAsyncSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
@@ -312,14 +329,17 @@ class AsyncSeam(AbstractAsyncSeam):
             access token format is invalid
         """
 
-        self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_options(
             api_key=api_key,
             personal_access_token=personal_access_token,
             workspace_id=workspace_id,
             endpoint=endpoint,
         )
-        self.defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+        self.defaults = {
+            "wait_for_action_attempt": normalize_wait_for_action_attempt(
+                wait_for_action_attempt
+            )
+        }
 
         self.client = AsyncSeamHttpClient(
             base_url=endpoint,
@@ -334,6 +354,19 @@ class AsyncSeam(AbstractAsyncSeam):
         # attach the route namespaces passes a self the signature does not
         # admit.
         AsyncRoutes.__init__(self, client=self.client, defaults=self.defaults)  # type: ignore[arg-type]
+
+    @property
+    def wait_for_action_attempt(self) -> Union[bool, Dict[str, float]]:
+        """Default wait behavior for action attempts, shared with every route."""
+        return self.defaults["wait_for_action_attempt"]
+
+    @wait_for_action_attempt.setter
+    def wait_for_action_attempt(
+        self, value: Optional[Union[bool, Dict[str, float]]]
+    ) -> None:
+        self.defaults["wait_for_action_attempt"] = normalize_wait_for_action_attempt(
+            value
+        )
 
     def create_paginator(
         self, request: Callable, params: Optional[Dict[str, Any]] = None, /
@@ -402,7 +435,7 @@ class AsyncSeam(AbstractAsyncSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :return: A new instance of the AsyncSeam class authenticated with the
             provided API key
@@ -445,7 +478,7 @@ class AsyncSeam(AbstractAsyncSeam):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :return: A new instance of the AsyncSeam class authenticated with the
             provided personal access token
