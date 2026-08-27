@@ -99,7 +99,13 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
 
         super().__init__(error, status_code, request_id)
         self.code = "invalid_input"
-        self._validation_errors = error.get("validation_errors") or {}
+        validation_errors = error.get("validation_errors")
+        # The envelope shape is server-controlled: anything but the expected
+        # object of objects reads as no validation details rather than
+        # raising from inside the error accessors.
+        self._validation_errors = (
+            validation_errors if isinstance(validation_errors, dict) else {}
+        )
 
     @property
     def validation_errors(self) -> List[SeamValidationError]:
@@ -123,7 +129,14 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
         :rtype: List[str]
         """
 
-        return self._validation_errors.get(param_name, {}).get("_errors", [])
+        messages = self._validation_errors.get(param_name)
+
+        if not isinstance(messages, dict):
+            return []
+
+        errors = messages.get("_errors", [])
+
+        return errors if isinstance(errors, list) else []
 
 
 # Action Attempt
