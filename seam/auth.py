@@ -1,4 +1,5 @@
 from typing import Optional
+from .exceptions import SeamError
 from .options import (
     SeamInvalidOptionsError,
     is_seam_options_with_api_key,
@@ -15,7 +16,7 @@ from .token import (
 )
 
 
-class SeamInvalidTokenError(Exception):
+class SeamInvalidTokenError(SeamError):
     """
     Exception raised when an invalid token is provided to the Seam client.
 
