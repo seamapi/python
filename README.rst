@@ -221,6 +221,28 @@ When the ``wait_for_action_attempt`` option is enabled, the SDK:
 - Raises a ``SeamActionAttemptTimeoutError`` if the action attempt is still pending when the ``timeout`` is reached.
 - Both errors expose an ``action_attempt`` property.
 
+Each action attempt parses to a class for its ``action_type`` and ``status`` pair,
+e.g., ``LockDoorSuccessActionAttempt``.
+The ``error`` and ``result`` attributes are ``None``
+except for the status that populates them,
+so narrow on the ``status`` before reading them:
+
+.. code-block:: python
+
+  action_attempt = seam.locks.unlock_door(
+      device_id=device_id,
+      wait_for_action_attempt=False,
+  )
+
+  if action_attempt.status == "success":
+      print(action_attempt.result)  # The result is not None here.
+
+  if action_attempt.status == "error":
+      print(action_attempt.error.message)  # The error is not None here.
+
+Waiting for an action attempt returns a ``SuccessActionAttempt``,
+so the ``result`` is immediately usable.
+
 If you already have an action attempt ID
 and want to wait for it to resolve, simply use
 
