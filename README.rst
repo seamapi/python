@@ -61,6 +61,10 @@ Contents
 
   * `Asynchronous Usage`_
 
+  * `Error Handling`_
+
+    * `Validation errors`_
+
   * `Requests without a Workspace in Scope`_
 
     * `Personal Access Token without a Workspace`_
@@ -485,6 +489,38 @@ and ``flatten`` returns an async generator.
 
 The ``AsyncSeamWithoutWorkspace`` client is the equivalent async variant of
 ``SeamWithoutWorkspace``.
+
+Error Handling
+~~~~~~~~~~~~~~
+
+Requests rejected by the Seam API raise a ``SeamHttpApiError`` subclass
+carrying the HTTP ``status_code``, API error ``code``, and ``request_id``.
+
+Validation errors
+^^^^^^^^^^^^^^^^^
+
+When the API rejects a request because a parameter is invalid, it raises a
+``SeamHttpInvalidInputError``. Look up messages for a parameter you are already
+rendering, for example a field in a form:
+
+.. code-block:: python
+
+  from seam import SeamHttpInvalidInputError
+
+  try:
+      seam.devices.list(device_ids=["not-a-uuid"])
+  except SeamHttpInvalidInputError as error:
+      print(error.get_validation_error_messages("device_ids"))
+
+Or read every parameter that failed validation to summarize the request:
+
+.. code-block:: python
+
+  for validation_error in error.validation_errors:
+      print(
+          f"{validation_error.parameter_name}: "
+          f"{', '.join(validation_error.error_messages)}"
+      )
 
 Requests without a Workspace in Scope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

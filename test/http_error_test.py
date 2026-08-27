@@ -5,6 +5,7 @@ from seam.exceptions import (
     SeamHttpApiError,
     SeamHttpInvalidInputError,
     SeamHttpUnauthorizedError,
+    SeamValidationError,
 )
 
 
@@ -47,6 +48,29 @@ def test_seam_http_throws_invalid_input_error(server):
     assert err.request_id.startswith("request")
     assert err.get_validation_error_messages("device_ids") == [
         "Expected array, received number"
+    ]
+    assert err.validation_errors == [
+        SeamValidationError(
+            parameter_name="device_ids",
+            error_messages=["Expected array, received number"],
+        )
+    ]
+
+
+def test_validation_errors_exclude_request_wide_errors():
+    err = SeamHttpInvalidInputError(
+        {
+            "validation_errors": {
+                "_errors": ["Request is invalid"],
+                "device_ids": {"_errors": ["Invalid device IDs"]},
+            }
+        },
+        400,
+        None,
+    )
+
+    assert err.validation_errors == [
+        SeamValidationError("device_ids", ["Invalid device IDs"])
     ]
 
 
