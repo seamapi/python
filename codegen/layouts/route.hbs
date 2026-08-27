@@ -20,6 +20,9 @@ from ..response import unwrap
 {{#if importUnwrapList}}
 from ..response import unwrap_list
 {{/if}}
+{{#if importPaginatedList}}
+from ..pagination import PaginatedList
+{{/if}}
 
 
 {{> abstract-route-class abstractClass}}

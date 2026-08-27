@@ -19,6 +19,7 @@ from .user_identities_unmanaged import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractUserIdentities(abc.ABC):
@@ -783,10 +784,13 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/list", params=params)
 
-        return [
-            UserIdentity.from_dict(item)
-            for item in unwrap_list(res, "user_identities", "/user_identities/list")
-        ]
+        return PaginatedList(
+            [
+                UserIdentity.from_dict(item)
+                for item in unwrap_list(res, "user_identities", "/user_identities/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",
@@ -1312,10 +1316,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.get("/user_identities/list", params=params)
 
-        return [
-            UserIdentity.from_dict(item)
-            for item in unwrap_list(res, "user_identities", "/user_identities/list")
-        ]
+        return PaginatedList(
+            [
+                UserIdentity.from_dict(item)
+                for item in unwrap_list(res, "user_identities", "/user_identities/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",

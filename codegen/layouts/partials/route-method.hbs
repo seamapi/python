@@ -35,7 +35,10 @@
         return None
 {{else if (isListType returnType)}}
 
-        return [{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")]
+        return {{#if hasPagination}}PaginatedList(
+            [{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")],
+            pagination=res.get("pagination"),
+        ){{else}}[{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")]{{/if}}
 {{else}}
 
         return {{fromDict returnType}}(unwrap(res, "{{returnPath.[0]}}", "{{path}}"))

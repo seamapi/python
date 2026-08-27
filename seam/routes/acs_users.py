@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import AcsUser, AcsEntrance
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAcsUsers(abc.ABC):
@@ -760,10 +761,13 @@ class AcsUsers(AbstractAcsUsers):
 
         res = self.client.get("/acs/users/list", params=params)
 
-        return [
-            AcsUser.from_dict(item)
-            for item in unwrap_list(res, "acs_users", "/acs/users/list")
-        ]
+        return PaginatedList(
+            [
+                AcsUser.from_dict(item)
+                for item in unwrap_list(res, "acs_users", "/acs/users/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",
@@ -1336,10 +1340,13 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         res = await self.client.get("/acs/users/list", params=params)
 
-        return [
-            AcsUser.from_dict(item)
-            for item in unwrap_list(res, "acs_users", "/acs/users/list")
-        ]
+        return PaginatedList(
+            [
+                AcsUser.from_dict(item)
+                for item in unwrap_list(res, "acs_users", "/acs/users/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",

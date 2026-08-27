@@ -18,6 +18,7 @@ from .devices_unmanaged import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractDevices(abc.ABC):
@@ -921,10 +922,13 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/list", params=params)
 
-        return [
-            Device.from_dict(item)
-            for item in unwrap_list(res, "devices", "/devices/list")
-        ]
+        return PaginatedList(
+            [
+                Device.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/list_device_providers",
@@ -1339,10 +1343,13 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/list", params=params)
 
-        return [
-            Device.from_dict(item)
-            for item in unwrap_list(res, "devices", "/devices/list")
-        ]
+        return PaginatedList(
+            [
+                Device.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/list_device_providers",

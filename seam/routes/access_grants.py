@@ -12,6 +12,7 @@ from .access_grants_unmanaged import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAccessGrants(abc.ABC):
@@ -798,10 +799,13 @@ class AccessGrants(AbstractAccessGrants):
 
         res = self.client.get("/access_grants/list", params=params)
 
-        return [
-            AccessGrant.from_dict(item)
-            for item in unwrap_list(res, "access_grants", "/access_grants/list")
-        ]
+        return PaginatedList(
+            [
+                AccessGrant.from_dict(item)
+                for item in unwrap_list(res, "access_grants", "/access_grants/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_grants/request_access_methods",
@@ -1232,10 +1236,13 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         res = await self.client.get("/access_grants/list", params=params)
 
-        return [
-            AccessGrant.from_dict(item)
-            for item in unwrap_list(res, "access_grants", "/access_grants/list")
-        ]
+        return PaginatedList(
+            [
+                AccessGrant.from_dict(item)
+                for item in unwrap_list(res, "access_grants", "/access_grants/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_grants/request_access_methods",
