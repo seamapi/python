@@ -296,6 +296,67 @@ def test_wait_for_action_attempt_polls_at_least_once_before_timing_out(
         assert time.monotonic() - start < 5
 
 
+def test_wait_for_action_attempt_polls_with_the_generated_route_shape(
+    recording_server,
+):
+    success_response = {
+        "action_attempt": {
+            **PENDING_ACTION_ATTEMPT_RESPONSE["action_attempt"],
+            "status": "success",
+            "result": {},
+        }
+    }
+
+    with recording_server(
+        [(200, PENDING_ACTION_ATTEMPT_RESPONSE), (200, success_response)]
+    ) as (endpoint, requests):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        action_attempt = seam.action_attempts.get(
+            action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+            wait_for_action_attempt={"timeout": 5, "polling_interval": 0.05},
+        )
+
+        assert action_attempt.status == "success"
+
+        # The poll goes through the same wire shape as the generated route:
+        # a GET with the id and _strict in the query, and no request body.
+        poll_request = requests[1]
+        assert poll_request["method"] == "GET"
+        assert poll_request["path"] == "/action_attempts/get"
+        assert f"action_attempt_id={PENDING_ACTION_ATTEMPT_ID}" in poll_request["query"]
+        assert "_strict=true" in poll_request["query"]
+        assert poll_request["body"] is None
+
+
+def test_wait_for_action_attempt_retries_a_failed_poll(recording_server):
+    success_response = {
+        "action_attempt": {
+            **PENDING_ACTION_ATTEMPT_RESPONSE["action_attempt"],
+            "status": "success",
+            "result": {},
+        }
+    }
+
+    with recording_server(
+        [
+            (200, PENDING_ACTION_ATTEMPT_RESPONSE),
+            (503, {"error": {"type": "service_unavailable", "message": "Down"}}),
+            (200, success_response),
+        ]
+    ) as (endpoint, requests):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        action_attempt = seam.action_attempts.get(
+            action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+            wait_for_action_attempt={"timeout": 5, "polling_interval": 0.05},
+        )
+
+        # A transient 503 mid-wait is retried instead of aborting the wait.
+        assert action_attempt.status == "success"
+        assert len(requests) == 3
+
+
 async def test_wait_for_action_attempt_rejects_a_zero_polling_interval_async(
     recording_server,
 ):

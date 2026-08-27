@@ -25,8 +25,8 @@ def validate_poll_options(timeout: float, polling_interval: float) -> None:
 
 
 def get_action_attempt(client: SeamHttpClient, action_attempt_id: str) -> ActionAttempt:
-    res = client.post(
-        "/action_attempts/get", json={"action_attempt_id": action_attempt_id}
+    res = client.get(
+        "/action_attempts/get", params={"action_attempt_id": action_attempt_id}
     )
 
     return action_attempt_from_dict(res["action_attempt"])
@@ -93,8 +93,8 @@ def resolve_action_attempt(
 async def get_action_attempt_async(
     client: AsyncSeamHttpClient, action_attempt_id: str
 ) -> ActionAttempt:
-    res = await client.post(
-        "/action_attempts/get", json={"action_attempt_id": action_attempt_id}
+    res = await client.get(
+        "/action_attempts/get", params={"action_attempt_id": action_attempt_id}
     )
 
     return action_attempt_from_dict(res["action_attempt"])
