@@ -8,8 +8,9 @@ from seam.resources import (
     ActionAttempt,
     Device,
     LockDoorActionAttempt,
+    LockDoorSuccessActionAttempt,
     NoiseSensorNoiseThresholdTriggeredEvent,
-    ScanCredentialActionAttempt,
+    ScanCredentialSuccessActionAttempt,
     SeamEvent,
     UnmanagedAccessCode,
 )
@@ -27,7 +28,7 @@ def _assert_access_code_narrowing(
 def _assert_boolean_shapes(
     code: AccessCode,
     unmanaged_code: UnmanagedAccessCode,
-    credential: ScanCredentialActionAttempt.Result.AcsCredentialOnSeam,
+    credential: ScanCredentialSuccessActionAttempt.Result.AcsCredentialOnSeam,
 ) -> None:
     assert_type(code.is_backup_access_code_available, bool)
     error = code.errors[0]
@@ -63,8 +64,11 @@ def _assert_action_attempt_narrowing(attempt: ActionAttempt) -> None:
         assert_type(attempt, LockDoorActionAttempt)
         assert_type(
             attempt.result,
-            LockDoorActionAttempt.Result | None,
+            LockDoorSuccessActionAttempt.Result | None,
         )
+        if attempt.status == "success":
+            assert_type(attempt, LockDoorSuccessActionAttempt)
+            assert_type(attempt.result, LockDoorSuccessActionAttempt.Result)
 
 
 def _assert_record_value_types(device: Device) -> None:

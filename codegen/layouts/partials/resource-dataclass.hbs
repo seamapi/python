@@ -33,6 +33,6 @@
 {{/unless}}
 {{memberIndent}}    return cls(
 {{#each properties}}
-{{../memberIndent}}        {{pythonIdentifier name}}={{#if isObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isDiscriminatedObjectList}}[_from_discriminated_dict(i, cls._{{nestedClassName}}Variants, "{{discriminator}}") for i in d.get("{{name}}") or []]{{else}}{{#if isObjectList}}[cls.{{nestedClassName}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}}{{/if}},
+{{../memberIndent}}        {{pythonIdentifier name}}={{#if isRequiredObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}") or {}){{else}}{{#if isObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isDiscriminatedObjectList}}[_from_discriminated_dict(i, cls._{{nestedClassName}}Variants, "{{discriminator}}") for i in d.get("{{name}}") or []]{{else}}{{#if isObjectList}}[cls.{{nestedClassName}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}}{{/if}}{{/if}},
 {{/each}}
 {{memberIndent}}    )

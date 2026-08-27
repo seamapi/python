@@ -1,11 +1,88 @@
-from typing import Any, Dict, List, Literal, Optional, Union, cast
+from typing import Any, Dict, List, Literal, Optional, Tuple, Union, cast
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
 @dataclass
-class LockDoorActionAttempt:
+class LockDoorSuccessActionAttempt:
+    """Locking a door is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of locking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action.
+
+        :ivar was_confirmed_by_device: Indicates whether the device confirmed that the lock action occurred.
+        """
+
+        was_confirmed_by_device: Optional[bool]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                was_confirmed_by_device=d.get("was_confirmed_by_device", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["LOCK_DOOR"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class LockDoorPendingActionAttempt:
+    """Locking a door is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of locking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["LOCK_DOOR"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class LockDoorErrorActionAttempt:
     """Locking a door is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -36,11 +113,42 @@ class LockDoorActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["LOCK_DOOR"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UnlockDoorSuccessActionAttempt:
+    """Unlocking a door is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of unlocking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action.
 
-        :ivar was_confirmed_by_device: Indicates whether the device confirmed that the lock action occurred.
+        :ivar was_confirmed_by_device: Indicates whether the device confirmed that the unlock action occurred.
         """
 
         was_confirmed_by_device: Optional[bool]
@@ -52,32 +160,55 @@ class LockDoorActionAttempt:
             )
 
     action_attempt_id: str
-    action_type: Literal["LOCK_DOOR"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["UNLOCK_DOOR"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class UnlockDoorActionAttempt:
+class UnlockDoorPendingActionAttempt:
+    """Unlocking a door is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of unlocking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["UNLOCK_DOOR"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UnlockDoorErrorActionAttempt:
     """Unlocking a door is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -108,48 +239,25 @@ class UnlockDoorActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar was_confirmed_by_device: Indicates whether the device confirmed that the unlock action occurred.
-        """
-
-        was_confirmed_by_device: Optional[bool]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                was_confirmed_by_device=d.get("was_confirmed_by_device", None),
-            )
-
     action_attempt_id: str
     action_type: Literal["UNLOCK_DOOR"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class ScanCredentialActionAttempt:
+class ScanCredentialSuccessActionAttempt:
     """Reading credential data from the physical encoder is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -161,32 +269,6 @@ class ScanCredentialActionAttempt:
     :ivar result: Result of scanning a card. If the attempt was successful, includes a snapshot of credential data read from the physical encoder, the corresponding data stored on Seam and the access system, and any associated warnings.
 
     :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Error type to indicate that the Seam Bridge is disconnected or cannot reach the access control system.
-        """
-
-        message: str
-        type: Literal[
-            "uncategorized_error",
-            "action_attempt_expired",
-            "no_credential_on_encoder",
-            "encoder_not_online",
-            "encoder_communication_timeout",
-            "bridge_disconnected",
-        ]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
 
     @dataclass
     class Result(ResourceMapping):
@@ -668,31 +750,111 @@ class ScanCredentialActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_CREDENTIAL"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class EncodeCredentialActionAttempt:
+class ScanCredentialPendingActionAttempt:
+    """Reading credential data from the physical encoder is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of scanning a credential.
+
+    :ivar error:
+
+    :ivar result: Result of scanning a card. If the attempt was successful, includes a snapshot of credential data read from the physical encoder, the corresponding data stored on Seam and the access system, and any associated warnings.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SCAN_CREDENTIAL"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ScanCredentialErrorActionAttempt:
+    """Reading credential data from the physical encoder is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of scanning a credential.
+
+    :ivar error:
+
+    :ivar result: Result of scanning a card. If the attempt was successful, includes a snapshot of credential data read from the physical encoder, the corresponding data stored on Seam and the access system, and any associated warnings.
+
+    :ivar status:"""
+
+    @dataclass
+    class Error(ResourceMapping):
+        """
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar type: Error type to indicate that the Seam Bridge is disconnected or cannot reach the access control system.
+        """
+
+        message: str
+        type: Literal[
+            "uncategorized_error",
+            "action_attempt_expired",
+            "no_credential_on_encoder",
+            "encoder_not_online",
+            "encoder_communication_timeout",
+            "bridge_disconnected",
+        ]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                message=d.get("message", None),
+                type=d.get("type", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["SCAN_CREDENTIAL"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class EncodeCredentialSuccessActionAttempt:
     """Encoding credential data from the physical encoder onto a card is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -704,36 +866,6 @@ class EncodeCredentialActionAttempt:
     :ivar result: Result of an encoding attempt. If the attempt was successful, includes the credential data that was encoded onto the card.
 
     :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Error type to indicate that the credential was deleted and can no longer be encoded.
-        """
-
-        message: str
-        type: Literal[
-            "uncategorized_error",
-            "action_attempt_expired",
-            "no_credential_on_encoder",
-            "incompatible_card_format",
-            "credential_cannot_be_reissued",
-            "encoder_not_online",
-            "encoder_communication_timeout",
-            "bridge_disconnected",
-            "encoding_interrupted",
-            "credential_deleted",
-        ]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
 
     @dataclass
     class Result(ResourceMapping):
@@ -1056,31 +1188,115 @@ class EncodeCredentialActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ENCODE_CREDENTIAL"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class ScanToAssignCredentialActionAttempt:
+class EncodeCredentialPendingActionAttempt:
+    """Encoding credential data from the physical encoder onto a card is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of encoding credential data from the physical encoder onto a card.
+
+    :ivar error:
+
+    :ivar result: Result of an encoding attempt. If the attempt was successful, includes the credential data that was encoded onto the card.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["ENCODE_CREDENTIAL"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class EncodeCredentialErrorActionAttempt:
+    """Encoding credential data from the physical encoder onto a card is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of encoding credential data from the physical encoder onto a card.
+
+    :ivar error:
+
+    :ivar result: Result of an encoding attempt. If the attempt was successful, includes the credential data that was encoded onto the card.
+
+    :ivar status:"""
+
+    @dataclass
+    class Error(ResourceMapping):
+        """
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar type: Error type to indicate that the credential was deleted and can no longer be encoded.
+        """
+
+        message: str
+        type: Literal[
+            "uncategorized_error",
+            "action_attempt_expired",
+            "no_credential_on_encoder",
+            "incompatible_card_format",
+            "credential_cannot_be_reissued",
+            "encoder_not_online",
+            "encoder_communication_timeout",
+            "bridge_disconnected",
+            "encoding_interrupted",
+            "credential_deleted",
+        ]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                message=d.get("message", None),
+                type=d.get("type", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["ENCODE_CREDENTIAL"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ScanToAssignCredentialSuccessActionAttempt:
     """Scanning a physical card and assigning the credential is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1092,27 +1308,6 @@ class ScanToAssignCredentialActionAttempt:
     :ivar result: Result of a scan to assign attempt. If the attempt was successful, includes the credential data that was scanned and assigned.
 
     :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Error type to indicate that there is no credential on the encoder.
-        """
-
-        message: str
-        type: Literal[
-            "uncategorized_error", "action_attempt_expired", "no_credential_on_encoder"
-        ]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
 
     @dataclass
     class Result(ResourceMapping):
@@ -1435,31 +1630,106 @@ class ScanToAssignCredentialActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class AssignCredentialActionAttempt:
+class ScanToAssignCredentialPendingActionAttempt:
+    """Scanning a physical card and assigning the credential is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of scanning a physical card and assigning the credential to an ACS user.
+
+    :ivar error:
+
+    :ivar result: Result of a scan to assign attempt. If the attempt was successful, includes the credential data that was scanned and assigned.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ScanToAssignCredentialErrorActionAttempt:
+    """Scanning a physical card and assigning the credential is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of scanning a physical card and assigning the credential to an ACS user.
+
+    :ivar error:
+
+    :ivar result: Result of a scan to assign attempt. If the attempt was successful, includes the credential data that was scanned and assigned.
+
+    :ivar status:"""
+
+    @dataclass
+    class Error(ResourceMapping):
+        """
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar type: Error type to indicate that there is no credential on the encoder.
+        """
+
+        message: str
+        type: Literal[
+            "uncategorized_error", "action_attempt_expired", "no_credential_on_encoder"
+        ]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                message=d.get("message", None),
+                type=d.get("type", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class AssignCredentialSuccessActionAttempt:
     """Assigning a credential to an access method is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1471,26 +1741,6 @@ class AssignCredentialActionAttempt:
     :ivar result: Result of assigning a credential. If successful, includes the updated access method with the assigned credential.
 
     :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Error type to indicate that no matching credential was found."""
-
-        message: str
-        type: Literal[
-            "uncategorized_error", "action_attempt_expired", "credential_not_found"
-        ]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
 
     @dataclass
     class Result(ResourceMapping):
@@ -1715,31 +1965,176 @@ class AssignCredentialActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ASSIGN_CREDENTIAL"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class ResetSandboxWorkspaceActionAttempt:
+class AssignCredentialPendingActionAttempt:
+    """Assigning a credential to an access method is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of assigning a pre-registered card credential to an access method.
+
+    :ivar error:
+
+    :ivar result: Result of assigning a credential. If successful, includes the updated access method with the assigned credential.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["ASSIGN_CREDENTIAL"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class AssignCredentialErrorActionAttempt:
+    """Assigning a credential to an access method is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of assigning a pre-registered card credential to an access method.
+
+    :ivar error:
+
+    :ivar result: Result of assigning a credential. If successful, includes the updated access method with the assigned credential.
+
+    :ivar status:"""
+
+    @dataclass
+    class Error(ResourceMapping):
+        """
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar type: Error type to indicate that no matching credential was found."""
+
+        message: str
+        type: Literal[
+            "uncategorized_error", "action_attempt_expired", "credential_not_found"
+        ]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                message=d.get("message", None),
+                type=d.get("type", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["ASSIGN_CREDENTIAL"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ResetSandboxWorkspaceSuccessActionAttempt:
+    """Resetting a sandbox workspace is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of resetting a sandbox workspace.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action."""
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            # pylint: disable=unused-argument
+            return cls()
+
+    action_attempt_id: str
+    action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ResetSandboxWorkspacePendingActionAttempt:
+    """Resetting a sandbox workspace is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of resetting a sandbox workspace.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ResetSandboxWorkspaceErrorActionAttempt:
     """Resetting a sandbox workspace is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1770,6 +2165,37 @@ class ResetSandboxWorkspaceActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SetFanModeSuccessActionAttempt:
+    """Setting the fan mode is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of setting the fan mode on a thermostat.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -1780,32 +2206,55 @@ class ResetSandboxWorkspaceActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["RESET_SANDBOX_WORKSPACE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["SET_FAN_MODE"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class SetFanModeActionAttempt:
+class SetFanModePendingActionAttempt:
+    """Setting the fan mode is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of setting the fan mode on a thermostat.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SET_FAN_MODE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SetFanModeErrorActionAttempt:
     """Setting the fan mode is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1836,6 +2285,37 @@ class SetFanModeActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["SET_FAN_MODE"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SetHvacModeSuccessActionAttempt:
+    """Setting the HVAC mode is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of setting the HVAC mode on a thermostat.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -1846,32 +2326,55 @@ class SetFanModeActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["SET_FAN_MODE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["SET_HVAC_MODE"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class SetHvacModeActionAttempt:
+class SetHvacModePendingActionAttempt:
+    """Setting the HVAC mode is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of setting the HVAC mode on a thermostat.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SET_HVAC_MODE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SetHvacModeErrorActionAttempt:
     """Setting the HVAC mode is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1902,6 +2405,37 @@ class SetHvacModeActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["SET_HVAC_MODE"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ActivateClimatePresetSuccessActionAttempt:
+    """Activating a climate preset is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of a climate preset activation.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -1912,32 +2446,55 @@ class SetHvacModeActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["SET_HVAC_MODE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class ActivateClimatePresetActionAttempt:
+class ActivateClimatePresetPendingActionAttempt:
+    """Activating a climate preset is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of a climate preset activation.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ActivateClimatePresetErrorActionAttempt:
     """Activating a climate preset is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -1968,6 +2525,37 @@ class ActivateClimatePresetActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SimulateKeypadCodeEntrySuccessActionAttempt:
+    """Simulating a keypad code entry is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of simulating a keypad code entry.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -1978,32 +2566,55 @@ class ActivateClimatePresetActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class SimulateKeypadCodeEntryActionAttempt:
+class SimulateKeypadCodeEntryPendingActionAttempt:
+    """Simulating a keypad code entry is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of simulating a keypad code entry.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SimulateKeypadCodeEntryErrorActionAttempt:
     """Simulating a keypad code entry is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2034,6 +2645,37 @@ class SimulateKeypadCodeEntryActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SimulateManualLockViaKeypadSuccessActionAttempt:
+    """Simulating a manual lock action using a keypad is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of simulating a manual lock action using a keypad.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -2044,32 +2686,55 @@ class SimulateKeypadCodeEntryActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class SimulateManualLockViaKeypadActionAttempt:
+class SimulateManualLockViaKeypadPendingActionAttempt:
+    """Simulating a manual lock action using a keypad is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of simulating a manual lock action using a keypad.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SimulateManualLockViaKeypadErrorActionAttempt:
     """Simulating a manual lock action using a keypad is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2100,6 +2765,37 @@ class SimulateManualLockViaKeypadActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class PushThermostatProgramsSuccessActionAttempt:
+    """Pushing thermostat weekly programs is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of pushing thermostat programs.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -2110,32 +2806,55 @@ class SimulateManualLockViaKeypadActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class PushThermostatProgramsActionAttempt:
+class PushThermostatProgramsPendingActionAttempt:
+    """Pushing thermostat weekly programs is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of pushing thermostat programs.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class PushThermostatProgramsErrorActionAttempt:
     """Pushing thermostat weekly programs is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2166,6 +2885,37 @@ class PushThermostatProgramsActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ConfigureAutoLockSuccessActionAttempt:
+    """Configuring the auto-lock is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of configuring the auto-lock on a lock.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -2176,32 +2926,55 @@ class PushThermostatProgramsActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class ConfigureAutoLockActionAttempt:
+class ConfigureAutoLockPendingActionAttempt:
+    """Configuring the auto-lock is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of configuring the auto-lock on a lock.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ConfigureAutoLockErrorActionAttempt:
     """Configuring the auto-lock is pending.
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2232,6 +3005,37 @@ class ConfigureAutoLockActionAttempt:
                 type=d.get("type", None),
             )
 
+    action_attempt_id: str
+    action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SyncAccessCodesSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Syncing access codes is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
     @dataclass
     class Result(ResourceMapping):
         """Result of the action."""
@@ -2242,32 +3046,55 @@ class ConfigureAutoLockActionAttempt:
             return cls()
 
     action_attempt_id: str
-    action_type: Literal["CONFIGURE_AUTO_LOCK"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    action_type: Literal["SYNC_ACCESS_CODES"]
+    error: None
+    result: Result
+    status: Literal["success"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class SyncAccessCodesActionAttempt:
+class SyncAccessCodesPendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Syncing access codes is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["SYNC_ACCESS_CODES"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class SyncAccessCodesErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2298,42 +3125,101 @@ class SyncAccessCodesActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
     action_attempt_id: str
     action_type: Literal["SYNC_ACCESS_CODES"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class CreateAccessCodeActionAttempt:
+class CreateAccessCodeSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Creating an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action.
+
+        :ivar access_code: Created access code."""
+
+        access_code: Dict[str, Any]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                access_code=DeepAttrDict(d.get("access_code", None)),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["CREATE_ACCESS_CODE"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class CreateAccessCodePendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Creating an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["CREATE_ACCESS_CODE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class CreateAccessCodeErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2364,47 +3250,96 @@ class CreateAccessCodeActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar access_code: Created access code."""
-
-        access_code: Dict[str, Any]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                access_code=DeepAttrDict(d.get("access_code", None)),
-            )
-
     action_attempt_id: str
     action_type: Literal["CREATE_ACCESS_CODE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class DeleteAccessCodeActionAttempt:
+class DeleteAccessCodeSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Deleting an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action."""
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            # pylint: disable=unused-argument
+            return cls()
+
+    action_attempt_id: str
+    action_type: Literal["DELETE_ACCESS_CODE"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class DeleteAccessCodePendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Deleting an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["DELETE_ACCESS_CODE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class DeleteAccessCodeErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2435,42 +3370,101 @@ class DeleteAccessCodeActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
     action_attempt_id: str
     action_type: Literal["DELETE_ACCESS_CODE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class UpdateAccessCodeActionAttempt:
+class UpdateAccessCodeSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Updating an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action.
+
+        :ivar access_code: Updated access code."""
+
+        access_code: Optional[Dict[str, Any]]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                access_code=DeepAttrDict(d.get("access_code", None)),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["UPDATE_ACCESS_CODE"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UpdateAccessCodePendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Updating an access code is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["UPDATE_ACCESS_CODE"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UpdateAccessCodeErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2501,47 +3495,101 @@ class UpdateAccessCodeActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar access_code: Updated access code."""
-
-        access_code: Optional[Dict[str, Any]]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                access_code=DeepAttrDict(d.get("access_code", None)),
-            )
-
     action_attempt_id: str
     action_type: Literal["UPDATE_ACCESS_CODE"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class CreateNoiseThresholdActionAttempt:
+class CreateNoiseThresholdSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Creating a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action.
+
+        :ivar noise_threshold: Created noise threshold."""
+
+        noise_threshold: Dict[str, Any]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["CREATE_NOISE_THRESHOLD"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class CreateNoiseThresholdPendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Creating a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["CREATE_NOISE_THRESHOLD"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class CreateNoiseThresholdErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2572,47 +3620,96 @@ class CreateNoiseThresholdActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar noise_threshold: Created noise threshold."""
-
-        noise_threshold: Dict[str, Any]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
-            )
-
     action_attempt_id: str
     action_type: Literal["CREATE_NOISE_THRESHOLD"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class DeleteNoiseThresholdActionAttempt:
+class DeleteNoiseThresholdSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Deleting a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action."""
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            # pylint: disable=unused-argument
+            return cls()
+
+    action_attempt_id: str
+    action_type: Literal["DELETE_NOISE_THRESHOLD"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class DeleteNoiseThresholdPendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Deleting a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["DELETE_NOISE_THRESHOLD"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class DeleteNoiseThresholdErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2643,42 +3740,101 @@ class DeleteNoiseThresholdActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
     action_attempt_id: str
     action_type: Literal["DELETE_NOISE_THRESHOLD"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 @dataclass
-class UpdateNoiseThresholdActionAttempt:
+class UpdateNoiseThresholdSuccessActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Updating a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action.
+
+        :ivar noise_threshold: Updated noise threshold."""
+
+        noise_threshold: Dict[str, Any]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["UPDATE_NOISE_THRESHOLD"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UpdateNoiseThresholdPendingActionAttempt:
+    """
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Updating a noise threshold is pending.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["UPDATE_NOISE_THRESHOLD"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class UpdateNoiseThresholdErrorActionAttempt:
     """
 
     :ivar action_attempt_id: ID of the action attempt.
@@ -2709,101 +3865,382 @@ class UpdateNoiseThresholdActionAttempt:
                 type=d.get("type", None),
             )
 
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar noise_threshold: Updated noise threshold."""
-
-        noise_threshold: Dict[str, Any]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
-            )
-
     action_attempt_id: str
     action_type: Literal["UPDATE_NOISE_THRESHOLD"]
-    error: Optional[Error]
-    result: Optional[Result]
-    status: Literal["success", "pending", "error"]
+    error: Error
+    result: None
+    status: Literal["error"]
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=(
-                cls.Error.from_dict(d.get("error"))
-                if d.get("error") is not None
-                else None
-            ),
-            result=(
-                cls.Result.from_dict(d.get("result"))
-                if d.get("result") is not None
-                else None
-            ),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
             status=d.get("status", None),
         )
 
 
 ActionAttempt = Union[
-    LockDoorActionAttempt,
-    UnlockDoorActionAttempt,
-    ScanCredentialActionAttempt,
-    EncodeCredentialActionAttempt,
-    ScanToAssignCredentialActionAttempt,
-    AssignCredentialActionAttempt,
-    ResetSandboxWorkspaceActionAttempt,
-    SetFanModeActionAttempt,
-    SetHvacModeActionAttempt,
-    ActivateClimatePresetActionAttempt,
-    SimulateKeypadCodeEntryActionAttempt,
-    SimulateManualLockViaKeypadActionAttempt,
-    PushThermostatProgramsActionAttempt,
-    ConfigureAutoLockActionAttempt,
-    SyncAccessCodesActionAttempt,
-    CreateAccessCodeActionAttempt,
-    DeleteAccessCodeActionAttempt,
-    UpdateAccessCodeActionAttempt,
-    CreateNoiseThresholdActionAttempt,
-    DeleteNoiseThresholdActionAttempt,
-    UpdateNoiseThresholdActionAttempt,
+    LockDoorSuccessActionAttempt,
+    LockDoorPendingActionAttempt,
+    LockDoorErrorActionAttempt,
+    UnlockDoorSuccessActionAttempt,
+    UnlockDoorPendingActionAttempt,
+    UnlockDoorErrorActionAttempt,
+    ScanCredentialSuccessActionAttempt,
+    ScanCredentialPendingActionAttempt,
+    ScanCredentialErrorActionAttempt,
+    EncodeCredentialSuccessActionAttempt,
+    EncodeCredentialPendingActionAttempt,
+    EncodeCredentialErrorActionAttempt,
+    ScanToAssignCredentialSuccessActionAttempt,
+    ScanToAssignCredentialPendingActionAttempt,
+    ScanToAssignCredentialErrorActionAttempt,
+    AssignCredentialSuccessActionAttempt,
+    AssignCredentialPendingActionAttempt,
+    AssignCredentialErrorActionAttempt,
+    ResetSandboxWorkspaceSuccessActionAttempt,
+    ResetSandboxWorkspacePendingActionAttempt,
+    ResetSandboxWorkspaceErrorActionAttempt,
+    SetFanModeSuccessActionAttempt,
+    SetFanModePendingActionAttempt,
+    SetFanModeErrorActionAttempt,
+    SetHvacModeSuccessActionAttempt,
+    SetHvacModePendingActionAttempt,
+    SetHvacModeErrorActionAttempt,
+    ActivateClimatePresetSuccessActionAttempt,
+    ActivateClimatePresetPendingActionAttempt,
+    ActivateClimatePresetErrorActionAttempt,
+    SimulateKeypadCodeEntrySuccessActionAttempt,
+    SimulateKeypadCodeEntryPendingActionAttempt,
+    SimulateKeypadCodeEntryErrorActionAttempt,
+    SimulateManualLockViaKeypadSuccessActionAttempt,
+    SimulateManualLockViaKeypadPendingActionAttempt,
+    SimulateManualLockViaKeypadErrorActionAttempt,
+    PushThermostatProgramsSuccessActionAttempt,
+    PushThermostatProgramsPendingActionAttempt,
+    PushThermostatProgramsErrorActionAttempt,
+    ConfigureAutoLockSuccessActionAttempt,
+    ConfigureAutoLockPendingActionAttempt,
+    ConfigureAutoLockErrorActionAttempt,
+    SyncAccessCodesSuccessActionAttempt,
+    SyncAccessCodesPendingActionAttempt,
+    SyncAccessCodesErrorActionAttempt,
+    CreateAccessCodeSuccessActionAttempt,
+    CreateAccessCodePendingActionAttempt,
+    CreateAccessCodeErrorActionAttempt,
+    DeleteAccessCodeSuccessActionAttempt,
+    DeleteAccessCodePendingActionAttempt,
+    DeleteAccessCodeErrorActionAttempt,
+    UpdateAccessCodeSuccessActionAttempt,
+    UpdateAccessCodePendingActionAttempt,
+    UpdateAccessCodeErrorActionAttempt,
+    CreateNoiseThresholdSuccessActionAttempt,
+    CreateNoiseThresholdPendingActionAttempt,
+    CreateNoiseThresholdErrorActionAttempt,
+    DeleteNoiseThresholdSuccessActionAttempt,
+    DeleteNoiseThresholdPendingActionAttempt,
+    DeleteNoiseThresholdErrorActionAttempt,
+    UpdateNoiseThresholdSuccessActionAttempt,
+    UpdateNoiseThresholdPendingActionAttempt,
+    UpdateNoiseThresholdErrorActionAttempt,
 ]
 
-_ACTION_ATTEMPT_VARIANTS: Dict[str, Any] = {
-    "LOCK_DOOR": LockDoorActionAttempt,
-    "UNLOCK_DOOR": UnlockDoorActionAttempt,
-    "SCAN_CREDENTIAL": ScanCredentialActionAttempt,
-    "ENCODE_CREDENTIAL": EncodeCredentialActionAttempt,
-    "SCAN_TO_ASSIGN_CREDENTIAL": ScanToAssignCredentialActionAttempt,
-    "ASSIGN_CREDENTIAL": AssignCredentialActionAttempt,
-    "RESET_SANDBOX_WORKSPACE": ResetSandboxWorkspaceActionAttempt,
-    "SET_FAN_MODE": SetFanModeActionAttempt,
-    "SET_HVAC_MODE": SetHvacModeActionAttempt,
-    "ACTIVATE_CLIMATE_PRESET": ActivateClimatePresetActionAttempt,
-    "SIMULATE_KEYPAD_CODE_ENTRY": SimulateKeypadCodeEntryActionAttempt,
-    "SIMULATE_MANUAL_LOCK_VIA_KEYPAD": SimulateManualLockViaKeypadActionAttempt,
-    "PUSH_THERMOSTAT_PROGRAMS": PushThermostatProgramsActionAttempt,
-    "CONFIGURE_AUTO_LOCK": ConfigureAutoLockActionAttempt,
-    "SYNC_ACCESS_CODES": SyncAccessCodesActionAttempt,
-    "CREATE_ACCESS_CODE": CreateAccessCodeActionAttempt,
-    "DELETE_ACCESS_CODE": DeleteAccessCodeActionAttempt,
-    "UPDATE_ACCESS_CODE": UpdateAccessCodeActionAttempt,
-    "CREATE_NOISE_THRESHOLD": CreateNoiseThresholdActionAttempt,
-    "DELETE_NOISE_THRESHOLD": DeleteNoiseThresholdActionAttempt,
-    "UPDATE_NOISE_THRESHOLD": UpdateNoiseThresholdActionAttempt,
+LockDoorActionAttempt = Union[
+    LockDoorSuccessActionAttempt,
+    LockDoorPendingActionAttempt,
+    LockDoorErrorActionAttempt,
+]
+
+UnlockDoorActionAttempt = Union[
+    UnlockDoorSuccessActionAttempt,
+    UnlockDoorPendingActionAttempt,
+    UnlockDoorErrorActionAttempt,
+]
+
+ScanCredentialActionAttempt = Union[
+    ScanCredentialSuccessActionAttempt,
+    ScanCredentialPendingActionAttempt,
+    ScanCredentialErrorActionAttempt,
+]
+
+EncodeCredentialActionAttempt = Union[
+    EncodeCredentialSuccessActionAttempt,
+    EncodeCredentialPendingActionAttempt,
+    EncodeCredentialErrorActionAttempt,
+]
+
+ScanToAssignCredentialActionAttempt = Union[
+    ScanToAssignCredentialSuccessActionAttempt,
+    ScanToAssignCredentialPendingActionAttempt,
+    ScanToAssignCredentialErrorActionAttempt,
+]
+
+AssignCredentialActionAttempt = Union[
+    AssignCredentialSuccessActionAttempt,
+    AssignCredentialPendingActionAttempt,
+    AssignCredentialErrorActionAttempt,
+]
+
+ResetSandboxWorkspaceActionAttempt = Union[
+    ResetSandboxWorkspaceSuccessActionAttempt,
+    ResetSandboxWorkspacePendingActionAttempt,
+    ResetSandboxWorkspaceErrorActionAttempt,
+]
+
+SetFanModeActionAttempt = Union[
+    SetFanModeSuccessActionAttempt,
+    SetFanModePendingActionAttempt,
+    SetFanModeErrorActionAttempt,
+]
+
+SetHvacModeActionAttempt = Union[
+    SetHvacModeSuccessActionAttempt,
+    SetHvacModePendingActionAttempt,
+    SetHvacModeErrorActionAttempt,
+]
+
+ActivateClimatePresetActionAttempt = Union[
+    ActivateClimatePresetSuccessActionAttempt,
+    ActivateClimatePresetPendingActionAttempt,
+    ActivateClimatePresetErrorActionAttempt,
+]
+
+SimulateKeypadCodeEntryActionAttempt = Union[
+    SimulateKeypadCodeEntrySuccessActionAttempt,
+    SimulateKeypadCodeEntryPendingActionAttempt,
+    SimulateKeypadCodeEntryErrorActionAttempt,
+]
+
+SimulateManualLockViaKeypadActionAttempt = Union[
+    SimulateManualLockViaKeypadSuccessActionAttempt,
+    SimulateManualLockViaKeypadPendingActionAttempt,
+    SimulateManualLockViaKeypadErrorActionAttempt,
+]
+
+PushThermostatProgramsActionAttempt = Union[
+    PushThermostatProgramsSuccessActionAttempt,
+    PushThermostatProgramsPendingActionAttempt,
+    PushThermostatProgramsErrorActionAttempt,
+]
+
+ConfigureAutoLockActionAttempt = Union[
+    ConfigureAutoLockSuccessActionAttempt,
+    ConfigureAutoLockPendingActionAttempt,
+    ConfigureAutoLockErrorActionAttempt,
+]
+
+SyncAccessCodesActionAttempt = Union[
+    SyncAccessCodesSuccessActionAttempt,
+    SyncAccessCodesPendingActionAttempt,
+    SyncAccessCodesErrorActionAttempt,
+]
+
+CreateAccessCodeActionAttempt = Union[
+    CreateAccessCodeSuccessActionAttempt,
+    CreateAccessCodePendingActionAttempt,
+    CreateAccessCodeErrorActionAttempt,
+]
+
+DeleteAccessCodeActionAttempt = Union[
+    DeleteAccessCodeSuccessActionAttempt,
+    DeleteAccessCodePendingActionAttempt,
+    DeleteAccessCodeErrorActionAttempt,
+]
+
+UpdateAccessCodeActionAttempt = Union[
+    UpdateAccessCodeSuccessActionAttempt,
+    UpdateAccessCodePendingActionAttempt,
+    UpdateAccessCodeErrorActionAttempt,
+]
+
+CreateNoiseThresholdActionAttempt = Union[
+    CreateNoiseThresholdSuccessActionAttempt,
+    CreateNoiseThresholdPendingActionAttempt,
+    CreateNoiseThresholdErrorActionAttempt,
+]
+
+DeleteNoiseThresholdActionAttempt = Union[
+    DeleteNoiseThresholdSuccessActionAttempt,
+    DeleteNoiseThresholdPendingActionAttempt,
+    DeleteNoiseThresholdErrorActionAttempt,
+]
+
+UpdateNoiseThresholdActionAttempt = Union[
+    UpdateNoiseThresholdSuccessActionAttempt,
+    UpdateNoiseThresholdPendingActionAttempt,
+    UpdateNoiseThresholdErrorActionAttempt,
+]
+
+SuccessActionAttempt = Union[
+    LockDoorSuccessActionAttempt,
+    UnlockDoorSuccessActionAttempt,
+    ScanCredentialSuccessActionAttempt,
+    EncodeCredentialSuccessActionAttempt,
+    ScanToAssignCredentialSuccessActionAttempt,
+    AssignCredentialSuccessActionAttempt,
+    ResetSandboxWorkspaceSuccessActionAttempt,
+    SetFanModeSuccessActionAttempt,
+    SetHvacModeSuccessActionAttempt,
+    ActivateClimatePresetSuccessActionAttempt,
+    SimulateKeypadCodeEntrySuccessActionAttempt,
+    SimulateManualLockViaKeypadSuccessActionAttempt,
+    PushThermostatProgramsSuccessActionAttempt,
+    ConfigureAutoLockSuccessActionAttempt,
+    SyncAccessCodesSuccessActionAttempt,
+    CreateAccessCodeSuccessActionAttempt,
+    DeleteAccessCodeSuccessActionAttempt,
+    UpdateAccessCodeSuccessActionAttempt,
+    CreateNoiseThresholdSuccessActionAttempt,
+    DeleteNoiseThresholdSuccessActionAttempt,
+    UpdateNoiseThresholdSuccessActionAttempt,
+]
+
+PendingActionAttempt = Union[
+    LockDoorPendingActionAttempt,
+    UnlockDoorPendingActionAttempt,
+    ScanCredentialPendingActionAttempt,
+    EncodeCredentialPendingActionAttempt,
+    ScanToAssignCredentialPendingActionAttempt,
+    AssignCredentialPendingActionAttempt,
+    ResetSandboxWorkspacePendingActionAttempt,
+    SetFanModePendingActionAttempt,
+    SetHvacModePendingActionAttempt,
+    ActivateClimatePresetPendingActionAttempt,
+    SimulateKeypadCodeEntryPendingActionAttempt,
+    SimulateManualLockViaKeypadPendingActionAttempt,
+    PushThermostatProgramsPendingActionAttempt,
+    ConfigureAutoLockPendingActionAttempt,
+    SyncAccessCodesPendingActionAttempt,
+    CreateAccessCodePendingActionAttempt,
+    DeleteAccessCodePendingActionAttempt,
+    UpdateAccessCodePendingActionAttempt,
+    CreateNoiseThresholdPendingActionAttempt,
+    DeleteNoiseThresholdPendingActionAttempt,
+    UpdateNoiseThresholdPendingActionAttempt,
+]
+
+ErrorActionAttempt = Union[
+    LockDoorErrorActionAttempt,
+    UnlockDoorErrorActionAttempt,
+    ScanCredentialErrorActionAttempt,
+    EncodeCredentialErrorActionAttempt,
+    ScanToAssignCredentialErrorActionAttempt,
+    AssignCredentialErrorActionAttempt,
+    ResetSandboxWorkspaceErrorActionAttempt,
+    SetFanModeErrorActionAttempt,
+    SetHvacModeErrorActionAttempt,
+    ActivateClimatePresetErrorActionAttempt,
+    SimulateKeypadCodeEntryErrorActionAttempt,
+    SimulateManualLockViaKeypadErrorActionAttempt,
+    PushThermostatProgramsErrorActionAttempt,
+    ConfigureAutoLockErrorActionAttempt,
+    SyncAccessCodesErrorActionAttempt,
+    CreateAccessCodeErrorActionAttempt,
+    DeleteAccessCodeErrorActionAttempt,
+    UpdateAccessCodeErrorActionAttempt,
+    CreateNoiseThresholdErrorActionAttempt,
+    DeleteNoiseThresholdErrorActionAttempt,
+    UpdateNoiseThresholdErrorActionAttempt,
+]
+
+_ACTION_ATTEMPT_VARIANTS: Dict[Tuple[str, str], Any] = {
+    ("LOCK_DOOR", "success"): LockDoorSuccessActionAttempt,
+    ("LOCK_DOOR", "pending"): LockDoorPendingActionAttempt,
+    ("LOCK_DOOR", "error"): LockDoorErrorActionAttempt,
+    ("UNLOCK_DOOR", "success"): UnlockDoorSuccessActionAttempt,
+    ("UNLOCK_DOOR", "pending"): UnlockDoorPendingActionAttempt,
+    ("UNLOCK_DOOR", "error"): UnlockDoorErrorActionAttempt,
+    ("SCAN_CREDENTIAL", "success"): ScanCredentialSuccessActionAttempt,
+    ("SCAN_CREDENTIAL", "pending"): ScanCredentialPendingActionAttempt,
+    ("SCAN_CREDENTIAL", "error"): ScanCredentialErrorActionAttempt,
+    ("ENCODE_CREDENTIAL", "success"): EncodeCredentialSuccessActionAttempt,
+    ("ENCODE_CREDENTIAL", "pending"): EncodeCredentialPendingActionAttempt,
+    ("ENCODE_CREDENTIAL", "error"): EncodeCredentialErrorActionAttempt,
+    (
+        "SCAN_TO_ASSIGN_CREDENTIAL",
+        "success",
+    ): ScanToAssignCredentialSuccessActionAttempt,
+    (
+        "SCAN_TO_ASSIGN_CREDENTIAL",
+        "pending",
+    ): ScanToAssignCredentialPendingActionAttempt,
+    ("SCAN_TO_ASSIGN_CREDENTIAL", "error"): ScanToAssignCredentialErrorActionAttempt,
+    ("ASSIGN_CREDENTIAL", "success"): AssignCredentialSuccessActionAttempt,
+    ("ASSIGN_CREDENTIAL", "pending"): AssignCredentialPendingActionAttempt,
+    ("ASSIGN_CREDENTIAL", "error"): AssignCredentialErrorActionAttempt,
+    ("RESET_SANDBOX_WORKSPACE", "success"): ResetSandboxWorkspaceSuccessActionAttempt,
+    ("RESET_SANDBOX_WORKSPACE", "pending"): ResetSandboxWorkspacePendingActionAttempt,
+    ("RESET_SANDBOX_WORKSPACE", "error"): ResetSandboxWorkspaceErrorActionAttempt,
+    ("SET_FAN_MODE", "success"): SetFanModeSuccessActionAttempt,
+    ("SET_FAN_MODE", "pending"): SetFanModePendingActionAttempt,
+    ("SET_FAN_MODE", "error"): SetFanModeErrorActionAttempt,
+    ("SET_HVAC_MODE", "success"): SetHvacModeSuccessActionAttempt,
+    ("SET_HVAC_MODE", "pending"): SetHvacModePendingActionAttempt,
+    ("SET_HVAC_MODE", "error"): SetHvacModeErrorActionAttempt,
+    ("ACTIVATE_CLIMATE_PRESET", "success"): ActivateClimatePresetSuccessActionAttempt,
+    ("ACTIVATE_CLIMATE_PRESET", "pending"): ActivateClimatePresetPendingActionAttempt,
+    ("ACTIVATE_CLIMATE_PRESET", "error"): ActivateClimatePresetErrorActionAttempt,
+    (
+        "SIMULATE_KEYPAD_CODE_ENTRY",
+        "success",
+    ): SimulateKeypadCodeEntrySuccessActionAttempt,
+    (
+        "SIMULATE_KEYPAD_CODE_ENTRY",
+        "pending",
+    ): SimulateKeypadCodeEntryPendingActionAttempt,
+    ("SIMULATE_KEYPAD_CODE_ENTRY", "error"): SimulateKeypadCodeEntryErrorActionAttempt,
+    (
+        "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+        "success",
+    ): SimulateManualLockViaKeypadSuccessActionAttempt,
+    (
+        "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+        "pending",
+    ): SimulateManualLockViaKeypadPendingActionAttempt,
+    (
+        "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+        "error",
+    ): SimulateManualLockViaKeypadErrorActionAttempt,
+    ("PUSH_THERMOSTAT_PROGRAMS", "success"): PushThermostatProgramsSuccessActionAttempt,
+    ("PUSH_THERMOSTAT_PROGRAMS", "pending"): PushThermostatProgramsPendingActionAttempt,
+    ("PUSH_THERMOSTAT_PROGRAMS", "error"): PushThermostatProgramsErrorActionAttempt,
+    ("CONFIGURE_AUTO_LOCK", "success"): ConfigureAutoLockSuccessActionAttempt,
+    ("CONFIGURE_AUTO_LOCK", "pending"): ConfigureAutoLockPendingActionAttempt,
+    ("CONFIGURE_AUTO_LOCK", "error"): ConfigureAutoLockErrorActionAttempt,
+    ("SYNC_ACCESS_CODES", "success"): SyncAccessCodesSuccessActionAttempt,
+    ("SYNC_ACCESS_CODES", "pending"): SyncAccessCodesPendingActionAttempt,
+    ("SYNC_ACCESS_CODES", "error"): SyncAccessCodesErrorActionAttempt,
+    ("CREATE_ACCESS_CODE", "success"): CreateAccessCodeSuccessActionAttempt,
+    ("CREATE_ACCESS_CODE", "pending"): CreateAccessCodePendingActionAttempt,
+    ("CREATE_ACCESS_CODE", "error"): CreateAccessCodeErrorActionAttempt,
+    ("DELETE_ACCESS_CODE", "success"): DeleteAccessCodeSuccessActionAttempt,
+    ("DELETE_ACCESS_CODE", "pending"): DeleteAccessCodePendingActionAttempt,
+    ("DELETE_ACCESS_CODE", "error"): DeleteAccessCodeErrorActionAttempt,
+    ("UPDATE_ACCESS_CODE", "success"): UpdateAccessCodeSuccessActionAttempt,
+    ("UPDATE_ACCESS_CODE", "pending"): UpdateAccessCodePendingActionAttempt,
+    ("UPDATE_ACCESS_CODE", "error"): UpdateAccessCodeErrorActionAttempt,
+    ("CREATE_NOISE_THRESHOLD", "success"): CreateNoiseThresholdSuccessActionAttempt,
+    ("CREATE_NOISE_THRESHOLD", "pending"): CreateNoiseThresholdPendingActionAttempt,
+    ("CREATE_NOISE_THRESHOLD", "error"): CreateNoiseThresholdErrorActionAttempt,
+    ("DELETE_NOISE_THRESHOLD", "success"): DeleteNoiseThresholdSuccessActionAttempt,
+    ("DELETE_NOISE_THRESHOLD", "pending"): DeleteNoiseThresholdPendingActionAttempt,
+    ("DELETE_NOISE_THRESHOLD", "error"): DeleteNoiseThresholdErrorActionAttempt,
+    ("UPDATE_NOISE_THRESHOLD", "success"): UpdateNoiseThresholdSuccessActionAttempt,
+    ("UPDATE_NOISE_THRESHOLD", "pending"): UpdateNoiseThresholdPendingActionAttempt,
+    ("UPDATE_NOISE_THRESHOLD", "error"): UpdateNoiseThresholdErrorActionAttempt,
 }
 
 
 def action_attempt_from_dict(d: Any) -> ActionAttempt:
-    """Deserialize a known action_type variant.
+    """Deserialize a known action_type and status variant.
 
     Unknown discriminator values return ``DeepAttrDict`` so payloads from a
     newer API remain readable. The static return type covers known variants.
     """
-    variant = _ACTION_ATTEMPT_VARIANTS.get(d.get("action_type"))
+    variant = _ACTION_ATTEMPT_VARIANTS.get((d.get("action_type"), d.get("status")))
     if variant is None:
         return cast(ActionAttempt, DeepAttrDict(d))
     return variant.from_dict(d)

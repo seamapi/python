@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-from .resources import ActionAttempt
+from .resources import ActionAttempt, ErrorActionAttempt, PendingActionAttempt
 
 
 @dataclass(frozen=True)
@@ -156,10 +156,10 @@ class SeamActionAttemptFailedError(SeamActionAttemptError):
     :vartype code: str
     """
 
-    def __init__(self, action_attempt: ActionAttempt):
+    def __init__(self, action_attempt: ErrorActionAttempt):
         """
-        :param action_attempt: The ActionAttempt object associated with this error
-        :type action_attempt: ActionAttempt
+        :param action_attempt: The failed ActionAttempt object associated with this error
+        :type action_attempt: ErrorActionAttempt
         """
 
         # A failed action attempt carries an error, but reading through it
@@ -186,10 +186,10 @@ class SeamActionAttemptTimeoutError(SeamActionAttemptError):
     :vartype name: str
     """
 
-    def __init__(self, action_attempt: ActionAttempt, timeout: float):
+    def __init__(self, action_attempt: PendingActionAttempt, timeout: float):
         """
-        :param action_attempt: The ActionAttempt object associated with this error
-        :type action_attempt: ActionAttempt
+        :param action_attempt: The still-pending ActionAttempt object associated with this error
+        :type action_attempt: PendingActionAttempt
         :param timeout: The timeout duration in seconds
         :type timeout: float
         """

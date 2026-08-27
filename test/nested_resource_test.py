@@ -8,8 +8,10 @@ import pytest
 import seam.resources.device as device_module
 from seam.resources.acs_user import AcsUser
 from seam.resources.action_attempt import (
-    LockDoorActionAttempt,
-    ScanCredentialActionAttempt,
+    LockDoorErrorActionAttempt,
+    LockDoorPendingActionAttempt,
+    LockDoorSuccessActionAttempt,
+    ScanCredentialSuccessActionAttempt,
     action_attempt_from_dict,
 )
 from seam.resources.device import Device
@@ -75,28 +77,42 @@ def test_action_attempt_union_hydrates_nested_result_and_error():
     attempt = action_attempt_from_dict(
         {
             "action_type": "LOCK_DOOR",
+            "status": "success",
             "result": {"was_confirmed_by_device": True},
-            "error": {"message": "failed", "type": "device_error"},
         }
     )
 
-    assert isinstance(attempt, LockDoorActionAttempt)
-    assert isinstance(attempt.result, LockDoorActionAttempt.Result)
+    assert isinstance(attempt, LockDoorSuccessActionAttempt)
+    assert isinstance(attempt.result, LockDoorSuccessActionAttempt.Result)
     assert attempt.result.was_confirmed_by_device is True
-    assert isinstance(attempt.error, LockDoorActionAttempt.Error)
-    assert attempt.error.message == "failed"
+    assert attempt.error is None
+
+    failed = action_attempt_from_dict(
+        {
+            "action_type": "LOCK_DOOR",
+            "status": "error",
+            "error": {"message": "failed", "type": "device_error"},
+        }
+    )
+    assert isinstance(failed, LockDoorErrorActionAttempt)
+    assert isinstance(failed.error, LockDoorErrorActionAttempt.Error)
+    assert failed.error.message == "failed"
+    assert failed.result is None
 
     pending = action_attempt_from_dict(
         {"action_type": "LOCK_DOOR", "status": "pending"}
     )
+    assert isinstance(pending, LockDoorPendingActionAttempt)
     assert pending.error is None
     assert pending.result is None
 
 
 def test_action_attempt_variants_keep_distinct_result_shapes():
-    lock_fields = {f.name for f in dataclasses.fields(LockDoorActionAttempt.Result)}
+    lock_fields = {
+        f.name for f in dataclasses.fields(LockDoorSuccessActionAttempt.Result)
+    }
     scan_fields = {
-        f.name for f in dataclasses.fields(ScanCredentialActionAttempt.Result)
+        f.name for f in dataclasses.fields(ScanCredentialSuccessActionAttempt.Result)
     }
 
     assert "was_confirmed_by_device" in lock_fields
