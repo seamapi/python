@@ -195,9 +195,7 @@ class AbstractCustomers(abc.ABC):
 
         :param user_identities: List of user identities.
 
-        :param users: List of users.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param users: List of users."""
         raise NotImplementedError()
 
 
@@ -390,9 +388,7 @@ class AbstractAsyncCustomers(abc.ABC):
 
         :param user_identities: List of user identities.
 
-        :param users: List of users.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param users: List of users."""
         raise NotImplementedError()
 
 
@@ -403,7 +399,7 @@ class Customers(AbstractCustomers):
 
     @route_metadata(
         path="/customers/create_portal",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create_portal(
@@ -492,7 +488,7 @@ class Customers(AbstractCustomers):
 
     @route_metadata(
         path="/customers/delete_data",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete_data(
@@ -604,7 +600,9 @@ class Customers(AbstractCustomers):
         return None
 
     @route_metadata(
-        path="/customers/push_data", has_required_parameters=True, has_pagination=False
+        path="/customers/push_data",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def push_data(
         self,
@@ -670,9 +668,7 @@ class Customers(AbstractCustomers):
 
         :param user_identities: List of user identities.
 
-        :param users: List of users.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param users: List of users."""
         json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:
@@ -716,11 +712,6 @@ class Customers(AbstractCustomers):
         if users is not None:
             json_payload["users"] = users
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /customers/push_data"
-            )
-
         self.client.post("/customers/push_data", json=json_payload)
 
         return None
@@ -733,7 +724,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
     @route_metadata(
         path="/customers/create_portal",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create_portal(
@@ -822,7 +813,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
     @route_metadata(
         path="/customers/delete_data",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete_data(
@@ -934,7 +925,9 @@ class AsyncCustomers(AbstractAsyncCustomers):
         return None
 
     @route_metadata(
-        path="/customers/push_data", has_required_parameters=True, has_pagination=False
+        path="/customers/push_data",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def push_data(
         self,
@@ -1000,9 +993,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
         :param user_identities: List of user identities.
 
-        :param users: List of users.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param users: List of users."""
         json_payload: Dict[str, Any] = {}
 
         if customer_key is not None:
@@ -1045,11 +1036,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["user_identities"] = user_identities
         if users is not None:
             json_payload["users"] = users
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /customers/push_data"
-            )
 
         await self.client.post("/customers/push_data", json=json_payload)
 

@@ -15,9 +15,7 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -51,9 +49,7 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,9 +66,7 @@ class AbstractAcsSystems(abc.ABC):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_entrances: Array of ACS entrances to report"""
         raise NotImplementedError()
 
 
@@ -84,9 +78,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -120,9 +112,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -139,9 +129,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_entrances: Array of ACS entrances to report"""
         raise NotImplementedError()
 
 
@@ -151,30 +139,25 @@ class AcsSystems(AbstractAcsSystems):
         self.defaults = defaults
 
     @route_metadata(
-        path="/acs/systems/get", has_required_parameters=True, has_pagination=False
+        path="/acs/systems/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, acs_system_id: str) -> AcsSystem:
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /acs/systems/get")
 
         res = self.client.get("/acs/systems/get", params=params)
 
         return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
 
     @route_metadata(
-        path="/acs/systems/list", has_required_parameters=False, has_pagination=False
+        path="/acs/systems/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(
         self,
@@ -212,7 +195,7 @@ class AcsSystems(AbstractAcsSystems):
 
     @route_metadata(
         path="/acs/systems/list_compatible_credential_manager_acs_systems",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_compatible_credential_manager_acs_systems(
@@ -224,18 +207,11 @@ class AcsSystems(AbstractAcsSystems):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
-            )
 
         res = self.client.get(
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
@@ -252,7 +228,7 @@ class AcsSystems(AbstractAcsSystems):
 
     @route_metadata(
         path="/acs/systems/report_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def report_devices(
@@ -268,9 +244,7 @@ class AcsSystems(AbstractAcsSystems):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_entrances: Array of ACS entrances to report"""
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -279,11 +253,6 @@ class AcsSystems(AbstractAcsSystems):
             json_payload["acs_encoders"] = acs_encoders
         if acs_entrances is not None:
             json_payload["acs_entrances"] = acs_entrances
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/report_devices"
-            )
 
         self.client.post("/acs/systems/report_devices", json=json_payload)
 
@@ -296,30 +265,25 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
         self.defaults = defaults
 
     @route_metadata(
-        path="/acs/systems/get", has_required_parameters=True, has_pagination=False
+        path="/acs/systems/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, acs_system_id: str) -> AcsSystem:
         """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /acs/systems/get")
 
         res = await self.client.get("/acs/systems/get", params=params)
 
         return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
 
     @route_metadata(
-        path="/acs/systems/list", has_required_parameters=False, has_pagination=False
+        path="/acs/systems/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(
         self,
@@ -357,7 +321,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
     @route_metadata(
         path="/acs/systems/list_compatible_credential_manager_acs_systems",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_compatible_credential_manager_acs_systems(
@@ -369,18 +333,11 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         :param acs_system_id: ID of the access system for which you want to retrieve all compatible credential manager systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/list_compatible_credential_manager_acs_systems"
-            )
 
         res = await self.client.get(
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
@@ -397,7 +354,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
     @route_metadata(
         path="/acs/systems/report_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def report_devices(
@@ -413,9 +370,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         :param acs_encoders: Array of ACS encoders to report
 
-        :param acs_entrances: Array of ACS entrances to report
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_entrances: Array of ACS entrances to report"""
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -424,11 +379,6 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
             json_payload["acs_encoders"] = acs_encoders
         if acs_entrances is not None:
             json_payload["acs_entrances"] = acs_entrances
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/systems/report_devices"
-            )
 
         await self.client.post("/acs/systems/report_devices", json=json_payload)
 

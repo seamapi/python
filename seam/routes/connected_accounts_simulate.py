@@ -11,8 +11,7 @@ class AbstractConnectedAccountsSimulate(abc.ABC):
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -23,8 +22,7 @@ class AbstractAsyncConnectedAccountsSimulate(abc.ABC):
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -35,24 +33,18 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
 
     @route_metadata(
         path="/connected_accounts/simulate/disconnect",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def disconnect(self, *, connected_account_id: str) -> None:
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/simulate/disconnect"
-            )
 
         self.client.post("/connected_accounts/simulate/disconnect", json=json_payload)
 
@@ -66,24 +58,18 @@ class AsyncConnectedAccountsSimulate(AbstractAsyncConnectedAccountsSimulate):
 
     @route_metadata(
         path="/connected_accounts/simulate/disconnect",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def disconnect(self, *, connected_account_id: str) -> None:
         """Simulates a connected account becoming disconnected from Seam. Only applicable for `sandbox workspaces <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param connected_account_id: ID of the connected account you want to simulate as disconnected.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/simulate/disconnect"
-            )
 
         await self.client.post(
             "/connected_accounts/simulate/disconnect", json=json_payload

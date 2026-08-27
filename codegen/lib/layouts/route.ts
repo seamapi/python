@@ -14,7 +14,8 @@ export interface MethodLayoutContext {
   httpVerb: string
   payloadVar: string
   payloadArg: string
-  hasRequiredParameters: boolean
+  requiresAtLeastOneParameter: boolean
+  atLeastOneParameterNames: string[]
   hasPagination: boolean
   description: string
   responseDescription: string
@@ -66,6 +67,16 @@ export interface RouteLayoutContext {
   methods: MethodLayoutContext[]
 }
 
+const paginationParameterNames = new Set(['limit', 'page_cursor'])
+
+const getAtLeastOneParameterNames = (method: ClassMethod): string[] =>
+  method.hasRequiredParameters &&
+  method.parameters.every(({ required }) => !(required ?? false))
+    ? method.parameters
+        .map(({ name }) => name)
+        .filter((name) => !paginationParameterNames.has(name))
+    : []
+
 const getRequestLayoutContext = (
   preferredMethod: string,
 ): Pick<MethodLayoutContext, 'httpVerb' | 'payloadVar' | 'payloadArg'> => {
@@ -84,7 +95,8 @@ export const getMethodLayoutContext = (
   name: method.methodName,
   path: method.path,
   ...getRequestLayoutContext(method.preferredMethod),
-  hasRequiredParameters: method.hasRequiredParameters,
+  requiresAtLeastOneParameter: getAtLeastOneParameterNames(method).length > 0,
+  atLeastOneParameterNames: getAtLeastOneParameterNames(method),
   hasPagination: method.hasPagination,
   description: method.description,
   responseDescription: method.responseDescription,

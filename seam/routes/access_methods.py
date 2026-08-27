@@ -41,9 +41,7 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -81,9 +79,7 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -92,9 +88,7 @@ class AbstractAccessMethods(abc.ABC):
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -139,9 +133,7 @@ class AbstractAccessMethods(abc.ABC):
 
         :param include:
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -196,9 +188,7 @@ class AbstractAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -225,9 +215,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -265,9 +253,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -276,9 +262,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -323,9 +307,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param include:
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -380,9 +362,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -398,7 +378,7 @@ class AccessMethods(AbstractAccessMethods):
 
     @route_metadata(
         path="/access_methods/assign_card",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def assign_card(
@@ -416,20 +396,13 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if card_number is not None:
             json_payload["card_number"] = card_number
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/assign_card"
-            )
 
         res = self.client.post("/access_methods/assign_card", json=json_payload)
 
@@ -449,7 +422,11 @@ class AccessMethods(AbstractAccessMethods):
 
     @route_metadata(
         path="/access_methods/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_method_id",
+            "reservation_key",
+        ),
         has_pagination=False,
     )
     def delete(
@@ -477,7 +454,14 @@ class AccessMethods(AbstractAccessMethods):
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_method_id,
+                reservation_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/delete"
             )
@@ -488,7 +472,7 @@ class AccessMethods(AbstractAccessMethods):
 
     @route_metadata(
         path="/access_methods/encode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def encode(
@@ -506,20 +490,13 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/encode"
-            )
 
         res = self.client.post("/access_methods/encode", json=json_payload)
 
@@ -538,25 +515,20 @@ class AccessMethods(AbstractAccessMethods):
         )
 
     @route_metadata(
-        path="/access_methods/get", has_required_parameters=True, has_pagination=False
+        path="/access_methods/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def get(self, *, access_method_id: str) -> AccessMethod:
         """Gets an access method.
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get"
-            )
 
         res = self.client.get("/access_methods/get", params=params)
 
@@ -566,7 +538,7 @@ class AccessMethods(AbstractAccessMethods):
 
     @route_metadata(
         path="/access_methods/get_related",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get_related(
@@ -610,9 +582,7 @@ class AccessMethods(AbstractAccessMethods):
 
         :param include:
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_ids is not None:
@@ -622,17 +592,21 @@ class AccessMethods(AbstractAccessMethods):
         if include is not None:
             params["include"] = include
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get_related"
-            )
-
         res = self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
 
     @route_metadata(
-        path="/access_methods/list", has_required_parameters=True, has_pagination=True
+        path="/access_methods/list",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "access_grant_id",
+            "access_grant_key",
+            "acs_entrance_id",
+            "device_id",
+            "space_id",
+        ),
+        has_pagination=True,
     )
     def list(
         self,
@@ -686,7 +660,17 @@ class AccessMethods(AbstractAccessMethods):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                access_grant_id,
+                access_grant_key,
+                acs_entrance_id,
+                device_id,
+                space_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/list"
             )
@@ -700,7 +684,7 @@ class AccessMethods(AbstractAccessMethods):
 
     @route_metadata(
         path="/access_methods/unlock_door",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def unlock_door(
@@ -718,20 +702,13 @@ class AccessMethods(AbstractAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unlock_door"
-            )
 
         res = self.client.post("/access_methods/unlock_door", json=json_payload)
 
@@ -762,7 +739,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
     @route_metadata(
         path="/access_methods/assign_card",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def assign_card(
@@ -780,20 +757,13 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if card_number is not None:
             json_payload["card_number"] = card_number
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/assign_card"
-            )
 
         res = await self.client.post("/access_methods/assign_card", json=json_payload)
 
@@ -813,7 +783,11 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
     @route_metadata(
         path="/access_methods/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_method_id",
+            "reservation_key",
+        ),
         has_pagination=False,
     )
     async def delete(
@@ -841,7 +815,14 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_method_id,
+                reservation_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/delete"
             )
@@ -852,7 +833,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
     @route_metadata(
         path="/access_methods/encode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def encode(
@@ -870,20 +851,13 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/encode"
-            )
 
         res = await self.client.post("/access_methods/encode", json=json_payload)
 
@@ -902,25 +876,20 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         )
 
     @route_metadata(
-        path="/access_methods/get", has_required_parameters=True, has_pagination=False
+        path="/access_methods/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def get(self, *, access_method_id: str) -> AccessMethod:
         """Gets an access method.
 
         :param access_method_id: ID of access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get"
-            )
 
         res = await self.client.get("/access_methods/get", params=params)
 
@@ -930,7 +899,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
     @route_metadata(
         path="/access_methods/get_related",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get_related(
@@ -974,9 +943,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         :param include:
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_ids is not None:
@@ -986,17 +953,21 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         if include is not None:
             params["include"] = include
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/get_related"
-            )
-
         res = await self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
 
     @route_metadata(
-        path="/access_methods/list", has_required_parameters=True, has_pagination=True
+        path="/access_methods/list",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "access_grant_id",
+            "access_grant_key",
+            "acs_entrance_id",
+            "device_id",
+            "space_id",
+        ),
+        has_pagination=True,
     )
     async def list(
         self,
@@ -1050,7 +1021,17 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                access_grant_id,
+                access_grant_key,
+                acs_entrance_id,
+                device_id,
+                space_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_methods/list"
             )
@@ -1064,7 +1045,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
     @route_metadata(
         path="/access_methods/unlock_door",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def unlock_door(
@@ -1082,20 +1063,13 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_method_id is not None:
             json_payload["access_method_id"] = access_method_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unlock_door"
-            )
 
         res = await self.client.post("/access_methods/unlock_door", json=json_payload)
 

@@ -30,8 +30,7 @@ class AbstractConnectedAccounts(abc.ABC):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -85,8 +84,7 @@ class AbstractConnectedAccounts(abc.ABC):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -119,8 +117,7 @@ class AbstractConnectedAccounts(abc.ABC):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -140,8 +137,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -195,8 +191,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -229,8 +224,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -246,7 +240,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, connected_account_id: str) -> None:
@@ -257,17 +251,11 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/delete"
-            )
 
         self.client.delete("/connected_accounts/delete", params=params)
 
@@ -275,7 +263,10 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "connected_account_id",
+            "email",
+        ),
         has_pagination=False,
     )
     def get(
@@ -297,7 +288,13 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         if email is not None:
             params["email"] = email
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                connected_account_id,
+                email,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/get"
             )
@@ -310,7 +307,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     def list(
@@ -369,24 +366,18 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/sync",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def sync(self, *, connected_account_id: str) -> None:
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/sync"
-            )
 
         self.client.post("/connected_accounts/sync", json=json_payload)
 
@@ -394,7 +385,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -426,8 +417,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -444,11 +434,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["customer_key"] = customer_key
         if display_name is not None:
             json_payload["display_name"] = display_name
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/update"
-            )
 
         self.client.patch("/connected_accounts/update", json=json_payload)
 
@@ -469,7 +454,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, connected_account_id: str) -> None:
@@ -480,17 +465,11 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         For example, if you delete a connected account with a device that has an access code, Seam sends a ``connected_account.deleted`` event, a ``device.deleted`` event, and an ``access_code.deleted`` event, but Seam does not remove the access code from the device.
 
         :param connected_account_id: ID of the connected account that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/delete"
-            )
 
         await self.client.delete("/connected_accounts/delete", params=params)
 
@@ -498,7 +477,10 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "connected_account_id",
+            "email",
+        ),
         has_pagination=False,
     )
     async def get(
@@ -520,7 +502,13 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         if email is not None:
             params["email"] = email
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                connected_account_id,
+                email,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /connected_accounts/get"
             )
@@ -533,7 +521,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     async def list(
@@ -592,24 +580,18 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/sync",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def sync(self, *, connected_account_id: str) -> None:
         """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/sync"
-            )
 
         await self.client.post("/connected_accounts/sync", json=json_payload)
 
@@ -617,7 +599,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
     @route_metadata(
         path="/connected_accounts/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -649,8 +631,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
         :param display_name: Human-readable name for the connected account, shown in the dashboard. For example, ``Booking from Airbnb House 1``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -667,11 +648,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
             json_payload["customer_key"] = customer_key
         if display_name is not None:
             json_payload["display_name"] = display_name
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/update"
-            )
 
         await self.client.patch("/connected_accounts/update", json=json_payload)
 

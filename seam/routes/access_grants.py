@@ -73,18 +73,14 @@ class AbstractAccessGrants(abc.ABC):
 
         :param user_identity_id: ID of user identity for whom access is being granted.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param access_grant_id: ID of Access Grant to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -214,9 +210,7 @@ class AbstractAccessGrants(abc.ABC):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -304,18 +298,14 @@ class AbstractAsyncAccessGrants(abc.ABC):
 
         :param user_identity_id: ID of user identity for whom access is being granted.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param access_grant_id: ID of Access Grant to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -445,9 +435,7 @@ class AbstractAsyncAccessGrants(abc.ABC):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -487,7 +475,9 @@ class AccessGrants(AbstractAccessGrants):
         return self._unmanaged
 
     @route_metadata(
-        path="/access_grants/create", has_required_parameters=True, has_pagination=False
+        path="/access_grants/create",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def create(
         self,
@@ -540,9 +530,7 @@ class AccessGrants(AbstractAccessGrants):
 
         :param user_identity_id: ID of user identity for whom access is being granted.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if requested_access_methods is not None:
@@ -576,11 +564,6 @@ class AccessGrants(AbstractAccessGrants):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/create"
-            )
-
         res = self.client.post("/access_grants/create", json=json_payload)
 
         return AccessGrant.from_dict(
@@ -588,30 +571,30 @@ class AccessGrants(AbstractAccessGrants):
         )
 
     @route_metadata(
-        path="/access_grants/delete", has_required_parameters=True, has_pagination=False
+        path="/access_grants/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param access_grant_id: ID of Access Grant to delete."""
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/delete"
-            )
 
         self.client.delete("/access_grants/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/access_grants/get", has_required_parameters=True, has_pagination=False
+        path="/access_grants/get",
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_grant_key",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -635,7 +618,13 @@ class AccessGrants(AbstractAccessGrants):
         if access_grant_key is not None:
             params["access_grant_key"] = access_grant_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_grant_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get"
             )
@@ -646,7 +635,12 @@ class AccessGrants(AbstractAccessGrants):
 
     @route_metadata(
         path="/access_grants/get_related",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "access_grant_ids",
+            "access_grant_keys",
+            "exclude",
+            "include",
+        ),
         has_pagination=False,
     )
     def get_related(
@@ -707,7 +701,15 @@ class AccessGrants(AbstractAccessGrants):
         if include is not None:
             params["include"] = include
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_ids,
+                access_grant_keys,
+                exclude,
+                include,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get_related"
             )
@@ -717,7 +719,7 @@ class AccessGrants(AbstractAccessGrants):
         return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
 
     @route_metadata(
-        path="/access_grants/list", has_required_parameters=False, has_pagination=True
+        path="/access_grants/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -803,7 +805,7 @@ class AccessGrants(AbstractAccessGrants):
 
     @route_metadata(
         path="/access_grants/request_access_methods",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def request_access_methods(
@@ -815,20 +817,13 @@ class AccessGrants(AbstractAccessGrants):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/request_access_methods"
-            )
 
         res = self.client.post(
             "/access_grants/request_access_methods", json=json_payload
@@ -839,7 +834,15 @@ class AccessGrants(AbstractAccessGrants):
         )
 
     @route_metadata(
-        path="/access_grants/update", has_required_parameters=True, has_pagination=False
+        path="/access_grants/update",
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_grant_key",
+            "ends_at",
+            "name",
+            "starts_at",
+        ),
+        has_pagination=False,
     )
     def update(
         self,
@@ -876,7 +879,16 @@ class AccessGrants(AbstractAccessGrants):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_grant_key,
+                ends_at,
+                name,
+                starts_at,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/update"
             )
@@ -897,7 +909,9 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         return self._unmanaged
 
     @route_metadata(
-        path="/access_grants/create", has_required_parameters=True, has_pagination=False
+        path="/access_grants/create",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def create(
         self,
@@ -950,9 +964,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         :param user_identity_id: ID of user identity for whom access is being granted.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if requested_access_methods is not None:
@@ -986,11 +998,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/create"
-            )
-
         res = await self.client.post("/access_grants/create", json=json_payload)
 
         return AccessGrant.from_dict(
@@ -998,30 +1005,30 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         )
 
     @route_metadata(
-        path="/access_grants/delete", has_required_parameters=True, has_pagination=False
+        path="/access_grants/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def delete(self, *, access_grant_id: str) -> None:
         """Delete an Access Grant.
 
-        :param access_grant_id: ID of Access Grant to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param access_grant_id: ID of Access Grant to delete."""
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/delete"
-            )
 
         await self.client.delete("/access_grants/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/access_grants/get", has_required_parameters=True, has_pagination=False
+        path="/access_grants/get",
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_grant_key",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -1045,7 +1052,13 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         if access_grant_key is not None:
             params["access_grant_key"] = access_grant_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_grant_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get"
             )
@@ -1056,7 +1069,12 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
     @route_metadata(
         path="/access_grants/get_related",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "access_grant_ids",
+            "access_grant_keys",
+            "exclude",
+            "include",
+        ),
         has_pagination=False,
     )
     async def get_related(
@@ -1117,7 +1135,15 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         if include is not None:
             params["include"] = include
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_grant_ids,
+                access_grant_keys,
+                exclude,
+                include,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/get_related"
             )
@@ -1127,7 +1153,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
 
     @route_metadata(
-        path="/access_grants/list", has_required_parameters=False, has_pagination=True
+        path="/access_grants/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -1213,7 +1239,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
     @route_metadata(
         path="/access_grants/request_access_methods",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def request_access_methods(
@@ -1225,20 +1251,13 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         :param requested_access_methods: Array of requested access methods to add to the access grant.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_grant_id is not None:
             json_payload["access_grant_id"] = access_grant_id
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_grants/request_access_methods"
-            )
 
         res = await self.client.post(
             "/access_grants/request_access_methods", json=json_payload
@@ -1249,7 +1268,15 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         )
 
     @route_metadata(
-        path="/access_grants/update", has_required_parameters=True, has_pagination=False
+        path="/access_grants/update",
+        at_least_one_parameter_names=(
+            "access_grant_id",
+            "access_grant_key",
+            "ends_at",
+            "name",
+            "starts_at",
+        ),
+        has_pagination=False,
     )
     async def update(
         self,
@@ -1286,7 +1313,16 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                access_grant_id,
+                access_grant_key,
+                ends_at,
+                name,
+                starts_at,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_grants/update"
             )

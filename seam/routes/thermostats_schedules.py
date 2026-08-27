@@ -38,9 +38,7 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -48,8 +46,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -58,9 +55,7 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -73,9 +68,7 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -105,8 +98,7 @@ class AbstractThermostatsSchedules(abc.ABC):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -140,9 +132,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -150,8 +140,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -160,9 +149,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -175,9 +162,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -207,8 +192,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -219,7 +203,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -249,9 +233,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -269,11 +251,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/create"
-            )
-
         res = self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(
@@ -282,24 +259,18 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, thermostat_schedule_id: str) -> None:
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/delete"
-            )
 
         self.client.delete("/thermostats/schedules/delete", params=params)
 
@@ -307,7 +278,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
@@ -315,18 +286,11 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/get"
-            )
 
         res = self.client.get("/thermostats/schedules/get", params=params)
 
@@ -336,7 +300,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list(
@@ -348,20 +312,13 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/list"
-            )
 
         res = self.client.get("/thermostats/schedules/list", params=params)
 
@@ -374,7 +331,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -403,8 +360,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -422,11 +378,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/update"
-            )
-
         self.client.patch("/thermostats/schedules/update", json=json_payload)
 
         return None
@@ -439,7 +390,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -469,9 +420,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         :param name: Name of the thermostat schedule.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -489,11 +438,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/create"
-            )
-
         res = await self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(
@@ -502,24 +446,18 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, thermostat_schedule_id: str) -> None:
         """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/delete"
-            )
 
         await self.client.delete("/thermostats/schedules/delete", params=params)
 
@@ -527,7 +465,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
@@ -535,18 +473,11 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/get"
-            )
 
         res = await self.client.get("/thermostats/schedules/get", params=params)
 
@@ -556,7 +487,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list(
@@ -568,20 +499,13 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         :param user_identifier_key: User identifier key by which to filter the list of returned thermostat schedules.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/list"
-            )
 
         res = await self.client.get("/thermostats/schedules/list", params=params)
 
@@ -594,7 +518,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
     @route_metadata(
         path="/thermostats/schedules/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -623,8 +547,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         :param name: Name of the thermostat schedule.
 
         :param starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if thermostat_schedule_id is not None:
@@ -641,11 +564,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/schedules/update"
-            )
 
         await self.client.patch("/thermostats/schedules/update", json=json_payload)
 

@@ -146,11 +146,12 @@ class Seam(AbstractSeam):
         if not getattr(request, "__seam_has_pagination__", False):
             raise ValueError("Cannot create a paginator for a non-paginated endpoint")
 
-        has_required_parameters = getattr(
-            request, "__seam_has_required_parameters__", False
+        at_least_one_parameter_names = getattr(
+            request, "__seam_at_least_one_parameter_names__", ()
         )
-        if has_required_parameters and (
-            not params or not any(value is not None for value in params.values())
+        if at_least_one_parameter_names and (
+            not params
+            or all(params.get(name) is None for name in at_least_one_parameter_names)
         ):
             path = getattr(request, "__seam_path__", "this endpoint")
             raise ValueError(f"At least one parameter is required for {path}")
@@ -394,11 +395,12 @@ class AsyncSeam(AbstractAsyncSeam):
         if not getattr(request, "__seam_has_pagination__", False):
             raise ValueError("Cannot create a paginator for a non-paginated endpoint")
 
-        has_required_parameters = getattr(
-            request, "__seam_has_required_parameters__", False
+        at_least_one_parameter_names = getattr(
+            request, "__seam_at_least_one_parameter_names__", ()
         )
-        if has_required_parameters and (
-            not params or not any(value is not None for value in params.values())
+        if at_least_one_parameter_names and (
+            not params
+            or all(params.get(name) is None for name in at_least_one_parameter_names)
         ):
             path = getattr(request, "__seam_path__", "this endpoint")
             raise ValueError(f"At least one parameter is required for {path}")

@@ -16,9 +16,7 @@ class AbstractSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -30,8 +28,7 @@ class AbstractSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -40,9 +37,7 @@ class AbstractSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -73,18 +68,14 @@ class AbstractSpaces(abc.ABC):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -181,9 +172,7 @@ class AbstractSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -195,8 +184,7 @@ class AbstractSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -205,9 +193,7 @@ class AbstractSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -249,9 +235,7 @@ class AbstractAsyncSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -263,8 +247,7 @@ class AbstractAsyncSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -273,9 +256,7 @@ class AbstractAsyncSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -306,18 +287,14 @@ class AbstractAsyncSpaces(abc.ABC):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -414,9 +391,7 @@ class AbstractAsyncSpaces(abc.ABC):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove entrances."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -428,8 +403,7 @@ class AbstractAsyncSpaces(abc.ABC):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -438,9 +412,7 @@ class AbstractAsyncSpaces(abc.ABC):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove devices."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -479,7 +451,7 @@ class Spaces(AbstractSpaces):
 
     @route_metadata(
         path="/spaces/add_acs_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
@@ -487,9 +459,7 @@ class Spaces(AbstractSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add entrances."""
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -497,18 +467,13 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_acs_entrances"
-            )
-
         self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/spaces/add_connected_account",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def add_connected_account(
@@ -519,8 +484,7 @@ class Spaces(AbstractSpaces):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -528,26 +492,21 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_connected_account"
-            )
-
         self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/spaces/add_devices", has_required_parameters=True, has_pagination=False
+        path="/spaces/add_devices",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Adds devices to a specific space.
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add devices."""
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -555,17 +514,12 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_devices"
-            )
-
         self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/spaces/create", has_required_parameters=True, has_pagination=False
+        path="/spaces/create", at_least_one_parameter_names=(), has_pagination=False
     )
     def create(
         self,
@@ -594,9 +548,7 @@ class Spaces(AbstractSpaces):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -614,36 +566,33 @@ class Spaces(AbstractSpaces):
         if space_key is not None:
             json_payload["space_key"] = space_key
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/create")
-
         res = self.client.post("/spaces/create", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/create"))
 
     @route_metadata(
-        path="/spaces/delete", has_required_parameters=True, has_pagination=False
+        path="/spaces/delete", at_least_one_parameter_names=(), has_pagination=False
     )
     def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space that you want to delete."""
         params: Dict[str, Any] = {}
 
         if space_id is not None:
             params["space_id"] = space_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /spaces/delete")
 
         self.client.delete("/spaces/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/spaces/get", has_required_parameters=True, has_pagination=False
+        path="/spaces/get",
+        at_least_one_parameter_names=(
+            "space_id",
+            "space_key",
+        ),
+        has_pagination=False,
     )
     def get(
         self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
@@ -664,7 +613,13 @@ class Spaces(AbstractSpaces):
         if space_key is not None:
             params["space_key"] = space_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                space_id,
+                space_key,
+            )
+        ):
             raise ValueError("At least one parameter is required for /spaces/get")
 
         res = self.client.get("/spaces/get", params=params)
@@ -672,7 +627,14 @@ class Spaces(AbstractSpaces):
         return Space.from_dict(unwrap(res, "space", "/spaces/get"))
 
     @route_metadata(
-        path="/spaces/get_related", has_required_parameters=True, has_pagination=False
+        path="/spaces/get_related",
+        at_least_one_parameter_names=(
+            "exclude",
+            "include",
+            "space_ids",
+            "space_keys",
+        ),
+        has_pagination=False,
     )
     def get_related(
         self,
@@ -728,7 +690,15 @@ class Spaces(AbstractSpaces):
         if space_keys is not None:
             params["space_keys"] = space_keys
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                exclude,
+                include,
+                space_ids,
+                space_keys,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /spaces/get_related"
             )
@@ -738,7 +708,7 @@ class Spaces(AbstractSpaces):
         return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
 
     @route_metadata(
-        path="/spaces/list", has_required_parameters=False, has_pagination=True
+        path="/spaces/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -783,7 +753,7 @@ class Spaces(AbstractSpaces):
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_acs_entrances(
@@ -793,9 +763,7 @@ class Spaces(AbstractSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove entrances."""
         params: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -803,18 +771,13 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_acs_entrances"
-            )
-
         self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
 
     @route_metadata(
         path="/spaces/remove_connected_account",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_connected_account(
@@ -825,8 +788,7 @@ class Spaces(AbstractSpaces):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -834,18 +796,13 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_connected_account"
-            )
-
         self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
 
     @route_metadata(
         path="/spaces/remove_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
@@ -853,9 +810,7 @@ class Spaces(AbstractSpaces):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove devices."""
         params: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -863,17 +818,12 @@ class Spaces(AbstractSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_devices"
-            )
-
         self.client.delete("/spaces/remove_devices", params=params)
 
         return None
 
     @route_metadata(
-        path="/spaces/update", has_required_parameters=False, has_pagination=False
+        path="/spaces/update", at_least_one_parameter_names=(), has_pagination=False
     )
     def update(
         self,
@@ -927,7 +877,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
     @route_metadata(
         path="/spaces/add_acs_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def add_acs_entrances(
@@ -937,9 +887,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add entrances."""
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -947,18 +895,13 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_acs_entrances"
-            )
-
         await self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/spaces/add_connected_account",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def add_connected_account(
@@ -969,8 +912,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
         :param space_id: ID of the space to which you want to add the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -978,26 +920,21 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_connected_account"
-            )
-
         await self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/spaces/add_devices", has_required_parameters=True, has_pagination=False
+        path="/spaces/add_devices",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def add_devices(self, *, device_ids: List[str], space_id: str) -> None:
         """Adds devices to a specific space.
 
         :param device_ids: IDs of the devices that you want to add to the space.
 
-        :param space_id: ID of the space to which you want to add devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space to which you want to add devices."""
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -1005,17 +942,12 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             json_payload["space_id"] = space_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /spaces/add_devices"
-            )
-
         await self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/spaces/create", has_required_parameters=True, has_pagination=False
+        path="/spaces/create", at_least_one_parameter_names=(), has_pagination=False
     )
     async def create(
         self,
@@ -1044,9 +976,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         :param space_key: Unique key for the space within the workspace.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -1064,36 +994,33 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_key is not None:
             json_payload["space_key"] = space_key
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /spaces/create")
-
         res = await self.client.post("/spaces/create", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/create"))
 
     @route_metadata(
-        path="/spaces/delete", has_required_parameters=True, has_pagination=False
+        path="/spaces/delete", at_least_one_parameter_names=(), has_pagination=False
     )
     async def delete(self, *, space_id: str) -> None:
         """Deletes a space.
 
-        :param space_id: ID of the space that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space that you want to delete."""
         params: Dict[str, Any] = {}
 
         if space_id is not None:
             params["space_id"] = space_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /spaces/delete")
 
         await self.client.delete("/spaces/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/spaces/get", has_required_parameters=True, has_pagination=False
+        path="/spaces/get",
+        at_least_one_parameter_names=(
+            "space_id",
+            "space_key",
+        ),
+        has_pagination=False,
     )
     async def get(
         self, *, space_id: Optional[str] = None, space_key: Optional[str] = None
@@ -1114,7 +1041,13 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_key is not None:
             params["space_key"] = space_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                space_id,
+                space_key,
+            )
+        ):
             raise ValueError("At least one parameter is required for /spaces/get")
 
         res = await self.client.get("/spaces/get", params=params)
@@ -1122,7 +1055,14 @@ class AsyncSpaces(AbstractAsyncSpaces):
         return Space.from_dict(unwrap(res, "space", "/spaces/get"))
 
     @route_metadata(
-        path="/spaces/get_related", has_required_parameters=True, has_pagination=False
+        path="/spaces/get_related",
+        at_least_one_parameter_names=(
+            "exclude",
+            "include",
+            "space_ids",
+            "space_keys",
+        ),
+        has_pagination=False,
     )
     async def get_related(
         self,
@@ -1178,7 +1118,15 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_keys is not None:
             params["space_keys"] = space_keys
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                exclude,
+                include,
+                space_ids,
+                space_keys,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /spaces/get_related"
             )
@@ -1188,7 +1136,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
         return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
 
     @route_metadata(
-        path="/spaces/list", has_required_parameters=False, has_pagination=True
+        path="/spaces/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -1233,7 +1181,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_acs_entrances(
@@ -1243,9 +1191,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove entrances.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove entrances."""
         params: Dict[str, Any] = {}
 
         if acs_entrance_ids is not None:
@@ -1253,18 +1199,13 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_acs_entrances"
-            )
-
         await self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
 
     @route_metadata(
         path="/spaces/remove_connected_account",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_connected_account(
@@ -1275,8 +1216,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
         :param space_id: ID of the space from which you want to remove the connected account.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if connected_account_id is not None:
@@ -1284,18 +1224,13 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_connected_account"
-            )
-
         await self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
 
     @route_metadata(
         path="/spaces/remove_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_devices(self, *, device_ids: List[str], space_id: str) -> None:
@@ -1303,9 +1238,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         :param device_ids: IDs of the devices that you want to remove from the space.
 
-        :param space_id: ID of the space from which you want to remove devices.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param space_id: ID of the space from which you want to remove devices."""
         params: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -1313,17 +1246,12 @@ class AsyncSpaces(AbstractAsyncSpaces):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /spaces/remove_devices"
-            )
-
         await self.client.delete("/spaces/remove_devices", params=params)
 
         return None
 
     @route_metadata(
-        path="/spaces/update", has_required_parameters=False, has_pagination=False
+        path="/spaces/update", at_least_one_parameter_names=(), has_pagination=False
     )
     async def update(
         self,

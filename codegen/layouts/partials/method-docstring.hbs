@@ -4,7 +4,7 @@
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.{{/if}}{{#unless (eq returnType "None")}}
 
-        :returns: {{{indent (pythonDoc responseDescription) 8}}}{{/unless}}{{#if hasRequiredParameters}}
+        :returns: {{{indent (pythonDoc responseDescription) 8}}}{{/unless}}{{#if requiresAtLeastOneParameter}}
 
         :raises ValueError: At least one parameter must be provided.{{/if}}{{#if isDeprecated}}
 
