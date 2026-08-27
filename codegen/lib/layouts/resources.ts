@@ -2,7 +2,12 @@
 // Each blueprint resource, along with events, action attempts, and pagination,
 // becomes a dataclass in its own module, re-exported from seam/resources/__init__.py.
 
-import type { Blueprint, Property } from '@seamapi/blueprint'
+import type {
+  ActionAttemptStatus,
+  Blueprint,
+  EnumProperty,
+  Property,
+} from '@seamapi/blueprint'
 import { pascalCase, snakeCase } from 'change-case'
 
 import { convertCustomResourceName } from '../custom-resource-name-conversions.js'
@@ -38,9 +43,15 @@ interface ResourceClassLayoutContext {
 interface DiscriminatedUnionLayoutContext {
   className: string
   discriminator: string
+  secondaryDiscriminator?: string
   fromDictName: string
   variantsName: string
-  variants: Array<{ className: string; values: string[] }>
+  variants: Array<{
+    className: string
+    values: string[]
+    secondaryValue?: string
+  }>
+  aliases?: Array<{ className: string; variantClassNames: string[] }>
 }
 
 interface ResourcePropertyLayoutContext {
@@ -52,6 +63,7 @@ interface ResourcePropertyLayoutContext {
   nestedClassName: string
   isDictParam: boolean
   isObject: boolean
+  isRequiredObject: boolean
   isObjectList: boolean
   isDiscriminatedObjectList: boolean
   discriminator: string
@@ -248,6 +260,17 @@ const reservedClassNames = new Set([
   'dataclass',
 ])
 
+type StatusAnnotatedProperty = Property & {
+  renderAsNone?: boolean
+  presentForStatus?: boolean
+}
+
+const isRenderedAsNone = (property: Property): boolean =>
+  (property as StatusAnnotatedProperty).renderAsNone === true
+
+const isPresentForStatus = (property: Property): boolean =>
+  (property as StatusAnnotatedProperty).presentForStatus === true
+
 const getNestedProperties = (property: Property): Property[] | undefined => {
   if (property.format === 'object') return property.properties
   if (property.format === 'list' && property.itemFormat === 'object') {
@@ -296,6 +319,23 @@ const buildClass = (
   const takenClassNames = new Set<string>()
 
   const properties = classProperties.map((property) => {
+    if (isRenderedAsNone(property)) {
+      return {
+        name: property.name,
+        description: property.description,
+        isDeprecated: property.isDeprecated,
+        deprecationMessage: property.deprecationMessage,
+        type: 'None',
+        nestedClassName: '',
+        isDictParam: false,
+        isObject: false,
+        isRequiredObject: false,
+        isObjectList: false,
+        isDiscriminatedObjectList: false,
+        discriminator: '',
+      }
+    }
+
     const nestedProperties = getNestedProperties(property)
     const nestedPath = `${path}.${property.name}`
     const isDiscriminatedObjectList =
@@ -379,12 +419,16 @@ const buildClass = (
     }
 
     const isObject = nestedClassName != null && property.format === 'object'
-    // A nested object is read as None whenever the payload omits it, and the
-    // schema is not a reliable guide to when that happens: an action attempt
-    // documents both error and result as required, yet a pending one carries
-    // neither. Constructing them unconditionally would fail on those payloads,
-    // so from_dict keeps its None fallback and the field stays Optional.
-    const type = mapPropertyToPythonType(property, nestedClassName, isObject)
+    const isRequiredObject =
+      isObject &&
+      isPresentForStatus(property) &&
+      !property.isOptional &&
+      !property.isNullable
+    const type = mapPropertyToPythonType(
+      property,
+      nestedClassName,
+      isObject && !isRequiredObject,
+    )
     const requiredType = mapRequiredPropertyToPythonType(
       property,
       nestedClassName,
@@ -400,6 +444,7 @@ const buildClass = (
       nestedClassName: nestedClassName ?? '',
       isDictParam: requiredType.startsWith('Dict'),
       isObject,
+      isRequiredObject,
       isObjectList:
         !isDiscriminatedObjectList &&
         nestedClassName != null &&
@@ -427,41 +472,108 @@ const hasDiscriminatedLists = (
   resourceClass.nestedUnions.length > 0 ||
   resourceClass.nestedClasses.some(hasDiscriminatedLists)
 
+interface UnionVariant {
+  value: string
+  secondaryValue?: string
+  description: string
+  properties: Property[]
+  isDeprecated: boolean
+  deprecationMessage: string
+}
+
+const buildUnionAliases = (
+  variants: Array<{ className: string; groupValue: string | undefined }>,
+  suffix: string,
+): Array<{ className: string; variantClassNames: string[] }> => {
+  const groups = new Map<string, string[]>()
+  for (const { className, groupValue } of variants) {
+    if (groupValue == null) continue
+    const group = groups.get(groupValue)
+    if (group == null) {
+      groups.set(groupValue, [className])
+    } else {
+      group.push(className)
+    }
+  }
+  return [...groups.entries()].map(([value, variantClassNames]) => ({
+    className: `${pythonClassName(value)}${suffix}`,
+    variantClassNames,
+  }))
+}
+
 const buildUnionResource = (
   className: string,
   discriminator: string,
   fromDictName: string,
-  variants: Array<{
-    value: string
-    description: string
-    properties: Property[]
-    isDeprecated: boolean
-    deprecationMessage: string
-  }>,
+  variants: UnionVariant[],
   isDeprecated: boolean,
   deprecationMessage: string,
+  secondaryDiscriminator?: string,
 ): ResourceLayoutContext => {
   const suffix = className === 'SeamEvent' ? 'Event' : 'ActionAttempt'
-  const classes = variants.map((variant) => ({
-    ...buildClass(
-      `${pythonClassName(variant.value)}${suffix}`,
-      variant.description,
-      variant.properties,
-      `${snakeCase(className)}.${variant.value}`,
-      rootIndentation,
-    ),
-    isDeprecated: variant.isDeprecated,
-    deprecationMessage: variant.deprecationMessage,
-  }))
+  const classes = variants.map((variant) => {
+    const secondaryName =
+      variant.secondaryValue == null
+        ? ''
+        : pythonClassName(variant.secondaryValue)
+    const secondaryPath =
+      variant.secondaryValue == null ? '' : `.${variant.secondaryValue}`
+    return {
+      ...buildClass(
+        `${pythonClassName(variant.value)}${secondaryName}${suffix}`,
+        variant.description,
+        variant.properties,
+        `${snakeCase(className)}.${variant.value}${secondaryPath}`,
+        rootIndentation,
+      ),
+      isDeprecated: variant.isDeprecated,
+      deprecationMessage: variant.deprecationMessage,
+    }
+  })
+
+  const aliases =
+    secondaryDiscriminator == null
+      ? []
+      : [
+          ...buildUnionAliases(
+            classes.map(({ className: name }, index) => ({
+              className: name,
+              groupValue: variants[index]?.value,
+            })),
+            suffix,
+          ),
+          ...buildUnionAliases(
+            classes.map(({ className: name }, index) => ({
+              className: name,
+              groupValue: variants[index]?.secondaryValue,
+            })),
+            suffix,
+          ),
+        ]
+  const classNames = new Set(classes.map(({ className: name }) => name))
+  for (const alias of aliases) {
+    if (classNames.has(alias.className) || alias.className === className) {
+      throw new Error(
+        `The union alias ${alias.className} collides with a generated class name.`,
+      )
+    }
+  }
+
   const union = {
     className,
     discriminator,
+    ...(secondaryDiscriminator == null ? {} : { secondaryDiscriminator }),
     fromDictName,
     variantsName: `_${snakeCase(className).toUpperCase()}_VARIANTS`,
-    variants: classes.map((variantClass, index) => ({
-      className: variantClass.className,
-      values: [variants[index]?.value ?? ''],
-    })),
+    variants: classes.map((variantClass, index) => {
+      const secondaryValue = variants[index]?.secondaryValue
+      return {
+        className: variantClass.className,
+        values: [variants[index]?.value ?? ''],
+        ...(secondaryValue == null ? {} : { secondaryValue }),
+      }
+    }),
+    aliases,
   }
 
   return {
@@ -474,10 +586,58 @@ const buildUnionResource = (
     hasDiscriminatedLists: classes.some(hasDiscriminatedLists),
     exports: [
       ...classes.map(({ className: name }) => name),
+      ...aliases.map(({ className: name }) => name),
       className,
       fromDictName,
     ],
   }
+}
+
+const expandActionAttemptByStatus = (
+  attempt: Blueprint['actionAttempts'][number],
+): UnionVariant[] => {
+  const statusProperty = attempt.properties.find(
+    (property): property is EnumProperty =>
+      property.name === 'status' && property.format === 'enum',
+  )
+  if (statusProperty == null || statusProperty.values.length === 0) {
+    throw new Error(
+      `The ${attempt.actionAttemptType} action attempt must have a status enum property to expand into per-status variants.`,
+    )
+  }
+
+  return statusProperty.values.map(({ name: status }) => ({
+    value: attempt.actionAttemptType,
+    secondaryValue: status,
+    description: attempt.description,
+    isDeprecated: attempt.isDeprecated,
+    deprecationMessage: attempt.deprecationMessage,
+    properties: attempt.properties.map((property): Property => {
+      if (property === statusProperty) {
+        return {
+          ...statusProperty,
+          values: statusProperty.values.filter(
+            (value) => value.name === status,
+          ),
+        }
+      }
+      const { actionAttemptStatuses } = property
+      if (actionAttemptStatuses == null) return property
+      if (actionAttemptStatuses.includes(status as ActionAttemptStatus)) {
+        const presentProperty: StatusAnnotatedProperty = {
+          ...property,
+          presentForStatus: true,
+        }
+        return presentProperty
+      }
+      const noneProperty: StatusAnnotatedProperty = {
+        ...property,
+        isNullable: false,
+        renderAsNone: true,
+      }
+      return noneProperty
+    }),
+  }))
 }
 
 export const getResourceLayoutContexts = (
@@ -568,15 +728,10 @@ export const getResourceLayoutContexts = (
       'ActionAttempt',
       'action_type',
       'action_attempt_from_dict',
-      blueprint.actionAttempts.map((attempt) => ({
-        value: attempt.actionAttemptType,
-        description: attempt.description,
-        properties: attempt.properties,
-        isDeprecated: attempt.isDeprecated,
-        deprecationMessage: attempt.deprecationMessage,
-      })),
+      blueprint.actionAttempts.flatMap(expandActionAttemptByStatus),
       actionAttemptModel?.isDeprecated ?? false,
       actionAttemptModel?.deprecationMessage ?? '',
+      'status',
     ),
   )
 

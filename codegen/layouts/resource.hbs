@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Literal, Optional, Union{{#if union}}, cast{{/if}}
+from typing import Any, Dict, List, Literal, Optional, {{#if union.secondaryDiscriminator}}Tuple, {{/if}}Union{{#if union}}, cast{{/if}}
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
@@ -20,22 +20,26 @@ def _from_discriminated_dict(
 {{#if union}}
 {{union.className}} = Union[{{#each union.variants}}{{className}}{{#unless @last}}, {{/unless}}{{/each}}]
 
-{{union.variantsName}}: Dict[str, Any] = {
+{{#each union.aliases}}
+{{className}} = Union[{{#each variantClassNames}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}]
+
+{{/each}}
+{{union.variantsName}}: Dict[{{#if union.secondaryDiscriminator}}Tuple[str, str]{{else}}str{{/if}}, Any] = {
 {{#each union.variants}}
 {{#each values}}
-    {{pythonString this}}: {{../className}},
+    {{#if @root.union.secondaryDiscriminator}}({{pythonString this}}, {{pythonString ../secondaryValue}}){{else}}{{pythonString this}}{{/if}}: {{../className}},
 {{/each}}
 {{/each}}
 }
 
 
 def {{union.fromDictName}}(d: Any) -> {{union.className}}:
-    """Deserialize a known {{union.discriminator}} variant.
+    """Deserialize a known {{union.discriminator}}{{#if union.secondaryDiscriminator}} and {{union.secondaryDiscriminator}}{{/if}} variant.
 
     Unknown discriminator values return ``DeepAttrDict`` so payloads from a
     newer API remain readable. The static return type covers known variants.
     """
-    variant = {{union.variantsName}}.get(d.get("{{union.discriminator}}"))
+    variant = {{union.variantsName}}.get({{#if union.secondaryDiscriminator}}(d.get("{{union.discriminator}}"), d.get("{{union.secondaryDiscriminator}}")){{else}}d.get("{{union.discriminator}}"){{/if}})
     if variant is None:
         return cast({{union.className}}, DeepAttrDict(d))
     return variant.from_dict(d)
