@@ -1,7 +1,22 @@
-import pytest
+import time
 from threading import Timer
+
+import pytest
+
 from seam.exceptions import SeamActionAttemptTimeoutError, SeamActionAttemptFailedError
-from seam import Seam
+from seam import AsyncSeam, Seam, SeamInvalidOptionsError
+
+PENDING_ACTION_ATTEMPT_ID = "11111111-1111-1111-1111-111111111111"
+
+PENDING_ACTION_ATTEMPT_RESPONSE = {
+    "action_attempt": {
+        "action_attempt_id": PENDING_ACTION_ATTEMPT_ID,
+        "action_type": "UNLOCK_DOOR",
+        "status": "pending",
+        "result": None,
+        "error": None,
+    }
+}
 
 
 def test_wait_for_action_attempt_directly_on_returned_action_attempt(server):
@@ -196,10 +211,126 @@ def test_wait_for_action_attempt_times_out_if_waiting_for_polling_interval(serve
         },
     )
 
+    start = time.monotonic()
+
     with pytest.raises(SeamActionAttemptTimeoutError) as exc_info:
         seam.action_attempts.get(
             action_attempt_id=action_attempt.action_attempt_id,
             wait_for_action_attempt={"timeout": 0.5, "polling_interval": 5},
         )
 
+    # The wait sleeps only the time remaining until the deadline, never a
+    # full polling_interval past it.
+    assert time.monotonic() - start < 2.5
+
     assert exc_info.value.action_attempt == action_attempt
+
+
+def test_wait_for_action_attempt_rejects_a_zero_polling_interval(recording_server):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (
+        endpoint,
+        requests,
+    ):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(
+            SeamInvalidOptionsError,
+            match="The polling_interval option must be greater than zero, got 0",
+        ):
+            seam.action_attempts.get(
+                action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                wait_for_action_attempt={"timeout": 1, "polling_interval": 0},
+            )
+
+        assert len(requests) == 1
+
+
+def test_wait_for_action_attempt_rejects_a_negative_polling_interval(recording_server):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(
+            SeamInvalidOptionsError,
+            match="The polling_interval option must be greater than zero, got -1",
+        ):
+            seam.action_attempts.get(
+                action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                wait_for_action_attempt={"timeout": 1, "polling_interval": -1},
+            )
+
+
+def test_wait_for_action_attempt_rejects_a_negative_timeout(recording_server):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (endpoint, _):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        with pytest.raises(
+            SeamInvalidOptionsError,
+            match="The timeout option must not be negative, got -1",
+        ):
+            seam.action_attempts.get(
+                action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                wait_for_action_attempt={"timeout": -1},
+            )
+
+
+def test_wait_for_action_attempt_polls_at_least_once_before_timing_out(
+    recording_server,
+):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (
+        endpoint,
+        requests,
+    ):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+
+        start = time.monotonic()
+
+        with pytest.raises(SeamActionAttemptTimeoutError):
+            seam.action_attempts.get(
+                action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                wait_for_action_attempt={"timeout": 0.1, "polling_interval": 60},
+            )
+
+        # One request resolves the route, and the wait still polls once
+        # before the deadline passes instead of sleeping a full interval.
+        assert len(requests) == 2
+        assert time.monotonic() - start < 5
+
+
+async def test_wait_for_action_attempt_rejects_a_zero_polling_interval_async(
+    recording_server,
+):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (
+        endpoint,
+        requests,
+    ):
+        async with AsyncSeam(api_key="seam_apikey_token", endpoint=endpoint) as seam:
+            with pytest.raises(
+                SeamInvalidOptionsError,
+                match="The polling_interval option must be greater than zero, got 0",
+            ):
+                await seam.action_attempts.get(
+                    action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                    wait_for_action_attempt={"timeout": 1, "polling_interval": 0},
+                )
+
+            assert len(requests) == 1
+
+
+async def test_wait_for_action_attempt_polls_at_least_once_before_timing_out_async(
+    recording_server,
+):
+    with recording_server([(200, PENDING_ACTION_ATTEMPT_RESPONSE)]) as (
+        endpoint,
+        requests,
+    ):
+        async with AsyncSeam(api_key="seam_apikey_token", endpoint=endpoint) as seam:
+            start = time.monotonic()
+
+            with pytest.raises(SeamActionAttemptTimeoutError):
+                await seam.action_attempts.get(
+                    action_attempt_id=PENDING_ACTION_ATTEMPT_ID,
+                    wait_for_action_attempt={"timeout": 0.1, "polling_interval": 60},
+                )
+
+            assert len(requests) == 2
+            assert time.monotonic() - start < 5
