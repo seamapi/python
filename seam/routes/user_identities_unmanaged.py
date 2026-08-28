@@ -16,9 +16,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -60,8 +58,7 @@ class AbstractUserIdentitiesUnmanaged(abc.ABC):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -73,9 +70,7 @@ class AbstractAsyncUserIdentitiesUnmanaged(abc.ABC):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -117,8 +112,7 @@ class AbstractAsyncUserIdentitiesUnmanaged(abc.ABC):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -129,7 +123,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
@@ -137,18 +131,11 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/get"
-            )
 
         res = self.client.get("/user_identities/unmanaged/get", params=params)
 
@@ -158,7 +145,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     def list(
@@ -202,7 +189,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -221,8 +208,7 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:
@@ -231,11 +217,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/update"
-            )
 
         self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 
@@ -249,7 +230,7 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get(self, *, user_identity_id: str) -> UnmanagedUserIdentity:
@@ -257,18 +238,11 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
         :param user_identity_id: ID of the unmanaged user identity that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/get"
-            )
 
         res = await self.client.get("/user_identities/unmanaged/get", params=params)
 
@@ -278,7 +252,7 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     async def list(
@@ -322,7 +296,7 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
     @route_metadata(
         path="/user_identities/unmanaged/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -341,8 +315,7 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
         :param user_identity_id: ID of the unmanaged user identity that you want to update.
 
         :param user_identity_key: Unique key for the user identity. If not provided, the existing key will be preserved.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if is_managed is not None:
@@ -351,11 +324,6 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/unmanaged/update"
-            )
 
         await self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 

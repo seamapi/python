@@ -43,9 +43,7 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -213,9 +211,7 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -231,9 +227,7 @@ class AbstractLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -263,9 +257,7 @@ class AbstractAsyncLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -433,9 +425,7 @@ class AbstractAsyncLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -451,9 +441,7 @@ class AbstractAsyncLocks(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -469,7 +457,7 @@ class Locks(AbstractLocks):
 
     @route_metadata(
         path="/locks/configure_auto_lock",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def configure_auto_lock(
@@ -490,9 +478,7 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
@@ -501,11 +487,6 @@ class Locks(AbstractLocks):
             json_payload["device_id"] = device_id
         if auto_lock_delay_seconds is not None:
             json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/configure_auto_lock"
-            )
 
         res = self.client.post("/locks/configure_auto_lock", json=json_payload)
 
@@ -524,7 +505,12 @@ class Locks(AbstractLocks):
         )
 
     @route_metadata(
-        path="/locks/get", has_required_parameters=True, has_pagination=False
+        path="/locks/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
+        has_pagination=False,
     )
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -548,7 +534,13 @@ class Locks(AbstractLocks):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError("At least one parameter is required for /locks/get")
 
         res = self.client.get("/locks/get", params=params)
@@ -556,7 +548,7 @@ class Locks(AbstractLocks):
         return Device.from_dict(unwrap(res, "device", "/locks/get"))
 
     @route_metadata(
-        path="/locks/list", has_required_parameters=False, has_pagination=False
+        path="/locks/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(
         self,
@@ -712,7 +704,7 @@ class Locks(AbstractLocks):
         ]
 
     @route_metadata(
-        path="/locks/lock_door", has_required_parameters=True, has_pagination=False
+        path="/locks/lock_door", at_least_one_parameter_names=(), has_pagination=False
     )
     def lock_door(
         self,
@@ -726,16 +718,11 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /locks/lock_door")
 
         res = self.client.post("/locks/lock_door", json=json_payload)
 
@@ -754,7 +741,7 @@ class Locks(AbstractLocks):
         )
 
     @route_metadata(
-        path="/locks/unlock_door", has_required_parameters=True, has_pagination=False
+        path="/locks/unlock_door", at_least_one_parameter_names=(), has_pagination=False
     )
     def unlock_door(
         self,
@@ -768,18 +755,11 @@ class Locks(AbstractLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/unlock_door"
-            )
 
         res = self.client.post("/locks/unlock_door", json=json_payload)
 
@@ -810,7 +790,7 @@ class AsyncLocks(AbstractAsyncLocks):
 
     @route_metadata(
         path="/locks/configure_auto_lock",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def configure_auto_lock(
@@ -831,9 +811,7 @@ class AsyncLocks(AbstractAsyncLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if auto_lock_enabled is not None:
@@ -842,11 +820,6 @@ class AsyncLocks(AbstractAsyncLocks):
             json_payload["device_id"] = device_id
         if auto_lock_delay_seconds is not None:
             json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/configure_auto_lock"
-            )
 
         res = await self.client.post("/locks/configure_auto_lock", json=json_payload)
 
@@ -865,7 +838,12 @@ class AsyncLocks(AbstractAsyncLocks):
         )
 
     @route_metadata(
-        path="/locks/get", has_required_parameters=True, has_pagination=False
+        path="/locks/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
+        has_pagination=False,
     )
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -889,7 +867,13 @@ class AsyncLocks(AbstractAsyncLocks):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError("At least one parameter is required for /locks/get")
 
         res = await self.client.get("/locks/get", params=params)
@@ -897,7 +881,7 @@ class AsyncLocks(AbstractAsyncLocks):
         return Device.from_dict(unwrap(res, "device", "/locks/get"))
 
     @route_metadata(
-        path="/locks/list", has_required_parameters=False, has_pagination=False
+        path="/locks/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(
         self,
@@ -1053,7 +1037,7 @@ class AsyncLocks(AbstractAsyncLocks):
         ]
 
     @route_metadata(
-        path="/locks/lock_door", has_required_parameters=True, has_pagination=False
+        path="/locks/lock_door", at_least_one_parameter_names=(), has_pagination=False
     )
     async def lock_door(
         self,
@@ -1067,16 +1051,11 @@ class AsyncLocks(AbstractAsyncLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /locks/lock_door")
 
         res = await self.client.post("/locks/lock_door", json=json_payload)
 
@@ -1095,7 +1074,7 @@ class AsyncLocks(AbstractAsyncLocks):
         )
 
     @route_metadata(
-        path="/locks/unlock_door", has_required_parameters=True, has_pagination=False
+        path="/locks/unlock_door", at_least_one_parameter_names=(), has_pagination=False
     )
     async def unlock_door(
         self,
@@ -1109,18 +1088,11 @@ class AsyncLocks(AbstractAsyncLocks):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/unlock_door"
-            )
 
         res = await self.client.post("/locks/unlock_door", json=json_payload)
 

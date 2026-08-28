@@ -44,9 +44,7 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -55,9 +53,7 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -101,9 +97,7 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -128,9 +122,7 @@ class AbstractAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -160,9 +152,7 @@ class AbstractAsyncAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -171,9 +161,7 @@ class AbstractAsyncAcsEncoders(abc.ABC):
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -217,9 +205,7 @@ class AbstractAsyncAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -244,9 +230,7 @@ class AbstractAsyncAcsEncoders(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -262,7 +246,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/encode_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def encode_credential(
@@ -283,9 +267,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -294,11 +276,6 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/encode_credential"
-            )
 
         res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
 
@@ -317,30 +294,25 @@ class AcsEncoders(AbstractAcsEncoders):
         )
 
     @route_metadata(
-        path="/acs/encoders/get", has_required_parameters=True, has_pagination=False
+        path="/acs/encoders/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, acs_encoder_id: str) -> AcsEncoder:
         """Returns a specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             params["acs_encoder_id"] = acs_encoder_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /acs/encoders/get")
 
         res = self.client.get("/acs/encoders/get", params=params)
 
         return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
 
     @route_metadata(
-        path="/acs/encoders/list", has_required_parameters=False, has_pagination=True
+        path="/acs/encoders/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -386,7 +358,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/scan_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def scan_credential(
@@ -404,20 +376,13 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
         if salto_ks_metadata is not None:
             json_payload["salto_ks_metadata"] = salto_ks_metadata
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_credential"
-            )
 
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
@@ -437,7 +402,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/scan_to_assign_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def scan_to_assign_credential(
@@ -461,9 +426,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -474,11 +437,6 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_to_assign_credential"
-            )
 
         res = self.client.post(
             "/acs/encoders/scan_to_assign_credential", json=json_payload
@@ -511,7 +469,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/encode_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def encode_credential(
@@ -532,9 +490,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -543,11 +499,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/encode_credential"
-            )
 
         res = await self.client.post(
             "/acs/encoders/encode_credential", json=json_payload
@@ -568,30 +519,25 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
         )
 
     @route_metadata(
-        path="/acs/encoders/get", has_required_parameters=True, has_pagination=False
+        path="/acs/encoders/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, acs_encoder_id: str) -> AcsEncoder:
         """Returns a specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param acs_encoder_id: ID of the encoder that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             params["acs_encoder_id"] = acs_encoder_id
-
-        if not params:
-            raise ValueError("At least one parameter is required for /acs/encoders/get")
 
         res = await self.client.get("/acs/encoders/get", params=params)
 
         return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
 
     @route_metadata(
-        path="/acs/encoders/list", has_required_parameters=False, has_pagination=True
+        path="/acs/encoders/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -637,7 +583,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/scan_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def scan_credential(
@@ -655,20 +601,13 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
         if salto_ks_metadata is not None:
             json_payload["salto_ks_metadata"] = salto_ks_metadata
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_credential"
-            )
 
         res = await self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
@@ -688,7 +627,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
     @route_metadata(
         path="/acs/encoders/scan_to_assign_credential",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def scan_to_assign_credential(
@@ -712,9 +651,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_encoder_id is not None:
@@ -725,11 +662,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/encoders/scan_to_assign_credential"
-            )
 
         res = await self.client.post(
             "/acs/encoders/scan_to_assign_credential", json=json_payload

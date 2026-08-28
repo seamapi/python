@@ -93,9 +93,7 @@ class AbstractAccessCodes(abc.ABC):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -159,9 +157,7 @@ class AbstractAccessCodes(abc.ABC):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -171,8 +167,7 @@ class AbstractAccessCodes(abc.ABC):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -181,9 +176,7 @@ class AbstractAccessCodes(abc.ABC):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -267,9 +260,7 @@ class AbstractAccessCodes(abc.ABC):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -292,8 +283,7 @@ class AbstractAccessCodes(abc.ABC):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -343,8 +333,7 @@ class AbstractAccessCodes(abc.ABC):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -375,8 +364,7 @@ class AbstractAccessCodes(abc.ABC):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -453,9 +441,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -519,9 +505,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -533,8 +517,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -543,9 +526,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -629,9 +610,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -654,8 +633,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -705,8 +683,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -737,8 +714,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -758,7 +734,9 @@ class AccessCodes(AbstractAccessCodes):
         return self._unmanaged
 
     @route_metadata(
-        path="/access_codes/create", has_required_parameters=True, has_pagination=False
+        path="/access_codes/create",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def create(
         self,
@@ -820,9 +798,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -860,18 +836,13 @@ class AccessCodes(AbstractAccessCodes):
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create"
-            )
-
         res = self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
 
     @route_metadata(
         path="/access_codes/create_multiple",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create_multiple(
@@ -934,9 +905,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -968,11 +937,6 @@ class AccessCodes(AbstractAccessCodes):
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create_multiple"
-            )
-
         res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -983,7 +947,9 @@ class AccessCodes(AbstractAccessCodes):
         ]
 
     @route_metadata(
-        path="/access_codes/delete", has_required_parameters=True, has_pagination=False
+        path="/access_codes/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def delete(self, *, access_code_id: str, device_id: Optional[str] = None) -> None:
         """Deletes an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
@@ -991,8 +957,7 @@ class AccessCodes(AbstractAccessCodes):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -1000,18 +965,13 @@ class AccessCodes(AbstractAccessCodes):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/delete"
-            )
-
         self.client.delete("/access_codes/delete", params=params)
 
         return None
 
     @route_metadata(
         path="/access_codes/generate_code",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def generate_code(self, *, device_id: str) -> AccessCode:
@@ -1019,18 +979,11 @@ class AccessCodes(AbstractAccessCodes):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/generate_code"
-            )
 
         res = self.client.get("/access_codes/generate_code", params=params)
 
@@ -1039,7 +992,13 @@ class AccessCodes(AbstractAccessCodes):
         )
 
     @route_metadata(
-        path="/access_codes/get", has_required_parameters=True, has_pagination=False
+        path="/access_codes/get",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "code",
+            "device_id",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -1070,7 +1029,14 @@ class AccessCodes(AbstractAccessCodes):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                code,
+                device_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /access_codes/get")
 
         res = self.client.get("/access_codes/get", params=params)
@@ -1078,7 +1044,18 @@ class AccessCodes(AbstractAccessCodes):
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
-        path="/access_codes/list", has_required_parameters=True, has_pagination=True
+        path="/access_codes/list",
+        at_least_one_parameter_names=(
+            "access_code_ids",
+            "access_grant_id",
+            "access_grant_key",
+            "access_method_id",
+            "customer_key",
+            "device_id",
+            "search",
+            "user_identifier_key",
+        ),
+        has_pagination=True,
     )
     def list(
         self,
@@ -1144,7 +1121,19 @@ class AccessCodes(AbstractAccessCodes):
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_ids,
+                access_grant_id,
+                access_grant_key,
+                access_method_id,
+                customer_key,
+                device_id,
+                search,
+                user_identifier_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/list"
             )
@@ -1158,7 +1147,7 @@ class AccessCodes(AbstractAccessCodes):
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def pull_backup_access_code(self, *, access_code_id: str) -> AccessCode:
@@ -1174,18 +1163,11 @@ class AccessCodes(AbstractAccessCodes):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/pull_backup_access_code"
-            )
 
         res = self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
@@ -1197,7 +1179,7 @@ class AccessCodes(AbstractAccessCodes):
 
     @route_metadata(
         path="/access_codes/report_device_constraints",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def report_device_constraints(
@@ -1219,8 +1201,7 @@ class AccessCodes(AbstractAccessCodes):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1232,17 +1213,14 @@ class AccessCodes(AbstractAccessCodes):
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/report_device_constraints"
-            )
-
         self.client.post("/access_codes/report_device_constraints", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/access_codes/update", has_required_parameters=True, has_pagination=False
+        path="/access_codes/update",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def update(
         self,
@@ -1290,8 +1268,7 @@ class AccessCodes(AbstractAccessCodes):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -1319,18 +1296,13 @@ class AccessCodes(AbstractAccessCodes):
         if type is not None:
             json_payload["type"] = type
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update"
-            )
-
         self.client.patch("/access_codes/update", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/access_codes/update_multiple",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update_multiple(
@@ -1360,8 +1332,7 @@ class AccessCodes(AbstractAccessCodes):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:
@@ -1372,11 +1343,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update_multiple"
-            )
 
         self.client.patch("/access_codes/update_multiple", json=json_payload)
 
@@ -1399,7 +1365,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         return self._unmanaged
 
     @route_metadata(
-        path="/access_codes/create", has_required_parameters=True, has_pagination=False
+        path="/access_codes/create",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def create(
         self,
@@ -1461,9 +1429,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1501,18 +1467,13 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create"
-            )
-
         res = await self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
 
     @route_metadata(
         path="/access_codes/create_multiple",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create_multiple(
@@ -1575,9 +1536,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://docs.seam.co/api/access_codes/pull_backup_access_code>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_ids is not None:
@@ -1609,11 +1568,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/create_multiple"
-            )
-
         res = await self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -1624,7 +1578,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         ]
 
     @route_metadata(
-        path="/access_codes/delete", has_required_parameters=True, has_pagination=False
+        path="/access_codes/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def delete(
         self, *, access_code_id: str, device_id: Optional[str] = None
@@ -1634,8 +1590,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         :param access_code_id: ID of the access code that you want to delete.
 
         :param device_id: ID of the device for which you want to delete the access code.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -1643,18 +1598,13 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/delete"
-            )
-
         await self.client.delete("/access_codes/delete", params=params)
 
         return None
 
     @route_metadata(
         path="/access_codes/generate_code",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def generate_code(self, *, device_id: str) -> AccessCode:
@@ -1662,18 +1612,11 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param device_id: ID of the device for which you want to generate a code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/generate_code"
-            )
 
         res = await self.client.get("/access_codes/generate_code", params=params)
 
@@ -1682,7 +1625,13 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         )
 
     @route_metadata(
-        path="/access_codes/get", has_required_parameters=True, has_pagination=False
+        path="/access_codes/get",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "code",
+            "device_id",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -1713,7 +1662,14 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                code,
+                device_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /access_codes/get")
 
         res = await self.client.get("/access_codes/get", params=params)
@@ -1721,7 +1677,18 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
-        path="/access_codes/list", has_required_parameters=True, has_pagination=True
+        path="/access_codes/list",
+        at_least_one_parameter_names=(
+            "access_code_ids",
+            "access_grant_id",
+            "access_grant_key",
+            "access_method_id",
+            "customer_key",
+            "device_id",
+            "search",
+            "user_identifier_key",
+        ),
+        has_pagination=True,
     )
     async def list(
         self,
@@ -1787,7 +1754,19 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_ids,
+                access_grant_id,
+                access_grant_key,
+                access_method_id,
+                customer_key,
+                device_id,
+                search,
+                user_identifier_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /access_codes/list"
             )
@@ -1801,7 +1780,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def pull_backup_access_code(self, *, access_code_id: str) -> AccessCode:
@@ -1817,18 +1796,11 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param access_code_id: ID of the access code for which you want to pull a backup access code.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/pull_backup_access_code"
-            )
 
         res = await self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
@@ -1840,7 +1812,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
     @route_metadata(
         path="/access_codes/report_device_constraints",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def report_device_constraints(
@@ -1862,8 +1834,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         :param min_code_length: Minimum supported code length as an integer between 4 and 20, inclusive. You can specify either ``min_code_length``/``max_code_length`` or ``supported_code_lengths``.
 
         :param supported_code_lengths: Array of supported code lengths as integers between 4 and 20, inclusive. You can specify either ``supported_code_lengths`` or ``min_code_length``/``max_code_length``.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1875,11 +1846,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/report_device_constraints"
-            )
-
         await self.client.post(
             "/access_codes/report_device_constraints", json=json_payload
         )
@@ -1887,7 +1853,9 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         return None
 
     @route_metadata(
-        path="/access_codes/update", has_required_parameters=True, has_pagination=False
+        path="/access_codes/update",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def update(
         self,
@@ -1935,8 +1903,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param type: Type to which you want to convert the access code. To convert a time-bound access code to an ongoing access code, set ``type`` to ``ongoing``. See also `Changing a time-bound access code to permanent access <https://docs.seam.co/low-level-apis/smart-locks/access-codes/modifying-access-codes#special-case-2-changing-a-time-bound-access-code-to-permanent-access>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if access_code_id is not None:
@@ -1964,18 +1931,13 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         if type is not None:
             json_payload["type"] = type
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update"
-            )
-
         await self.client.patch("/access_codes/update", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/access_codes/update_multiple",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update_multiple(
@@ -2005,8 +1967,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         To help your users identify codes set by Seam, Seam provides the name exactly as it appears on the lock provider's app or on the device as a separate property called ``appearance``. This is an object with a ``name`` property and, optionally, ``first_name`` and ``last_name`` properties (for providers that break down a name into components).
 
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if common_code_key is not None:
@@ -2017,11 +1978,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /access_codes/update_multiple"
-            )
 
         await self.client.patch("/access_codes/update_multiple", json=json_payload)
 

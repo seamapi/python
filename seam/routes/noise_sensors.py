@@ -126,7 +126,9 @@ class NoiseSensors(AbstractNoiseSensors):
         return self._simulate
 
     @route_metadata(
-        path="/noise_sensors/list", has_required_parameters=False, has_pagination=False
+        path="/noise_sensors/list",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def list(
         self,
@@ -198,7 +200,9 @@ class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
         return self._simulate
 
     @route_metadata(
-        path="/noise_sensors/list", has_required_parameters=False, has_pagination=False
+        path="/noise_sensors/list",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def list(
         self,

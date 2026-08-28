@@ -24,9 +24,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -34,8 +32,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -57,9 +54,7 @@ class AbstractThermostatsDailyPrograms(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -77,9 +72,7 @@ class AbstractAsyncThermostatsDailyPrograms(abc.ABC):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,8 +80,7 @@ class AbstractAsyncThermostatsDailyPrograms(abc.ABC):
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -110,9 +102,7 @@ class AbstractAsyncThermostatsDailyPrograms(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -123,7 +113,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -137,9 +127,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -148,11 +136,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["name"] = name
         if periods is not None:
             json_payload["periods"] = periods
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/create"
-            )
 
         res = self.client.post("/thermostats/daily_programs/create", json=json_payload)
 
@@ -164,24 +147,18 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, thermostat_daily_program_id: str) -> None:
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
             params["thermostat_daily_program_id"] = thermostat_daily_program_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/delete"
-            )
 
         self.client.delete("/thermostats/daily_programs/delete", params=params)
 
@@ -189,7 +166,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -210,9 +187,7 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -221,11 +196,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["periods"] = periods
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/update"
-            )
 
         res = self.client.patch("/thermostats/daily_programs/update", json=json_payload)
 
@@ -251,7 +221,7 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -265,9 +235,7 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
         :param periods: Array of thermostat daily program periods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -276,11 +244,6 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
             json_payload["name"] = name
         if periods is not None:
             json_payload["periods"] = periods
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/create"
-            )
 
         res = await self.client.post(
             "/thermostats/daily_programs/create", json=json_payload
@@ -294,24 +257,18 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, thermostat_daily_program_id: str) -> None:
         """Deletes a thermostat daily program.
 
         :param thermostat_daily_program_id: ID of the thermostat daily program that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if thermostat_daily_program_id is not None:
             params["thermostat_daily_program_id"] = thermostat_daily_program_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/delete"
-            )
 
         await self.client.delete("/thermostats/daily_programs/delete", params=params)
 
@@ -319,7 +276,7 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
     @route_metadata(
         path="/thermostats/daily_programs/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -340,9 +297,7 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -351,11 +306,6 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
             json_payload["periods"] = periods
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/daily_programs/update"
-            )
 
         res = await self.client.patch(
             "/thermostats/daily_programs/update", json=json_payload

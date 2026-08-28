@@ -19,8 +19,7 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -54,9 +53,7 @@ class AbstractAcsUsers(abc.ABC):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -169,8 +166,7 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -279,8 +275,7 @@ class AbstractAsyncAcsUsers(abc.ABC):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -314,9 +309,7 @@ class AbstractAsyncAcsUsers(abc.ABC):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -429,8 +422,7 @@ class AbstractAsyncAcsUsers(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -535,7 +527,7 @@ class AcsUsers(AbstractAcsUsers):
 
     @route_metadata(
         path="/acs/users/add_to_access_group",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def add_to_access_group(
@@ -546,8 +538,7 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -555,17 +546,12 @@ class AcsUsers(AbstractAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/add_to_access_group"
-            )
-
         self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/acs/users/create", has_required_parameters=True, has_pagination=False
+        path="/acs/users/create", at_least_one_parameter_names=(), has_pagination=False
     )
     def create(
         self,
@@ -597,9 +583,7 @@ class AcsUsers(AbstractAcsUsers):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -619,15 +603,18 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /acs/users/create")
-
         res = self.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
 
     @route_metadata(
-        path="/acs/users/delete", has_required_parameters=True, has_pagination=False
+        path="/acs/users/delete",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def delete(
         self,
@@ -654,7 +641,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/delete")
 
         self.client.delete("/acs/users/delete", params=params)
@@ -662,7 +656,13 @@ class AcsUsers(AbstractAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/get", has_required_parameters=True, has_pagination=False
+        path="/acs/users/get",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -691,7 +691,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/get")
 
         res = self.client.get("/acs/users/get", params=params)
@@ -699,7 +706,7 @@ class AcsUsers(AbstractAcsUsers):
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
 
     @route_metadata(
-        path="/acs/users/list", has_required_parameters=False, has_pagination=True
+        path="/acs/users/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -760,7 +767,11 @@ class AcsUsers(AbstractAcsUsers):
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
         has_pagination=False,
     )
     def list_accessible_entrances(
@@ -790,7 +801,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/list_accessible_entrances"
             )
@@ -806,7 +824,7 @@ class AcsUsers(AbstractAcsUsers):
 
     @route_metadata(
         path="/acs/users/remove_from_access_group",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_from_access_group(
@@ -823,8 +841,7 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -834,18 +851,17 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/remove_from_access_group"
-            )
-
         self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
 
     @route_metadata(
         path="/acs/users/revoke_access_to_all_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
         has_pagination=False,
     )
     def revoke_access_to_all_entrances(
@@ -873,7 +889,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
             )
@@ -883,7 +906,13 @@ class AcsUsers(AbstractAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/suspend", has_required_parameters=True, has_pagination=False
+        path="/acs/users/suspend",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def suspend(
         self,
@@ -910,7 +939,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/suspend"
             )
@@ -920,7 +956,13 @@ class AcsUsers(AbstractAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/unsuspend", has_required_parameters=True, has_pagination=False
+        path="/acs/users/unsuspend",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def unsuspend(
         self,
@@ -947,7 +989,14 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/unsuspend"
             )
@@ -957,7 +1006,19 @@ class AcsUsers(AbstractAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/update", has_required_parameters=True, has_pagination=False
+        path="/acs/users/update",
+        at_least_one_parameter_names=(
+            "access_schedule",
+            "acs_system_id",
+            "acs_user_id",
+            "email",
+            "email_address",
+            "full_name",
+            "hid_acs_system_id",
+            "phone_number",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def update(
         self,
@@ -1014,7 +1075,20 @@ class AcsUsers(AbstractAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                access_schedule,
+                acs_system_id,
+                acs_user_id,
+                email,
+                email_address,
+                full_name,
+                hid_acs_system_id,
+                phone_number,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/update")
 
         self.client.patch("/acs/users/update", json=json_payload)
@@ -1029,7 +1103,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
     @route_metadata(
         path="/acs/users/add_to_access_group",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def add_to_access_group(
@@ -1040,8 +1114,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
         :param acs_user_id: ID of the access system user that you want to add to an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -1049,17 +1122,12 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/add_to_access_group"
-            )
-
         await self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/acs/users/create", has_required_parameters=True, has_pagination=False
+        path="/acs/users/create", at_least_one_parameter_names=(), has_pagination=False
     )
     async def create(
         self,
@@ -1091,9 +1159,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         :param user_identity_id: ID of the user identity with which you want to associate the new access system user.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_system_id is not None:
@@ -1113,15 +1179,18 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /acs/users/create")
-
         res = await self.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
 
     @route_metadata(
-        path="/acs/users/delete", has_required_parameters=True, has_pagination=False
+        path="/acs/users/delete",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def delete(
         self,
@@ -1148,7 +1217,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/delete")
 
         await self.client.delete("/acs/users/delete", params=params)
@@ -1156,7 +1232,13 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/get", has_required_parameters=True, has_pagination=False
+        path="/acs/users/get",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -1185,7 +1267,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/get")
 
         res = await self.client.get("/acs/users/get", params=params)
@@ -1193,7 +1282,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
 
     @route_metadata(
-        path="/acs/users/list", has_required_parameters=False, has_pagination=True
+        path="/acs/users/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -1254,7 +1343,11 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
         has_pagination=False,
     )
     async def list_accessible_entrances(
@@ -1284,7 +1377,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/list_accessible_entrances"
             )
@@ -1302,7 +1402,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
     @route_metadata(
         path="/acs/users/remove_from_access_group",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_from_access_group(
@@ -1319,8 +1419,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         :param acs_user_id: ID of the access system user that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity that you want to remove from an access group. You can only provide acs_user_id or user_identity_id.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -1330,18 +1429,17 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/users/remove_from_access_group"
-            )
-
         await self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
 
     @route_metadata(
         path="/acs/users/revoke_access_to_all_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
         has_pagination=False,
     )
     async def revoke_access_to_all_entrances(
@@ -1369,7 +1467,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
             )
@@ -1381,7 +1486,13 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/suspend", has_required_parameters=True, has_pagination=False
+        path="/acs/users/suspend",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def suspend(
         self,
@@ -1408,7 +1519,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/suspend"
             )
@@ -1418,7 +1536,13 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/unsuspend", has_required_parameters=True, has_pagination=False
+        path="/acs/users/unsuspend",
+        at_least_one_parameter_names=(
+            "acs_system_id",
+            "acs_user_id",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def unsuspend(
         self,
@@ -1445,7 +1569,14 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                acs_system_id,
+                acs_user_id,
+                user_identity_id,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /acs/users/unsuspend"
             )
@@ -1455,7 +1586,19 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         return None
 
     @route_metadata(
-        path="/acs/users/update", has_required_parameters=True, has_pagination=False
+        path="/acs/users/update",
+        at_least_one_parameter_names=(
+            "access_schedule",
+            "acs_system_id",
+            "acs_user_id",
+            "email",
+            "email_address",
+            "full_name",
+            "hid_acs_system_id",
+            "phone_number",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def update(
         self,
@@ -1512,7 +1655,20 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                access_schedule,
+                acs_system_id,
+                acs_user_id,
+                email,
+                email_address,
+                full_name,
+                hid_acs_system_id,
+                phone_number,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /acs/users/update")
 
         await self.client.patch("/acs/users/update", json=json_payload)

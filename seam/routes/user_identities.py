@@ -47,8 +47,7 @@ class AbstractUserIdentities(abc.ABC):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -80,9 +79,7 @@ class AbstractUserIdentities(abc.ABC):
     def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_id: ID of the user identity that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -101,9 +98,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -131,8 +126,7 @@ class AbstractUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -169,9 +163,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -180,9 +172,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -191,9 +181,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -202,9 +190,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -242,8 +228,7 @@ class AbstractUserIdentities(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -253,8 +238,7 @@ class AbstractUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -277,9 +261,7 @@ class AbstractUserIdentities(abc.ABC):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_key: Unique key for the user identity."""
         raise NotImplementedError()
 
 
@@ -309,8 +291,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -342,9 +323,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
     async def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_id: ID of the user identity that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -363,9 +342,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -395,8 +372,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -433,9 +409,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -446,9 +420,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -457,9 +429,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -468,9 +438,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -508,8 +476,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -521,8 +488,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -545,9 +511,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_key: Unique key for the user identity."""
         raise NotImplementedError()
 
 
@@ -563,7 +527,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/add_acs_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def add_acs_user(
@@ -584,8 +548,7 @@ class UserIdentities(AbstractUserIdentities):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -595,18 +558,13 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/add_acs_user"
-            )
-
         self.client.put("/user_identities/add_acs_user", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/user_identities/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -652,24 +610,17 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_id: ID of the user identity that you want to delete."""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/delete"
-            )
 
         self.client.delete("/user_identities/delete", params=params)
 
@@ -677,7 +628,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/generate_instant_key",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def generate_instant_key(
@@ -695,9 +646,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -706,11 +655,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/generate_instant_key"
-            )
 
         res = self.client.post(
             "/user_identities/generate_instant_key", json=json_payload
@@ -721,7 +665,12 @@ class UserIdentities(AbstractUserIdentities):
         )
 
     @route_metadata(
-        path="/user_identities/get", has_required_parameters=True, has_pagination=False
+        path="/user_identities/get",
+        at_least_one_parameter_names=(
+            "user_identity_id",
+            "user_identity_key",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -745,7 +694,13 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             params["user_identity_key"] = user_identity_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                user_identity_id,
+                user_identity_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/get"
             )
@@ -758,7 +713,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/grant_access_to_device",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
@@ -767,8 +722,7 @@ class UserIdentities(AbstractUserIdentities):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -776,17 +730,14 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/grant_access_to_device"
-            )
-
         self.client.put("/user_identities/grant_access_to_device", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/user_identities/list", has_required_parameters=False, has_pagination=True
+        path="/user_identities/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     def list(
         self,
@@ -839,7 +790,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
@@ -847,18 +798,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_devices"
-            )
 
         res = self.client.get("/user_identities/list_accessible_devices", params=params)
 
@@ -871,7 +815,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
@@ -879,18 +823,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_entrances"
-            )
 
         res = self.client.get(
             "/user_identities/list_accessible_entrances", params=params
@@ -905,7 +842,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_acs_systems",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
@@ -913,18 +850,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_systems"
-            )
 
         res = self.client.get("/user_identities/list_acs_systems", params=params)
 
@@ -937,7 +867,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_acs_users",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
@@ -945,18 +875,11 @@ class UserIdentities(AbstractUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_users"
-            )
 
         res = self.client.get("/user_identities/list_acs_users", params=params)
 
@@ -967,7 +890,12 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/merge",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "merged_user_identity_ids",
+            "merged_user_identity_keys",
+            "user_identity_id",
+            "user_identity_key",
+        ),
         has_pagination=False,
     )
     def merge(
@@ -1006,7 +934,15 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                merged_user_identity_ids,
+                merged_user_identity_keys,
+                user_identity_id,
+                user_identity_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/merge"
             )
@@ -1017,7 +953,7 @@ class UserIdentities(AbstractUserIdentities):
 
     @route_metadata(
         path="/user_identities/remove_acs_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
@@ -1026,8 +962,7 @@ class UserIdentities(AbstractUserIdentities):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -1035,18 +970,13 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/remove_acs_user"
-            )
-
         self.client.delete("/user_identities/remove_acs_user", params=params)
 
         return None
 
     @route_metadata(
         path="/user_identities/revoke_access_to_device",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
@@ -1055,8 +985,7 @@ class UserIdentities(AbstractUserIdentities):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1064,18 +993,13 @@ class UserIdentities(AbstractUserIdentities):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/revoke_access_to_device"
-            )
-
         self.client.delete("/user_identities/revoke_access_to_device", params=params)
 
         return None
 
     @route_metadata(
         path="/user_identities/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -1097,9 +1021,7 @@ class UserIdentities(AbstractUserIdentities):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_key: Unique key for the user identity."""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -1112,11 +1034,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/update"
-            )
 
         self.client.patch("/user_identities/update", json=json_payload)
 
@@ -1135,7 +1052,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/add_acs_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def add_acs_user(
@@ -1156,8 +1073,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param user_identity_id: ID of the user identity to which you want to add an access system user.
 
         :param user_identity_key: Key of the user identity to which you want to add an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -1167,18 +1083,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/add_acs_user"
-            )
-
         await self.client.put("/user_identities/add_acs_user", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/user_identities/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -1224,24 +1135,17 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, user_identity_id: str) -> None:
         """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
 
-        :param user_identity_id: ID of the user identity that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_id: ID of the user identity that you want to delete."""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/delete"
-            )
 
         await self.client.delete("/user_identities/delete", params=params)
 
@@ -1249,7 +1153,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/generate_instant_key",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def generate_instant_key(
@@ -1267,9 +1171,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param max_use_count: Maximum number of times the instant key can be used. Default: 1.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -1278,11 +1180,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/generate_instant_key"
-            )
 
         res = await self.client.post(
             "/user_identities/generate_instant_key", json=json_payload
@@ -1293,7 +1190,12 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         )
 
     @route_metadata(
-        path="/user_identities/get", has_required_parameters=True, has_pagination=False
+        path="/user_identities/get",
+        at_least_one_parameter_names=(
+            "user_identity_id",
+            "user_identity_key",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -1317,7 +1219,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         if user_identity_key is not None:
             params["user_identity_key"] = user_identity_key
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                user_identity_id,
+                user_identity_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/get"
             )
@@ -1330,7 +1238,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/grant_access_to_device",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def grant_access_to_device(
@@ -1341,19 +1249,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
         :param user_identity_id: ID of the user identity that you want to grant access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/grant_access_to_device"
-            )
 
         await self.client.put(
             "/user_identities/grant_access_to_device", json=json_payload
@@ -1362,7 +1264,9 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         return None
 
     @route_metadata(
-        path="/user_identities/list", has_required_parameters=False, has_pagination=True
+        path="/user_identities/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     async def list(
         self,
@@ -1415,7 +1319,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
@@ -1423,18 +1327,11 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_devices"
-            )
 
         res = await self.client.get(
             "/user_identities/list_accessible_devices", params=params
@@ -1449,7 +1346,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_accessible_entrances(
@@ -1459,18 +1356,11 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_accessible_entrances"
-            )
 
         res = await self.client.get(
             "/user_identities/list_accessible_entrances", params=params
@@ -1485,7 +1375,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_acs_systems",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
@@ -1493,18 +1383,11 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_systems"
-            )
 
         res = await self.client.get("/user_identities/list_acs_systems", params=params)
 
@@ -1517,7 +1400,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/list_acs_users",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
@@ -1525,18 +1408,11 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/list_acs_users"
-            )
 
         res = await self.client.get("/user_identities/list_acs_users", params=params)
 
@@ -1547,7 +1423,12 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/merge",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "merged_user_identity_ids",
+            "merged_user_identity_keys",
+            "user_identity_id",
+            "user_identity_key",
+        ),
         has_pagination=False,
     )
     async def merge(
@@ -1586,7 +1467,15 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                merged_user_identity_ids,
+                merged_user_identity_keys,
+                user_identity_id,
+                user_identity_key,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /user_identities/merge"
             )
@@ -1597,7 +1486,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/remove_acs_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
@@ -1606,8 +1495,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
         :param user_identity_id: ID of the user identity from which you want to remove an access system user.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_user_id is not None:
@@ -1615,18 +1503,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/remove_acs_user"
-            )
-
         await self.client.delete("/user_identities/remove_acs_user", params=params)
 
         return None
 
     @route_metadata(
         path="/user_identities/revoke_access_to_device",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def revoke_access_to_device(
@@ -1637,19 +1520,13 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
         :param user_identity_id: ID of the user identity from which you want to revoke access to a device.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/revoke_access_to_device"
-            )
 
         await self.client.delete(
             "/user_identities/revoke_access_to_device", params=params
@@ -1659,7 +1536,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
     @route_metadata(
         path="/user_identities/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -1681,9 +1558,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         :param phone_number: Unique phone number for the user identity.
 
-        :param user_identity_key: Unique key for the user identity.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param user_identity_key: Unique key for the user identity."""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -1696,11 +1571,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /user_identities/update"
-            )
 
         await self.client.patch("/user_identities/update", json=json_payload)
 

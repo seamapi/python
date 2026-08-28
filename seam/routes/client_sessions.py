@@ -48,9 +48,7 @@ class AbstractClientSessions(abc.ABC):
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -156,9 +154,7 @@ class AbstractClientSessions(abc.ABC):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to revoke."""
         raise NotImplementedError()
 
 
@@ -202,9 +198,7 @@ class AbstractAsyncClientSessions(abc.ABC):
     async def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -310,9 +304,7 @@ class AbstractAsyncClientSessions(abc.ABC):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to revoke."""
         raise NotImplementedError()
 
 
@@ -323,7 +315,7 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -384,31 +376,26 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to delete."""
         params: Dict[str, Any] = {}
 
         if client_session_id is not None:
             params["client_session_id"] = client_session_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/delete"
-            )
 
         self.client.delete("/client_sessions/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/client_sessions/get", has_required_parameters=False, has_pagination=False
+        path="/client_sessions/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def get(
         self,
@@ -438,7 +425,7 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/get_or_create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get_or_create(
@@ -489,7 +476,14 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/grant_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "client_session_id",
+            "connect_webview_ids",
+            "connected_account_ids",
+            "user_identifier_key",
+            "user_identity_id",
+            "user_identity_ids",
+        ),
         has_pagination=False,
     )
     def grant_access(
@@ -532,7 +526,17 @@ class ClientSessions(AbstractClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                client_session_id,
+                connect_webview_ids,
+                connected_account_ids,
+                user_identifier_key,
+                user_identity_id,
+                user_identity_ids,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /client_sessions/grant_access"
             )
@@ -543,7 +547,7 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list(
@@ -590,7 +594,7 @@ class ClientSessions(AbstractClientSessions):
 
     @route_metadata(
         path="/client_sessions/revoke",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def revoke(self, *, client_session_id: str) -> None:
@@ -598,18 +602,11 @@ class ClientSessions(AbstractClientSessions):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to revoke."""
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/revoke"
-            )
 
         self.client.post("/client_sessions/revoke", json=json_payload)
 
@@ -623,7 +620,7 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -684,31 +681,26 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, client_session_id: str) -> None:
         """Deletes a `client session <https://docs.seam.co/core-concepts/authentication/client-session-tokens>`_.
 
-        :param client_session_id: ID of the client session that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to delete."""
         params: Dict[str, Any] = {}
 
         if client_session_id is not None:
             params["client_session_id"] = client_session_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/delete"
-            )
 
         await self.client.delete("/client_sessions/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/client_sessions/get", has_required_parameters=False, has_pagination=False
+        path="/client_sessions/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -738,7 +730,7 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/get_or_create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get_or_create(
@@ -791,7 +783,14 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/grant_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "client_session_id",
+            "connect_webview_ids",
+            "connected_account_ids",
+            "user_identifier_key",
+            "user_identity_id",
+            "user_identity_ids",
+        ),
         has_pagination=False,
     )
     async def grant_access(
@@ -834,7 +833,17 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
 
-        if not json_payload:
+        if all(
+            param is None
+            for param in (
+                client_session_id,
+                connect_webview_ids,
+                connected_account_ids,
+                user_identifier_key,
+                user_identity_id,
+                user_identity_ids,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /client_sessions/grant_access"
             )
@@ -845,7 +854,7 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list(
@@ -892,7 +901,7 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
     @route_metadata(
         path="/client_sessions/revoke",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def revoke(self, *, client_session_id: str) -> None:
@@ -900,18 +909,11 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         Note that `deleting a client session <https://docs.seam.co/api/client_sessions/delete>`_ is a separate action.
 
-        :param client_session_id: ID of the client session that you want to revoke.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param client_session_id: ID of the client session that you want to revoke."""
         json_payload: Dict[str, Any] = {}
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/revoke"
-            )
 
         await self.client.post("/client_sessions/revoke", json=json_payload)
 

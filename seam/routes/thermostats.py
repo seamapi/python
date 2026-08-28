@@ -63,9 +63,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,9 +85,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -138,8 +134,7 @@ class AbstractThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -149,8 +144,7 @@ class AbstractThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -172,9 +166,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -202,9 +194,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -272,9 +262,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -286,8 +274,7 @@ class AbstractThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -309,9 +296,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -342,9 +327,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -368,8 +351,7 @@ class AbstractThermostats(abc.ABC):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -418,8 +400,7 @@ class AbstractThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -456,9 +437,7 @@ class AbstractThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -495,9 +474,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -519,9 +496,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -570,8 +545,7 @@ class AbstractAsyncThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -583,8 +557,7 @@ class AbstractAsyncThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -606,9 +579,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -636,9 +607,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -706,9 +675,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -720,8 +687,7 @@ class AbstractAsyncThermostats(abc.ABC):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -743,9 +709,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -776,9 +740,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -802,8 +764,7 @@ class AbstractAsyncThermostats(abc.ABC):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -852,8 +813,7 @@ class AbstractAsyncThermostats(abc.ABC):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -890,9 +850,7 @@ class AbstractAsyncThermostats(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -920,7 +878,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/activate_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def activate_climate_preset(
@@ -938,20 +896,13 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/activate_climate_preset"
-            )
 
         res = self.client.post(
             "/thermostats/activate_climate_preset", json=json_payload
@@ -972,7 +923,7 @@ class Thermostats(AbstractThermostats):
         )
 
     @route_metadata(
-        path="/thermostats/cool", has_required_parameters=True, has_pagination=False
+        path="/thermostats/cool", at_least_one_parameter_names=(), has_pagination=False
     )
     def cool(
         self,
@@ -992,9 +943,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1003,9 +952,6 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/cool")
 
         res = self.client.post("/thermostats/cool", json=json_payload)
 
@@ -1025,7 +971,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/create_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create_climate_preset(
@@ -1073,8 +1019,7 @@ class Thermostats(AbstractThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1102,18 +1047,13 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/create_climate_preset"
-            )
-
         self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/delete_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete_climate_preset(self, *, climate_preset_key: str, device_id: str) -> None:
@@ -1122,8 +1062,7 @@ class Thermostats(AbstractThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1131,17 +1070,12 @@ class Thermostats(AbstractThermostats):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/delete_climate_preset"
-            )
-
         self.client.delete("/thermostats/delete_climate_preset", params=params)
 
         return None
 
     @route_metadata(
-        path="/thermostats/heat", has_required_parameters=True, has_pagination=False
+        path="/thermostats/heat", at_least_one_parameter_names=(), has_pagination=False
     )
     def heat(
         self,
@@ -1161,9 +1095,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1172,9 +1104,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/heat")
 
         res = self.client.post("/thermostats/heat", json=json_payload)
 
@@ -1194,7 +1123,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/heat_cool",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def heat_cool(
@@ -1221,9 +1150,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1236,11 +1163,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/heat_cool"
-            )
 
         res = self.client.post("/thermostats/heat_cool", json=json_payload)
 
@@ -1259,7 +1181,7 @@ class Thermostats(AbstractThermostats):
         )
 
     @route_metadata(
-        path="/thermostats/list", has_required_parameters=False, has_pagination=False
+        path="/thermostats/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(
         self,
@@ -1333,7 +1255,7 @@ class Thermostats(AbstractThermostats):
         ]
 
     @route_metadata(
-        path="/thermostats/off", has_required_parameters=True, has_pagination=False
+        path="/thermostats/off", at_least_one_parameter_names=(), has_pagination=False
     )
     def off(
         self,
@@ -1347,16 +1269,11 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/off")
 
         res = self.client.post("/thermostats/off", json=json_payload)
 
@@ -1376,7 +1293,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/set_fallback_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def set_fallback_climate_preset(
@@ -1387,8 +1304,7 @@ class Thermostats(AbstractThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1396,18 +1312,13 @@ class Thermostats(AbstractThermostats):
         if device_id is not None:
             json_payload["device_id"] = device_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fallback_climate_preset"
-            )
-
         self.client.post("/thermostats/set_fallback_climate_preset", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/set_fan_mode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def set_fan_mode(
@@ -1428,9 +1339,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1439,11 +1348,6 @@ class Thermostats(AbstractThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fan_mode"
-            )
 
         res = self.client.post("/thermostats/set_fan_mode", json=json_payload)
 
@@ -1463,7 +1367,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/set_hvac_mode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def set_hvac_mode(
@@ -1493,9 +1397,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1510,11 +1412,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_hvac_mode"
-            )
 
         res = self.client.post("/thermostats/set_hvac_mode", json=json_payload)
 
@@ -1534,7 +1431,7 @@ class Thermostats(AbstractThermostats):
 
     @route_metadata(
         path="/thermostats/set_temperature_threshold",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def set_temperature_threshold(
@@ -1557,8 +1454,7 @@ class Thermostats(AbstractThermostats):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1572,18 +1468,13 @@ class Thermostats(AbstractThermostats):
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_temperature_threshold"
-            )
-
         self.client.patch("/thermostats/set_temperature_threshold", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/update_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update_climate_preset(
@@ -1631,8 +1522,7 @@ class Thermostats(AbstractThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1660,18 +1550,13 @@ class Thermostats(AbstractThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_climate_preset"
-            )
-
         self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/update_weekly_program",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update_weekly_program(
@@ -1707,9 +1592,7 @@ class Thermostats(AbstractThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1728,11 +1611,6 @@ class Thermostats(AbstractThermostats):
             json_payload["tuesday_program_id"] = tuesday_program_id
         if wednesday_program_id is not None:
             json_payload["wednesday_program_id"] = wednesday_program_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_weekly_program"
-            )
 
         res = self.client.post("/thermostats/update_weekly_program", json=json_payload)
 
@@ -1775,7 +1653,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/activate_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def activate_climate_preset(
@@ -1793,20 +1671,13 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/activate_climate_preset"
-            )
 
         res = await self.client.post(
             "/thermostats/activate_climate_preset", json=json_payload
@@ -1827,7 +1698,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         )
 
     @route_metadata(
-        path="/thermostats/cool", has_required_parameters=True, has_pagination=False
+        path="/thermostats/cool", at_least_one_parameter_names=(), has_pagination=False
     )
     async def cool(
         self,
@@ -1847,9 +1718,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1858,9 +1727,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/cool")
 
         res = await self.client.post("/thermostats/cool", json=json_payload)
 
@@ -1880,7 +1746,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/create_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create_climate_preset(
@@ -1928,8 +1794,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1957,18 +1822,13 @@ class AsyncThermostats(AbstractAsyncThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/create_climate_preset"
-            )
-
         await self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/delete_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete_climate_preset(
@@ -1979,8 +1839,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to delete.
 
         :param device_id: ID of the thermostat device for which you want to delete a climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -1988,17 +1847,12 @@ class AsyncThermostats(AbstractAsyncThermostats):
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/delete_climate_preset"
-            )
-
         await self.client.delete("/thermostats/delete_climate_preset", params=params)
 
         return None
 
     @route_metadata(
-        path="/thermostats/heat", has_required_parameters=True, has_pagination=False
+        path="/thermostats/heat", at_least_one_parameter_names=(), has_pagination=False
     )
     async def heat(
         self,
@@ -2018,9 +1872,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2029,9 +1881,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/heat")
 
         res = await self.client.post("/thermostats/heat", json=json_payload)
 
@@ -2051,7 +1900,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/heat_cool",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def heat_cool(
@@ -2078,9 +1927,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2093,11 +1940,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/heat_cool"
-            )
 
         res = await self.client.post("/thermostats/heat_cool", json=json_payload)
 
@@ -2116,7 +1958,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         )
 
     @route_metadata(
-        path="/thermostats/list", has_required_parameters=False, has_pagination=False
+        path="/thermostats/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(
         self,
@@ -2190,7 +2032,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         ]
 
     @route_metadata(
-        path="/thermostats/off", has_required_parameters=True, has_pagination=False
+        path="/thermostats/off", at_least_one_parameter_names=(), has_pagination=False
     )
     async def off(
         self,
@@ -2204,16 +2046,11 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /thermostats/off")
 
         res = await self.client.post("/thermostats/off", json=json_payload)
 
@@ -2233,7 +2070,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/set_fallback_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def set_fallback_climate_preset(
@@ -2244,19 +2081,13 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param climate_preset_key: Climate preset key of the climate preset that you want to set as the fallback climate preset.
 
         :param device_id: ID of the thermostat device for which you want to set the fallback climate preset.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fallback_climate_preset"
-            )
 
         await self.client.post(
             "/thermostats/set_fallback_climate_preset", json=json_payload
@@ -2266,7 +2097,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/set_fan_mode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def set_fan_mode(
@@ -2287,9 +2118,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2298,11 +2127,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_fan_mode"
-            )
 
         res = await self.client.post("/thermostats/set_fan_mode", json=json_payload)
 
@@ -2322,7 +2146,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/set_hvac_mode",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def set_hvac_mode(
@@ -2352,9 +2176,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2369,11 +2191,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_hvac_mode"
-            )
 
         res = await self.client.post("/thermostats/set_hvac_mode", json=json_payload)
 
@@ -2393,7 +2210,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/set_temperature_threshold",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def set_temperature_threshold(
@@ -2416,8 +2233,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param upper_limit_celsius: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
 
         :param upper_limit_fahrenheit: Upper temperature limit in in °C. Seam alerts you if the reported temperature is higher than this value. You can specify either ``upper_limit`` but not both.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2431,11 +2247,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/set_temperature_threshold"
-            )
-
         await self.client.patch(
             "/thermostats/set_temperature_threshold", json=json_payload
         )
@@ -2444,7 +2255,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
     @route_metadata(
         path="/thermostats/update_climate_preset",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update_climate_preset(
@@ -2492,8 +2303,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if climate_preset_key is not None:
@@ -2521,18 +2331,13 @@ class AsyncThermostats(AbstractAsyncThermostats):
         if name is not None:
             json_payload["name"] = name
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_climate_preset"
-            )
-
         await self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/thermostats/update_weekly_program",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update_weekly_program(
@@ -2568,9 +2373,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -2589,11 +2392,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["tuesday_program_id"] = tuesday_program_id
         if wednesday_program_id is not None:
             json_payload["wednesday_program_id"] = wednesday_program_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /thermostats/update_weekly_program"
-            )
 
         res = await self.client.post(
             "/thermostats/update_weekly_program", json=json_payload

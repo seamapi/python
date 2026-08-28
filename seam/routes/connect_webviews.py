@@ -153,9 +153,7 @@ class AbstractConnectWebviews(abc.ABC):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -166,9 +164,7 @@ class AbstractConnectWebviews(abc.ABC):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -345,9 +341,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -358,9 +352,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -399,7 +391,7 @@ class ConnectWebviews(AbstractConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -569,7 +561,7 @@ class ConnectWebviews(AbstractConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, connect_webview_id: str) -> None:
@@ -577,25 +569,20 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/delete"
-            )
 
         self.client.delete("/connect_webviews/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/connect_webviews/get", has_required_parameters=True, has_pagination=False
+        path="/connect_webviews/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def get(self, *, connect_webview_id: str) -> ConnectWebview:
         """Returns a specified `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
@@ -604,18 +591,11 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/get"
-            )
 
         res = self.client.get("/connect_webviews/get", params=params)
 
@@ -625,7 +605,7 @@ class ConnectWebviews(AbstractConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     def list(
@@ -683,7 +663,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/create",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -853,7 +833,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, connect_webview_id: str) -> None:
@@ -861,25 +841,20 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         You do not need to delete a Connect Webview once a user completes it. Instead, you can simply ignore completed Connect Webviews.
 
-        :param connect_webview_id: ID of the Connect Webview that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param connect_webview_id: ID of the Connect Webview that you want to delete."""
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/delete"
-            )
 
         await self.client.delete("/connect_webviews/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/connect_webviews/get", has_required_parameters=True, has_pagination=False
+        path="/connect_webviews/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def get(self, *, connect_webview_id: str) -> ConnectWebview:
         """Returns a specified `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_.
@@ -888,18 +863,11 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         :param connect_webview_id: ID of the Connect Webview that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /connect_webviews/get"
-            )
 
         res = await self.client.get("/connect_webviews/get", params=params)
 
@@ -909,7 +877,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
     @route_metadata(
         path="/connect_webviews/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     async def list(

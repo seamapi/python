@@ -725,7 +725,13 @@ class Events(AbstractEvents):
         self.defaults = defaults
 
     @route_metadata(
-        path="/events/get", has_required_parameters=True, has_pagination=False
+        path="/events/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "event_id",
+            "event_type",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -754,7 +760,14 @@ class Events(AbstractEvents):
         if event_type is not None:
             params["event_type"] = event_type
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                event_id,
+                event_type,
+            )
+        ):
             raise ValueError("At least one parameter is required for /events/get")
 
         res = self.client.get("/events/get", params=params)
@@ -762,7 +775,37 @@ class Events(AbstractEvents):
         return seam_event_from_dict(unwrap(res, "event", "/events/get"))
 
     @route_metadata(
-        path="/events/list", has_required_parameters=True, has_pagination=False
+        path="/events/list",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "access_code_ids",
+            "access_grant_id",
+            "access_grant_ids",
+            "access_method_id",
+            "access_method_ids",
+            "acs_access_group_id",
+            "acs_credential_id",
+            "acs_encoder_id",
+            "acs_entrance_id",
+            "acs_system_id",
+            "acs_system_ids",
+            "acs_user_id",
+            "between",
+            "connect_webview_id",
+            "connected_account_id",
+            "customer_key",
+            "device_id",
+            "device_ids",
+            "event_ids",
+            "event_type",
+            "event_types",
+            "since",
+            "space_id",
+            "space_ids",
+            "unstable_offset",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     def list(
         self,
@@ -1152,7 +1195,38 @@ class Events(AbstractEvents):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                access_code_ids,
+                access_grant_id,
+                access_grant_ids,
+                access_method_id,
+                access_method_ids,
+                acs_access_group_id,
+                acs_credential_id,
+                acs_encoder_id,
+                acs_entrance_id,
+                acs_system_id,
+                acs_system_ids,
+                acs_user_id,
+                between,
+                connect_webview_id,
+                connected_account_id,
+                customer_key,
+                device_id,
+                device_ids,
+                event_ids,
+                event_type,
+                event_types,
+                since,
+                space_id,
+                space_ids,
+                unstable_offset,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /events/list")
 
         res = self.client.get("/events/list", params=params)
@@ -1169,7 +1243,13 @@ class AsyncEvents(AbstractAsyncEvents):
         self.defaults = defaults
 
     @route_metadata(
-        path="/events/get", has_required_parameters=True, has_pagination=False
+        path="/events/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "event_id",
+            "event_type",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -1198,7 +1278,14 @@ class AsyncEvents(AbstractAsyncEvents):
         if event_type is not None:
             params["event_type"] = event_type
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                event_id,
+                event_type,
+            )
+        ):
             raise ValueError("At least one parameter is required for /events/get")
 
         res = await self.client.get("/events/get", params=params)
@@ -1206,7 +1293,37 @@ class AsyncEvents(AbstractAsyncEvents):
         return seam_event_from_dict(unwrap(res, "event", "/events/get"))
 
     @route_metadata(
-        path="/events/list", has_required_parameters=True, has_pagination=False
+        path="/events/list",
+        at_least_one_parameter_names=(
+            "access_code_id",
+            "access_code_ids",
+            "access_grant_id",
+            "access_grant_ids",
+            "access_method_id",
+            "access_method_ids",
+            "acs_access_group_id",
+            "acs_credential_id",
+            "acs_encoder_id",
+            "acs_entrance_id",
+            "acs_system_id",
+            "acs_system_ids",
+            "acs_user_id",
+            "between",
+            "connect_webview_id",
+            "connected_account_id",
+            "customer_key",
+            "device_id",
+            "device_ids",
+            "event_ids",
+            "event_type",
+            "event_types",
+            "since",
+            "space_id",
+            "space_ids",
+            "unstable_offset",
+            "user_identity_id",
+        ),
+        has_pagination=False,
     )
     async def list(
         self,
@@ -1596,7 +1713,38 @@ class AsyncEvents(AbstractAsyncEvents):
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                access_code_id,
+                access_code_ids,
+                access_grant_id,
+                access_grant_ids,
+                access_method_id,
+                access_method_ids,
+                acs_access_group_id,
+                acs_credential_id,
+                acs_encoder_id,
+                acs_entrance_id,
+                acs_system_id,
+                acs_system_ids,
+                acs_user_id,
+                between,
+                connect_webview_id,
+                connected_account_id,
+                customer_key,
+                device_id,
+                device_ids,
+                event_ids,
+                event_type,
+                event_types,
+                since,
+                space_id,
+                space_ids,
+                unstable_offset,
+                user_identity_id,
+            )
+        ):
             raise ValueError("At least one parameter is required for /events/list")
 
         res = await self.client.get("/events/list", params=params)

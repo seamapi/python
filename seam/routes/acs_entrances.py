@@ -25,9 +25,7 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -45,8 +43,7 @@ class AbstractAcsEntrances(abc.ABC):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -105,9 +102,7 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -126,9 +121,7 @@ class AbstractAcsEntrances(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -140,9 +133,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -160,8 +151,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -220,9 +210,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -241,9 +229,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -253,25 +239,18 @@ class AcsEntrances(AbstractAcsEntrances):
         self.defaults = defaults
 
     @route_metadata(
-        path="/acs/entrances/get", has_required_parameters=True, has_pagination=False
+        path="/acs/entrances/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
         """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/get"
-            )
 
         res = self.client.get("/acs/entrances/get", params=params)
 
@@ -279,7 +258,7 @@ class AcsEntrances(AbstractAcsEntrances):
 
     @route_metadata(
         path="/acs/entrances/grant_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def grant_access(
@@ -296,8 +275,7 @@ class AcsEntrances(AbstractAcsEntrances):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -307,17 +285,12 @@ class AcsEntrances(AbstractAcsEntrances):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/grant_access"
-            )
-
         self.client.post("/acs/entrances/grant_access", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/acs/entrances/list", has_required_parameters=False, has_pagination=True
+        path="/acs/entrances/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -393,7 +366,7 @@ class AcsEntrances(AbstractAcsEntrances):
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_credentials_with_access(
@@ -408,20 +381,13 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
             params["include_if"] = include_if
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/list_credentials_with_access"
-            )
 
         res = self.client.get(
             "/acs/entrances/list_credentials_with_access", params=params
@@ -435,7 +401,9 @@ class AcsEntrances(AbstractAcsEntrances):
         ]
 
     @route_metadata(
-        path="/acs/entrances/unlock", has_required_parameters=True, has_pagination=False
+        path="/acs/entrances/unlock",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def unlock(
         self,
@@ -452,20 +420,13 @@ class AcsEntrances(AbstractAcsEntrances):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/unlock"
-            )
 
         res = self.client.post("/acs/entrances/unlock", json=json_payload)
 
@@ -490,25 +451,18 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         self.defaults = defaults
 
     @route_metadata(
-        path="/acs/entrances/get", has_required_parameters=True, has_pagination=False
+        path="/acs/entrances/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, acs_entrance_id: str) -> AcsEntrance:
         """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/get"
-            )
 
         res = await self.client.get("/acs/entrances/get", params=params)
 
@@ -516,7 +470,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
     @route_metadata(
         path="/acs/entrances/grant_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def grant_access(
@@ -533,8 +487,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         :param acs_user_id: ID of the access system user to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the user identity to whom you want to grant access to an entrance. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
@@ -544,17 +497,12 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/grant_access"
-            )
-
         await self.client.post("/acs/entrances/grant_access", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/acs/entrances/list", has_required_parameters=False, has_pagination=True
+        path="/acs/entrances/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -630,7 +578,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_credentials_with_access(
@@ -645,20 +593,13 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         :param include_if: Conditions that credentials must meet to be included in the returned list.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
             params["include_if"] = include_if
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/list_credentials_with_access"
-            )
 
         res = await self.client.get(
             "/acs/entrances/list_credentials_with_access", params=params
@@ -672,7 +613,9 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         ]
 
     @route_metadata(
-        path="/acs/entrances/unlock", has_required_parameters=True, has_pagination=False
+        path="/acs/entrances/unlock",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def unlock(
         self,
@@ -689,20 +632,13 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/entrances/unlock"
-            )
 
         res = await self.client.post("/acs/entrances/unlock", json=json_payload)
 

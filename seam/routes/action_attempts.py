@@ -27,9 +27,7 @@ class AbstractActionAttempts(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -70,9 +68,7 @@ class AbstractAsyncActionAttempts(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -104,7 +100,9 @@ class ActionAttempts(AbstractActionAttempts):
         self.defaults = defaults
 
     @route_metadata(
-        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
+        path="/action_attempts/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def get(
         self,
@@ -118,18 +116,11 @@ class ActionAttempts(AbstractActionAttempts):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
 
         res = self.client.get("/action_attempts/get", params=params)
 
@@ -148,7 +139,9 @@ class ActionAttempts(AbstractActionAttempts):
         )
 
     @route_metadata(
-        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
+        path="/action_attempts/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     def list(
         self,
@@ -194,7 +187,9 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         self.defaults = defaults
 
     @route_metadata(
-        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
+        path="/action_attempts/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -208,18 +203,11 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
 
         res = await self.client.get("/action_attempts/get", params=params)
 
@@ -238,7 +226,9 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         )
 
     @route_metadata(
-        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
+        path="/action_attempts/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     async def list(
         self,
