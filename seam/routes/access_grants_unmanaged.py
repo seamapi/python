@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import UnmanagedAccessGrant
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAccessGrantsUnmanaged(abc.ABC):
@@ -206,12 +207,15 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         res = self.client.get("/access_grants/unmanaged/list", params=params)
 
-        return [
-            UnmanagedAccessGrant.from_dict(item)
-            for item in unwrap_list(
-                res, "access_grants", "/access_grants/unmanaged/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                UnmanagedAccessGrant.from_dict(item)
+                for item in unwrap_list(
+                    res, "access_grants", "/access_grants/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_grants/unmanaged/update",
@@ -325,12 +329,15 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
 
         res = await self.client.get("/access_grants/unmanaged/list", params=params)
 
-        return [
-            UnmanagedAccessGrant.from_dict(item)
-            for item in unwrap_list(
-                res, "access_grants", "/access_grants/unmanaged/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                UnmanagedAccessGrant.from_dict(item)
+                for item in unwrap_list(
+                    res, "access_grants", "/access_grants/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_grants/unmanaged/update",

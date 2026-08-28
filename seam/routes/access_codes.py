@@ -18,6 +18,7 @@ from .access_codes_unmanaged import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAccessCodes(abc.ABC):
@@ -1140,10 +1141,13 @@ class AccessCodes(AbstractAccessCodes):
 
         res = self.client.get("/access_codes/list", params=params)
 
-        return [
-            AccessCode.from_dict(item)
-            for item in unwrap_list(res, "access_codes", "/access_codes/list")
-        ]
+        return PaginatedList(
+            [
+                AccessCode.from_dict(item)
+                for item in unwrap_list(res, "access_codes", "/access_codes/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",
@@ -1773,10 +1777,13 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         res = await self.client.get("/access_codes/list", params=params)
 
-        return [
-            AccessCode.from_dict(item)
-            for item in unwrap_list(res, "access_codes", "/access_codes/list")
-        ]
+        return PaginatedList(
+            [
+                AccessCode.from_dict(item)
+                for item in unwrap_list(res, "access_codes", "/access_codes/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_codes/pull_backup_access_code",

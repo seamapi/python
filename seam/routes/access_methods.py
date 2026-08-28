@@ -16,6 +16,7 @@ from ..modules.action_attempts import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAccessMethods(abc.ABC):
@@ -677,10 +678,13 @@ class AccessMethods(AbstractAccessMethods):
 
         res = self.client.get("/access_methods/list", params=params)
 
-        return [
-            AccessMethod.from_dict(item)
-            for item in unwrap_list(res, "access_methods", "/access_methods/list")
-        ]
+        return PaginatedList(
+            [
+                AccessMethod.from_dict(item)
+                for item in unwrap_list(res, "access_methods", "/access_methods/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_methods/unlock_door",
@@ -1038,10 +1042,13 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         res = await self.client.get("/access_methods/list", params=params)
 
-        return [
-            AccessMethod.from_dict(item)
-            for item in unwrap_list(res, "access_methods", "/access_methods/list")
-        ]
+        return PaginatedList(
+            [
+                AccessMethod.from_dict(item)
+                for item in unwrap_list(res, "access_methods", "/access_methods/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_methods/unlock_door",

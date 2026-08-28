@@ -176,6 +176,9 @@ class SeamHttpClient(httpx.Client, SeamHttpResponseHandler, AbstractSeamHttpClie
         if "json" in kwargs:
             kwargs["json"] = replace_null(kwargs["json"])
 
+        if isinstance(kwargs.get("data"), Mapping):
+            kwargs["data"] = replace_null(kwargs["data"])
+
         response = super().request(method, url, *args, **kwargs)
 
         return self._handle_response(response)
@@ -246,6 +249,9 @@ class AsyncSeamHttpClient(
 
         if "json" in kwargs:
             kwargs["json"] = replace_null(kwargs["json"])
+
+        if isinstance(kwargs.get("data"), Mapping):
+            kwargs["data"] = replace_null(kwargs["data"])
 
         response = await super().request(method, url, *args, **kwargs)
 

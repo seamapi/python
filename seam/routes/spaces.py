@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import Space, Batch
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractSpaces(abc.ABC):
@@ -747,9 +748,13 @@ class Spaces(AbstractSpaces):
 
         res = self.client.get("/spaces/list", params=params)
 
-        return [
-            Space.from_dict(item) for item in unwrap_list(res, "spaces", "/spaces/list")
-        ]
+        return PaginatedList(
+            [
+                Space.from_dict(item)
+                for item in unwrap_list(res, "spaces", "/spaces/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",
@@ -1175,9 +1180,13 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         res = await self.client.get("/spaces/list", params=params)
 
-        return [
-            Space.from_dict(item) for item in unwrap_list(res, "spaces", "/spaces/list")
-        ]
+        return PaginatedList(
+            [
+                Space.from_dict(item)
+                for item in unwrap_list(res, "spaces", "/spaces/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/spaces/remove_acs_entrances",

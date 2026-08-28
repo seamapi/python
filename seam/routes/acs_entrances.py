@@ -15,6 +15,7 @@ from ..modules.action_attempts import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAcsEntrances(abc.ABC):
@@ -359,10 +360,13 @@ class AcsEntrances(AbstractAcsEntrances):
 
         res = self.client.get("/acs/entrances/list", params=params)
 
-        return [
-            AcsEntrance.from_dict(item)
-            for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
-        ]
+        return PaginatedList(
+            [
+                AcsEntrance.from_dict(item)
+                for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",
@@ -571,10 +575,13 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         res = await self.client.get("/acs/entrances/list", params=params)
 
-        return [
-            AcsEntrance.from_dict(item)
-            for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
-        ]
+        return PaginatedList(
+            [
+                AcsEntrance.from_dict(item)
+                for item in unwrap_list(res, "acs_entrances", "/acs/entrances/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/entrances/list_credentials_with_access",

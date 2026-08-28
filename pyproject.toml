@@ -1,6 +1,6 @@
 [project]
 name = "seam"
-version = "3.13.7"
+version = "3.13.10"
 description = "SDK for the Seam API written in Python."
 authors = [{ name = "Seam Labs, Inc.", email = "engineering@getseam.com" }]
 license = "MIT"
@@ -39,8 +39,8 @@ required-version = ">=0.12.0,<0.13.0"
 
 [tool.uv.build-backend]
 module-root = ""
-source-exclude = ["**/*_test.py"]
-wheel-exclude = ["**/*_test.py"]
+source-exclude = ["**/*_test.py", "**/__pycache__"]
+wheel-exclude = ["**/*_test.py", "**/__pycache__"]
 
 [tool.black]
 target-version = ["py311"]

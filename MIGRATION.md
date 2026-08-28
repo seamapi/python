@@ -227,7 +227,10 @@ What breaks:
 - **Typoed attributes raise `AttributeError`.** In v1, reading an unknown attribute silently returned (and inserted) an empty mapping, so typos went unnoticed and were truthy-checked as empty dicts. In v2 they fail loudly — code that probed for optional fields via bare attribute access should use `.get("field")` or `hasattr`.
 - **Undocumented nested fields are stripped.** API fields not (yet) in the SDK's generated types are dropped during hydration instead of being passed through. If you depend on a field the SDK does not model, upgrade the SDK to a version that includes it.
 
-Free-form record properties, such as `custom_metadata`, remain plain mappings and are not affected.
+Free-form record properties, such as `custom_metadata`, remain mappings with
+attribute access, and reading a missing key from them fails loudly the same
+way: indexing raises `KeyError` and attribute access raises `AttributeError`.
+Probe for optional keys with `.get("key")` or `"key" in mapping`.
 
 ## `SeamMultiWorkspace` is renamed to `SeamWithoutWorkspace`
 

@@ -94,7 +94,7 @@ def recording_server(responses):
                     "path": path,
                     "query": query,
                     "headers": {k.lower(): v for k, v in self.headers.items()},
-                    "body": json.loads(raw_body) if raw_body else None,
+                    "body": parse_body(raw_body),
                 }
             )
 
@@ -138,6 +138,17 @@ def recording_server(responses):
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
+
+
+def parse_body(raw_body):
+    if not raw_body:
+        return None
+
+    try:
+        return json.loads(raw_body)
+    except json.JSONDecodeError:
+        # Form-encoded bodies are recorded as text.
+        return raw_body.decode()
 
 
 @contextmanager

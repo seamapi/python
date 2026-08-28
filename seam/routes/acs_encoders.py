@@ -16,6 +16,7 @@ from ..modules.action_attempts import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAcsEncoders(abc.ABC):
@@ -351,10 +352,13 @@ class AcsEncoders(AbstractAcsEncoders):
 
         res = self.client.get("/acs/encoders/list", params=params)
 
-        return [
-            AcsEncoder.from_dict(item)
-            for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
-        ]
+        return PaginatedList(
+            [
+                AcsEncoder.from_dict(item)
+                for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/encoders/scan_credential",
@@ -576,10 +580,13 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         res = await self.client.get("/acs/encoders/list", params=params)
 
-        return [
-            AcsEncoder.from_dict(item)
-            for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
-        ]
+        return PaginatedList(
+            [
+                AcsEncoder.from_dict(item)
+                for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/encoders/scan_credential",

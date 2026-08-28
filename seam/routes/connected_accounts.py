@@ -12,6 +12,7 @@ from .connected_accounts_simulate import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractConnectedAccounts(abc.ABC):
@@ -357,12 +358,15 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         res = self.client.get("/connected_accounts/list", params=params)
 
-        return [
-            ConnectedAccount.from_dict(item)
-            for item in unwrap_list(
-                res, "connected_accounts", "/connected_accounts/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                ConnectedAccount.from_dict(item)
+                for item in unwrap_list(
+                    res, "connected_accounts", "/connected_accounts/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/connected_accounts/sync",
@@ -571,12 +575,15 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         res = await self.client.get("/connected_accounts/list", params=params)
 
-        return [
-            ConnectedAccount.from_dict(item)
-            for item in unwrap_list(
-                res, "connected_accounts", "/connected_accounts/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                ConnectedAccount.from_dict(item)
+                for item in unwrap_list(
+                    res, "connected_accounts", "/connected_accounts/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/connected_accounts/sync",
