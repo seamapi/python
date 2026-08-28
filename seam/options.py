@@ -2,6 +2,7 @@ import os
 from typing import Optional
 
 from .constants import DEFAULT_ENDPOINT
+from .exceptions import SeamError
 
 
 def get_endpoint(endpoint: Optional[str] = None):
@@ -31,7 +32,7 @@ def get_endpoint_from_env():
     return seam_endpoint or seam_api_url
 
 
-class SeamInvalidOptionsError(Exception):
+class SeamInvalidOptionsError(SeamError):
     """
     Exception raised when invalid options are provided to Seam client.
 

@@ -11,8 +11,12 @@ class SeamValidationError:
     error_messages: List[str]
 
 
+class SeamError(Exception):
+    """Base exception for all errors raised by the Seam SDK."""
+
+
 # HTTP
-class SeamHttpApiError(Exception):
+class SeamHttpApiError(SeamError):
     """
     Base exception for Seam HTTP API errors.
 
@@ -123,7 +127,7 @@ class SeamHttpInvalidInputError(SeamHttpApiError):
 
 
 # Action Attempt
-class SeamActionAttemptError(Exception):
+class SeamActionAttemptError(SeamError):
     """
     Base exception for Seam Action Attempt errors.
 

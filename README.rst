@@ -515,6 +515,18 @@ The ``AsyncSeamWithoutWorkspace`` client is the equivalent async variant of
 Error Handling
 ~~~~~~~~~~~~~~
 
+Errors raised by the SDK subclass ``SeamError``, so one except block
+covers everything the SDK raises:
+
+.. code-block:: python
+
+  from seam import SeamError
+
+  try:
+      seam.locks.unlock_door(device_id=device_id)
+  except SeamError as error:
+      print(error)
+
 Requests rejected by the Seam API raise a ``SeamHttpApiError`` subclass
 carrying the HTTP ``status_code``, API error ``code``, and ``request_id``.
 
