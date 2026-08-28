@@ -120,7 +120,7 @@ class AbstractAsyncSeamWithoutWorkspaceWorkspaces(abc.ABC):
         raise NotImplementedError()
 
 
-class AbstractSeamWithoutWorkspace:
+class AbstractSeamWithoutWorkspace(abc.ABC):
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
     @abc.abstractmethod
@@ -145,7 +145,7 @@ class AbstractSeamWithoutWorkspace:
         raise NotImplementedError
 
 
-class AbstractAsyncSeamWithoutWorkspace:
+class AbstractAsyncSeamWithoutWorkspace(abc.ABC):
     wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
 
     @abc.abstractmethod
