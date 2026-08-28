@@ -1,4 +1,4 @@
-    @route_metadata(path="{{path}}", has_required_parameters={{#if hasRequiredParameters}}True{{else}}False{{/if}}, has_pagination={{#if hasPagination}}True{{else}}False{{/if}})
+    @route_metadata(path="{{path}}", at_least_one_parameter_names=({{#each atLeastOneParameterNames}}"{{this}}",{{#unless @last}} {{/unless}}{{/each}}), has_pagination={{#if hasPagination}}True{{else}}False{{/if}})
     {{#if isAsync}}async {{/if}}def {{> method-signature}}:
         """{{> method-docstring}}"""
         {{payloadVar}}: Dict[str, Any] = {}
@@ -7,9 +7,12 @@
         if {{name}} is not None:
             {{../payloadVar}}["{{name}}"] = {{name}}
 {{/each}}
-{{#if hasRequiredParameters}}
+{{#if requiresAtLeastOneParameter}}
 
-        if not {{payloadVar}}:
+        if all(
+            param is None
+            for param in ({{#each atLeastOneParameterNames}}{{this}},{{#unless @last}} {{/unless}}{{/each}})
+        ):
             raise ValueError("At least one parameter is required for {{path}}")
 {{/if}}
 
@@ -24,7 +27,7 @@
 
         return {{#if isAsync}}await resolve_action_attempt_async{{else}}resolve_action_attempt{{/if}}(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(unwrap(res, "action_attempt", "{{path}}")),
             wait_for_action_attempt=wait_for_action_attempt
         )
 {{else if (eq returnType "None")}}
@@ -32,8 +35,11 @@
         return None
 {{else if (isListType returnType)}}
 
-        return [{{fromDict (listItemType returnType)}}(item) for item in res{{#each returnPath}}["{{this}}"]{{/each}}]
+        return {{#if hasPagination}}PaginatedList(
+            [{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")],
+            pagination=res.get("pagination"),
+        ){{else}}[{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")]{{/if}}
 {{else}}
 
-        return {{fromDict returnType}}(res{{#each returnPath}}["{{this}}"]{{/each}})
+        return {{fromDict returnType}}(unwrap(res, "{{returnPath.[0]}}", "{{path}}"))
 {{/if}}

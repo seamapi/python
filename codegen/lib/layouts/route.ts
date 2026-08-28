@@ -14,7 +14,8 @@ export interface MethodLayoutContext {
   httpVerb: string
   payloadVar: string
   payloadArg: string
-  hasRequiredParameters: boolean
+  requiresAtLeastOneParameter: boolean
+  atLeastOneParameterNames: string[]
   hasPagination: boolean
   description: string
   responseDescription: string
@@ -61,8 +62,21 @@ export interface RouteLayoutContext {
   }>
   importResolveActionAttempt: boolean
   importNull: boolean
+  importUnwrap: boolean
+  importUnwrapList: boolean
+  importPaginatedList: boolean
   methods: MethodLayoutContext[]
 }
+
+const paginationParameterNames = new Set(['limit', 'page_cursor'])
+
+const getAtLeastOneParameterNames = (method: ClassMethod): string[] =>
+  method.hasRequiredParameters &&
+  method.parameters.every(({ required }) => !(required ?? false))
+    ? method.parameters
+        .map(({ name }) => name)
+        .filter((name) => !paginationParameterNames.has(name))
+    : []
 
 const getRequestLayoutContext = (
   preferredMethod: string,
@@ -82,7 +96,8 @@ export const getMethodLayoutContext = (
   name: method.methodName,
   path: method.path,
   ...getRequestLayoutContext(method.preferredMethod),
-  hasRequiredParameters: method.hasRequiredParameters,
+  requiresAtLeastOneParameter: getAtLeastOneParameterNames(method).length > 0,
+  atLeastOneParameterNames: getAtLeastOneParameterNames(method),
   hasPagination: method.hasPagination,
   description: method.description,
   responseDescription: method.responseDescription,
@@ -130,6 +145,18 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     params.some(({ isNullable }) => isNullable),
   )
 
+  const importUnwrap = methods.some(
+    ({ returnPath, returnType }) =>
+      returnPath.length > 0 && !returnType.startsWith('List['),
+  )
+
+  const importUnwrapList = methods.some(
+    ({ returnPath, returnType }) =>
+      returnPath.length > 0 && returnType.startsWith('List['),
+  )
+
+  const importPaginatedList = methods.some(({ hasPagination }) => hasPagination)
+
   const showPass =
     cls.methods.length === 0 && cls.childClassIdentifiers.length === 0
 
@@ -172,6 +199,9 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     })),
     importResolveActionAttempt,
     importNull,
+    importUnwrap,
+    importUnwrapList,
+    importPaginatedList,
     methods,
   }
 }

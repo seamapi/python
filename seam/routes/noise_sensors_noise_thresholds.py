@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import NoiseThreshold
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
@@ -32,9 +34,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -43,9 +43,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -54,9 +52,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -65,9 +61,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -97,8 +91,7 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -129,9 +122,7 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -140,9 +131,7 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -151,9 +140,7 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -162,9 +149,7 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -194,8 +179,7 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -206,7 +190,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create(
@@ -233,9 +217,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -251,20 +233,17 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
-            )
-
         res = self.client.post(
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/create")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
@@ -272,20 +251,13 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
-            )
 
         self.client.delete("/noise_sensors/noise_thresholds/delete", params=params)
 
@@ -293,7 +265,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get(self, *, noise_threshold_id: str) -> NoiseThreshold:
@@ -301,26 +273,21 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
-            )
-
         res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/get")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list(self, *, device_id: str) -> List[NoiseThreshold]:
@@ -328,26 +295,24 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
-            )
-
         res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
-        return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
+        return [
+            NoiseThreshold.from_dict(item)
+            for item in unwrap_list(
+                res, "noise_thresholds", "/noise_sensors/noise_thresholds/list"
+            )
+        ]
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -376,8 +341,7 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -395,11 +359,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
-            )
-
         self.client.patch("/noise_sensors/noise_thresholds/update", json=json_payload)
 
         return None
@@ -412,7 +371,7 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/create",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create(
@@ -439,9 +398,7 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the new noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -457,20 +414,17 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/create"
-            )
-
         res = await self.client.post(
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/create")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
@@ -478,20 +432,13 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
-        :param noise_threshold_id: ID of the noise threshold that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param noise_threshold_id: ID of the noise threshold that you want to delete."""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/delete"
-            )
 
         await self.client.delete(
             "/noise_sensors/noise_thresholds/delete", params=params
@@ -501,7 +448,7 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get(self, *, noise_threshold_id: str) -> NoiseThreshold:
@@ -509,28 +456,23 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         :param noise_threshold_id: ID of the noise threshold that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/get"
-            )
-
         res = await self.client.get(
             "/noise_sensors/noise_thresholds/get", params=params
         )
 
-        return NoiseThreshold.from_dict(res["noise_threshold"])
+        return NoiseThreshold.from_dict(
+            unwrap(res, "noise_threshold", "/noise_sensors/noise_thresholds/get")
+        )
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list(self, *, device_id: str) -> List[NoiseThreshold]:
@@ -538,28 +480,26 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         :param device_id: ID of the device for which you want to list noise thresholds.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/list"
-            )
-
         res = await self.client.get(
             "/noise_sensors/noise_thresholds/list", params=params
         )
 
-        return [NoiseThreshold.from_dict(item) for item in res["noise_thresholds"]]
+        return [
+            NoiseThreshold.from_dict(item)
+            for item in unwrap_list(
+                res, "noise_thresholds", "/noise_sensors/noise_thresholds/list"
+            )
+        ]
 
     @route_metadata(
         path="/noise_sensors/noise_thresholds/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -588,8 +528,7 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
         :param noise_threshold_nrs: Noise level in Noiseaware Noise Risk Score (NRS) for the noise threshold. This parameter is only relevant for `Noiseaware sensors <https://docs.seam.co/device-and-system-integration-guides/noiseaware-sensors>`_.
 
         :param starts_daily_at: Time at which the noise threshold should become active daily.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -606,11 +545,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /noise_sensors/noise_thresholds/update"
-            )
 
         await self.client.patch(
             "/noise_sensors/noise_thresholds/update", json=json_payload

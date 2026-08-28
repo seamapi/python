@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import UnmanagedAccessMethod
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessMethodsUnmanaged(abc.ABC):
@@ -13,9 +15,7 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -37,9 +37,7 @@ class AbstractAccessMethodsUnmanaged(abc.ABC):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -51,9 +49,7 @@ class AbstractAsyncAccessMethodsUnmanaged(abc.ABC):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -75,9 +71,7 @@ class AbstractAsyncAccessMethodsUnmanaged(abc.ABC):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -88,7 +82,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
     @route_metadata(
         path="/access_methods/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get(self, *, access_method_id: str) -> UnmanagedAccessMethod:
@@ -96,26 +90,21 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/get"
-            )
-
         res = self.client.get("/access_methods/unmanaged/get", params=params)
 
-        return UnmanagedAccessMethod.from_dict(res["access_method"])
+        return UnmanagedAccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_methods/unmanaged/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list(
@@ -136,9 +125,7 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -150,14 +137,14 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/list"
-            )
-
         res = self.client.get("/access_methods/unmanaged/list", params=params)
 
-        return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            UnmanagedAccessMethod.from_dict(item)
+            for item in unwrap_list(
+                res, "access_methods", "/access_methods/unmanaged/list"
+            )
+        ]
 
 
 class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
@@ -167,7 +154,7 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
     @route_metadata(
         path="/access_methods/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get(self, *, access_method_id: str) -> UnmanagedAccessMethod:
@@ -175,26 +162,21 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
         :param access_method_id: ID of unmanaged access method to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/get"
-            )
-
         res = await self.client.get("/access_methods/unmanaged/get", params=params)
 
-        return UnmanagedAccessMethod.from_dict(res["access_method"])
+        return UnmanagedAccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_methods/unmanaged/list",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list(
@@ -215,9 +197,7 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
         :param space_id: ID of the space for which you want to retrieve all unmanaged access methods.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -229,11 +209,11 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
         if space_id is not None:
             params["space_id"] = space_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /access_methods/unmanaged/list"
-            )
-
         res = await self.client.get("/access_methods/unmanaged/list", params=params)
 
-        return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            UnmanagedAccessMethod.from_dict(item)
+            for item in unwrap_list(
+                res, "access_methods", "/access_methods/unmanaged/list"
+            )
+        ]

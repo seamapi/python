@@ -9,6 +9,8 @@ from .phones_simulate import (
     AbstractAsyncPhonesSimulate,
     AsyncPhonesSimulate,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractPhones(abc.ABC):
@@ -22,9 +24,7 @@ class AbstractPhones(abc.ABC):
     def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param device_id: Device ID of the phone that you want to deactivate."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -33,9 +33,7 @@ class AbstractPhones(abc.ABC):
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -66,9 +64,7 @@ class AbstractAsyncPhones(abc.ABC):
     async def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param device_id: Device ID of the phone that you want to deactivate."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -77,9 +73,7 @@ class AbstractAsyncPhones(abc.ABC):
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -110,53 +104,41 @@ class Phones(AbstractPhones):
         return self._simulate
 
     @route_metadata(
-        path="/phones/deactivate", has_required_parameters=True, has_pagination=False
+        path="/phones/deactivate", at_least_one_parameter_names=(), has_pagination=False
     )
     def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param device_id: Device ID of the phone that you want to deactivate."""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /phones/deactivate"
-            )
 
         self.client.delete("/phones/deactivate", params=params)
 
         return None
 
     @route_metadata(
-        path="/phones/get", has_required_parameters=True, has_pagination=False
+        path="/phones/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, device_id: str) -> Phone:
         """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError("At least one parameter is required for /phones/get")
-
         res = self.client.get("/phones/get", params=params)
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
 
     @route_metadata(
-        path="/phones/list", has_required_parameters=False, has_pagination=False
+        path="/phones/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(
         self,
@@ -180,7 +162,9 @@ class Phones(AbstractPhones):
 
         res = self.client.get("/phones/list", params=params)
 
-        return [Phone.from_dict(item) for item in res["phones"]]
+        return [
+            Phone.from_dict(item) for item in unwrap_list(res, "phones", "/phones/list")
+        ]
 
 
 class AsyncPhones(AbstractAsyncPhones):
@@ -194,53 +178,41 @@ class AsyncPhones(AbstractAsyncPhones):
         return self._simulate
 
     @route_metadata(
-        path="/phones/deactivate", has_required_parameters=True, has_pagination=False
+        path="/phones/deactivate", at_least_one_parameter_names=(), has_pagination=False
     )
     async def deactivate(self, *, device_id: str) -> None:
         """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
-        :param device_id: Device ID of the phone that you want to deactivate.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param device_id: Device ID of the phone that you want to deactivate."""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /phones/deactivate"
-            )
 
         await self.client.delete("/phones/deactivate", params=params)
 
         return None
 
     @route_metadata(
-        path="/phones/get", has_required_parameters=True, has_pagination=False
+        path="/phones/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, device_id: str) -> Phone:
         """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if device_id is not None:
             params["device_id"] = device_id
 
-        if not params:
-            raise ValueError("At least one parameter is required for /phones/get")
-
         res = await self.client.get("/phones/get", params=params)
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
 
     @route_metadata(
-        path="/phones/list", has_required_parameters=False, has_pagination=False
+        path="/phones/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(
         self,
@@ -264,4 +236,6 @@ class AsyncPhones(AbstractAsyncPhones):
 
         res = await self.client.get("/phones/list", params=params)
 
-        return [Phone.from_dict(item) for item in res["phones"]]
+        return [
+            Phone.from_dict(item) for item in unwrap_list(res, "phones", "/phones/list")
+        ]

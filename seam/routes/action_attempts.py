@@ -8,6 +8,9 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractActionAttempts(abc.ABC):
@@ -25,9 +28,7 @@ class AbstractActionAttempts(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -68,9 +69,7 @@ class AbstractAsyncActionAttempts(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -102,7 +101,9 @@ class ActionAttempts(AbstractActionAttempts):
         self.defaults = defaults
 
     @route_metadata(
-        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
+        path="/action_attempts/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def get(
         self,
@@ -116,18 +117,11 @@ class ActionAttempts(AbstractActionAttempts):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
 
         res = self.client.get("/action_attempts/get", params=params)
 
@@ -139,12 +133,16 @@ class ActionAttempts(AbstractActionAttempts):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/action_attempts/get")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
-        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
+        path="/action_attempts/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     def list(
         self,
@@ -178,7 +176,13 @@ class ActionAttempts(AbstractActionAttempts):
 
         res = self.client.get("/action_attempts/list", params=params)
 
-        return [action_attempt_from_dict(item) for item in res["action_attempts"]]
+        return PaginatedList(
+            [
+                action_attempt_from_dict(item)
+                for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
 
 class AsyncActionAttempts(AbstractAsyncActionAttempts):
@@ -187,7 +191,9 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         self.defaults = defaults
 
     @route_metadata(
-        path="/action_attempts/get", has_required_parameters=True, has_pagination=False
+        path="/action_attempts/get",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -201,18 +207,11 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /action_attempts/get"
-            )
 
         res = await self.client.get("/action_attempts/get", params=params)
 
@@ -224,12 +223,16 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/action_attempts/get")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
-        path="/action_attempts/list", has_required_parameters=False, has_pagination=True
+        path="/action_attempts/list",
+        at_least_one_parameter_names=(),
+        has_pagination=True,
     )
     async def list(
         self,
@@ -263,4 +266,10 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         res = await self.client.get("/action_attempts/list", params=params)
 
-        return [action_attempt_from_dict(item) for item in res["action_attempts"]]
+        return PaginatedList(
+            [
+                action_attempt_from_dict(item)
+                for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+            ],
+            pagination=res.get("pagination"),
+        )

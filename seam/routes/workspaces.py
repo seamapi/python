@@ -8,6 +8,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractWorkspaces(abc.ABC):
@@ -49,9 +51,7 @@ class AbstractWorkspaces(abc.ABC):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -146,9 +146,7 @@ class AbstractAsyncWorkspaces(abc.ABC):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -210,7 +208,7 @@ class Workspaces(AbstractWorkspaces):
         self.defaults = defaults
 
     @route_metadata(
-        path="/workspaces/create", has_required_parameters=True, has_pagination=False
+        path="/workspaces/create", at_least_one_parameter_names=(), has_pagination=False
     )
     def create(
         self,
@@ -248,9 +246,7 @@ class Workspaces(AbstractWorkspaces):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -278,17 +274,12 @@ class Workspaces(AbstractWorkspaces):
         if webview_success_message is not None:
             json_payload["webview_success_message"] = webview_success_message
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /workspaces/create"
-            )
-
         res = self.client.post("/workspaces/create", json=json_payload)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
 
     @route_metadata(
-        path="/workspaces/get", has_required_parameters=False, has_pagination=False
+        path="/workspaces/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self) -> Workspace:
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
@@ -298,10 +289,10 @@ class Workspaces(AbstractWorkspaces):
 
         res = self.client.get("/workspaces/get", params=params)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/get"))
 
     @route_metadata(
-        path="/workspaces/list", has_required_parameters=False, has_pagination=False
+        path="/workspaces/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(self) -> List[Workspace]:
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
@@ -311,11 +302,14 @@ class Workspaces(AbstractWorkspaces):
 
         res = self.client.get("/workspaces/list", params=params)
 
-        return [Workspace.from_dict(item) for item in res["workspaces"]]
+        return [
+            Workspace.from_dict(item)
+            for item in unwrap_list(res, "workspaces", "/workspaces/list")
+        ]
 
     @route_metadata(
         path="/workspaces/reset_sandbox",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def reset_sandbox(
@@ -338,12 +332,14 @@ class Workspaces(AbstractWorkspaces):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/workspaces/reset_sandbox")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
-        path="/workspaces/update", has_required_parameters=False, has_pagination=False
+        path="/workspaces/update", at_least_one_parameter_names=(), has_pagination=False
     )
     def update(
         self,
@@ -399,7 +395,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         self.defaults = defaults
 
     @route_metadata(
-        path="/workspaces/create", has_required_parameters=True, has_pagination=False
+        path="/workspaces/create", at_least_one_parameter_names=(), has_pagination=False
     )
     async def create(
         self,
@@ -437,9 +433,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
@@ -467,17 +461,12 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         if webview_success_message is not None:
             json_payload["webview_success_message"] = webview_success_message
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /workspaces/create"
-            )
-
         res = await self.client.post("/workspaces/create", json=json_payload)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
 
     @route_metadata(
-        path="/workspaces/get", has_required_parameters=False, has_pagination=False
+        path="/workspaces/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self) -> Workspace:
         """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
@@ -487,10 +476,10 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         res = await self.client.get("/workspaces/get", params=params)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/get"))
 
     @route_metadata(
-        path="/workspaces/list", has_required_parameters=False, has_pagination=False
+        path="/workspaces/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(self) -> List[Workspace]:
         """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
@@ -500,11 +489,14 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         res = await self.client.get("/workspaces/list", params=params)
 
-        return [Workspace.from_dict(item) for item in res["workspaces"]]
+        return [
+            Workspace.from_dict(item)
+            for item in unwrap_list(res, "workspaces", "/workspaces/list")
+        ]
 
     @route_metadata(
         path="/workspaces/reset_sandbox",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def reset_sandbox(
@@ -527,12 +519,14 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/workspaces/reset_sandbox")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
-        path="/workspaces/update", has_required_parameters=False, has_pagination=False
+        path="/workspaces/update", at_least_one_parameter_names=(), has_pagination=False
     )
     async def update(
         self,
