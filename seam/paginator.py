@@ -87,28 +87,32 @@ class SeamPaginator:
     def flatten_to_list(self) -> List[Any]:
         """Fetches all pages and returns all items as a single list."""
         all_items = []
-        current_items, pagination = self.first_page()
-
-        if current_items:
+        for current_items in self._walk():
             all_items.extend(current_items)
-
-        while pagination and pagination.has_next_page and pagination.next_page_cursor:
-            current_items, pagination = self.next_page(pagination.next_page_cursor)
-            if current_items:
-                all_items.extend(current_items)
 
         return all_items
 
     def flatten(self) -> Generator[Any, None, None]:
         """Fetches all pages and yields items one by one using a generator."""
-        current_items, pagination = self.first_page()
-        if current_items:
+        for current_items in self._walk():
             yield from current_items
 
+    def _walk(self) -> Generator[List[Any], None, None]:
+        """Yields each page once, stopping if the server repeats a cursor."""
+        current_items, pagination = self.first_page()
+        yield current_items or []
+
+        seen_cursors = set()
+
         while pagination and pagination.has_next_page and pagination.next_page_cursor:
-            current_items, pagination = self.next_page(pagination.next_page_cursor)
-            if current_items:
-                yield from current_items
+            cursor = pagination.next_page_cursor
+
+            if cursor in seen_cursors:
+                return
+            seen_cursors.add(cursor)
+
+            current_items, pagination = self.next_page(cursor)
+            yield current_items or []
 
 
 class AsyncSeamPaginator:
@@ -161,29 +165,30 @@ class AsyncSeamPaginator:
     async def flatten_to_list(self) -> List[Any]:
         """Fetches all pages and returns all items as a single list."""
         all_items = []
-        current_items, pagination = await self.first_page()
-
-        if current_items:
+        async for current_items in self._walk():
             all_items.extend(current_items)
-
-        while pagination and pagination.has_next_page and pagination.next_page_cursor:
-            current_items, pagination = await self.next_page(
-                pagination.next_page_cursor
-            )
-            if current_items:
-                all_items.extend(current_items)
 
         return all_items
 
     async def flatten(self) -> AsyncGenerator[Any, None]:
         """Fetches all pages and yields items one by one using an async generator."""
+        async for current_items in self._walk():
+            for item in current_items:
+                yield item
+
+    async def _walk(self) -> AsyncGenerator[List[Any], None]:
+        """Yields each page once, stopping if the server repeats a cursor."""
         current_items, pagination = await self.first_page()
-        for item in current_items or []:
-            yield item
+        yield current_items or []
+
+        seen_cursors = set()
 
         while pagination and pagination.has_next_page and pagination.next_page_cursor:
-            current_items, pagination = await self.next_page(
-                pagination.next_page_cursor
-            )
-            for item in current_items or []:
-                yield item
+            cursor = pagination.next_page_cursor
+
+            if cursor in seen_cursors:
+                return
+            seen_cursors.add(cursor)
+
+            current_items, pagination = await self.next_page(cursor)
+            yield current_items or []

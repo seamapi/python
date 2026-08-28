@@ -92,3 +92,48 @@ async def test_a_missing_pagination_envelope_raises_async(recording_server):
                 "pagination object",
             ):
                 await paginator.first_page()
+
+
+PINNED_CURSOR_PAGE = {
+    "devices": [{"device_id": "33333333-3333-3333-3333-333333333333"}],
+    "pagination": {
+        "has_next_page": True,
+        "next_page_cursor": "pinned-cursor",
+        "next_page_url": "https://example.com/devices/list?page_cursor=pinned-cursor",
+    },
+}
+
+
+def test_paginator_stops_when_a_cursor_repeats(recording_server):
+    with recording_server([(200, PINNED_CURSOR_PAGE)]) as (endpoint, requests):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+        paginator = seam.create_paginator(seam.devices.list)
+
+        devices = paginator.flatten_to_list()
+
+        # The server pins one cursor, so the paginator fetches the first
+        # page, follows the cursor once, sees it repeat, and stops.
+        assert len(requests) == 2
+        assert len(devices) == 2
+
+
+def test_paginator_flatten_stops_when_a_cursor_repeats(recording_server):
+    with recording_server([(200, PINNED_CURSOR_PAGE)]) as (endpoint, requests):
+        seam = Seam.from_api_key("seam_apikey_token", endpoint=endpoint)
+        paginator = seam.create_paginator(seam.devices.list)
+
+        devices = list(paginator.flatten())
+
+        assert len(requests) == 2
+        assert len(devices) == 2
+
+
+async def test_paginator_stops_when_a_cursor_repeats_async(recording_server):
+    with recording_server([(200, PINNED_CURSOR_PAGE)]) as (endpoint, requests):
+        async with AsyncSeam(api_key="seam_apikey_token", endpoint=endpoint) as seam:
+            paginator = seam.create_paginator(seam.devices.list)
+
+            devices = await paginator.flatten_to_list()
+
+            assert len(requests) == 2
+            assert len(devices) == 2
