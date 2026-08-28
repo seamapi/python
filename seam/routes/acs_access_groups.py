@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import AcsAccessGroup, AcsEntrance, AcsUser
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsAccessGroups(abc.ABC):
@@ -22,17 +24,14 @@ class AbstractAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
     def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_access_group_id: ID of the access group that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -41,9 +40,7 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -76,9 +73,7 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,9 +82,7 @@ class AbstractAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -107,8 +100,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -129,17 +121,14 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_access_group_id: ID of the access group that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -148,9 +137,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -183,9 +170,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -194,9 +179,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -214,8 +197,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -226,7 +208,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
     @route_metadata(
         path="/acs/access_groups/add_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def add_user(
@@ -243,8 +225,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -254,35 +235,23 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/add_user"
-            )
-
         self.client.put("/acs/access_groups/add_user", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/acs/access_groups/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_access_group_id: ID of the access group that you want to delete."""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/delete"
-            )
 
         self.client.delete("/acs/access_groups/delete", params=params)
 
@@ -290,7 +259,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
     @route_metadata(
         path="/acs/access_groups/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
@@ -298,26 +267,21 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/get"
-            )
-
         res = self.client.get("/acs/access_groups/get", params=params)
 
-        return AcsAccessGroup.from_dict(res["acs_access_group"])
+        return AcsAccessGroup.from_dict(
+            unwrap(res, "acs_access_group", "/acs/access_groups/get")
+        )
 
     @route_metadata(
         path="/acs/access_groups/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list(
@@ -352,11 +316,14 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         res = self.client.get("/acs/access_groups/list", params=params)
 
-        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+        return [
+            AcsAccessGroup.from_dict(item)
+            for item in unwrap_list(res, "acs_access_groups", "/acs/access_groups/list")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_accessible_entrances(
@@ -366,28 +333,26 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
-            )
-
         res = self.client.get(
             "/acs/access_groups/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/access_groups/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_users",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
@@ -395,26 +360,22 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_users"
-            )
-
         res = self.client.get("/acs/access_groups/list_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/access_groups/list_users")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/remove_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def remove_user(
@@ -431,8 +392,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -441,11 +401,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/remove_user"
-            )
 
         self.client.delete("/acs/access_groups/remove_user", params=params)
 
@@ -459,7 +414,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
     @route_metadata(
         path="/acs/access_groups/add_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def add_user(
@@ -476,8 +431,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id.
 
         :param user_identity_id: ID of the desired user identity that you want to add to an access group. You can only provide one of acs_user_id or user_identity_id. If the ACS system contains an ACS user with the same ``email_address`` or ``phone_number`` as the user identity that you specify, they are linked, and the access group membership belongs to the ACS user. If the ACS system does not have a corresponding ACS user, one is created.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -487,35 +441,23 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/add_user"
-            )
-
         await self.client.put("/acs/access_groups/add_user", json=json_payload)
 
         return None
 
     @route_metadata(
         path="/acs/access_groups/delete",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def delete(self, *, acs_access_group_id: str) -> None:
         """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
-        :param acs_access_group_id: ID of the access group that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param acs_access_group_id: ID of the access group that you want to delete."""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/delete"
-            )
 
         await self.client.delete("/acs/access_groups/delete", params=params)
 
@@ -523,7 +465,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
     @route_metadata(
         path="/acs/access_groups/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
@@ -531,26 +473,21 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/get"
-            )
-
         res = await self.client.get("/acs/access_groups/get", params=params)
 
-        return AcsAccessGroup.from_dict(res["acs_access_group"])
+        return AcsAccessGroup.from_dict(
+            unwrap(res, "acs_access_group", "/acs/access_groups/get")
+        )
 
     @route_metadata(
         path="/acs/access_groups/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list(
@@ -585,11 +522,14 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         res = await self.client.get("/acs/access_groups/list", params=params)
 
-        return [AcsAccessGroup.from_dict(item) for item in res["acs_access_groups"]]
+        return [
+            AcsAccessGroup.from_dict(item)
+            for item in unwrap_list(res, "acs_access_groups", "/acs/access_groups/list")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_accessible_entrances",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_accessible_entrances(
@@ -599,28 +539,26 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_accessible_entrances"
-            )
-
         res = await self.client.get(
             "/acs/access_groups/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/access_groups/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/access_groups/list_users",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
@@ -628,26 +566,22 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
 
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/list_users"
-            )
-
         res = await self.client.get("/acs/access_groups/list_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/access_groups/list_users")
+        ]
 
     @route_metadata(
         path="/acs/access_groups/remove_user",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def remove_user(
@@ -664,8 +598,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         :param acs_user_id: ID of the access system user that you want to remove from an access group.
 
         :param user_identity_id: ID of the user identity associated with the user that you want to remove from an access group.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         params: Dict[str, Any] = {}
 
         if acs_access_group_id is not None:
@@ -674,11 +607,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /acs/access_groups/remove_user"
-            )
 
         await self.client.delete("/acs/access_groups/remove_user", params=params)
 

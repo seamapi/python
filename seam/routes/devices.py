@@ -16,6 +16,9 @@ from .devices_unmanaged import (
     AbstractAsyncDevicesUnmanaged,
     AsyncDevicesUnmanaged,
 )
+from ..response import unwrap
+from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractDevices(abc.ABC):
@@ -286,9 +289,7 @@ class AbstractDevices(abc.ABC):
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param devices: Array of devices with provider metadata to update"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -316,9 +317,7 @@ class AbstractDevices(abc.ABC):
 
         :param name: Name for the device.
 
-        :param properties:
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param properties:"""
         raise NotImplementedError()
 
 
@@ -590,9 +589,7 @@ class AbstractAsyncDevices(abc.ABC):
     async def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param devices: Array of devices with provider metadata to update"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -620,9 +617,7 @@ class AbstractAsyncDevices(abc.ABC):
 
         :param name: Name for the device.
 
-        :param properties:
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param properties:"""
         raise NotImplementedError()
 
 
@@ -642,7 +637,12 @@ class Devices(AbstractDevices):
         return self._unmanaged
 
     @route_metadata(
-        path="/devices/get", has_required_parameters=True, has_pagination=False
+        path="/devices/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
+        has_pagination=False,
     )
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -665,15 +665,21 @@ class Devices(AbstractDevices):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError("At least one parameter is required for /devices/get")
 
         res = self.client.get("/devices/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/devices/get"))
 
     @route_metadata(
-        path="/devices/list", has_required_parameters=False, has_pagination=True
+        path="/devices/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -916,11 +922,17 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return PaginatedList(
+            [
+                Device.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/list_device_providers",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def list_device_providers(
@@ -955,35 +967,33 @@ class Devices(AbstractDevices):
 
         res = self.client.get("/devices/list_device_providers", params=params)
 
-        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
+        return [
+            DeviceProvider.from_dict(item)
+            for item in unwrap_list(
+                res, "device_providers", "/devices/list_device_providers"
+            )
+        ]
 
     @route_metadata(
         path="/devices/report_provider_metadata",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param devices: Array of devices with provider metadata to update"""
         json_payload: Dict[str, Any] = {}
 
         if devices is not None:
             json_payload["devices"] = devices
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /devices/report_provider_metadata"
-            )
 
         self.client.post("/devices/report_provider_metadata", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/devices/update", has_required_parameters=True, has_pagination=False
+        path="/devices/update", at_least_one_parameter_names=(), has_pagination=False
     )
     def update(
         self,
@@ -1009,9 +1019,7 @@ class Devices(AbstractDevices):
 
         :param name: Name for the device.
 
-        :param properties:
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param properties:"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1028,9 +1036,6 @@ class Devices(AbstractDevices):
             json_payload["name"] = name
         if properties is not None:
             json_payload["properties"] = properties
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /devices/update")
 
         self.client.patch("/devices/update", json=json_payload)
 
@@ -1053,7 +1058,12 @@ class AsyncDevices(AbstractAsyncDevices):
         return self._unmanaged
 
     @route_metadata(
-        path="/devices/get", has_required_parameters=True, has_pagination=False
+        path="/devices/get",
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
+        has_pagination=False,
     )
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
@@ -1076,15 +1086,21 @@ class AsyncDevices(AbstractAsyncDevices):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError("At least one parameter is required for /devices/get")
 
         res = await self.client.get("/devices/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/devices/get"))
 
     @route_metadata(
-        path="/devices/list", has_required_parameters=False, has_pagination=True
+        path="/devices/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -1327,11 +1343,17 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return PaginatedList(
+            [
+                Device.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/list_device_providers",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def list_device_providers(
@@ -1366,35 +1388,33 @@ class AsyncDevices(AbstractAsyncDevices):
 
         res = await self.client.get("/devices/list_device_providers", params=params)
 
-        return [DeviceProvider.from_dict(item) for item in res["device_providers"]]
+        return [
+            DeviceProvider.from_dict(item)
+            for item in unwrap_list(
+                res, "device_providers", "/devices/list_device_providers"
+            )
+        ]
 
     @route_metadata(
         path="/devices/report_provider_metadata",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def report_provider_metadata(self, *, devices: List[Dict[str, Any]]) -> None:
         """Updates provider-specific metadata for devices.
 
-        :param devices: Array of devices with provider metadata to update
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param devices: Array of devices with provider metadata to update"""
         json_payload: Dict[str, Any] = {}
 
         if devices is not None:
             json_payload["devices"] = devices
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /devices/report_provider_metadata"
-            )
 
         await self.client.post("/devices/report_provider_metadata", json=json_payload)
 
         return None
 
     @route_metadata(
-        path="/devices/update", has_required_parameters=True, has_pagination=False
+        path="/devices/update", at_least_one_parameter_names=(), has_pagination=False
     )
     async def update(
         self,
@@ -1420,9 +1440,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         :param name: Name for the device.
 
-        :param properties:
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param properties:"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1439,9 +1457,6 @@ class AsyncDevices(AbstractAsyncDevices):
             json_payload["name"] = name
         if properties is not None:
             json_payload["properties"] = properties
-
-        if not json_payload:
-            raise ValueError("At least one parameter is required for /devices/update")
 
         await self.client.patch("/devices/update", json=json_payload)
 

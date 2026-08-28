@@ -7,6 +7,7 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
 
 
 class AbstractLocksSimulate(abc.ABC):
@@ -27,9 +28,7 @@ class AbstractLocksSimulate(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -45,9 +44,7 @@ class AbstractLocksSimulate(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -69,9 +66,7 @@ class AbstractAsyncLocksSimulate(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -87,9 +82,7 @@ class AbstractAsyncLocksSimulate(abc.ABC):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -100,7 +93,7 @@ class LocksSimulate(AbstractLocksSimulate):
 
     @route_metadata(
         path="/locks/simulate/keypad_code_entry",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def keypad_code_entry(
@@ -118,20 +111,13 @@ class LocksSimulate(AbstractLocksSimulate):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if code is not None:
             json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/keypad_code_entry"
-            )
 
         res = self.client.post("/locks/simulate/keypad_code_entry", json=json_payload)
 
@@ -143,13 +129,15 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/keypad_code_entry")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
         path="/locks/simulate/manual_lock_via_keypad",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def manual_lock_via_keypad(
@@ -164,18 +152,11 @@ class LocksSimulate(AbstractLocksSimulate):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/manual_lock_via_keypad"
-            )
 
         res = self.client.post(
             "/locks/simulate/manual_lock_via_keypad", json=json_payload
@@ -189,7 +170,9 @@ class LocksSimulate(AbstractLocksSimulate):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/manual_lock_via_keypad")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -201,7 +184,7 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
     @route_metadata(
         path="/locks/simulate/keypad_code_entry",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def keypad_code_entry(
@@ -219,20 +202,13 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if code is not None:
             json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/keypad_code_entry"
-            )
 
         res = await self.client.post(
             "/locks/simulate/keypad_code_entry", json=json_payload
@@ -246,13 +222,15 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/keypad_code_entry")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
     @route_metadata(
         path="/locks/simulate/manual_lock_via_keypad",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def manual_lock_via_keypad(
@@ -267,18 +245,11 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /locks/simulate/manual_lock_via_keypad"
-            )
 
         res = await self.client.post(
             "/locks/simulate/manual_lock_via_keypad", json=json_payload
@@ -292,6 +263,8 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/simulate/manual_lock_via_keypad")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

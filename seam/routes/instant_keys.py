@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import InstantKey
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractInstantKeys(abc.ABC):
@@ -11,9 +13,7 @@ class AbstractInstantKeys(abc.ABC):
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -50,9 +50,7 @@ class AbstractAsyncInstantKeys(abc.ABC):
     async def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -89,30 +87,30 @@ class InstantKeys(AbstractInstantKeys):
         self.defaults = defaults
 
     @route_metadata(
-        path="/instant_keys/delete", has_required_parameters=True, has_pagination=False
+        path="/instant_keys/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /instant_keys/delete"
-            )
 
         self.client.delete("/instant_keys/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/instant_keys/get", has_required_parameters=True, has_pagination=False
+        path="/instant_keys/get",
+        at_least_one_parameter_names=(
+            "instant_key_id",
+            "instant_key_url",
+        ),
+        has_pagination=False,
     )
     def get(
         self,
@@ -136,15 +134,21 @@ class InstantKeys(AbstractInstantKeys):
         if instant_key_url is not None:
             params["instant_key_url"] = instant_key_url
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                instant_key_id,
+                instant_key_url,
+            )
+        ):
             raise ValueError("At least one parameter is required for /instant_keys/get")
 
         res = self.client.get("/instant_keys/get", params=params)
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
 
     @route_metadata(
-        path="/instant_keys/list", has_required_parameters=False, has_pagination=False
+        path="/instant_keys/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
         """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
@@ -159,7 +163,10 @@ class InstantKeys(AbstractInstantKeys):
 
         res = self.client.get("/instant_keys/list", params=params)
 
-        return [InstantKey.from_dict(item) for item in res["instant_keys"]]
+        return [
+            InstantKey.from_dict(item)
+            for item in unwrap_list(res, "instant_keys", "/instant_keys/list")
+        ]
 
 
 class AsyncInstantKeys(AbstractAsyncInstantKeys):
@@ -168,30 +175,30 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
         self.defaults = defaults
 
     @route_metadata(
-        path="/instant_keys/delete", has_required_parameters=True, has_pagination=False
+        path="/instant_keys/delete",
+        at_least_one_parameter_names=(),
+        has_pagination=False,
     )
     async def delete(self, *, instant_key_id: str) -> None:
         """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
 
-        :param instant_key_id: ID of the Instant Key that you want to delete.
-
-        :raises ValueError: At least one parameter must be provided."""
+        :param instant_key_id: ID of the Instant Key that you want to delete."""
         params: Dict[str, Any] = {}
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
-
-        if not params:
-            raise ValueError(
-                "At least one parameter is required for /instant_keys/delete"
-            )
 
         await self.client.delete("/instant_keys/delete", params=params)
 
         return None
 
     @route_metadata(
-        path="/instant_keys/get", has_required_parameters=True, has_pagination=False
+        path="/instant_keys/get",
+        at_least_one_parameter_names=(
+            "instant_key_id",
+            "instant_key_url",
+        ),
+        has_pagination=False,
     )
     async def get(
         self,
@@ -215,15 +222,21 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
         if instant_key_url is not None:
             params["instant_key_url"] = instant_key_url
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                instant_key_id,
+                instant_key_url,
+            )
+        ):
             raise ValueError("At least one parameter is required for /instant_keys/get")
 
         res = await self.client.get("/instant_keys/get", params=params)
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
 
     @route_metadata(
-        path="/instant_keys/list", has_required_parameters=False, has_pagination=False
+        path="/instant_keys/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
         """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
@@ -238,4 +251,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
 
         res = await self.client.get("/instant_keys/list", params=params)
 
-        return [InstantKey.from_dict(item) for item in res["instant_keys"]]
+        return [
+            InstantKey.from_dict(item)
+            for item in unwrap_list(res, "instant_keys", "/instant_keys/list")
+        ]

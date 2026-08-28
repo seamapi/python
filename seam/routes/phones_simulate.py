@@ -3,6 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import Phone
+from ..response import unwrap
 
 
 class AbstractPhonesSimulate(abc.ABC):
@@ -26,9 +27,7 @@ class AbstractPhonesSimulate(abc.ABC):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -53,9 +52,7 @@ class AbstractAsyncPhonesSimulate(abc.ABC):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
 
@@ -66,7 +63,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
 
     @route_metadata(
         path="/phones/simulate/create_sandbox_phone",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def create_sandbox_phone(
@@ -87,9 +84,7 @@ class PhonesSimulate(AbstractPhonesSimulate):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -101,16 +96,13 @@ class PhonesSimulate(AbstractPhonesSimulate):
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
-            )
-
         res = self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(
+            unwrap(res, "phone", "/phones/simulate/create_sandbox_phone")
+        )
 
 
 class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
@@ -120,7 +112,7 @@ class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
 
     @route_metadata(
         path="/phones/simulate/create_sandbox_phone",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def create_sandbox_phone(
@@ -141,9 +133,7 @@ class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
 
         :param phone_metadata: Metadata that you want to associate with the simulated phone.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if user_identity_id is not None:
@@ -155,13 +145,10 @@ class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
 
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /phones/simulate/create_sandbox_phone"
-            )
-
         res = await self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
 
-        return Phone.from_dict(res["phone"])
+        return Phone.from_dict(
+            unwrap(res, "phone", "/phones/simulate/create_sandbox_phone")
+        )

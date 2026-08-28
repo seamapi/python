@@ -4,6 +4,9 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import UnmanagedDevice
+from ..response import unwrap
+from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractDevicesUnmanaged(abc.ABC):
@@ -241,8 +244,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -481,8 +483,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         raise NotImplementedError()
 
 
@@ -493,7 +494,10 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
     @route_metadata(
         path="/devices/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
         has_pagination=False,
     )
     def get(
@@ -519,18 +523,26 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /devices/unmanaged/get"
             )
 
         res = self.client.get("/devices/unmanaged/get", params=params)
 
-        return UnmanagedDevice.from_dict(res["device"])
+        return UnmanagedDevice.from_dict(
+            unwrap(res, "device", "/devices/unmanaged/get")
+        )
 
     @route_metadata(
         path="/devices/unmanaged/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     def list(
@@ -756,11 +768,17 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         res = self.client.get("/devices/unmanaged/list", params=params)
 
-        return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
+        return PaginatedList(
+            [
+                UnmanagedDevice.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/unmanaged/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/unmanaged/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     def update(
@@ -779,8 +797,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -789,11 +806,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/update"
-            )
 
         self.client.patch("/devices/unmanaged/update", json=json_payload)
 
@@ -807,7 +819,10 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
 
     @route_metadata(
         path="/devices/unmanaged/get",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(
+            "device_id",
+            "name",
+        ),
         has_pagination=False,
     )
     async def get(
@@ -833,18 +848,26 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
         if name is not None:
             params["name"] = name
 
-        if not params:
+        if all(
+            param is None
+            for param in (
+                device_id,
+                name,
+            )
+        ):
             raise ValueError(
                 "At least one parameter is required for /devices/unmanaged/get"
             )
 
         res = await self.client.get("/devices/unmanaged/get", params=params)
 
-        return UnmanagedDevice.from_dict(res["device"])
+        return UnmanagedDevice.from_dict(
+            unwrap(res, "device", "/devices/unmanaged/get")
+        )
 
     @route_metadata(
         path="/devices/unmanaged/list",
-        has_required_parameters=False,
+        at_least_one_parameter_names=(),
         has_pagination=True,
     )
     async def list(
@@ -1070,11 +1093,17 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
 
         res = await self.client.get("/devices/unmanaged/list", params=params)
 
-        return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
+        return PaginatedList(
+            [
+                UnmanagedDevice.from_dict(item)
+                for item in unwrap_list(res, "devices", "/devices/unmanaged/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/devices/unmanaged/update",
-        has_required_parameters=True,
+        at_least_one_parameter_names=(),
         has_pagination=False,
     )
     async def update(
@@ -1093,8 +1122,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
         :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. Set this parameter to ``true`` to convert an unmanaged device to managed.
-
-        :raises ValueError: At least one parameter must be provided."""
+        """
         json_payload: Dict[str, Any] = {}
 
         if device_id is not None:
@@ -1103,11 +1131,6 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
-
-        if not json_payload:
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/update"
-            )
 
         await self.client.patch("/devices/unmanaged/update", json=json_payload)
 
