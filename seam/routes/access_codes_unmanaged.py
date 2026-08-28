@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import UnmanagedAccessCode
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAccessCodesUnmanaged(abc.ABC):
@@ -392,10 +393,15 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         res = self.client.get("/access_codes/unmanaged/list", params=params)
 
-        return [
-            UnmanagedAccessCode.from_dict(item)
-            for item in unwrap_list(res, "access_codes", "/access_codes/unmanaged/list")
-        ]
+        return PaginatedList(
+            [
+                UnmanagedAccessCode.from_dict(item)
+                for item in unwrap_list(
+                    res, "access_codes", "/access_codes/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_codes/unmanaged/update",
@@ -611,10 +617,15 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
 
         res = await self.client.get("/access_codes/unmanaged/list", params=params)
 
-        return [
-            UnmanagedAccessCode.from_dict(item)
-            for item in unwrap_list(res, "access_codes", "/access_codes/unmanaged/list")
-        ]
+        return PaginatedList(
+            [
+                UnmanagedAccessCode.from_dict(item)
+                for item in unwrap_list(
+                    res, "access_codes", "/access_codes/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/access_codes/unmanaged/update",

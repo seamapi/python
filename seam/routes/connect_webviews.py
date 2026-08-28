@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import ConnectWebview
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractConnectWebviews(abc.ABC):
@@ -650,10 +651,15 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         res = self.client.get("/connect_webviews/list", params=params)
 
-        return [
-            ConnectWebview.from_dict(item)
-            for item in unwrap_list(res, "connect_webviews", "/connect_webviews/list")
-        ]
+        return PaginatedList(
+            [
+                ConnectWebview.from_dict(item)
+                for item in unwrap_list(
+                    res, "connect_webviews", "/connect_webviews/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
 
 class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
@@ -922,7 +928,12 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         res = await self.client.get("/connect_webviews/list", params=params)
 
-        return [
-            ConnectWebview.from_dict(item)
-            for item in unwrap_list(res, "connect_webviews", "/connect_webviews/list")
-        ]
+        return PaginatedList(
+            [
+                ConnectWebview.from_dict(item)
+                for item in unwrap_list(
+                    res, "connect_webviews", "/connect_webviews/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )

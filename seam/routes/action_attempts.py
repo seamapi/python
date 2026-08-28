@@ -10,6 +10,7 @@ from ..modules.action_attempts import (
 )
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractActionAttempts(abc.ABC):
@@ -175,10 +176,13 @@ class ActionAttempts(AbstractActionAttempts):
 
         res = self.client.get("/action_attempts/list", params=params)
 
-        return [
-            action_attempt_from_dict(item)
-            for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
-        ]
+        return PaginatedList(
+            [
+                action_attempt_from_dict(item)
+                for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
 
 class AsyncActionAttempts(AbstractAsyncActionAttempts):
@@ -262,7 +266,10 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         res = await self.client.get("/action_attempts/list", params=params)
 
-        return [
-            action_attempt_from_dict(item)
-            for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
-        ]
+        return PaginatedList(
+            [
+                action_attempt_from_dict(item)
+                for item in unwrap_list(res, "action_attempts", "/action_attempts/list")
+            ],
+            pagination=res.get("pagination"),
+        )

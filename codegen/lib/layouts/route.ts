@@ -64,6 +64,7 @@ export interface RouteLayoutContext {
   importNull: boolean
   importUnwrap: boolean
   importUnwrapList: boolean
+  importPaginatedList: boolean
   methods: MethodLayoutContext[]
 }
 
@@ -154,6 +155,8 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
       returnPath.length > 0 && returnType.startsWith('List['),
   )
 
+  const importPaginatedList = methods.some(({ hasPagination }) => hasPagination)
+
   const showPass =
     cls.methods.length === 0 && cls.childClassIdentifiers.length === 0
 
@@ -198,6 +201,7 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
     importNull,
     importUnwrap,
     importUnwrapList,
+    importPaginatedList,
     methods,
   }
 }

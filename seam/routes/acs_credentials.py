@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import AcsCredential, AcsEntrance
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractAcsCredentials(abc.ABC):
@@ -565,10 +566,13 @@ class AcsCredentials(AbstractAcsCredentials):
 
         res = self.client.get("/acs/credentials/list", params=params)
 
-        return [
-            AcsCredential.from_dict(item)
-            for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
-        ]
+        return PaginatedList(
+            [
+                AcsCredential.from_dict(item)
+                for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/credentials/list_accessible_entrances",
@@ -889,10 +893,13 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         res = await self.client.get("/acs/credentials/list", params=params)
 
-        return [
-            AcsCredential.from_dict(item)
-            for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
-        ]
+        return PaginatedList(
+            [
+                AcsCredential.from_dict(item)
+                for item in unwrap_list(res, "acs_credentials", "/acs/credentials/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/acs/credentials/list_accessible_entrances",

@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import UnmanagedUserIdentity
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractUserIdentitiesUnmanaged(abc.ABC):
@@ -180,12 +181,15 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         res = self.client.get("/user_identities/unmanaged/list", params=params)
 
-        return [
-            UnmanagedUserIdentity.from_dict(item)
-            for item in unwrap_list(
-                res, "user_identities", "/user_identities/unmanaged/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                UnmanagedUserIdentity.from_dict(item)
+                for item in unwrap_list(
+                    res, "user_identities", "/user_identities/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/user_identities/unmanaged/update",
@@ -287,12 +291,15 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
         res = await self.client.get("/user_identities/unmanaged/list", params=params)
 
-        return [
-            UnmanagedUserIdentity.from_dict(item)
-            for item in unwrap_list(
-                res, "user_identities", "/user_identities/unmanaged/list"
-            )
-        ]
+        return PaginatedList(
+            [
+                UnmanagedUserIdentity.from_dict(item)
+                for item in unwrap_list(
+                    res, "user_identities", "/user_identities/unmanaged/list"
+                )
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/user_identities/unmanaged/update",
