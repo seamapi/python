@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
+
 from .resources import ActionAttempt, ErrorActionAttempt, PendingActionAttempt
 
 
@@ -13,6 +14,18 @@ class SeamValidationError:
 
 class SeamError(Exception):
     """Base exception for all errors raised by the Seam SDK."""
+
+
+# Webhook
+class SeamInvalidWebhookPayloadError(SeamError):
+    """
+    Exception raised when a webhook payload passes signature verification
+    but cannot be read as a Seam event.
+
+    The payload is genuinely from Seam and will never become readable, so
+    report it as a bug instead of letting the sender retry it, and do not
+    treat it as forgery.
+    """
 
 
 # HTTP

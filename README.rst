@@ -597,12 +597,20 @@ Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/i
 This example is for `Flask <https://flask.palletsprojects.com/>`_,
 see the `Svix docs for more examples in specific frameworks <https://docs.svix.com/receiving/verifying-payloads/how>`_.
 
+Verification failures raise Svix's ``WebhookVerificationError``, re-exported as
+``SeamWebhookVerificationError``: treat the payload as forged and respond with
+an error status so Svix retries. A payload that is correctly signed but
+unreadable raises a ``SeamInvalidWebhookPayloadError`` instead: it is genuinely
+from Seam and will never become readable, so log it as a bug rather than
+reporting a verification failure and letting Svix retry it through its full
+backoff schedule.
+
 .. code-block:: python
 
   import os
 
   from flask import Flask, request
-  from seam import SeamWebhook
+  from seam import SeamInvalidWebhookPayloadError, SeamWebhook, SeamWebhookVerificationError
 
   app = Flask(__name__)
 
@@ -612,8 +620,11 @@ see the `Svix docs for more examples in specific frameworks <https://docs.svix.c
   def handle_webhook():
       try:
           data = webhook.verify(request.get_data(), request.headers)
-      except Exception:
+      except SeamWebhookVerificationError:
           return 'Bad Request', 400
+      except SeamInvalidWebhookPayloadError:
+          app.logger.exception('Unreadable Seam webhook payload')
+          return '', 204
 
       try:
           store_event(data)
