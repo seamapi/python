@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import UnmanagedDevice
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractDevicesUnmanaged(abc.ABC):
@@ -526,7 +528,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         res = self.client.get("/devices/unmanaged/get", params=params)
 
-        return UnmanagedDevice.from_dict(res["device"])
+        return UnmanagedDevice.from_dict(
+            unwrap(res, "device", "/devices/unmanaged/get")
+        )
 
     @route_metadata(
         path="/devices/unmanaged/list",
@@ -756,7 +760,10 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
 
         res = self.client.get("/devices/unmanaged/list", params=params)
 
-        return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
+        return [
+            UnmanagedDevice.from_dict(item)
+            for item in unwrap_list(res, "devices", "/devices/unmanaged/list")
+        ]
 
     @route_metadata(
         path="/devices/unmanaged/update",
@@ -840,7 +847,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
 
         res = await self.client.get("/devices/unmanaged/get", params=params)
 
-        return UnmanagedDevice.from_dict(res["device"])
+        return UnmanagedDevice.from_dict(
+            unwrap(res, "device", "/devices/unmanaged/get")
+        )
 
     @route_metadata(
         path="/devices/unmanaged/list",
@@ -1070,7 +1079,10 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
 
         res = await self.client.get("/devices/unmanaged/list", params=params)
 
-        return [UnmanagedDevice.from_dict(item) for item in res["devices"]]
+        return [
+            UnmanagedDevice.from_dict(item)
+            for item in unwrap_list(res, "devices", "/devices/unmanaged/list")
+        ]
 
     @route_metadata(
         path="/devices/unmanaged/update",

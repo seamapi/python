@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import SeamEvent, seam_event_from_dict
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractEvents(abc.ABC):
@@ -757,7 +759,7 @@ class Events(AbstractEvents):
 
         res = self.client.get("/events/get", params=params)
 
-        return seam_event_from_dict(res["event"])
+        return seam_event_from_dict(unwrap(res, "event", "/events/get"))
 
     @route_metadata(
         path="/events/list", has_required_parameters=True, has_pagination=False
@@ -1155,7 +1157,10 @@ class Events(AbstractEvents):
 
         res = self.client.get("/events/list", params=params)
 
-        return [seam_event_from_dict(item) for item in res["events"]]
+        return [
+            seam_event_from_dict(item)
+            for item in unwrap_list(res, "events", "/events/list")
+        ]
 
 
 class AsyncEvents(AbstractAsyncEvents):
@@ -1198,7 +1203,7 @@ class AsyncEvents(AbstractAsyncEvents):
 
         res = await self.client.get("/events/get", params=params)
 
-        return seam_event_from_dict(res["event"])
+        return seam_event_from_dict(unwrap(res, "event", "/events/get"))
 
     @route_metadata(
         path="/events/list", has_required_parameters=True, has_pagination=False
@@ -1596,4 +1601,7 @@ class AsyncEvents(AbstractAsyncEvents):
 
         res = await self.client.get("/events/list", params=params)
 
-        return [seam_event_from_dict(item) for item in res["events"]]
+        return [
+            seam_event_from_dict(item)
+            for item in unwrap_list(res, "events", "/events/list")
+        ]

@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import ConnectWebview
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractConnectWebviews(abc.ABC):
@@ -561,7 +563,9 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         res = self.client.post("/connect_webviews/create", json=json_payload)
 
-        return ConnectWebview.from_dict(res["connect_webview"])
+        return ConnectWebview.from_dict(
+            unwrap(res, "connect_webview", "/connect_webviews/create")
+        )
 
     @route_metadata(
         path="/connect_webviews/delete",
@@ -615,7 +619,9 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         res = self.client.get("/connect_webviews/get", params=params)
 
-        return ConnectWebview.from_dict(res["connect_webview"])
+        return ConnectWebview.from_dict(
+            unwrap(res, "connect_webview", "/connect_webviews/get")
+        )
 
     @route_metadata(
         path="/connect_webviews/list",
@@ -664,7 +670,10 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         res = self.client.get("/connect_webviews/list", params=params)
 
-        return [ConnectWebview.from_dict(item) for item in res["connect_webviews"]]
+        return [
+            ConnectWebview.from_dict(item)
+            for item in unwrap_list(res, "connect_webviews", "/connect_webviews/list")
+        ]
 
 
 class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
@@ -838,7 +847,9 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         res = await self.client.post("/connect_webviews/create", json=json_payload)
 
-        return ConnectWebview.from_dict(res["connect_webview"])
+        return ConnectWebview.from_dict(
+            unwrap(res, "connect_webview", "/connect_webviews/create")
+        )
 
     @route_metadata(
         path="/connect_webviews/delete",
@@ -892,7 +903,9 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         res = await self.client.get("/connect_webviews/get", params=params)
 
-        return ConnectWebview.from_dict(res["connect_webview"])
+        return ConnectWebview.from_dict(
+            unwrap(res, "connect_webview", "/connect_webviews/get")
+        )
 
     @route_metadata(
         path="/connect_webviews/list",
@@ -941,4 +954,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         res = await self.client.get("/connect_webviews/list", params=params)
 
-        return [ConnectWebview.from_dict(item) for item in res["connect_webviews"]]
+        return [
+            ConnectWebview.from_dict(item)
+            for item in unwrap_list(res, "connect_webviews", "/connect_webviews/list")
+        ]

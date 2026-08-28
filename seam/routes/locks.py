@@ -13,6 +13,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractLocks(abc.ABC):
@@ -515,7 +517,9 @@ class Locks(AbstractLocks):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/configure_auto_lock")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -549,7 +553,7 @@ class Locks(AbstractLocks):
 
         res = self.client.get("/locks/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/locks/get"))
 
     @route_metadata(
         path="/locks/list", has_required_parameters=False, has_pagination=False
@@ -702,7 +706,10 @@ class Locks(AbstractLocks):
 
         res = self.client.get("/locks/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/locks/list")
+        ]
 
     @route_metadata(
         path="/locks/lock_door", has_required_parameters=True, has_pagination=False
@@ -740,7 +747,9 @@ class Locks(AbstractLocks):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/lock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -782,7 +791,9 @@ class Locks(AbstractLocks):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/unlock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -847,7 +858,9 @@ class AsyncLocks(AbstractAsyncLocks):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/configure_auto_lock")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -881,7 +894,7 @@ class AsyncLocks(AbstractAsyncLocks):
 
         res = await self.client.get("/locks/get", params=params)
 
-        return Device.from_dict(res["device"])
+        return Device.from_dict(unwrap(res, "device", "/locks/get"))
 
     @route_metadata(
         path="/locks/list", has_required_parameters=False, has_pagination=False
@@ -1034,7 +1047,10 @@ class AsyncLocks(AbstractAsyncLocks):
 
         res = await self.client.get("/locks/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/locks/list")
+        ]
 
     @route_metadata(
         path="/locks/lock_door", has_required_parameters=True, has_pagination=False
@@ -1072,7 +1088,9 @@ class AsyncLocks(AbstractAsyncLocks):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/lock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1114,6 +1132,8 @@ class AsyncLocks(AbstractAsyncLocks):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/locks/unlock_door")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

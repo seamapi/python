@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import ThermostatSchedule
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractThermostatsSchedules(abc.ABC):
@@ -274,7 +276,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         res = self.client.post("/thermostats/schedules/create", json=json_payload)
 
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return ThermostatSchedule.from_dict(
+            unwrap(res, "thermostat_schedule", "/thermostats/schedules/create")
+        )
 
     @route_metadata(
         path="/thermostats/schedules/delete",
@@ -326,7 +330,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         res = self.client.get("/thermostats/schedules/get", params=params)
 
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return ThermostatSchedule.from_dict(
+            unwrap(res, "thermostat_schedule", "/thermostats/schedules/get")
+        )
 
     @route_metadata(
         path="/thermostats/schedules/list",
@@ -360,7 +366,10 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         res = self.client.get("/thermostats/schedules/list", params=params)
 
         return [
-            ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
+            ThermostatSchedule.from_dict(item)
+            for item in unwrap_list(
+                res, "thermostat_schedules", "/thermostats/schedules/list"
+            )
         ]
 
     @route_metadata(
@@ -487,7 +496,9 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         res = await self.client.post("/thermostats/schedules/create", json=json_payload)
 
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return ThermostatSchedule.from_dict(
+            unwrap(res, "thermostat_schedule", "/thermostats/schedules/create")
+        )
 
     @route_metadata(
         path="/thermostats/schedules/delete",
@@ -539,7 +550,9 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         res = await self.client.get("/thermostats/schedules/get", params=params)
 
-        return ThermostatSchedule.from_dict(res["thermostat_schedule"])
+        return ThermostatSchedule.from_dict(
+            unwrap(res, "thermostat_schedule", "/thermostats/schedules/get")
+        )
 
     @route_metadata(
         path="/thermostats/schedules/list",
@@ -573,7 +586,10 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         res = await self.client.get("/thermostats/schedules/list", params=params)
 
         return [
-            ThermostatSchedule.from_dict(item) for item in res["thermostat_schedules"]
+            ThermostatSchedule.from_dict(item)
+            for item in unwrap_list(
+                res, "thermostat_schedules", "/thermostats/schedules/list"
+            )
         ]
 
     @route_metadata(

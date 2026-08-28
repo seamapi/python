@@ -16,6 +16,36 @@ class SeamError(Exception):
 
 
 # HTTP
+class SeamHttpInvalidResponseError(SeamError):
+    """
+    Exception raised when a success response from the Seam API has an
+    unexpected shape, e.g., a proxy rewrote the body or the expected
+    response key is missing.
+
+    :ivar path: The request path that produced the response
+    :vartype path: str
+    :ivar response_key: The response key the SDK expected to read
+    :vartype response_key: str
+    """
+
+    def __init__(self, path: str, response_key: str, reason: str):
+        """
+        :param path: The request path that produced the response
+        :type path: str
+        :param response_key: The response key the SDK expected to read
+        :type response_key: str
+        :param reason: Description of how the response diverged
+        :type reason: str
+        """
+
+        super().__init__(
+            f"Seam returned an invalid response for {path}: "
+            f'expected "{response_key}", {reason}'
+        )
+        self.path = path
+        self.response_key = response_key
+
+
 class SeamHttpApiError(SeamError):
     """
     Base exception for Seam HTTP API errors.

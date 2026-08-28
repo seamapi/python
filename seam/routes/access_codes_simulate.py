@@ -3,6 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import UnmanagedAccessCode
+from ..response import unwrap
 
 
 class AbstractAccessCodesSimulate(abc.ABC):
@@ -87,7 +88,13 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )
 
-        return UnmanagedAccessCode.from_dict(res["access_code"])
+        return UnmanagedAccessCode.from_dict(
+            unwrap(
+                res,
+                "access_code",
+                "/access_codes/simulate/create_unmanaged_access_code",
+            )
+        )
 
 
 class AsyncAccessCodesSimulate(AbstractAsyncAccessCodesSimulate):
@@ -132,4 +139,10 @@ class AsyncAccessCodesSimulate(AbstractAsyncAccessCodesSimulate):
             "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )
 
-        return UnmanagedAccessCode.from_dict(res["access_code"])
+        return UnmanagedAccessCode.from_dict(
+            unwrap(
+                res,
+                "access_code",
+                "/access_codes/simulate/create_unmanaged_access_code",
+            )
+        )

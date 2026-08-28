@@ -10,6 +10,8 @@ from .connected_accounts_simulate import (
     AbstractAsyncConnectedAccountsSimulate,
     AsyncConnectedAccountsSimulate,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractConnectedAccounts(abc.ABC):
@@ -302,7 +304,9 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         res = self.client.get("/connected_accounts/get", params=params)
 
-        return ConnectedAccount.from_dict(res["connected_account"])
+        return ConnectedAccount.from_dict(
+            unwrap(res, "connected_account", "/connected_accounts/get")
+        )
 
     @route_metadata(
         path="/connected_accounts/list",
@@ -356,7 +360,12 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         res = self.client.get("/connected_accounts/list", params=params)
 
-        return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
+        return [
+            ConnectedAccount.from_dict(item)
+            for item in unwrap_list(
+                res, "connected_accounts", "/connected_accounts/list"
+            )
+        ]
 
     @route_metadata(
         path="/connected_accounts/sync",
@@ -518,7 +527,9 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         res = await self.client.get("/connected_accounts/get", params=params)
 
-        return ConnectedAccount.from_dict(res["connected_account"])
+        return ConnectedAccount.from_dict(
+            unwrap(res, "connected_account", "/connected_accounts/get")
+        )
 
     @route_metadata(
         path="/connected_accounts/list",
@@ -572,7 +583,12 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         res = await self.client.get("/connected_accounts/list", params=params)
 
-        return [ConnectedAccount.from_dict(item) for item in res["connected_accounts"]]
+        return [
+            ConnectedAccount.from_dict(item)
+            for item in unwrap_list(
+                res, "connected_accounts", "/connected_accounts/list"
+            )
+        ]
 
     @route_metadata(
         path="/connected_accounts/sync",

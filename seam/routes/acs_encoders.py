@@ -14,6 +14,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsEncoders(abc.ABC):
@@ -308,7 +310,9 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/encode_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -333,7 +337,7 @@ class AcsEncoders(AbstractAcsEncoders):
 
         res = self.client.get("/acs/encoders/get", params=params)
 
-        return AcsEncoder.from_dict(res["acs_encoder"])
+        return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
 
     @route_metadata(
         path="/acs/encoders/list", has_required_parameters=False, has_pagination=True
@@ -375,7 +379,10 @@ class AcsEncoders(AbstractAcsEncoders):
 
         res = self.client.get("/acs/encoders/list", params=params)
 
-        return [AcsEncoder.from_dict(item) for item in res["acs_encoders"]]
+        return [
+            AcsEncoder.from_dict(item)
+            for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
+        ]
 
     @route_metadata(
         path="/acs/encoders/scan_credential",
@@ -422,7 +429,9 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/scan_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -483,7 +492,9 @@ class AcsEncoders(AbstractAcsEncoders):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/scan_to_assign_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -550,7 +561,9 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/encode_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -575,7 +588,7 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         res = await self.client.get("/acs/encoders/get", params=params)
 
-        return AcsEncoder.from_dict(res["acs_encoder"])
+        return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
 
     @route_metadata(
         path="/acs/encoders/list", has_required_parameters=False, has_pagination=True
@@ -617,7 +630,10 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         res = await self.client.get("/acs/encoders/list", params=params)
 
-        return [AcsEncoder.from_dict(item) for item in res["acs_encoders"]]
+        return [
+            AcsEncoder.from_dict(item)
+            for item in unwrap_list(res, "acs_encoders", "/acs/encoders/list")
+        ]
 
     @route_metadata(
         path="/acs/encoders/scan_credential",
@@ -664,7 +680,9 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/scan_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -725,6 +743,8 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/acs/encoders/scan_to_assign_credential")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

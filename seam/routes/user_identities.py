@@ -17,6 +17,8 @@ from .user_identities_unmanaged import (
     AbstractAsyncUserIdentitiesUnmanaged,
     AsyncUserIdentitiesUnmanaged,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractUserIdentities(abc.ABC):
@@ -644,7 +646,9 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.post("/user_identities/create", json=json_payload)
 
-        return UserIdentity.from_dict(res["user_identity"])
+        return UserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/create")
+        )
 
     @route_metadata(
         path="/user_identities/delete",
@@ -712,7 +716,9 @@ class UserIdentities(AbstractUserIdentities):
             "/user_identities/generate_instant_key", json=json_payload
         )
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(
+            unwrap(res, "instant_key", "/user_identities/generate_instant_key")
+        )
 
     @route_metadata(
         path="/user_identities/get", has_required_parameters=True, has_pagination=False
@@ -746,7 +752,9 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/get", params=params)
 
-        return UserIdentity.from_dict(res["user_identity"])
+        return UserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/get")
+        )
 
     @route_metadata(
         path="/user_identities/grant_access_to_device",
@@ -824,7 +832,10 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/list", params=params)
 
-        return [UserIdentity.from_dict(item) for item in res["user_identities"]]
+        return [
+            UserIdentity.from_dict(item)
+            for item in unwrap_list(res, "user_identities", "/user_identities/list")
+        ]
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",
@@ -851,7 +862,12 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/list_accessible_devices", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(
+                res, "devices", "/user_identities/list_accessible_devices"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_accessible_entrances",
@@ -880,7 +896,12 @@ class UserIdentities(AbstractUserIdentities):
             "/user_identities/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/user_identities/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_acs_systems",
@@ -907,7 +928,12 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/list_acs_systems", params=params)
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_systems", "/user_identities/list_acs_systems"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_acs_users",
@@ -934,7 +960,10 @@ class UserIdentities(AbstractUserIdentities):
 
         res = self.client.get("/user_identities/list_acs_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/user_identities/list_acs_users")
+        ]
 
     @route_metadata(
         path="/user_identities/merge",
@@ -1189,7 +1218,9 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.post("/user_identities/create", json=json_payload)
 
-        return UserIdentity.from_dict(res["user_identity"])
+        return UserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/create")
+        )
 
     @route_metadata(
         path="/user_identities/delete",
@@ -1257,7 +1288,9 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             "/user_identities/generate_instant_key", json=json_payload
         )
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(
+            unwrap(res, "instant_key", "/user_identities/generate_instant_key")
+        )
 
     @route_metadata(
         path="/user_identities/get", has_required_parameters=True, has_pagination=False
@@ -1291,7 +1324,9 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.get("/user_identities/get", params=params)
 
-        return UserIdentity.from_dict(res["user_identity"])
+        return UserIdentity.from_dict(
+            unwrap(res, "user_identity", "/user_identities/get")
+        )
 
     @route_metadata(
         path="/user_identities/grant_access_to_device",
@@ -1373,7 +1408,10 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.get("/user_identities/list", params=params)
 
-        return [UserIdentity.from_dict(item) for item in res["user_identities"]]
+        return [
+            UserIdentity.from_dict(item)
+            for item in unwrap_list(res, "user_identities", "/user_identities/list")
+        ]
 
     @route_metadata(
         path="/user_identities/list_accessible_devices",
@@ -1402,7 +1440,12 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             "/user_identities/list_accessible_devices", params=params
         )
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(
+                res, "devices", "/user_identities/list_accessible_devices"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_accessible_entrances",
@@ -1433,7 +1476,12 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             "/user_identities/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/user_identities/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_acs_systems",
@@ -1460,7 +1508,12 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.get("/user_identities/list_acs_systems", params=params)
 
-        return [AcsSystem.from_dict(item) for item in res["acs_systems"]]
+        return [
+            AcsSystem.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_systems", "/user_identities/list_acs_systems"
+            )
+        ]
 
     @route_metadata(
         path="/user_identities/list_acs_users",
@@ -1487,7 +1540,10 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         res = await self.client.get("/user_identities/list_acs_users", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/user_identities/list_acs_users")
+        ]
 
     @route_metadata(
         path="/user_identities/merge",

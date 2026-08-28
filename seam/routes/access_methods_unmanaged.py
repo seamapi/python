@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import UnmanagedAccessMethod
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessMethodsUnmanaged(abc.ABC):
@@ -111,7 +113,9 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         res = self.client.get("/access_methods/unmanaged/get", params=params)
 
-        return UnmanagedAccessMethod.from_dict(res["access_method"])
+        return UnmanagedAccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_methods/unmanaged/list",
@@ -157,7 +161,12 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         res = self.client.get("/access_methods/unmanaged/list", params=params)
 
-        return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            UnmanagedAccessMethod.from_dict(item)
+            for item in unwrap_list(
+                res, "access_methods", "/access_methods/unmanaged/list"
+            )
+        ]
 
 
 class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
@@ -190,7 +199,9 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
         res = await self.client.get("/access_methods/unmanaged/get", params=params)
 
-        return UnmanagedAccessMethod.from_dict(res["access_method"])
+        return UnmanagedAccessMethod.from_dict(
+            unwrap(res, "access_method", "/access_methods/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_methods/unmanaged/list",
@@ -236,4 +247,9 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
         res = await self.client.get("/access_methods/unmanaged/list", params=params)
 
-        return [UnmanagedAccessMethod.from_dict(item) for item in res["access_methods"]]
+        return [
+            UnmanagedAccessMethod.from_dict(item)
+            for item in unwrap_list(
+                res, "access_methods", "/access_methods/unmanaged/list"
+            )
+        ]

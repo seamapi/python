@@ -26,6 +26,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractThermostats(abc.ABC):
@@ -963,7 +965,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/activate_climate_preset")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1013,7 +1017,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/cool")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1180,7 +1186,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/heat")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1244,7 +1252,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/heat_cool")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1317,7 +1327,10 @@ class Thermostats(AbstractThermostats):
 
         res = self.client.get("/thermostats/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/thermostats/list")
+        ]
 
     @route_metadata(
         path="/thermostats/off", has_required_parameters=True, has_pagination=False
@@ -1355,7 +1368,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/off")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1440,7 +1455,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/set_fan_mode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1509,7 +1526,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/set_hvac_mode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1725,7 +1744,9 @@ class Thermostats(AbstractThermostats):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/update_weekly_program")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1799,7 +1820,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/activate_climate_preset")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -1849,7 +1872,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/cool")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2018,7 +2043,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/heat")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2082,7 +2109,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/heat_cool")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2155,7 +2184,10 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         res = await self.client.get("/thermostats/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/thermostats/list")
+        ]
 
     @route_metadata(
         path="/thermostats/off", has_required_parameters=True, has_pagination=False
@@ -2193,7 +2225,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/off")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2280,7 +2314,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/set_fan_mode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2349,7 +2385,9 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/set_hvac_mode")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -2569,6 +2607,8 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/thermostats/update_weekly_program")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )

@@ -8,6 +8,8 @@ from ..modules.action_attempts import (
     resolve_action_attempt,
     resolve_action_attempt_async,
 )
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractWorkspaces(abc.ABC):
@@ -285,7 +287,7 @@ class Workspaces(AbstractWorkspaces):
 
         res = self.client.post("/workspaces/create", json=json_payload)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
 
     @route_metadata(
         path="/workspaces/get", has_required_parameters=False, has_pagination=False
@@ -298,7 +300,7 @@ class Workspaces(AbstractWorkspaces):
 
         res = self.client.get("/workspaces/get", params=params)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/get"))
 
     @route_metadata(
         path="/workspaces/list", has_required_parameters=False, has_pagination=False
@@ -311,7 +313,10 @@ class Workspaces(AbstractWorkspaces):
 
         res = self.client.get("/workspaces/list", params=params)
 
-        return [Workspace.from_dict(item) for item in res["workspaces"]]
+        return [
+            Workspace.from_dict(item)
+            for item in unwrap_list(res, "workspaces", "/workspaces/list")
+        ]
 
     @route_metadata(
         path="/workspaces/reset_sandbox",
@@ -338,7 +343,9 @@ class Workspaces(AbstractWorkspaces):
 
         return resolve_action_attempt(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/workspaces/reset_sandbox")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 
@@ -474,7 +481,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         res = await self.client.post("/workspaces/create", json=json_payload)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
 
     @route_metadata(
         path="/workspaces/get", has_required_parameters=False, has_pagination=False
@@ -487,7 +494,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         res = await self.client.get("/workspaces/get", params=params)
 
-        return Workspace.from_dict(res["workspace"])
+        return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/get"))
 
     @route_metadata(
         path="/workspaces/list", has_required_parameters=False, has_pagination=False
@@ -500,7 +507,10 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         res = await self.client.get("/workspaces/list", params=params)
 
-        return [Workspace.from_dict(item) for item in res["workspaces"]]
+        return [
+            Workspace.from_dict(item)
+            for item in unwrap_list(res, "workspaces", "/workspaces/list")
+        ]
 
     @route_metadata(
         path="/workspaces/reset_sandbox",
@@ -527,7 +537,9 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         return await resolve_action_attempt_async(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(
+                unwrap(res, "action_attempt", "/workspaces/reset_sandbox")
+            ),
             wait_for_action_attempt=wait_for_action_attempt,
         )
 

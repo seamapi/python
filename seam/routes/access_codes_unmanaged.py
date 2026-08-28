@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import UnmanagedAccessCode
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAccessCodesUnmanaged(abc.ABC):
@@ -355,7 +357,9 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         res = self.client.get("/access_codes/unmanaged/get", params=params)
 
-        return UnmanagedAccessCode.from_dict(res["access_code"])
+        return UnmanagedAccessCode.from_dict(
+            unwrap(res, "access_code", "/access_codes/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_codes/unmanaged/list",
@@ -406,7 +410,10 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         res = self.client.get("/access_codes/unmanaged/list", params=params)
 
-        return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            UnmanagedAccessCode.from_dict(item)
+            for item in unwrap_list(res, "access_codes", "/access_codes/unmanaged/list")
+        ]
 
     @route_metadata(
         path="/access_codes/unmanaged/update",
@@ -583,7 +590,9 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
 
         res = await self.client.get("/access_codes/unmanaged/get", params=params)
 
-        return UnmanagedAccessCode.from_dict(res["access_code"])
+        return UnmanagedAccessCode.from_dict(
+            unwrap(res, "access_code", "/access_codes/unmanaged/get")
+        )
 
     @route_metadata(
         path="/access_codes/unmanaged/list",
@@ -634,7 +643,10 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
 
         res = await self.client.get("/access_codes/unmanaged/list", params=params)
 
-        return [UnmanagedAccessCode.from_dict(item) for item in res["access_codes"]]
+        return [
+            UnmanagedAccessCode.from_dict(item)
+            for item in unwrap_list(res, "access_codes", "/access_codes/unmanaged/list")
+        ]
 
     @route_metadata(
         path="/access_codes/unmanaged/update",

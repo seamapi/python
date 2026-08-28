@@ -15,6 +15,7 @@ from .noise_sensors_simulate import (
     AbstractAsyncNoiseSensorsSimulate,
     AsyncNoiseSensorsSimulate,
 )
+from ..response import unwrap_list
 
 
 class AbstractNoiseSensors(abc.ABC):
@@ -173,7 +174,10 @@ class NoiseSensors(AbstractNoiseSensors):
 
         res = self.client.get("/noise_sensors/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/noise_sensors/list")
+        ]
 
 
 class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
@@ -242,4 +246,7 @@ class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
 
         res = await self.client.get("/noise_sensors/list", params=params)
 
-        return [Device.from_dict(item) for item in res["devices"]]
+        return [
+            Device.from_dict(item)
+            for item in unwrap_list(res, "devices", "/noise_sensors/list")
+        ]

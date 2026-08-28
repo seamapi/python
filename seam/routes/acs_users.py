@@ -4,6 +4,8 @@ from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..null import Null
 from ..resources import AcsUser, AcsEntrance
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractAcsUsers(abc.ABC):
@@ -622,7 +624,7 @@ class AcsUsers(AbstractAcsUsers):
 
         res = self.client.post("/acs/users/create", json=json_payload)
 
-        return AcsUser.from_dict(res["acs_user"])
+        return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
 
     @route_metadata(
         path="/acs/users/delete", has_required_parameters=True, has_pagination=False
@@ -694,7 +696,7 @@ class AcsUsers(AbstractAcsUsers):
 
         res = self.client.get("/acs/users/get", params=params)
 
-        return AcsUser.from_dict(res["acs_user"])
+        return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
 
     @route_metadata(
         path="/acs/users/list", has_required_parameters=False, has_pagination=True
@@ -751,7 +753,10 @@ class AcsUsers(AbstractAcsUsers):
 
         res = self.client.get("/acs/users/list", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/users/list")
+        ]
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",
@@ -792,7 +797,12 @@ class AcsUsers(AbstractAcsUsers):
 
         res = self.client.get("/acs/users/list_accessible_entrances", params=params)
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/users/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/users/remove_from_access_group",
@@ -1108,7 +1118,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         res = await self.client.post("/acs/users/create", json=json_payload)
 
-        return AcsUser.from_dict(res["acs_user"])
+        return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
 
     @route_metadata(
         path="/acs/users/delete", has_required_parameters=True, has_pagination=False
@@ -1180,7 +1190,7 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         res = await self.client.get("/acs/users/get", params=params)
 
-        return AcsUser.from_dict(res["acs_user"])
+        return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
 
     @route_metadata(
         path="/acs/users/list", has_required_parameters=False, has_pagination=True
@@ -1237,7 +1247,10 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
 
         res = await self.client.get("/acs/users/list", params=params)
 
-        return [AcsUser.from_dict(item) for item in res["acs_users"]]
+        return [
+            AcsUser.from_dict(item)
+            for item in unwrap_list(res, "acs_users", "/acs/users/list")
+        ]
 
     @route_metadata(
         path="/acs/users/list_accessible_entrances",
@@ -1280,7 +1293,12 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             "/acs/users/list_accessible_entrances", params=params
         )
 
-        return [AcsEntrance.from_dict(item) for item in res["acs_entrances"]]
+        return [
+            AcsEntrance.from_dict(item)
+            for item in unwrap_list(
+                res, "acs_entrances", "/acs/users/list_accessible_entrances"
+            )
+        ]
 
     @route_metadata(
         path="/acs/users/remove_from_access_group",

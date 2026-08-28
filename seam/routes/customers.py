@@ -3,6 +3,7 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import CustomerPortal
+from ..response import unwrap
 
 
 class AbstractCustomers(abc.ABC):
@@ -485,7 +486,9 @@ class Customers(AbstractCustomers):
 
         res = self.client.post("/customers/create_portal", json=json_payload)
 
-        return CustomerPortal.from_dict(res["customer_portal"])
+        return CustomerPortal.from_dict(
+            unwrap(res, "customer_portal", "/customers/create_portal")
+        )
 
     @route_metadata(
         path="/customers/delete_data",
@@ -813,7 +816,9 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
         res = await self.client.post("/customers/create_portal", json=json_payload)
 
-        return CustomerPortal.from_dict(res["customer_portal"])
+        return CustomerPortal.from_dict(
+            unwrap(res, "customer_portal", "/customers/create_portal")
+        )
 
     @route_metadata(
         path="/customers/delete_data",

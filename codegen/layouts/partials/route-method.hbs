@@ -24,7 +24,7 @@
 
         return {{#if isAsync}}await resolve_action_attempt_async{{else}}resolve_action_attempt{{/if}}(
             client=self.client,
-            action_attempt=action_attempt_from_dict(res["action_attempt"]),
+            action_attempt=action_attempt_from_dict(unwrap(res, "action_attempt", "{{path}}")),
             wait_for_action_attempt=wait_for_action_attempt
         )
 {{else if (eq returnType "None")}}
@@ -32,8 +32,8 @@
         return None
 {{else if (isListType returnType)}}
 
-        return [{{fromDict (listItemType returnType)}}(item) for item in res{{#each returnPath}}["{{this}}"]{{/each}}]
+        return [{{fromDict (listItemType returnType)}}(item) for item in unwrap_list(res, "{{returnPath.[0]}}", "{{path}}")]
 {{else}}
 
-        return {{fromDict returnType}}(res{{#each returnPath}}["{{this}}"]{{/each}})
+        return {{fromDict returnType}}(unwrap(res, "{{returnPath.[0]}}", "{{path}}"))
 {{/if}}

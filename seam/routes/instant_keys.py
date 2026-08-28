@@ -3,6 +3,8 @@ import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
 from ..resources import InstantKey
+from ..response import unwrap
+from ..response import unwrap_list
 
 
 class AbstractInstantKeys(abc.ABC):
@@ -141,7 +143,7 @@ class InstantKeys(AbstractInstantKeys):
 
         res = self.client.get("/instant_keys/get", params=params)
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
 
     @route_metadata(
         path="/instant_keys/list", has_required_parameters=False, has_pagination=False
@@ -159,7 +161,10 @@ class InstantKeys(AbstractInstantKeys):
 
         res = self.client.get("/instant_keys/list", params=params)
 
-        return [InstantKey.from_dict(item) for item in res["instant_keys"]]
+        return [
+            InstantKey.from_dict(item)
+            for item in unwrap_list(res, "instant_keys", "/instant_keys/list")
+        ]
 
 
 class AsyncInstantKeys(AbstractAsyncInstantKeys):
@@ -220,7 +225,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
 
         res = await self.client.get("/instant_keys/get", params=params)
 
-        return InstantKey.from_dict(res["instant_key"])
+        return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
 
     @route_metadata(
         path="/instant_keys/list", has_required_parameters=False, has_pagination=False
@@ -238,4 +243,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
 
         res = await self.client.get("/instant_keys/list", params=params)
 
-        return [InstantKey.from_dict(item) for item in res["instant_keys"]]
+        return [
+            InstantKey.from_dict(item)
+            for item in unwrap_list(res, "instant_keys", "/instant_keys/list")
+        ]
