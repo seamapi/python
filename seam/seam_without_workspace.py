@@ -6,6 +6,7 @@ from .constants import DEFAULT_TIMEOUT
 from .parse_options import parse_without_workspace_options
 from .client import AsyncSeamHttpClient, SeamHttpClient
 from .models import AbstractAsyncSeamWithoutWorkspace, AbstractSeamWithoutWorkspace
+from .modules.action_attempts import normalize_wait_for_action_attempt
 from .routes.workspaces import AsyncWorkspaces, Workspaces
 
 
@@ -63,7 +64,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
@@ -79,7 +80,6 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
-        self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_without_workspace_options(
             personal_access_token=personal_access_token,
             endpoint=endpoint,
@@ -93,10 +93,27 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
             httpx_options=httpx_options,
         )
 
-        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+        self.defaults = {
+            "wait_for_action_attempt": normalize_wait_for_action_attempt(
+                wait_for_action_attempt
+            )
+        }
 
-        self._workspaces = Workspaces(client=self.client, defaults=defaults)
+        self._workspaces = Workspaces(client=self.client, defaults=self.defaults)
         self.workspaces = WorkspacesProxy(self._workspaces)
+
+    @property
+    def wait_for_action_attempt(self) -> Union[bool, Dict[str, float]]:
+        """Default wait behavior for action attempts, shared with every route."""
+        return self.defaults["wait_for_action_attempt"]
+
+    @wait_for_action_attempt.setter
+    def wait_for_action_attempt(
+        self, value: Optional[Union[bool, Dict[str, float]]]
+    ) -> None:
+        self.defaults["wait_for_action_attempt"] = normalize_wait_for_action_attempt(
+            value
+        )
 
     @classmethod
     def from_personal_access_token(
@@ -121,7 +138,7 @@ class SeamWithoutWorkspace(AbstractSeamWithoutWorkspace):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
@@ -209,7 +226,7 @@ class AsyncSeamWithoutWorkspace(AbstractAsyncSeamWithoutWorkspace):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
@@ -225,7 +242,6 @@ class AsyncSeamWithoutWorkspace(AbstractAsyncSeamWithoutWorkspace):
         :raises SeamInvalidTokenError: If the provided personal access token format is invalid
         """
 
-        self.wait_for_action_attempt = wait_for_action_attempt
         auth_headers, endpoint = parse_without_workspace_options(
             personal_access_token=personal_access_token,
             endpoint=endpoint,
@@ -239,10 +255,27 @@ class AsyncSeamWithoutWorkspace(AbstractAsyncSeamWithoutWorkspace):
             httpx_options=httpx_options,
         )
 
-        defaults = {"wait_for_action_attempt": wait_for_action_attempt}
+        self.defaults = {
+            "wait_for_action_attempt": normalize_wait_for_action_attempt(
+                wait_for_action_attempt
+            )
+        }
 
-        self._workspaces = AsyncWorkspaces(client=self.client, defaults=defaults)
+        self._workspaces = AsyncWorkspaces(client=self.client, defaults=self.defaults)
         self.workspaces = AsyncWorkspacesProxy(self._workspaces)
+
+    @property
+    def wait_for_action_attempt(self) -> Union[bool, Dict[str, float]]:
+        """Default wait behavior for action attempts, shared with every route."""
+        return self.defaults["wait_for_action_attempt"]
+
+    @wait_for_action_attempt.setter
+    def wait_for_action_attempt(
+        self, value: Optional[Union[bool, Dict[str, float]]]
+    ) -> None:
+        self.defaults["wait_for_action_attempt"] = normalize_wait_for_action_attempt(
+            value
+        )
 
     @classmethod
     def from_personal_access_token(
@@ -264,7 +297,7 @@ class AsyncSeamWithoutWorkspace(AbstractAsyncSeamWithoutWorkspace):
         :type endpoint: Optional[str]
         :param wait_for_action_attempt: Controls whether to wait for an
             action attempt to complete. Can be a boolean or a dictionary with
-            'timeout' and 'poll_interval' keys
+            'timeout' and 'polling_interval' keys
         :type wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]]
         :param retries: Configuration for retry behavior on failed requests
         :type retries: Optional[httpx_retries.Retry]
