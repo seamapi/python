@@ -682,6 +682,31 @@ and its ``Retry`` class is re-exported from ``seam`` for convenience:
         retries=Retry(total=3, backoff_factor=0.5, status_forcelist=[503]),
     )
 
+Bringing your own transport
++++++++++++++++++++++++++++
+
+A custom ``transport`` or ``mounts`` passed through ``httpx_options`` replaces
+the transport the SDK builds, so it takes full responsibility for retries:
+requests through it are not retried unless you wrap it yourself. Combining
+either with the ``retries`` option raises a ``SeamInvalidOptionsError``. To
+retry through your own transport, wrap it with ``RetryTransport``:
+
+.. code-block:: python
+
+    from httpx_retries import RetryTransport
+
+    from seam import Seam, Retry
+
+    seam = Seam(
+        api_key="your-api-key",
+        httpx_options={
+            "transport": RetryTransport(
+                transport=MyCustomTransport(),
+                retry=Retry(total=2, status_forcelist=[429, 503]),
+            ),
+        },
+    )
+
 Configuring the httpx client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
