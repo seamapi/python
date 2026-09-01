@@ -1,13 +1,8 @@
-"""Total conversion helpers shared by the generated resource dataclasses.
+"""Convert response payloads without raising on their shape.
 
-The Seam API grows new event types, action types, and error codes between SDK
-releases, so reading a response must never fail on the shape of the payload.
-Every helper here degrades instead of raising: an unusable value becomes
-``None``, an empty list, or a :class:`DeepAttrDict` carrying the payload
-verbatim, so one unexpected field cannot cost the caller the whole response.
-
-The narrow cost is that a genuinely malformed payload is no longer loud. The
-payload survives on the returned object, so it stays diagnosable.
+Seam adds event types, action types, and error codes between SDK releases, so a
+value in an unexpected shape degrades to None, an empty list, or a DeepAttrDict
+rather than costing the caller the whole response.
 """
 
 from typing import Any, Dict, List
@@ -16,11 +11,7 @@ from .deep_attr_dict import DeepAttrDict
 
 
 def record_from_dict(value: Any) -> Any:
-    """Wrap a free-form record for attribute access, passing anything else through.
-
-    A record the API sends as something other than an object degrades to the raw
-    value rather than costing the caller the whole surrounding resource.
-    """
+    """Wrap a free-form record for attribute access, passing anything else through."""
 
     return DeepAttrDict(value) if isinstance(value, dict) else value
 
@@ -49,10 +40,7 @@ def required_object_from_dict(cls: Any, value: Any) -> Any:
 
 
 def object_list_from_dict(cls: Any, value: Any) -> List[Any]:
-    """Convert a list of nested objects, skipping nothing and raising for nothing.
-
-    A value that is not a list reads as empty, so callers can always iterate.
-    """
+    """Convert a list of nested objects, reading a non-list as empty."""
 
     if not isinstance(value, list):
         return []
@@ -69,11 +57,10 @@ def discriminated_from_dict(
     """Convert one member of a discriminated union.
 
     An unrecognized discriminator, or a known one whose payload does not
-    convert, yields a DeepAttrDict so a newer API stays readable.
+    convert, yields a DeepAttrDict.
     """
 
     if not isinstance(value, dict):
-        # Not an object at all; hand it back untouched rather than lose it.
         return value
 
     key = value.get(discriminator)
@@ -91,7 +78,7 @@ def discriminated_from_dict(
 def discriminated_list_from_dict(
     value: Any, variants: Dict[str, Any], discriminator: str
 ) -> List[Any]:
-    """Convert a list of discriminated union members, degrading item by item."""
+    """Convert a list of discriminated union members, reading a non-list as empty."""
 
     if not isinstance(value, list):
         return []

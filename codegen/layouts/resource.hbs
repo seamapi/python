@@ -56,6 +56,5 @@ def {{union.fromDictName}}(d: Any) -> {{union.className}}:
     try:
         return variant.from_dict(d)
     except Exception:  # pylint: disable=broad-exception-caught
-        # A known discriminator whose payload does not convert is still readable.
         return cast({{union.className}}, DeepAttrDict(d))
 {{/if}}

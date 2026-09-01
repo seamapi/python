@@ -1,9 +1,4 @@
-"""Reading a response never fails on the shape of the payload.
-
-Seam adds event types, action types, and error codes between SDK releases, so a
-payload this version does not recognize has to stay readable rather than cost
-the caller the whole response. Each test here pins one shape that used to raise.
-"""
+"""Regression tests for reading responses that do not match the generated shape."""
 
 from seam.deep_attr_dict import DeepAttrDict
 from seam.exceptions import SeamActionAttemptUnknownStatusError
@@ -68,7 +63,6 @@ def test_an_unknown_event_type_stays_readable():
 
 
 def test_a_known_event_survives_one_malformed_field():
-    # Only the unusable field degrades; the event keeps its generated type.
     event = seam_event_from_dict(
         {
             "event_id": "e",
@@ -99,13 +93,6 @@ def test_a_discriminator_that_is_not_a_string_does_not_match_a_variant():
 
 
 def test_waiting_on_an_unknown_status_raises_rather_than_claiming_success():
-    """An unrecognized status supports neither conclusion the wait can return.
-
-    Reporting success would tell the caller the action completed when the SDK
-    cannot tell; polling on would block until the timeout and then report a
-    timeout that misdescribes what happened.
-    """
-
     attempt = action_attempt_from_dict(
         {"action_attempt_id": "aa", "action_type": "LOCK_DOOR", "status": "cancelled"}
     )

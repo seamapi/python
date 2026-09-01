@@ -25,11 +25,7 @@ WAIT_FOR_ACTION_ATTEMPT_OPTION_KEYS = ("timeout", "polling_interval")
 
 
 def _status_of(action_attempt: ActionAttempt) -> Optional[str]:
-    """Read the status without assuming the attempt carries one.
-
-    An attempt from a newer API deserializes to a DeepAttrDict, where a missing
-    key raises rather than reading as None.
-    """
+    """Read the status, which a DeepAttrDict fallback may not carry."""
 
     return getattr(action_attempt, "status", None)
 
@@ -128,8 +124,6 @@ def poll_until_ready(
     if _status_of(action_attempt) == "error":
         raise SeamActionAttemptFailedError(cast(ErrorActionAttempt, action_attempt))
 
-    # Neither pending, success, nor error: a status added after this SDK release.
-    # Waiting cannot conclude, so say so rather than pass it off as a success.
     status = _status_of(action_attempt)
     if status != "success":
         raise SeamActionAttemptUnknownStatusError(action_attempt, str(status))
@@ -208,8 +202,6 @@ async def poll_until_ready_async(
     if _status_of(action_attempt) == "error":
         raise SeamActionAttemptFailedError(cast(ErrorActionAttempt, action_attempt))
 
-    # Neither pending, success, nor error: a status added after this SDK release.
-    # Waiting cannot conclude, so say so rather than pass it off as a success.
     status = _status_of(action_attempt)
     if status != "success":
         raise SeamActionAttemptUnknownStatusError(action_attempt, str(status))

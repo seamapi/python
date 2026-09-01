@@ -8587,5 +8587,4 @@ def seam_event_from_dict(d: Any) -> SeamEvent:
     try:
         return variant.from_dict(d)
     except Exception:  # pylint: disable=broad-exception-caught
-        # A known discriminator whose payload does not convert is still readable.
         return cast(SeamEvent, DeepAttrDict(d))

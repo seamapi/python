@@ -260,11 +260,8 @@ class SeamActionAttemptUnknownStatusError(SeamActionAttemptError):
     """
     Exception raised when an action attempt reports a status this SDK does not know.
 
-    Seam adds action attempt statuses over time. Waiting for an attempt promises to
-    return a succeeded attempt or raise, and an unrecognized status supports neither
-    conclusion: reporting success would claim the action completed when the SDK
-    cannot tell, and polling on would block until the timeout and then report a
-    misleading timeout. Read ``action_attempt`` to inspect the status directly.
+    Waiting promises to return a succeeded attempt or raise, and an unrecognized
+    status supports neither. Read ``action_attempt`` to inspect it directly.
 
     :ivar name: Name of the exception class
     :vartype name: str
