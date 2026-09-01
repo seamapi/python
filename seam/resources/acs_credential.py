@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
-
-
-def _from_discriminated_dict(
-    d: Any, variants: Dict[str, Any], discriminator: str
-) -> Any:
-    variant = variants.get(d.get(discriminator))
-    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -90,6 +90,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 member_pin_id=d.get("member_pin_id", None),
             )
@@ -120,6 +122,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 auto_join=d.get("auto_join", None),
                 door_names=d.get("door_names", None),
@@ -147,6 +151,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -185,6 +191,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 auto_join=d.get("auto_join", None),
                 card_function_type=d.get("card_function_type", None),
@@ -213,6 +221,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -236,6 +246,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -259,6 +271,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -282,6 +296,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -305,6 +321,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -328,6 +346,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -357,6 +377,8 @@ class AcsCredential:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -433,23 +455,19 @@ class AcsCredential:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             access_method=d.get("access_method", None),
             acs_credential_id=d.get("acs_credential_id", None),
             acs_credential_pool_id=d.get("acs_credential_pool_id", None),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
-            akiles_metadata=(
-                cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
-                if d.get("akiles_metadata") is not None
-                else None
+            akiles_metadata=_object_from_dict(
+                cls.AkilesMetadata, d.get("akiles_metadata")
             ),
-            assa_abloy_vostio_metadata=(
-                cls.AssaAbloyVostioMetadata.from_dict(
-                    d.get("assa_abloy_vostio_metadata")
-                )
-                if d.get("assa_abloy_vostio_metadata") is not None
-                else None
+            assa_abloy_vostio_metadata=_object_from_dict(
+                cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
             ),
             card_number=d.get("card_number", None),
             code=d.get("code", None),
@@ -457,7 +475,7 @@ class AcsCredential:
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=_object_list_from_dict(cls.Errors, d.get("errors")),
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             is_issued=d.get("is_issued", None),
@@ -476,14 +494,11 @@ class AcsCredential:
             parent_acs_credential_id=d.get("parent_acs_credential_id", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
-            visionline_metadata=(
-                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
-                if d.get("visionline_metadata") is not None
-                else None
+            visionline_metadata=_object_from_dict(
+                cls.VisionlineMetadata, d.get("visionline_metadata")
             ),
-            warnings=[
-                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
-                for i in d.get("warnings") or []
-            ],
+            warnings=_discriminated_list_from_dict(
+                d.get("warnings"), cls._WarningsVariants, "warning_code"
+            ),
             workspace_id=d.get("workspace_id", None),
         )

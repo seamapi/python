@@ -1,6 +1,13 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
 
 
@@ -35,6 +42,8 @@ class ThermostatDailyProgram:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 climate_preset_key=d.get("climate_preset_key", None),
                 starts_at_time=d.get("starts_at_time", None),
@@ -49,11 +58,13 @@ class ThermostatDailyProgram:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
             name=d.get("name", None),
-            periods=[cls.Periods.from_dict(i) for i in d.get("periods") or []],
+            periods=_object_list_from_dict(cls.Periods, d.get("periods")),
             thermostat_daily_program_id=d.get("thermostat_daily_program_id", None),
             workspace_id=d.get("workspace_id", None),
         )

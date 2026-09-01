@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
-
-
-def _from_discriminated_dict(
-    d: Any, variants: Dict[str, Any], discriminator: str
-) -> Any:
-    variant = variants.get(d.get(discriminator))
-    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -90,6 +90,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 is_cancellable=d.get("is_cancellable", None),
                 is_early_checkin_able=d.get("is_early_checkin_able", None),
@@ -121,6 +123,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -148,6 +152,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -175,6 +181,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -208,6 +216,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -237,6 +247,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -277,6 +289,8 @@ class UnmanagedAccessCode:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     field=d.get("field", None),
                     from_=d.get("from", None),
@@ -292,16 +306,17 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 change_type=d.get("change_type", None),
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
                 is_access_code_error=d.get("is_access_code_error", None),
                 message=d.get("message", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=_object_list_from_dict(
+                    cls.ModifiedFields, d.get("modified_fields")
+                ),
             )
 
     @dataclass
@@ -324,6 +339,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -351,6 +368,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -378,6 +397,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -405,6 +426,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -432,6 +455,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -462,6 +487,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -493,6 +520,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -524,6 +553,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -555,6 +586,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -583,6 +616,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -610,6 +645,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -637,6 +674,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -664,6 +703,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -691,6 +732,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -718,6 +761,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -745,6 +790,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -772,6 +819,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -799,6 +848,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -829,6 +880,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -854,6 +907,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -877,6 +932,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -914,6 +971,8 @@ class UnmanagedAccessCode:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     field=d.get("field", None),
                     from_=d.get("from", None),
@@ -928,14 +987,15 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 change_type=d.get("change_type", None),
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
-                modified_fields=[
-                    cls.ModifiedFields.from_dict(i)
-                    for i in d.get("modified_fields") or []
-                ],
+                modified_fields=_object_list_from_dict(
+                    cls.ModifiedFields, d.get("modified_fields")
+                ),
                 warning_code=d.get("warning_code", None),
             )
 
@@ -956,6 +1016,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -979,6 +1041,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1002,6 +1066,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1025,6 +1091,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1048,6 +1116,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1071,6 +1141,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1094,6 +1166,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1117,6 +1191,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1140,6 +1216,8 @@ class UnmanagedAccessCode:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1249,6 +1327,8 @@ class UnmanagedAccessCode:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             cannot_be_managed=d.get("cannot_be_managed", None),
@@ -1258,26 +1338,20 @@ class UnmanagedAccessCode:
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
-            dormakaba_oracode_metadata=(
-                cls.DormakabaOracodeMetadata.from_dict(
-                    d.get("dormakaba_oracode_metadata")
-                )
-                if d.get("dormakaba_oracode_metadata") is not None
-                else None
+            dormakaba_oracode_metadata=_object_from_dict(
+                cls.DormakabaOracodeMetadata, d.get("dormakaba_oracode_metadata")
             ),
             ends_at=d.get("ends_at", None),
-            errors=[
-                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
-                for i in d.get("errors") or []
-            ],
+            errors=_discriminated_list_from_dict(
+                d.get("errors"), cls._ErrorsVariants, "error_code"
+            ),
             is_managed=d.get("is_managed", None),
             name=d.get("name", None),
             starts_at=d.get("starts_at", None),
             status=d.get("status", None),
             type=d.get("type", None),
-            warnings=[
-                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
-                for i in d.get("warnings") or []
-            ],
+            warnings=_discriminated_list_from_dict(
+                d.get("warnings"), cls._WarningsVariants, "warning_code"
+            ),
             workspace_id=d.get("workspace_id", None),
         )

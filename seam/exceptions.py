@@ -254,3 +254,36 @@ class SeamActionAttemptTimeoutError(SeamActionAttemptError):
         message = f"Timed out waiting for action attempt after {timeout}s"
         super().__init__(message, action_attempt)
         self.name = self.__class__.__name__
+
+
+class SeamActionAttemptUnknownStatusError(SeamActionAttemptError):
+    """
+    Exception raised when an action attempt reports a status this SDK does not know.
+
+    Seam adds action attempt statuses over time. Waiting for an attempt promises to
+    return a succeeded attempt or raise, and an unrecognized status supports neither
+    conclusion: reporting success would claim the action completed when the SDK
+    cannot tell, and polling on would block until the timeout and then report a
+    misleading timeout. Read ``action_attempt`` to inspect the status directly.
+
+    :ivar name: Name of the exception class
+    :vartype name: str
+    :ivar status: The unrecognized status reported by the API
+    :vartype status: str
+    """
+
+    def __init__(self, action_attempt: ActionAttempt, status: str):
+        """
+        :param action_attempt: The ActionAttempt object carrying the unknown status
+        :type action_attempt: ActionAttempt
+        :param status: The unrecognized status reported by the API
+        :type status: str
+        """
+
+        message = (
+            f'Action attempt reported an unknown status "{status}". '
+            "This SDK version may predate it; upgrade or read the action attempt directly."
+        )
+        super().__init__(message, action_attempt)
+        self.name = self.__class__.__name__
+        self.status = status
