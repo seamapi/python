@@ -623,6 +623,8 @@ class Device:
 
         :ivar controlbyweb_metadata: Metadata for a ControlByWeb device.
 
+        :ivar dormakaba_oracode_iho_metadata: Metadata for a dormakaba Oracode Homeowner's Portal device.
+
         :ivar dormakaba_oracode_metadata: Metadata for a dormakaba Oracode device.
 
         :ivar ecobee_metadata: Metadata for an ecobee device.
@@ -1148,6 +1150,61 @@ class Device:
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
                     relay_name=d.get("relay_name", None),
+                )
+
+        @dataclass
+        class DormakabaOracodeIhoMetadata(ResourceMapping):
+            """Metadata for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar door_id: Door ID for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar door_name: Name of the door for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar user_levels: User levels for a dormakaba Oracode Homeowner's Portal device.
+            """
+
+            @dataclass
+            class UserLevels(ResourceMapping):
+                """User levels for a dormakaba Oracode Homeowner's Portal device.
+
+                :ivar checkInTime:
+
+                :ivar checkOutTime:
+
+                :ivar userLevel:
+
+                :ivar userLevelName:
+
+                :ivar userLevelType:"""
+
+                checkInTime: Optional[str]
+                checkOutTime: Optional[str]
+                userLevel: Optional[float]
+                userLevelName: Optional[str]
+                userLevelType: Optional[str]
+
+                @classmethod
+                def from_dict(cls, d: Any):
+                    return cls(
+                        checkInTime=d.get("checkInTime", None),
+                        checkOutTime=d.get("checkOutTime", None),
+                        userLevel=d.get("userLevel", None),
+                        userLevelName=d.get("userLevelName", None),
+                        userLevelType=d.get("userLevelType", None),
+                    )
+
+            door_id: Optional[float]
+            door_name: Optional[str]
+            user_levels: Optional[List[UserLevels]]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    door_id=d.get("door_id", None),
+                    door_name=d.get("door_name", None),
+                    user_levels=[
+                        cls.UserLevels.from_dict(i) for i in d.get("user_levels") or []
+                    ],
                 )
 
         @dataclass
@@ -3140,6 +3197,7 @@ class Device:
         avigilon_alta_metadata: Optional[AvigilonAltaMetadata]
         brivo_metadata: Optional[BrivoMetadata]
         controlbyweb_metadata: Optional[ControlbywebMetadata]
+        dormakaba_oracode_iho_metadata: Optional[DormakabaOracodeIhoMetadata]
         dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
         ecobee_metadata: Optional[EcobeeMetadata]
         four_suites_metadata: Optional[FourSuitesMetadata]
@@ -3315,6 +3373,13 @@ class Device:
                 controlbyweb_metadata=(
                     cls.ControlbywebMetadata.from_dict(d.get("controlbyweb_metadata"))
                     if d.get("controlbyweb_metadata") is not None
+                    else None
+                ),
+                dormakaba_oracode_iho_metadata=(
+                    cls.DormakabaOracodeIhoMetadata.from_dict(
+                        d.get("dormakaba_oracode_iho_metadata")
+                    )
+                    if d.get("dormakaba_oracode_iho_metadata") is not None
                     else None
                 ),
                 dormakaba_oracode_metadata=(

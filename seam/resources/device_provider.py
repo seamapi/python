@@ -109,6 +109,7 @@ class DeviceProvider:
         "ecobee",
         "four_suites",
         "dormakaba_oracode",
+        "dormakaba_oracode_iho",
         "pti",
         "wyze",
         "seam_passport",
