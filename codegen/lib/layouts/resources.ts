@@ -511,7 +511,8 @@ const commonScalarProperties = (variants: UnionVariant[]): Property[] => {
       if (property.format === 'list') return false
       return rest.every((variant) =>
         variant.properties.some(
-          ({ name, format }) => name === property.name && format === property.format,
+          ({ name, format }) =>
+            name === property.name && format === property.format,
         ),
       )
     })
@@ -609,13 +610,13 @@ const buildUnionResource = (
     variants: classes
       .filter(({ className: name }) => name !== fallbackClassName)
       .map((variantClass, index) => {
-      const secondaryValue = variants[index]?.secondaryValue
-      return {
-        className: variantClass.className,
-        values: [variants[index]?.value ?? ''],
-        ...(secondaryValue == null ? {} : { secondaryValue }),
-      }
-    }),
+        const secondaryValue = variants[index]?.secondaryValue
+        return {
+          className: variantClass.className,
+          values: [variants[index]?.value ?? ''],
+          ...(secondaryValue == null ? {} : { secondaryValue }),
+        }
+      }),
     aliases,
   }
 
