@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
-
-
-def _from_discriminated_dict(
-    d: Any, variants: Dict[str, Any], discriminator: str
-) -> Any:
-    variant = variants.get(d.get(discriminator))
-    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -67,6 +67,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -98,6 +100,8 @@ class UnmanagedAccessGrant:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_ids=d.get("device_ids", None),
                 )
@@ -115,6 +119,8 @@ class UnmanagedAccessGrant:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     common_code_key=d.get("common_code_key", None),
                     device_ids=d.get("device_ids", None),
@@ -128,16 +134,14 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=(
-                    cls.From.from_dict(d.get("from"))
-                    if d.get("from") is not None
-                    else None
-                ),
+                from_=_object_from_dict(cls.From, d.get("from")),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+                to=_object_from_dict(cls.To, d.get("to")),
             )
 
     @dataclass
@@ -169,6 +173,8 @@ class UnmanagedAccessGrant:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -187,6 +193,8 @@ class UnmanagedAccessGrant:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -201,17 +209,15 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 access_method_ids=d.get("access_method_ids", None),
                 created_at=d.get("created_at", None),
-                from_=(
-                    cls.From.from_dict(d.get("from"))
-                    if d.get("from") is not None
-                    else None
-                ),
+                from_=_object_from_dict(cls.From, d.get("from")),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
+                to=_object_from_dict(cls.To, d.get("to")),
             )
 
     @dataclass
@@ -240,6 +246,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 code=d.get("code", None),
                 created_access_method_ids=d.get("created_access_method_ids", None),
@@ -266,6 +274,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -289,6 +299,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -324,6 +336,8 @@ class UnmanagedAccessGrant:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     error_code=d.get("error_code", None),
@@ -337,12 +351,13 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                failed_devices=[
-                    cls.FailedDevices.from_dict(i)
-                    for i in d.get("failed_devices") or []
-                ],
+                failed_devices=_object_list_from_dict(
+                    cls.FailedDevices, d.get("failed_devices")
+                ),
                 message=d.get("message", None),
                 warning_code=d.get("warning_code", None),
             )
@@ -367,6 +382,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 access_method_ids=d.get("access_method_ids", None),
                 created_at=d.get("created_at", None),
@@ -400,6 +417,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 device_id=d.get("device_id", None),
@@ -429,6 +448,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 device_id=d.get("device_id", None),
@@ -461,6 +482,8 @@ class UnmanagedAccessGrant:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 device_id=d.get("device_id", None),
@@ -520,35 +543,33 @@ class UnmanagedAccessGrant:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             access_method_ids=d.get("access_method_ids", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
             ends_at=d.get("ends_at", None),
-            errors=[
-                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
-                for i in d.get("errors") or []
-            ],
+            errors=_discriminated_list_from_dict(
+                d.get("errors"), cls._ErrorsVariants, "error_code"
+            ),
             location_ids=d.get("location_ids", None),
             name=d.get("name", None),
-            pending_mutations=[
-                _from_discriminated_dict(
-                    i, cls._PendingMutationsVariants, "mutation_code"
-                )
-                for i in d.get("pending_mutations") or []
-            ],
-            requested_access_methods=[
-                cls.RequestedAccessMethods.from_dict(i)
-                for i in d.get("requested_access_methods") or []
-            ],
+            pending_mutations=_discriminated_list_from_dict(
+                d.get("pending_mutations"),
+                cls._PendingMutationsVariants,
+                "mutation_code",
+            ),
+            requested_access_methods=_object_list_from_dict(
+                cls.RequestedAccessMethods, d.get("requested_access_methods")
+            ),
             reservation_key=d.get("reservation_key", None),
             space_ids=d.get("space_ids", None),
             starts_at=d.get("starts_at", None),
             user_identity_id=d.get("user_identity_id", None),
-            warnings=[
-                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
-                for i in d.get("warnings") or []
-            ],
+            warnings=_discriminated_list_from_dict(
+                d.get("warnings"), cls._WarningsVariants, "warning_code"
+            ),
             workspace_id=d.get("workspace_id", None),
         )

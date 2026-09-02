@@ -1,17 +1,33 @@
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, cast
 import asyncio
 import time
 
 from ..client import AsyncSeamHttpClient, SeamHttpClient
-from ..exceptions import SeamActionAttemptFailedError, SeamActionAttemptTimeoutError
+from ..exceptions import (
+    SeamActionAttemptFailedError,
+    SeamActionAttemptTimeoutError,
+    SeamActionAttemptUnknownStatusError,
+)
 from ..options import SeamInvalidOptionsError
-from ..resources import ActionAttempt, SuccessActionAttempt, action_attempt_from_dict
+from ..resources import (
+    ActionAttempt,
+    ErrorActionAttempt,
+    PendingActionAttempt,
+    SuccessActionAttempt,
+    action_attempt_from_dict,
+)
 from ..response import unwrap
 
 TIMEOUT = 5.0
 POLLING_INTERVAL = 0.5
 
 WAIT_FOR_ACTION_ATTEMPT_OPTION_KEYS = ("timeout", "polling_interval")
+
+
+def _status_of(action_attempt: ActionAttempt) -> Optional[str]:
+    """Read the status, which a DeepAttrDict fallback may not carry."""
+
+    return getattr(action_attempt, "status", None)
 
 
 def validate_wait_for_action_attempt(
@@ -93,20 +109,26 @@ def poll_until_ready(
     if action_attempt is None:
         action_attempt = get_action_attempt(client, action_attempt_id)
 
-    while action_attempt.status == "pending":
+    while _status_of(action_attempt) == "pending":
         remaining = deadline - time.monotonic()
 
         if remaining <= 0:
-            raise SeamActionAttemptTimeoutError(action_attempt, timeout)
+            raise SeamActionAttemptTimeoutError(
+                cast(PendingActionAttempt, action_attempt), timeout
+            )
 
         time.sleep(min(polling_interval, remaining))
 
         action_attempt = get_action_attempt(client, action_attempt_id)
 
-    if action_attempt.status == "error":
-        raise SeamActionAttemptFailedError(action_attempt)
+    if _status_of(action_attempt) == "error":
+        raise SeamActionAttemptFailedError(cast(ErrorActionAttempt, action_attempt))
 
-    return action_attempt
+    status = _status_of(action_attempt)
+    if status != "success":
+        raise SeamActionAttemptUnknownStatusError(action_attempt, str(status))
+
+    return cast(SuccessActionAttempt, action_attempt)
 
 
 def resolve_action_attempt(
@@ -165,20 +187,26 @@ async def poll_until_ready_async(
     if action_attempt is None:
         action_attempt = await get_action_attempt_async(client, action_attempt_id)
 
-    while action_attempt.status == "pending":
+    while _status_of(action_attempt) == "pending":
         remaining = deadline - time.monotonic()
 
         if remaining <= 0:
-            raise SeamActionAttemptTimeoutError(action_attempt, timeout)
+            raise SeamActionAttemptTimeoutError(
+                cast(PendingActionAttempt, action_attempt), timeout
+            )
 
         await asyncio.sleep(min(polling_interval, remaining))
 
         action_attempt = await get_action_attempt_async(client, action_attempt_id)
 
-    if action_attempt.status == "error":
-        raise SeamActionAttemptFailedError(action_attempt)
+    if _status_of(action_attempt) == "error":
+        raise SeamActionAttemptFailedError(cast(ErrorActionAttempt, action_attempt))
 
-    return action_attempt
+    status = _status_of(action_attempt)
+    if status != "success":
+        raise SeamActionAttemptUnknownStatusError(action_attempt, str(status))
+
+    return cast(SuccessActionAttempt, action_attempt)
 
 
 async def resolve_action_attempt_async(

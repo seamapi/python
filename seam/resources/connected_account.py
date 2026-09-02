@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
-
-
-def _from_discriminated_dict(
-    d: Any, variants: Dict[str, Any], discriminator: str
-) -> Any:
-    variant = variants.get(d.get(discriminator))
-    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -74,6 +74,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -105,6 +107,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -157,6 +161,8 @@ class ConnectedAccount:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
@@ -172,8 +178,10 @@ class ConnectedAccount:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
-                    sites=[cls.Sites.from_dict(i) for i in d.get("sites") or []],
+                    sites=_object_list_from_dict(cls.Sites, d.get("sites")),
                 )
 
         created_at: str
@@ -185,16 +193,16 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
                 is_bridge_error=d.get("is_bridge_error", None),
                 is_connected_account_error=d.get("is_connected_account_error", None),
                 message=d.get("message", None),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
+                salto_ks_metadata=_object_from_dict(
+                    cls.SaltoKsMetadata, d.get("salto_ks_metadata")
                 ),
             )
 
@@ -221,6 +229,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -252,6 +262,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 api_url=d.get("api_url", None),
                 email=d.get("email", None),
@@ -277,6 +289,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -300,6 +314,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -346,6 +362,8 @@ class ConnectedAccount:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         site_id=d.get("site_id", None),
                         site_name=d.get("site_name", None),
@@ -361,8 +379,10 @@ class ConnectedAccount:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
-                    sites=[cls.Sites.from_dict(i) for i in d.get("sites") or []],
+                    sites=_object_list_from_dict(cls.Sites, d.get("sites")),
                 )
 
         created_at: str
@@ -372,13 +392,13 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
+                salto_ks_metadata=_object_from_dict(
+                    cls.SaltoKsMetadata, d.get("salto_ks_metadata")
                 ),
                 warning_code=d.get("warning_code", None),
             )
@@ -400,6 +420,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -423,6 +445,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -446,6 +470,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -469,6 +495,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -492,6 +520,8 @@ class ConnectedAccount:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -555,6 +585,8 @@ class ConnectedAccount:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             accepted_capabilities=d.get("accepted_capabilities", None),
             account_type=d.get("account_type", None),
@@ -564,26 +596,22 @@ class ConnectedAccount:
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
+            custom_metadata=_record_from_dict(d.get("custom_metadata", None)),
             customer_key=d.get("customer_key", None),
             default_checkin_time=d.get("default_checkin_time", None),
             default_checkout_time=d.get("default_checkout_time", None),
             display_name=d.get("display_name", None),
-            errors=[
-                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
-                for i in d.get("errors") or []
-            ],
+            errors=_discriminated_list_from_dict(
+                d.get("errors"), cls._ErrorsVariants, "error_code"
+            ),
             ical_feed_origin=d.get("ical_feed_origin", None),
             ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
             time_zone=d.get("time_zone", None),
-            user_identifier=(
-                cls.UserIdentifier.from_dict(d.get("user_identifier"))
-                if d.get("user_identifier") is not None
-                else None
+            user_identifier=_object_from_dict(
+                cls.UserIdentifier, d.get("user_identifier")
             ),
-            warnings=[
-                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
-                for i in d.get("warnings") or []
-            ],
+            warnings=_discriminated_list_from_dict(
+                d.get("warnings"), cls._WarningsVariants, "warning_code"
+            ),
         )

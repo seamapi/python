@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
-
-
-def _from_discriminated_dict(
-    d: Any, variants: Dict[str, Any], discriminator: str
-) -> Any:
-    variant = variants.get(d.get(discriminator))
-    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -107,6 +107,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 display_name=d.get("display_name", None),
                 image_url=d.get("image_url", None),
@@ -133,6 +135,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 device_provider_name=d.get("device_provider_name", None),
                 display_name=d.get("display_name", None),
@@ -163,6 +167,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -194,6 +200,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -225,6 +233,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -256,6 +266,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -284,6 +296,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -311,6 +325,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -338,6 +354,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -365,6 +383,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -392,6 +412,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -419,6 +441,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -446,6 +470,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -473,6 +499,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -500,6 +528,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -530,6 +560,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -558,6 +590,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 location_name=d.get("location_name", None),
                 room_name=d.get("room_name", None),
@@ -799,6 +833,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         level=d.get("level", None),
                     )
@@ -808,12 +844,10 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
-                    battery=(
-                        cls.Battery.from_dict(d.get("battery"))
-                        if d.get("battery") is not None
-                        else None
-                    ),
+                    battery=_object_from_dict(cls.Battery, d.get("battery")),
                     is_connected=d.get("is_connected", None),
                 )
 
@@ -828,6 +862,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     name=d.get("name", None),
                 )
@@ -846,6 +882,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     level=d.get("level", None),
                     status=d.get("status", None),
@@ -880,6 +918,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     accessory_keypad_supported=d.get(
                         "accessory_keypad_supported", None
@@ -920,6 +960,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         endpoint_id=d.get("endpoint_id", None),
                         is_active=d.get("is_active", None),
@@ -930,10 +972,10 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
-                    endpoints=[
-                        cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
-                    ],
+                    endpoints=_object_list_from_dict(cls.Endpoints, d.get("endpoints")),
                     has_active_endpoint=d.get("has_active_endpoint", None),
                 )
 
@@ -948,6 +990,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     has_active_phone=d.get("has_active_phone", None),
                 )
@@ -971,6 +1015,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     _member_group_id=d.get("_member_group_id", None),
                     gadget_id=d.get("gadget_id", None),
@@ -1009,6 +1055,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_name=d.get("device_name", None),
                     did=d.get("did", None),
@@ -1030,6 +1078,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     encoder_name=d.get("encoder_name", None),
                 )
@@ -1062,6 +1112,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     has_keypad=d.get("has_keypad", None),
                     house_id=d.get("house_id", None),
@@ -1100,6 +1152,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     entry_name=d.get("entry_name", None),
                     entry_relays_total_count=d.get("entry_relays_total_count", None),
@@ -1123,6 +1177,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     activation_enabled=d.get("activation_enabled", None),
                     device_name=d.get("device_name", None),
@@ -1144,6 +1200,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1207,6 +1265,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         check_in_time=d.get("check_in_time", None),
                         check_out_time=d.get("check_out_time", None),
@@ -1235,16 +1295,17 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     door_id=d.get("door_id", None),
                     door_is_wireless=d.get("door_is_wireless", None),
                     door_name=d.get("door_name", None),
                     iana_timezone=d.get("iana_timezone", None),
-                    predefined_time_slots=[
-                        cls.PredefinedTimeSlots.from_dict(i)
-                        for i in d.get("predefined_time_slots") or []
-                    ],
+                    predefined_time_slots=_object_list_from_dict(
+                        cls.PredefinedTimeSlots, d.get("predefined_time_slots")
+                    ),
                     site_id=d.get("site_id", None),
                     site_name=d.get("site_name", None),
                 )
@@ -1262,6 +1323,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_name=d.get("device_name", None),
                     ecobee_device_id=d.get("ecobee_device_id", None),
@@ -1284,6 +1347,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1303,6 +1368,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_name=d.get("device_name", None),
                     door_name=d.get("door_name", None),
@@ -1322,6 +1389,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_name=d.get("device_name", None),
                     honeywell_resideo_device_id=d.get(
@@ -1345,6 +1414,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     device_id=d.get("device_id", None),
@@ -1376,6 +1447,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     bridge_name=d.get("bridge_name", None),
@@ -1457,6 +1530,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     address=d.get("address", None),
                     current_or_last_store_id=d.get("current_or_last_store_id", None),
@@ -1500,6 +1575,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     description=d.get("description", None),
                     lock_id=d.get("lock_id", None),
@@ -1536,6 +1613,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1562,6 +1641,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1584,6 +1665,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1628,6 +1711,8 @@ class Device:
 
                     @classmethod
                     def from_dict(cls, d: Any):
+                        if not isinstance(d, dict):
+                            d = {}
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1646,6 +1731,8 @@ class Device:
 
                     @classmethod
                     def from_dict(cls, d: Any):
+                        if not isinstance(d, dict):
+                            d = {}
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1664,6 +1751,8 @@ class Device:
 
                     @classmethod
                     def from_dict(cls, d: Any):
+                        if not isinstance(d, dict):
+                            d = {}
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1682,6 +1771,8 @@ class Device:
 
                     @classmethod
                     def from_dict(cls, d: Any):
+                        if not isinstance(d, dict):
+                            d = {}
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1701,6 +1792,8 @@ class Device:
 
                     @classmethod
                     def from_dict(cls, d: Any):
+                        if not isinstance(d, dict):
+                            d = {}
                         return cls(
                             time=d.get("time", None),
                             value=d.get("value", None),
@@ -1714,31 +1807,17 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
-                        accelerometer_z=(
-                            cls.AccelerometerZ.from_dict(d.get("accelerometer_z"))
-                            if d.get("accelerometer_z") is not None
-                            else None
+                        accelerometer_z=_object_from_dict(
+                            cls.AccelerometerZ, d.get("accelerometer_z")
                         ),
-                        humidity=(
-                            cls.Humidity.from_dict(d.get("humidity"))
-                            if d.get("humidity") is not None
-                            else None
-                        ),
-                        pressure=(
-                            cls.Pressure.from_dict(d.get("pressure"))
-                            if d.get("pressure") is not None
-                            else None
-                        ),
-                        sound=(
-                            cls.Sound.from_dict(d.get("sound"))
-                            if d.get("sound") is not None
-                            else None
-                        ),
-                        temperature=(
-                            cls.Temperature.from_dict(d.get("temperature"))
-                            if d.get("temperature") is not None
-                            else None
+                        humidity=_object_from_dict(cls.Humidity, d.get("humidity")),
+                        pressure=_object_from_dict(cls.Pressure, d.get("pressure")),
+                        sound=_object_from_dict(cls.Sound, d.get("sound")),
+                        temperature=_object_from_dict(
+                            cls.Temperature, d.get("temperature")
                         ),
                     )
 
@@ -1748,13 +1827,13 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
-                    latest_sensor_values=(
-                        cls.LatestSensorValues.from_dict(d.get("latest_sensor_values"))
-                        if d.get("latest_sensor_values") is not None
-                        else None
+                    latest_sensor_values=_object_from_dict(
+                        cls.LatestSensorValues, d.get("latest_sensor_values")
                     ),
                 )
 
@@ -1784,6 +1863,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_custom_name=d.get("device_custom_name", None),
                     device_name=d.get("device_name", None),
@@ -1816,6 +1897,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_model=d.get("device_model", None),
@@ -1847,6 +1930,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1884,6 +1969,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     has_gateway=d.get("has_gateway", None),
                     lock_alias=d.get("lock_alias", None),
@@ -1907,6 +1994,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -1947,6 +2036,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     battery_level=d.get("battery_level", None),
                     customer_reference=d.get("customer_reference", None),
@@ -1993,6 +2084,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     battery_level=d.get("battery_level", None),
                     customer_reference=d.get("customer_reference", None),
@@ -2020,6 +2113,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2042,6 +2137,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_num=d.get("device_num", None),
                     name=d.get("name", None),
@@ -2067,6 +2164,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2095,6 +2194,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2115,6 +2216,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_type=d.get("device_type", None),
                     serial_no=d.get("serial_no", None),
@@ -2148,6 +2251,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     bridge_id=d.get("bridge_id", None),
                     bridge_name=d.get("bridge_name", None),
@@ -2204,6 +2309,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         auto_lock_time_config=d.get("auto_lock_time_config", None),
                         incomplete_keyboard_passcode=d.get(
@@ -2230,6 +2337,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         wireless_keypad_id=d.get("wireless_keypad_id", None),
                         wireless_keypad_name=d.get("wireless_keypad_name", None),
@@ -2245,21 +2354,18 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     feature_value=d.get("feature_value", None),
-                    features=(
-                        cls.Features.from_dict(d.get("features"))
-                        if d.get("features") is not None
-                        else None
-                    ),
+                    features=_object_from_dict(cls.Features, d.get("features")),
                     has_gateway=d.get("has_gateway", None),
                     lock_alias=d.get("lock_alias", None),
                     lock_id=d.get("lock_id", None),
                     timezone_raw_offset_ms=d.get("timezone_raw_offset_ms", None),
-                    wireless_keypads=[
-                        cls.WirelessKeypads.from_dict(i)
-                        for i in d.get("wireless_keypads") or []
-                    ],
+                    wireless_keypads=_object_list_from_dict(
+                        cls.WirelessKeypads, d.get("wireless_keypads")
+                    ),
                 )
 
         @dataclass
@@ -2275,6 +2381,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2299,6 +2407,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2316,6 +2426,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     encoder_id=d.get("encoder_id", None),
                 )
@@ -2351,6 +2463,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_info_model=d.get("device_info_model", None),
@@ -2381,6 +2495,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
@@ -2419,6 +2535,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     constraint_type=d.get("constraint_type", None),
                     max_length=d.get("max_length", None),
@@ -2435,6 +2553,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     level=d.get("level", None),
                 )
@@ -2477,6 +2597,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         display_name=d.get("display_name", None),
                         end_time=d.get("end_time", None),
@@ -2494,6 +2616,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     display_name=d.get("display_name", None),
                     end_date_recurrence_rule=d.get("end_date_recurrence_rule", None),
@@ -2503,9 +2627,9 @@ class Device:
                     start_date_recurrence_rule=d.get(
                         "start_date_recurrence_rule", None
                     ),
-                    time_pairs=[
-                        cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []
-                    ],
+                    time_pairs=_object_list_from_dict(
+                        cls.TimePairs, d.get("time_pairs")
+                    ),
                     time_zone=d.get("time_zone", None),
                 )
 
@@ -2547,6 +2671,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         display_name=d.get("display_name", None),
                         end_time=d.get("end_time", None),
@@ -2564,6 +2690,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     display_name=d.get("display_name", None),
                     end_date_recurrence_rule=d.get("end_date_recurrence_rule", None),
@@ -2573,9 +2701,9 @@ class Device:
                     start_date_recurrence_rule=d.get(
                         "start_date_recurrence_rule", None
                     ),
-                    time_pairs=[
-                        cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []
-                    ],
+                    time_pairs=_object_list_from_dict(
+                        cls.TimePairs, d.get("time_pairs")
+                    ),
                     time_zone=d.get("time_zone", None),
                 )
 
@@ -2623,6 +2751,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         created_at=d.get("created_at", None),
                         error_code=d.get("error_code", None),
@@ -2643,12 +2773,14 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     climate_preset_key=d.get("climate_preset_key", None),
                     created_at=d.get("created_at", None),
                     device_id=d.get("device_id", None),
                     ends_at=d.get("ends_at", None),
-                    errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+                    errors=_object_list_from_dict(cls.Errors, d.get("errors")),
                     is_override_allowed=d.get("is_override_allowed", None),
                     max_override_period_minutes=d.get(
                         "max_override_period_minutes", None
@@ -2711,6 +2843,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
@@ -2739,6 +2873,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2752,10 +2888,8 @@ class Device:
                         "cooling_set_point_fahrenheit", None
                     ),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
+                    ecobee_metadata=_object_from_dict(
+                        cls.EcobeeMetadata, d.get("ecobee_metadata")
                     ),
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
@@ -2819,6 +2953,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
@@ -2847,6 +2983,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2860,10 +2998,8 @@ class Device:
                         "cooling_set_point_fahrenheit", None
                     ),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
+                    ecobee_metadata=_object_from_dict(
+                        cls.EcobeeMetadata, d.get("ecobee_metadata")
                     ),
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
@@ -2927,6 +3063,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         climate_ref=d.get("climate_ref", None),
                         is_optimized=d.get("is_optimized", None),
@@ -2955,6 +3093,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     can_delete=d.get("can_delete", None),
                     can_edit=d.get("can_edit", None),
@@ -2968,10 +3108,8 @@ class Device:
                         "cooling_set_point_fahrenheit", None
                     ),
                     display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
+                    ecobee_metadata=_object_from_dict(
+                        cls.EcobeeMetadata, d.get("ecobee_metadata")
                     ),
                     fan_mode_setting=d.get("fan_mode_setting", None),
                     heating_set_point_celsius=d.get("heating_set_point_celsius", None),
@@ -3003,6 +3141,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     lower_limit_celsius=d.get("lower_limit_celsius", None),
                     lower_limit_fahrenheit=d.get("lower_limit_fahrenheit", None),
@@ -3041,6 +3181,8 @@ class Device:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         climate_preset_key=d.get("climate_preset_key", None),
                         starts_at_time=d.get("starts_at_time", None),
@@ -3055,11 +3197,13 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     device_id=d.get("device_id", None),
                     name=d.get("name", None),
-                    periods=[cls.Periods.from_dict(i) for i in d.get("periods") or []],
+                    periods=_object_list_from_dict(cls.Periods, d.get("periods")),
                     thermostat_daily_program_id=d.get(
                         "thermostat_daily_program_id", None
                     ),
@@ -3098,6 +3242,8 @@ class Device:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     friday_program_id=d.get("friday_program_id", None),
@@ -3225,22 +3371,14 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
-                accessory_keypad=(
-                    cls.AccessoryKeypad.from_dict(d.get("accessory_keypad"))
-                    if d.get("accessory_keypad") is not None
-                    else None
+                accessory_keypad=_object_from_dict(
+                    cls.AccessoryKeypad, d.get("accessory_keypad")
                 ),
-                appearance=(
-                    cls.Appearance.from_dict(d.get("appearance"))
-                    if d.get("appearance") is not None
-                    else None
-                ),
-                battery=(
-                    cls.Battery.from_dict(d.get("battery"))
-                    if d.get("battery") is not None
-                    else None
-                ),
+                appearance=_object_from_dict(cls.Appearance, d.get("appearance")),
+                battery=_object_from_dict(cls.Battery, d.get("battery")),
                 battery_level=d.get("battery_level", None),
                 currently_triggering_noise_threshold_ids=d.get(
                     "currently_triggering_noise_threshold_ids", None
@@ -3249,11 +3387,7 @@ class Device:
                 image_alt_text=d.get("image_alt_text", None),
                 image_url=d.get("image_url", None),
                 manufacturer=d.get("manufacturer", None),
-                model=(
-                    cls.Model.from_dict(d.get("model"))
-                    if d.get("model") is not None
-                    else None
-                ),
+                model=_object_from_dict(cls.Model, d.get("model")),
                 name=d.get("name", None),
                 noise_level_decibels=d.get("noise_level_decibels", None),
                 offline_access_codes_enabled=d.get(
@@ -3266,257 +3400,158 @@ class Device:
                 supports_offline_access_codes=d.get(
                     "supports_offline_access_codes", None
                 ),
-                assa_abloy_credential_service_metadata=(
-                    cls.AssaAbloyCredentialServiceMetadata.from_dict(
-                        d.get("assa_abloy_credential_service_metadata")
-                    )
-                    if d.get("assa_abloy_credential_service_metadata") is not None
-                    else None
+                assa_abloy_credential_service_metadata=_object_from_dict(
+                    cls.AssaAbloyCredentialServiceMetadata,
+                    d.get("assa_abloy_credential_service_metadata"),
                 ),
-                salto_space_credential_service_metadata=(
-                    cls.SaltoSpaceCredentialServiceMetadata.from_dict(
-                        d.get("salto_space_credential_service_metadata")
-                    )
-                    if d.get("salto_space_credential_service_metadata") is not None
-                    else None
+                salto_space_credential_service_metadata=_object_from_dict(
+                    cls.SaltoSpaceCredentialServiceMetadata,
+                    d.get("salto_space_credential_service_metadata"),
                 ),
-                akiles_metadata=(
-                    cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
-                    if d.get("akiles_metadata") is not None
-                    else None
+                akiles_metadata=_object_from_dict(
+                    cls.AkilesMetadata, d.get("akiles_metadata")
                 ),
-                aqara_metadata=(
-                    cls.AqaraMetadata.from_dict(d.get("aqara_metadata"))
-                    if d.get("aqara_metadata") is not None
-                    else None
+                aqara_metadata=_object_from_dict(
+                    cls.AqaraMetadata, d.get("aqara_metadata")
                 ),
-                assa_abloy_vostio_metadata=(
-                    cls.AssaAbloyVostioMetadata.from_dict(
-                        d.get("assa_abloy_vostio_metadata")
-                    )
-                    if d.get("assa_abloy_vostio_metadata") is not None
-                    else None
+                assa_abloy_vostio_metadata=_object_from_dict(
+                    cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
                 ),
-                august_metadata=(
-                    cls.AugustMetadata.from_dict(d.get("august_metadata"))
-                    if d.get("august_metadata") is not None
-                    else None
+                august_metadata=_object_from_dict(
+                    cls.AugustMetadata, d.get("august_metadata")
                 ),
-                avigilon_alta_metadata=(
-                    cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata"))
-                    if d.get("avigilon_alta_metadata") is not None
-                    else None
+                avigilon_alta_metadata=_object_from_dict(
+                    cls.AvigilonAltaMetadata, d.get("avigilon_alta_metadata")
                 ),
-                brivo_metadata=(
-                    cls.BrivoMetadata.from_dict(d.get("brivo_metadata"))
-                    if d.get("brivo_metadata") is not None
-                    else None
+                brivo_metadata=_object_from_dict(
+                    cls.BrivoMetadata, d.get("brivo_metadata")
                 ),
-                controlbyweb_metadata=(
-                    cls.ControlbywebMetadata.from_dict(d.get("controlbyweb_metadata"))
-                    if d.get("controlbyweb_metadata") is not None
-                    else None
+                controlbyweb_metadata=_object_from_dict(
+                    cls.ControlbywebMetadata, d.get("controlbyweb_metadata")
                 ),
-                dormakaba_oracode_metadata=(
-                    cls.DormakabaOracodeMetadata.from_dict(
-                        d.get("dormakaba_oracode_metadata")
-                    )
-                    if d.get("dormakaba_oracode_metadata") is not None
-                    else None
+                dormakaba_oracode_metadata=_object_from_dict(
+                    cls.DormakabaOracodeMetadata, d.get("dormakaba_oracode_metadata")
                 ),
-                ecobee_metadata=(
-                    cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                    if d.get("ecobee_metadata") is not None
-                    else None
+                ecobee_metadata=_object_from_dict(
+                    cls.EcobeeMetadata, d.get("ecobee_metadata")
                 ),
-                four_suites_metadata=(
-                    cls.FourSuitesMetadata.from_dict(d.get("four_suites_metadata"))
-                    if d.get("four_suites_metadata") is not None
-                    else None
+                four_suites_metadata=_object_from_dict(
+                    cls.FourSuitesMetadata, d.get("four_suites_metadata")
                 ),
-                genie_metadata=(
-                    cls.GenieMetadata.from_dict(d.get("genie_metadata"))
-                    if d.get("genie_metadata") is not None
-                    else None
+                genie_metadata=_object_from_dict(
+                    cls.GenieMetadata, d.get("genie_metadata")
                 ),
-                honeywell_resideo_metadata=(
-                    cls.HoneywellResideoMetadata.from_dict(
-                        d.get("honeywell_resideo_metadata")
-                    )
-                    if d.get("honeywell_resideo_metadata") is not None
-                    else None
+                honeywell_resideo_metadata=_object_from_dict(
+                    cls.HoneywellResideoMetadata, d.get("honeywell_resideo_metadata")
                 ),
-                igloo_metadata=(
-                    cls.IglooMetadata.from_dict(d.get("igloo_metadata"))
-                    if d.get("igloo_metadata") is not None
-                    else None
+                igloo_metadata=_object_from_dict(
+                    cls.IglooMetadata, d.get("igloo_metadata")
                 ),
-                igloohome_metadata=(
-                    cls.IgloohomeMetadata.from_dict(d.get("igloohome_metadata"))
-                    if d.get("igloohome_metadata") is not None
-                    else None
+                igloohome_metadata=_object_from_dict(
+                    cls.IgloohomeMetadata, d.get("igloohome_metadata")
                 ),
-                keynest_metadata=(
-                    cls.KeynestMetadata.from_dict(d.get("keynest_metadata"))
-                    if d.get("keynest_metadata") is not None
-                    else None
+                keynest_metadata=_object_from_dict(
+                    cls.KeynestMetadata, d.get("keynest_metadata")
                 ),
-                kisi_metadata=(
-                    cls.KisiMetadata.from_dict(d.get("kisi_metadata"))
-                    if d.get("kisi_metadata") is not None
-                    else None
+                kisi_metadata=_object_from_dict(
+                    cls.KisiMetadata, d.get("kisi_metadata")
                 ),
-                korelock_metadata=(
-                    cls.KorelockMetadata.from_dict(d.get("korelock_metadata"))
-                    if d.get("korelock_metadata") is not None
-                    else None
+                korelock_metadata=_object_from_dict(
+                    cls.KorelockMetadata, d.get("korelock_metadata")
                 ),
-                kwikset_metadata=(
-                    cls.KwiksetMetadata.from_dict(d.get("kwikset_metadata"))
-                    if d.get("kwikset_metadata") is not None
-                    else None
+                kwikset_metadata=_object_from_dict(
+                    cls.KwiksetMetadata, d.get("kwikset_metadata")
                 ),
-                lockly_metadata=(
-                    cls.LocklyMetadata.from_dict(d.get("lockly_metadata"))
-                    if d.get("lockly_metadata") is not None
-                    else None
+                lockly_metadata=_object_from_dict(
+                    cls.LocklyMetadata, d.get("lockly_metadata")
                 ),
-                minut_metadata=(
-                    cls.MinutMetadata.from_dict(d.get("minut_metadata"))
-                    if d.get("minut_metadata") is not None
-                    else None
+                minut_metadata=_object_from_dict(
+                    cls.MinutMetadata, d.get("minut_metadata")
                 ),
-                nest_metadata=(
-                    cls.NestMetadata.from_dict(d.get("nest_metadata"))
-                    if d.get("nest_metadata") is not None
-                    else None
+                nest_metadata=_object_from_dict(
+                    cls.NestMetadata, d.get("nest_metadata")
                 ),
-                noiseaware_metadata=(
-                    cls.NoiseawareMetadata.from_dict(d.get("noiseaware_metadata"))
-                    if d.get("noiseaware_metadata") is not None
-                    else None
+                noiseaware_metadata=_object_from_dict(
+                    cls.NoiseawareMetadata, d.get("noiseaware_metadata")
                 ),
-                nuki_metadata=(
-                    cls.NukiMetadata.from_dict(d.get("nuki_metadata"))
-                    if d.get("nuki_metadata") is not None
-                    else None
+                nuki_metadata=_object_from_dict(
+                    cls.NukiMetadata, d.get("nuki_metadata")
                 ),
-                omnitec_metadata=(
-                    cls.OmnitecMetadata.from_dict(d.get("omnitec_metadata"))
-                    if d.get("omnitec_metadata") is not None
-                    else None
+                omnitec_metadata=_object_from_dict(
+                    cls.OmnitecMetadata, d.get("omnitec_metadata")
                 ),
-                ring_metadata=(
-                    cls.RingMetadata.from_dict(d.get("ring_metadata"))
-                    if d.get("ring_metadata") is not None
-                    else None
+                ring_metadata=_object_from_dict(
+                    cls.RingMetadata, d.get("ring_metadata")
                 ),
-                salto_ks_metadata=(
-                    cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
-                    if d.get("salto_ks_metadata") is not None
-                    else None
+                salto_ks_metadata=_object_from_dict(
+                    cls.SaltoKsMetadata, d.get("salto_ks_metadata")
                 ),
-                salto_metadata=(
-                    cls.SaltoMetadata.from_dict(d.get("salto_metadata"))
-                    if d.get("salto_metadata") is not None
-                    else None
+                salto_metadata=_object_from_dict(
+                    cls.SaltoMetadata, d.get("salto_metadata")
                 ),
-                schlage_metadata=(
-                    cls.SchlageMetadata.from_dict(d.get("schlage_metadata"))
-                    if d.get("schlage_metadata") is not None
-                    else None
+                schlage_metadata=_object_from_dict(
+                    cls.SchlageMetadata, d.get("schlage_metadata")
                 ),
-                seam_bridge_metadata=(
-                    cls.SeamBridgeMetadata.from_dict(d.get("seam_bridge_metadata"))
-                    if d.get("seam_bridge_metadata") is not None
-                    else None
+                seam_bridge_metadata=_object_from_dict(
+                    cls.SeamBridgeMetadata, d.get("seam_bridge_metadata")
                 ),
-                sensi_metadata=(
-                    cls.SensiMetadata.from_dict(d.get("sensi_metadata"))
-                    if d.get("sensi_metadata") is not None
-                    else None
+                sensi_metadata=_object_from_dict(
+                    cls.SensiMetadata, d.get("sensi_metadata")
                 ),
-                smartthings_metadata=(
-                    cls.SmartthingsMetadata.from_dict(d.get("smartthings_metadata"))
-                    if d.get("smartthings_metadata") is not None
-                    else None
+                smartthings_metadata=_object_from_dict(
+                    cls.SmartthingsMetadata, d.get("smartthings_metadata")
                 ),
-                tado_metadata=(
-                    cls.TadoMetadata.from_dict(d.get("tado_metadata"))
-                    if d.get("tado_metadata") is not None
-                    else None
+                tado_metadata=_object_from_dict(
+                    cls.TadoMetadata, d.get("tado_metadata")
                 ),
-                tedee_metadata=(
-                    cls.TedeeMetadata.from_dict(d.get("tedee_metadata"))
-                    if d.get("tedee_metadata") is not None
-                    else None
+                tedee_metadata=_object_from_dict(
+                    cls.TedeeMetadata, d.get("tedee_metadata")
                 ),
-                ttlock_metadata=(
-                    cls.TtlockMetadata.from_dict(d.get("ttlock_metadata"))
-                    if d.get("ttlock_metadata") is not None
-                    else None
+                ttlock_metadata=_object_from_dict(
+                    cls.TtlockMetadata, d.get("ttlock_metadata")
                 ),
-                two_n_metadata=(
-                    cls.TwoNMetadata.from_dict(d.get("two_n_metadata"))
-                    if d.get("two_n_metadata") is not None
-                    else None
+                two_n_metadata=_object_from_dict(
+                    cls.TwoNMetadata, d.get("two_n_metadata")
                 ),
-                ultraloq_metadata=(
-                    cls.UltraloqMetadata.from_dict(d.get("ultraloq_metadata"))
-                    if d.get("ultraloq_metadata") is not None
-                    else None
+                ultraloq_metadata=_object_from_dict(
+                    cls.UltraloqMetadata, d.get("ultraloq_metadata")
                 ),
-                visionline_metadata=(
-                    cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
-                    if d.get("visionline_metadata") is not None
-                    else None
+                visionline_metadata=_object_from_dict(
+                    cls.VisionlineMetadata, d.get("visionline_metadata")
                 ),
-                wyze_metadata=(
-                    cls.WyzeMetadata.from_dict(d.get("wyze_metadata"))
-                    if d.get("wyze_metadata") is not None
-                    else None
+                wyze_metadata=_object_from_dict(
+                    cls.WyzeMetadata, d.get("wyze_metadata")
                 ),
-                yacan_metadata=(
-                    cls.YacanMetadata.from_dict(d.get("yacan_metadata"))
-                    if d.get("yacan_metadata") is not None
-                    else None
+                yacan_metadata=_object_from_dict(
+                    cls.YacanMetadata, d.get("yacan_metadata")
                 ),
                 auto_lock_delay_seconds=d.get("auto_lock_delay_seconds", None),
                 auto_lock_enabled=d.get("auto_lock_enabled", None),
                 backup_access_code_pool_enabled=d.get(
                     "backup_access_code_pool_enabled", None
                 ),
-                code_constraints=[
-                    cls.CodeConstraints.from_dict(i)
-                    for i in d.get("code_constraints") or []
-                ],
+                code_constraints=_object_list_from_dict(
+                    cls.CodeConstraints, d.get("code_constraints")
+                ),
                 door_open=d.get("door_open", None),
                 has_native_entry_events=d.get("has_native_entry_events", None),
-                keypad_battery=(
-                    cls.KeypadBattery.from_dict(d.get("keypad_battery"))
-                    if d.get("keypad_battery") is not None
-                    else None
+                keypad_battery=_object_from_dict(
+                    cls.KeypadBattery, d.get("keypad_battery")
                 ),
                 locked=d.get("locked", None),
                 max_active_codes_supported=d.get("max_active_codes_supported", None),
-                offline_time_frame_options=[
-                    cls.OfflineTimeFrameOptions.from_dict(i)
-                    for i in d.get("offline_time_frame_options") or []
-                ],
-                online_time_frame_options=[
-                    cls.OnlineTimeFrameOptions.from_dict(i)
-                    for i in d.get("online_time_frame_options") or []
-                ],
+                offline_time_frame_options=_object_list_from_dict(
+                    cls.OfflineTimeFrameOptions, d.get("offline_time_frame_options")
+                ),
+                online_time_frame_options=_object_list_from_dict(
+                    cls.OnlineTimeFrameOptions, d.get("online_time_frame_options")
+                ),
                 supported_code_lengths=d.get("supported_code_lengths", None),
                 supports_backup_access_code_pool=d.get(
                     "supports_backup_access_code_pool", None
                 ),
-                active_thermostat_schedule=(
-                    cls.ActiveThermostatSchedule.from_dict(
-                        d.get("active_thermostat_schedule")
-                    )
-                    if d.get("active_thermostat_schedule") is not None
-                    else None
+                active_thermostat_schedule=_object_from_dict(
+                    cls.ActiveThermostatSchedule, d.get("active_thermostat_schedule")
                 ),
                 active_thermostat_schedule_id=d.get(
                     "active_thermostat_schedule_id", None
@@ -3524,27 +3559,18 @@ class Device:
                 available_climate_preset_modes=d.get(
                     "available_climate_preset_modes", None
                 ),
-                available_climate_presets=[
-                    cls.AvailableClimatePresets.from_dict(i)
-                    for i in d.get("available_climate_presets") or []
-                ],
+                available_climate_presets=_object_list_from_dict(
+                    cls.AvailableClimatePresets, d.get("available_climate_presets")
+                ),
                 available_fan_mode_settings=d.get("available_fan_mode_settings", None),
                 available_hvac_mode_settings=d.get(
                     "available_hvac_mode_settings", None
                 ),
-                current_climate_setting=(
-                    cls.CurrentClimateSetting.from_dict(
-                        d.get("current_climate_setting")
-                    )
-                    if d.get("current_climate_setting") is not None
-                    else None
+                current_climate_setting=_object_from_dict(
+                    cls.CurrentClimateSetting, d.get("current_climate_setting")
                 ),
-                default_climate_setting=(
-                    cls.DefaultClimateSetting.from_dict(
-                        d.get("default_climate_setting")
-                    )
-                    if d.get("default_climate_setting") is not None
-                    else None
+                default_climate_setting=_object_from_dict(
+                    cls.DefaultClimateSetting, d.get("default_climate_setting")
                 ),
                 fallback_climate_preset_key=d.get("fallback_climate_preset_key", None),
                 fan_mode_setting=d.get("fan_mode_setting", None),
@@ -3593,24 +3619,17 @@ class Device:
                 relative_humidity=d.get("relative_humidity", None),
                 temperature_celsius=d.get("temperature_celsius", None),
                 temperature_fahrenheit=d.get("temperature_fahrenheit", None),
-                temperature_threshold=(
-                    cls.TemperatureThreshold.from_dict(d.get("temperature_threshold"))
-                    if d.get("temperature_threshold") is not None
-                    else None
+                temperature_threshold=_object_from_dict(
+                    cls.TemperatureThreshold, d.get("temperature_threshold")
                 ),
                 thermostat_daily_program_period_precision_minutes=d.get(
                     "thermostat_daily_program_period_precision_minutes", None
                 ),
-                thermostat_daily_programs=[
-                    cls.ThermostatDailyPrograms.from_dict(i)
-                    for i in d.get("thermostat_daily_programs") or []
-                ],
-                thermostat_weekly_program=(
-                    cls.ThermostatWeeklyProgram.from_dict(
-                        d.get("thermostat_weekly_program")
-                    )
-                    if d.get("thermostat_weekly_program") is not None
-                    else None
+                thermostat_daily_programs=_object_list_from_dict(
+                    cls.ThermostatDailyPrograms, d.get("thermostat_daily_programs")
+                ),
+                thermostat_weekly_program=_object_from_dict(
+                    cls.ThermostatWeeklyProgram, d.get("thermostat_weekly_program")
                 ),
             )
 
@@ -3631,6 +3650,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3654,6 +3675,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3677,6 +3700,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3700,6 +3725,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3723,6 +3750,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3746,6 +3775,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3769,6 +3800,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3792,6 +3825,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3815,6 +3850,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3838,6 +3875,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3861,6 +3900,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3884,6 +3925,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3907,6 +3950,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3930,6 +3975,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3953,6 +4000,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3976,6 +4025,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3999,6 +4050,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4022,6 +4075,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4045,6 +4100,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4068,6 +4125,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4091,6 +4150,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4114,6 +4175,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4137,6 +4200,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4160,6 +4225,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4183,6 +4250,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4206,6 +4275,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4229,6 +4300,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4258,6 +4331,8 @@ class Device:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 active_access_code_count=d.get("active_access_code_count", None),
                 created_at=d.get("created_at", None),
@@ -4450,6 +4525,8 @@ class Device:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
@@ -4488,40 +4565,26 @@ class Device:
             capabilities_supported=d.get("capabilities_supported", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
+            custom_metadata=_record_from_dict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
-            device_manufacturer=(
-                cls.DeviceManufacturer.from_dict(d.get("device_manufacturer"))
-                if d.get("device_manufacturer") is not None
-                else None
+            device_manufacturer=_object_from_dict(
+                cls.DeviceManufacturer, d.get("device_manufacturer")
             ),
-            device_provider=(
-                cls.DeviceProvider.from_dict(d.get("device_provider"))
-                if d.get("device_provider") is not None
-                else None
+            device_provider=_object_from_dict(
+                cls.DeviceProvider, d.get("device_provider")
             ),
             device_type=d.get("device_type", None),
             display_name=d.get("display_name", None),
-            errors=[
-                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
-                for i in d.get("errors") or []
-            ],
+            errors=_discriminated_list_from_dict(
+                d.get("errors"), cls._ErrorsVariants, "error_code"
+            ),
             is_managed=d.get("is_managed", None),
-            location=(
-                cls.Location.from_dict(d.get("location"))
-                if d.get("location") is not None
-                else None
-            ),
+            location=_object_from_dict(cls.Location, d.get("location")),
             nickname=d.get("nickname", None),
-            properties=(
-                cls.Properties.from_dict(d.get("properties"))
-                if d.get("properties") is not None
-                else None
-            ),
+            properties=_object_from_dict(cls.Properties, d.get("properties")),
             space_ids=d.get("space_ids", None),
-            warnings=[
-                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
-                for i in d.get("warnings") or []
-            ],
+            warnings=_discriminated_list_from_dict(
+                d.get("warnings"), cls._WarningsVariants, "warning_code"
+            ),
             workspace_id=d.get("workspace_id", None),
         )

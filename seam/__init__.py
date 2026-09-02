@@ -16,7 +16,9 @@ from .exceptions import (
     SeamActionAttemptError,
     SeamActionAttemptFailedError,
     SeamActionAttemptTimeoutError,
+    SeamActionAttemptUnknownStatusError,
 )
+from .deep_attr_dict import DeepAttrDict
 from .seam_webhook import SeamWebhook
 from svix.webhooks import WebhookVerificationError as SeamWebhookVerificationError
 from .null import NULL, Null

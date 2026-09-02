@@ -1,6 +1,13 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
+from ..parse import (
+    discriminated_list_from_dict as _discriminated_list_from_dict,
+    object_from_dict as _object_from_dict,
+    object_list_from_dict as _object_list_from_dict,
+    record_from_dict as _record_from_dict,
+    required_object_from_dict as _required_object_from_dict,
+)
 from ..resource_mapping import ResourceMapping
 
 
@@ -44,6 +51,8 @@ class Phone:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -81,6 +90,8 @@ class Phone:
 
                 @classmethod
                 def from_dict(cls, d: Any):
+                    if not isinstance(d, dict):
+                        d = {}
                     return cls(
                         endpoint_id=d.get("endpoint_id", None),
                         is_active=d.get("is_active", None),
@@ -91,10 +102,10 @@ class Phone:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
-                    endpoints=[
-                        cls.Endpoints.from_dict(i) for i in d.get("endpoints") or []
-                    ],
+                    endpoints=_object_list_from_dict(cls.Endpoints, d.get("endpoints")),
                     has_active_endpoint=d.get("has_active_endpoint", None),
                 )
 
@@ -109,6 +120,8 @@ class Phone:
 
             @classmethod
             def from_dict(cls, d: Any):
+                if not isinstance(d, dict):
+                    d = {}
                 return cls(
                     has_active_phone=d.get("has_active_phone", None),
                 )
@@ -122,20 +135,16 @@ class Phone:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
-                assa_abloy_credential_service_metadata=(
-                    cls.AssaAbloyCredentialServiceMetadata.from_dict(
-                        d.get("assa_abloy_credential_service_metadata")
-                    )
-                    if d.get("assa_abloy_credential_service_metadata") is not None
-                    else None
+                assa_abloy_credential_service_metadata=_object_from_dict(
+                    cls.AssaAbloyCredentialServiceMetadata,
+                    d.get("assa_abloy_credential_service_metadata"),
                 ),
-                salto_space_credential_service_metadata=(
-                    cls.SaltoSpaceCredentialServiceMetadata.from_dict(
-                        d.get("salto_space_credential_service_metadata")
-                    )
-                    if d.get("salto_space_credential_service_metadata") is not None
-                    else None
+                salto_space_credential_service_metadata=_object_from_dict(
+                    cls.SaltoSpaceCredentialServiceMetadata,
+                    d.get("salto_space_credential_service_metadata"),
                 ),
             )
 
@@ -155,6 +164,8 @@ class Phone:
 
         @classmethod
         def from_dict(cls, d: Any):
+            if not isinstance(d, dict):
+                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -174,19 +185,17 @@ class Phone:
 
     @classmethod
     def from_dict(cls, d: Any):
+        if not isinstance(d, dict):
+            d = {}
         return cls(
             created_at=d.get("created_at", None),
-            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
+            custom_metadata=_record_from_dict(d.get("custom_metadata", None)),
             device_id=d.get("device_id", None),
             device_type=d.get("device_type", None),
             display_name=d.get("display_name", None),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=_object_list_from_dict(cls.Errors, d.get("errors")),
             nickname=d.get("nickname", None),
-            properties=(
-                cls.Properties.from_dict(d.get("properties"))
-                if d.get("properties") is not None
-                else None
-            ),
-            warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
+            properties=_object_from_dict(cls.Properties, d.get("properties")),
+            warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
             workspace_id=d.get("workspace_id", None),
         )
