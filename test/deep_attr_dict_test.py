@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from seam import Seam
@@ -78,4 +80,4 @@ def test_unknown_event_fallback_fields_stay_readable():
     )
 
     assert event.event_id == "e"
-    assert event.foo.bar == 1
+    assert json.loads(event.raw_json())["foo"] == {"bar": 1}

@@ -3882,6 +3882,37 @@ class UpdateNoiseThresholdErrorActionAttempt:
         )
 
 
+@dataclass
+class UnrecognizedActionAttempt:
+    """An action attempt whose action_type or status this SDK version does not recognize.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of locking a door.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: Optional[str]
+    action_type: Optional[Literal["LOCK_DOOR"]]
+    error: None
+    result: Optional[Dict[str, Any]]
+    status: Optional[Literal["success"]]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=DeepAttrDict(d.get("result", None)),
+            status=d.get("status", None),
+        )
+
+
 ActionAttempt = Union[
     LockDoorSuccessActionAttempt,
     LockDoorPendingActionAttempt,
@@ -4237,10 +4268,9 @@ _ACTION_ATTEMPT_VARIANTS: Dict[Tuple[str, str], Any] = {
 def action_attempt_from_dict(d: Any) -> ActionAttempt:
     """Deserialize a known action_type and status variant.
 
-    Unknown discriminator values return ``DeepAttrDict`` so payloads from a
-    newer API remain readable. The static return type covers known variants.
+    An unrecognized action_type yields ``UnrecognizedActionAttempt``.
     """
     variant = _ACTION_ATTEMPT_VARIANTS.get((d.get("action_type"), d.get("status")))
     if variant is None:
-        return cast(ActionAttempt, DeepAttrDict(d))
+        return cast(ActionAttempt, UnrecognizedActionAttempt.from_dict(d))
     return variant.from_dict(d)

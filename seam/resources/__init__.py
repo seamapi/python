@@ -71,6 +71,7 @@ from .action_attempt import (
     UpdateNoiseThresholdSuccessActionAttempt,
     UpdateNoiseThresholdPendingActionAttempt,
     UpdateNoiseThresholdErrorActionAttempt,
+    UnrecognizedActionAttempt,
     LockDoorActionAttempt,
     UnlockDoorActionAttempt,
     ScanCredentialActionAttempt,
@@ -218,6 +219,7 @@ from .seam_event import (
     SpaceDeviceMembershipChangedEvent,
     SpaceCreatedEvent,
     SpaceDeletedEvent,
+    UnrecognizedEvent,
     SeamEvent,
     seam_event_from_dict,
 )

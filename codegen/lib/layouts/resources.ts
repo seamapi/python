@@ -18,6 +18,7 @@ import {
 
 export interface ResourceLayoutContext {
   className: string
+  hasRawJson?: boolean
   moduleName: string
   isDeprecated: boolean
   deprecationMessage: string
@@ -501,6 +502,26 @@ const buildUnionAliases = (
   }))
 }
 
+const commonScalarProperties = (variants: UnionVariant[]): Property[] => {
+  const [first, ...rest] = variants
+  if (first == null) return []
+
+  return first.properties
+    .filter((property) => {
+      if (property.format === 'list') return false
+      return rest.every((variant) =>
+        variant.properties.some(
+          ({ name, format }) => name === property.name && format === property.format,
+        ),
+      )
+    })
+    .map((property) =>
+      property.format === 'object'
+        ? ({ ...property, format: 'record' } as unknown as Property)
+        : property,
+    )
+}
+
 const buildUnionResource = (
   className: string,
   discriminator: string,
@@ -509,6 +530,7 @@ const buildUnionResource = (
   isDeprecated: boolean,
   deprecationMessage: string,
   secondaryDiscriminator?: string,
+  fallback?: { properties: Property[]; description: string },
 ): ResourceLayoutContext => {
   const suffix = className === 'SeamEvent' ? 'Event' : 'ActionAttempt'
   const classes = variants.map((variant) => {
@@ -550,6 +572,24 @@ const buildUnionResource = (
             suffix,
           ),
         ]
+  const fallbackClassName = `Unrecognized${suffix}`
+  if (fallback != null) {
+    classes.push({
+      ...buildClass(
+        fallbackClassName,
+        fallback.description,
+        fallback.properties.map((property) => ({
+          ...property,
+          isOptional: true,
+        })),
+        snakeCase(className),
+        rootIndentation,
+      ),
+      isDeprecated: false,
+      deprecationMessage: '',
+    })
+  }
+
   const classNames = new Set(classes.map(({ className: name }) => name))
   for (const alias of aliases) {
     if (classNames.has(alias.className) || alias.className === className) {
@@ -565,7 +605,10 @@ const buildUnionResource = (
     ...(secondaryDiscriminator == null ? {} : { secondaryDiscriminator }),
     fromDictName,
     variantsName: `_${snakeCase(className).toUpperCase()}_VARIANTS`,
-    variants: classes.map((variantClass, index) => {
+    ...(fallback == null ? {} : { fallbackClassName }),
+    variants: classes
+      .filter(({ className: name }) => name !== fallbackClassName)
+      .map((variantClass, index) => {
       const secondaryValue = variants[index]?.secondaryValue
       return {
         className: variantClass.className,
@@ -703,8 +746,8 @@ export const getResourceLayoutContexts = (
   const eventModel = blueprint.resources.find(
     ({ resourceType }) => resourceType === 'event',
   )
-  resources.push(
-    buildUnionResource(
+  resources.push({
+    ...buildUnionResource(
       'SeamEvent',
       'event_type',
       'seam_event_from_dict',
@@ -717,8 +760,17 @@ export const getResourceLayoutContexts = (
       })),
       eventModel?.isDeprecated ?? false,
       eventModel?.deprecationMessage ?? '',
+      undefined,
+      eventModel == null
+        ? undefined
+        : {
+            properties: eventModel.properties,
+            description:
+              'An event whose event_type this SDK version does not recognize.',
+          },
     ),
-  )
+    hasRawJson: true,
+  })
 
   const actionAttemptModel = blueprint.resources.find(
     ({ resourceType }) => resourceType === 'action_attempt',
@@ -732,6 +784,13 @@ export const getResourceLayoutContexts = (
       actionAttemptModel?.isDeprecated ?? false,
       actionAttemptModel?.deprecationMessage ?? '',
       'status',
+      {
+        properties: commonScalarProperties(
+          blueprint.actionAttempts.flatMap(expandActionAttemptByStatus),
+        ),
+        description:
+          'An action attempt whose action_type or status this SDK version does not recognize.',
+      },
     ),
   )
 

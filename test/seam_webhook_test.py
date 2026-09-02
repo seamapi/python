@@ -137,7 +137,8 @@ def test_an_unknown_event_type_still_parses():
     event = webhook.verify(payload, sign_headers(payload))
 
     assert event.event_type == "future.event_type"
-    assert event.future_field.nested is True
+    assert event.event_id == "11111111-1111-1111-1111-111111111111"
+    assert json.loads(event.raw_json())["future_field"] == {"nested": True}
 
 
 def test_verification_failures_raise_the_svix_error():

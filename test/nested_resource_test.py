@@ -1,6 +1,7 @@
 """Regression tests for generated nested resource types."""
 
 import dataclasses
+import json
 from typing import Any, cast
 
 import pytest
@@ -70,7 +71,7 @@ def test_event_union_dispatches_and_keeps_unknown_events_readable():
 
     assert isinstance(event, AccessCodeCreatedEvent)
     assert unknown.event_type == "future.event"
-    assert unknown.future_api_field == "kept"
+    assert json.loads(unknown.raw_json())["future_api_field"] == "kept"
 
 
 def test_action_attempt_union_hydrates_nested_result_and_error():

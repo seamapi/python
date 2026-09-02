@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union, cast
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import json
 from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
@@ -41,6 +42,11 @@ class AccessCodeCreatedEvent:
     event_type: Literal["access_code.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -58,6 +64,7 @@ class AccessCodeCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -126,6 +133,11 @@ class AccessCodeChangedEvent:
     event_type: Literal["access_code.changed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -148,6 +160,7 @@ class AccessCodeChangedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -225,6 +238,11 @@ class AccessCodeNameChangedEvent:
     occurred_at: str
     to: Optional[To]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -247,6 +265,7 @@ class AccessCodeNameChangedEvent:
             occurred_at=d.get("occurred_at", None),
             to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -324,6 +343,11 @@ class AccessCodeCodeChangedEvent:
     occurred_at: str
     to: Optional[To]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -346,6 +370,7 @@ class AccessCodeCodeChangedEvent:
             occurred_at=d.get("occurred_at", None),
             to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -431,6 +456,11 @@ class AccessCodeTimeFrameChangedEvent:
     occurred_at: str
     to: Optional[To]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -453,6 +483,7 @@ class AccessCodeTimeFrameChangedEvent:
             occurred_at=d.get("occurred_at", None),
             to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -526,6 +557,11 @@ class AccessCodeMutationsRequestedEvent:
     occurred_at: str
     requested_mutations: List[RequestedMutations]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -547,6 +583,7 @@ class AccessCodeMutationsRequestedEvent:
                 for i in d.get("requested_mutations") or []
             ],
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -590,6 +627,11 @@ class AccessCodeScheduledOnDeviceEvent:
     event_type: Literal["access_code.scheduled_on_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -608,6 +650,7 @@ class AccessCodeScheduledOnDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -651,6 +694,11 @@ class AccessCodeSetOnDeviceEvent:
     event_type: Literal["access_code.set_on_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -669,6 +717,7 @@ class AccessCodeSetOnDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -709,6 +758,11 @@ class AccessCodeRemovedFromDeviceEvent:
     event_type: Literal["access_code.removed_from_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -726,6 +780,7 @@ class AccessCodeRemovedFromDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -922,6 +977,11 @@ class AccessCodeDelayInSettingOnDeviceEvent:
     event_type: Literal["access_code.delay_in_setting_on_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -961,6 +1021,7 @@ class AccessCodeDelayInSettingOnDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1157,6 +1218,11 @@ class AccessCodeFailedToSetOnDeviceEvent:
     event_type: Literal["access_code.failed_to_set_on_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1196,6 +1262,7 @@ class AccessCodeFailedToSetOnDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1239,6 +1306,11 @@ class AccessCodeDeletedEvent:
     event_type: Literal["access_code.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1257,6 +1329,7 @@ class AccessCodeDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1457,6 +1530,11 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
     event_type: Literal["access_code.delay_in_removing_from_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1496,6 +1574,7 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1692,6 +1771,11 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
     event_type: Literal["access_code.failed_to_remove_from_device"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1731,6 +1815,7 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1771,6 +1856,11 @@ class AccessCodeModifiedExternalToSeamEvent:
     event_type: Literal["access_code.modified_external_to_seam"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1788,6 +1878,7 @@ class AccessCodeModifiedExternalToSeamEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1828,6 +1919,11 @@ class AccessCodeDeletedExternalToSeamEvent:
     event_type: Literal["access_code.deleted_external_to_seam"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1845,6 +1941,7 @@ class AccessCodeDeletedExternalToSeamEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1888,6 +1985,11 @@ class AccessCodeBackupAccessCodePulledEvent:
     event_type: Literal["access_code.backup_access_code_pulled"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1906,6 +2008,7 @@ class AccessCodeBackupAccessCodePulledEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -1946,6 +2049,11 @@ class AccessCodeUnmanagedConvertedToManagedEvent:
     event_type: Literal["access_code.unmanaged.converted_to_managed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -1963,6 +2071,7 @@ class AccessCodeUnmanagedConvertedToManagedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2159,6 +2268,11 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
     event_type: Literal["access_code.unmanaged.failed_to_convert_to_managed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2198,6 +2312,7 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2238,6 +2353,11 @@ class AccessCodeUnmanagedCreatedEvent:
     event_type: Literal["access_code.unmanaged.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2255,6 +2375,7 @@ class AccessCodeUnmanagedCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2295,6 +2416,11 @@ class AccessCodeUnmanagedRemovedEvent:
     event_type: Literal["access_code.unmanaged.removed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2312,6 +2438,7 @@ class AccessCodeUnmanagedRemovedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2340,6 +2467,11 @@ class AccessGrantCreatedEvent:
     event_type: Literal["access_grant.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2351,6 +2483,7 @@ class AccessGrantCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2379,6 +2512,11 @@ class AccessGrantDeletedEvent:
     event_type: Literal["access_grant.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2390,6 +2528,7 @@ class AccessGrantDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2418,6 +2557,11 @@ class AccessGrantAccessGrantedToAllDoorsEvent:
     event_type: Literal["access_grant.access_granted_to_all_doors"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2429,6 +2573,7 @@ class AccessGrantAccessGrantedToAllDoorsEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2460,6 +2605,11 @@ class AccessGrantAccessGrantedToDoorEvent:
     event_type: Literal["access_grant.access_granted_to_door"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2472,6 +2622,7 @@ class AccessGrantAccessGrantedToDoorEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2503,6 +2654,11 @@ class AccessGrantAccessToDoorLostEvent:
     event_type: Literal["access_grant.access_to_door_lost"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2515,6 +2671,7 @@ class AccessGrantAccessToDoorLostEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2552,6 +2709,11 @@ class AccessGrantAccessTimesChangedEvent:
     occurred_at: str
     starts_at: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2566,6 +2728,7 @@ class AccessGrantAccessTimesChangedEvent:
             occurred_at=d.get("occurred_at", None),
             starts_at=d.get("starts_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2600,6 +2763,11 @@ class AccessGrantCouldNotCreateRequestedAccessMethodsEvent:
     missing_device_ids: Optional[List[str]]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2613,6 +2781,7 @@ class AccessGrantCouldNotCreateRequestedAccessMethodsEvent:
             missing_device_ids=d.get("missing_device_ids", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2653,6 +2822,11 @@ class AccessMethodIssuedEvent:
     is_backup_code: Optional[bool]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2668,6 +2842,7 @@ class AccessMethodIssuedEvent:
             is_backup_code=d.get("is_backup_code", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2702,6 +2877,11 @@ class AccessMethodRevokedEvent:
     event_type: Literal["access_method.revoked"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2715,6 +2895,7 @@ class AccessMethodRevokedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2749,6 +2930,11 @@ class AccessMethodCardEncodingRequiredEvent:
     event_type: Literal["access_method.card_encoding_required"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2762,6 +2948,7 @@ class AccessMethodCardEncodingRequiredEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2796,6 +2983,11 @@ class AccessMethodDeletedEvent:
     event_type: Literal["access_method.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2809,6 +3001,7 @@ class AccessMethodDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2849,6 +3042,11 @@ class AccessMethodReissuedEvent:
     is_backup_code: Optional[bool]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2864,6 +3062,7 @@ class AccessMethodReissuedEvent:
             is_backup_code=d.get("is_backup_code", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2898,6 +3097,11 @@ class AccessMethodCreatedEvent:
     event_type: Literal["access_method.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2911,6 +3115,7 @@ class AccessMethodCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2945,6 +3150,11 @@ class AccessMethodDelayInIssuingEvent:
     event_type: Literal["access_method.delay_in_issuing"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -2958,6 +3168,7 @@ class AccessMethodDelayInIssuingEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -2992,6 +3203,11 @@ class AccessMethodFailedToIssueEvent:
     event_type: Literal["access_method.failed_to_issue"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3005,6 +3221,7 @@ class AccessMethodFailedToIssueEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3036,6 +3253,11 @@ class AcsSystemConnectedEvent:
     event_type: Literal["acs_system.connected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3048,6 +3270,7 @@ class AcsSystemConnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3079,6 +3302,11 @@ class AcsSystemAddedEvent:
     event_type: Literal["acs_system.added"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3091,6 +3319,7 @@ class AcsSystemAddedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3226,6 +3455,11 @@ class AcsSystemDisconnectedEvent:
     event_type: Literal["acs_system.disconnected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3254,6 +3488,7 @@ class AcsSystemDisconnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3288,6 +3523,11 @@ class AcsCredentialDeletedEvent:
     event_type: Literal["acs_credential.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3301,6 +3541,7 @@ class AcsCredentialDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3335,6 +3576,11 @@ class AcsCredentialIssuedEvent:
     event_type: Literal["acs_credential.issued"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3348,6 +3594,7 @@ class AcsCredentialIssuedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3382,6 +3629,11 @@ class AcsCredentialReissuedEvent:
     event_type: Literal["acs_credential.reissued"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3395,6 +3647,7 @@ class AcsCredentialReissuedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3429,6 +3682,11 @@ class AcsCredentialInvalidatedEvent:
     event_type: Literal["acs_credential.invalidated"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3442,6 +3700,7 @@ class AcsCredentialInvalidatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3476,6 +3735,11 @@ class AcsUserCreatedEvent:
     event_type: Literal["acs_user.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3489,6 +3753,7 @@ class AcsUserCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3523,6 +3788,11 @@ class AcsUserDeletedEvent:
     event_type: Literal["acs_user.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3536,6 +3806,7 @@ class AcsUserDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3570,6 +3841,11 @@ class AcsEncoderAddedEvent:
     event_type: Literal["acs_encoder.added"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3583,6 +3859,7 @@ class AcsEncoderAddedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3617,6 +3894,11 @@ class AcsEncoderRemovedEvent:
     event_type: Literal["acs_encoder.removed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3630,6 +3912,7 @@ class AcsEncoderRemovedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3664,6 +3947,11 @@ class AcsAccessGroupDeletedEvent:
     event_type: Literal["acs_access_group.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3677,6 +3965,7 @@ class AcsAccessGroupDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3711,6 +4000,11 @@ class AcsEntranceAddedEvent:
     event_type: Literal["acs_entrance.added"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3724,6 +4018,7 @@ class AcsEntranceAddedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3758,6 +4053,11 @@ class AcsEntranceRemovedEvent:
     event_type: Literal["acs_entrance.removed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3771,6 +4071,7 @@ class AcsEntranceRemovedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3799,6 +4100,11 @@ class ClientSessionDeletedEvent:
     event_type: Literal["client_session.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3810,6 +4116,7 @@ class ClientSessionDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3847,6 +4154,11 @@ class ConnectedAccountConnectedEvent:
     event_type: Literal["connected_account.connected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3863,6 +4175,7 @@ class ConnectedAccountConnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3897,6 +4210,11 @@ class ConnectedAccountCreatedEvent:
     event_type: Literal["connected_account.created"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3912,6 +4230,7 @@ class ConnectedAccountCreatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -3949,6 +4268,11 @@ class ConnectedAccountSuccessfulLoginEvent:
     event_type: Literal["connected_account.successful_login"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -3964,6 +4288,7 @@ class ConnectedAccountSuccessfulLoginEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4047,6 +4372,11 @@ class ConnectedAccountDisconnectedEvent:
     event_type: Literal["connected_account.disconnected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4069,6 +4399,7 @@ class ConnectedAccountDisconnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4100,6 +4431,11 @@ class ConnectedAccountCompletedFirstSyncEvent:
     event_type: Literal["connected_account.completed_first_sync"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4114,6 +4450,7 @@ class ConnectedAccountCompletedFirstSyncEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4148,6 +4485,11 @@ class ConnectedAccountDeletedEvent:
     event_type: Literal["connected_account.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4163,6 +4505,7 @@ class ConnectedAccountDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4194,6 +4537,11 @@ class ConnectedAccountCompletedFirstSyncAfterReconnectionEvent:
     event_type: Literal["connected_account.completed_first_sync_after_reconnection"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4208,6 +4556,7 @@ class ConnectedAccountCompletedFirstSyncAfterReconnectionEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4291,6 +4640,11 @@ class ConnectedAccountReauthorizationRequestedEvent:
     event_type: Literal["connected_account.reauthorization_requested"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4313,6 +4667,7 @@ class ConnectedAccountReauthorizationRequestedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4353,6 +4708,11 @@ class ActionAttemptLockDoorSucceededEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4368,6 +4728,7 @@ class ActionAttemptLockDoorSucceededEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4408,6 +4769,11 @@ class ActionAttemptLockDoorFailedEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4423,6 +4789,7 @@ class ActionAttemptLockDoorFailedEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4463,6 +4830,11 @@ class ActionAttemptUnlockDoorSucceededEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4478,6 +4850,7 @@ class ActionAttemptUnlockDoorSucceededEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4518,6 +4891,11 @@ class ActionAttemptUnlockDoorFailedEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4533,6 +4911,7 @@ class ActionAttemptUnlockDoorFailedEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4573,6 +4952,11 @@ class ActionAttemptSimulateKeypadCodeEntrySucceededEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4588,6 +4972,7 @@ class ActionAttemptSimulateKeypadCodeEntrySucceededEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4628,6 +5013,11 @@ class ActionAttemptSimulateKeypadCodeEntryFailedEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4643,6 +5033,7 @@ class ActionAttemptSimulateKeypadCodeEntryFailedEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4683,6 +5074,11 @@ class ActionAttemptSimulateManualLockViaKeypadSucceededEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4698,6 +5094,7 @@ class ActionAttemptSimulateManualLockViaKeypadSucceededEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4738,6 +5135,11 @@ class ActionAttemptSimulateManualLockViaKeypadFailedEvent:
     occurred_at: str
     status: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4753,6 +5155,7 @@ class ActionAttemptSimulateManualLockViaKeypadFailedEvent:
             occurred_at=d.get("occurred_at", None),
             status=d.get("status", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4790,6 +5193,11 @@ class ConnectWebviewLoginSucceededEvent:
     event_type: Literal["connect_webview.login_succeeded"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4806,6 +5214,7 @@ class ConnectWebviewLoginSucceededEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4834,6 +5243,11 @@ class ConnectWebviewLoginFailedEvent:
     event_type: Literal["connect_webview.login_failed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4845,6 +5259,7 @@ class ConnectWebviewLoginFailedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4885,6 +5300,11 @@ class DeviceConnectedEvent:
     event_type: Literal["device.connected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4902,6 +5322,7 @@ class DeviceConnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4942,6 +5363,11 @@ class DeviceAddedEvent:
     event_type: Literal["device.added"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -4959,6 +5385,7 @@ class DeviceAddedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -4999,6 +5426,11 @@ class DeviceConvertedToUnmanagedEvent:
     event_type: Literal["device.converted_to_unmanaged"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5016,6 +5448,7 @@ class DeviceConvertedToUnmanagedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5056,6 +5489,11 @@ class DeviceUnmanagedConvertedToManagedEvent:
     event_type: Literal["device.unmanaged.converted_to_managed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5073,6 +5511,7 @@ class DeviceUnmanagedConvertedToManagedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5113,6 +5552,11 @@ class DeviceUnmanagedConnectedEvent:
     event_type: Literal["device.unmanaged.connected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5130,6 +5574,7 @@ class DeviceUnmanagedConnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5279,6 +5724,11 @@ class DeviceDisconnectedEvent:
     event_type: Literal["device.disconnected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5311,6 +5761,7 @@ class DeviceDisconnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5460,6 +5911,11 @@ class DeviceUnmanagedDisconnectedEvent:
     event_type: Literal["device.unmanaged.disconnected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5492,6 +5948,7 @@ class DeviceUnmanagedDisconnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5532,6 +5989,11 @@ class DeviceTamperedEvent:
     event_type: Literal["device.tampered"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5549,6 +6011,7 @@ class DeviceTamperedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5598,6 +6061,11 @@ class DeviceLowBatteryEvent:
     event_type: Literal["device.low_battery"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5620,6 +6088,7 @@ class DeviceLowBatteryEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5666,6 +6135,11 @@ class DeviceBatteryStatusChangedEvent:
     event_type: Literal["device.battery_status_changed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5685,6 +6159,7 @@ class DeviceBatteryStatusChangedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5725,6 +6200,11 @@ class DeviceRemovedEvent:
     event_type: Literal["device.removed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5742,6 +6222,7 @@ class DeviceRemovedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5785,6 +6266,11 @@ class DeviceDeletedEvent:
     event_type: Literal["device.deleted"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5803,6 +6289,7 @@ class DeviceDeletedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5843,6 +6330,11 @@ class DeviceThirdPartyIntegrationDetectedEvent:
     event_type: Literal["device.third_party_integration_detected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5860,6 +6352,7 @@ class DeviceThirdPartyIntegrationDetectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5900,6 +6393,11 @@ class DeviceThirdPartyIntegrationNoLongerDetectedEvent:
     event_type: Literal["device.third_party_integration_no_longer_detected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5917,6 +6415,7 @@ class DeviceThirdPartyIntegrationNoLongerDetectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -5957,6 +6456,11 @@ class DeviceSaltoPrivacyModeActivatedEvent:
     event_type: Literal["device.salto.privacy_mode_activated"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -5974,6 +6478,7 @@ class DeviceSaltoPrivacyModeActivatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6014,6 +6519,11 @@ class DeviceSaltoPrivacyModeDeactivatedEvent:
     event_type: Literal["device.salto.privacy_mode_deactivated"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6031,6 +6541,7 @@ class DeviceSaltoPrivacyModeDeactivatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6175,6 +6686,11 @@ class DeviceConnectionBecameFlakyEvent:
     event_type: Literal["device.connection_became_flaky"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6206,6 +6722,7 @@ class DeviceConnectionBecameFlakyEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6246,6 +6763,11 @@ class DeviceConnectionStabilizedEvent:
     event_type: Literal["device.connection_stabilized"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6263,6 +6785,7 @@ class DeviceConnectionStabilizedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6407,6 +6930,11 @@ class DeviceErrorSubscriptionRequiredEvent:
     event_type: Literal["device.error.subscription_required"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6438,6 +6966,7 @@ class DeviceErrorSubscriptionRequiredEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6478,6 +7007,11 @@ class DeviceErrorSubscriptionRequiredResolvedEvent:
     event_type: Literal["device.error.subscription_required.resolved"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6495,6 +7029,7 @@ class DeviceErrorSubscriptionRequiredResolvedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6535,6 +7070,11 @@ class DeviceAccessoryKeypadConnectedEvent:
     event_type: Literal["device.accessory_keypad_connected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6552,6 +7092,7 @@ class DeviceAccessoryKeypadConnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6696,6 +7237,11 @@ class DeviceAccessoryKeypadDisconnectedEvent:
     event_type: Literal["device.accessory_keypad_disconnected"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6727,6 +7273,7 @@ class DeviceAccessoryKeypadDisconnectedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6785,6 +7332,11 @@ class NoiseSensorNoiseThresholdTriggeredEvent:
     noiseaware_metadata: Optional[Dict[str, Any]]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6808,6 +7360,7 @@ class NoiseSensorNoiseThresholdTriggeredEvent:
             noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6869,6 +7422,11 @@ class LockLockedEvent:
     method: Literal["keycode", "manual", "automatic", "unknown", "remote", "card"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6893,6 +7451,7 @@ class LockLockedEvent:
             method=d.get("method", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -6954,6 +7513,11 @@ class LockUnlockedEvent:
     method: Literal["keycode", "manual", "automatic", "unknown", "remote", "card"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -6978,6 +7542,7 @@ class LockUnlockedEvent:
             method=d.get("method", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7050,6 +7615,11 @@ class LockAccessDeniedEvent:
     occurred_at: str
     reason: Optional[Reason]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7073,6 +7643,7 @@ class LockAccessDeniedEvent:
                 else None
             ),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7122,6 +7693,11 @@ class ThermostatClimatePresetActivatedEvent:
     occurred_at: str
     thermostat_schedule_id: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7142,6 +7718,7 @@ class ThermostatClimatePresetActivatedEvent:
             occurred_at=d.get("occurred_at", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7203,6 +7780,11 @@ class ThermostatManuallyAdjustedEvent:
     method: Literal["seam", "external"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7227,6 +7809,7 @@ class ThermostatManuallyAdjustedEvent:
             method=d.get("method", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7285,6 +7868,11 @@ class ThermostatTemperatureThresholdExceededEvent:
     upper_limit_celsius: Optional[float]
     upper_limit_fahrenheit: Optional[float]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7308,6 +7896,7 @@ class ThermostatTemperatureThresholdExceededEvent:
             upper_limit_celsius=d.get("upper_limit_celsius", None),
             upper_limit_fahrenheit=d.get("upper_limit_fahrenheit", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7366,6 +7955,11 @@ class ThermostatTemperatureThresholdNoLongerExceededEvent:
     upper_limit_celsius: Optional[float]
     upper_limit_fahrenheit: Optional[float]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7389,6 +7983,7 @@ class ThermostatTemperatureThresholdNoLongerExceededEvent:
             upper_limit_celsius=d.get("upper_limit_celsius", None),
             upper_limit_fahrenheit=d.get("upper_limit_fahrenheit", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7441,6 +8036,11 @@ class ThermostatTemperatureReachedSetPointEvent:
     temperature_celsius: float
     temperature_fahrenheit: float
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7464,6 +8064,7 @@ class ThermostatTemperatureReachedSetPointEvent:
             temperature_celsius=d.get("temperature_celsius", None),
             temperature_fahrenheit=d.get("temperature_fahrenheit", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7510,6 +8111,11 @@ class ThermostatTemperatureChangedEvent:
     temperature_celsius: float
     temperature_fahrenheit: float
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7529,6 +8135,7 @@ class ThermostatTemperatureChangedEvent:
             temperature_celsius=d.get("temperature_celsius", None),
             temperature_fahrenheit=d.get("temperature_fahrenheit", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7572,6 +8179,11 @@ class DeviceNameChangedEvent:
     event_type: Literal["device.name_changed"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7590,6 +8202,7 @@ class DeviceNameChangedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7642,6 +8255,11 @@ class CameraActivatedEvent:
     occurred_at: str
     video_url: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7663,6 +8281,7 @@ class CameraActivatedEvent:
             occurred_at=d.get("occurred_at", None),
             video_url=d.get("video_url", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7709,6 +8328,11 @@ class DeviceDoorbellRangEvent:
     occurred_at: str
     video_url: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7728,6 +8352,7 @@ class DeviceDoorbellRangEvent:
             occurred_at=d.get("occurred_at", None),
             video_url=d.get("video_url", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7759,6 +8384,11 @@ class PhoneDeactivatedEvent:
     event_type: Literal["phone.deactivated"]
     occurred_at: str
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7771,6 +8401,7 @@ class PhoneDeactivatedEvent:
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7808,6 +8439,11 @@ class SpaceDeviceMembershipChangedEvent:
     space_id: str
     space_key: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7822,6 +8458,7 @@ class SpaceDeviceMembershipChangedEvent:
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7859,6 +8496,11 @@ class SpaceCreatedEvent:
     space_id: str
     space_key: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7873,6 +8515,7 @@ class SpaceCreatedEvent:
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -7910,6 +8553,11 @@ class SpaceDeletedEvent:
     space_id: str
     space_key: Optional[str]
     workspace_id: str
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
 
     @classmethod
     def from_dict(cls, d: Any):
@@ -7924,6 +8572,165 @@ class SpaceDeletedEvent:
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
             workspace_id=d.get("workspace_id", None),
+            _raw=d,
+        )
+
+
+@dataclass
+class UnrecognizedEvent:
+    """An event whose event_type this SDK version does not recognize.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    created_at: Optional[str]
+    event_description: Optional[str]
+    event_id: Optional[str]
+    event_type: Optional[
+        Literal[
+            "access_code.created",
+            "access_code.changed",
+            "access_code.name_changed",
+            "access_code.code_changed",
+            "access_code.time_frame_changed",
+            "access_code.mutations_requested",
+            "access_code.scheduled_on_device",
+            "access_code.set_on_device",
+            "access_code.removed_from_device",
+            "access_code.delay_in_setting_on_device",
+            "access_code.failed_to_set_on_device",
+            "access_code.issued",
+            "access_code.delay_in_issuing",
+            "access_code.failed_to_issue",
+            "access_code.failed_to_update",
+            "access_code.failed_to_expire",
+            "access_code.deleted",
+            "access_code.delay_in_removing_from_device",
+            "access_code.failed_to_remove_from_device",
+            "access_code.modified_external_to_seam",
+            "access_code.deleted_external_to_seam",
+            "access_code.backup_access_code_pulled",
+            "access_code.unmanaged.converted_to_managed",
+            "access_code.unmanaged.failed_to_convert_to_managed",
+            "access_code.unmanaged.created",
+            "access_code.unmanaged.removed",
+            "access_grant.created",
+            "access_grant.deleted",
+            "access_grant.access_granted_to_all_doors",
+            "access_grant.access_granted_to_door",
+            "access_grant.access_to_door_lost",
+            "access_grant.access_times_changed",
+            "access_grant.could_not_create_requested_access_methods",
+            "access_method.issued",
+            "access_method.revoked",
+            "access_method.card_encoding_required",
+            "access_method.deleted",
+            "access_method.reissued",
+            "access_method.created",
+            "access_method.delay_in_issuing",
+            "access_method.failed_to_issue",
+            "acs_system.connected",
+            "acs_system.added",
+            "acs_system.disconnected",
+            "acs_credential.deleted",
+            "acs_credential.issued",
+            "acs_credential.reissued",
+            "acs_credential.invalidated",
+            "acs_user.created",
+            "acs_user.deleted",
+            "acs_encoder.added",
+            "acs_encoder.removed",
+            "acs_access_group.deleted",
+            "acs_entrance.added",
+            "acs_entrance.removed",
+            "client_session.deleted",
+            "connected_account.connected",
+            "connected_account.created",
+            "connected_account.successful_login",
+            "connected_account.disconnected",
+            "connected_account.completed_first_sync",
+            "connected_account.deleted",
+            "connected_account.completed_first_sync_after_reconnection",
+            "connected_account.reauthorization_requested",
+            "action_attempt.lock_door.succeeded",
+            "action_attempt.lock_door.failed",
+            "action_attempt.unlock_door.succeeded",
+            "action_attempt.unlock_door.failed",
+            "action_attempt.simulate_keypad_code_entry.succeeded",
+            "action_attempt.simulate_keypad_code_entry.failed",
+            "action_attempt.simulate_manual_lock_via_keypad.succeeded",
+            "action_attempt.simulate_manual_lock_via_keypad.failed",
+            "connect_webview.login_succeeded",
+            "connect_webview.login_failed",
+            "device.connected",
+            "device.added",
+            "device.converted_to_unmanaged",
+            "device.unmanaged.converted_to_managed",
+            "device.unmanaged.connected",
+            "device.disconnected",
+            "device.unmanaged.disconnected",
+            "device.tampered",
+            "device.low_battery",
+            "device.battery_status_changed",
+            "device.removed",
+            "device.deleted",
+            "device.third_party_integration_detected",
+            "device.third_party_integration_no_longer_detected",
+            "device.salto.privacy_mode_activated",
+            "device.salto.privacy_mode_deactivated",
+            "device.connection_became_flaky",
+            "device.connection_stabilized",
+            "device.error.subscription_required",
+            "device.error.subscription_required.resolved",
+            "device.accessory_keypad_connected",
+            "device.accessory_keypad_disconnected",
+            "noise_sensor.noise_threshold_triggered",
+            "lock.locked",
+            "lock.unlocked",
+            "lock.access_denied",
+            "thermostat.climate_preset_activated",
+            "thermostat.manually_adjusted",
+            "thermostat.temperature_threshold_exceeded",
+            "thermostat.temperature_threshold_no_longer_exceeded",
+            "thermostat.temperature_reached_set_point",
+            "thermostat.temperature_changed",
+            "device.name_changed",
+            "camera.activated",
+            "device.doorbell_rang",
+            "enrollment_automation.deleted",
+            "phone.deactivated",
+            "space.device_membership_changed",
+            "space.created",
+            "space.deleted",
+        ]
+    ]
+    occurred_at: Optional[str]
+    workspace_id: Optional[str]
+    _raw: Optional[Dict[str, Any]] = field(default=None, repr=False, compare=False)
+
+    def raw_json(self) -> str:
+        """Return the payload this event was parsed from, as JSON."""
+        return json.dumps(self._raw)
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            created_at=d.get("created_at", None),
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+            _raw=d,
         )
 
 
@@ -8153,10 +8960,9 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
 def seam_event_from_dict(d: Any) -> SeamEvent:
     """Deserialize a known event_type variant.
 
-    Unknown discriminator values return ``DeepAttrDict`` so payloads from a
-    newer API remain readable. The static return type covers known variants.
+    An unrecognized event_type yields ``UnrecognizedEvent``.
     """
     variant = _SEAM_EVENT_VARIANTS.get(d.get("event_type"))
     if variant is None:
-        return cast(SeamEvent, DeepAttrDict(d))
+        return cast(SeamEvent, UnrecognizedEvent.from_dict(d))
     return variant.from_dict(d)
