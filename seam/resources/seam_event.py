@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union, cast
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -51,18 +44,14 @@ class AccessCodeCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -118,8 +107,6 @@ class AccessCodeChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 from_=d.get("from", None),
                 property=d.get("property", None),
@@ -142,22 +129,19 @@ class AccessCodeChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             change_reason=d.get("change_reason", None),
-            changed_properties=_object_list_from_dict(
-                cls.ChangedProperties, d.get("changed_properties")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            changed_properties=[
+                cls.ChangedProperties.from_dict(i)
+                for i in d.get("changed_properties") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -209,8 +193,6 @@ class AccessCodeNameChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 name=d.get("name", None),
             )
@@ -225,8 +207,6 @@ class AccessCodeNameChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 name=d.get("name", None),
             )
@@ -248,26 +228,24 @@ class AccessCodeNameChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             description=d.get("description", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
-            from_=_object_from_dict(cls.From, d.get("from")),
+            from_=(
+                cls.From.from_dict(d.get("from")) if d.get("from") is not None else None
+            ),
             occurred_at=d.get("occurred_at", None),
-            to=_object_from_dict(cls.To, d.get("to")),
+            to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -314,8 +292,6 @@ class AccessCodeCodeChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 code=d.get("code", None),
             )
@@ -330,8 +306,6 @@ class AccessCodeCodeChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 code=d.get("code", None),
             )
@@ -353,26 +327,24 @@ class AccessCodeCodeChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             description=d.get("description", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
-            from_=_object_from_dict(cls.From, d.get("from")),
+            from_=(
+                cls.From.from_dict(d.get("from")) if d.get("from") is not None else None
+            ),
             occurred_at=d.get("occurred_at", None),
-            to=_object_from_dict(cls.To, d.get("to")),
+            to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -422,8 +394,6 @@ class AccessCodeTimeFrameChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 ends_at=d.get("ends_at", None),
                 starts_at=d.get("starts_at", None),
@@ -442,8 +412,6 @@ class AccessCodeTimeFrameChangedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 ends_at=d.get("ends_at", None),
                 starts_at=d.get("starts_at", None),
@@ -466,26 +434,24 @@ class AccessCodeTimeFrameChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             description=d.get("description", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
-            from_=_object_from_dict(cls.From, d.get("from")),
+            from_=(
+                cls.From.from_dict(d.get("from")) if d.get("from") is not None else None
+            ),
             occurred_at=d.get("occurred_at", None),
-            to=_object_from_dict(cls.To, d.get("to")),
+            to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -542,12 +508,10 @@ class AccessCodeMutationsRequestedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                from_=_record_from_dict(d.get("from", None)),
+                from_=DeepAttrDict(d.get("from", None)),
                 mutation_code=d.get("mutation_code", None),
-                to=_record_from_dict(d.get("to", None)),
+                to=DeepAttrDict(d.get("to", None)),
             )
 
     access_code_id: str
@@ -565,26 +529,23 @@ class AccessCodeMutationsRequestedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
-            requested_mutations=_object_list_from_dict(
-                cls.RequestedMutations, d.get("requested_mutations")
-            ),
+            requested_mutations=[
+                cls.RequestedMutations.from_dict(i)
+                for i in d.get("requested_mutations") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -632,19 +593,15 @@ class AccessCodeScheduledOnDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             code=d.get("code", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -697,19 +654,15 @@ class AccessCodeSetOnDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             code=d.get("code", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -759,18 +712,14 @@ class AccessCodeRemovedFromDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -835,8 +784,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -860,8 +807,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -885,8 +830,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -910,8 +853,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -935,8 +876,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -960,8 +899,6 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -988,37 +925,37 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_code_errors=_object_list_from_dict(
-                cls.AccessCodeErrors, d.get("access_code_errors")
-            ),
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
             access_code_id=d.get("access_code_id", None),
-            access_code_warnings=_object_list_from_dict(
-                cls.AccessCodeWarnings, d.get("access_code_warnings")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -1082,8 +1019,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1107,8 +1042,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1132,8 +1065,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1157,8 +1088,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1182,8 +1111,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1207,8 +1134,6 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1235,37 +1160,37 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_code_errors=_object_list_from_dict(
-                cls.AccessCodeErrors, d.get("access_code_errors")
-            ),
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
             access_code_id=d.get("access_code_id", None),
-            access_code_warnings=_object_list_from_dict(
-                cls.AccessCodeWarnings, d.get("access_code_warnings")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -1317,19 +1242,15 @@ class AccessCodeDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             code=d.get("code", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -1398,8 +1319,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1423,8 +1342,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1448,8 +1365,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1473,8 +1388,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1498,8 +1411,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1523,8 +1434,6 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1551,37 +1460,37 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_code_errors=_object_list_from_dict(
-                cls.AccessCodeErrors, d.get("access_code_errors")
-            ),
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
             access_code_id=d.get("access_code_id", None),
-            access_code_warnings=_object_list_from_dict(
-                cls.AccessCodeWarnings, d.get("access_code_warnings")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -1645,8 +1554,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1670,8 +1577,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1695,8 +1600,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1720,8 +1623,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1745,8 +1646,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -1770,8 +1669,6 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -1798,37 +1695,37 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_code_errors=_object_list_from_dict(
-                cls.AccessCodeErrors, d.get("access_code_errors")
-            ),
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
             access_code_id=d.get("access_code_id", None),
-            access_code_warnings=_object_list_from_dict(
-                cls.AccessCodeWarnings, d.get("access_code_warnings")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -1877,18 +1774,14 @@ class AccessCodeModifiedExternalToSeamEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -1938,18 +1831,14 @@ class AccessCodeDeletedExternalToSeamEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -2002,19 +1891,15 @@ class AccessCodeBackupAccessCodePulledEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             backup_access_code_id=d.get("backup_access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -2064,18 +1949,14 @@ class AccessCodeUnmanagedConvertedToManagedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -2140,8 +2021,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -2165,8 +2044,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -2190,8 +2067,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -2215,8 +2090,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -2240,8 +2113,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -2265,8 +2136,6 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -2293,37 +2162,37 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_code_errors=_object_list_from_dict(
-                cls.AccessCodeErrors, d.get("access_code_errors")
-            ),
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
             access_code_id=d.get("access_code_id", None),
-            access_code_warnings=_object_list_from_dict(
-                cls.AccessCodeWarnings, d.get("access_code_warnings")
-            ),
-            connected_account_custom_metadata=_record_from_dict(
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -2372,18 +2241,14 @@ class AccessCodeUnmanagedCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -2433,18 +2298,14 @@ class AccessCodeUnmanagedRemovedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -2482,8 +2343,6 @@ class AccessGrantCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             created_at=d.get("created_at", None),
@@ -2523,8 +2382,6 @@ class AccessGrantDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             created_at=d.get("created_at", None),
@@ -2564,8 +2421,6 @@ class AccessGrantAccessGrantedToAllDoorsEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             created_at=d.get("created_at", None),
@@ -2608,8 +2463,6 @@ class AccessGrantAccessGrantedToDoorEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
@@ -2653,8 +2506,6 @@ class AccessGrantAccessToDoorLostEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             acs_entrance_id=d.get("acs_entrance_id", None),
@@ -2704,8 +2555,6 @@ class AccessGrantAccessTimesChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             access_grant_key=d.get("access_grant_key", None),
@@ -2754,8 +2603,6 @@ class AccessGrantCouldNotCreateRequestedAccessMethodsEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_id=d.get("access_grant_id", None),
             created_at=d.get("created_at", None),
@@ -2809,8 +2656,6 @@ class AccessMethodIssuedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -2860,8 +2705,6 @@ class AccessMethodRevokedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -2909,8 +2752,6 @@ class AccessMethodCardEncodingRequiredEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -2958,8 +2799,6 @@ class AccessMethodDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -3013,8 +2852,6 @@ class AccessMethodReissuedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -3064,8 +2901,6 @@ class AccessMethodCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -3113,8 +2948,6 @@ class AccessMethodDelayInIssuingEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -3162,8 +2995,6 @@ class AccessMethodFailedToIssueEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_grant_ids=d.get("access_grant_ids", None),
             access_grant_keys=d.get("access_grant_keys", None),
@@ -3208,8 +3039,6 @@ class AcsSystemConnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -3253,8 +3082,6 @@ class AcsSystemAddedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
@@ -3312,8 +3139,6 @@ class AcsSystemDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -3337,8 +3162,6 @@ class AcsSystemDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3362,8 +3185,6 @@ class AcsSystemDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -3387,8 +3208,6 @@ class AcsSystemDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -3410,23 +3229,25 @@ class AcsSystemDisconnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            acs_system_errors=_object_list_from_dict(
-                cls.AcsSystemErrors, d.get("acs_system_errors")
-            ),
+            acs_system_errors=[
+                cls.AcsSystemErrors.from_dict(i)
+                for i in d.get("acs_system_errors") or []
+            ],
             acs_system_id=d.get("acs_system_id", None),
-            acs_system_warnings=_object_list_from_dict(
-                cls.AcsSystemWarnings, d.get("acs_system_warnings")
-            ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            acs_system_warnings=[
+                cls.AcsSystemWarnings.from_dict(i)
+                for i in d.get("acs_system_warnings") or []
+            ],
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -3470,8 +3291,6 @@ class AcsCredentialDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_credential_id=d.get("acs_credential_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3519,8 +3338,6 @@ class AcsCredentialIssuedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_credential_id=d.get("acs_credential_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3568,8 +3385,6 @@ class AcsCredentialReissuedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_credential_id=d.get("acs_credential_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3617,8 +3432,6 @@ class AcsCredentialInvalidatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_credential_id=d.get("acs_credential_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3666,8 +3479,6 @@ class AcsUserCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
@@ -3715,8 +3526,6 @@ class AcsUserDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
@@ -3764,8 +3573,6 @@ class AcsEncoderAddedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_encoder_id=d.get("acs_encoder_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3813,8 +3620,6 @@ class AcsEncoderRemovedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_encoder_id=d.get("acs_encoder_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3862,8 +3667,6 @@ class AcsAccessGroupDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_access_group_id=d.get("acs_access_group_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3911,8 +3714,6 @@ class AcsEntranceAddedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -3960,8 +3761,6 @@ class AcsEntranceRemovedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -4003,8 +3802,6 @@ class ClientSessionDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
@@ -4053,11 +3850,9 @@ class ConnectedAccountConnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             connect_webview_id=d.get("connect_webview_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4105,11 +3900,9 @@ class ConnectedAccountCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             connect_webview_id=d.get("connect_webview_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4159,11 +3952,9 @@ class ConnectedAccountSuccessfulLoginEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             connect_webview_id=d.get("connect_webview_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4217,8 +4008,6 @@ class ConnectedAccountDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -4242,8 +4031,6 @@ class ConnectedAccountDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4263,19 +4050,19 @@ class ConnectedAccountDisconnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -4316,10 +4103,8 @@ class ConnectedAccountCompletedFirstSyncEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4366,10 +4151,8 @@ class ConnectedAccountDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4414,10 +4197,8 @@ class ConnectedAccountCompletedFirstSyncAfterReconnectionEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -4471,8 +4252,6 @@ class ConnectedAccountReauthorizationRequestedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -4496,8 +4275,6 @@ class ConnectedAccountReauthorizationRequestedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -4517,19 +4294,19 @@ class ConnectedAccountReauthorizationRequestedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -4579,8 +4356,6 @@ class ActionAttemptLockDoorSucceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4636,8 +4411,6 @@ class ActionAttemptLockDoorFailedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4693,8 +4466,6 @@ class ActionAttemptUnlockDoorSucceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4750,8 +4521,6 @@ class ActionAttemptUnlockDoorFailedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4807,8 +4576,6 @@ class ActionAttemptSimulateKeypadCodeEntrySucceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4864,8 +4631,6 @@ class ActionAttemptSimulateKeypadCodeEntryFailedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4921,8 +4686,6 @@ class ActionAttemptSimulateManualLockViaKeypadSucceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4978,8 +4741,6 @@ class ActionAttemptSimulateManualLockViaKeypadFailedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -5032,11 +4793,9 @@ class ConnectWebviewLoginSucceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             connect_webview_id=d.get("connect_webview_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -5078,8 +4837,6 @@ class ConnectWebviewLoginFailedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             connect_webview_id=d.get("connect_webview_id", None),
             created_at=d.get("created_at", None),
@@ -5131,18 +4888,14 @@ class DeviceConnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5192,18 +4945,14 @@ class DeviceAddedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5253,18 +5002,14 @@ class DeviceConvertedToUnmanagedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5314,18 +5059,14 @@ class DeviceUnmanagedConvertedToManagedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5375,18 +5116,14 @@ class DeviceUnmanagedConnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5449,8 +5186,6 @@ class DeviceDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -5474,8 +5209,6 @@ class DeviceDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -5499,8 +5232,6 @@ class DeviceDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -5524,8 +5255,6 @@ class DeviceDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -5553,31 +5282,29 @@ class DeviceDisconnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             error_code=d.get("error_code", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5640,8 +5367,6 @@ class DeviceUnmanagedDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -5665,8 +5390,6 @@ class DeviceUnmanagedDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -5690,8 +5413,6 @@ class DeviceUnmanagedDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -5715,8 +5436,6 @@ class DeviceUnmanagedDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -5744,31 +5463,29 @@ class DeviceUnmanagedDisconnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             error_code=d.get("error_code", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5818,18 +5535,14 @@ class DeviceTamperedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5888,23 +5601,19 @@ class DeviceLowBatteryEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             accessory_keypad_battery_level=d.get(
                 "accessory_keypad_battery_level", None
             ),
             battery_level=d.get("battery_level", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
             device_battery_level=d.get("device_battery_level", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -5960,20 +5669,16 @@ class DeviceBatteryStatusChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             battery_level=d.get("battery_level", None),
             battery_status=d.get("battery_status", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6023,18 +5728,14 @@ class DeviceRemovedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6087,18 +5788,14 @@ class DeviceDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             device_name=d.get("device_name", None),
             event_description=d.get("event_description", None),
@@ -6149,18 +5846,14 @@ class DeviceThirdPartyIntegrationDetectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6210,18 +5903,14 @@ class DeviceThirdPartyIntegrationNoLongerDetectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6271,18 +5960,14 @@ class DeviceSaltoPrivacyModeActivatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6332,18 +6017,14 @@ class DeviceSaltoPrivacyModeDeactivatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6404,8 +6085,6 @@ class DeviceConnectionBecameFlakyEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -6429,8 +6108,6 @@ class DeviceConnectionBecameFlakyEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -6454,8 +6131,6 @@ class DeviceConnectionBecameFlakyEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -6479,8 +6154,6 @@ class DeviceConnectionBecameFlakyEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -6505,31 +6178,29 @@ class DeviceConnectionBecameFlakyEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -6578,18 +6249,14 @@ class DeviceConnectionStabilizedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6650,8 +6317,6 @@ class DeviceErrorSubscriptionRequiredEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -6675,8 +6340,6 @@ class DeviceErrorSubscriptionRequiredEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -6700,8 +6363,6 @@ class DeviceErrorSubscriptionRequiredEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -6725,8 +6386,6 @@ class DeviceErrorSubscriptionRequiredEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -6751,31 +6410,29 @@ class DeviceErrorSubscriptionRequiredEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -6824,18 +6481,14 @@ class DeviceErrorSubscriptionRequiredResolvedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6885,18 +6538,14 @@ class DeviceAccessoryKeypadConnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -6957,8 +6606,6 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -6982,8 +6629,6 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -7007,8 +6652,6 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -7032,8 +6675,6 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -7058,31 +6699,29 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
-            connected_account_errors=_object_list_from_dict(
-                cls.ConnectedAccountErrors, d.get("connected_account_errors")
-            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_warnings=_object_list_from_dict(
-                cls.ConnectedAccountWarnings, d.get("connected_account_warnings")
-            ),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
-            device_errors=_object_list_from_dict(
-                cls.DeviceErrors, d.get("device_errors")
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
             device_id=d.get("device_id", None),
-            device_warnings=_object_list_from_dict(
-                cls.DeviceWarnings, d.get("device_warnings")
-            ),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
@@ -7149,28 +6788,24 @@ class NoiseSensorNoiseThresholdTriggeredEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
-            minut_metadata=_record_from_dict(d.get("minut_metadata", None)),
+            minut_metadata=DeepAttrDict(d.get("minut_metadata", None)),
             noise_level_decibels=d.get("noise_level_decibels", None),
             noise_level_nrs=d.get("noise_level_nrs", None),
             noise_threshold_id=d.get("noise_threshold_id", None),
             noise_threshold_name=d.get("noise_threshold_name", None),
-            noiseaware_metadata=_record_from_dict(d.get("noiseaware_metadata", None)),
+            noiseaware_metadata=DeepAttrDict(d.get("noiseaware_metadata", None)),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -7237,22 +6872,18 @@ class LockLockedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             access_code_is_managed=d.get("access_code_is_managed", None),
             action_attempt_id=d.get("action_attempt_id", None),
             code=d.get("code", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7326,22 +6957,18 @@ class LockUnlockedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
             access_code_is_managed=d.get("access_code_is_managed", None),
             action_attempt_id=d.get("action_attempt_id", None),
             code=d.get("code", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7405,8 +7032,6 @@ class LockAccessDeniedEvent:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 reason_code=d.get("reason_code", None),
@@ -7428,25 +7053,25 @@ class LockAccessDeniedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_code_id=d.get("access_code_id", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             occurred_at=d.get("occurred_at", None),
-            reason=_object_from_dict(cls.Reason, d.get("reason")),
+            reason=(
+                cls.Reason.from_dict(d.get("reason"))
+                if d.get("reason") is not None
+                else None
+            ),
             workspace_id=d.get("workspace_id", None),
         )
 
@@ -7500,19 +7125,15 @@ class ThermostatClimatePresetActivatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             climate_preset_key=d.get("climate_preset_key", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7585,10 +7206,8 @@ class ThermostatManuallyAdjustedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -7596,9 +7215,7 @@ class ThermostatManuallyAdjustedEvent:
             cooling_set_point_fahrenheit=d.get("cooling_set_point_fahrenheit", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7671,18 +7288,14 @@ class ThermostatTemperatureThresholdExceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7756,18 +7369,14 @@ class ThermostatTemperatureThresholdNoLongerExceededEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7835,10 +7444,8 @@ class ThermostatTemperatureReachedSetPointEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
@@ -7848,9 +7455,7 @@ class ThermostatTemperatureReachedSetPointEvent:
             desired_temperature_fahrenheit=d.get(
                 "desired_temperature_fahrenheit", None
             ),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7908,18 +7513,14 @@ class ThermostatTemperatureChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -7974,18 +7575,14 @@ class DeviceNameChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             device_name=d.get("device_name", None),
             event_description=d.get("event_description", None),
@@ -8048,19 +7645,15 @@ class CameraActivatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             activation_reason=d.get("activation_reason", None),
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -8119,18 +7712,14 @@ class DeviceDoorbellRangEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            connected_account_custom_metadata=_record_from_dict(
+            connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             customer_key=d.get("customer_key", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -8173,13 +7762,9 @@ class PhoneDeactivatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             created_at=d.get("created_at", None),
-            device_custom_metadata=_record_from_dict(
-                d.get("device_custom_metadata", None)
-            ),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
@@ -8226,8 +7811,6 @@ class SpaceDeviceMembershipChangedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_ids=d.get("acs_entrance_ids", None),
             created_at=d.get("created_at", None),
@@ -8279,8 +7862,6 @@ class SpaceCreatedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_ids=d.get("acs_entrance_ids", None),
             created_at=d.get("created_at", None),
@@ -8332,8 +7913,6 @@ class SpaceDeletedEvent:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_ids=d.get("acs_entrance_ids", None),
             created_at=d.get("created_at", None),
@@ -8574,17 +8153,10 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
 def seam_event_from_dict(d: Any) -> SeamEvent:
     """Deserialize a known event_type variant.
 
-    An unrecognized discriminator, or a known one whose payload does not
-    convert, returns ``DeepAttrDict`` so payloads from a newer API remain
-    readable. The static return type covers known variants.
+    Unknown discriminator values return ``DeepAttrDict`` so payloads from a
+    newer API remain readable. The static return type covers known variants.
     """
-    if not isinstance(d, dict):
-        return cast(SeamEvent, DeepAttrDict(d) if isinstance(d, dict) else d)
-    key = d.get("event_type")
-    variant = _SEAM_EVENT_VARIANTS.get(key) if isinstance(key, str) else None
+    variant = _SEAM_EVENT_VARIANTS.get(d.get("event_type"))
     if variant is None:
         return cast(SeamEvent, DeepAttrDict(d))
-    try:
-        return variant.from_dict(d)
-    except Exception:  # pylint: disable=broad-exception-caught
-        return cast(SeamEvent, DeepAttrDict(d))
+    return variant.from_dict(d)

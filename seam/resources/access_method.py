@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
+
+
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -70,8 +70,6 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -102,8 +100,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     device_ids=d.get("device_ids", None),
                 )
@@ -118,8 +114,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     device_ids=d.get("device_ids", None),
                 )
@@ -132,14 +126,16 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -166,8 +162,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     device_ids=d.get("device_ids", None),
                 )
@@ -182,8 +176,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     device_ids=d.get("device_ids", None),
                 )
@@ -196,14 +188,16 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -233,8 +227,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -253,8 +245,6 @@ class AccessMethod:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -268,14 +258,16 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -295,8 +287,6 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -320,8 +310,6 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -348,8 +336,6 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -374,8 +360,6 @@ class AccessMethod:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -433,8 +417,6 @@ class AccessMethod:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             access_method_id=d.get("access_method_id", None),
             client_session_token=d.get("client_session_token", None),
@@ -443,9 +425,10 @@ class AccessMethod:
             customization_profile_id=d.get("customization_profile_id", None),
             display_name=d.get("display_name", None),
             display_status=d.get("display_status", None),
-            errors=_discriminated_list_from_dict(
-                d.get("errors"), cls._ErrorsVariants, "error_code"
-            ),
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             instant_key_url=d.get("instant_key_url", None),
             is_assignment_required=d.get("is_assignment_required", None),
             is_encoding_required=d.get("is_encoding_required", None),
@@ -454,13 +437,15 @@ class AccessMethod:
             is_ready_for_encoding=d.get("is_ready_for_encoding", None),
             issued_at=d.get("issued_at", None),
             mode=d.get("mode", None),
-            pending_mutations=_discriminated_list_from_dict(
-                d.get("pending_mutations"),
-                cls._PendingMutationsVariants,
-                "mutation_code",
-            ),
-            warnings=_discriminated_list_from_dict(
-                d.get("warnings"), cls._WarningsVariants, "warning_code"
-            ),
+            pending_mutations=[
+                _from_discriminated_dict(
+                    i, cls._PendingMutationsVariants, "mutation_code"
+                )
+                for i in d.get("pending_mutations") or []
+            ],
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

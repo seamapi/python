@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -58,8 +51,6 @@ class Workspace:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 inviter_logo_url=d.get("inviter_logo_url", None),
                 logo_shape=d.get("logo_shape", None),
@@ -81,13 +72,15 @@ class Workspace:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             company_name=d.get("company_name", None),
             connect_partner_name=d.get("connect_partner_name", None),
-            connect_webview_customization=_object_from_dict(
-                cls.ConnectWebviewCustomization, d.get("connect_webview_customization")
+            connect_webview_customization=(
+                cls.ConnectWebviewCustomization.from_dict(
+                    d.get("connect_webview_customization")
+                )
+                if d.get("connect_webview_customization") is not None
+                else None
             ),
             is_publishable_key_auth_enabled=d.get(
                 "is_publishable_key_auth_enabled", None

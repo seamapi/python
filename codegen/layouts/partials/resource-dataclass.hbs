@@ -31,10 +31,8 @@
 {{#unless properties}}
 {{memberIndent}}    # pylint: disable=unused-argument
 {{/unless}}
-{{memberIndent}}    if not isinstance(d, dict):
-{{memberIndent}}        d = {}
 {{memberIndent}}    return cls(
 {{#each properties}}
-{{../memberIndent}}        {{pythonIdentifier name}}={{#if isRequiredObject}}_required_object_from_dict(cls.{{nestedClassName}}, d.get("{{name}}")){{else}}{{#if isObject}}_object_from_dict(cls.{{nestedClassName}}, d.get("{{name}}")){{else}}{{#if isDiscriminatedObjectList}}_discriminated_list_from_dict(d.get("{{name}}"), cls._{{nestedClassName}}Variants, "{{discriminator}}"){{else}}{{#if isObjectList}}_object_list_from_dict(cls.{{nestedClassName}}, d.get("{{name}}")){{else}}{{#if isDictParam}}_record_from_dict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}}{{/if}}{{/if}},
+{{../memberIndent}}        {{pythonIdentifier name}}={{#if isRequiredObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}") or {}){{else}}{{#if isObject}}cls.{{nestedClassName}}.from_dict(d.get("{{name}}")) if d.get("{{name}}") is not None else None{{else}}{{#if isDiscriminatedObjectList}}[_from_discriminated_dict(i, cls._{{nestedClassName}}Variants, "{{discriminator}}") for i in d.get("{{name}}") or []]{{else}}{{#if isObjectList}}[cls.{{nestedClassName}}.from_dict(i) for i in d.get("{{name}}") or []]{{else}}{{#if isDictParam}}DeepAttrDict({{/if}}d.get("{{name}}", None){{#if isDictParam}}){{/if}}{{/if}}{{/if}}{{/if}}{{/if}},
 {{/each}}
 {{memberIndent}}    )

@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
+
+
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -84,8 +84,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 ends_at=d.get("ends_at", None),
                 starts_at=d.get("starts_at", None),
@@ -108,8 +106,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -133,8 +129,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -158,8 +152,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -183,8 +175,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -208,8 +198,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -233,8 +221,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -258,8 +244,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -283,8 +267,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -310,8 +292,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -349,8 +329,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
@@ -373,8 +351,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     email_address=d.get("email_address", None),
                     full_name=d.get("full_name", None),
@@ -389,14 +365,16 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -426,8 +404,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -446,8 +422,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     ends_at=d.get("ends_at", None),
                     starts_at=d.get("starts_at", None),
@@ -461,14 +435,16 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -495,8 +471,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     is_suspended=d.get("is_suspended", None),
                 )
@@ -511,8 +485,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     is_suspended=d.get("is_suspended", None),
                 )
@@ -525,14 +497,16 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -559,8 +533,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     acs_access_group_id=d.get("acs_access_group_id", None),
                 )
@@ -575,8 +547,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     acs_access_group_id=d.get("acs_access_group_id", None),
                 )
@@ -589,14 +559,16 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -622,8 +594,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 acs_access_group_id=d.get("acs_access_group_id", None),
                 created_at=d.get("created_at", None),
@@ -656,8 +626,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     acs_credential_id=d.get("acs_credential_id", None),
                 )
@@ -672,8 +640,6 @@ class AcsUser:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     acs_credential_id=d.get("acs_credential_id", None),
                 )
@@ -686,14 +652,16 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
-                from_=_object_from_dict(cls.From, d.get("from")),
+                from_=(
+                    cls.From.from_dict(d.get("from"))
+                    if d.get("from") is not None
+                    else None
+                ),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
-                to=_object_from_dict(cls.To, d.get("to")),
+                to=cls.To.from_dict(d.get("to")) if d.get("to") is not None else None,
             )
 
     @dataclass
@@ -707,8 +675,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 is_subscribed=d.get("is_subscribed", None),
             )
@@ -726,8 +692,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 audit_openings=d.get("audit_openings", None),
                 user_id=d.get("user_id", None),
@@ -749,8 +713,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -773,8 +735,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -797,8 +757,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -821,8 +779,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -845,8 +801,6 @@ class AcsUser:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -948,11 +902,11 @@ class AcsUser:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
-            access_schedule=_object_from_dict(
-                cls.AccessSchedule, d.get("access_schedule")
+            access_schedule=(
+                cls.AccessSchedule.from_dict(d.get("access_schedule"))
+                if d.get("access_schedule") is not None
+                else None
             ),
             acs_system_id=d.get("acs_system_id", None),
             acs_user_id=d.get("acs_user_id", None),
@@ -961,33 +915,40 @@ class AcsUser:
             display_name=d.get("display_name", None),
             email=d.get("email", None),
             email_address=d.get("email_address", None),
-            errors=_discriminated_list_from_dict(
-                d.get("errors"), cls._ErrorsVariants, "error_code"
-            ),
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             full_name=d.get("full_name", None),
             hid_acs_system_id=d.get("hid_acs_system_id", None),
             is_managed=d.get("is_managed", None),
             is_suspended=d.get("is_suspended", None),
-            pending_mutations=_discriminated_list_from_dict(
-                d.get("pending_mutations"),
-                cls._PendingMutationsVariants,
-                "mutation_code",
-            ),
+            pending_mutations=[
+                _from_discriminated_dict(
+                    i, cls._PendingMutationsVariants, "mutation_code"
+                )
+                for i in d.get("pending_mutations") or []
+            ],
             phone_number=d.get("phone_number", None),
-            salto_ks_metadata=_object_from_dict(
-                cls.SaltoKsMetadata, d.get("salto_ks_metadata")
+            salto_ks_metadata=(
+                cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                if d.get("salto_ks_metadata") is not None
+                else None
             ),
-            salto_space_metadata=_object_from_dict(
-                cls.SaltoSpaceMetadata, d.get("salto_space_metadata")
+            salto_space_metadata=(
+                cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata"))
+                if d.get("salto_space_metadata") is not None
+                else None
             ),
             user_identity_email_address=d.get("user_identity_email_address", None),
             user_identity_full_name=d.get("user_identity_full_name", None),
             user_identity_id=d.get("user_identity_id", None),
             user_identity_phone_number=d.get("user_identity_phone_number", None),
-            warnings=_discriminated_list_from_dict(
-                d.get("warnings"), cls._WarningsVariants, "warning_code"
-            ),
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

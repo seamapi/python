@@ -1,14 +1,16 @@
 from typing import Any, Dict, List, Literal, Optional, {{#if union.secondaryDiscriminator}}Tuple, {{/if}}Union{{#if union}}, cast{{/if}}
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
+
+{{#if hasDiscriminatedLists}}
+
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+{{/if}}
 
 {{#each classes}}
 {{> resource-dataclass}}
@@ -34,27 +36,11 @@ from ..resource_mapping import ResourceMapping
 def {{union.fromDictName}}(d: Any) -> {{union.className}}:
     """Deserialize a known {{union.discriminator}}{{#if union.secondaryDiscriminator}} and {{union.secondaryDiscriminator}}{{/if}} variant.
 
-    An unrecognized discriminator, or a known one whose payload does not
-    convert, returns ``DeepAttrDict`` so payloads from a newer API remain
-    readable. The static return type covers known variants.
+    Unknown discriminator values return ``DeepAttrDict`` so payloads from a
+    newer API remain readable. The static return type covers known variants.
     """
-    if not isinstance(d, dict):
-        return cast({{union.className}}, DeepAttrDict(d) if isinstance(d, dict) else d)
-{{#if union.secondaryDiscriminator}}
-    key = (d.get("{{union.discriminator}}"), d.get("{{union.secondaryDiscriminator}}"))
-    variant = (
-        {{union.variantsName}}.get(cast(Tuple[str, str], key))
-        if isinstance(key[0], str) and isinstance(key[1], str)
-        else None
-    )
-{{else}}
-    key = d.get("{{union.discriminator}}")
-    variant = {{union.variantsName}}.get(key) if isinstance(key, str) else None
-{{/if}}
+    variant = {{union.variantsName}}.get({{#if union.secondaryDiscriminator}}(d.get("{{union.discriminator}}"), d.get("{{union.secondaryDiscriminator}}")){{else}}d.get("{{union.discriminator}}"){{/if}})
     if variant is None:
         return cast({{union.className}}, DeepAttrDict(d))
-    try:
-        return variant.from_dict(d)
-    except Exception:  # pylint: disable=broad-exception-caught
-        return cast({{union.className}}, DeepAttrDict(d))
+    return variant.from_dict(d)
 {{/if}}

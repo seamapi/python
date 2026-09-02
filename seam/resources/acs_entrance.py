@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
+
+
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -93,8 +93,6 @@ class AcsEntrance:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     id=d.get("id", None),
                     name=d.get("name", None),
@@ -107,10 +105,8 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                actions=_object_list_from_dict(cls.Actions, d.get("actions")),
+                actions=[cls.Actions.from_dict(i) for i in d.get("actions") or []],
                 gadget_id=d.get("gadget_id", None),
                 site_id=d.get("site_id", None),
                 site_name=d.get("site_name", None),
@@ -141,8 +137,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 door_name=d.get("door_name", None),
                 door_number=d.get("door_number", None),
@@ -179,8 +173,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 entry_name=d.get("entry_name", None),
                 entry_relays_total_count=d.get("entry_relays_total_count", None),
@@ -207,8 +199,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_point_id=d.get("access_point_id", None),
                 site_id=d.get("site_id", None),
@@ -226,8 +216,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_point_name=d.get("access_point_name", None),
             )
@@ -243,8 +231,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_point_profile=d.get("access_point_profile", None),
             )
@@ -266,8 +252,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -290,8 +274,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 common_area_name=d.get("common_area_name", None),
                 common_area_number=d.get("common_area_number", None),
@@ -317,8 +299,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 accessibility_type=d.get("accessibility_type", None),
                 door_name=d.get("door_name", None),
@@ -357,8 +337,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 battery_level=d.get("battery_level", None),
                 door_name=d.get("door_name", None),
@@ -395,8 +373,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 audit_on_keys=d.get("audit_on_keys", None),
                 door_description=d.get("door_description", None),
@@ -432,8 +408,6 @@ class AcsEntrance:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     visionline_door_profile_id=d.get(
                         "visionline_door_profile_id", None
@@ -451,12 +425,10 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 door_category=d.get("door_category", None),
                 door_name=d.get("door_name", None),
-                profiles=_object_list_from_dict(cls.Profiles, d.get("profiles")),
+                profiles=[cls.Profiles.from_dict(i) for i in d.get("profiles") or []],
             )
 
     @dataclass
@@ -476,8 +448,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -501,8 +471,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -526,8 +494,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -551,8 +517,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -576,8 +540,6 @@ class AcsEntrance:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -627,22 +589,30 @@ class AcsEntrance:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_entrance_id=d.get("acs_entrance_id", None),
             acs_system_id=d.get("acs_system_id", None),
-            akiles_metadata=_object_from_dict(
-                cls.AkilesMetadata, d.get("akiles_metadata")
+            akiles_metadata=(
+                cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
+                if d.get("akiles_metadata") is not None
+                else None
             ),
-            assa_abloy_vostio_metadata=_object_from_dict(
-                cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
+            assa_abloy_vostio_metadata=(
+                cls.AssaAbloyVostioMetadata.from_dict(
+                    d.get("assa_abloy_vostio_metadata")
+                )
+                if d.get("assa_abloy_vostio_metadata") is not None
+                else None
             ),
-            avigilon_alta_metadata=_object_from_dict(
-                cls.AvigilonAltaMetadata, d.get("avigilon_alta_metadata")
+            avigilon_alta_metadata=(
+                cls.AvigilonAltaMetadata.from_dict(d.get("avigilon_alta_metadata"))
+                if d.get("avigilon_alta_metadata") is not None
+                else None
             ),
-            brivo_metadata=_object_from_dict(
-                cls.BrivoMetadata, d.get("brivo_metadata")
+            brivo_metadata=(
+                cls.BrivoMetadata.from_dict(d.get("brivo_metadata"))
+                if d.get("brivo_metadata") is not None
+                else None
             ),
             can_belong_to_reservation=d.get("can_belong_to_reservation", None),
             can_unlock_with_card=d.get("can_unlock_with_card", None),
@@ -652,31 +622,50 @@ class AcsEntrance:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            dormakaba_ambiance_metadata=_object_from_dict(
-                cls.DormakabaAmbianceMetadata, d.get("dormakaba_ambiance_metadata")
+            dormakaba_ambiance_metadata=(
+                cls.DormakabaAmbianceMetadata.from_dict(
+                    d.get("dormakaba_ambiance_metadata")
+                )
+                if d.get("dormakaba_ambiance_metadata") is not None
+                else None
             ),
-            dormakaba_community_metadata=_object_from_dict(
-                cls.DormakabaCommunityMetadata, d.get("dormakaba_community_metadata")
+            dormakaba_community_metadata=(
+                cls.DormakabaCommunityMetadata.from_dict(
+                    d.get("dormakaba_community_metadata")
+                )
+                if d.get("dormakaba_community_metadata") is not None
+                else None
             ),
-            errors=_object_list_from_dict(cls.Errors, d.get("errors")),
-            hotek_metadata=_object_from_dict(
-                cls.HotekMetadata, d.get("hotek_metadata")
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            hotek_metadata=(
+                cls.HotekMetadata.from_dict(d.get("hotek_metadata"))
+                if d.get("hotek_metadata") is not None
+                else None
             ),
             is_locked=d.get("is_locked", None),
-            latch_metadata=_object_from_dict(
-                cls.LatchMetadata, d.get("latch_metadata")
+            latch_metadata=(
+                cls.LatchMetadata.from_dict(d.get("latch_metadata"))
+                if d.get("latch_metadata") is not None
+                else None
             ),
-            salto_ks_metadata=_object_from_dict(
-                cls.SaltoKsMetadata, d.get("salto_ks_metadata")
+            salto_ks_metadata=(
+                cls.SaltoKsMetadata.from_dict(d.get("salto_ks_metadata"))
+                if d.get("salto_ks_metadata") is not None
+                else None
             ),
-            salto_space_metadata=_object_from_dict(
-                cls.SaltoSpaceMetadata, d.get("salto_space_metadata")
+            salto_space_metadata=(
+                cls.SaltoSpaceMetadata.from_dict(d.get("salto_space_metadata"))
+                if d.get("salto_space_metadata") is not None
+                else None
             ),
             space_ids=d.get("space_ids", None),
-            visionline_metadata=_object_from_dict(
-                cls.VisionlineMetadata, d.get("visionline_metadata")
+            visionline_metadata=(
+                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                if d.get("visionline_metadata") is not None
+                else None
             ),
-            warnings=_discriminated_list_from_dict(
-                d.get("warnings"), cls._WarningsVariants, "warning_code"
-            ),
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
         )
