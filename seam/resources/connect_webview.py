@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -87,8 +80,6 @@ class ConnectWebview:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             accepted_capabilities=d.get("accepted_capabilities", None),
             accepted_providers=d.get("accepted_providers", None),
@@ -100,7 +91,7 @@ class ConnectWebview:
             connect_webview_id=d.get("connect_webview_id", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
-            custom_metadata=_record_from_dict(d.get("custom_metadata", None)),
+            custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
             custom_redirect_failure_url=d.get("custom_redirect_failure_url", None),
             custom_redirect_url=d.get("custom_redirect_url", None),
             customer_key=d.get("customer_key", None),

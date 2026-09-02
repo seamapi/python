@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -51,8 +44,6 @@ class InstantKey:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 logo_url=d.get("logo_url", None),
                 primary_color=d.get("primary_color", None),
@@ -71,12 +62,14 @@ class InstantKey:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             client_session_id=d.get("client_session_id", None),
             created_at=d.get("created_at", None),
-            customization=_object_from_dict(cls.Customization, d.get("customization")),
+            customization=(
+                cls.Customization.from_dict(d.get("customization"))
+                if d.get("customization") is not None
+                else None
+            ),
             customization_profile_id=d.get("customization_profile_id", None),
             expires_at=d.get("expires_at", None),
             instant_key_id=d.get("instant_key_id", None),

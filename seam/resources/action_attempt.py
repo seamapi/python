@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Tuple, Union, cast
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -36,8 +29,6 @@ class LockDoorSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 was_confirmed_by_device=d.get("was_confirmed_by_device", None),
             )
@@ -50,13 +41,11 @@ class LockDoorSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -83,8 +72,6 @@ class LockDoorPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -121,8 +108,6 @@ class LockDoorErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -136,12 +121,10 @@ class LockDoorErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -172,8 +155,6 @@ class UnlockDoorSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 was_confirmed_by_device=d.get("was_confirmed_by_device", None),
             )
@@ -186,13 +167,11 @@ class UnlockDoorSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -219,8 +198,6 @@ class UnlockDoorPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -257,8 +234,6 @@ class UnlockDoorErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -272,12 +247,10 @@ class UnlockDoorErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -369,8 +342,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         cancelled=d.get("cancelled", None),
                         card_format=d.get("card_format", None),
@@ -395,16 +366,16 @@ class ScanCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     card_number=d.get("card_number", None),
                     created_at=d.get("created_at", None),
                     ends_at=d.get("ends_at", None),
                     is_issued=d.get("is_issued", None),
                     starts_at=d.get("starts_at", None),
-                    visionline_metadata=_object_from_dict(
-                        cls.VisionlineMetadata, d.get("visionline_metadata")
+                    visionline_metadata=(
+                        cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                        if d.get("visionline_metadata") is not None
+                        else None
                     ),
                 )
 
@@ -481,8 +452,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         member_pin_id=d.get("member_pin_id", None),
                     )
@@ -513,8 +482,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         auto_join=d.get("auto_join", None),
                         door_names=d.get("door_names", None),
@@ -542,8 +509,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         created_at=d.get("created_at", None),
                         error_code=d.get("error_code", None),
@@ -582,8 +547,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         auto_join=d.get("auto_join", None),
                         card_function_type=d.get("card_function_type", None),
@@ -628,8 +591,6 @@ class ScanCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         created_at=d.get("created_at", None),
                         message=d.get("message", None),
@@ -687,19 +648,23 @@ class ScanCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     access_method=d.get("access_method", None),
                     acs_credential_id=d.get("acs_credential_id", None),
                     acs_credential_pool_id=d.get("acs_credential_pool_id", None),
                     acs_system_id=d.get("acs_system_id", None),
                     acs_user_id=d.get("acs_user_id", None),
-                    akiles_metadata=_object_from_dict(
-                        cls.AkilesMetadata, d.get("akiles_metadata")
+                    akiles_metadata=(
+                        cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
+                        if d.get("akiles_metadata") is not None
+                        else None
                     ),
-                    assa_abloy_vostio_metadata=_object_from_dict(
-                        cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
+                    assa_abloy_vostio_metadata=(
+                        cls.AssaAbloyVostioMetadata.from_dict(
+                            d.get("assa_abloy_vostio_metadata")
+                        )
+                        if d.get("assa_abloy_vostio_metadata") is not None
+                        else None
                     ),
                     card_number=d.get("card_number", None),
                     code=d.get("code", None),
@@ -707,7 +672,7 @@ class ScanCredentialSuccessActionAttempt:
                     created_at=d.get("created_at", None),
                     display_name=d.get("display_name", None),
                     ends_at=d.get("ends_at", None),
-                    errors=_object_list_from_dict(cls.Errors, d.get("errors")),
+                    errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
                     external_type=d.get("external_type", None),
                     external_type_display_name=d.get(
                         "external_type_display_name", None
@@ -728,10 +693,14 @@ class ScanCredentialSuccessActionAttempt:
                     parent_acs_credential_id=d.get("parent_acs_credential_id", None),
                     starts_at=d.get("starts_at", None),
                     user_identity_id=d.get("user_identity_id", None),
-                    visionline_metadata=_object_from_dict(
-                        cls.VisionlineMetadata, d.get("visionline_metadata")
+                    visionline_metadata=(
+                        cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                        if d.get("visionline_metadata") is not None
+                        else None
                     ),
-                    warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
+                    warnings=[
+                        cls.Warnings.from_dict(i) for i in d.get("warnings") or []
+                    ],
                     workspace_id=d.get("workspace_id", None),
                 )
 
@@ -752,8 +721,6 @@ class ScanCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     warning_code=d.get("warning_code", None),
                     warning_message=d.get("warning_message", None),
@@ -765,16 +732,20 @@ class ScanCredentialSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                acs_credential_on_encoder=_object_from_dict(
-                    cls.AcsCredentialOnEncoder, d.get("acs_credential_on_encoder")
+                acs_credential_on_encoder=(
+                    cls.AcsCredentialOnEncoder.from_dict(
+                        d.get("acs_credential_on_encoder")
+                    )
+                    if d.get("acs_credential_on_encoder") is not None
+                    else None
                 ),
-                acs_credential_on_seam=_object_from_dict(
-                    cls.AcsCredentialOnSeam, d.get("acs_credential_on_seam")
+                acs_credential_on_seam=(
+                    cls.AcsCredentialOnSeam.from_dict(d.get("acs_credential_on_seam"))
+                    if d.get("acs_credential_on_seam") is not None
+                    else None
                 ),
-                warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
+                warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
             )
 
     action_attempt_id: str
@@ -785,13 +756,11 @@ class ScanCredentialSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -818,8 +787,6 @@ class ScanCredentialPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -864,8 +831,6 @@ class ScanCredentialErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -879,12 +844,10 @@ class ScanCredentialErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -977,8 +940,6 @@ class EncodeCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     member_pin_id=d.get("member_pin_id", None),
                 )
@@ -1009,8 +970,6 @@ class EncodeCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     auto_join=d.get("auto_join", None),
                     door_names=d.get("door_names", None),
@@ -1038,8 +997,6 @@ class EncodeCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     error_code=d.get("error_code", None),
@@ -1078,8 +1035,6 @@ class EncodeCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     auto_join=d.get("auto_join", None),
                     card_function_type=d.get("card_function_type", None),
@@ -1122,8 +1077,6 @@ class EncodeCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     message=d.get("message", None),
@@ -1181,19 +1134,23 @@ class EncodeCredentialSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_method=d.get("access_method", None),
                 acs_credential_id=d.get("acs_credential_id", None),
                 acs_credential_pool_id=d.get("acs_credential_pool_id", None),
                 acs_system_id=d.get("acs_system_id", None),
                 acs_user_id=d.get("acs_user_id", None),
-                akiles_metadata=_object_from_dict(
-                    cls.AkilesMetadata, d.get("akiles_metadata")
+                akiles_metadata=(
+                    cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
+                    if d.get("akiles_metadata") is not None
+                    else None
                 ),
-                assa_abloy_vostio_metadata=_object_from_dict(
-                    cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
+                assa_abloy_vostio_metadata=(
+                    cls.AssaAbloyVostioMetadata.from_dict(
+                        d.get("assa_abloy_vostio_metadata")
+                    )
+                    if d.get("assa_abloy_vostio_metadata") is not None
+                    else None
                 ),
                 card_number=d.get("card_number", None),
                 code=d.get("code", None),
@@ -1201,7 +1158,7 @@ class EncodeCredentialSuccessActionAttempt:
                 created_at=d.get("created_at", None),
                 display_name=d.get("display_name", None),
                 ends_at=d.get("ends_at", None),
-                errors=_object_list_from_dict(cls.Errors, d.get("errors")),
+                errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
                 external_type=d.get("external_type", None),
                 external_type_display_name=d.get("external_type_display_name", None),
                 is_issued=d.get("is_issued", None),
@@ -1220,10 +1177,12 @@ class EncodeCredentialSuccessActionAttempt:
                 parent_acs_credential_id=d.get("parent_acs_credential_id", None),
                 starts_at=d.get("starts_at", None),
                 user_identity_id=d.get("user_identity_id", None),
-                visionline_metadata=_object_from_dict(
-                    cls.VisionlineMetadata, d.get("visionline_metadata")
+                visionline_metadata=(
+                    cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                    if d.get("visionline_metadata") is not None
+                    else None
                 ),
-                warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
+                warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
                 workspace_id=d.get("workspace_id", None),
             )
 
@@ -1235,13 +1194,11 @@ class EncodeCredentialSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -1268,8 +1225,6 @@ class EncodeCredentialPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -1318,8 +1273,6 @@ class EncodeCredentialErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -1333,12 +1286,10 @@ class EncodeCredentialErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -1431,8 +1382,6 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     member_pin_id=d.get("member_pin_id", None),
                 )
@@ -1463,8 +1412,6 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     auto_join=d.get("auto_join", None),
                     door_names=d.get("door_names", None),
@@ -1492,8 +1439,6 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     error_code=d.get("error_code", None),
@@ -1532,8 +1477,6 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     auto_join=d.get("auto_join", None),
                     card_function_type=d.get("card_function_type", None),
@@ -1576,8 +1519,6 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     message=d.get("message", None),
@@ -1635,19 +1576,23 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_method=d.get("access_method", None),
                 acs_credential_id=d.get("acs_credential_id", None),
                 acs_credential_pool_id=d.get("acs_credential_pool_id", None),
                 acs_system_id=d.get("acs_system_id", None),
                 acs_user_id=d.get("acs_user_id", None),
-                akiles_metadata=_object_from_dict(
-                    cls.AkilesMetadata, d.get("akiles_metadata")
+                akiles_metadata=(
+                    cls.AkilesMetadata.from_dict(d.get("akiles_metadata"))
+                    if d.get("akiles_metadata") is not None
+                    else None
                 ),
-                assa_abloy_vostio_metadata=_object_from_dict(
-                    cls.AssaAbloyVostioMetadata, d.get("assa_abloy_vostio_metadata")
+                assa_abloy_vostio_metadata=(
+                    cls.AssaAbloyVostioMetadata.from_dict(
+                        d.get("assa_abloy_vostio_metadata")
+                    )
+                    if d.get("assa_abloy_vostio_metadata") is not None
+                    else None
                 ),
                 card_number=d.get("card_number", None),
                 code=d.get("code", None),
@@ -1655,7 +1600,7 @@ class ScanToAssignCredentialSuccessActionAttempt:
                 created_at=d.get("created_at", None),
                 display_name=d.get("display_name", None),
                 ends_at=d.get("ends_at", None),
-                errors=_object_list_from_dict(cls.Errors, d.get("errors")),
+                errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
                 external_type=d.get("external_type", None),
                 external_type_display_name=d.get("external_type_display_name", None),
                 is_issued=d.get("is_issued", None),
@@ -1674,10 +1619,12 @@ class ScanToAssignCredentialSuccessActionAttempt:
                 parent_acs_credential_id=d.get("parent_acs_credential_id", None),
                 starts_at=d.get("starts_at", None),
                 user_identity_id=d.get("user_identity_id", None),
-                visionline_metadata=_object_from_dict(
-                    cls.VisionlineMetadata, d.get("visionline_metadata")
+                visionline_metadata=(
+                    cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                    if d.get("visionline_metadata") is not None
+                    else None
                 ),
-                warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
+                warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
                 workspace_id=d.get("workspace_id", None),
             )
 
@@ -1689,13 +1636,11 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -1722,8 +1667,6 @@ class ScanToAssignCredentialPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -1763,8 +1706,6 @@ class ScanToAssignCredentialErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -1778,12 +1719,10 @@ class ScanToAssignCredentialErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -1863,8 +1802,6 @@ class AssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     error_code=d.get("error_code", None),
@@ -1898,8 +1835,6 @@ class AssignCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         ends_at=d.get("ends_at", None),
                         starts_at=d.get("starts_at", None),
@@ -1918,8 +1853,6 @@ class AssignCredentialSuccessActionAttempt:
 
                 @classmethod
                 def from_dict(cls, d: Any):
-                    if not isinstance(d, dict):
-                        d = {}
                     return cls(
                         ends_at=d.get("ends_at", None),
                         starts_at=d.get("starts_at", None),
@@ -1935,14 +1868,20 @@ class AssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
-                    from_=_object_from_dict(cls.From, d.get("from")),
+                    from_=(
+                        cls.From.from_dict(d.get("from"))
+                        if d.get("from") is not None
+                        else None
+                    ),
                     message=d.get("message", None),
                     mutation_code=d.get("mutation_code", None),
-                    to=_object_from_dict(cls.To, d.get("to")),
+                    to=(
+                        cls.To.from_dict(d.get("to"))
+                        if d.get("to") is not None
+                        else None
+                    ),
                 )
 
         @dataclass
@@ -1970,8 +1909,6 @@ class AssignCredentialSuccessActionAttempt:
 
             @classmethod
             def from_dict(cls, d: Any):
-                if not isinstance(d, dict):
-                    d = {}
                 return cls(
                     created_at=d.get("created_at", None),
                     message=d.get("message", None),
@@ -2001,8 +1938,6 @@ class AssignCredentialSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 access_method_id=d.get("access_method_id", None),
                 client_session_token=d.get("client_session_token", None),
@@ -2011,7 +1946,7 @@ class AssignCredentialSuccessActionAttempt:
                 customization_profile_id=d.get("customization_profile_id", None),
                 display_name=d.get("display_name", None),
                 display_status=d.get("display_status", None),
-                errors=_object_list_from_dict(cls.Errors, d.get("errors")),
+                errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
                 instant_key_url=d.get("instant_key_url", None),
                 is_assignment_required=d.get("is_assignment_required", None),
                 is_encoding_required=d.get("is_encoding_required", None),
@@ -2020,10 +1955,11 @@ class AssignCredentialSuccessActionAttempt:
                 is_ready_for_encoding=d.get("is_ready_for_encoding", None),
                 issued_at=d.get("issued_at", None),
                 mode=d.get("mode", None),
-                pending_mutations=_object_list_from_dict(
-                    cls.PendingMutations, d.get("pending_mutations")
-                ),
-                warnings=_object_list_from_dict(cls.Warnings, d.get("warnings")),
+                pending_mutations=[
+                    cls.PendingMutations.from_dict(i)
+                    for i in d.get("pending_mutations") or []
+                ],
+                warnings=[cls.Warnings.from_dict(i) for i in d.get("warnings") or []],
                 workspace_id=d.get("workspace_id", None),
             )
 
@@ -2035,13 +1971,11 @@ class AssignCredentialSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2068,8 +2002,6 @@ class AssignCredentialPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2108,8 +2040,6 @@ class AssignCredentialErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2123,12 +2053,10 @@ class AssignCredentialErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2155,8 +2083,6 @@ class ResetSandboxWorkspaceSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2167,13 +2093,11 @@ class ResetSandboxWorkspaceSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2200,8 +2124,6 @@ class ResetSandboxWorkspacePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2238,8 +2160,6 @@ class ResetSandboxWorkspaceErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2253,12 +2173,10 @@ class ResetSandboxWorkspaceErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2285,8 +2203,6 @@ class SetFanModeSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2297,13 +2213,11 @@ class SetFanModeSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2330,8 +2244,6 @@ class SetFanModePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2368,8 +2280,6 @@ class SetFanModeErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2383,12 +2293,10 @@ class SetFanModeErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2415,8 +2323,6 @@ class SetHvacModeSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2427,13 +2333,11 @@ class SetHvacModeSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2460,8 +2364,6 @@ class SetHvacModePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2498,8 +2400,6 @@ class SetHvacModeErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2513,12 +2413,10 @@ class SetHvacModeErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2545,8 +2443,6 @@ class ActivateClimatePresetSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2557,13 +2453,11 @@ class ActivateClimatePresetSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2590,8 +2484,6 @@ class ActivateClimatePresetPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2628,8 +2520,6 @@ class ActivateClimatePresetErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2643,12 +2533,10 @@ class ActivateClimatePresetErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2675,8 +2563,6 @@ class SimulateKeypadCodeEntrySuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2687,13 +2573,11 @@ class SimulateKeypadCodeEntrySuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2720,8 +2604,6 @@ class SimulateKeypadCodeEntryPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2758,8 +2640,6 @@ class SimulateKeypadCodeEntryErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2773,12 +2653,10 @@ class SimulateKeypadCodeEntryErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2805,8 +2683,6 @@ class SimulateManualLockViaKeypadSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2817,13 +2693,11 @@ class SimulateManualLockViaKeypadSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2850,8 +2724,6 @@ class SimulateManualLockViaKeypadPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -2888,8 +2760,6 @@ class SimulateManualLockViaKeypadErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -2903,12 +2773,10 @@ class SimulateManualLockViaKeypadErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -2935,8 +2803,6 @@ class PushThermostatProgramsSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -2947,13 +2813,11 @@ class PushThermostatProgramsSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -2980,8 +2844,6 @@ class PushThermostatProgramsPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3018,8 +2880,6 @@ class PushThermostatProgramsErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3033,12 +2893,10 @@ class PushThermostatProgramsErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3065,8 +2923,6 @@ class ConfigureAutoLockSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -3077,13 +2933,11 @@ class ConfigureAutoLockSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3110,8 +2964,6 @@ class ConfigureAutoLockPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3148,8 +3000,6 @@ class ConfigureAutoLockErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3163,12 +3013,10 @@ class ConfigureAutoLockErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3195,8 +3043,6 @@ class SyncAccessCodesSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -3207,13 +3053,11 @@ class SyncAccessCodesSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3240,8 +3084,6 @@ class SyncAccessCodesPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3278,8 +3120,6 @@ class SyncAccessCodesErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3293,12 +3133,10 @@ class SyncAccessCodesErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3328,10 +3166,8 @@ class CreateAccessCodeSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                access_code=_record_from_dict(d.get("access_code", None)),
+                access_code=DeepAttrDict(d.get("access_code", None)),
             )
 
     action_attempt_id: str
@@ -3342,13 +3178,11 @@ class CreateAccessCodeSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3375,8 +3209,6 @@ class CreateAccessCodePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3413,8 +3245,6 @@ class CreateAccessCodeErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3428,12 +3258,10 @@ class CreateAccessCodeErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3460,8 +3288,6 @@ class DeleteAccessCodeSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -3472,13 +3298,11 @@ class DeleteAccessCodeSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3505,8 +3329,6 @@ class DeleteAccessCodePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3543,8 +3365,6 @@ class DeleteAccessCodeErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3558,12 +3378,10 @@ class DeleteAccessCodeErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3593,10 +3411,8 @@ class UpdateAccessCodeSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                access_code=_record_from_dict(d.get("access_code", None)),
+                access_code=DeepAttrDict(d.get("access_code", None)),
             )
 
     action_attempt_id: str
@@ -3607,13 +3423,11 @@ class UpdateAccessCodeSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3640,8 +3454,6 @@ class UpdateAccessCodePendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3678,8 +3490,6 @@ class UpdateAccessCodeErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3693,12 +3503,10 @@ class UpdateAccessCodeErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3728,10 +3536,8 @@ class CreateNoiseThresholdSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                noise_threshold=_record_from_dict(d.get("noise_threshold", None)),
+                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
             )
 
     action_attempt_id: str
@@ -3742,13 +3548,11 @@ class CreateNoiseThresholdSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3775,8 +3579,6 @@ class CreateNoiseThresholdPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3813,8 +3615,6 @@ class CreateNoiseThresholdErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3828,12 +3628,10 @@ class CreateNoiseThresholdErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3860,8 +3658,6 @@ class DeleteNoiseThresholdSuccessActionAttempt:
         @classmethod
         def from_dict(cls, d: Any):
             # pylint: disable=unused-argument
-            if not isinstance(d, dict):
-                d = {}
             return cls()
 
     action_attempt_id: str
@@ -3872,13 +3668,11 @@ class DeleteNoiseThresholdSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -3905,8 +3699,6 @@ class DeleteNoiseThresholdPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -3943,8 +3735,6 @@ class DeleteNoiseThresholdErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -3958,12 +3748,10 @@ class DeleteNoiseThresholdErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -3993,10 +3781,8 @@ class UpdateNoiseThresholdSuccessActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
-                noise_threshold=_record_from_dict(d.get("noise_threshold", None)),
+                noise_threshold=DeepAttrDict(d.get("noise_threshold", None)),
             )
 
     action_attempt_id: str
@@ -4007,13 +3793,11 @@ class UpdateNoiseThresholdSuccessActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
             error=d.get("error", None),
-            result=_required_object_from_dict(cls.Result, d.get("result")),
+            result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
         )
 
@@ -4040,8 +3824,6 @@ class UpdateNoiseThresholdPendingActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
@@ -4078,8 +3860,6 @@ class UpdateNoiseThresholdErrorActionAttempt:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 message=d.get("message", None),
                 type=d.get("type", None),
@@ -4093,12 +3873,10 @@ class UpdateNoiseThresholdErrorActionAttempt:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
-            error=_required_object_from_dict(cls.Error, d.get("error")),
+            error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
         )
@@ -4459,21 +4237,10 @@ _ACTION_ATTEMPT_VARIANTS: Dict[Tuple[str, str], Any] = {
 def action_attempt_from_dict(d: Any) -> ActionAttempt:
     """Deserialize a known action_type and status variant.
 
-    An unrecognized discriminator, or a known one whose payload does not
-    convert, returns ``DeepAttrDict`` so payloads from a newer API remain
-    readable. The static return type covers known variants.
+    Unknown discriminator values return ``DeepAttrDict`` so payloads from a
+    newer API remain readable. The static return type covers known variants.
     """
-    if not isinstance(d, dict):
-        return cast(ActionAttempt, DeepAttrDict(d) if isinstance(d, dict) else d)
-    key = (d.get("action_type"), d.get("status"))
-    variant = (
-        _ACTION_ATTEMPT_VARIANTS.get(cast(Tuple[str, str], key))
-        if isinstance(key[0], str) and isinstance(key[1], str)
-        else None
-    )
+    variant = _ACTION_ATTEMPT_VARIANTS.get((d.get("action_type"), d.get("status")))
     if variant is None:
         return cast(ActionAttempt, DeepAttrDict(d))
-    try:
-        return variant.from_dict(d)
-    except Exception:  # pylint: disable=broad-exception-caught
-        return cast(ActionAttempt, DeepAttrDict(d))
+    return variant.from_dict(d)

@@ -1,14 +1,14 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
+
+
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
 
 
 @dataclass
@@ -79,8 +79,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -108,8 +106,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -136,8 +132,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -161,8 +155,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -186,8 +178,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -211,8 +201,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -236,8 +224,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -261,8 +247,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -286,8 +270,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -305,8 +287,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 time_zone=d.get("time_zone", None),
             )
@@ -328,8 +308,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 lan_address=d.get("lan_address", None),
                 mobile_access_uuid=d.get("mobile_access_uuid", None),
@@ -353,8 +331,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -381,8 +357,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -409,8 +383,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -434,8 +406,6 @@ class AcsSystem:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
@@ -541,8 +511,6 @@ class AcsSystem:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_access_group_count=d.get("acs_access_group_count", None),
             acs_system_id=d.get("acs_system_id", None),
@@ -553,23 +521,31 @@ class AcsSystem:
             default_credential_manager_acs_system_id=d.get(
                 "default_credential_manager_acs_system_id", None
             ),
-            errors=_discriminated_list_from_dict(
-                d.get("errors"), cls._ErrorsVariants, "error_code"
-            ),
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             external_type=d.get("external_type", None),
             external_type_display_name=d.get("external_type_display_name", None),
             image_alt_text=d.get("image_alt_text", None),
             image_url=d.get("image_url", None),
             is_credential_manager=d.get("is_credential_manager", None),
-            location=_object_from_dict(cls.Location, d.get("location")),
+            location=(
+                cls.Location.from_dict(d.get("location"))
+                if d.get("location") is not None
+                else None
+            ),
             name=d.get("name", None),
             system_type=d.get("system_type", None),
             system_type_display_name=d.get("system_type_display_name", None),
-            visionline_metadata=_object_from_dict(
-                cls.VisionlineMetadata, d.get("visionline_metadata")
+            visionline_metadata=(
+                cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
+                if d.get("visionline_metadata") is not None
+                else None
             ),
-            warnings=_discriminated_list_from_dict(
-                d.get("warnings"), cls._WarningsVariants, "warning_code"
-            ),
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

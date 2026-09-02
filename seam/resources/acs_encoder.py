@@ -1,13 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from dataclasses import dataclass
 from ..deep_attr_dict import DeepAttrDict
-from ..parse import (
-    discriminated_list_from_dict as _discriminated_list_from_dict,
-    object_from_dict as _object_from_dict,
-    object_list_from_dict as _object_list_from_dict,
-    record_from_dict as _record_from_dict,
-    required_object_from_dict as _required_object_from_dict,
-)
 from ..resource_mapping import ResourceMapping
 
 
@@ -60,8 +53,6 @@ class AcsEncoder:
 
         @classmethod
         def from_dict(cls, d: Any):
-            if not isinstance(d, dict):
-                d = {}
             return cls(
                 created_at=d.get("created_at", None),
                 error_code=d.get("error_code", None),
@@ -78,14 +69,12 @@ class AcsEncoder:
 
     @classmethod
     def from_dict(cls, d: Any):
-        if not isinstance(d, dict):
-            d = {}
         return cls(
             acs_encoder_id=d.get("acs_encoder_id", None),
             acs_system_id=d.get("acs_system_id", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            errors=_object_list_from_dict(cls.Errors, d.get("errors")),
+            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
             workspace_id=d.get("workspace_id", None),
         )
