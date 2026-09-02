@@ -1,9 +1,4 @@
-"""The SDK does not explode on values it does not recognize.
-
-Seam adds event types, action types, error codes, and enum values between SDK
-releases. Reading them must not raise; writing logic against them is what an
-upgrade is for.
-"""
+"""The SDK does not explode on values it does not recognize."""
 
 from seam.deep_attr_dict import DeepAttrDict
 from seam.exceptions import SeamActionAttemptUnknownStatusError
@@ -48,9 +43,6 @@ def test_an_unknown_action_attempt_status_reads_as_itself():
     assert attempt.status == "cancelled"
 
 
-# Waiting promises a succeeded attempt or a raise, so an unrecognized status is
-# the one place the SDK must not stay quiet: returning it would report a success
-# the SDK cannot vouch for.
 def test_waiting_on_an_unknown_status_raises_rather_than_claiming_success():
     attempt = action_attempt_from_dict(
         {"action_attempt_id": "aa", "action_type": "LOCK_DOOR", "status": "cancelled"}
