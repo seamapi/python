@@ -1,5 +1,7 @@
 """Regression tests for reading responses that do not match the generated shape."""
 
+import json
+
 from seam.deep_attr_dict import DeepAttrDict
 from seam.exceptions import SeamActionAttemptUnknownStatusError
 from seam.modules.action_attempts import poll_until_ready
@@ -115,3 +117,45 @@ def test_waiting_on_an_attempt_with_no_status_does_not_raise_attribute_error():
         assert error.status == "None"
     else:
         raise AssertionError("expected SeamActionAttemptUnknownStatusError")
+
+
+def test_raw_json_recovers_a_field_the_generated_shape_drops():
+    payload = {
+        "event_id": "event_1",
+        "event_type": "access_code.created",
+        "brand_new_field": "kept",
+    }
+
+    event = seam_event_from_dict(payload)
+
+    assert not hasattr(event, "brand_new_field")
+    assert json.loads(event.raw_json()) == payload
+
+
+def test_raw_json_round_trips_an_unrecognized_event():
+    payload = {"event_id": "event_1", "event_type": "future.thing", "nested": {"x": 1}}
+
+    assert json.loads(seam_event_from_dict(payload).raw_json()) == payload
+
+
+def test_raw_json_is_absent_from_the_event_repr():
+    event = seam_event_from_dict(
+        {"event_id": "event_1", "event_type": "access_code.created"}
+    )
+
+    assert "_raw" not in repr(event)
+
+
+def test_two_events_with_the_same_fields_compare_equal():
+    # The retained payload must not make otherwise-identical events unequal.
+    a = seam_event_from_dict(
+        {"event_id": "e", "event_type": "access_code.created", "extra": 1}
+    )
+    b = seam_event_from_dict({"event_id": "e", "event_type": "access_code.created"})
+
+    assert a == b
+
+
+def test_raw_json_is_scoped_to_events():
+    # It exists for the webhook verify return, not as a general model accessor.
+    assert not hasattr(Device.from_dict({"device_id": "device_1"}), "raw_json")

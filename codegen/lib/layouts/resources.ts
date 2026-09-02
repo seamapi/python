@@ -18,6 +18,7 @@ import {
 
 export interface ResourceLayoutContext {
   className: string
+  hasRawJson?: boolean
   moduleName: string
   isDeprecated: boolean
   deprecationMessage: string
@@ -703,8 +704,10 @@ export const getResourceLayoutContexts = (
   const eventModel = blueprint.resources.find(
     ({ resourceType }) => resourceType === 'event',
   )
-  resources.push(
-    buildUnionResource(
+  resources.push({
+    // raw_json exists for the webhook verify return, so the events carry it and
+    // nothing else does.
+    ...buildUnionResource(
       'SeamEvent',
       'event_type',
       'seam_event_from_dict',
@@ -718,7 +721,8 @@ export const getResourceLayoutContexts = (
       eventModel?.isDeprecated ?? false,
       eventModel?.deprecationMessage ?? '',
     ),
-  )
+    hasRawJson: true,
+  })
 
   const actionAttemptModel = blueprint.resources.find(
     ({ resourceType }) => resourceType === 'action_attempt',

@@ -1,3 +1,6 @@
+import json
+
+
 class DeepAttrDict(dict):
     """A dict whose keys are also readable as attributes, nested dicts included.
 
@@ -14,6 +17,10 @@ class DeepAttrDict(dict):
                 self.__setitem__(key, value[key])
         else:
             raise TypeError("expected dict")
+
+    def raw_json(self):
+        """Return the payload this was parsed from, as JSON."""
+        return json.dumps(self)
 
     def __setitem__(self, key, value):
         if isinstance(value, dict) and not isinstance(value, DeepAttrDict):

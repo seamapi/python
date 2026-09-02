@@ -1,5 +1,8 @@
 from typing import Any, Dict, List, Literal, Optional, {{#if union.secondaryDiscriminator}}Tuple, {{/if}}Union{{#if union}}, cast{{/if}}
-from dataclasses import dataclass
+from dataclasses import dataclass{{#if hasRawJson}}, field{{/if}}
+{{#if hasRawJson}}
+import json
+{{/if}}
 from ..deep_attr_dict import DeepAttrDict
 from ..parse import (
     discriminated_list_from_dict as _discriminated_list_from_dict,
