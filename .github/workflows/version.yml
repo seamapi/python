@@ -13,7 +13,7 @@ on:
 jobs:
   tag:
     name: Tag
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-mini
     timeout-minutes: 30
     steps:
       - name: Checkout

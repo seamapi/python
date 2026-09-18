@@ -10,7 +10,7 @@ on:
 jobs:
   commit:
     name: Generate code
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-codegen
     timeout-minutes: 30
     steps:
       - name: Checkout

@@ -15,7 +15,7 @@ concurrency:
 jobs:
   semantic:
     name: Determine version
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-standard
     timeout-minutes: 30
     outputs:
       new_release_published: ${{ steps.release.outputs.new_release_published }}
@@ -57,7 +57,7 @@ jobs:
           dry_run: true
   release:
     name: Release version
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-standard
     timeout-minutes: 30
     needs: semantic
     if: needs.semantic.outputs.new_release_published == 'true' && needs.semantic.outputs.new_release_version != '1.0.0'

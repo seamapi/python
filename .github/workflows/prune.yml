@@ -9,7 +9,7 @@ on:
 jobs:
   branches:
     name: Prune Branches
-    runs-on: 'ubuntu-latest'
+    runs-on: 'namespace-profile-mini'
     timeout-minutes: 30
     permissions:
       pull-requests: read
