@@ -16,7 +16,7 @@ on:
 jobs:
   publish:
     name: Publish package
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-standard
     timeout-minutes: 30
     steps:
       - name: Checkout

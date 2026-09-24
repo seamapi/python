@@ -9,7 +9,7 @@ on:
 jobs:
   changes:
     name: Get changes
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-mini
     timeout-minutes: 30
     if: github.actor == 'dependabot[bot]'
     permissions:
@@ -33,7 +33,7 @@ jobs:
             seam/routes/**
   merge:
     name: Merge
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-mini
     timeout-minutes: 30
     needs: changes
     if: needs.changes.outputs.has_changes == 'true'
@@ -50,7 +50,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
   close:
     name: Close
-    runs-on: ubuntu-latest
+    runs-on: namespace-profile-mini
     timeout-minutes: 30
     needs: changes
     if: needs.changes.outputs.has_changes == 'false' && needs.changes.outputs.is_generation_successful == 'true'
