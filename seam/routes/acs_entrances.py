@@ -22,7 +22,7 @@ class AbstractAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
-        """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
@@ -37,7 +37,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Grants a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
 
@@ -63,7 +63,7 @@ class AbstractAcsEntrances(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
-        """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `access system entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param access_method_id: ID of the access method for which you want to retrieve all entrances to which it grants access.
 
@@ -97,7 +97,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_entrance_id: str,
         include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
 
@@ -114,7 +114,7 @@ class AbstractAcsEntrances(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
 
@@ -130,7 +130,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
 
     @abc.abstractmethod
     async def get(self, *, acs_entrance_id: str) -> AcsEntrance:
-        """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
@@ -145,7 +145,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Grants a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
 
@@ -171,7 +171,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
-        """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `access system entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param access_method_id: ID of the access method for which you want to retrieve all entrances to which it grants access.
 
@@ -205,7 +205,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         acs_entrance_id: str,
         include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
 
@@ -222,7 +222,7 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
 
@@ -243,7 +243,7 @@ class AcsEntrances(AbstractAcsEntrances):
         path="/acs/entrances/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, acs_entrance_id: str) -> AcsEntrance:
-        """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
@@ -269,7 +269,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Grants a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
 
@@ -308,7 +308,7 @@ class AcsEntrances(AbstractAcsEntrances):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
-        """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `access system entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param access_method_id: ID of the access method for which you want to retrieve all entrances to which it grants access.
 
@@ -379,7 +379,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_entrance_id: str,
         include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
 
@@ -416,7 +416,7 @@ class AcsEntrances(AbstractAcsEntrances):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
 
@@ -458,7 +458,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         path="/acs/entrances/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, acs_entrance_id: str) -> AcsEntrance:
-        """Returns a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance that you want to get.
 
@@ -484,7 +484,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Grants a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Grants a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access to a specified `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance to which you want to grant an access system user access.
 
@@ -523,7 +523,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         search: Optional[str] = None,
         space_id: Optional[str] = None,
     ) -> List[AcsEntrance]:
-        """Returns a list of all `access system entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `access system entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param access_method_id: ID of the access method for which you want to retrieve all entrances to which it grants access.
 
@@ -594,7 +594,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         acs_entrance_id: str,
         include_if: Optional[List[Literal["visionline_metadata.is_valid"]]] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ with access to a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :param acs_entrance_id: ID of the entrance for which you want to list all credentials that grant access.
 
@@ -631,7 +631,7 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using a cloud_key credential. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param acs_credential_id: ID of the cloud_key credential to use for the unlock operation.
 

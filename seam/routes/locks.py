@@ -33,7 +33,7 @@ class AbstractLocks(abc.ABC):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Configures the auto-lock setting for a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
 
@@ -50,7 +50,7 @@ class AbstractLocks(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
 
@@ -166,11 +166,13 @@ class AbstractLocks(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "four_suites",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "korelock",
                 "lockly",
                 "smartthings",
@@ -181,7 +183,7 @@ class AbstractLocks(abc.ABC):
             ]
         ] = None,
     ) -> List[Device]:
-        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a list of all `locks <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -205,7 +207,7 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Locks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
 
@@ -221,7 +223,7 @@ class AbstractLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Unlocks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
 
@@ -247,7 +249,7 @@ class AbstractAsyncLocks(abc.ABC):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Configures the auto-lock setting for a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
 
@@ -264,7 +266,7 @@ class AbstractAsyncLocks(abc.ABC):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
 
@@ -380,11 +382,13 @@ class AbstractAsyncLocks(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "four_suites",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "korelock",
                 "lockly",
                 "smartthings",
@@ -395,7 +399,7 @@ class AbstractAsyncLocks(abc.ABC):
             ]
         ] = None,
     ) -> List[Device]:
-        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a list of all `locks <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -419,7 +423,7 @@ class AbstractAsyncLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Locks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
 
@@ -435,7 +439,7 @@ class AbstractAsyncLocks(abc.ABC):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Unlocks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
 
@@ -468,7 +472,7 @@ class Locks(AbstractLocks):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Configures the auto-lock setting for a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
 
@@ -515,7 +519,7 @@ class Locks(AbstractLocks):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
 
@@ -651,11 +655,13 @@ class Locks(AbstractLocks):
                 "ttlock",
                 "igloohome",
                 "four_suites",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "korelock",
                 "lockly",
                 "smartthings",
@@ -666,7 +672,7 @@ class Locks(AbstractLocks):
             ]
         ] = None,
     ) -> List[Device]:
-        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a list of all `locks <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -712,7 +718,7 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Locks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
 
@@ -749,7 +755,7 @@ class Locks(AbstractLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Unlocks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
 
@@ -801,7 +807,7 @@ class AsyncLocks(AbstractAsyncLocks):
         auto_lock_delay_seconds: Optional[float] = None,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Configures the auto-lock setting for a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Configures the auto-lock setting for a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param auto_lock_enabled: Whether to enable or disable auto-lock.
 
@@ -848,7 +854,7 @@ class AsyncLocks(AbstractAsyncLocks):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `lock <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a specified `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param device_id: ID of the lock that you want to get.
 
@@ -984,11 +990,13 @@ class AsyncLocks(AbstractAsyncLocks):
                 "ttlock",
                 "igloohome",
                 "four_suites",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "korelock",
                 "lockly",
                 "smartthings",
@@ -999,7 +1007,7 @@ class AsyncLocks(AbstractAsyncLocks):
             ]
         ] = None,
     ) -> List[Device]:
-        """Returns a list of all `locks <https://docs.seam.co/low-level-apis/smart-locks>`_.
+        """Returns a list of all `locks <https://www.seam.co/docs/low-level-apis/smart-locks>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -1045,7 +1053,7 @@ class AsyncLocks(AbstractAsyncLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Locks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Locks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to lock.
 
@@ -1082,7 +1090,7 @@ class AsyncLocks(AbstractAsyncLocks):
         device_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Unlocks a `lock <https://docs.seam.co/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://docs.seam.co/low-level-apis/smart-locks/lock-and-unlock>`_.
+        """Unlocks a `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_. See also `Locking and Unlocking Smart Locks <https://www.seam.co/docs/low-level-apis/smart-locks/lock-and-unlock>`_.
 
         :param device_id: ID of the lock that you want to unlock.
 

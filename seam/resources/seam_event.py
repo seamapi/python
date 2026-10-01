@@ -6,7 +6,7 @@ from ..resource_mapping import ResourceMapping
 
 @dataclass
 class AccessCodeCreatedEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was created.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was created.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -63,7 +63,7 @@ class AccessCodeCreatedEvent:
 
 @dataclass
 class AccessCodeChangedEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was changed.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was changed.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -153,7 +153,7 @@ class AccessCodeChangedEvent:
 
 @dataclass
 class AccessCodeNameChangedEvent:
-    """The name of an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
+    """The name of an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -252,7 +252,7 @@ class AccessCodeNameChangedEvent:
 
 @dataclass
 class AccessCodeCodeChangedEvent:
-    """The pin code of an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
+    """The pin code of an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -351,7 +351,7 @@ class AccessCodeCodeChangedEvent:
 
 @dataclass
 class AccessCodeTimeFrameChangedEvent:
-    """The time frame of an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
+    """The time frame of an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was changed on the device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -458,7 +458,7 @@ class AccessCodeTimeFrameChangedEvent:
 
 @dataclass
 class AccessCodeMutationsRequestedEvent:
-    """Mutations were requested on an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_. This event fires at request time, before the change is confirmed on the device.
+    """Mutations were requested on an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_. This event fires at request time, before the change is confirmed on the device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -552,7 +552,7 @@ class AccessCodeMutationsRequestedEvent:
 
 @dataclass
 class AccessCodeScheduledOnDeviceEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was `scheduled natively <https://docs.seam.co/low-level-apis/smart-locks/access-codes#native-scheduling>`_ on a device.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was `scheduled natively <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes#native-scheduling>`_ on a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -613,7 +613,7 @@ class AccessCodeScheduledOnDeviceEvent:
 
 @dataclass
 class AccessCodeSetOnDeviceEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was set on a device.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was set on a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -674,7 +674,7 @@ class AccessCodeSetOnDeviceEvent:
 
 @dataclass
 class AccessCodeRemovedFromDeviceEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was removed from a device.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was removed from a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -731,7 +731,7 @@ class AccessCodeRemovedFromDeviceEvent:
 
 @dataclass
 class AccessCodeDelayInSettingOnDeviceEvent:
-    """There was an unusually long delay in setting an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ on a device.
+    """There was an unusually long delay in setting an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ on a device.
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -966,7 +966,7 @@ class AccessCodeDelayInSettingOnDeviceEvent:
 
 @dataclass
 class AccessCodeFailedToSetOnDeviceEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ failed to be set on a device.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ failed to be set on a device.
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -1201,7 +1201,7 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
 @dataclass
 class AccessCodeDeletedEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was deleted.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was deleted.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -1262,7 +1262,7 @@ class AccessCodeDeletedEvent:
 
 @dataclass
 class AccessCodeDelayInRemovingFromDeviceEvent:
-    """There was an unusually long delay in removing an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ from a device.
+    """There was an unusually long delay in removing an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ from a device.
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -1501,7 +1501,7 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
 
 @dataclass
 class AccessCodeFailedToRemoveFromDeviceEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ failed to be removed from a device.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ failed to be removed from a device.
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -1736,7 +1736,7 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
 
 @dataclass
 class AccessCodeModifiedExternalToSeamEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was modified outside of Seam.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was modified outside of Seam.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -1793,7 +1793,7 @@ class AccessCodeModifiedExternalToSeamEvent:
 
 @dataclass
 class AccessCodeDeletedExternalToSeamEvent:
-    """An `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was deleted outside of Seam.
+    """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was deleted outside of Seam.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -1850,7 +1850,7 @@ class AccessCodeDeletedExternalToSeamEvent:
 
 @dataclass
 class AccessCodeBackupAccessCodePulledEvent:
-    """A `backup access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ was pulled from the backup access code pool and set on a device.
+    """A `backup access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ was pulled from the backup access code pool and set on a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -1911,7 +1911,7 @@ class AccessCodeBackupAccessCodePulledEvent:
 
 @dataclass
 class AccessCodeUnmanagedConvertedToManagedEvent:
-    """An `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was converted successfully to a managed access code.
+    """An `unmanaged access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was converted successfully to a managed access code.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -1968,7 +1968,7 @@ class AccessCodeUnmanagedConvertedToManagedEvent:
 
 @dataclass
 class AccessCodeUnmanagedFailedToConvertToManagedEvent:
-    """An `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ failed to be converted to a managed access code.
+    """An `unmanaged access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ failed to be converted to a managed access code.
 
     :ivar access_code_errors: Errors associated with the access code.
 
@@ -2203,7 +2203,7 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
 
 @dataclass
 class AccessCodeUnmanagedCreatedEvent:
-    """An `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was created on a device.
+    """An `unmanaged access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was created on a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -2260,7 +2260,7 @@ class AccessCodeUnmanagedCreatedEvent:
 
 @dataclass
 class AccessCodeUnmanagedRemovedEvent:
-    """An `unmanaged access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was removed from a device.
+    """An `unmanaged access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ was removed from a device.
 
     :ivar access_code_id: ID of the affected access code.
 
@@ -2438,7 +2438,7 @@ class AccessGrantAccessGrantedToDoorEvent:
 
     :ivar access_grant_id: ID of the affected Access Grant.
 
-    :ivar acs_entrance_id: ID of the affected `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar acs_entrance_id: ID of the affected `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
     :ivar created_at: Date and time at which the event was created.
 
@@ -2481,7 +2481,7 @@ class AccessGrantAccessToDoorLostEvent:
 
     :ivar access_grant_id: ID of the affected Access Grant.
 
-    :ivar acs_entrance_id: ID of the affected `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar acs_entrance_id: ID of the affected `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
     :ivar created_at: Date and time at which the event was created.
 
@@ -3010,7 +3010,7 @@ class AccessMethodFailedToIssueEvent:
 
 @dataclass
 class AcsSystemConnectedEvent:
-    """An `access system <https://docs.seam.co/low-level-apis/access-systems>`_ was connected.
+    """An `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_ was connected.
 
     :ivar acs_system_id: ID of the access system.
 
@@ -3053,7 +3053,7 @@ class AcsSystemConnectedEvent:
 
 @dataclass
 class AcsSystemAddedEvent:
-    """An `access system <https://docs.seam.co/low-level-apis/access-systems>`_ was added.
+    """An `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_ was added.
 
     :ivar acs_system_id: ID of the access system.
 
@@ -3096,7 +3096,7 @@ class AcsSystemAddedEvent:
 
 @dataclass
 class AcsSystemDisconnectedEvent:
-    """An `access system <https://docs.seam.co/low-level-apis/access-systems>`_ was disconnected.
+    """An `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_ was disconnected.
 
     :ivar acs_system_errors: Errors associated with the access control system.
 
@@ -3259,7 +3259,7 @@ class AcsSystemDisconnectedEvent:
 
 @dataclass
 class AcsCredentialDeletedEvent:
-    """An `access system credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was deleted.
+    """An `access system credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was deleted.
 
     :ivar acs_credential_id: ID of the affected credential.
 
@@ -3306,7 +3306,7 @@ class AcsCredentialDeletedEvent:
 
 @dataclass
 class AcsCredentialIssuedEvent:
-    """An `access system credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was issued.
+    """An `access system credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was issued.
 
     :ivar acs_credential_id: ID of the affected credential.
 
@@ -3353,7 +3353,7 @@ class AcsCredentialIssuedEvent:
 
 @dataclass
 class AcsCredentialReissuedEvent:
-    """An `access system credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was reissued.
+    """An `access system credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was reissued.
 
     :ivar acs_credential_id: ID of the affected credential.
 
@@ -3400,7 +3400,7 @@ class AcsCredentialReissuedEvent:
 
 @dataclass
 class AcsCredentialInvalidatedEvent:
-    """An `access system credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was invalidated. That is, the credential cannot be used anymore.
+    """An `access system credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was invalidated. That is, the credential cannot be used anymore.
 
     :ivar acs_credential_id: ID of the affected credential.
 
@@ -3447,7 +3447,7 @@ class AcsCredentialInvalidatedEvent:
 
 @dataclass
 class AcsUserCreatedEvent:
-    """An `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was created.
+    """An `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was created.
 
     :ivar acs_system_id: ID of the access system.
 
@@ -3494,7 +3494,7 @@ class AcsUserCreatedEvent:
 
 @dataclass
 class AcsUserDeletedEvent:
-    """An `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was deleted.
+    """An `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was deleted.
 
     :ivar acs_system_id: ID of the access system.
 
@@ -3541,7 +3541,7 @@ class AcsUserDeletedEvent:
 
 @dataclass
 class AcsEncoderAddedEvent:
-    """An `access system encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was added.
+    """An `access system encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was added.
 
     :ivar acs_encoder_id: ID of the affected encoder.
 
@@ -3588,7 +3588,7 @@ class AcsEncoderAddedEvent:
 
 @dataclass
 class AcsEncoderRemovedEvent:
-    """An `access system encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was removed.
+    """An `access system encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was removed.
 
     :ivar acs_encoder_id: ID of the affected encoder.
 
@@ -3682,7 +3682,7 @@ class AcsAccessGroupDeletedEvent:
 
 @dataclass
 class AcsEntranceAddedEvent:
-    """An `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ was added.
+    """An `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ was added.
 
     :ivar acs_entrance_id: ID of the affected entrance.
 
@@ -3729,7 +3729,7 @@ class AcsEntranceAddedEvent:
 
 @dataclass
 class AcsEntranceRemovedEvent:
-    """An `access system entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ was removed.
+    """An `access system entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ was removed.
 
     :ivar acs_entrance_id: ID of the affected entrance.
 
@@ -4964,7 +4964,7 @@ class DeviceAddedEvent:
 
 @dataclass
 class DeviceConvertedToUnmanagedEvent:
-    """A managed device was successfully converted to an `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+    """A managed device was successfully converted to an `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5021,7 +5021,7 @@ class DeviceConvertedToUnmanagedEvent:
 
 @dataclass
 class DeviceUnmanagedConvertedToManagedEvent:
-    """An `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_ was successfully converted to a managed device.
+    """An `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_ was successfully converted to a managed device.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5078,7 +5078,7 @@ class DeviceUnmanagedConvertedToManagedEvent:
 
 @dataclass
 class DeviceUnmanagedConnectedEvent:
-    """The status of an `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_ changed from offline to online. That is, the ``device.properties.online`` property changed from ``false`` to ``true``.
+    """The status of an `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_ changed from offline to online. That is, the ``device.properties.online`` property changed from ``false`` to ``true``.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5316,7 +5316,7 @@ class DeviceDisconnectedEvent:
 
 @dataclass
 class DeviceUnmanagedDisconnectedEvent:
-    """The status of an `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_ changed from online to offline. That is, the ``device.properties.online`` property changed from ``true`` to ``false``.
+    """The status of an `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_ changed from online to offline. That is, the ``device.properties.online`` property changed from ``true`` to ``false``.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5922,7 +5922,7 @@ class DeviceThirdPartyIntegrationNoLongerDetectedEvent:
 
 @dataclass
 class DeviceSaltoPrivacyModeActivatedEvent:
-    """A `Salto device <https://docs.seam.co/device-and-system-integration-guides/salto-locks>`_ activated privacy mode.
+    """A `Salto device <https://www.seam.co/docs/device-and-system-integration-guides/salto-locks>`_ activated privacy mode.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -5979,7 +5979,7 @@ class DeviceSaltoPrivacyModeActivatedEvent:
 
 @dataclass
 class DeviceSaltoPrivacyModeDeactivatedEvent:
-    """A `Salto device <https://docs.seam.co/device-and-system-integration-guides/salto-locks>`_ deactivated privacy mode.
+    """A `Salto device <https://www.seam.co/docs/device-and-system-integration-guides/salto-locks>`_ deactivated privacy mode.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -6732,7 +6732,7 @@ class DeviceAccessoryKeypadDisconnectedEvent:
 
 @dataclass
 class NoiseSensorNoiseThresholdTriggeredEvent:
-    """Extended periods of noise or noise exceeding a `threshold <https://docs.seam.co/capability-guides/noise-sensors#what-is-a-threshold>`_ were detected.
+    """Extended periods of noise or noise exceeding a `threshold <https://www.seam.co/docs/capability-guides/noise-sensors#what-is-a-threshold>`_ were detected.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -6813,7 +6813,7 @@ class NoiseSensorNoiseThresholdTriggeredEvent:
 
 @dataclass
 class LockLockedEvent:
-    """A `lock <https://docs.seam.co/low-level-apis/smart-locks>`_ was locked.
+    """A `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ was locked.
 
     :ivar access_code_id: ID of the access code that was used to lock the device.
 
@@ -6866,7 +6866,9 @@ class LockLockedEvent:
     event_type: Literal["lock.locked"]
     is_via_bluetooth: Optional[bool]
     is_via_nfc: Optional[bool]
-    method: Literal["keycode", "manual", "automatic", "unknown", "remote", "card"]
+    method: Literal[
+        "keycode", "manual", "automatic", "unknown", "remote", "card", "mobile_key"
+    ]
     occurred_at: str
     workspace_id: str
 
@@ -6898,7 +6900,7 @@ class LockLockedEvent:
 
 @dataclass
 class LockUnlockedEvent:
-    """A `lock <https://docs.seam.co/low-level-apis/smart-locks>`_ was unlocked.
+    """A `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ was unlocked.
 
     :ivar access_code_id: ID of the access code that was used to unlock the affected device.
 
@@ -6930,7 +6932,7 @@ class LockUnlockedEvent:
 
     :ivar is_via_nfc: Whether the unlock action was performed by an NFC credential tap (such as an Apple Home Key or an NFC key fob) presented to the lock, rather than a direct physical interaction or a Seam-initiated remote action.
 
-    :ivar method: Method by which the lock was unlocked. ``keycode``: an `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_ was used (see ``access_code_id``). ``manual``: a physical action such as a thumbturn or handle press. ``remote``: a remote action via an app, Bluetooth, or the Seam API (see ``action_attempt_id`` if Seam-initiated; see ``is_via_bluetooth`` or ``is_via_nfc`` for the transport). ``automatic``: triggered automatically, for example by a time-based schedule. ``unknown``: could not be determined.
+    :ivar method: Method by which the lock was unlocked. ``keycode``: an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was used (see ``access_code_id``). ``manual``: a physical action such as a thumbturn or handle press. ``remote``: a remote action via an app, Bluetooth, or the Seam API (see ``action_attempt_id`` if Seam-initiated; see ``is_via_bluetooth`` or ``is_via_nfc`` for the transport). ``automatic``: triggered automatically, for example by a time-based schedule. ``unknown``: could not be determined.
 
     :ivar occurred_at: Date and time at which the event occurred.
 
@@ -6951,7 +6953,9 @@ class LockUnlockedEvent:
     event_type: Literal["lock.unlocked"]
     is_via_bluetooth: Optional[bool]
     is_via_nfc: Optional[bool]
-    method: Literal["keycode", "manual", "automatic", "unknown", "remote", "card"]
+    method: Literal[
+        "keycode", "manual", "automatic", "unknown", "remote", "card", "mobile_key"
+    ]
     occurred_at: str
     workspace_id: str
 
@@ -6983,7 +6987,7 @@ class LockUnlockedEvent:
 
 @dataclass
 class LockAccessDeniedEvent:
-    """The `lock <https://docs.seam.co/low-level-apis/smart-locks>`_ denied access to a user after one or more consecutive invalid attempts to unlock the device.
+    """The `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ denied access to a user after one or more consecutive invalid attempts to unlock the device.
 
     :ivar access_code_id: ID of the access code that was used in the unlock attempts.
 
@@ -7078,7 +7082,7 @@ class LockAccessDeniedEvent:
 
 @dataclass
 class ThermostatClimatePresetActivatedEvent:
-    """A thermostat `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ was activated.
+    """A thermostat `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ was activated.
 
     :ivar climate_preset_key: Key of the climate preset that was activated.
 
@@ -7147,15 +7151,15 @@ class ThermostatClimatePresetActivatedEvent:
 
 @dataclass
 class ThermostatManuallyAdjustedEvent:
-    """A `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ was adjusted manually.
+    """A `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ was adjusted manually.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
     :ivar connected_account_id: ID of the connected account associated with the event.
 
-    :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+    :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-    :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+    :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
     :ivar created_at: Date and time at which the event was created.
 
@@ -7171,13 +7175,13 @@ class ThermostatManuallyAdjustedEvent:
 
     :ivar event_type:
 
-    :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
+    :ivar fan_mode_setting: Desired `fan mode setting <https://www.seam.co/docs/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
 
-    :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+    :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-    :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+    :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-    :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
+    :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
 
     :ivar method: Method used to adjust the affected thermostat manually. ``seam`` indicates that the Seam API, Seam CLI, or Seam Console was used to adjust the thermostat.
 
@@ -7232,7 +7236,7 @@ class ThermostatManuallyAdjustedEvent:
 
 @dataclass
 class ThermostatTemperatureThresholdExceededEvent:
-    """A `thermostat's <https://docs.seam.co/capability-guides/thermostats>`_ temperature reading exceeded the set `threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_.
+    """A `thermostat's <https://www.seam.co/docs/capability-guides/thermostats>`_ temperature reading exceeded the set `threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -7313,7 +7317,7 @@ class ThermostatTemperatureThresholdExceededEvent:
 
 @dataclass
 class ThermostatTemperatureThresholdNoLongerExceededEvent:
-    """A `thermostat's <https://docs.seam.co/capability-guides/thermostats>`_ temperature reading no longer exceeds the set `threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_.
+    """A `thermostat's <https://www.seam.co/docs/capability-guides/thermostats>`_ temperature reading no longer exceeds the set `threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -7394,7 +7398,7 @@ class ThermostatTemperatureThresholdNoLongerExceededEvent:
 
 @dataclass
 class ThermostatTemperatureReachedSetPointEvent:
-    """A `thermostat's <https://docs.seam.co/capability-guides/thermostats>`_ temperature reading is within 1 °C of the configured cooling or heating `set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+    """A `thermostat's <https://www.seam.co/docs/capability-guides/thermostats>`_ temperature reading is within 1 °C of the configured cooling or heating `set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -7469,7 +7473,7 @@ class ThermostatTemperatureReachedSetPointEvent:
 
 @dataclass
 class ThermostatTemperatureChangedEvent:
-    """A `thermostat's <https://docs.seam.co/capability-guides/thermostats>`_ reported temperature changed by at least 1 °C.
+    """A `thermostat's <https://www.seam.co/docs/capability-guides/thermostats>`_ reported temperature changed by at least 1 °C.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
@@ -7619,6 +7623,8 @@ class CameraActivatedEvent:
 
     :ivar image_url: URL to a thumbnail image captured at the time of activation.
 
+    :ivar media_ids: IDs of the media, such as a video clip and a thumbnail image, captured for this activation. Use ``/media/get`` to retrieve each one.
+
     :ivar motion_sub_type: Sub-type of motion detected, if available.
 
     :ivar occurred_at: Date and time at which the event occurred.
@@ -7638,6 +7644,7 @@ class CameraActivatedEvent:
     event_id: str
     event_type: Literal["camera.activated"]
     image_url: Optional[str]
+    media_ids: Optional[List[str]]
     motion_sub_type: Optional[Literal["human", "vehicle", "package", "other"]]
     occurred_at: str
     video_url: Optional[str]
@@ -7659,6 +7666,7 @@ class CameraActivatedEvent:
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             image_url=d.get("image_url", None),
+            media_ids=d.get("media_ids", None),
             motion_sub_type=d.get("motion_sub_type", None),
             occurred_at=d.get("occurred_at", None),
             video_url=d.get("video_url", None),
@@ -7690,6 +7698,8 @@ class DeviceDoorbellRangEvent:
 
     :ivar image_url: URL to a thumbnail image captured at the time the doorbell was pressed.
 
+    :ivar media_ids: IDs of the media, such as a video clip and a thumbnail image, captured when the doorbell was pressed. Use ``/media/get`` to retrieve each one.
+
     :ivar occurred_at: Date and time at which the event occurred.
 
     :ivar video_url: URL to a short video clip captured at the time the doorbell was pressed.
@@ -7706,6 +7716,7 @@ class DeviceDoorbellRangEvent:
     event_id: str
     event_type: Literal["device.doorbell_rang"]
     image_url: Optional[str]
+    media_ids: Optional[List[str]]
     occurred_at: str
     video_url: Optional[str]
     workspace_id: str
@@ -7725,6 +7736,7 @@ class DeviceDoorbellRangEvent:
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             image_url=d.get("image_url", None),
+            media_ids=d.get("media_ids", None),
             occurred_at=d.get("occurred_at", None),
             video_url=d.get("video_url", None),
             workspace_id=d.get("workspace_id", None),

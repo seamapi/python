@@ -19,7 +19,7 @@ class AbstractAcsCredentials(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Assigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to assign to an access system user.
 
@@ -47,7 +47,7 @@ class AbstractAcsCredentials(abc.ABC):
         user_identity_id: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
-        """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
+        """Creates a new `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ for a specified `ACS user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
         :param access_method: Access method for the new credential. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
@@ -55,17 +55,17 @@ class AbstractAcsCredentials(abc.ABC):
 
         :param acs_user_id: ID of the access system user to whom the new credential belongs. You must provide either ``acs_user_id`` or the combination of ``user_identity_id`` and ``acs_system_id``.
 
-        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
+        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
 
         :param assa_abloy_vostio_metadata: Vostio-specific metadata for the new credential.
 
-        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://docs.seam.co/device-and-system-integration-guides>`_.
+        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://www.seam.co/docs/device-and-system-integration-guides>`_.
 
         :param credential_manager_acs_system_id: ACS system ID of the credential manager for the new credential.
 
         :param ends_at: Date and time at which the validity of the new credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
-        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://docs.seam.co/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
+        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://www.seam.co/docs/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
 
         :param salto_space_metadata: Salto Space-specific metadata for the new credential.
 
@@ -80,14 +80,14 @@ class AbstractAcsCredentials(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, acs_credential_id: str) -> None:
-        """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Deletes a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(self, *, acs_credential_id: str) -> AcsCredential:
-        """Returns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to get.
 
@@ -107,7 +107,7 @@ class AbstractAcsCredentials(abc.ABC):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
@@ -130,7 +130,7 @@ class AbstractAcsCredentials(abc.ABC):
 
     @abc.abstractmethod
     def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
-        """Returns a list of all `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a `credential <https://docs.seam.co/api/acs/credentials>`_ grants access.
+        """Returns a list of all `entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ to which a `credential <https://www.seam.co/docs/api/acs/credentials/object>`_ grants access.
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
@@ -145,7 +145,7 @@ class AbstractAcsCredentials(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Unassigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to unassign from an access system user.
 
@@ -163,7 +163,7 @@ class AbstractAcsCredentials(abc.ABC):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
     ) -> None:
-        """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Updates the code and ends at date and time for a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to update.
 
@@ -184,7 +184,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Assigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to assign to an access system user.
 
@@ -212,7 +212,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         user_identity_id: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
-        """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
+        """Creates a new `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ for a specified `ACS user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
         :param access_method: Access method for the new credential. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
@@ -220,17 +220,17 @@ class AbstractAsyncAcsCredentials(abc.ABC):
 
         :param acs_user_id: ID of the access system user to whom the new credential belongs. You must provide either ``acs_user_id`` or the combination of ``user_identity_id`` and ``acs_system_id``.
 
-        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
+        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
 
         :param assa_abloy_vostio_metadata: Vostio-specific metadata for the new credential.
 
-        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://docs.seam.co/device-and-system-integration-guides>`_.
+        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://www.seam.co/docs/device-and-system-integration-guides>`_.
 
         :param credential_manager_acs_system_id: ACS system ID of the credential manager for the new credential.
 
         :param ends_at: Date and time at which the validity of the new credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
-        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://docs.seam.co/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
+        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://www.seam.co/docs/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
 
         :param salto_space_metadata: Salto Space-specific metadata for the new credential.
 
@@ -245,14 +245,14 @@ class AbstractAsyncAcsCredentials(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, acs_credential_id: str) -> None:
-        """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Deletes a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def get(self, *, acs_credential_id: str) -> AcsCredential:
-        """Returns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to get.
 
@@ -272,7 +272,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
@@ -297,7 +297,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
     async def list_accessible_entrances(
         self, *, acs_credential_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a `credential <https://docs.seam.co/api/acs/credentials>`_ grants access.
+        """Returns a list of all `entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ to which a `credential <https://www.seam.co/docs/api/acs/credentials/object>`_ grants access.
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
@@ -312,7 +312,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Unassigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to unassign from an access system user.
 
@@ -330,7 +330,7 @@ class AbstractAsyncAcsCredentials(abc.ABC):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
     ) -> None:
-        """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Updates the code and ends at date and time for a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to update.
 
@@ -358,7 +358,7 @@ class AcsCredentials(AbstractAcsCredentials):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Assigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to assign to an access system user.
 
@@ -401,7 +401,7 @@ class AcsCredentials(AbstractAcsCredentials):
         user_identity_id: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
-        """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
+        """Creates a new `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ for a specified `ACS user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
         :param access_method: Access method for the new credential. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
@@ -409,17 +409,17 @@ class AcsCredentials(AbstractAcsCredentials):
 
         :param acs_user_id: ID of the access system user to whom the new credential belongs. You must provide either ``acs_user_id`` or the combination of ``user_identity_id`` and ``acs_system_id``.
 
-        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
+        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
 
         :param assa_abloy_vostio_metadata: Vostio-specific metadata for the new credential.
 
-        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://docs.seam.co/device-and-system-integration-guides>`_.
+        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://www.seam.co/docs/device-and-system-integration-guides>`_.
 
         :param credential_manager_acs_system_id: ACS system ID of the credential manager for the new credential.
 
         :param ends_at: Date and time at which the validity of the new credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
-        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://docs.seam.co/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
+        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://www.seam.co/docs/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
 
         :param salto_space_metadata: Salto Space-specific metadata for the new credential.
 
@@ -475,7 +475,7 @@ class AcsCredentials(AbstractAcsCredentials):
         has_pagination=False,
     )
     def delete(self, *, acs_credential_id: str) -> None:
-        """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Deletes a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
         params: Dict[str, Any] = {}
@@ -493,7 +493,7 @@ class AcsCredentials(AbstractAcsCredentials):
         has_pagination=False,
     )
     def get(self, *, acs_credential_id: str) -> AcsCredential:
-        """Returns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to get.
 
@@ -526,7 +526,7 @@ class AcsCredentials(AbstractAcsCredentials):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
@@ -580,7 +580,7 @@ class AcsCredentials(AbstractAcsCredentials):
         has_pagination=False,
     )
     def list_accessible_entrances(self, *, acs_credential_id: str) -> List[AcsEntrance]:
-        """Returns a list of all `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a `credential <https://docs.seam.co/api/acs/credentials>`_ grants access.
+        """Returns a list of all `entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ to which a `credential <https://www.seam.co/docs/api/acs/credentials/object>`_ grants access.
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
@@ -613,7 +613,7 @@ class AcsCredentials(AbstractAcsCredentials):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Unassigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to unassign from an access system user.
 
@@ -646,7 +646,7 @@ class AcsCredentials(AbstractAcsCredentials):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
     ) -> None:
-        """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Updates the code and ends at date and time for a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to update.
 
@@ -685,7 +685,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Assigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Assigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ to a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to assign to an access system user.
 
@@ -728,7 +728,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         user_identity_id: Optional[str] = None,
         visionline_metadata: Optional[Dict[str, Any]] = None,
     ) -> AcsCredential:
-        """Creates a new `credential <https://docs.seam.co/low-level-apis/managing-credentials>`_ for a specified `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
+        """Creates a new `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ for a specified `ACS user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they create and manage the underlying credentials for you, across access systems and standalone smart locks alike. Use this low-level endpoint only when you need direct control over an individual ACS credential.
 
         :param access_method: Access method for the new credential. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
@@ -736,17 +736,17 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         :param acs_user_id: ID of the access system user to whom the new credential belongs. You must provide either ``acs_user_id`` or the combination of ``user_identity_id`` and ``acs_system_id``.
 
-        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
+        :param allowed_acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ for which the new credential grants access.
 
         :param assa_abloy_vostio_metadata: Vostio-specific metadata for the new credential.
 
-        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://docs.seam.co/device-and-system-integration-guides>`_.
+        :param code: Access (PIN) code for the new credential. There may be manufacturer-specific code restrictions. For details, see the applicable `device or system integration guide <https://www.seam.co/docs/device-and-system-integration-guides>`_.
 
         :param credential_manager_acs_system_id: ACS system ID of the credential manager for the new credential.
 
         :param ends_at: Date and time at which the validity of the new credential ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
-        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://docs.seam.co/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
+        :param is_multi_phone_sync_credential: Indicates whether the new credential is a `multi-phone sync credential <https://www.seam.co/docs/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
 
         :param salto_space_metadata: Salto Space-specific metadata for the new credential.
 
@@ -802,7 +802,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         has_pagination=False,
     )
     async def delete(self, *, acs_credential_id: str) -> None:
-        """Deletes a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Deletes a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to delete."""
         params: Dict[str, Any] = {}
@@ -820,7 +820,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         has_pagination=False,
     )
     async def get(self, *, acs_credential_id: str) -> AcsCredential:
-        """Returns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to get.
 
@@ -853,7 +853,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsCredential]:
-        """Returns a list of all `credentials <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Returns a list of all `credentials <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all credentials.
 
@@ -909,7 +909,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
     async def list_accessible_entrances(
         self, *, acs_credential_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all `entrances <https://docs.seam.co/api/acs/entrances>`_ to which a `credential <https://docs.seam.co/api/acs/credentials>`_ grants access.
+        """Returns a list of all `entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ to which a `credential <https://www.seam.co/docs/api/acs/credentials/object>`_ grants access.
 
         :param acs_credential_id: ID of the credential for which you want to retrieve all entrances to which the credential grants access.
 
@@ -942,7 +942,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Unassigns a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Unassigns a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ from a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :param acs_credential_id: ID of the credential that you want to unassign from an access system user.
 
@@ -975,7 +975,7 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
         code: Optional[str] = None,
         ends_at: Optional[str] = None,
     ) -> None:
-        """Updates the code and ends at date and time for a specified `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Updates the code and ends at date and time for a specified `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :param acs_credential_id: ID of the credential that you want to update.
 

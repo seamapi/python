@@ -45,7 +45,7 @@ class AbstractNoiseSensors(abc.ABC):
         ] = None,
         manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
+        """Returns a list of all `noise sensors <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -90,7 +90,7 @@ class AbstractAsyncNoiseSensors(abc.ABC):
         ] = None,
         manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
+        """Returns a list of all `noise sensors <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -144,7 +144,7 @@ class NoiseSensors(AbstractNoiseSensors):
         ] = None,
         manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
+        """Returns a list of all `noise sensors <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -218,7 +218,7 @@ class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
         ] = None,
         manufacturer: Optional[Literal["minut", "noiseaware"]] = None,
     ) -> List[Device]:
-        """Returns a list of all `noise sensors <https://docs.seam.co/capability-guides/noise-sensors>`_.
+        """Returns a list of all `noise sensors <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 

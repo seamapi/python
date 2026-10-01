@@ -24,7 +24,7 @@ class AbstractConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, connected_account_id: str) -> None:
-        """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Deletes a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
 
@@ -38,7 +38,7 @@ class AbstractConnectedAccounts(abc.ABC):
     def get(
         self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
     ) -> ConnectedAccount:
-        """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
 
@@ -61,7 +61,7 @@ class AbstractConnectedAccounts(abc.ABC):
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
-        """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a list of all `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
@@ -82,7 +82,7 @@ class AbstractConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     def sync(self, *, connected_account_id: str) -> None:
-        """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
+        """Request a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
         """
@@ -105,15 +105,15 @@ class AbstractConnectedAccounts(abc.ABC):
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:
-        """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Updates a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://www.seam.co/docs/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -131,7 +131,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, connected_account_id: str) -> None:
-        """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Deletes a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
 
@@ -145,7 +145,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
     async def get(
         self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
     ) -> ConnectedAccount:
-        """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
 
@@ -168,7 +168,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
-        """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a list of all `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
@@ -189,7 +189,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
 
     @abc.abstractmethod
     async def sync(self, *, connected_account_id: str) -> None:
-        """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
+        """Request a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
         """
@@ -212,15 +212,15 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:
-        """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Updates a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://www.seam.co/docs/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -245,7 +245,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         has_pagination=False,
     )
     def delete(self, *, connected_account_id: str) -> None:
-        """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Deletes a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
 
@@ -273,7 +273,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
     def get(
         self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
     ) -> ConnectedAccount:
-        """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
 
@@ -322,7 +322,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
-        """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a list of all `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
@@ -374,7 +374,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         has_pagination=False,
     )
     def sync(self, *, connected_account_id: str) -> None:
-        """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
+        """Request a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
         """
@@ -408,15 +408,15 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:
-        """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Updates a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://www.seam.co/docs/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 
@@ -462,7 +462,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         has_pagination=False,
     )
     async def delete(self, *, connected_account_id: str) -> None:
-        """Deletes a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Deletes a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         Deleting a connected account triggers a ``connected_account.deleted`` event and removes the connected account and all data associated with the connected account from Seam, including devices, events, access codes, and so on. For every deleted resource, Seam sends a corresponding deleted event, but the resource is not deleted from the provider.
 
@@ -490,7 +490,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
     async def get(
         self, *, connected_account_id: Optional[str] = None, email: Optional[str] = None
     ) -> ConnectedAccount:
-        """Returns a specified `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a specified `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to get.
 
@@ -539,7 +539,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         space_id: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[ConnectedAccount]:
-        """Returns a list of all `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Returns a list of all `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param custom_metadata_has: Custom metadata pairs by which you want to filter connected accounts. Returns connected accounts with ``custom_metadata`` that contains all of the provided key:value pairs. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
@@ -591,7 +591,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         has_pagination=False,
     )
     async def sync(self, *, connected_account_id: str) -> None:
-        """Request a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
+        """Request a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ sync attempt for the specified ``connected_account_id``.
 
         :param connected_account_id: ID of the connected account that you want to sync.
         """
@@ -625,15 +625,15 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         customer_key: Optional[str] = None,
         display_name: Optional[str] = None,
     ) -> None:
-        """Updates a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_.
+        """Updates a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_.
 
         :param connected_account_id: ID of the connected account that you want to update.
 
         :param accepted_capabilities: List of accepted device capabilities that restrict the types of devices that can be connected through this connected account. Valid values are ``lock``, ``thermostat``, ``noise_sensor``, and ``access_control``.
 
-        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        :param automatically_manage_new_devices: Indicates whether newly-added devices should appear as `managed devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://docs.seam.co/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the connected account. Entirely replaces the existing custom metadata object. If a new Connect Webview contains custom metadata and is used to reconnect a connected account, the custom metadata from the Connect Webview will entirely replace the entire custom metadata object on the connected account. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter connected accounts by the desired metadata <https://www.seam.co/docs/core-concepts/connected-accounts/filtering-connected-accounts-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param customer_key: The customer key to associate with this connected account. If provided, the connected account and all resources under the connected account will be moved to this customer. May only be provided if the connected account is not already associated with a customer.
 

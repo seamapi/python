@@ -15,9 +15,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
-        """Returns a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -85,6 +85,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -133,6 +136,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -164,12 +170,14 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -182,6 +190,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -196,9 +207,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
-        """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a list of all `unmanaged devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -235,9 +246,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
-        """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
+        """Updates a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param device_id: ID of the unmanaged device that you want to update.
 
@@ -254,9 +265,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
-        """Returns a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -324,6 +335,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -372,6 +386,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -403,12 +420,14 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -421,6 +440,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -435,9 +457,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
-        """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a list of all `unmanaged devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -474,9 +496,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
-        """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
+        """Updates a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param device_id: ID of the unmanaged device that you want to update.
 
@@ -503,9 +525,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
-        """Returns a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -599,6 +621,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -647,6 +672,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -678,12 +706,14 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -696,6 +726,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -710,9 +743,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
-        """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a list of all `unmanaged devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -788,9 +821,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
-        """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
+        """Updates a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param device_id: ID of the unmanaged device that you want to update.
 
@@ -828,9 +861,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> UnmanagedDevice:
-        """Returns a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -924,6 +957,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -972,6 +1008,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -1003,12 +1042,14 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -1021,6 +1062,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -1035,9 +1079,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
     ) -> List[UnmanagedDevice]:
-        """Returns a list of all `unmanaged devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        """Returns a list of all `unmanaged devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -1113,9 +1157,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
         custom_metadata: Optional[Dict[str, Union[str, bool]]] = None,
         is_managed: Optional[Literal[True]] = None,
     ) -> None:
-        """Updates a specified `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
+        """Updates a specified `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_. To convert an unmanaged device to managed, set ``is_managed`` to ``true``.
 
-        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+        An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
 
         :param device_id: ID of the unmanaged device that you want to update.
 

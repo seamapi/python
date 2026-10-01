@@ -11,7 +11,7 @@ class AbstractAcsSystems(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, acs_system_id: str) -> AcsSystem:
-        """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
@@ -26,7 +26,7 @@ class AbstractAcsSystems(abc.ABC):
         customer_key: Optional[str] = None,
         search: Optional[str] = None,
     ) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
@@ -43,7 +43,7 @@ class AbstractAcsSystems(abc.ABC):
     def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
-        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
@@ -74,7 +74,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
 
     @abc.abstractmethod
     async def get(self, *, acs_system_id: str) -> AcsSystem:
-        """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
@@ -89,7 +89,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
         customer_key: Optional[str] = None,
         search: Optional[str] = None,
     ) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
@@ -106,7 +106,7 @@ class AbstractAsyncAcsSystems(abc.ABC):
     async def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
-        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
@@ -142,7 +142,7 @@ class AcsSystems(AbstractAcsSystems):
         path="/acs/systems/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, acs_system_id: str) -> AcsSystem:
-        """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
@@ -166,7 +166,7 @@ class AcsSystems(AbstractAcsSystems):
         customer_key: Optional[str] = None,
         search: Optional[str] = None,
     ) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
@@ -201,7 +201,7 @@ class AcsSystems(AbstractAcsSystems):
     def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
-        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 
@@ -268,7 +268,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
         path="/acs/systems/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, acs_system_id: str) -> AcsSystem:
-        """Returns a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         :param acs_system_id: ID of the access system that you want to get.
 
@@ -292,7 +292,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
         customer_key: Optional[str] = None,
         search: Optional[str] = None,
     ) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         To filter the list of returned access systems by a specific connected account ID, include the ``connected_account_id`` in the request body. If you omit the ``connected_account_id`` parameter, the response includes all access systems connected to your workspace.
 
@@ -327,7 +327,7 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
     async def list_compatible_credential_manager_acs_systems(
         self, *, acs_system_id: str
     ) -> List[AcsSystem]:
-        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Returns a list of all credential manager systems that are compatible with a specified `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
         Specify the access system for which you want to retrieve all compatible credential manager systems by including the corresponding ``acs_system_id`` in the request body.
 

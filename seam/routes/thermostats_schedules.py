@@ -22,9 +22,9 @@ class AbstractThermostatsSchedules(abc.ABC):
         max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
-        """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Creates a new `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
 
         :param device_id: ID of the thermostat device for which you want to create a schedule.
 
@@ -32,9 +32,9 @@ class AbstractThermostatsSchedules(abc.ABC):
 
         :param starts_at: Date and time at which the new thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -43,7 +43,7 @@ class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, thermostat_schedule_id: str) -> None:
-        """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Deletes a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
@@ -51,7 +51,7 @@ class AbstractThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
     def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
-        """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Returns a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
@@ -62,7 +62,7 @@ class AbstractThermostatsSchedules(abc.ABC):
     def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
     ) -> List[ThermostatSchedule]:
-        """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Returns a list of all `thermostat schedules <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
 
@@ -83,17 +83,17 @@ class AbstractThermostatsSchedules(abc.ABC):
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:
-        """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Updates a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
 
         :param ends_at: Date and time at which the thermostat schedule ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -116,9 +116,9 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
         max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
-        """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Creates a new `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
 
         :param device_id: ID of the thermostat device for which you want to create a schedule.
 
@@ -126,9 +126,9 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
         :param starts_at: Date and time at which the new thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -137,7 +137,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, thermostat_schedule_id: str) -> None:
-        """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Deletes a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
@@ -145,7 +145,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
 
     @abc.abstractmethod
     async def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
-        """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Returns a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
@@ -156,7 +156,7 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
     async def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
     ) -> List[ThermostatSchedule]:
-        """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Returns a list of all `thermostat schedules <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
 
@@ -177,17 +177,17 @@ class AbstractAsyncThermostatsSchedules(abc.ABC):
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:
-        """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Updates a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
 
         :param ends_at: Date and time at which the thermostat schedule ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -217,9 +217,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
-        """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Creates a new `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
 
         :param device_id: ID of the thermostat device for which you want to create a schedule.
 
@@ -227,9 +227,9 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         :param starts_at: Date and time at which the new thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -263,7 +263,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         has_pagination=False,
     )
     def delete(self, *, thermostat_schedule_id: str) -> None:
-        """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Deletes a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
@@ -282,7 +282,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         has_pagination=False,
     )
     def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
-        """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Returns a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
@@ -306,7 +306,7 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
     def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
     ) -> List[ThermostatSchedule]:
-        """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Returns a list of all `thermostat schedules <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
 
@@ -345,17 +345,17 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:
-        """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Updates a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
 
         :param ends_at: Date and time at which the thermostat schedule ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -404,9 +404,9 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         max_override_period_minutes: Optional[Union[int, Null]] = None,
         name: Optional[str] = None,
     ) -> ThermostatSchedule:
-        """Creates a new `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Creates a new `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the new thermostat schedule.
 
         :param device_id: ID of the thermostat device for which you want to create a schedule.
 
@@ -414,9 +414,9 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         :param starts_at: Date and time at which the new thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the new schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 
@@ -450,7 +450,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         has_pagination=False,
     )
     async def delete(self, *, thermostat_schedule_id: str) -> None:
-        """Deletes a `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Deletes a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to delete.
         """
@@ -469,7 +469,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         has_pagination=False,
     )
     async def get(self, *, thermostat_schedule_id: str) -> ThermostatSchedule:
-        """Returns a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Returns a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to get.
 
@@ -493,7 +493,7 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
     async def list(
         self, *, device_id: str, user_identifier_key: Optional[str] = None
     ) -> List[ThermostatSchedule]:
-        """Returns a list of all `thermostat schedules <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://docs.seam.co/capability-guides/thermostats>`_.
+        """Returns a list of all `thermostat schedules <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
 
         :param device_id: ID of the thermostat device for which you want to list schedules.
 
@@ -532,17 +532,17 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
         name: Optional[str] = None,
         starts_at: Optional[str] = None,
     ) -> None:
-        """Updates a specified `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        """Updates a specified `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :param thermostat_schedule_id: ID of the thermostat schedule that you want to update.
 
-        :param climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
+        :param climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the thermostat schedule.
 
         :param ends_at: Date and time at which the thermostat schedule ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param is_override_allowed: Indicates whether a person at the thermostat or using the API can change the thermostat's settings while the schedule is active. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+        :param max_override_period_minutes: Number of minutes for which a person at the thermostat or using the API can change the thermostat's settings after the activation of the scheduled climate preset. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: Name of the thermostat schedule.
 

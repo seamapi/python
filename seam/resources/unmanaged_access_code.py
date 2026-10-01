@@ -13,7 +13,7 @@ def _from_discriminated_dict(
 
 @dataclass
 class UnmanagedAccessCode:
-    """Represents an `unmanaged smart lock access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
+    """Represents an `unmanaged smart lock access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_.
 
     An access code is a code used for a keypad or pinpad device. Unlike physical keys, which can easily be lost or duplicated, PIN codes can be customized, tracked, and altered on the fly.
 
@@ -23,7 +23,7 @@ class UnmanagedAccessCode:
 
     Not all providers support unmanaged access codes. The following providers do not support unmanaged access codes:
 
-    - `Kwikset <https://docs.seam.co/device-and-system-integration-guides/kwikset-locks>`_
+    - `Kwikset <https://www.seam.co/docs/device-and-system-integration-guides/kwikset-locks>`_
 
     :ivar access_code_id: Unique identifier for the access code.
 
@@ -37,11 +37,13 @@ class UnmanagedAccessCode:
 
     :ivar device_id: Unique identifier for the device associated with the access code.
 
+    :ivar display_status: Human-readable label for the code's state: ``Active`` or ``Not active``, based on whether the code is set on the device. For display only. The wording is not stable and is not an enumeration — never compare against or branch on it.
+
     :ivar dormakaba_oracode_metadata: Metadata for a dormakaba Oracode unmanaged access code. Only present for unmanaged access codes from dormakaba Oracode devices.
 
     :ivar ends_at: Date and time after which the time-bound access code becomes inactive.
 
-    :ivar errors: Errors associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+    :ivar errors: Errors associated with the `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
     :ivar is_managed: Indicates that Seam does not manage the access code.
 
@@ -49,11 +51,11 @@ class UnmanagedAccessCode:
 
     :ivar starts_at: Date and time at which the time-bound access code becomes active.
 
-    :ivar status: Current status of the access code within the operational lifecycle. ``set`` indicates that the code is active and operational. ``unset`` indicates that the code exists on the provider but is not usable on the device.
+    :ivar status: Deprecated: Use ``display_status`` to show a person the code's state. Current status of the access code within the operational lifecycle. ``set`` indicates that the code is active and operational. ``unset`` indicates that the code exists on the provider but is not usable on the device.
 
     :ivar type: Type of the access code. ``ongoing`` access codes are active continuously until deactivated manually. ``time_bound`` access codes have a specific duration.
 
-    :ivar warnings: Warnings associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+    :ivar warnings: Warnings associated with the `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
     :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code.
     """
@@ -413,8 +415,8 @@ class UnmanagedAccessCode:
             )
 
     @dataclass
-    class FailedToExpireError(ResourceMapping):
-        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to remove it, and this error clears automatically once the access code is no longer active.
+    class FailedToDeleteError(ResourceMapping):
+        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to delete it, and this error clears automatically once the access code is no longer active.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -426,7 +428,7 @@ class UnmanagedAccessCode:
         """
 
         created_at: Optional[str]
-        error_code: Literal["failed_to_expire"]
+        error_code: Literal["failed_to_delete"]
         is_access_code_error: Literal[True]
         message: str
 
@@ -447,7 +449,7 @@ class UnmanagedAccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -478,7 +480,7 @@ class UnmanagedAccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -503,13 +505,13 @@ class UnmanagedAccessCode:
 
     @dataclass
     class InsufficientPermissionsError(ResourceMapping):
-        """Indicates that Seam's integration user does not have sufficient permissions on the provider's system to which this device belongs, so Seam cannot manage access codes or unlock the device. See the error message for specifics, then either reauthorize the connected account in Seam or grant the integration user the required permissions in the provider's system.
+        """Indicates that the provider's system to which this device belongs is not letting Seam act on it, so Seam cannot manage access codes or unlock the device. The error message says which of three causes applies. Seam's integration user may not have sufficient permissions on the provider's system, or may have been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. The provider account or site may not have a valid subscription with the provider: set up or renew that subscription with the provider. Or the provider may have rejected the credential Seam uses to operate the device's hub: contact Seam support to re-activate it.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -540,7 +542,7 @@ class UnmanagedAccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -673,7 +675,7 @@ class UnmanagedAccessCode:
 
     @dataclass
     class EmptyBackupAccessCodePoolError(ResourceMapping):
-        """Indicates that the `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
+        """Indicates that the `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -808,13 +810,13 @@ class UnmanagedAccessCode:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -1157,7 +1159,7 @@ class UnmanagedAccessCode:
         CodeConstraintsViolatedError,
         FailedToIssueError,
         FailedToUpdateError,
-        FailedToExpireError,
+        FailedToDeleteError,
         AccountDisconnectedError,
         SaltoKsSubscriptionLimitExceededError,
         InsufficientPermissionsError,
@@ -1184,7 +1186,7 @@ class UnmanagedAccessCode:
         "code_constraints_violated": CodeConstraintsViolatedError,
         "failed_to_issue": FailedToIssueError,
         "failed_to_update": FailedToUpdateError,
-        "failed_to_expire": FailedToExpireError,
+        "failed_to_delete": FailedToDeleteError,
         "account_disconnected": AccountDisconnectedError,
         "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
         "insufficient_permissions": InsufficientPermissionsError,
@@ -1236,6 +1238,7 @@ class UnmanagedAccessCode:
     code: Optional[str]
     created_at: str
     device_id: str
+    display_status: str
     dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
     ends_at: Optional[str]
     errors: List[Errors]
@@ -1258,6 +1261,7 @@ class UnmanagedAccessCode:
             code=d.get("code", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
+            display_status=d.get("display_status", None),
             dormakaba_oracode_metadata=(
                 cls.DormakabaOracodeMetadata.from_dict(
                     d.get("dormakaba_oracode_metadata")

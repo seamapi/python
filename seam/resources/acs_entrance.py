@@ -13,21 +13,21 @@ def _from_discriminated_dict(
 
 @dataclass
 class AcsEntrance:
-    """Represents an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """Represents an `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ within an `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     In an access control system, an entrance is a secured door, gate, zone, or other method of entry. You can list details for all the ``acs_entrance`` resources in your workspace or get these details for a specific ``acs_entrance``. You can also list all entrances associated with a specific credential, and you can list all credentials associated with a specific entrance.
 
-    :ivar acs_entrance_id: ID of the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar acs_entrance_id: ID of the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar acs_system_id: ID of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ that contains the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar acs_system_id: ID of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ that contains the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar akiles_metadata: Akiles-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar akiles_metadata: Akiles-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar assa_abloy_vostio_metadata: ASSA ABLOY Vostio-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar assa_abloy_vostio_metadata: ASSA ABLOY Vostio-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar avigilon_alta_metadata: Avigilon Alta-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar avigilon_alta_metadata: Avigilon Alta-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar brivo_metadata: Brivo-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar brivo_metadata: Brivo-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
     :ivar can_belong_to_reservation: Indicates whether the ACS entrance can belong to a reservation via an access_grant.reservation_key.
 
@@ -39,38 +39,38 @@ class AcsEntrance:
 
     :ivar can_unlock_with_mobile_key: Indicates whether the ACS entrance can be unlocked with mobile key credentials.
 
-    :ivar connected_account_id: ID of the `connected account <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar connected_account_id: ID of the `connected account <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar created_at: Date and time at which the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ was created.
+    :ivar created_at: Date and time at which the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ was created.
 
-    :ivar display_name: Display name for the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar display_name: Display name for the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar dormakaba_ambiance_metadata: dormakaba Ambiance-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar dormakaba_ambiance_metadata: dormakaba Ambiance-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar dormakaba_community_metadata: dormakaba Community-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar dormakaba_community_metadata: dormakaba Community-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar errors: Errors associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar errors: Errors associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar hotek_metadata: Hotek-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar hotek_metadata: Hotek-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar is_locked: Indicates whether the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ is currently locked.
+    :ivar is_locked: Indicates whether the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ is currently locked.
 
-    :ivar latch_metadata: Latch-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar latch_metadata: Latch-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar salto_ks_metadata: Salto KS-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar salto_ks_metadata: Salto KS-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar salto_space_metadata: Salto Space-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar salto_space_metadata: Salto Space-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
     :ivar space_ids: IDs of the spaces that the entrance is in.
 
-    :ivar visionline_metadata: Visionline-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar visionline_metadata: Visionline-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
-    :ivar warnings: Warnings associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    :ivar warnings: Warnings associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
     """
 
     @dataclass
     class AkilesMetadata(ResourceMapping):
-        """Akiles-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Akiles-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar actions: Actions the gadget exposes (for example, open).
 
@@ -114,7 +114,7 @@ class AcsEntrance:
 
     @dataclass
     class AssaAbloyVostioMetadata(ResourceMapping):
-        """ASSA ABLOY Vostio-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """ASSA ABLOY Vostio-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar door_name: Name of the door in the Vostio access system.
 
@@ -147,7 +147,7 @@ class AcsEntrance:
 
     @dataclass
     class AvigilonAltaMetadata(ResourceMapping):
-        """Avigilon Alta-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Avigilon Alta-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar entry_name: Entry name for an Avigilon Alta system.
 
@@ -185,7 +185,7 @@ class AcsEntrance:
 
     @dataclass
     class BrivoMetadata(ResourceMapping):
-        """Brivo-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Brivo-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar access_point_id: ID of the access point in the Brivo access system.
 
@@ -207,7 +207,7 @@ class AcsEntrance:
 
     @dataclass
     class DormakabaAmbianceMetadata(ResourceMapping):
-        """dormakaba Ambiance-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """dormakaba Ambiance-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar access_point_name: Name of the access point in the dormakaba Ambiance access system.
         """
@@ -222,7 +222,7 @@ class AcsEntrance:
 
     @dataclass
     class DormakabaCommunityMetadata(ResourceMapping):
-        """dormakaba Community-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """dormakaba Community-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar access_point_profile: Type of access point profile in the dormakaba Community access system.
         """
@@ -237,7 +237,7 @@ class AcsEntrance:
 
     @dataclass
     class Errors(ResourceMapping):
-        """Errors associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Errors associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -260,7 +260,7 @@ class AcsEntrance:
 
     @dataclass
     class HotekMetadata(ResourceMapping):
-        """Hotek-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Hotek-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar common_area_name: Display name of the entrance.
 
@@ -282,7 +282,7 @@ class AcsEntrance:
 
     @dataclass
     class LatchMetadata(ResourceMapping):
-        """Latch-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Latch-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar accessibility_type: Accessibility type in the Latch access system.
 
@@ -308,7 +308,7 @@ class AcsEntrance:
 
     @dataclass
     class SaltoKsMetadata(ResourceMapping):
-        """Salto KS-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Salto KS-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar battery_level: Battery level of the door access device.
 
@@ -350,7 +350,7 @@ class AcsEntrance:
 
     @dataclass
     class SaltoSpaceMetadata(ResourceMapping):
-        """Salto Space-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Salto Space-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar audit_on_keys: Indicates whether AuditOnKeys is enabled for the door in the Salto Space access system.
 
@@ -384,7 +384,7 @@ class AcsEntrance:
 
     @dataclass
     class VisionlineMetadata(ResourceMapping):
-        """Visionline-specific metadata associated with the `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Visionline-specific metadata associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar door_category: Category of the door in the Visionline access system.
 

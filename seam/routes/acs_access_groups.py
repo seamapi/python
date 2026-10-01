@@ -17,7 +17,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
@@ -29,14 +29,14 @@ class AbstractAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, acs_access_group_id: str) -> None:
-        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Deletes a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
-        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
@@ -52,7 +52,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
-        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access groups <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
 
@@ -69,7 +69,7 @@ class AbstractAcsAccessGroups(abc.ABC):
     def list_accessible_entrances(
         self, *, acs_access_group_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all accessible entrances for a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
@@ -78,7 +78,7 @@ class AbstractAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in an `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
@@ -93,7 +93,7 @@ class AbstractAcsAccessGroups(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
 
@@ -114,7 +114,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
@@ -126,14 +126,14 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, acs_access_group_id: str) -> None:
-        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Deletes a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
-        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
@@ -149,7 +149,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
-        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access groups <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
 
@@ -166,7 +166,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
     async def list_accessible_entrances(
         self, *, acs_access_group_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all accessible entrances for a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
@@ -175,7 +175,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
 
     @abc.abstractmethod
     async def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in an `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
@@ -190,7 +190,7 @@ class AbstractAsyncAcsAccessGroups(abc.ABC):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
 
@@ -218,7 +218,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
@@ -245,7 +245,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         has_pagination=False,
     )
     def delete(self, *, acs_access_group_id: str) -> None:
-        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Deletes a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
         params: Dict[str, Any] = {}
@@ -263,7 +263,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         has_pagination=False,
     )
     def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
-        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
@@ -292,7 +292,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
-        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access groups <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
 
@@ -329,7 +329,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
     def list_accessible_entrances(
         self, *, acs_access_group_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all accessible entrances for a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
@@ -356,7 +356,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         has_pagination=False,
     )
     def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in an `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
@@ -385,7 +385,7 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
 
@@ -424,7 +424,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group to which you want to add an access system user.
 
@@ -451,7 +451,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         has_pagination=False,
     )
     async def delete(self, *, acs_access_group_id: str) -> None:
-        """Deletes a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Deletes a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to delete."""
         params: Dict[str, Any] = {}
@@ -469,7 +469,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         has_pagination=False,
     )
     async def get(self, *, acs_access_group_id: str) -> AcsAccessGroup:
-        """Returns a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group that you want to get.
 
@@ -498,7 +498,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         search: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AcsAccessGroup]:
-        """Returns a list of all `access groups <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access groups <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_system_id: ID of the access system for which you want to retrieve all access groups.
 
@@ -535,7 +535,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
     async def list_accessible_entrances(
         self, *, acs_access_group_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all accessible entrances for a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all accessible entrances for a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all accessible entrances.
 
@@ -562,7 +562,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         has_pagination=False,
     )
     async def list_users(self, *, acs_access_group_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in an `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group for which you want to retrieve all access system users.
 
@@ -591,7 +591,7 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
         acs_user_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://docs.seam.co/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `access group <https://www.seam.co/docs/low-level-apis/access-systems/user-management/assigning-users-to-access-groups>`_.
 
         :param acs_access_group_id: ID of the access group from which you want to remove an access system user.
 

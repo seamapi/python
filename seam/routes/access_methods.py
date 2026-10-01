@@ -72,7 +72,7 @@ class AbstractAccessMethods(abc.ABC):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
 
@@ -181,7 +181,7 @@ class AbstractAccessMethods(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
 
@@ -246,7 +246,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
 
@@ -355,7 +355,7 @@ class AbstractAsyncAccessMethods(abc.ABC):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
 
@@ -483,7 +483,7 @@ class AccessMethods(AbstractAccessMethods):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
 
@@ -698,7 +698,7 @@ class AccessMethods(AbstractAccessMethods):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
 
@@ -847,7 +847,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         acs_encoder_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+        """Encodes an existing access method onto a plastic card placed on the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :param access_method_id: ID of the ``access_method`` to encode onto a card.
 
@@ -1062,7 +1062,7 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
         acs_entrance_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Remotely unlocks a specified `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
+        """Remotely unlocks a specified `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ using the cloud key credential associated with an access method. Returns an action attempt that tracks the progress of the unlock operation.
 
         :param access_method_id: ID of the cloud_key ``access_method`` to use for the unlock operation.
 
