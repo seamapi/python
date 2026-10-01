@@ -13,7 +13,9 @@ def _from_discriminated_dict(
 
 @dataclass
 class Device:
-    """Represents a `device <https://docs.seam.co/core-concepts/devices>`_ that has been connected to Seam.
+    """Represents a `device <https://www.seam.co/docs/core-concepts/devices>`_ that has been connected to Seam.
+
+    :ivar can_activate_weekly_program: Indicates whether the thermostat can be returned to its weekly program, the schedule that is configured on the device itself, releasing any hold that Seam has set.
 
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
 
@@ -51,17 +53,19 @@ class Device:
 
     :ivar can_simulate_removal: Indicates whether the device supports simulating removal in a sandbox.
 
+    :ivar can_stream_live_video: Indicates whether the camera supports streaming live video through a camera live view session.
+
     :ivar can_turn_off_hvac: Indicates whether the thermostat can be turned off.
 
     :ivar can_unlock_with_code: Indicates whether the lock supports unlocking with an access code.
 
-    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_.
+    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_.
 
     :ivar connected_account_id: Unique identifier for the account associated with the device.
 
     :ivar created_at: Date and time at which the device object was created.
 
-    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
+    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
 
     :ivar device_id: ID of the device.
 
@@ -75,7 +79,7 @@ class Device:
 
     :ivar errors: Array of errors associated with the device. Each error object within the array contains two fields: ``error_code`` and ``message``. ``error_code`` is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
 
-    :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+    :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
     :ivar location: Location information for the device.
 
@@ -148,7 +152,7 @@ class Device:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -179,7 +183,7 @@ class Device:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -204,13 +208,13 @@ class Device:
 
     @dataclass
     class InsufficientPermissionsError(ResourceMapping):
-        """Indicates that Seam's integration user does not have sufficient permissions on the provider's system to which this device belongs, so Seam cannot manage access codes or unlock the device. See the error message for specifics, then either reauthorize the connected account in Seam or grant the integration user the required permissions in the provider's system.
+        """Indicates that the provider's system to which this device belongs is not letting Seam act on it, so Seam cannot manage access codes or unlock the device. The error message says which of three causes applies. Seam's integration user may not have sufficient permissions on the provider's system, or may have been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. The provider account or site may not have a valid subscription with the provider: set up or renew that subscription with the provider. Or the provider may have rejected the credential Seam uses to operate the device's hub: contact Seam support to re-activate it.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -241,7 +245,7 @@ class Device:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -374,7 +378,7 @@ class Device:
 
     @dataclass
     class EmptyBackupAccessCodePoolError(ResourceMapping):
-        """Indicates that the `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
+        """Indicates that the `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -509,13 +513,13 @@ class Device:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -613,6 +617,8 @@ class Device:
 
         :ivar aqara_metadata: Metadata for an Aqara device.
 
+        :ivar arlo_metadata: Metadata for an Arlo camera.
+
         :ivar assa_abloy_vostio_metadata: Metadata for an ASSA ABLOY Vostio system.
 
         :ivar august_metadata: Metadata for an August device.
@@ -622,6 +628,8 @@ class Device:
         :ivar brivo_metadata: Metadata for a Brivo device.
 
         :ivar controlbyweb_metadata: Metadata for a ControlByWeb device.
+
+        :ivar dormakaba_oracode_iho_metadata: Metadata for a dormakaba Oracode Homeowner's Portal device.
 
         :ivar dormakaba_oracode_metadata: Metadata for a dormakaba Oracode device.
 
@@ -657,6 +665,8 @@ class Device:
 
         :ivar omnitec_metadata: Metadata for an Omnitec device.
 
+        :ivar reolink_metadata: Metadata for a Reolink camera.
+
         :ivar ring_metadata: Metadata for a Ring device.
 
         :ivar salto_ks_metadata: Metadata for a Salto KS device.
@@ -672,6 +682,8 @@ class Device:
         :ivar smartthings_metadata: Metadata for a SmartThings device.
 
         :ivar tado_metadata: Metadata for a tado° device.
+
+        :ivar tapo_metadata: Metadata for a Tapo camera.
 
         :ivar tedee_metadata: Metadata for a Tedee device.
 
@@ -691,7 +703,7 @@ class Device:
 
         :ivar auto_lock_enabled: Indicates whether automatic locking is enabled.
 
-        :ivar backup_access_code_pool_enabled: Indicates whether the `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is currently enabled for the device. To disable it, set this to ``false`` using `/devices/update <https://docs.seam.co/api/devices/update>`_.
+        :ivar backup_access_code_pool_enabled: Indicates whether the `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is currently enabled for the device. To disable it, set this to ``false`` using `/devices/update <https://www.seam.co/docs/api/devices/update>`_.
 
         :ivar code_constraints: Constraints on access codes for the device. Seam represents each constraint as an object with a ``constraint_type`` property. Depending on the constraint type, there may also be additional properties. Note that some constraints are manufacturer- or device-specific.
 
@@ -711,15 +723,15 @@ class Device:
 
         :ivar supported_code_lengths: Supported code lengths for access codes.
 
-        :ivar supports_backup_access_code_pool: Indicates whether the device supports a `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_.
+        :ivar supports_backup_access_code_pool: Indicates whether the device supports a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_.
 
-        :ivar active_thermostat_schedule: Deprecated: Use ``active_thermostat_schedule_id`` with ``/thermostats/schedules/get`` instead. Active `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        :ivar active_thermostat_schedule: Deprecated: Use ``active_thermostat_schedule_id`` with ``/thermostats/schedules/get`` instead. Active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-        :ivar active_thermostat_schedule_id: ID of the active `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+        :ivar active_thermostat_schedule_id: ID of the active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :ivar available_climate_preset_modes: Climate preset modes that the thermostat supports, such as "home", "away", "wake", "sleep", "occupied", and "unoccupied".
 
-        :ivar available_climate_presets: Available `climate presets <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for the thermostat.
+        :ivar available_climate_presets: Available `climate presets <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for the thermostat.
 
         :ivar available_fan_mode_settings: Fan mode settings that the thermostat supports.
 
@@ -729,7 +741,7 @@ class Device:
 
         :ivar default_climate_setting: Deprecated: use fallback_climate_preset_key to specify a fallback climate preset instead.
 
-        :ivar fallback_climate_preset_key: Key of the `fallback climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets/setting-the-fallback-climate-preset>`_ for the thermostat.
+        :ivar fallback_climate_preset_key: Key of the `fallback climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets/setting-the-fallback-climate-preset>`_ for the thermostat.
 
         :ivar fan_mode_setting: Deprecated: Use ``current_climate_setting.fan_mode_setting`` instead.
 
@@ -741,29 +753,29 @@ class Device:
 
         :ivar is_temporary_manual_override_active: Indicates whether the current thermostat settings differ from the most recent active program or schedule that Seam activated. For this condition to occur, ``current_climate_setting.manual_override_allowed`` must also be ``true``.
 
-        :ivar max_cooling_set_point_celsius: Maximum `cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °C.
+        :ivar max_cooling_set_point_celsius: Maximum `cooling set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °C.
 
-        :ivar max_cooling_set_point_fahrenheit: Maximum `cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °F.
+        :ivar max_cooling_set_point_fahrenheit: Maximum `cooling set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °F.
 
-        :ivar max_heating_set_point_celsius: Maximum `heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °C.
+        :ivar max_heating_set_point_celsius: Maximum `heating set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °C.
 
-        :ivar max_heating_set_point_fahrenheit: Maximum `heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °F.
+        :ivar max_heating_set_point_fahrenheit: Maximum `heating set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °F.
 
         :ivar max_thermostat_daily_program_periods_per_day: Maximum number of periods that the thermostat can support per day. For example, if the thermostat supports 4 periods per day, this value is 4.
 
         :ivar max_unique_climate_presets_per_thermostat_weekly_program: Maximum number of climate presets that the thermostat can support for weekly programming.
 
-        :ivar min_cooling_set_point_celsius: Minimum `cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °C.
+        :ivar min_cooling_set_point_celsius: Minimum `cooling set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °C.
 
-        :ivar min_cooling_set_point_fahrenheit: Minimum `cooling set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °F.
+        :ivar min_cooling_set_point_fahrenheit: Minimum `cooling set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#cooling-set-point>`_ in °F.
 
-        :ivar min_heating_cooling_delta_celsius: Minimum `temperature difference <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#minimum-heating-cooling-temperature-delta>`_ in °C between the cooling and heating set points when in heat-cool (auto) mode.
+        :ivar min_heating_cooling_delta_celsius: Minimum `temperature difference <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#minimum-heating-cooling-temperature-delta>`_ in °C between the cooling and heating set points when in heat-cool (auto) mode.
 
-        :ivar min_heating_cooling_delta_fahrenheit: Minimum `temperature difference <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#minimum-heating-cooling-temperature-delta>`_ in °F between the cooling and heating set points when in heat-cool (auto) mode.
+        :ivar min_heating_cooling_delta_fahrenheit: Minimum `temperature difference <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#minimum-heating-cooling-temperature-delta>`_ in °F between the cooling and heating set points when in heat-cool (auto) mode.
 
-        :ivar min_heating_set_point_celsius: Minimum `heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °C.
+        :ivar min_heating_set_point_celsius: Minimum `heating set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °C.
 
-        :ivar min_heating_set_point_fahrenheit: Minimum `heating set point <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °F.
+        :ivar min_heating_set_point_fahrenheit: Minimum `heating set point <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points#heating-set-point>`_ in °F.
 
         :ivar relative_humidity: Reported relative humidity, as a value between 0 and 1, inclusive.
 
@@ -771,13 +783,13 @@ class Device:
 
         :ivar temperature_fahrenheit: Reported temperature in °F.
 
-        :ivar temperature_threshold: Current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+        :ivar temperature_threshold: Current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
         :ivar thermostat_daily_program_period_precision_minutes: Precision of the thermostat's period in minutes. For example, if the thermostat supports 15-minute periods, this value is 15. All values are relative to the top of the hour, so for 15 minutes, the periods would be 0, 15, 30, and 45 minutes past the hour.
 
-        :ivar thermostat_daily_programs: Configured `daily programs <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
+        :ivar thermostat_daily_programs: Configured `daily programs <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
 
-        :ivar thermostat_weekly_program: Current `weekly program <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
+        :ivar thermostat_weekly_program: Current `weekly program <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
         """
 
         @dataclass
@@ -956,15 +968,12 @@ class Device:
         class AkilesMetadata(ResourceMapping):
             """Metadata for an Akiles device.
 
-            :ivar _member_group_id: Group ID to which to add users for an Akiles device.
-
             :ivar gadget_id: Gadget ID for an Akiles device.
 
             :ivar gadget_name: Gadget name for an Akiles device.
 
             :ivar product_name: Product name for an Akiles device."""
 
-            _member_group_id: Optional[str]
             gadget_id: Optional[str]
             gadget_name: Optional[str]
             product_name: Optional[str]
@@ -972,7 +981,6 @@ class Device:
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    _member_group_id=d.get("_member_group_id", None),
                     gadget_id=d.get("gadget_id", None),
                     gadget_name=d.get("gadget_name", None),
                     product_name=d.get("product_name", None),
@@ -1018,6 +1026,36 @@ class Device:
                     parent_did=d.get("parent_did", None),
                     position_id=d.get("position_id", None),
                     time_zone=d.get("time_zone", None),
+                )
+
+        @dataclass
+        class ArloMetadata(ResourceMapping):
+            """Metadata for an Arlo camera.
+
+            :ivar device_id: Device ID reported by Arlo.
+
+            :ivar device_name: Device name reported by Arlo.
+
+            :ivar firmware_version: Firmware version reported by Arlo.
+
+            :ivar hardware_version: Hardware version reported by Arlo.
+
+            :ivar model_id: Model ID reported by Arlo."""
+
+            device_id: Optional[str]
+            device_name: Optional[str]
+            firmware_version: Optional[str]
+            hardware_version: Optional[str]
+            model_id: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    device_id=d.get("device_id", None),
+                    device_name=d.get("device_name", None),
+                    firmware_version=d.get("firmware_version", None),
+                    hardware_version=d.get("hardware_version", None),
+                    model_id=d.get("model_id", None),
                 )
 
         @dataclass
@@ -1148,6 +1186,69 @@ class Device:
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
                     relay_name=d.get("relay_name", None),
+                )
+
+        @dataclass
+        class DormakabaOracodeIhoMetadata(ResourceMapping):
+            """Metadata for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar door_id: Door ID for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar door_name: Name of the door for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar iana_timezone: IANA time zone for a dormakaba Oracode Homeowner's Portal device.
+
+            :ivar user_levels: User levels for a dormakaba Oracode Homeowner's Portal device.
+            """
+
+            @dataclass
+            class UserLevels(ResourceMapping):
+                """User levels for a dormakaba Oracode Homeowner's Portal device.
+
+                :ivar user_level:
+
+                :ivar user_level_check_in_time:
+
+                :ivar user_level_check_out_time:
+
+                :ivar user_level_name:
+
+                :ivar user_level_type:"""
+
+                user_level: Optional[float]
+                user_level_check_in_time: Optional[str]
+                user_level_check_out_time: Optional[str]
+                user_level_name: Optional[str]
+                user_level_type: Optional[str]
+
+                @classmethod
+                def from_dict(cls, d: Any):
+                    return cls(
+                        user_level=d.get("user_level", None),
+                        user_level_check_in_time=d.get(
+                            "user_level_check_in_time", None
+                        ),
+                        user_level_check_out_time=d.get(
+                            "user_level_check_out_time", None
+                        ),
+                        user_level_name=d.get("user_level_name", None),
+                        user_level_type=d.get("user_level_type", None),
+                    )
+
+            door_id: Optional[float]
+            door_name: Optional[str]
+            iana_timezone: Optional[str]
+            user_levels: Optional[List[UserLevels]]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    door_id=d.get("door_id", None),
+                    door_name=d.get("door_name", None),
+                    iana_timezone=d.get("iana_timezone", None),
+                    user_levels=[
+                        cls.UserLevels.from_dict(i) for i in d.get("user_levels") or []
+                    ],
                 )
 
         @dataclass
@@ -1766,7 +1867,7 @@ class Device:
 
             :ivar device_name: Device name for a Google Nest device. Google sets this value.
 
-            :ivar display_name: Display name for a Google Nest device.
+            :ivar display_name: Name of the Google Home room containing the device. The device owner sets this value.
 
             :ivar nest_device_id: Device ID for a Google Nest device.
 
@@ -1892,6 +1993,28 @@ class Device:
                     lock_name=d.get("lock_name", None),
                     time_zone=d.get("time_zone", None),
                     timezone_raw_offset_ms=d.get("timezone_raw_offset_ms", None),
+                )
+
+        @dataclass
+        class ReolinkMetadata(ResourceMapping):
+            """Metadata for a Reolink camera.
+
+            :ivar firmware_version: Firmware version reported by the camera.
+
+            :ivar hardware_version: Hardware version reported by the camera.
+
+            :ivar model: Model reported by the Reolink camera."""
+
+            firmware_version: Optional[str]
+            hardware_version: Optional[str]
+            model: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    firmware_version=d.get("firmware_version", None),
+                    hardware_version=d.get("hardware_version", None),
+                    model=d.get("model", None),
                 )
 
         @dataclass
@@ -2118,6 +2241,28 @@ class Device:
                 return cls(
                     device_type=d.get("device_type", None),
                     serial_no=d.get("serial_no", None),
+                )
+
+        @dataclass
+        class TapoMetadata(ResourceMapping):
+            """Metadata for a Tapo camera.
+
+            :ivar firmware_version: Firmware version reported by the camera.
+
+            :ivar hardware_version: Hardware version reported by the camera.
+
+            :ivar model: Model reported by the Tapo camera."""
+
+            firmware_version: Optional[str]
+            hardware_version: Optional[str]
+            model: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    firmware_version=d.get("firmware_version", None),
+                    hardware_version=d.get("hardware_version", None),
+                    model=d.get("model", None),
                 )
 
         @dataclass
@@ -2581,34 +2726,34 @@ class Device:
 
         @dataclass
         class ActiveThermostatSchedule(ResourceMapping):
-            """Active `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+            """Active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-            :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+            :ivar climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-            :ivar created_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ was created.
+            :ivar created_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ was created.
 
-            :ivar device_id: ID of the desired `thermostat <https://docs.seam.co/capability-guides/thermostats>`_ device.
+            :ivar device_id: ID of the desired `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ device.
 
-            :ivar ends_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+            :ivar ends_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-            :ivar errors: Errors associated with the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+            :ivar errors: Errors associated with the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-            :ivar is_override_allowed: Indicates whether a person at the thermostat can change the thermostat's settings after the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts.
+            :ivar is_override_allowed: Indicates whether a person at the thermostat can change the thermostat's settings after the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts.
 
-            :ivar max_override_period_minutes: Number of minutes for which a person at the thermostat can change the thermostat's settings after the activation of the scheduled `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_. See also `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+            :ivar max_override_period_minutes: Number of minutes for which a person at the thermostat can change the thermostat's settings after the activation of the scheduled `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+            :ivar name: User-friendly name to identify the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
-            :ivar starts_at: Date and time at which the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+            :ivar starts_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-            :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+            :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
             :ivar workspace_id: ID of the workspace that contains the thermostat schedule.
             """
 
             @dataclass
             class Errors(ResourceMapping):
-                """Errors associated with the `thermostat schedule <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+                """Errors associated with the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
                 :ivar created_at: Date and time at which Seam created the error.
 
@@ -2661,37 +2806,37 @@ class Device:
 
         @dataclass
         class AvailableClimatePresets(ResourceMapping):
-            """Available `climate presets <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for the thermostat.
+            """Available `climate presets <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for the thermostat.
 
-            :ivar can_delete: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
+            :ivar can_delete: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
 
-            :ivar can_edit: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
+            :ivar can_edit: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
 
-            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
+            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
 
-            :ivar climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar climate_preset_key: Unique key to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
 
-            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar display_name: Display name for the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar display_name: Display name for the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
 
-            :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
+            :ivar fan_mode_setting: Desired `fan mode setting <https://www.seam.co/docs/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
 
-            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
+            :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
 
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
             """
 
             @dataclass
@@ -2771,35 +2916,35 @@ class Device:
         class CurrentClimateSetting(ResourceMapping):
             """Current climate setting.
 
-            :ivar can_delete: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
+            :ivar can_delete: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
 
-            :ivar can_edit: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
+            :ivar can_edit: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
 
-            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
+            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
 
-            :ivar climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar climate_preset_key: Unique key to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
 
-            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar display_name: Display name for the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar display_name: Display name for the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
 
-            :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
+            :ivar fan_mode_setting: Desired `fan mode setting <https://www.seam.co/docs/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
 
-            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
+            :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
 
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
             """
 
             @dataclass
@@ -2879,35 +3024,35 @@ class Device:
         class DefaultClimateSetting(ResourceMapping):
             """
 
-            :ivar can_delete: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
+            :ivar can_delete: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
 
-            :ivar can_edit: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
+            :ivar can_edit: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
 
-            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
+            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
 
-            :ivar climate_preset_key: Unique key to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar climate_preset_key: Unique key to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
 
-            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar display_name: Display name for the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar display_name: Display name for the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
 
             :ivar ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
 
-            :ivar fan_mode_setting: Desired `fan mode setting <https://docs.seam.co/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
+            :ivar fan_mode_setting: Desired `fan mode setting <https://www.seam.co/docs/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
 
-            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
+            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
-            :ivar hvac_mode_setting: Desired `HVAC mode <https://docs.seam.co/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
+            :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
 
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
+            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
-            :ivar name: User-friendly name to identify the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
+            :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
             """
 
             @dataclass
@@ -2985,15 +3130,15 @@ class Device:
 
         @dataclass
         class TemperatureThreshold(ResourceMapping):
-            """Current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+            """Current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
-            :ivar lower_limit_celsius: Lower limit in °C within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+            :ivar lower_limit_celsius: Lower limit in °C within the current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
-            :ivar lower_limit_fahrenheit: Lower limit in °F within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+            :ivar lower_limit_fahrenheit: Lower limit in °F within the current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
-            :ivar upper_limit_celsius: Upper limit in °C within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+            :ivar upper_limit_celsius: Upper limit in °C within the current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
 
-            :ivar upper_limit_fahrenheit: Upper limit in °F within the current `temperature threshold <https://docs.seam.co/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
+            :ivar upper_limit_fahrenheit: Upper limit in °F within the current `temperature threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_ set for the thermostat.
             """
 
             lower_limit_celsius: Optional[float]
@@ -3012,7 +3157,7 @@ class Device:
 
         @dataclass
         class ThermostatDailyPrograms(ResourceMapping):
-            """Configured `daily programs <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
+            """Configured `daily programs <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
 
             :ivar created_at: Date and time at which the thermostat daily program was created.
 
@@ -3031,7 +3176,7 @@ class Device:
             class Periods(ResourceMapping):
                 """Array of thermostat daily program periods.
 
-                :ivar climate_preset_key: Key of the `climate preset <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to activate at the ``starts_at_time``.
+                :ivar climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to activate at the ``starts_at_time``.
 
                 :ivar starts_at_time: Time at which the thermostat daily program period starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
                 """
@@ -3068,7 +3213,7 @@ class Device:
 
         @dataclass
         class ThermostatWeeklyProgram(ResourceMapping):
-            """Current `weekly program <https://docs.seam.co/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
+            """Current `weekly program <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-programs>`_ for the thermostat.
 
             :ivar created_at: Date and time at which the thermostat weekly program was created.
 
@@ -3135,11 +3280,13 @@ class Device:
         ]
         akiles_metadata: Optional[AkilesMetadata]
         aqara_metadata: Optional[AqaraMetadata]
+        arlo_metadata: Optional[ArloMetadata]
         assa_abloy_vostio_metadata: Optional[AssaAbloyVostioMetadata]
         august_metadata: Optional[AugustMetadata]
         avigilon_alta_metadata: Optional[AvigilonAltaMetadata]
         brivo_metadata: Optional[BrivoMetadata]
         controlbyweb_metadata: Optional[ControlbywebMetadata]
+        dormakaba_oracode_iho_metadata: Optional[DormakabaOracodeIhoMetadata]
         dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
         ecobee_metadata: Optional[EcobeeMetadata]
         four_suites_metadata: Optional[FourSuitesMetadata]
@@ -3157,6 +3304,7 @@ class Device:
         noiseaware_metadata: Optional[NoiseawareMetadata]
         nuki_metadata: Optional[NukiMetadata]
         omnitec_metadata: Optional[OmnitecMetadata]
+        reolink_metadata: Optional[ReolinkMetadata]
         ring_metadata: Optional[RingMetadata]
         salto_ks_metadata: Optional[SaltoKsMetadata]
         salto_metadata: Optional[SaltoMetadata]
@@ -3165,6 +3313,7 @@ class Device:
         sensi_metadata: Optional[SensiMetadata]
         smartthings_metadata: Optional[SmartthingsMetadata]
         tado_metadata: Optional[TadoMetadata]
+        tapo_metadata: Optional[TapoMetadata]
         tedee_metadata: Optional[TedeeMetadata]
         ttlock_metadata: Optional[TtlockMetadata]
         two_n_metadata: Optional[TwoNMetadata]
@@ -3290,6 +3439,11 @@ class Device:
                     if d.get("aqara_metadata") is not None
                     else None
                 ),
+                arlo_metadata=(
+                    cls.ArloMetadata.from_dict(d.get("arlo_metadata"))
+                    if d.get("arlo_metadata") is not None
+                    else None
+                ),
                 assa_abloy_vostio_metadata=(
                     cls.AssaAbloyVostioMetadata.from_dict(
                         d.get("assa_abloy_vostio_metadata")
@@ -3315,6 +3469,13 @@ class Device:
                 controlbyweb_metadata=(
                     cls.ControlbywebMetadata.from_dict(d.get("controlbyweb_metadata"))
                     if d.get("controlbyweb_metadata") is not None
+                    else None
+                ),
+                dormakaba_oracode_iho_metadata=(
+                    cls.DormakabaOracodeIhoMetadata.from_dict(
+                        d.get("dormakaba_oracode_iho_metadata")
+                    )
+                    if d.get("dormakaba_oracode_iho_metadata") is not None
                     else None
                 ),
                 dormakaba_oracode_metadata=(
@@ -3406,6 +3567,11 @@ class Device:
                     if d.get("omnitec_metadata") is not None
                     else None
                 ),
+                reolink_metadata=(
+                    cls.ReolinkMetadata.from_dict(d.get("reolink_metadata"))
+                    if d.get("reolink_metadata") is not None
+                    else None
+                ),
                 ring_metadata=(
                     cls.RingMetadata.from_dict(d.get("ring_metadata"))
                     if d.get("ring_metadata") is not None
@@ -3444,6 +3610,11 @@ class Device:
                 tado_metadata=(
                     cls.TadoMetadata.from_dict(d.get("tado_metadata"))
                     if d.get("tado_metadata") is not None
+                    else None
+                ),
+                tapo_metadata=(
+                    cls.TapoMetadata.from_dict(d.get("tapo_metadata"))
+                    if d.get("tapo_metadata") is not None
                     else None
                 ),
                 tedee_metadata=(
@@ -4362,6 +4533,7 @@ class Device:
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
     }
 
+    can_activate_weekly_program: Optional[bool]
     can_configure_auto_lock: Optional[bool]
     can_hvac_cool: Optional[bool]
     can_hvac_heat: Optional[bool]
@@ -4380,6 +4552,7 @@ class Device:
     can_simulate_hub_disconnection: Optional[bool]
     can_simulate_paid_subscription: Optional[bool]
     can_simulate_removal: Optional[bool]
+    can_stream_live_video: Optional[bool]
     can_turn_off_hvac: Optional[bool]
     can_unlock_with_code: Optional[bool]
     capabilities_supported: List[
@@ -4437,6 +4610,9 @@ class Device:
         "ios_phone",
         "android_phone",
         "ring_camera",
+        "tapo_camera",
+        "arlo_camera",
+        "reolink_camera",
     ]
     display_name: str
     errors: List[Errors]
@@ -4451,6 +4627,7 @@ class Device:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
+            can_activate_weekly_program=d.get("can_activate_weekly_program", None),
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
@@ -4483,6 +4660,7 @@ class Device:
                 "can_simulate_paid_subscription", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_stream_live_video=d.get("can_stream_live_video", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             capabilities_supported=d.get("capabilities_supported", None),

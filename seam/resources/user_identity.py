@@ -13,7 +13,7 @@ def _from_discriminated_dict(
 
 @dataclass
 class UserIdentity:
-    """Represents a `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with an application user account.
+    """Represents a `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with an application user account.
 
     :ivar acs_user_ids: Array of access system user IDs associated with the user identity.
 

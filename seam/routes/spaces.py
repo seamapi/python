@@ -13,7 +13,7 @@ class AbstractSpaces(abc.ABC):
 
     @abc.abstractmethod
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
-        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
+        """Adds `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
@@ -24,7 +24,7 @@ class AbstractSpaces(abc.ABC):
     def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
+        """Adds a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
@@ -169,7 +169,7 @@ class AbstractSpaces(abc.ABC):
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
+        """Removes `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
@@ -180,7 +180,7 @@ class AbstractSpaces(abc.ABC):
     def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
+        """Removes a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
@@ -232,7 +232,7 @@ class AbstractAsyncSpaces(abc.ABC):
     async def add_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
+        """Adds `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
@@ -243,7 +243,7 @@ class AbstractAsyncSpaces(abc.ABC):
     async def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
+        """Adds a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
@@ -388,7 +388,7 @@ class AbstractAsyncSpaces(abc.ABC):
     async def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
+        """Removes `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
@@ -399,7 +399,7 @@ class AbstractAsyncSpaces(abc.ABC):
     async def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
+        """Removes a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
@@ -456,7 +456,7 @@ class Spaces(AbstractSpaces):
         has_pagination=False,
     )
     def add_acs_entrances(self, *, acs_entrance_ids: List[str], space_id: str) -> None:
-        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
+        """Adds `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
@@ -480,7 +480,7 @@ class Spaces(AbstractSpaces):
     def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
+        """Adds a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
@@ -764,7 +764,7 @@ class Spaces(AbstractSpaces):
     def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
+        """Removes `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
@@ -788,7 +788,7 @@ class Spaces(AbstractSpaces):
     def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
+        """Removes a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 
@@ -888,7 +888,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
     async def add_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Adds `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
+        """Adds `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ to a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to add to the space.
 
@@ -912,7 +912,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
     async def add_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Adds a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to a specific space.
+        """Adds a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ to a specific space.
 
         :param connected_account_id: ID of the connected account that you want to add to the space.
 
@@ -1196,7 +1196,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
     async def remove_acs_entrances(
         self, *, acs_entrance_ids: List[str], space_id: str
     ) -> None:
-        """Removes `entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
+        """Removes `entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ from a specific space.
 
         :param acs_entrance_ids: IDs of the entrances that you want to remove from the space.
 
@@ -1220,7 +1220,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
     async def remove_connected_account(
         self, *, connected_account_id: str, space_id: str
     ) -> None:
-        """Removes a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ from a specific space.
+        """Removes a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ from a specific space.
 
         :param connected_account_id: ID of the connected account that you want to remove from the space.
 

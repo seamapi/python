@@ -13,76 +13,76 @@ def _from_discriminated_dict(
 
 @dataclass
 class AcsCredential:
-    """Means by which an `access control system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ gains access at an `entrance <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_. The ``acs_credential`` object represents a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ that provides an ACS user access within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """Means by which an `access control system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ gains access at an `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_. The ``acs_credential`` object represents a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ that provides an ACS user access within an `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     An access control system generally uses digital means of access to authorize a user trying to get through a specific entrance. Examples of credentials include plastic key cards, mobile keys, biometric identifiers, and PIN codes. The electronic nature of these credentials, as well as the fact that access is centralized, enables both the rapid provisioning and rescinding of access and the ability to compile access audit logs.
 
     For each ``acs_credential``, you define the access method. You can also specify additional properties, such as a PIN code, depending on the credential type.
 
-    For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach. Use the lower-level ACS credential API directly only when you specifically need to manage individual credentials.
+    For granting a person access to a space, `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ are the default and recommended approach. Use the lower-level ACS credential API directly only when you specifically need to manage individual credentials.
 
-    :ivar access_method: Access method for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
+    :ivar access_method: Access method for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
-    :ivar acs_credential_id: ID of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar acs_credential_id: ID of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
     :ivar acs_credential_pool_id: ID of the credential pool to which the credential belongs.
 
-    :ivar acs_system_id: ID of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar acs_system_id: ID of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ that contains the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar acs_user_id: ID of the `ACS user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to whom the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ belongs.
+    :ivar acs_user_id: ID of the `ACS user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to whom the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ belongs.
 
-    :ivar akiles_metadata: Akiles-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar akiles_metadata: Akiles-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar assa_abloy_vostio_metadata: Vostio-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar assa_abloy_vostio_metadata: Vostio-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar card_number: Number of the card associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar card_number: Number of the card associated with the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar code: Access (PIN) code for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar code: Access (PIN) code for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar connected_account_id: ID of the `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_ to which the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ belongs.
+    :ivar connected_account_id: ID of the `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_ to which the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ belongs.
 
-    :ivar created_at: Date and time at which the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was created.
+    :ivar created_at: Date and time at which the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was created.
 
-    :ivar display_name: Display name that corresponds to the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ type.
+    :ivar display_name: Display name that corresponds to the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ type.
 
-    :ivar ends_at: Date and time at which the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ validity ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
+    :ivar ends_at: Date and time at which the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ validity ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
-    :ivar errors: Errors associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar errors: Errors associated with the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar external_type: Brand-specific terminology for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ type. Supported values: ``pti_card``, ``brivo_credential``, ``hid_credential``, ``visionline_card``.
+    :ivar external_type: Brand-specific terminology for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ type. Supported values: ``pti_card``, ``brivo_credential``, ``hid_credential``, ``visionline_card``.
 
-    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ type.
+    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ type.
 
-    :ivar is_issued: Indicates whether the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ has been encoded onto a card.
+    :ivar is_issued: Indicates whether the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ has been encoded onto a card.
 
-    :ivar is_latest_desired_state_synced_with_provider: Indicates whether the latest state of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ has been synced from Seam to the provider.
+    :ivar is_latest_desired_state_synced_with_provider: Indicates whether the latest state of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ has been synced from Seam to the provider.
 
     :ivar is_managed: Indicates whether Seam manages the credential.
 
-    :ivar is_multi_phone_sync_credential: Indicates whether the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is a `multi-phone sync credential <https://docs.seam.co/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
+    :ivar is_multi_phone_sync_credential: Indicates whether the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ is a `multi-phone sync credential <https://www.seam.co/docs/capability-guides/mobile-access/issuing-mobile-credentials-from-an-access-control-system#what-are-multi-phone-sync-credentials>`_.
 
-    :ivar is_one_time_use: Indicates whether the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ can only be used once. If ``true``, the code becomes invalid after the first use.
+    :ivar is_one_time_use: Indicates whether the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ can only be used once. If ``true``, the code becomes invalid after the first use.
 
-    :ivar issued_at: Date and time at which the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was encoded onto a card.
+    :ivar issued_at: Date and time at which the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was encoded onto a card.
 
-    :ivar latest_desired_state_synced_with_provider_at: Date and time at which the state of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was most recently synced from Seam to the provider.
+    :ivar latest_desired_state_synced_with_provider_at: Date and time at which the state of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was most recently synced from Seam to the provider.
 
-    :ivar parent_acs_credential_id: ID of the parent `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar parent_acs_credential_id: ID of the parent `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar starts_at: Date and time at which the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ validity starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+    :ivar starts_at: Date and time at which the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ validity starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
-    :ivar user_identity_id: ID of the `user identity <https://docs.seam.co/api/user_identities>`_ to whom the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ belongs.
+    :ivar user_identity_id: ID of the `user identity <https://www.seam.co/docs/api/user_identities/object>`_ to whom the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ belongs.
 
-    :ivar visionline_metadata: Visionline-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar visionline_metadata: Visionline-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar warnings: Warnings associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar warnings: Warnings associated with the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+    :ivar workspace_id: ID of the workspace that contains the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
     """
 
     @dataclass
     class AkilesMetadata(ResourceMapping):
-        """Akiles-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Akiles-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :ivar member_pin_id: ID of the Akiles member PIN."""
 
@@ -96,7 +96,7 @@ class AcsCredential:
 
     @dataclass
     class AssaAbloyVostioMetadata(ResourceMapping):
-        """Vostio-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Vostio-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
 
@@ -133,7 +133,7 @@ class AcsCredential:
 
     @dataclass
     class Errors(ResourceMapping):
-        """Errors associated with the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Errors associated with the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -155,7 +155,7 @@ class AcsCredential:
 
     @dataclass
     class VisionlineMetadata(ResourceMapping):
-        """Visionline-specific metadata for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_.
+        """Visionline-specific metadata for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_.
 
         :ivar auto_join: Indicates whether the credential should auto-join. For an auto-join credential, Seam automatically issues an override card if there are no other cards and a joiner card if there are existing cards on the doors.
 
@@ -198,7 +198,7 @@ class AcsCredential:
 
     @dataclass
     class WaitingToBeIssuedWarning(ResourceMapping):
-        """Indicates that the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is waiting to be issued.
+        """Indicates that the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ is waiting to be issued.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -221,7 +221,7 @@ class AcsCredential:
 
     @dataclass
     class ScheduleExternallyModifiedWarning(ResourceMapping):
-        """Indicates that the schedule of one of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_'s children was modified externally.
+        """Indicates that the schedule of one of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_'s children was modified externally.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -244,7 +244,7 @@ class AcsCredential:
 
     @dataclass
     class ScheduleModifiedWarning(ResourceMapping):
-        """Indicates that the schedule of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ was modified to avoid creating a credential with a start date in the past.
+        """Indicates that the schedule of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ was modified to avoid creating a credential with a start date in the past.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -267,7 +267,7 @@ class AcsCredential:
 
     @dataclass
     class BeingDeletedWarning(ResourceMapping):
-        """Indicates that the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ is being deleted.
+        """Indicates that the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ is being deleted.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -290,7 +290,7 @@ class AcsCredential:
 
     @dataclass
     class UnknownIssueWithAcsCredentialWarning(ResourceMapping):
-        """An unknown issue occurred while syncing the state of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ with the provider. This issue may affect the proper functioning of the credential.
+        """An unknown issue occurred while syncing the state of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ with the provider. This issue may affect the proper functioning of the credential.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -313,7 +313,7 @@ class AcsCredential:
 
     @dataclass
     class NeedsToBeReissuedWarning(ResourceMapping):
-        """Access permissions for the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ have changed. `Reissue <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners/creating-and-encoding-card-based-credentials>`_ (re-encode) the credential. This issue may affect the proper functioning of the credential.
+        """Access permissions for the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ have changed. `Reissue <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners/creating-and-encoding-card-based-credentials>`_ (re-encode) the credential. This issue may affect the proper functioning of the credential.
 
         :ivar created_at: Date and time at which Seam created the warning.
 

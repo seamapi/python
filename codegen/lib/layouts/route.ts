@@ -139,7 +139,26 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
   const abstractClassName = `Abstract${cls.name}`
   const asyncClassName = `Async${cls.name}`
   const asyncAbstractClassName = `AbstractAsync${cls.name}`
-  const methods = cls.methods.map(getMethodLayoutContext)
+
+  // A resource named like its route class (e.g. the media resource returned by
+  // the media route) would be shadowed by the route class, so import it under
+  // an alias.
+  const resourceAlias = `${cls.name}Resource`
+  const isResourceShadowed = resourceClasses.includes(cls.name)
+  const importedResourceClasses = resourceClasses.map((className) =>
+    className === cls.name ? `${className} as ${resourceAlias}` : className,
+  )
+  const methods = cls.methods.map(getMethodLayoutContext).map((method) =>
+    isResourceShadowed
+      ? {
+          ...method,
+          returnType: method.returnType.replace(
+            new RegExp(`^(List\\[)?${cls.name}(\\])?$`),
+            `$1${resourceAlias}$2`,
+          ),
+        }
+      : method,
+  )
 
   const importNull = methods.some(({ params }) =>
     params.some(({ isNullable }) => isNullable),
@@ -188,7 +207,7 @@ export const setRouteLayoutContext = (cls: ClassModel): RouteLayoutContext => {
       })),
       methods,
     },
-    resourceClasses,
+    resourceClasses: importedResourceClasses,
     childClasses: cls.childClassIdentifiers.map((identifier) => ({
       namespace: identifier.namespace,
       className: identifier.className,

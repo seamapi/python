@@ -8,6 +8,8 @@ from ..resource_mapping import ResourceMapping
 class DeviceProvider:
     """
 
+    :ivar can_activate_weekly_program: Indicates whether the thermostat can be returned to its weekly program, the schedule that is configured on the device itself, releasing any hold that Seam has set.
+
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
 
     :ivar can_hvac_cool: Indicates whether the thermostat supports cooling.
@@ -44,6 +46,8 @@ class DeviceProvider:
 
     :ivar can_simulate_removal: Indicates whether the device supports simulating removal in a sandbox.
 
+    :ivar can_stream_live_video: Indicates whether the camera supports streaming live video through a camera live view session.
+
     :ivar can_turn_off_hvac: Indicates whether the thermostat can be turned off.
 
     :ivar can_unlock_with_code: Indicates whether the lock supports unlocking with an access code.
@@ -57,6 +61,7 @@ class DeviceProvider:
     :ivar provider_categories: List of provider categories to which the device provider belongs, such as ``stable``, ``consumer_smartlocks``, ``thermostats``, and so on.
     """
 
+    can_activate_weekly_program: Optional[bool]
     can_configure_auto_lock: Optional[bool]
     can_hvac_cool: Optional[bool]
     can_hvac_heat: Optional[bool]
@@ -75,6 +80,7 @@ class DeviceProvider:
     can_simulate_hub_disconnection: Optional[bool]
     can_simulate_paid_subscription: Optional[bool]
     can_simulate_removal: Optional[bool]
+    can_stream_live_video: Optional[bool]
     can_turn_off_hvac: Optional[bool]
     can_unlock_with_code: Optional[bool]
     device_provider_name: Literal[
@@ -109,6 +115,7 @@ class DeviceProvider:
         "ecobee",
         "four_suites",
         "dormakaba_oracode",
+        "dormakaba_oracode_iho",
         "pti",
         "wyze",
         "seam_passport",
@@ -134,6 +141,9 @@ class DeviceProvider:
         "sifely",
         "thirty_three_lock",
         "ring",
+        "tapo",
+        "arlo",
+        "reolink",
         "ical",
         "lodgify",
         "hostaway",
@@ -161,6 +171,7 @@ class DeviceProvider:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
+            can_activate_weekly_program=d.get("can_activate_weekly_program", None),
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
@@ -193,6 +204,7 @@ class DeviceProvider:
                 "can_simulate_paid_subscription", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_stream_live_video=d.get("can_stream_live_video", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             device_provider_name=d.get("device_provider_name", None),

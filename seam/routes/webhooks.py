@@ -11,7 +11,7 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
-        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Creates a new `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
 
@@ -22,14 +22,14 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Deletes a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Gets a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
 
@@ -38,14 +38,14 @@ class AbstractWebhooks(abc.ABC):
 
     @abc.abstractmethod
     def list(self) -> List[Webhook]:
-        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Returns a list of all `webhooks <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Updates a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
 
@@ -59,7 +59,7 @@ class AbstractAsyncWebhooks(abc.ABC):
     async def create(
         self, *, url: str, event_types: Optional[List[str]] = None
     ) -> Webhook:
-        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Creates a new `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
 
@@ -70,14 +70,14 @@ class AbstractAsyncWebhooks(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Deletes a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Gets a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
 
@@ -86,14 +86,14 @@ class AbstractAsyncWebhooks(abc.ABC):
 
     @abc.abstractmethod
     async def list(self) -> List[Webhook]:
-        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Returns a list of all `webhooks <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Updates a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
 
@@ -110,7 +110,7 @@ class Webhooks(AbstractWebhooks):
         path="/webhooks/create", at_least_one_parameter_names=(), has_pagination=False
     )
     def create(self, *, url: str, event_types: Optional[List[str]] = None) -> Webhook:
-        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Creates a new `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
 
@@ -132,7 +132,7 @@ class Webhooks(AbstractWebhooks):
         path="/webhooks/delete", at_least_one_parameter_names=(), has_pagination=False
     )
     def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Deletes a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
         params: Dict[str, Any] = {}
@@ -148,7 +148,7 @@ class Webhooks(AbstractWebhooks):
         path="/webhooks/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Gets a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
 
@@ -166,7 +166,7 @@ class Webhooks(AbstractWebhooks):
         path="/webhooks/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(self) -> List[Webhook]:
-        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Returns a list of all `webhooks <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -182,7 +182,7 @@ class Webhooks(AbstractWebhooks):
         path="/webhooks/update", at_least_one_parameter_names=(), has_pagination=False
     )
     def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Updates a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
 
@@ -210,7 +210,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
     async def create(
         self, *, url: str, event_types: Optional[List[str]] = None
     ) -> Webhook:
-        """Creates a new `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Creates a new `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param url: URL for the new webhook.
 
@@ -232,7 +232,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
         path="/webhooks/delete", at_least_one_parameter_names=(), has_pagination=False
     )
     async def delete(self, *, webhook_id: str) -> None:
-        """Deletes a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Deletes a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to delete."""
         params: Dict[str, Any] = {}
@@ -248,7 +248,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
         path="/webhooks/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, webhook_id: str) -> Webhook:
-        """Gets a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Gets a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param webhook_id: ID of the webhook that you want to get.
 
@@ -266,7 +266,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
         path="/webhooks/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(self) -> List[Webhook]:
-        """Returns a list of all `webhooks <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Returns a list of all `webhooks <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -282,7 +282,7 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
         path="/webhooks/update", at_least_one_parameter_names=(), has_pagination=False
     )
     async def update(self, *, event_types: List[str], webhook_id: str) -> None:
-        """Updates a specified `webhook <https://docs.seam.co/developer-tools/webhooks>`_.
+        """Updates a specified `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_.
 
         :param event_types: Types of events that you want the webhook to receive.
 

@@ -13,58 +13,58 @@ def _from_discriminated_dict(
 
 @dataclass
 class AcsSystem:
-    """Represents an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """Represents an `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    Within an ``acs_system``, create ```acs_user``s <https://docs.seam.co/api/acs/users/object>`_ and ```acs_credential``s <https://docs.seam.co/api/acs/credentials/object>`_ to grant access to the ``acs_user``s.
+    Within an ``acs_system``, create ```acs_user``s <https://www.seam.co/docs/api/acs/users/object>`_ and ```acs_credential``s <https://www.seam.co/docs/api/acs/credentials/object>`_ to grant access to the ``acs_user``s.
 
-    For details about the resources associated with an access control system, see the `access control systems namespace <https://docs.seam.co/api/acs>`_.
+    For details about the resources associated with an access control system, see the `access control systems namespace <https://www.seam.co/docs/api/acs/object>`_.
 
-    :ivar acs_access_group_count: Number of access groups in the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar acs_access_group_count: Number of access groups in the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar acs_system_id: ID of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar acs_system_id: ID of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar acs_user_count: Number of users in the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar acs_user_count: Number of users in the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar connected_account_id: ID of the connected account associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar connected_account_id: ID of the connected account associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar connected_account_ids: Deprecated: Use ``connected_account_id``. IDs of the `connected accounts <https://docs.seam.co/core-concepts/connected-accounts>`_ associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar connected_account_ids: Deprecated: Use ``connected_account_id``. IDs of the `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_ associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar created_at: Date and time at which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ was created.
+    :ivar created_at: Date and time at which the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ was created.
 
-    :ivar default_credential_manager_acs_system_id: ID of the default credential manager ``acs_system`` for this `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar default_credential_manager_acs_system_id: ID of the default credential manager ``acs_system`` for this `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar errors: Errors associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar errors: Errors associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar external_type: Brand-specific terminology for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ type.
+    :ivar external_type: Brand-specific terminology for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ type.
 
-    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ type.
+    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ type.
 
-    :ivar image_alt_text: Alternative text for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ image.
+    :ivar image_alt_text: Alternative text for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ image.
 
-    :ivar image_url: URL for the image that represents the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar image_url: URL for the image that represents the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     :ivar is_credential_manager: Indicates whether the ``acs_system`` is a credential manager.
 
-    :ivar location: Location information for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar location: Location information for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar name: Name of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar name: Name of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     :ivar system_type: Deprecated: Use ``external_type``.
 
     :ivar system_type_display_name: Deprecated: Use ``external_type_display_name``.
 
-    :ivar visionline_metadata: Visionline-specific metadata for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar visionline_metadata: Visionline-specific metadata for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar warnings: Warnings associated with the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar warnings: Warnings associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    :ivar workspace_id: ID of the workspace that contains the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
     """
 
     @dataclass
     class SeamBridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline.
-        This error might also occur if Seam Bridge is connected to the wrong `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
-        See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline.
+        This error might also occur if Seam Bridge is connected to the wrong `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
+        See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -87,14 +87,14 @@ class AcsSystem:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline.
-        See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline.
+        See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to the `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to the `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
         """
@@ -115,9 +115,9 @@ class AcsSystem:
 
     @dataclass
     class VisionlineInstanceUnreachableError(ResourceMapping):
-        """Indicates that `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_ is functioning correctly and the Seam API can communicate with Seam Bridge, but the Seam API cannot connect to the on-premises `Visionline access control system <https://docs.seam.co/device-and-system-integration-guides/assa-abloy-visionline-access-control-system>`_.
-        For example, the IP address of the on-premises access control system may be set incorrectly within the Seam `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
-        See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-visionline_instance_unreachable>`_.
+        """Indicates that `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_ is functioning correctly and the Seam API can communicate with Seam Bridge, but the Seam API cannot connect to the on-premises `Visionline access control system <https://www.seam.co/docs/device-and-system-integration-guides/assa-abloy-visionline-access-control-system>`_.
+        For example, the IP address of the on-premises access control system may be set incorrectly within the Seam `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
+        See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-visionline_instance_unreachable>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -163,7 +163,7 @@ class AcsSystem:
 
     @dataclass
     class InsufficientPermissionsError(ResourceMapping):
-        """Indicates that Seam's integration user does not have sufficient permissions on the provider's system backing this `access control system <https://docs.seam.co/low-level-apis/access-systems>`_. Access cannot be managed until permissions are restored. See the error message for specifics, then either reauthorize the connected account in Seam or grant the integration user the required permissions in the provider's system.
+        """Indicates that the provider's system backing this `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ is not letting Seam act on it, so access cannot be managed until this is resolved. The error message says which of two causes applies. Either Seam's integration user does not have sufficient permissions on the provider's system, or has been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. Or the provider account or site does not have a valid subscription with the provider: set up or renew that subscription with the provider.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -186,7 +186,7 @@ class AcsSystem:
 
     @dataclass
     class AcsSystemDisconnectedError(ResourceMapping):
-        """Indicates that the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ has been disconnected. See `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system>`_ to resolve the issue.
+        """Indicates that the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ has been disconnected. See `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system>`_ to resolve the issue.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -209,7 +209,7 @@ class AcsSystem:
 
     @dataclass
     class AccountDisconnectedError(ResourceMapping):
-        """Indicates that the login credentials are invalid. Reconnect the account using a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ to restore access.
+        """Indicates that the login credentials are invalid. Reconnect the account using a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ to restore access.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -232,7 +232,7 @@ class AcsSystem:
 
     @dataclass
     class SaltoKsCertificationExpiredError(ResourceMapping):
-        """Indicates that the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ has lost its Salto KS certification. Contact `support <mailto:support@seam.co>`_ to regain access.
+        """Indicates that the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ has lost its Salto KS certification. Contact `support <mailto:support@seam.co>`_ to regain access.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -278,9 +278,9 @@ class AcsSystem:
 
     @dataclass
     class Location(ResourceMapping):
-        """Location information for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Location information for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-        :ivar time_zone: Time zone in which the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ is located.
+        :ivar time_zone: Time zone in which the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ is located.
         """
 
         time_zone: Optional[str]
@@ -293,9 +293,9 @@ class AcsSystem:
 
     @dataclass
     class VisionlineMetadata(ResourceMapping):
-        """Visionline-specific metadata for the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+        """Visionline-specific metadata for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-        :ivar lan_address: IP address or hostname of the main Visionline server relative to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_ on the local network.
+        :ivar lan_address: IP address or hostname of the main Visionline server relative to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_ on the local network.
 
         :ivar mobile_access_uuid: Keyset loaded into a reader. Mobile keys and reader administration tools securely authenticate only with readers programmed with a matching keyset.
 
@@ -339,7 +339,7 @@ class AcsSystem:
 
     @dataclass
     class TimeZoneDoesNotMatchLocationWarning(ResourceMapping):
-        """Indicates the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ time zone could not be determined because the reported physical location does not match the time zone configured on the physical `ACS entrances <https://docs.seam.co/low-level-apis/access-systems/retrieving-entrance-details>`_.
+        """Indicates the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ time zone could not be determined because the reported physical location does not match the time zone configured on the physical `ACS entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -391,7 +391,7 @@ class AcsSystem:
 
     @dataclass
     class UnknownIssueWithAcsSystemWarning(ResourceMapping):
-        """Indicates that Seam encountered an unexpected error while syncing this `access control system <https://docs.seam.co/low-level-apis/access-systems>`_, so its users, credentials, and access groups may be out of date. Seam retries on every sync cycle and clears this warning once a sync succeeds; if it persists, contact `support <mailto:support@seam.co>`_.
+        """Indicates that Seam encountered an unexpected error while syncing this `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_, so its users, credentials, and access groups may be out of date. Seam retries on every sync cycle and clears this warning once a sync succeeds; if it persists, contact `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the warning.
 

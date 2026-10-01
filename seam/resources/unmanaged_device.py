@@ -13,7 +13,9 @@ def _from_discriminated_dict(
 
 @dataclass
 class UnmanagedDevice:
-    """Represents an `unmanaged device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_. An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+    """Represents an `unmanaged device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_. An unmanaged device has a limited set of visible properties and a subset of supported events. You cannot control an unmanaged device. Any `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/migrating-existing-access-codes>`_ on an unmanaged device are unmanaged. To control an unmanaged device with Seam, `convert it to a managed device <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices#convert-an-unmanaged-device-to-managed>`_.
+
+    :ivar can_activate_weekly_program: Indicates whether the thermostat can be returned to its weekly program, the schedule that is configured on the device itself, releasing any hold that Seam has set.
 
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
 
@@ -51,17 +53,19 @@ class UnmanagedDevice:
 
     :ivar can_simulate_removal: Indicates whether the device supports simulating removal in a sandbox.
 
+    :ivar can_stream_live_video: Indicates whether the camera supports streaming live video through a camera live view session.
+
     :ivar can_turn_off_hvac: Indicates whether the thermostat can be turned off.
 
     :ivar can_unlock_with_code: Indicates whether the lock supports unlocking with an access code.
 
-    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_.
+    :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_.
 
     :ivar connected_account_id: Unique identifier for the account associated with the device.
 
     :ivar created_at: Date and time at which the device object was created.
 
-    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
+    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
 
     :ivar device_id: ID of the device.
 
@@ -90,7 +94,7 @@ class UnmanagedDevice:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -121,7 +125,7 @@ class UnmanagedDevice:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -146,13 +150,13 @@ class UnmanagedDevice:
 
     @dataclass
     class InsufficientPermissionsError(ResourceMapping):
-        """Indicates that Seam's integration user does not have sufficient permissions on the provider's system to which this device belongs, so Seam cannot manage access codes or unlock the device. See the error message for specifics, then either reauthorize the connected account in Seam or grant the integration user the required permissions in the provider's system.
+        """Indicates that the provider's system to which this device belongs is not letting Seam act on it, so Seam cannot manage access codes or unlock the device. The error message says which of three causes applies. Seam's integration user may not have sufficient permissions on the provider's system, or may have been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. The provider account or site may not have a valid subscription with the provider: set up or renew that subscription with the provider. Or the provider may have rejected the credential Seam uses to operate the device's hub: contact Seam support to re-activate it.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -183,7 +187,7 @@ class UnmanagedDevice:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -316,7 +320,7 @@ class UnmanagedDevice:
 
     @dataclass
     class EmptyBackupAccessCodePoolError(ResourceMapping):
-        """Indicates that the `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
+        """Indicates that the `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -451,13 +455,13 @@ class UnmanagedDevice:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -1427,6 +1431,7 @@ class UnmanagedDevice:
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
     }
 
+    can_activate_weekly_program: Optional[bool]
     can_configure_auto_lock: Optional[bool]
     can_hvac_cool: Optional[bool]
     can_hvac_heat: Optional[bool]
@@ -1445,6 +1450,7 @@ class UnmanagedDevice:
     can_simulate_hub_disconnection: Optional[bool]
     can_simulate_paid_subscription: Optional[bool]
     can_simulate_removal: Optional[bool]
+    can_stream_live_video: Optional[bool]
     can_turn_off_hvac: Optional[bool]
     can_unlock_with_code: Optional[bool]
     capabilities_supported: List[
@@ -1500,6 +1506,9 @@ class UnmanagedDevice:
         "ios_phone",
         "android_phone",
         "ring_camera",
+        "tapo_camera",
+        "arlo_camera",
+        "reolink_camera",
     ]
     display_name: str
     errors: List[Errors]
@@ -1512,6 +1521,7 @@ class UnmanagedDevice:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
+            can_activate_weekly_program=d.get("can_activate_weekly_program", None),
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
@@ -1544,6 +1554,7 @@ class UnmanagedDevice:
                 "can_simulate_paid_subscription", None
             ),
             can_simulate_removal=d.get("can_simulate_removal", None),
+            can_stream_live_video=d.get("can_stream_live_video", None),
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             capabilities_supported=d.get("capabilities_supported", None),

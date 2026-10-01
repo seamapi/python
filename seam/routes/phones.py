@@ -22,14 +22,14 @@ class AbstractPhones(abc.ABC):
 
     @abc.abstractmethod
     def deactivate(self, *, device_id: str) -> None:
-        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
+        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def get(self, *, device_id: str) -> Phone:
-        """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
+        """Returns a specified `phone <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
@@ -43,9 +43,9 @@ class AbstractPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
-        """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
+        """Returns a list of all `phones <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 
-        :param acs_credential_id: ID of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
+        :param acs_credential_id: ID of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
 
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 
@@ -62,14 +62,14 @@ class AbstractAsyncPhones(abc.ABC):
 
     @abc.abstractmethod
     async def deactivate(self, *, device_id: str) -> None:
-        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
+        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def get(self, *, device_id: str) -> Phone:
-        """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
+        """Returns a specified `phone <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
@@ -83,9 +83,9 @@ class AbstractAsyncPhones(abc.ABC):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
-        """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
+        """Returns a list of all `phones <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 
-        :param acs_credential_id: ID of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
+        :param acs_credential_id: ID of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
 
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 
@@ -107,7 +107,7 @@ class Phones(AbstractPhones):
         path="/phones/deactivate", at_least_one_parameter_names=(), has_pagination=False
     )
     def deactivate(self, *, device_id: str) -> None:
-        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
+        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
         params: Dict[str, Any] = {}
@@ -123,7 +123,7 @@ class Phones(AbstractPhones):
         path="/phones/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self, *, device_id: str) -> Phone:
-        """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
+        """Returns a specified `phone <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
@@ -146,9 +146,9 @@ class Phones(AbstractPhones):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
-        """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
+        """Returns a list of all `phones <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 
-        :param acs_credential_id: ID of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
+        :param acs_credential_id: ID of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
 
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 
@@ -181,7 +181,7 @@ class AsyncPhones(AbstractAsyncPhones):
         path="/phones/deactivate", at_least_one_parameter_names=(), has_pagination=False
     )
     async def deactivate(self, *, device_id: str) -> None:
-        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
+        """Deactivates a phone, which is useful, for example, if a user has lost their phone. For more information, see `App User Lost Phone Process <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity#app-user-lost-phone-process>`_.
 
         :param device_id: Device ID of the phone that you want to deactivate."""
         params: Dict[str, Any] = {}
@@ -197,7 +197,7 @@ class AsyncPhones(AbstractAsyncPhones):
         path="/phones/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self, *, device_id: str) -> Phone:
-        """Returns a specified `phone <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
+        """Returns a specified `phone <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_.
 
         :param device_id: Device ID of the phone that you want to get.
 
@@ -220,9 +220,9 @@ class AsyncPhones(AbstractAsyncPhones):
         acs_credential_id: Optional[str] = None,
         owner_user_identity_id: Optional[str] = None,
     ) -> List[Phone]:
-        """Returns a list of all `phones <https://docs.seam.co/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
+        """Returns a list of all `phones <https://www.seam.co/docs/capability-guides/mobile-access/managing-phones-for-a-user-identity>`_. To filter the list of returned phones by a specific owner user identity or credential, include the ``owner_user_identity_id`` or ``acs_credential_id``, respectively, in the request body.
 
-        :param acs_credential_id: ID of the `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
+        :param acs_credential_id: ID of the `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ by which you want to filter the list of returned phones.
 
         :param owner_user_identity_id: ID of the user identity that represents the owner by which you want to filter the list of returned phones.
 

@@ -11,7 +11,7 @@ class AbstractInstantKeys(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, instant_key_id: str) -> None:
-        """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Deletes a specified `Instant Key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
         raise NotImplementedError()
@@ -23,7 +23,7 @@ class AbstractInstantKeys(abc.ABC):
         instant_key_id: Optional[str] = None,
         instant_key_url: Optional[str] = None,
     ) -> InstantKey:
-        """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Gets an `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
 
@@ -36,7 +36,7 @@ class AbstractInstantKeys(abc.ABC):
 
     @abc.abstractmethod
     def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
-        """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Returns a list of all `instant keys <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 
@@ -48,7 +48,7 @@ class AbstractAsyncInstantKeys(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, instant_key_id: str) -> None:
-        """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Deletes a specified `Instant Key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
         raise NotImplementedError()
@@ -60,7 +60,7 @@ class AbstractAsyncInstantKeys(abc.ABC):
         instant_key_id: Optional[str] = None,
         instant_key_url: Optional[str] = None,
     ) -> InstantKey:
-        """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Gets an `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
 
@@ -73,7 +73,7 @@ class AbstractAsyncInstantKeys(abc.ABC):
 
     @abc.abstractmethod
     async def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
-        """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Returns a list of all `instant keys <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 
@@ -92,7 +92,7 @@ class InstantKeys(AbstractInstantKeys):
         has_pagination=False,
     )
     def delete(self, *, instant_key_id: str) -> None:
-        """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Deletes a specified `Instant Key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
         params: Dict[str, Any] = {}
@@ -118,7 +118,7 @@ class InstantKeys(AbstractInstantKeys):
         instant_key_id: Optional[str] = None,
         instant_key_url: Optional[str] = None,
     ) -> InstantKey:
-        """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Gets an `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
 
@@ -151,7 +151,7 @@ class InstantKeys(AbstractInstantKeys):
         path="/instant_keys/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
-        """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Returns a list of all `instant keys <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 
@@ -180,7 +180,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
         has_pagination=False,
     )
     async def delete(self, *, instant_key_id: str) -> None:
-        """Deletes a specified `Instant Key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Deletes a specified `Instant Key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the Instant Key that you want to delete."""
         params: Dict[str, Any] = {}
@@ -206,7 +206,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
         instant_key_id: Optional[str] = None,
         instant_key_url: Optional[str] = None,
     ) -> InstantKey:
-        """Gets an `instant key <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Gets an `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param instant_key_id: ID of the instant key to get.
 
@@ -239,7 +239,7 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
         path="/instant_keys/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(self, *, user_identity_id: Optional[str] = None) -> List[InstantKey]:
-        """Returns a list of all `instant keys <https://docs.seam.co/capability-guides/instant-keys>`_.
+        """Returns a list of all `instant keys <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_.
 
         :param user_identity_id: ID of the user identity by which you want to filter the list of Instant Keys.
 

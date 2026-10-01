@@ -13,15 +13,15 @@ def _from_discriminated_dict(
 
 @dataclass
 class AccessCode:
-    """Represents a smart lock `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+    """Represents a smart lock `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
     An access code is a code used for a keypad or pinpad device. Unlike physical keys, which can easily be lost or duplicated, PIN codes can be customized, tracked, and altered on the fly. Using the Seam Access Code API, you can easily generate access codes on the hundreds of door lock models with which we integrate.
 
-    Seam supports programming two types of access codes: `ongoing <https://docs.seam.co/low-level-apis/smart-locks/access-codes#ongoing-access-codes>`_ and `time-bound <https://docs.seam.co/low-level-apis/smart-locks/access-codes#time-bound-access-codes>`_. To differentiate between the two, refer to the ``type`` property of the access code. Ongoing codes display as ``ongoing``, whereas time-bound codes are labeled ``time_bound``. An ongoing access code is active, until it has been removed from the device. To specify an ongoing access code, leave both ``starts_at`` and ``ends_at`` empty. A time-bound access code will be programmed at the ``starts_at`` time and removed at the ``ends_at`` time.
+    Seam supports programming two types of access codes: `ongoing <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes#ongoing-access-codes>`_ and `time-bound <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes#time-bound-access-codes>`_. To differentiate between the two, refer to the ``type`` property of the access code. Ongoing codes display as ``ongoing``, whereas time-bound codes are labeled ``time_bound``. An ongoing access code is active, until it has been removed from the device. To specify an ongoing access code, leave both ``starts_at`` and ``ends_at`` empty. A time-bound access code will be programmed at the ``starts_at`` time and removed at the ``ends_at`` time.
 
-    In addition, for certain devices, Seam also supports `offline access codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes#offline-access-codes>`_. Offline access (PIN) codes are designed for door locks that might not always maintain an internet connection. For this type of access code, the device manufacturer uses encryption keys (tokens) to create server-based registries of algorithmically-generated offline PIN codes. Because the tokens remain synchronized with the managed devices, the locks do not require an active internet connection—and you do not need to be near the locks—to create an offline access code. Then, owners or managers can share these offline codes with users through a variety of mechanisms, such as messaging applications. That is, lock users do not need to install a smartphone application to receive an offline access code.
+    In addition, for certain devices, Seam also supports `offline access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes#offline-access-codes>`_. Offline access (PIN) codes are designed for door locks that might not always maintain an internet connection. For this type of access code, the device manufacturer uses encryption keys (tokens) to create server-based registries of algorithmically-generated offline PIN codes. Because the tokens remain synchronized with the managed devices, the locks do not require an active internet connection—and you do not need to be near the locks—to create an offline access code. Then, owners or managers can share these offline codes with users through a variety of mechanisms, such as messaging applications. That is, lock users do not need to install a smartphone application to receive an offline access code.
 
-    For granting a person access to a space, `Access Grants <https://docs.seam.co/use-cases/granting-access>`_ are the default and recommended approach and work across both standalone smart locks and access systems. Use the lower-level Access Codes API directly only when you specifically need to manage individual PIN codes.
+    For granting a person access to a space, `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ are the default and recommended approach and work across both standalone smart locks and access systems. Use the lower-level Access Codes API directly only when you specifically need to manage individual PIN codes.
 
     :ivar access_code_id: Unique identifier for the access code.
 
@@ -33,11 +33,13 @@ class AccessCode:
 
     :ivar device_id: Unique identifier for the device associated with the access code.
 
+    :ivar display_status: Human-readable label for where this access code sits in its lifecycle, for example ``Active``, ``Issuing``, or ``Expired``. For display only. The wording is not stable and is not an enumeration — it may change at any time, so never compare against or branch on it. To make decisions, read ``pending_mutations``, ``errors``, ``warnings``, ``starts_at``, and ``ends_at``.
+
     :ivar dormakaba_oracode_metadata: Metadata for a dormakaba Oracode managed access code. Only present for access codes from dormakaba Oracode devices.
 
     :ivar ends_at: Date and time after which the time-bound access code becomes inactive.
 
-    :ivar errors: Errors associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+    :ivar errors: Errors associated with the `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
     :ivar is_backup: Indicates whether the access code is a backup code.
 
@@ -63,11 +65,11 @@ class AccessCode:
 
     :ivar starts_at: Date and time at which the time-bound access code becomes active.
 
-    :ivar status: Current status of the access code within the operational lifecycle. Values are ``setting``, a transitional phase that indicates that the code is being configured or activated; ``set``, which indicates that the code is active and operational; ``unset``, which indicates a deactivated or unused state, either before activation or after deliberate deactivation; ``removing``, which indicates a transitional period in which the code is being deleted or made inactive; and ``unknown``, which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting. See also `Lifecycle of Access Codes <https://docs.seam.co/low-level-apis/smart-locks/access-codes/lifecycle-of-access-codes>`_.
+    :ivar status: Deprecated: Use ``display_status`` to show a person the code's state. To make decisions, read ``pending_mutations``, ``errors``, ``warnings``, ``starts_at``, and ``ends_at``. Current status of the access code within the operational lifecycle. Values are ``setting``, a transitional phase that indicates that the code is being configured or activated; ``set``, which indicates that the code is active and operational; ``unset``, which indicates a deactivated or unused state, either before activation or after deliberate deactivation; ``removing``, which indicates a transitional period in which the code is being deleted or made inactive; and ``unknown``, which indicates an indeterminate state, due to reasons such as system errors or incomplete data, that highlights a potential need for system review or troubleshooting. See also `Lifecycle of Access Codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/lifecycle-of-access-codes>`_.
 
     :ivar type: Type of the access code. ``ongoing`` access codes are active continuously until deactivated manually. ``time_bound`` access codes have a specific duration.
 
-    :ivar warnings: Warnings associated with the `access code <https://docs.seam.co/low-level-apis/smart-locks/access-codes>`_.
+    :ivar warnings: Warnings associated with the `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
     :ivar workspace_id: Unique identifier for the Seam workspace associated with the access code.
     """
@@ -427,8 +429,8 @@ class AccessCode:
             )
 
     @dataclass
-    class FailedToExpireError(ResourceMapping):
-        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to remove it, and this error clears automatically once the access code is no longer active.
+    class FailedToDeleteError(ResourceMapping):
+        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to delete it, and this error clears automatically once the access code is no longer active.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -440,7 +442,7 @@ class AccessCode:
         """
 
         created_at: Optional[str]
-        error_code: Literal["failed_to_expire"]
+        error_code: Literal["failed_to_delete"]
         is_access_code_error: Literal[True]
         message: str
 
@@ -461,7 +463,7 @@ class AccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -492,7 +494,7 @@ class AccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -517,13 +519,13 @@ class AccessCode:
 
     @dataclass
     class InsufficientPermissionsError(ResourceMapping):
-        """Indicates that Seam's integration user does not have sufficient permissions on the provider's system to which this device belongs, so Seam cannot manage access codes or unlock the device. See the error message for specifics, then either reauthorize the connected account in Seam or grant the integration user the required permissions in the provider's system.
+        """Indicates that the provider's system to which this device belongs is not letting Seam act on it, so Seam cannot manage access codes or unlock the device. The error message says which of three causes applies. Seam's integration user may not have sufficient permissions on the provider's system, or may have been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. The provider account or site may not have a valid subscription with the provider: set up or renew that subscription with the provider. Or the provider may have rejected the credential Seam uses to operate the device's hub: contact Seam support to re-activate it.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -554,7 +556,7 @@ class AccessCode:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://docs.seam.co/api/connected_accounts>`_ error.
+        :ivar is_connected_account_error: Indicates that the error is a `connected account <https://www.seam.co/docs/api/connected_accounts/object>`_ error.
 
         :ivar is_device_error: Indicates that the error is not a device error.
 
@@ -687,7 +689,7 @@ class AccessCode:
 
     @dataclass
     class EmptyBackupAccessCodePoolError(ResourceMapping):
-        """Indicates that the `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
+        """Indicates that the `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is empty.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -822,13 +824,13 @@ class AccessCode:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -1438,7 +1440,7 @@ class AccessCode:
         CodeConstraintsViolatedError,
         FailedToIssueError,
         FailedToUpdateError,
-        FailedToExpireError,
+        FailedToDeleteError,
         AccountDisconnectedError,
         SaltoKsSubscriptionLimitExceededError,
         InsufficientPermissionsError,
@@ -1465,7 +1467,7 @@ class AccessCode:
         "code_constraints_violated": CodeConstraintsViolatedError,
         "failed_to_issue": FailedToIssueError,
         "failed_to_update": FailedToUpdateError,
-        "failed_to_expire": FailedToExpireError,
+        "failed_to_delete": FailedToDeleteError,
         "account_disconnected": AccountDisconnectedError,
         "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
         "insufficient_permissions": InsufficientPermissionsError,
@@ -1533,6 +1535,7 @@ class AccessCode:
     common_code_key: Optional[str]
     created_at: str
     device_id: str
+    display_status: str
     dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
     ends_at: Optional[str]
     errors: List[Errors]
@@ -1561,6 +1564,7 @@ class AccessCode:
             common_code_key=d.get("common_code_key", None),
             created_at=d.get("created_at", None),
             device_id=d.get("device_id", None),
+            display_status=d.get("display_status", None),
             dormakaba_oracode_metadata=(
                 cls.DormakabaOracodeMetadata.from_dict(
                     d.get("dormakaba_oracode_metadata")

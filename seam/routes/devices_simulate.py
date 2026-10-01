@@ -8,7 +8,7 @@ class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     def connect(self, *, device_id: str) -> None:
-        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
         """
@@ -26,7 +26,7 @@ class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     def disconnect(self, *, device_id: str) -> None:
-        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
         """
@@ -56,7 +56,7 @@ class AbstractDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     def remove(self, *, device_id: str) -> None:
-        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
         """
@@ -67,7 +67,7 @@ class AbstractAsyncDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     async def connect(self, *, device_id: str) -> None:
-        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
         """
@@ -85,7 +85,7 @@ class AbstractAsyncDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     async def disconnect(self, *, device_id: str) -> None:
-        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
         """
@@ -115,7 +115,7 @@ class AbstractAsyncDevicesSimulate(abc.ABC):
 
     @abc.abstractmethod
     async def remove(self, *, device_id: str) -> None:
-        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
         """
@@ -133,7 +133,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         has_pagination=False,
     )
     def connect(self, *, device_id: str) -> None:
-        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
         """
@@ -173,7 +173,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         has_pagination=False,
     )
     def disconnect(self, *, device_id: str) -> None:
-        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
         """
@@ -238,7 +238,7 @@ class DevicesSimulate(AbstractDevicesSimulate):
         has_pagination=False,
     )
     def remove(self, *, device_id: str) -> None:
-        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
         """
@@ -263,7 +263,7 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
         has_pagination=False,
     )
     async def connect(self, *, device_id: str) -> None:
-        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates connecting a device to Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate connecting to Seam.
         """
@@ -303,7 +303,7 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
         has_pagination=False,
     )
     async def disconnect(self, *, device_id: str) -> None:
-        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates disconnecting a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate disconnecting from Seam.
         """
@@ -370,7 +370,7 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
         has_pagination=False,
     )
     async def remove(self, *, device_id: str) -> None:
-        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://docs.seam.co/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
+        """Simulates removing a device from Seam. Only applicable for `sandbox devices <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_. See also `Testing Your App Against Device Disconnection and Removal <https://www.seam.co/docs/core-concepts/devices/testing-your-app-against-device-disconnection-and-removal>`_.
 
         :param device_id: ID of the device that you want to simulate removing from Seam.
         """

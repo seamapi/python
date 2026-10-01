@@ -27,6 +27,7 @@ from .action_attempts import (
     AbstractAsyncActionAttempts,
     AsyncActionAttempts,
 )
+from .cameras import AbstractCameras, Cameras, AbstractAsyncCameras, AsyncCameras
 from .client_sessions import (
     AbstractClientSessions,
     ClientSessions,
@@ -60,6 +61,7 @@ from .instant_keys import (
     AsyncInstantKeys,
 )
 from .locks import AbstractLocks, Locks, AbstractAsyncLocks, AsyncLocks
+from .media import AbstractMedia, Media, AbstractAsyncMedia, AsyncMedia
 from .noise_sensors import (
     AbstractNoiseSensors,
     NoiseSensors,
@@ -96,6 +98,7 @@ class AbstractRoutes(abc.ABC):
     access_methods: AbstractAccessMethods
     acs: AbstractAcs
     action_attempts: AbstractActionAttempts
+    cameras: AbstractCameras
     client_sessions: AbstractClientSessions
     connect_webviews: AbstractConnectWebviews
     connected_accounts: AbstractConnectedAccounts
@@ -104,6 +107,7 @@ class AbstractRoutes(abc.ABC):
     events: AbstractEvents
     instant_keys: AbstractInstantKeys
     locks: AbstractLocks
+    media: AbstractMedia
     noise_sensors: AbstractNoiseSensors
     phones: AbstractPhones
     spaces: AbstractSpaces
@@ -120,6 +124,7 @@ class AbstractAsyncRoutes(abc.ABC):
     access_methods: AbstractAsyncAccessMethods
     acs: AbstractAsyncAcs
     action_attempts: AbstractAsyncActionAttempts
+    cameras: AbstractAsyncCameras
     client_sessions: AbstractAsyncClientSessions
     connect_webviews: AbstractAsyncConnectWebviews
     connected_accounts: AbstractAsyncConnectedAccounts
@@ -128,6 +133,7 @@ class AbstractAsyncRoutes(abc.ABC):
     events: AbstractAsyncEvents
     instant_keys: AbstractAsyncInstantKeys
     locks: AbstractAsyncLocks
+    media: AbstractAsyncMedia
     noise_sensors: AbstractAsyncNoiseSensors
     phones: AbstractAsyncPhones
     spaces: AbstractAsyncSpaces
@@ -144,6 +150,7 @@ class Routes(AbstractRoutes):
         self.access_methods = AccessMethods(client=client, defaults=defaults)
         self.acs = Acs(client=client, defaults=defaults)
         self.action_attempts = ActionAttempts(client=client, defaults=defaults)
+        self.cameras = Cameras(client=client, defaults=defaults)
         self.client_sessions = ClientSessions(client=client, defaults=defaults)
         self.connect_webviews = ConnectWebviews(client=client, defaults=defaults)
         self.connected_accounts = ConnectedAccounts(client=client, defaults=defaults)
@@ -152,6 +159,7 @@ class Routes(AbstractRoutes):
         self.events = Events(client=client, defaults=defaults)
         self.instant_keys = InstantKeys(client=client, defaults=defaults)
         self.locks = Locks(client=client, defaults=defaults)
+        self.media = Media(client=client, defaults=defaults)
         self.noise_sensors = NoiseSensors(client=client, defaults=defaults)
         self.phones = Phones(client=client, defaults=defaults)
         self.spaces = Spaces(client=client, defaults=defaults)
@@ -168,6 +176,7 @@ class AsyncRoutes(AbstractAsyncRoutes):
         self.access_methods = AsyncAccessMethods(client=client, defaults=defaults)
         self.acs = AsyncAcs(client=client, defaults=defaults)
         self.action_attempts = AsyncActionAttempts(client=client, defaults=defaults)
+        self.cameras = AsyncCameras(client=client, defaults=defaults)
         self.client_sessions = AsyncClientSessions(client=client, defaults=defaults)
         self.connect_webviews = AsyncConnectWebviews(client=client, defaults=defaults)
         self.connected_accounts = AsyncConnectedAccounts(
@@ -178,6 +187,7 @@ class AsyncRoutes(AbstractAsyncRoutes):
         self.events = AsyncEvents(client=client, defaults=defaults)
         self.instant_keys = AsyncInstantKeys(client=client, defaults=defaults)
         self.locks = AsyncLocks(client=client, defaults=defaults)
+        self.media = AsyncMedia(client=client, defaults=defaults)
         self.noise_sensors = AsyncNoiseSensors(client=client, defaults=defaults)
         self.phones = AsyncPhones(client=client, defaults=defaults)
         self.spaces = AsyncSpaces(client=client, defaults=defaults)

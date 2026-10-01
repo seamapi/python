@@ -13,66 +13,66 @@ def _from_discriminated_dict(
 
 @dataclass
 class AcsUser:
-    """Represents a `user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in an `access system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """Represents a `user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in an `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     An access system user typically refers to an individual who requires access, like an employee or resident. Each user can possess multiple credentials that serve as their keys or identifiers for access. The type of credential can vary widely. For example, in the Salto system, a user can have a PIN code, a mobile app account, and a fob. In other platforms, it is not uncommon for a user to have more than one of the same credential type, such as multiple key cards. Additionally, these credentials can have a schedule or validity period.
 
-    For details about how to configure users in your access system, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
+    For details about how to configure users in your access system, see the corresponding `system integration guide <https://www.seam.co/docs/device-and-system-integration-guides#access-control-systems>`_.
 
-    :ivar access_schedule: ``starts_at`` and ``ends_at`` timestamps for the `access system user's <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access.
+    :ivar access_schedule: ``starts_at`` and ``ends_at`` timestamps for the `access system user's <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access.
 
-    :ivar acs_system_id: ID of the `access system <https://docs.seam.co/low-level-apis/access-systems>`_ that contains the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar acs_system_id: ID of the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_ that contains the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar acs_user_id: ID of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar acs_user_id: ID of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar connected_account_id: The ID of the connected account that is associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar connected_account_id: The ID of the connected account that is associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar created_at: Date and time at which the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was created.
+    :ivar created_at: Date and time at which the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was created.
 
-    :ivar display_name: Display name for the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar display_name: Display name for the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
     :ivar email: Deprecated: use email_address.
 
-    :ivar email_address: Email address of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar errors: Errors associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar errors: Errors associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar external_type: Brand-specific terminology for the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ type.
+    :ivar external_type: Brand-specific terminology for the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ type.
 
-    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ type.
+    :ivar external_type_display_name: Display name that corresponds to the brand-specific terminology for the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ type.
 
-    :ivar full_name: Full name of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar full_name: Full name of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
     :ivar hid_acs_system_id: ID of the HID access control system associated with the user.
 
     :ivar is_managed: Indicates whether Seam manages the access system user.
 
-    :ivar is_suspended: Indicates whether the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ is currently `suspended <https://docs.seam.co/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users>`_.
+    :ivar is_suspended: Indicates whether the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ is currently `suspended <https://www.seam.co/docs/low-level-apis/access-systems/user-management/suspending-and-unsuspending-users>`_.
 
-    :ivar pending_mutations: Pending mutations associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_. Seam is in the process of pushing these mutations to the integrated access system.
+    :ivar pending_mutations: Pending mutations associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_. Seam is in the process of pushing these mutations to the integrated access system.
 
-    :ivar phone_number: Phone number of the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+    :ivar phone_number: Phone number of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
 
-    :ivar salto_ks_metadata: Salto KS-specific metadata associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar salto_ks_metadata: Salto KS-specific metadata associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar salto_space_metadata: Salto Space-specific metadata associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar salto_space_metadata: Salto Space-specific metadata associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar user_identity_email_address: Email address of the user identity associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar user_identity_email_address: Email address of the user identity associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar user_identity_full_name: Full name of the user identity associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar user_identity_full_name: Full name of the user identity associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar user_identity_id: ID of the user identity associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar user_identity_id: ID of the user identity associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar user_identity_phone_number: Phone number of the user identity associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
+    :ivar user_identity_phone_number: Phone number of the user identity associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ in E.164 format (for example, ``+15555550100``).
 
-    :ivar warnings: Warnings associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar warnings: Warnings associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+    :ivar workspace_id: ID of the workspace that contains the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
     """
 
     @dataclass
     class AccessSchedule(ResourceMapping):
-        """``starts_at`` and ``ends_at`` timestamps for the `access system user's <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ access.
+        """``starts_at`` and ``ends_at`` timestamps for the `access system user's <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ access.
 
         :ivar ends_at: Date and time at which the user's access ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
@@ -91,7 +91,7 @@ class AcsUser:
 
     @dataclass
     class DeletedExternallyError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was deleted from the `access system <https://docs.seam.co/low-level-apis/access-systems>`_ outside of Seam.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was deleted from the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_ outside of Seam.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -114,7 +114,7 @@ class AcsUser:
 
     @dataclass
     class SaltoKsSubscriptionLimitExceededError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ could not be subscribed on Salto KS because the subscription limit has been exceeded.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ could not be subscribed on Salto KS because the subscription limit has been exceeded.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -137,7 +137,7 @@ class AcsUser:
 
     @dataclass
     class FailedToCreateOnAcsSystemError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was not created on the `access system <https://docs.seam.co/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was not created on the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -160,7 +160,7 @@ class AcsUser:
 
     @dataclass
     class FailedToUpdateOnAcsSystemError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was not updated on the `access system <https://docs.seam.co/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was not updated on the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -183,7 +183,7 @@ class AcsUser:
 
     @dataclass
     class FailedToDeleteOnAcsSystemError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was not deleted on the `access system <https://docs.seam.co/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was not deleted on the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_. This is likely due to an internal unexpected error. Contact Seam `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -206,7 +206,7 @@ class AcsUser:
 
     @dataclass
     class LatchConflictWithResidentUserError(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was created from the Seam API but also exists on Mission Control. This is unsupported. Contact Seam `support <mailto:support@seam.co>`_.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was created from the Seam API but also exists on Mission Control. This is unsupported. Contact Seam `support <mailto:support@seam.co>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -666,7 +666,7 @@ class AcsUser:
 
     @dataclass
     class SaltoKsMetadata(ResourceMapping):
-        """Salto KS-specific metadata associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Salto KS-specific metadata associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :ivar is_subscribed: Indicates whether the user holds an active subscription slot on the Salto KS site. Only subscribed users can unlock doors and count against the site's user-subscription limit. A user may not be subscribed because their access schedule has not started or has ended, the site has reached its subscription limit, or they were manually unsubscribed. This is distinct from ``is_suspended``, which reflects whether the user has been explicitly blocked.
         """
@@ -681,7 +681,7 @@ class AcsUser:
 
     @dataclass
     class SaltoSpaceMetadata(ResourceMapping):
-        """Salto Space-specific metadata associated with the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_.
+        """Salto Space-specific metadata associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
         :ivar audit_openings: Indicates whether AuditOpenings is enabled for the user in the Salto Space access system.
 
@@ -699,7 +699,7 @@ class AcsUser:
 
     @dataclass
     class BeingDeletedWarning(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ is being deleted from the `access system <https://docs.seam.co/low-level-apis/access-systems>`_. This is a temporary state, and the access system user will be deleted shortly.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ is being deleted from the `access system <https://www.seam.co/docs/low-level-apis/access-systems>`_. This is a temporary state, and the access system user will be deleted shortly.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -721,7 +721,7 @@ class AcsUser:
 
     @dataclass
     class SaltoKsUserNotSubscribedWarning(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ is not subscribed on Salto KS, so they cannot unlock doors or perform any actions. This occurs when the their access schedule hasn’t started yet, if their access schedule has ended, if the site has reached its limit for active users (subscription slots), or if they have been manually unsubscribed.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ is not subscribed on Salto KS, so they cannot unlock doors or perform any actions. This occurs when the their access schedule hasn’t started yet, if their access schedule has ended, if the site has reached its limit for active users (subscription slots), or if they have been manually unsubscribed.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -743,7 +743,7 @@ class AcsUser:
 
     @dataclass
     class AcsUserInactiveWarning(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ exists but is not currently able to gain access—for example, because their access schedule has not started yet or has ended, the access system has reached its limit for active users, or they have been unsubscribed or deactivated. Refer to the warning message for the provider-specific reason. This is distinct from ``is_suspended``, which indicates the user has been explicitly blocked.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ exists but is not currently able to gain access—for example, because their access schedule has not started yet or has ended, the access system has reached its limit for active users, or they have been unsubscribed or deactivated. Refer to the warning message for the provider-specific reason. This is distinct from ``is_suspended``, which indicates the user has been explicitly blocked.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -765,7 +765,7 @@ class AcsUser:
 
     @dataclass
     class UnknownIssueWithAcsUserWarning(ResourceMapping):
-        """An unknown issue occurred while syncing the state of this `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ with the provider. This issue may affect the proper functioning of this user.
+        """An unknown issue occurred while syncing the state of this `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ with the provider. This issue may affect the proper functioning of this user.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -787,7 +787,7 @@ class AcsUser:
 
     @dataclass
     class LatchResidentUserWarning(ResourceMapping):
-        """Indicates that the `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ was created on Latch Mission Control. Please use the Latch Mission Control to manage this user.
+        """Indicates that the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ was created on Latch Mission Control. Please use the Latch Mission Control to manage this user.
 
         :ivar created_at: Date and time at which Seam created the warning.
 

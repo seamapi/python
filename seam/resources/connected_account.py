@@ -13,7 +13,7 @@ def _from_discriminated_dict(
 
 @dataclass
 class ConnectedAccount:
-    """Represents a `connected account <https://docs.seam.co/core-concepts/connected-accounts>`_. A connected account is an external third-party account to which your user has authorized Seam to get access, for example, an August account with a list of door locks.
+    """Represents a `connected account <https://www.seam.co/docs/core-concepts/connected-accounts>`_. A connected account is an external third-party account to which your user has authorized Seam to get access, for example, an August account with a list of door locks.
 
     :ivar accepted_capabilities: List of capabilities that were accepted during the account connection process.
 
@@ -21,13 +21,13 @@ class ConnectedAccount:
 
     :ivar account_type_display_name: Display name for the connected account type.
 
-    :ivar automatically_manage_new_devices: Indicates whether Seam should `import all new devices <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#automatically_manage_new_devices>`_ for the connected account to make these devices available for management by the Seam API.
+    :ivar automatically_manage_new_devices: Indicates whether Seam should `import all new devices <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#automatically_manage_new_devices>`_ for the connected account to make these devices available for management by the Seam API.
 
     :ivar connected_account_id: ID of the connected account.
 
     :ivar created_at: Date and time at which the connected account was created.
 
-    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://docs.seam.co/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
+    :ivar custom_metadata: Set of key:value pairs. Adding custom metadata to a resource, such as a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews/attaching-custom-data-to-the-connect-webview>`_, `connected account <https://www.seam.co/docs/core-concepts/connected-accounts/adding-custom-metadata-to-a-connected-account>`_, or `device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_, enables you to store custom information, like customer details or internal IDs from your application. Keys set to ``null`` or to an empty string are omitted.
 
     :ivar customer_key: Your unique key for the customer associated with this connected account.
 
@@ -59,7 +59,7 @@ class ConnectedAccount:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -84,13 +84,13 @@ class ConnectedAccount:
 
     @dataclass
     class BridgeDisconnectedError(ResourceMapping):
-        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://docs.seam.co/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
+        """Indicates that the Seam API cannot communicate with `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_, for example, if the Seam Bridge executable has stopped or if the computer running the Seam Bridge executable is offline. See also `Troubleshooting Your Access Control System <https://www.seam.co/docs/low-level-apis/access-systems/troubleshooting-your-access-control-system#acs_system-errors-seam_bridge_disconnected>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -121,7 +121,7 @@ class ConnectedAccount:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 
@@ -206,7 +206,7 @@ class ConnectedAccount:
 
         :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
 
-        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://docs.seam.co/capability-guides/seam-bridge>`_.
+        :ivar is_bridge_error: Indicates whether the error is related to `Seam Bridge <https://www.seam.co/docs/capability-guides/seam-bridge>`_.
 
         :ivar is_connected_account_error: Indicates whether the error is related specifically to the connected account.
 

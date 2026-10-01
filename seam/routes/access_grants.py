@@ -42,17 +42,17 @@ class AbstractAccessGrants(abc.ABC):
         user_identity: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
-        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://www.seam.co/docs/use-cases/granting-access>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
-        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/api/acs/systems/list>`_ to which access is being granted.
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
 
-        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
@@ -167,6 +167,7 @@ class AbstractAccessGrants(abc.ABC):
         location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
@@ -193,6 +194,8 @@ class AbstractAccessGrants(abc.ABC):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param search: String for which to search. Filters returned Access Grants to include all records that satisfy a partial match using ``name``, ``access_grant_key``, ``reservation_key``, ``access_grant_id``, ``user_identity_id``, ``user_identity_full_name``, ``user_identity_email_address`` or ``user_identity_phone_number``.
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
 
@@ -267,17 +270,17 @@ class AbstractAsyncAccessGrants(abc.ABC):
         user_identity: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
-        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://www.seam.co/docs/use-cases/granting-access>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
-        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/api/acs/systems/list>`_ to which access is being granted.
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
 
-        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
@@ -392,6 +395,7 @@ class AbstractAsyncAccessGrants(abc.ABC):
         location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
@@ -418,6 +422,8 @@ class AbstractAsyncAccessGrants(abc.ABC):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param search: String for which to search. Filters returned Access Grants to include all records that satisfy a partial match using ``name``, ``access_grant_key``, ``reservation_key``, ``access_grant_id``, ``user_identity_id``, ``user_identity_full_name``, ``user_identity_email_address`` or ``user_identity_phone_number``.
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
 
@@ -499,17 +505,17 @@ class AccessGrants(AbstractAccessGrants):
         user_identity: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
-        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://www.seam.co/docs/use-cases/granting-access>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
-        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/api/acs/systems/list>`_ to which access is being granted.
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
 
-        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
@@ -736,6 +742,7 @@ class AccessGrants(AbstractAccessGrants):
         location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
@@ -762,6 +769,8 @@ class AccessGrants(AbstractAccessGrants):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param search: String for which to search. Filters returned Access Grants to include all records that satisfy a partial match using ``name``, ``access_grant_key``, ``reservation_key``, ``access_grant_id``, ``user_identity_id``, ``user_identity_full_name``, ``user_identity_email_address`` or ``user_identity_phone_number``.
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
 
@@ -792,6 +801,8 @@ class AccessGrants(AbstractAccessGrants):
             params["page_cursor"] = page_cursor
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
+        if search is not None:
+            params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
         if user_identity_id is not None:
@@ -936,17 +947,17 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         user_identity: Optional[Dict[str, Any]] = None,
         user_identity_id: Optional[str] = None,
     ) -> AccessGrant:
-        """Creates a new `Access Grant <https://docs.seam.co/use-cases/granting-access/access-grants>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
+        """Creates a new `Access Grant <https://www.seam.co/docs/use-cases/granting-access>`_. Access Grants are the default and recommended way to grant a user access to any physical space, irrespective of the locking hardware. They work with both standalone smart locks (using ``device_ids``) and access control systems (using ``acs_entrance_ids`` or ``space_ids``), and can issue PIN codes, key cards, and mobile keys through a single request.
 
         :param requested_access_methods:
 
         :param access_grant_key: Unique key for the access grant within the workspace.
 
-        :param acs_entrance_ids: Set of IDs of the `entrances <https://docs.seam.co/api/acs/systems/list>`_ to which access is being granted.
+        :param acs_entrance_ids: Set of IDs of the `entrances <https://www.seam.co/docs/api/acs/systems/list>`_ to which access is being granted.
 
         :param customization_profile_id: ID of the customization profile to apply to the Access Grant and its access methods.
 
-        :param device_ids: Set of IDs of the `devices <https://docs.seam.co/api/devices/list>`_ to which access is being granted.
+        :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
 
@@ -1173,6 +1184,7 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
+        search: Optional[str] = None,
         space_id: Optional[str] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[AccessGrant]:
@@ -1199,6 +1211,8 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param reservation_key: Filter Access Grants by reservation_key.
+
+        :param search: String for which to search. Filters returned Access Grants to include all records that satisfy a partial match using ``name``, ``access_grant_key``, ``reservation_key``, ``access_grant_id``, ``user_identity_id``, ``user_identity_full_name``, ``user_identity_email_address`` or ``user_identity_phone_number``.
 
         :param space_id: ID of the space by which you want to filter the list of Access Grants.
 
@@ -1229,6 +1243,8 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             params["page_cursor"] = page_cursor
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
+        if search is not None:
+            params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
         if user_identity_id is not None:

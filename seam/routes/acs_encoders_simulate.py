@@ -21,7 +21,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -37,7 +37,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
         acs_encoder_id: str,
         scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -58,7 +58,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
@@ -82,7 +82,7 @@ class AbstractAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
 
@@ -109,7 +109,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -125,7 +125,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
         acs_encoder_id: str,
         scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -146,7 +146,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
@@ -170,7 +170,7 @@ class AbstractAsyncAcsEncodersSimulate(abc.ABC):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
 
@@ -204,7 +204,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -237,7 +237,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
         acs_encoder_id: str,
         scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -274,7 +274,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
@@ -315,7 +315,7 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
 
@@ -363,7 +363,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -396,7 +396,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
         acs_encoder_id: str,
         scenario: Optional[Literal["credential_is_issued"]] = None,
     ) -> None:
-        """Simulates that the next attempt to encode a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to encode a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to encode the ``acs_credential``.
 
@@ -433,7 +433,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will fail. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will fail to scan the ``acs_credential`` in the next request.
 
@@ -474,7 +474,7 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             ]
         ] = None,
     ) -> None:
-        """Simulates that the next attempt to scan a `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        """Simulates that the next attempt to scan a `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ using the specified `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ will succeed. You can only perform this action within a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param acs_encoder_id: ID of the ``acs_encoder`` that will be used in the next request to scan the ``acs_credential``.
 

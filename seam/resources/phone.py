@@ -10,7 +10,7 @@ class Phone:
 
     :ivar created_at: Date and time at which the phone was created.
 
-    :ivar custom_metadata: Optional `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for the phone.
+    :ivar custom_metadata: Optional `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for the phone.
 
     :ivar device_id: ID of the phone.
 

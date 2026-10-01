@@ -29,7 +29,7 @@ class AbstractWorkspaces(abc.ABC):
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
     ) -> Workspace:
-        """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+        """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
 
@@ -37,11 +37,11 @@ class AbstractWorkspaces(abc.ABC):
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -56,14 +56,14 @@ class AbstractWorkspaces(abc.ABC):
 
     @abc.abstractmethod
     def get(self) -> Workspace:
-        """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     def list(self) -> List[Workspace]:
-        """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns a list of `workspaces <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -72,7 +72,7 @@ class AbstractWorkspaces(abc.ABC):
     def reset_sandbox(
         self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
+        """Resets the `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
@@ -90,11 +90,11 @@ class AbstractWorkspaces(abc.ABC):
         name: Optional[str] = None,
         organization_id: Optional[str] = None,
     ) -> None:
-        """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Updates the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :param connect_partner_name: Connect partner name for the workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
         :param is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 
@@ -124,7 +124,7 @@ class AbstractAsyncWorkspaces(abc.ABC):
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
     ) -> Workspace:
-        """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+        """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
 
@@ -132,11 +132,11 @@ class AbstractAsyncWorkspaces(abc.ABC):
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -151,14 +151,14 @@ class AbstractAsyncWorkspaces(abc.ABC):
 
     @abc.abstractmethod
     async def get(self) -> Workspace:
-        """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
     async def list(self) -> List[Workspace]:
-        """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns a list of `workspaces <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -167,7 +167,7 @@ class AbstractAsyncWorkspaces(abc.ABC):
     async def reset_sandbox(
         self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
+        """Resets the `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
@@ -185,11 +185,11 @@ class AbstractAsyncWorkspaces(abc.ABC):
         name: Optional[str] = None,
         organization_id: Optional[str] = None,
     ) -> None:
-        """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Updates the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :param connect_partner_name: Connect partner name for the workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
         :param is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 
@@ -224,7 +224,7 @@ class Workspaces(AbstractWorkspaces):
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
     ) -> Workspace:
-        """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+        """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
 
@@ -232,11 +232,11 @@ class Workspaces(AbstractWorkspaces):
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -282,7 +282,7 @@ class Workspaces(AbstractWorkspaces):
         path="/workspaces/get", at_least_one_parameter_names=(), has_pagination=False
     )
     def get(self) -> Workspace:
-        """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -295,7 +295,7 @@ class Workspaces(AbstractWorkspaces):
         path="/workspaces/list", at_least_one_parameter_names=(), has_pagination=False
     )
     def list(self) -> List[Workspace]:
-        """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns a list of `workspaces <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -315,7 +315,7 @@ class Workspaces(AbstractWorkspaces):
     def reset_sandbox(
         self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
+        """Resets the `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
@@ -351,11 +351,11 @@ class Workspaces(AbstractWorkspaces):
         name: Optional[str] = None,
         organization_id: Optional[str] = None,
     ) -> None:
-        """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Updates the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :param connect_partner_name: Connect partner name for the workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
         :param is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 
@@ -411,7 +411,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         webview_primary_button_text_color: Optional[str] = None,
         webview_success_message: Optional[str] = None,
     ) -> Workspace:
-        """Creates a new `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+        """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
 
@@ -419,11 +419,11 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the new workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+        :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
-        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one.
+        :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
         :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
 
@@ -469,7 +469,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         path="/workspaces/get", at_least_one_parameter_names=(), has_pagination=False
     )
     async def get(self) -> Workspace:
-        """Returns the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -482,7 +482,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         path="/workspaces/list", at_least_one_parameter_names=(), has_pagination=False
     )
     async def list(self) -> List[Workspace]:
-        """Returns a list of `workspaces <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Returns a list of `workspaces <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :returns: OK"""
         params: Dict[str, Any] = {}
@@ -502,7 +502,7 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
     async def reset_sandbox(
         self, *, wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None
     ) -> ActionAttempt:
-        """Resets the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
+        """Resets the `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ associated with the authentication value. Note that this endpoint is only available for sandbox workspaces.
 
         :param wait_for_action_attempt: Whether, and for how long, to wait for the action attempt to finish.
 
@@ -538,11 +538,11 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         name: Optional[str] = None,
         organization_id: Optional[str] = None,
     ) -> None:
-        """Updates the `workspace <https://docs.seam.co/core-concepts/workspaces>`_ associated with the authentication value.
+        """Updates the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_ associated with the authentication value.
 
         :param connect_partner_name: Connect partner name for the workspace.
 
-        :param connect_webview_customization: `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :param connect_webview_customization: `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ customizations for the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
         :param is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 

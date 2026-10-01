@@ -22,7 +22,7 @@ class AbstractActionAttempts(abc.ABC):
         action_attempt_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
+        """Returns a specified `action attempt <https://www.seam.co/docs/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
 
@@ -40,7 +40,7 @@ class AbstractActionAttempts(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
 
@@ -63,7 +63,7 @@ class AbstractAsyncActionAttempts(abc.ABC):
         action_attempt_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
+        """Returns a specified `action attempt <https://www.seam.co/docs/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
 
@@ -81,7 +81,7 @@ class AbstractAsyncActionAttempts(abc.ABC):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
 
@@ -111,7 +111,7 @@ class ActionAttempts(AbstractActionAttempts):
         action_attempt_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
+        """Returns a specified `action attempt <https://www.seam.co/docs/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
 
@@ -152,7 +152,7 @@ class ActionAttempts(AbstractActionAttempts):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
 
@@ -201,7 +201,7 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         action_attempt_id: str,
         wait_for_action_attempt: Optional[Union[bool, Dict[str, float]]] = None,
     ) -> ActionAttempt:
-        """Returns a specified `action attempt <https://docs.seam.co/core-concepts/action-attempts>`_.
+        """Returns a specified `action attempt <https://www.seam.co/docs/core-concepts/action-attempts>`_.
 
         :param action_attempt_id: ID of the action attempt that you want to get.
 
@@ -242,7 +242,7 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://docs.seam.co/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
 

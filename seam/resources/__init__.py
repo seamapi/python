@@ -38,6 +38,9 @@ from .action_attempt import (
     ActivateClimatePresetSuccessActionAttempt,
     ActivateClimatePresetPendingActionAttempt,
     ActivateClimatePresetErrorActionAttempt,
+    ActivateWeeklyProgramSuccessActionAttempt,
+    ActivateWeeklyProgramPendingActionAttempt,
+    ActivateWeeklyProgramErrorActionAttempt,
     SimulateKeypadCodeEntrySuccessActionAttempt,
     SimulateKeypadCodeEntryPendingActionAttempt,
     SimulateKeypadCodeEntryErrorActionAttempt,
@@ -81,6 +84,7 @@ from .action_attempt import (
     SetFanModeActionAttempt,
     SetHvacModeActionAttempt,
     ActivateClimatePresetActionAttempt,
+    ActivateWeeklyProgramActionAttempt,
     SimulateKeypadCodeEntryActionAttempt,
     SimulateManualLockViaKeypadActionAttempt,
     PushThermostatProgramsActionAttempt,
@@ -99,6 +103,8 @@ from .action_attempt import (
     action_attempt_from_dict,
 )
 from .batch import Batch
+from .camera_live_view_answer import CameraLiveViewAnswer
+from .camera_live_view_session import CameraLiveViewSession
 from .client_session import ClientSession
 from .connect_webview import ConnectWebview
 from .connected_account import ConnectedAccount
@@ -106,6 +112,7 @@ from .customer_portal import CustomerPortal
 from .device import Device
 from .device_provider import DeviceProvider
 from .instant_key import InstantKey
+from .media import Media
 from .noise_threshold import NoiseThreshold
 from .pagination import Pagination
 from .phone import Phone

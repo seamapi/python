@@ -6,7 +6,7 @@ from ..resource_mapping import ResourceMapping
 
 @dataclass
 class AcsEncoder:
-    """Represents a hardware device that encodes `credential <https://docs.seam.co/low-level-apis/access-systems/managing-credentials>`_ data onto physical cards within an `access control system <https://docs.seam.co/low-level-apis/access-systems>`_.
+    """Represents a hardware device that encodes `credential <https://www.seam.co/docs/low-level-apis/access-systems/managing-credentials>`_ data onto physical cards within an `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     Some access control systems require credentials to be encoded onto plastic key cards using a card encoder. This process involves the following two key steps:
 
@@ -17,28 +17,28 @@ class AcsEncoder:
 
     Separately, the Seam API also supports card scanning, which enables you to scan and read the encoded data on a card. You can use this action to confirm consistency with access control system records or diagnose discrepancies if needed.
 
-    See `Working with Card Encoders and Scanners <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    See `Working with Card Encoders and Scanners <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    To verify if your access control system requires a card encoder, see the corresponding `system integration guide <https://docs.seam.co/device-and-system-integration-guides#access-control-systems>`_.
+    To verify if your access control system requires a card encoder, see the corresponding `system integration guide <https://www.seam.co/docs/device-and-system-integration-guides#access-control-systems>`_.
 
-    :ivar acs_encoder_id: ID of the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar acs_encoder_id: ID of the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar acs_system_id: ID of the `access control system <https://docs.seam.co/low-level-apis/access-systems>`_ that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar acs_system_id: ID of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ that contains the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar connected_account_id: ID of the connected account that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar connected_account_id: ID of the connected account that contains the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar created_at: Date and time at which the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was created.
+    :ivar created_at: Date and time at which the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_ was created.
 
-    :ivar display_name: Display name for the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar display_name: Display name for the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar errors: Errors associated with the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar errors: Errors associated with the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
-    :ivar workspace_id: ID of the workspace that contains the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+    :ivar workspace_id: ID of the workspace that contains the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
     """
 
     @dataclass
     class Errors(ResourceMapping):
-        """Errors associated with the `encoder <https://docs.seam.co/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
+        """Errors associated with the `encoder <https://www.seam.co/docs/low-level-apis/access-systems/working-with-card-encoders-and-scanners>`_.
 
         :ivar created_at: Date and time at which Seam created the error.
 

@@ -33,7 +33,7 @@ class AccessGrant:
 
     :ivar ends_at: Date and time at which the Access Grant ends.
 
-    :ivar errors: Errors associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+    :ivar errors: Errors associated with the `access grant <https://www.seam.co/docs/use-cases/granting-access>`_.
 
     :ivar instant_key_url: Instant Key URL. Only returned if the Access Grant has a single mobile_key access_method.
 
@@ -53,7 +53,7 @@ class AccessGrant:
 
     :ivar user_identity_id: ID of user identity to which the Access Grant gives access.
 
-    :ivar warnings: Warnings associated with the `access grant <https://docs.seam.co/use-cases/granting-access>`_.
+    :ivar warnings: Warnings associated with the `access grant <https://www.seam.co/docs/use-cases/granting-access>`_.
 
     :ivar workspace_id: ID of the Seam workspace associated with the Access Grant."""
 
@@ -261,7 +261,7 @@ class AccessGrant:
 
     @dataclass
     class BeingDeletedWarning(ResourceMapping):
-        """Indicates that the `access grant <https://docs.seam.co/use-cases/granting-access>`_ is being deleted.
+        """Indicates that the `access grant <https://www.seam.co/docs/use-cases/granting-access>`_ is being deleted.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -359,7 +359,7 @@ class AccessGrant:
 
     @dataclass
     class UpdatingAccessTimesWarning(ResourceMapping):
-        """Indicates that the access times for this `access grant <https://docs.seam.co/use-cases/granting-access>`_ are being updated.
+        """Indicates that the access times for this `access grant <https://www.seam.co/docs/use-cases/granting-access>`_ are being updated.
 
         :ivar access_method_ids: IDs of the access methods being updated.
 

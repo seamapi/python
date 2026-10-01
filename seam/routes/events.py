@@ -17,7 +17,7 @@ class AbstractEvents(abc.ABC):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None,
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
 
@@ -71,7 +71,7 @@ class AbstractEvents(abc.ABC):
                 "access_code.delay_in_issuing",
                 "access_code.failed_to_issue",
                 "access_code.failed_to_update",
-                "access_code.failed_to_expire",
+                "access_code.failed_to_delete",
                 "access_code.deleted",
                 "access_code.delay_in_removing_from_device",
                 "access_code.failed_to_remove_from_device",
@@ -190,7 +190,7 @@ class AbstractEvents(abc.ABC):
                     "access_code.delay_in_issuing",
                     "access_code.failed_to_issue",
                     "access_code.failed_to_update",
-                    "access_code.failed_to_expire",
+                    "access_code.failed_to_delete",
                     "access_code.deleted",
                     "access_code.delay_in_removing_from_device",
                     "access_code.failed_to_remove_from_device",
@@ -299,7 +299,7 @@ class AbstractEvents(abc.ABC):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
 
@@ -373,7 +373,7 @@ class AbstractAsyncEvents(abc.ABC):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None,
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
 
@@ -427,7 +427,7 @@ class AbstractAsyncEvents(abc.ABC):
                 "access_code.delay_in_issuing",
                 "access_code.failed_to_issue",
                 "access_code.failed_to_update",
-                "access_code.failed_to_expire",
+                "access_code.failed_to_delete",
                 "access_code.deleted",
                 "access_code.delay_in_removing_from_device",
                 "access_code.failed_to_remove_from_device",
@@ -546,7 +546,7 @@ class AbstractAsyncEvents(abc.ABC):
                     "access_code.delay_in_issuing",
                     "access_code.failed_to_issue",
                     "access_code.failed_to_update",
-                    "access_code.failed_to_expire",
+                    "access_code.failed_to_delete",
                     "access_code.deleted",
                     "access_code.delay_in_removing_from_device",
                     "access_code.failed_to_remove_from_device",
@@ -655,7 +655,7 @@ class AbstractAsyncEvents(abc.ABC):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
 
@@ -740,7 +740,7 @@ class Events(AbstractEvents):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None,
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
 
@@ -847,7 +847,7 @@ class Events(AbstractEvents):
                 "access_code.delay_in_issuing",
                 "access_code.failed_to_issue",
                 "access_code.failed_to_update",
-                "access_code.failed_to_expire",
+                "access_code.failed_to_delete",
                 "access_code.deleted",
                 "access_code.delay_in_removing_from_device",
                 "access_code.failed_to_remove_from_device",
@@ -966,7 +966,7 @@ class Events(AbstractEvents):
                     "access_code.delay_in_issuing",
                     "access_code.failed_to_issue",
                     "access_code.failed_to_update",
-                    "access_code.failed_to_expire",
+                    "access_code.failed_to_delete",
                     "access_code.deleted",
                     "access_code.delay_in_removing_from_device",
                     "access_code.failed_to_remove_from_device",
@@ -1075,7 +1075,7 @@ class Events(AbstractEvents):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
 
@@ -1258,7 +1258,7 @@ class AsyncEvents(AbstractAsyncEvents):
         device_id: Optional[str] = None,
         event_type: Optional[str] = None,
     ) -> SeamEvent:
-        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
+        """Returns a specified event. This endpoint returns the same event that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to retrieve an event that already took place.
 
         :param event_id: Unique identifier for the event that you want to get.
 
@@ -1365,7 +1365,7 @@ class AsyncEvents(AbstractAsyncEvents):
                 "access_code.delay_in_issuing",
                 "access_code.failed_to_issue",
                 "access_code.failed_to_update",
-                "access_code.failed_to_expire",
+                "access_code.failed_to_delete",
                 "access_code.deleted",
                 "access_code.delay_in_removing_from_device",
                 "access_code.failed_to_remove_from_device",
@@ -1484,7 +1484,7 @@ class AsyncEvents(AbstractAsyncEvents):
                     "access_code.delay_in_issuing",
                     "access_code.failed_to_issue",
                     "access_code.failed_to_update",
-                    "access_code.failed_to_expire",
+                    "access_code.failed_to_delete",
                     "access_code.deleted",
                     "access_code.delay_in_removing_from_device",
                     "access_code.failed_to_remove_from_device",
@@ -1593,7 +1593,7 @@ class AsyncEvents(AbstractAsyncEvents):
         unstable_offset: Optional[float] = None,
         user_identity_id: Optional[str] = None,
     ) -> List[SeamEvent]:
-        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://docs.seam.co/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
+        """Returns a list of all events. This endpoint returns the same events that would be sent to a `webhook <https://www.seam.co/docs/developer-tools/webhooks>`_, but it enables you to filter or see events that already took place.
 
         :param access_code_id: ID of the access code for which you want to list events.
 

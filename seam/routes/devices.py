@@ -37,7 +37,7 @@ class AbstractDevices(abc.ABC):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -106,6 +106,9 @@ class AbstractDevices(abc.ABC):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -154,6 +157,9 @@ class AbstractDevices(abc.ABC):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -185,12 +191,14 @@ class AbstractDevices(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -203,6 +211,9 @@ class AbstractDevices(abc.ABC):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -220,7 +231,7 @@ class AbstractDevices(abc.ABC):
         unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -230,7 +241,7 @@ class AbstractDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -276,9 +287,9 @@ class AbstractDevices(abc.ABC):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
+        When you create a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
 
@@ -303,15 +314,15 @@ class AbstractDevices(abc.ABC):
         name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
-        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Updates a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
-        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        You can add or change `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://www.seam.co/docs/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -337,7 +348,7 @@ class AbstractAsyncDevices(abc.ABC):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -406,6 +417,9 @@ class AbstractAsyncDevices(abc.ABC):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -454,6 +468,9 @@ class AbstractAsyncDevices(abc.ABC):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -485,12 +502,14 @@ class AbstractAsyncDevices(abc.ABC):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -503,6 +522,9 @@ class AbstractAsyncDevices(abc.ABC):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -520,7 +542,7 @@ class AbstractAsyncDevices(abc.ABC):
         unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -530,7 +552,7 @@ class AbstractAsyncDevices(abc.ABC):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -576,9 +598,9 @@ class AbstractAsyncDevices(abc.ABC):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
+        When you create a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
 
@@ -603,15 +625,15 @@ class AbstractAsyncDevices(abc.ABC):
         name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
-        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Updates a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
-        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        You can add or change `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://www.seam.co/docs/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -647,7 +669,7 @@ class Devices(AbstractDevices):
     def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -736,6 +758,9 @@ class Devices(AbstractDevices):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -784,6 +809,9 @@ class Devices(AbstractDevices):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -815,12 +843,14 @@ class Devices(AbstractDevices):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -833,6 +863,9 @@ class Devices(AbstractDevices):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -850,7 +883,7 @@ class Devices(AbstractDevices):
         unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -860,7 +893,7 @@ class Devices(AbstractDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -953,9 +986,9 @@ class Devices(AbstractDevices):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
+        When you create a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
 
@@ -1005,15 +1038,15 @@ class Devices(AbstractDevices):
         name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
-        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Updates a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
-        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        You can add or change `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://www.seam.co/docs/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 
@@ -1068,7 +1101,7 @@ class AsyncDevices(AbstractAsyncDevices):
     async def get(
         self, *, device_id: Optional[str] = None, name: Optional[str] = None
     ) -> Device:
-        """Returns a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         You must specify either ``device_id`` or ``name``.
 
@@ -1157,6 +1190,9 @@ class AsyncDevices(AbstractAsyncDevices):
                 "ios_phone",
                 "android_phone",
                 "ring_camera",
+                "tapo_camera",
+                "arlo_camera",
+                "reolink_camera",
             ]
         ] = None,
         device_types: Optional[
@@ -1205,6 +1241,9 @@ class AsyncDevices(AbstractAsyncDevices):
                     "ios_phone",
                     "android_phone",
                     "ring_camera",
+                    "tapo_camera",
+                    "arlo_camera",
+                    "reolink_camera",
                 ]
             ]
         ] = None,
@@ -1236,12 +1275,14 @@ class AsyncDevices(AbstractAsyncDevices):
                 "ttlock",
                 "igloohome",
                 "controlbyweb",
-                "dormakaba_oracode",
                 "tedee",
                 "keyincode",
                 "akiles",
                 "aqara",
                 "ecobee",
+                "eufy",
+                "dormakaba_oracode",
+                "dormakaba_oracode_iho",
                 "honeywell_resideo",
                 "keynest",
                 "korelock",
@@ -1254,6 +1295,9 @@ class AsyncDevices(AbstractAsyncDevices):
                 "tado",
                 "ultraloq",
                 "ring",
+                "tapo",
+                "arlo",
+                "reolink",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -1271,7 +1315,7 @@ class AsyncDevices(AbstractAsyncDevices):
         unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param connect_webview_id: ID of the Connect Webview for which you want to list devices.
 
@@ -1281,7 +1325,7 @@ class AsyncDevices(AbstractAsyncDevices):
 
         :param created_before: Timestamp by which to limit returned devices. Returns devices created before this timestamp.
 
-        :param custom_metadata_has: Set of key:value `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
+        :param custom_metadata_has: Set of key:value `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ pairs for which you want to list devices. Key names cannot contain a period (.). Specify ``null`` to match a key that is unset. A key given an empty string is omitted from the filter.
 
         :param customer_key: Customer key for which you want to list devices.
 
@@ -1374,9 +1418,9 @@ class AsyncDevices(AbstractAsyncDevices):
     ) -> List[DeviceProvider]:
         """Returns a list of all device providers.
 
-        The information that this endpoint returns for each provider includes a set of `capability flags <https://docs.seam.co/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
+        The information that this endpoint returns for each provider includes a set of `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_, such as ``device_provider.can_remotely_unlock``. If at least one supported device from a provider has a specific capability, the corresponding capability flag is ``true``.
 
-        When you create a `Connect Webview <https://docs.seam.co/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
+        When you create a `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_, you can customize the providers—that is, the brands—that it displays. In the ``/connect_webviews/create`` request, include the desired set of device provider keys in the ``accepted_providers`` parameter. See also `Customize the Brands to Display in Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-brands-to-display-in-your-connect-webviews>`_.
 
         :param provider_category: Category for which you want to list providers.
 
@@ -1426,15 +1470,15 @@ class AsyncDevices(AbstractAsyncDevices):
         name: Optional[Union[str, Null]] = None,
         properties: Optional[Dict[str, Any]] = None,
     ) -> None:
-        """Updates a specified `device <https://docs.seam.co/core-concepts/devices>`_.
+        """Updates a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
-        You can add or change `custom metadata <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://docs.seam.co/core-concepts/devices/managed-and-unmanaged-devices>`_.
+        You can add or change `custom metadata <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ for a device, change the device's name, or `convert a managed device to unmanaged <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
         :param device_id: ID of the device that you want to update.
 
-        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://docs.seam.co/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
+        :param backup_access_code_pool_enabled: Indicates whether the device's `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ is enabled. Set to ``false`` to disable the pool: Seam stops refilling it and removes any backup codes that have not yet been pulled into active use.
 
-        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://docs.seam.co/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://docs.seam.co/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
+        :param custom_metadata: Custom metadata that you want to associate with the device. Supports up to 50 JSON key:value pairs, with key names up to 40 characters long that cannot contain a period (.). `Adding custom metadata to a device <https://www.seam.co/docs/core-concepts/devices/adding-custom-metadata-to-a-device>`_ enables you to store custom information, like customer details or internal IDs from your application. Then, you can `filter devices by the desired metadata <https://www.seam.co/docs/core-concepts/devices/filtering-devices-by-custom-metadata>`_. Set a key to ``null`` or to an empty string to remove that key from the custom metadata.
 
         :param is_managed: Indicates whether the device is managed. To unmanage a device, set ``is_managed`` to ``false``.
 

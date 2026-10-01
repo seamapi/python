@@ -29,7 +29,7 @@ class AccessMethod:
 
     :ivar display_status: Human-readable sentence describing where the access method sits in its relationship with the device or access system, for example ``Awaiting encoding``. For display only. The wording is not stable and is not an enumeration — it may change at any time, so never compare against or branch on it. To make decisions, read ``is_issued``, ``errors``, and ``pending_mutations``.
 
-    :ivar errors: Errors associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
+    :ivar errors: Errors associated with the `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_.
 
     :ivar instant_key_url: URL of the Instant Key for mobile key access methods.
 
@@ -47,15 +47,15 @@ class AccessMethod:
 
     :ivar mode: Access method mode. Supported values: ``code``, ``card``, ``mobile_key``, ``cloud_key``.
 
-    :ivar pending_mutations: Pending mutations for the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_. Indicates operations that are in progress.
+    :ivar pending_mutations: Pending mutations for the `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_. Indicates operations that are in progress.
 
-    :ivar warnings: Warnings associated with the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_.
+    :ivar warnings: Warnings associated with the `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_.
 
     :ivar workspace_id: ID of the Seam workspace associated with the access method."""
 
     @dataclass
     class FailedToIssueError(ResourceMapping):
-        """Indicates that Seam was unable to issue this `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_ before its access grant started, so the recipient may be unable to access the space. This usually points to a problem that needs attention, such as an offline or disconnected device. Seam keeps retrying, and this error clears automatically if the access method is eventually issued.
+        """Indicates that Seam was unable to issue this `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ before its access grant started, so the recipient may be unable to access the space. This usually points to a problem that needs attention, such as an offline or disconnected device. Seam keeps retrying, and this error clears automatically if the access method is eventually issued.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -272,7 +272,7 @@ class AccessMethod:
 
     @dataclass
     class BeingDeletedWarning(ResourceMapping):
-        """Indicates that the `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_ is being deleted.
+        """Indicates that the `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ is being deleted.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -295,7 +295,7 @@ class AccessMethod:
 
     @dataclass
     class UpdatingAccessTimesWarning(ResourceMapping):
-        """Indicates that the access times for this `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_ are being updated.
+        """Indicates that the access times for this `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ are being updated.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -345,7 +345,7 @@ class AccessMethod:
 
     @dataclass
     class DelayInIssuingWarning(ResourceMapping):
-        """Indicates that Seam has not yet issued this `access method <https://docs.seam.co/use-cases/granting-access/creating-an-access-grant>`_, even though its access grant is about to begin, so access may not be ready when the recipient arrives. Seam is still attempting to issue it, and this warning clears automatically once issuance succeeds.
+        """Indicates that Seam has not yet issued this `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_, even though its access grant is about to begin, so access may not be ready when the recipient arrives. Seam is still attempting to issue it, and this warning clears automatically once issuance succeeds.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -357,6 +357,52 @@ class AccessMethod:
         created_at: str
         message: str
         warning_code: Literal["delay_in_issuing"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UserIdentityMissingEmailAddressWarning(ResourceMapping):
+        """Indicates that the access system delivers this mobile key through an app invitation sent to the recipient's email address, but the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities>`_ for this `access grant <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ has no email address, so the mobile key cannot be delivered. Set an email address on the user identity when you create the access grant.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["user_identity_missing_email_address"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class UserIdentityMissingPhoneNumberWarning(ResourceMapping):
+        """Indicates that the access system delivers this mobile key to the recipient's phone number, but the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities>`_ for this `access grant <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ has no phone number, so the mobile key cannot be delivered. Set a phone number on the user identity when you create the access grant.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["user_identity_missing_phone_number"]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -387,12 +433,16 @@ class AccessMethod:
         UpdatingAccessTimesWarning,
         PulledBackupAccessCodeWarning,
         DelayInIssuingWarning,
+        UserIdentityMissingEmailAddressWarning,
+        UserIdentityMissingPhoneNumberWarning,
     ]
     _WarningsVariants = {
         "being_deleted": BeingDeletedWarning,
         "updating_access_times": UpdatingAccessTimesWarning,
         "pulled_backup_access_code": PulledBackupAccessCodeWarning,
         "delay_in_issuing": DelayInIssuingWarning,
+        "user_identity_missing_email_address": UserIdentityMissingEmailAddressWarning,
+        "user_identity_missing_phone_number": UserIdentityMissingPhoneNumberWarning,
     }
 
     access_method_id: str

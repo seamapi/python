@@ -37,7 +37,7 @@ class AbstractUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
 
@@ -61,7 +61,7 @@ class AbstractUserIdentities(abc.ABC):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
-        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
 
@@ -78,7 +78,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def delete(self, *, user_identity_id: str) -> None:
-        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+        """Deletes a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://www.seam.co/docs/api/acs/credentials/object>`_, `acs users <https://www.seam.co/docs/api/acs/users/object>`_ and `client sessions <https://www.seam.co/docs/api/client_sessions/object>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
         raise NotImplementedError()
@@ -91,7 +91,7 @@ class AbstractUserIdentities(abc.ABC):
         customization_profile_id: Optional[str] = None,
         max_use_count: Optional[float] = None,
     ) -> InstantKey:
-        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Generates a new `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_ for a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to generate an instant key.
 
@@ -109,7 +109,7 @@ class AbstractUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
-        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to get.
 
@@ -122,7 +122,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+        """Grants a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
@@ -141,7 +141,7 @@ class AbstractUserIdentities(abc.ABC):
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
-        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
@@ -160,7 +160,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
@@ -169,7 +169,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
-        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+        """Returns a list of all `ACS entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ accessible to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
@@ -178,7 +178,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
@@ -187,7 +187,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
@@ -203,7 +203,7 @@ class AbstractUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+        """Merges one or more `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
 
         The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
 
@@ -224,7 +224,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
@@ -234,7 +234,7 @@ class AbstractUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Revokes access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
@@ -252,7 +252,7 @@ class AbstractUserIdentities(abc.ABC):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
-        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Updates a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to update.
 
@@ -281,7 +281,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
 
@@ -305,7 +305,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
-        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
 
@@ -322,7 +322,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     async def delete(self, *, user_identity_id: str) -> None:
-        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+        """Deletes a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://www.seam.co/docs/api/acs/credentials/object>`_, `acs users <https://www.seam.co/docs/api/acs/users/object>`_ and `client sessions <https://www.seam.co/docs/api/client_sessions/object>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
         raise NotImplementedError()
@@ -335,7 +335,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         customization_profile_id: Optional[str] = None,
         max_use_count: Optional[float] = None,
     ) -> InstantKey:
-        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Generates a new `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_ for a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to generate an instant key.
 
@@ -353,7 +353,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
-        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to get.
 
@@ -368,7 +368,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
     async def grant_access_to_device(
         self, *, device_id: str, user_identity_id: str
     ) -> None:
-        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+        """Grants a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
@@ -387,7 +387,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
-        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
@@ -406,7 +406,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     async def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
@@ -417,7 +417,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
     async def list_accessible_entrances(
         self, *, user_identity_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+        """Returns a list of all `ACS entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ accessible to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
@@ -426,7 +426,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     async def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
@@ -435,7 +435,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     async def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
@@ -451,7 +451,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+        """Merges one or more `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
 
         The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
 
@@ -472,7 +472,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
 
     @abc.abstractmethod
     async def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
@@ -484,7 +484,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
     async def revoke_access_to_device(
         self, *, device_id: str, user_identity_id: str
     ) -> None:
-        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Revokes access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
@@ -502,7 +502,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
-        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Updates a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to update.
 
@@ -538,7 +538,7 @@ class UserIdentities(AbstractUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
 
@@ -577,7 +577,7 @@ class UserIdentities(AbstractUserIdentities):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
-        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
 
@@ -615,7 +615,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def delete(self, *, user_identity_id: str) -> None:
-        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+        """Deletes a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://www.seam.co/docs/api/acs/credentials/object>`_, `acs users <https://www.seam.co/docs/api/acs/users/object>`_ and `client sessions <https://www.seam.co/docs/api/client_sessions/object>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
         params: Dict[str, Any] = {}
@@ -639,7 +639,7 @@ class UserIdentities(AbstractUserIdentities):
         customization_profile_id: Optional[str] = None,
         max_use_count: Optional[float] = None,
     ) -> InstantKey:
-        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Generates a new `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_ for a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to generate an instant key.
 
@@ -679,7 +679,7 @@ class UserIdentities(AbstractUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
-        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to get.
 
@@ -718,7 +718,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def grant_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+        """Grants a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
@@ -750,7 +750,7 @@ class UserIdentities(AbstractUserIdentities):
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
-        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
@@ -798,7 +798,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
@@ -823,7 +823,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def list_accessible_entrances(self, *, user_identity_id: str) -> List[AcsEntrance]:
-        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+        """Returns a list of all `ACS entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ accessible to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
@@ -850,7 +850,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
@@ -875,7 +875,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
@@ -910,7 +910,7 @@ class UserIdentities(AbstractUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+        """Merges one or more `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
 
         The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
 
@@ -961,7 +961,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
@@ -984,7 +984,7 @@ class UserIdentities(AbstractUserIdentities):
         has_pagination=False,
     )
     def revoke_access_to_device(self, *, device_id: str, user_identity_id: str) -> None:
-        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Revokes access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
@@ -1015,7 +1015,7 @@ class UserIdentities(AbstractUserIdentities):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
-        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Updates a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to update.
 
@@ -1066,7 +1066,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Adds a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Adds a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         You must specify either ``user_identity_id`` or ``user_identity_key`` to identify the user identity.
 
@@ -1105,7 +1105,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> UserIdentity:
-        """Creates a new `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
 
@@ -1143,7 +1143,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         has_pagination=False,
     )
     async def delete(self, *, user_identity_id: str) -> None:
-        """Deletes a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://docs.seam.co/api/acs/credentials>`_, `acs users <https://docs.seam.co/api/acs/users>`_ and `client sessions <https://docs.seam.co/api/client_sessions>`_.
+        """Deletes a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This deletes the user identity and all associated resources, including any `credentials <https://www.seam.co/docs/api/acs/credentials/object>`_, `acs users <https://www.seam.co/docs/api/acs/users/object>`_ and `client sessions <https://www.seam.co/docs/api/client_sessions/object>`_.
 
         :param user_identity_id: ID of the user identity that you want to delete."""
         params: Dict[str, Any] = {}
@@ -1167,7 +1167,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         customization_profile_id: Optional[str] = None,
         max_use_count: Optional[float] = None,
     ) -> InstantKey:
-        """Generates a new `instant key <https://docs.seam.co/capability-guides/instant-keys>`_ for a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Generates a new `instant key <https://www.seam.co/docs/use-cases/granting-access/using-instant-keys>`_ for a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to generate an instant key.
 
@@ -1207,7 +1207,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> UserIdentity:
-        """Returns a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to get.
 
@@ -1248,7 +1248,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
     async def grant_access_to_device(
         self, *, device_id: str, user_identity_id: str
     ) -> None:
-        """Grants a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_.
+        """Grants a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_.
 
         :param device_id: ID of the managed device to which you want to grant access to the user identity.
 
@@ -1282,7 +1282,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         search: Optional[str] = None,
         user_identity_ids: Optional[List[str]] = None,
     ) -> List[UserIdentity]:
-        """Returns a list of all `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
@@ -1330,7 +1330,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         has_pagination=False,
     )
     async def list_accessible_devices(self, *, user_identity_id: str) -> List[Device]:
-        """Returns a list of all `devices <https://docs.seam.co/core-concepts/devices>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
+        """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes devices derived from the access grants assigned to the user identity and devices directly linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible devices.
 
@@ -1359,7 +1359,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
     async def list_accessible_entrances(
         self, *, user_identity_id: str
     ) -> List[AcsEntrance]:
-        """Returns a list of all `ACS entrances <https://docs.seam.co/api/acs/entrances>`_ accessible to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
+        """Returns a list of all `ACS entrances <https://www.seam.co/docs/api/acs/entrances/object>`_ accessible to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_. This includes entrances derived from the access grants assigned to the user identity and entrances accessible through ACS users linked to the user identity.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all accessible entrances.
 
@@ -1386,7 +1386,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         has_pagination=False,
     )
     async def list_acs_systems(self, *, user_identity_id: str) -> List[AcsSystem]:
-        """Returns a list of all `access systems <https://docs.seam.co/low-level-apis/access-systems>`_ associated with a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access systems <https://www.seam.co/docs/low-level-apis/access-systems>`_ associated with a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access systems.
 
@@ -1411,7 +1411,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         has_pagination=False,
     )
     async def list_acs_users(self, *, user_identity_id: str) -> List[AcsUser]:
-        """Returns a list of all `access system users <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Returns a list of all `access system users <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ assigned to a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity for which you want to retrieve all access system users.
 
@@ -1446,7 +1446,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         user_identity_id: Optional[str] = None,
         user_identity_key: Optional[str] = None,
     ) -> None:
-        """Merges one or more `user identities <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
+        """Merges one or more `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ into a primary user identity, for when the same person ended up with more than one user identity.
 
         The primary user identity takes on any email address or phone number it was missing from the user identities merged into it, and the merged user identities are then deleted. Their IDs and keys keep working: looking one up returns the primary user identity, and they are listed on it as ``merged_user_identity_ids`` and ``merged_user_identity_keys``.
 
@@ -1497,7 +1497,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         has_pagination=False,
     )
     async def remove_acs_user(self, *, acs_user_id: str, user_identity_id: str) -> None:
-        """Removes a specified `access system user <https://docs.seam.co/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Removes a specified `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_user_id: ID of the access system user that you want to remove from the user identity..
 
@@ -1522,7 +1522,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
     async def revoke_access_to_device(
         self, *, device_id: str, user_identity_id: str
     ) -> None:
-        """Revokes access to a specified `device <https://docs.seam.co/core-concepts/devices/>`_ from a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Revokes access to a specified `device <https://www.seam.co/docs/core-concepts/devices>`_ from a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param device_id: ID of the managed device to which you want to revoke access from the user identity.
 
@@ -1555,7 +1555,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         phone_number: Optional[Union[str, Null]] = None,
         user_identity_key: Optional[Union[str, Null]] = None,
     ) -> None:
-        """Updates a specified `user identity <https://docs.seam.co/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
+        """Updates a specified `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param user_identity_id: ID of the user identity that you want to update.
 

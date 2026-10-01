@@ -6,25 +6,25 @@ from ..resource_mapping import ResourceMapping
 
 @dataclass
 class Workspace:
-    """Represents a Seam `workspace <https://docs.seam.co/core-concepts/workspaces>`_. A workspace is a top-level entity that encompasses all other resources below it, such as devices, connected accounts, and Connect Webviews. Seam provides two types of workspaces. A `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ is a special type of workspace designed for testing code. Sandbox workspaces offer test device accounts and virtual devices that you can connect and control. This ability to work with virtual devices is quite handy because it removes the need to own physical devices from multiple brands. To connect real devices and systems to Seam, use a `production workspace <https://docs.seam.co/core-concepts/workspaces#production-workspaces>`_.
+    """Represents a Seam `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_. A workspace is a top-level entity that encompasses all other resources below it, such as devices, connected accounts, and Connect Webviews. Seam provides two types of workspaces. A `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ is a special type of workspace designed for testing code. Sandbox workspaces offer test device accounts and virtual devices that you can connect and control. This ability to work with virtual devices is quite handy because it removes the need to own physical devices from multiple brands. To connect real devices and systems to Seam, use a `production workspace <https://www.seam.co/docs/core-concepts/workspaces#production-workspaces>`_.
 
-    :ivar company_name: Deprecated: Use ``connect_partner_name`` instead. Company name associated with the `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+    :ivar company_name: Deprecated: Use ``connect_partner_name`` instead. Company name associated with the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
-    :ivar connect_partner_name: Seam Connect partner name associated with the `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+    :ivar connect_partner_name: Seam Connect partner name associated with the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
     :ivar connect_webview_customization:
 
     :ivar is_publishable_key_auth_enabled: Indicates whether publishable key authentication is enabled for this workspace.
 
-    :ivar is_sandbox: Indicates whether the workspace is a `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_.
+    :ivar is_sandbox: Indicates whether the workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
-    :ivar is_suspended: Indicates whether the `sandbox workspace <https://docs.seam.co/core-concepts/workspaces#sandbox-workspaces>`_ is suspended. Seam suspends sandbox workspaces that have not been accessed in 14 days.
+    :ivar is_suspended: Indicates whether the `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_ is suspended. Seam suspends sandbox workspaces that have not been accessed in 14 days.
 
-    :ivar name: Name of the `workspace <https://docs.seam.co/core-concepts/workspaces>`_.
+    :ivar name: Name of the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
     :ivar organization_id: ID of the organization to which the workspace belongs, or ``null`` if the workspace is not assigned to an organization.
 
-    :ivar publishable_key: Publishable key for the `workspace <https://docs.seam.co/core-concepts/workspaces>`_. This key is used to identify the workspace in client-side applications.
+    :ivar publishable_key: Publishable key for the `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_. This key is used to identify the workspace in client-side applications.
 
     :ivar workspace_id: ID of the workspace."""
 
@@ -32,15 +32,15 @@ class Workspace:
     class ConnectWebviewCustomization(ResourceMapping):
         """
 
-        :ivar inviter_logo_url: URL of the inviter logo for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :ivar inviter_logo_url: URL of the inviter logo for `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :ivar logo_shape: Logo shape for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :ivar logo_shape: Logo shape for `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :ivar primary_button_color: Primary button color for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :ivar primary_button_color: Primary button color for `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :ivar primary_button_text_color: Primary button text color for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :ivar primary_button_text_color: Primary button text color for `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
 
-        :ivar success_message: Success message for `Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://docs.seam.co/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
+        :ivar success_message: Success message for `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_ in the workspace. See also `Customize the Look and Feel of Your Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews/customizing-connect-webviews#customize-the-look-and-feel-of-your-connect-webviews>`_.
         """
 
         inviter_logo_url: Optional[str]
