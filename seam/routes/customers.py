@@ -2,6 +2,7 @@ from typing import Optional, Any, List, Dict, Literal, Union
 import abc
 from ..client import SeamHttpClient, AsyncSeamHttpClient
 from ..route import route_metadata
+from ..null import Null
 from ..resources import CustomerPortal
 from ..response import unwrap
 
@@ -139,6 +140,7 @@ class AbstractCustomers(abc.ABC):
         bookings: Optional[List[Dict[str, Any]]] = None,
         buildings: Optional[List[Dict[str, Any]]] = None,
         common_areas: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[Union[str, Null]] = None,
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
@@ -166,6 +168,8 @@ class AbstractCustomers(abc.ABC):
         :param buildings: List of buildings.
 
         :param common_areas: List of shared common areas.
+
+        :param customization_profile_id: ID of the customization profile to use for this customer. Access grants that automations create for this customer use this profile. Pass ``null`` to remove the customer's customization profile.
 
         :param facilities: List of gym or fitness facilities.
 
@@ -332,6 +336,7 @@ class AbstractAsyncCustomers(abc.ABC):
         bookings: Optional[List[Dict[str, Any]]] = None,
         buildings: Optional[List[Dict[str, Any]]] = None,
         common_areas: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[Union[str, Null]] = None,
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
@@ -359,6 +364,8 @@ class AbstractAsyncCustomers(abc.ABC):
         :param buildings: List of buildings.
 
         :param common_areas: List of shared common areas.
+
+        :param customization_profile_id: ID of the customization profile to use for this customer. Access grants that automations create for this customer use this profile. Pass ``null`` to remove the customer's customization profile.
 
         :param facilities: List of gym or fitness facilities.
 
@@ -612,6 +619,7 @@ class Customers(AbstractCustomers):
         bookings: Optional[List[Dict[str, Any]]] = None,
         buildings: Optional[List[Dict[str, Any]]] = None,
         common_areas: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[Union[str, Null]] = None,
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
@@ -639,6 +647,8 @@ class Customers(AbstractCustomers):
         :param buildings: List of buildings.
 
         :param common_areas: List of shared common areas.
+
+        :param customization_profile_id: ID of the customization profile to use for this customer. Access grants that automations create for this customer use this profile. Pass ``null`` to remove the customer's customization profile.
 
         :param facilities: List of gym or fitness facilities.
 
@@ -681,6 +691,8 @@ class Customers(AbstractCustomers):
             json_payload["buildings"] = buildings
         if common_areas is not None:
             json_payload["common_areas"] = common_areas
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
         if facilities is not None:
             json_payload["facilities"] = facilities
         if guests is not None:
@@ -937,6 +949,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
         bookings: Optional[List[Dict[str, Any]]] = None,
         buildings: Optional[List[Dict[str, Any]]] = None,
         common_areas: Optional[List[Dict[str, Any]]] = None,
+        customization_profile_id: Optional[Union[str, Null]] = None,
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
@@ -964,6 +977,8 @@ class AsyncCustomers(AbstractAsyncCustomers):
         :param buildings: List of buildings.
 
         :param common_areas: List of shared common areas.
+
+        :param customization_profile_id: ID of the customization profile to use for this customer. Access grants that automations create for this customer use this profile. Pass ``null`` to remove the customer's customization profile.
 
         :param facilities: List of gym or fitness facilities.
 
@@ -1006,6 +1021,8 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["buildings"] = buildings
         if common_areas is not None:
             json_payload["common_areas"] = common_areas
+        if customization_profile_id is not None:
+            json_payload["customization_profile_id"] = customization_profile_id
         if facilities is not None:
             json_payload["facilities"] = facilities
         if guests is not None:
