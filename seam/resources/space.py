@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class Space:
     """Represents a space that is a logical grouping of devices and entrances. You can assign access to an entire space, thereby making granting access more efficient.
@@ -27,6 +34,8 @@ class Space:
     :ivar space_id: ID of the space.
 
     :ivar space_key: Unique key for the space within the workspace.
+
+    :ivar warnings: Warnings associated with the space.
 
     :ivar workspace_id: ID of the workspace associated with the space."""
 
@@ -74,6 +83,34 @@ class Space:
                 longitude=d.get("longitude", None),
             )
 
+    @dataclass
+    class BeingDeletedWarning(ResourceMapping):
+        """Indicates that the space is being deleted. Seam removes it, revokes its access grants, and detaches its devices and entrances shortly.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["being_deleted"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Warnings = Union[BeingDeletedWarning]
+    _WarningsVariants = {
+        "being_deleted": BeingDeletedWarning,
+    }
+
     acs_entrance_count: float
     created_at: str
     customer_data: Optional[CustomerData]
@@ -84,6 +121,7 @@ class Space:
     name: str
     space_id: str
     space_key: Optional[str]
+    warnings: List[Warnings]
     workspace_id: str
 
     @classmethod
@@ -107,5 +145,9 @@ class Space:
             name=d.get("name", None),
             space_id=d.get("space_id", None),
             space_key=d.get("space_key", None),
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )
