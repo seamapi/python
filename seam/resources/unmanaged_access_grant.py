@@ -75,6 +75,29 @@ class UnmanagedAccessGrant:
             )
 
     @dataclass
+    class AccessNotProvisionedError(ResourceMapping):
+        """Indicates that the access system rejected the access that Seam tried to set up for this access grant, so its credentials cannot open the affected entrances. For example, a hotel room may already be reserved or checked in for another guest. The message contains the reason that the access system gave. Seam keeps retrying, and this error clears automatically once the access system accepts the access.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["access_not_provisioned"]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
     class UpdatingSpacesPendingMutation(ResourceMapping):
         """Seam is in the process of updating the devices/spaces associated with this access grant.
 
@@ -469,9 +492,10 @@ class UnmanagedAccessGrant:
                 warning_code=d.get("warning_code", None),
             )
 
-    Errors = Union[CannotCreateRequestedAccessMethodsError]
+    Errors = Union[CannotCreateRequestedAccessMethodsError, AccessNotProvisionedError]
     _ErrorsVariants = {
         "cannot_create_requested_access_methods": CannotCreateRequestedAccessMethodsError,
+        "access_not_provisioned": AccessNotProvisionedError,
     }
 
     PendingMutations = Union[

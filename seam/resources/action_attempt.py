@@ -1797,7 +1797,7 @@ class AssignCredentialSuccessActionAttempt:
             """
 
             created_at: str
-            error_code: Literal["failed_to_issue"]
+            error_code: Literal["failed_to_issue", "access_not_provisioned"]
             message: str
 
             @classmethod
@@ -3145,6 +3145,126 @@ class ConfigureAutoLockErrorActionAttempt:
 
 
 @dataclass
+class ConvertAccessCodeToManagedSuccessActionAttempt:
+    """Converting an unmanaged access code to managed is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Result(ResourceMapping):
+        """Result of the action."""
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            # pylint: disable=unused-argument
+            return cls()
+
+    action_attempt_id: str
+    action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    error: None
+    result: Result
+    status: Literal["success"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=cls.Result.from_dict(d.get("result") or {}),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ConvertAccessCodeToManagedPendingActionAttempt:
+    """Converting an unmanaged access code to managed is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    action_attempt_id: str
+    action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    error: None
+    result: None
+    status: Literal["pending"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=d.get("error", None),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
+class ConvertAccessCodeToManagedErrorActionAttempt:
+    """Converting an unmanaged access code to managed is pending.
+
+    :ivar action_attempt_id: ID of the action attempt.
+
+    :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
+
+    :ivar error: Error associated with the action.
+
+    :ivar result: Result of the action.
+
+    :ivar status:"""
+
+    @dataclass
+    class Error(ResourceMapping):
+        """Error associated with the action.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar type: Type of the error."""
+
+        message: str
+        type: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                message=d.get("message", None),
+                type=d.get("type", None),
+            )
+
+    action_attempt_id: str
+    action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    error: Error
+    result: None
+    status: Literal["error"]
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            action_attempt_id=d.get("action_attempt_id", None),
+            action_type=d.get("action_type", None),
+            error=cls.Error.from_dict(d.get("error") or {}),
+            result=d.get("result", None),
+            status=d.get("status", None),
+        )
+
+
+@dataclass
 class SyncAccessCodesSuccessActionAttempt:
     """
 
@@ -4050,6 +4170,9 @@ ActionAttempt = Union[
     ConfigureAutoLockSuccessActionAttempt,
     ConfigureAutoLockPendingActionAttempt,
     ConfigureAutoLockErrorActionAttempt,
+    ConvertAccessCodeToManagedSuccessActionAttempt,
+    ConvertAccessCodeToManagedPendingActionAttempt,
+    ConvertAccessCodeToManagedErrorActionAttempt,
     SyncAccessCodesSuccessActionAttempt,
     SyncAccessCodesPendingActionAttempt,
     SyncAccessCodesErrorActionAttempt,
@@ -4163,6 +4286,12 @@ ConfigureAutoLockActionAttempt = Union[
     ConfigureAutoLockErrorActionAttempt,
 ]
 
+ConvertAccessCodeToManagedActionAttempt = Union[
+    ConvertAccessCodeToManagedSuccessActionAttempt,
+    ConvertAccessCodeToManagedPendingActionAttempt,
+    ConvertAccessCodeToManagedErrorActionAttempt,
+]
+
 SyncAccessCodesActionAttempt = Union[
     SyncAccessCodesSuccessActionAttempt,
     SyncAccessCodesPendingActionAttempt,
@@ -4221,6 +4350,7 @@ SuccessActionAttempt = Union[
     SimulateManualLockViaKeypadSuccessActionAttempt,
     PushThermostatProgramsSuccessActionAttempt,
     ConfigureAutoLockSuccessActionAttempt,
+    ConvertAccessCodeToManagedSuccessActionAttempt,
     SyncAccessCodesSuccessActionAttempt,
     CreateAccessCodeSuccessActionAttempt,
     DeleteAccessCodeSuccessActionAttempt,
@@ -4246,6 +4376,7 @@ PendingActionAttempt = Union[
     SimulateManualLockViaKeypadPendingActionAttempt,
     PushThermostatProgramsPendingActionAttempt,
     ConfigureAutoLockPendingActionAttempt,
+    ConvertAccessCodeToManagedPendingActionAttempt,
     SyncAccessCodesPendingActionAttempt,
     CreateAccessCodePendingActionAttempt,
     DeleteAccessCodePendingActionAttempt,
@@ -4271,6 +4402,7 @@ ErrorActionAttempt = Union[
     SimulateManualLockViaKeypadErrorActionAttempt,
     PushThermostatProgramsErrorActionAttempt,
     ConfigureAutoLockErrorActionAttempt,
+    ConvertAccessCodeToManagedErrorActionAttempt,
     SyncAccessCodesErrorActionAttempt,
     CreateAccessCodeErrorActionAttempt,
     DeleteAccessCodeErrorActionAttempt,
@@ -4347,6 +4479,18 @@ _ACTION_ATTEMPT_VARIANTS: Dict[Tuple[str, str], Any] = {
     ("CONFIGURE_AUTO_LOCK", "success"): ConfigureAutoLockSuccessActionAttempt,
     ("CONFIGURE_AUTO_LOCK", "pending"): ConfigureAutoLockPendingActionAttempt,
     ("CONFIGURE_AUTO_LOCK", "error"): ConfigureAutoLockErrorActionAttempt,
+    (
+        "CONVERT_ACCESS_CODE_TO_MANAGED",
+        "success",
+    ): ConvertAccessCodeToManagedSuccessActionAttempt,
+    (
+        "CONVERT_ACCESS_CODE_TO_MANAGED",
+        "pending",
+    ): ConvertAccessCodeToManagedPendingActionAttempt,
+    (
+        "CONVERT_ACCESS_CODE_TO_MANAGED",
+        "error",
+    ): ConvertAccessCodeToManagedErrorActionAttempt,
     ("SYNC_ACCESS_CODES", "success"): SyncAccessCodesSuccessActionAttempt,
     ("SYNC_ACCESS_CODES", "pending"): SyncAccessCodesPendingActionAttempt,
     ("SYNC_ACCESS_CODES", "error"): SyncAccessCodesErrorActionAttempt,
