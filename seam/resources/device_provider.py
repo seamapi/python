@@ -18,6 +18,12 @@ class DeviceProvider:
 
     :ivar can_hvac_heat_cool: Indicates whether the thermostat supports simultaneous heating and cooling.
 
+    :ivar can_mute_speaker: Indicates whether the speaker supports muting and unmuting.
+
+    :ivar can_pause_speaker_playback: Indicates whether the speaker supports pausing and resuming playback.
+
+    :ivar can_play_speaker_chime: Indicates whether the speaker supports playing a chime.
+
     :ivar can_program_offline_access_codes: Indicates whether the device supports programming offline access codes.
 
     :ivar can_program_online_access_codes: Indicates whether the device supports programming online access codes.
@@ -33,6 +39,8 @@ class DeviceProvider:
     :ivar can_remotely_unlock: Indicates whether the device supports remote unlocking.
 
     :ivar can_run_thermostat_programs: Indicates whether the thermostat supports running climate programs.
+
+    :ivar can_set_speaker_volume: Indicates whether the speaker supports setting its volume.
 
     :ivar can_simulate_connection: Indicates whether the device supports simulating connection in a sandbox.
 
@@ -66,6 +74,9 @@ class DeviceProvider:
     can_hvac_cool: Optional[bool]
     can_hvac_heat: Optional[bool]
     can_hvac_heat_cool: Optional[bool]
+    can_mute_speaker: Optional[bool]
+    can_pause_speaker_playback: Optional[bool]
+    can_play_speaker_chime: Optional[bool]
     can_program_offline_access_codes: Optional[bool]
     can_program_online_access_codes: Optional[bool]
     can_program_thermostat_programs_as_different_each_day: Optional[bool]
@@ -74,6 +85,7 @@ class DeviceProvider:
     can_remotely_lock: Optional[bool]
     can_remotely_unlock: Optional[bool]
     can_run_thermostat_programs: Optional[bool]
+    can_set_speaker_volume: Optional[bool]
     can_simulate_connection: Optional[bool]
     can_simulate_disconnection: Optional[bool]
     can_simulate_hub_connection: Optional[bool]
@@ -152,6 +164,7 @@ class DeviceProvider:
         "omnitec",
         "kisi",
         "aqara",
+        "sonos",
     ]
     display_name: str
     image_url: str
@@ -176,6 +189,9 @@ class DeviceProvider:
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
+            can_mute_speaker=d.get("can_mute_speaker", None),
+            can_pause_speaker_playback=d.get("can_pause_speaker_playback", None),
+            can_play_speaker_chime=d.get("can_play_speaker_chime", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -194,6 +210,7 @@ class DeviceProvider:
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
+            can_set_speaker_volume=d.get("can_set_speaker_volume", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),

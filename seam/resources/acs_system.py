@@ -162,6 +162,29 @@ class AcsSystem:
             )
 
     @dataclass
+    class UserLicenseLimitReachedError(ResourceMapping):
+        """Indicates that the access control system has reached the maximum number of users its license allows, so Seam cannot create new users on it and access for new guests is not provisioned. Remove unused users from the access control system or increase its license. The error clears once Seam can create users again.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["user_license_limit_reached"]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
     class InsufficientPermissionsError(ResourceMapping):
         """Indicates that the provider's system backing this `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ is not letting Seam act on it, so access cannot be managed until this is resolved. The error message says which of two causes applies. Either Seam's integration user does not have sufficient permissions on the provider's system, or has been suspended there: grant the integration user the required permissions in the provider's system, or reauthorize the connected account in Seam. Or the provider account or site does not have a valid subscription with the provider: set up or renew that subscription with the provider.
 
@@ -417,6 +440,7 @@ class AcsSystem:
         BridgeDisconnectedError,
         VisionlineInstanceUnreachableError,
         SaltoKsSubscriptionLimitExceededError,
+        UserLicenseLimitReachedError,
         InsufficientPermissionsError,
         AcsSystemDisconnectedError,
         AccountDisconnectedError,
@@ -428,6 +452,7 @@ class AcsSystem:
         "bridge_disconnected": BridgeDisconnectedError,
         "visionline_instance_unreachable": VisionlineInstanceUnreachableError,
         "salto_ks_subscription_limit_exceeded": SaltoKsSubscriptionLimitExceededError,
+        "user_license_limit_reached": UserLicenseLimitReachedError,
         "insufficient_permissions": InsufficientPermissionsError,
         "acs_system_disconnected": AcsSystemDisconnectedError,
         "account_disconnected": AccountDisconnectedError,

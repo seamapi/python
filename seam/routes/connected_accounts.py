@@ -96,7 +96,12 @@ class AbstractConnectedAccounts(abc.ABC):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -203,7 +208,12 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -399,7 +409,12 @@ class ConnectedAccounts(AbstractConnectedAccounts):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -616,7 +631,12 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,

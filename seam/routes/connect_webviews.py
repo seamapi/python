@@ -18,7 +18,12 @@ class AbstractConnectWebviews(abc.ABC):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -93,6 +98,7 @@ class AbstractConnectWebviews(abc.ABC):
                     "omnitec",
                     "kisi",
                     "aqara",
+                    "sonos",
                     "yale_access",
                     "hid_cm",
                     "google_nest",
@@ -210,7 +216,12 @@ class AbstractAsyncConnectWebviews(abc.ABC):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -285,6 +296,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
                     "omnitec",
                     "kisi",
                     "aqara",
+                    "sonos",
                     "yale_access",
                     "hid_cm",
                     "google_nest",
@@ -409,7 +421,12 @@ class ConnectWebviews(AbstractConnectWebviews):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -484,6 +501,7 @@ class ConnectWebviews(AbstractConnectWebviews):
                     "omnitec",
                     "kisi",
                     "aqara",
+                    "sonos",
                     "yale_access",
                     "hid_cm",
                     "google_nest",
@@ -690,7 +708,12 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
         accepted_capabilities: Optional[
             List[
                 Literal[
-                    "lock", "thermostat", "noise_sensor", "access_control", "camera"
+                    "lock",
+                    "thermostat",
+                    "noise_sensor",
+                    "access_control",
+                    "camera",
+                    "speaker",
                 ]
             ]
         ] = None,
@@ -765,6 +788,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
                     "omnitec",
                     "kisi",
                     "aqara",
+                    "sonos",
                     "yale_access",
                     "hid_cm",
                     "google_nest",

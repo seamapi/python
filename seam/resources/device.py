@@ -25,6 +25,12 @@ class Device:
 
     :ivar can_hvac_heat_cool: Indicates whether the thermostat supports simultaneous heating and cooling.
 
+    :ivar can_mute_speaker: Indicates whether the speaker supports muting and unmuting.
+
+    :ivar can_pause_speaker_playback: Indicates whether the speaker supports pausing and resuming playback.
+
+    :ivar can_play_speaker_chime: Indicates whether the speaker supports playing a chime.
+
     :ivar can_program_offline_access_codes: Indicates whether the device supports programming offline access codes.
 
     :ivar can_program_online_access_codes: Indicates whether the device supports programming online access codes.
@@ -40,6 +46,8 @@ class Device:
     :ivar can_remotely_unlock: Indicates whether the device supports remote unlocking.
 
     :ivar can_run_thermostat_programs: Indicates whether the thermostat supports running climate programs.
+
+    :ivar can_set_speaker_volume: Indicates whether the speaker supports setting its volume.
 
     :ivar can_simulate_connection: Indicates whether the device supports simulating connection in a sandbox.
 
@@ -681,6 +689,8 @@ class Device:
 
         :ivar smartthings_metadata: Metadata for a SmartThings device.
 
+        :ivar sonos_metadata: Metadata for a Sonos speaker.
+
         :ivar tado_metadata: Metadata for a tado° device.
 
         :ivar tapo_metadata: Metadata for a Tapo camera.
@@ -720,6 +730,8 @@ class Device:
         :ivar offline_time_frame_options: Time frames that may be requested when creating an offline access code, expressed as a list of options. The caller picks one option (by matching the requested duration when the options' duration ranges do not overlap, or by ``display_name`` when they do) and satisfies that one option's rules. When ``undefined``, any time frame works.
 
         :ivar online_time_frame_options: Time frames that may be requested when creating an online access code, expressed as a list of options. The caller picks one option (by matching the requested duration when the options' duration ranges do not overlap, or by ``display_name`` when they do) and satisfies that one option's rules. When ``undefined``, any time frame works.
+
+        :ivar speaker: Audio state and capabilities of the speaker.
 
         :ivar supported_code_lengths: Supported code lengths for access codes.
 
@@ -2226,6 +2238,44 @@ class Device:
                 )
 
         @dataclass
+        class SonosMetadata(ResourceMapping):
+            """Metadata for a Sonos speaker.
+
+            :ivar bonded_member_models: Models of the speakers bonded to this speaker, such as surrounds or a subwoofer.
+
+            :ivar color: Color of the speaker, as reported by Sonos.
+
+            :ivar household_id: ID of the Sonos household that the speaker belongs to.
+
+            :ivar model_display_name: Model name of the speaker, as reported by Sonos.
+
+            :ivar player_id: ID of the Sonos player for the speaker.
+
+            :ivar player_name: Name of the speaker, as set in the Sonos app.
+
+            :ivar software_version: Software version running on the speaker."""
+
+            bonded_member_models: Optional[List[str]]
+            color: Optional[str]
+            household_id: Optional[str]
+            model_display_name: Optional[str]
+            player_id: Optional[str]
+            player_name: Optional[str]
+            software_version: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    bonded_member_models=d.get("bonded_member_models", None),
+                    color=d.get("color", None),
+                    household_id=d.get("household_id", None),
+                    model_display_name=d.get("model_display_name", None),
+                    player_id=d.get("player_id", None),
+                    player_name=d.get("player_name", None),
+                    software_version=d.get("software_version", None),
+                )
+
+        @dataclass
         class TadoMetadata(ResourceMapping):
             """Metadata for a tado° device.
 
@@ -2722,6 +2772,87 @@ class Device:
                         cls.TimePairs.from_dict(i) for i in d.get("time_pairs") or []
                     ],
                     time_zone=d.get("time_zone", None),
+                )
+
+        @dataclass
+        class Speaker(ResourceMapping):
+            """Audio state and capabilities of the speaker.
+
+            :ivar grouped_with_device_ids: IDs of the other speakers that are currently grouped with this speaker. Pausing or resuming playback on a speaker also affects the speakers in its group.
+
+            :ivar has_fixed_volume: Indicates whether the speaker's volume is fixed, for example, because the speaker's line-out level is controlled by an external amplifier. A speaker with a fixed volume cannot have its volume set through Seam.
+
+            :ivar is_muted: Indicates whether the speaker is muted.
+
+            :ivar max_volume: Maximum volume that you can set on the speaker. This is the ceiling of the speaker's native volume scale, not a limit configured for guests.
+
+            :ivar min_volume: Minimum volume that you can set on the speaker.
+
+            :ivar now_playing: Content that is currently playing on the speaker.
+
+            :ivar playback_state: Playback state of the speaker.
+
+            :ivar supports_chime: Indicates whether the speaker can play a chime.
+
+            :ivar volume: Current volume of the speaker, on the speaker's native volume scale from ``min_volume`` to ``max_volume``. This is the native volume setting, not a decibel level.
+
+            :ivar volume_reported_at: Date and time at which the speaker first reported its current volume.
+
+            :ivar volume_step: Increment between the volume values that you can set on the speaker.
+            """
+
+            @dataclass
+            class NowPlaying(ResourceMapping):
+                """Content that is currently playing on the speaker.
+
+                :ivar album: Album of the content that is currently playing.
+
+                :ivar artist: Artist of the content that is currently playing.
+
+                :ivar title: Title of the content that is currently playing."""
+
+                album: Optional[str]
+                artist: Optional[str]
+                title: Optional[str]
+
+                @classmethod
+                def from_dict(cls, d: Any):
+                    return cls(
+                        album=d.get("album", None),
+                        artist=d.get("artist", None),
+                        title=d.get("title", None),
+                    )
+
+            grouped_with_device_ids: List[str]
+            has_fixed_volume: bool
+            is_muted: bool
+            max_volume: float
+            min_volume: float
+            now_playing: Optional[NowPlaying]
+            playback_state: Literal["playing", "paused", "idle", "buffering", "unknown"]
+            supports_chime: bool
+            volume: float
+            volume_reported_at: Optional[str]
+            volume_step: float
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    grouped_with_device_ids=d.get("grouped_with_device_ids", None),
+                    has_fixed_volume=d.get("has_fixed_volume", None),
+                    is_muted=d.get("is_muted", None),
+                    max_volume=d.get("max_volume", None),
+                    min_volume=d.get("min_volume", None),
+                    now_playing=(
+                        cls.NowPlaying.from_dict(d.get("now_playing"))
+                        if d.get("now_playing") is not None
+                        else None
+                    ),
+                    playback_state=d.get("playback_state", None),
+                    supports_chime=d.get("supports_chime", None),
+                    volume=d.get("volume", None),
+                    volume_reported_at=d.get("volume_reported_at", None),
+                    volume_step=d.get("volume_step", None),
                 )
 
         @dataclass
@@ -3312,6 +3443,7 @@ class Device:
         seam_bridge_metadata: Optional[SeamBridgeMetadata]
         sensi_metadata: Optional[SensiMetadata]
         smartthings_metadata: Optional[SmartthingsMetadata]
+        sonos_metadata: Optional[SonosMetadata]
         tado_metadata: Optional[TadoMetadata]
         tapo_metadata: Optional[TapoMetadata]
         tedee_metadata: Optional[TedeeMetadata]
@@ -3332,6 +3464,7 @@ class Device:
         max_active_codes_supported: Optional[float]
         offline_time_frame_options: Optional[List[OfflineTimeFrameOptions]]
         online_time_frame_options: Optional[List[OnlineTimeFrameOptions]]
+        speaker: Optional[Speaker]
         supported_code_lengths: Optional[List[float]]
         supports_backup_access_code_pool: Optional[bool]
         active_thermostat_schedule: Optional[ActiveThermostatSchedule]
@@ -3607,6 +3740,11 @@ class Device:
                     if d.get("smartthings_metadata") is not None
                     else None
                 ),
+                sonos_metadata=(
+                    cls.SonosMetadata.from_dict(d.get("sonos_metadata"))
+                    if d.get("sonos_metadata") is not None
+                    else None
+                ),
                 tado_metadata=(
                     cls.TadoMetadata.from_dict(d.get("tado_metadata"))
                     if d.get("tado_metadata") is not None
@@ -3678,6 +3816,11 @@ class Device:
                     cls.OnlineTimeFrameOptions.from_dict(i)
                     for i in d.get("online_time_frame_options") or []
                 ],
+                speaker=(
+                    cls.Speaker.from_dict(d.get("speaker"))
+                    if d.get("speaker") is not None
+                    else None
+                ),
                 supported_code_lengths=d.get("supported_code_lengths", None),
                 supports_backup_access_code_pool=d.get(
                     "supports_backup_access_code_pool", None
@@ -4538,6 +4681,9 @@ class Device:
     can_hvac_cool: Optional[bool]
     can_hvac_heat: Optional[bool]
     can_hvac_heat_cool: Optional[bool]
+    can_mute_speaker: Optional[bool]
+    can_pause_speaker_playback: Optional[bool]
+    can_play_speaker_chime: Optional[bool]
     can_program_offline_access_codes: Optional[bool]
     can_program_online_access_codes: Optional[bool]
     can_program_thermostat_programs_as_different_each_day: Optional[bool]
@@ -4546,6 +4692,7 @@ class Device:
     can_remotely_lock: Optional[bool]
     can_remotely_unlock: Optional[bool]
     can_run_thermostat_programs: Optional[bool]
+    can_set_speaker_volume: Optional[bool]
     can_simulate_connection: Optional[bool]
     can_simulate_disconnection: Optional[bool]
     can_simulate_hub_connection: Optional[bool]
@@ -4613,6 +4760,7 @@ class Device:
         "tapo_camera",
         "arlo_camera",
         "reolink_camera",
+        "sonos_speaker",
     ]
     display_name: str
     errors: List[Errors]
@@ -4632,6 +4780,9 @@ class Device:
             can_hvac_cool=d.get("can_hvac_cool", None),
             can_hvac_heat=d.get("can_hvac_heat", None),
             can_hvac_heat_cool=d.get("can_hvac_heat_cool", None),
+            can_mute_speaker=d.get("can_mute_speaker", None),
+            can_pause_speaker_playback=d.get("can_pause_speaker_playback", None),
+            can_play_speaker_chime=d.get("can_play_speaker_chime", None),
             can_program_offline_access_codes=d.get(
                 "can_program_offline_access_codes", None
             ),
@@ -4650,6 +4801,7 @@ class Device:
             can_remotely_lock=d.get("can_remotely_lock", None),
             can_remotely_unlock=d.get("can_remotely_unlock", None),
             can_run_thermostat_programs=d.get("can_run_thermostat_programs", None),
+            can_set_speaker_volume=d.get("can_set_speaker_volume", None),
             can_simulate_connection=d.get("can_simulate_connection", None),
             can_simulate_disconnection=d.get("can_simulate_disconnection", None),
             can_simulate_hub_connection=d.get("can_simulate_hub_connection", None),

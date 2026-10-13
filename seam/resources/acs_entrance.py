@@ -236,8 +236,8 @@ class AcsEntrance:
             )
 
     @dataclass
-    class Errors(ResourceMapping):
-        """Errors associated with the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
+    class EntranceRemovedError(ResourceMapping):
+        """Indicates that the `entrance <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_ was removed from the connected account, so Seam can no longer sync it.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -247,7 +247,7 @@ class AcsEntrance:
         """
 
         created_at: str
-        error_code: str
+        error_code: Literal["entrance_removed"]
         message: str
 
         @classmethod
@@ -546,6 +546,11 @@ class AcsEntrance:
                 warning_code=d.get("warning_code", None),
             )
 
+    Errors = Union[EntranceRemovedError]
+    _ErrorsVariants = {
+        "entrance_removed": EntranceRemovedError,
+    }
+
     Warnings = Union[
         SaltoKsEntranceAccessCodeSupportRemovedWarning,
         EntranceSharesZoneWarning,
@@ -636,7 +641,10 @@ class AcsEntrance:
                 if d.get("dormakaba_community_metadata") is not None
                 else None
             ),
-            errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
+            errors=[
+                _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
+                for i in d.get("errors") or []
+            ],
             hotek_metadata=(
                 cls.HotekMetadata.from_dict(d.get("hotek_metadata"))
                 if d.get("hotek_metadata") is not None
