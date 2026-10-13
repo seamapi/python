@@ -57,7 +57,9 @@ class ConnectWebview:
     :ivar workspace_id: ID of the workspace that contains the Connect Webview."""
 
     accepted_capabilities: List[
-        Literal["lock", "thermostat", "noise_sensor", "access_control", "camera"]
+        Literal[
+            "lock", "thermostat", "noise_sensor", "access_control", "camera", "speaker"
+        ]
     ]
     accepted_providers: List[str]
     any_provider_allowed: bool

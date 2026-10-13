@@ -109,6 +109,7 @@ class AbstractDevices(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -160,6 +161,7 @@ class AbstractDevices(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -223,6 +225,7 @@ class AbstractDevices(abc.ABC):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -420,6 +423,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -471,6 +475,7 @@ class AbstractAsyncDevices(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -534,6 +539,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -761,6 +767,7 @@ class Devices(AbstractDevices):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -812,6 +819,7 @@ class Devices(AbstractDevices):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -875,6 +883,7 @@ class Devices(AbstractDevices):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -1193,6 +1202,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -1244,6 +1254,7 @@ class AsyncDevices(AbstractAsyncDevices):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -1307,6 +1318,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,

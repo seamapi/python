@@ -533,7 +533,9 @@ class ConnectedAccount:
     }
 
     accepted_capabilities: List[
-        Literal["lock", "thermostat", "noise_sensor", "access_control", "camera"]
+        Literal[
+            "lock", "thermostat", "noise_sensor", "access_control", "camera", "speaker"
+        ]
     ]
     account_type: Optional[str]
     account_type_display_name: str

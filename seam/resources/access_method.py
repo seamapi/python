@@ -41,7 +41,7 @@ class AccessMethod:
 
     :ivar is_ready_for_assignment: Indicates whether the access method is ready for card assignment. This is true when the access method is in card mode, has not yet been issued, and the system supports credential assignment.
 
-    :ivar is_ready_for_encoding: Indicates whether the access method is ready to be encoded. This is true when the credential has been created and the card has not yet been issued.
+    :ivar is_ready_for_encoding: Indicates whether the access method is ready to be encoded. This is true when the card has not yet been issued and the access system has received all the access the card needs. While it is false, ``pending_mutations`` contains ``waiting_for_access_on_acs_system``.
 
     :ivar issued_at: Date and time at which the access method was issued.
 
@@ -66,6 +66,29 @@ class AccessMethod:
 
         created_at: str
         error_code: Literal["failed_to_issue"]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class AccessNotProvisionedError(ResourceMapping):
+        """Indicates that the access system rejected the access that Seam tried to set up for this access method, so its credential cannot open the affected entrances, even after it is issued. For example, a hotel room may already be reserved or checked in for another guest. The message contains the reason that the access system gave. Seam keeps retrying, and this error clears automatically once the access system accepts the access.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["access_not_provisioned"]
         message: str
 
         @classmethod
@@ -271,6 +294,29 @@ class AccessMethod:
             )
 
     @dataclass
+    class WaitingForAccessOnAcsSystemPendingMutation(ResourceMapping):
+        """The access system has not yet received all the access this card needs. A card encoded now would carry only the access the system already has, so wait until this clears before encoding.
+
+        :ivar created_at: Date and time at which the mutation was created.
+
+        :ivar message: Detailed description of the mutation.
+
+        :ivar mutation_code: Mutation code to indicate that the access system has not yet received all the access this card needs, so the card is not ready to be encoded.
+        """
+
+        created_at: str
+        message: str
+        mutation_code: Literal["waiting_for_access_on_acs_system"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                mutation_code=d.get("mutation_code", None),
+            )
+
+    @dataclass
     class BeingDeletedWarning(ResourceMapping):
         """Indicates that the `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_ is being deleted.
 
@@ -412,20 +458,23 @@ class AccessMethod:
                 warning_code=d.get("warning_code", None),
             )
 
-    Errors = Union[FailedToIssueError]
+    Errors = Union[FailedToIssueError, AccessNotProvisionedError]
     _ErrorsVariants = {
         "failed_to_issue": FailedToIssueError,
+        "access_not_provisioned": AccessNotProvisionedError,
     }
 
     PendingMutations = Union[
         ProvisioningAccessPendingMutation,
         RevokingAccessPendingMutation,
         UpdatingAccessTimesPendingMutation,
+        WaitingForAccessOnAcsSystemPendingMutation,
     ]
     _PendingMutationsVariants = {
         "provisioning_access": ProvisioningAccessPendingMutation,
         "revoking_access": RevokingAccessPendingMutation,
         "updating_access_times": UpdatingAccessTimesPendingMutation,
+        "waiting_for_access_on_acs_system": WaitingForAccessOnAcsSystemPendingMutation,
     }
 
     Warnings = Union[

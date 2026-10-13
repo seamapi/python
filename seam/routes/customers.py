@@ -91,6 +91,7 @@ class AbstractCustomers(abc.ABC):
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+        Space keys also match spaces created directly with a ``space_key`` (for example, through ``/spaces/create``).
 
         :param access_grant_keys: List of access grant keys to delete.
 
@@ -144,6 +145,7 @@ class AbstractCustomers(abc.ABC):
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
+        low_battery_alert_threshold: Optional[Union[float, Null]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
         property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
@@ -176,6 +178,8 @@ class AbstractCustomers(abc.ABC):
         :param guests: List of guests.
 
         :param listings: List of property listings.
+
+        :param low_battery_alert_threshold: Battery level, from 0 to 1, at or below which ``device.low_battery`` events fire for this customer's devices. Overrides the workspace and device defaults. Pass ``null`` to remove the customer's override.
 
         :param properties: List of short-term rental properties.
 
@@ -287,6 +291,7 @@ class AbstractAsyncCustomers(abc.ABC):
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+        Space keys also match spaces created directly with a ``space_key`` (for example, through ``/spaces/create``).
 
         :param access_grant_keys: List of access grant keys to delete.
 
@@ -340,6 +345,7 @@ class AbstractAsyncCustomers(abc.ABC):
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
+        low_battery_alert_threshold: Optional[Union[float, Null]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
         property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
@@ -372,6 +378,8 @@ class AbstractAsyncCustomers(abc.ABC):
         :param guests: List of guests.
 
         :param listings: List of property listings.
+
+        :param low_battery_alert_threshold: Battery level, from 0 to 1, at or below which ``device.low_battery`` events fire for this customer's devices. Overrides the workspace and device defaults. Pass ``null`` to remove the customer's override.
 
         :param properties: List of short-term rental properties.
 
@@ -523,6 +531,7 @@ class Customers(AbstractCustomers):
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+        Space keys also match spaces created directly with a ``space_key`` (for example, through ``/spaces/create``).
 
         :param access_grant_keys: List of access grant keys to delete.
 
@@ -623,6 +632,7 @@ class Customers(AbstractCustomers):
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
+        low_battery_alert_threshold: Optional[Union[float, Null]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
         property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
@@ -655,6 +665,8 @@ class Customers(AbstractCustomers):
         :param guests: List of guests.
 
         :param listings: List of property listings.
+
+        :param low_battery_alert_threshold: Battery level, from 0 to 1, at or below which ``device.low_battery`` events fire for this customer's devices. Overrides the workspace and device defaults. Pass ``null`` to remove the customer's override.
 
         :param properties: List of short-term rental properties.
 
@@ -699,6 +711,8 @@ class Customers(AbstractCustomers):
             json_payload["guests"] = guests
         if listings is not None:
             json_payload["listings"] = listings
+        if low_battery_alert_threshold is not None:
+            json_payload["low_battery_alert_threshold"] = low_battery_alert_threshold
         if properties is not None:
             json_payload["properties"] = properties
         if property_listings is not None:
@@ -853,6 +867,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
     ) -> None:
         """Deletes customer data including resources like spaces, properties, rooms, users, etc.
         This will delete the partner resources and any related Seam resources (user identities, access grants, spaces).
+        Space keys also match spaces created directly with a ``space_key`` (for example, through ``/spaces/create``).
 
         :param access_grant_keys: List of access grant keys to delete.
 
@@ -953,6 +968,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
         facilities: Optional[List[Dict[str, Any]]] = None,
         guests: Optional[List[Dict[str, Any]]] = None,
         listings: Optional[List[Dict[str, Any]]] = None,
+        low_battery_alert_threshold: Optional[Union[float, Null]] = None,
         properties: Optional[List[Dict[str, Any]]] = None,
         property_listings: Optional[List[Dict[str, Any]]] = None,
         reservations: Optional[List[Dict[str, Any]]] = None,
@@ -985,6 +1001,8 @@ class AsyncCustomers(AbstractAsyncCustomers):
         :param guests: List of guests.
 
         :param listings: List of property listings.
+
+        :param low_battery_alert_threshold: Battery level, from 0 to 1, at or below which ``device.low_battery`` events fire for this customer's devices. Overrides the workspace and device defaults. Pass ``null`` to remove the customer's override.
 
         :param properties: List of short-term rental properties.
 
@@ -1029,6 +1047,8 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["guests"] = guests
         if listings is not None:
             json_payload["listings"] = listings
+        if low_battery_alert_threshold is not None:
+            json_payload["low_battery_alert_threshold"] = low_battery_alert_threshold
         if properties is not None:
             json_payload["properties"] = properties
         if property_listings is not None:

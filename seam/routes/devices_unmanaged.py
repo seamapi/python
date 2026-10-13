@@ -88,6 +88,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -139,6 +140,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -202,6 +204,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -338,6 +341,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -389,6 +393,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -452,6 +457,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -624,6 +630,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -675,6 +682,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -738,6 +746,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
@@ -960,6 +969,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "sonos_speaker",
             ]
         ] = None,
         device_types: Optional[
@@ -1011,6 +1021,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "sonos_speaker",
                 ]
             ]
         ] = None,
@@ -1074,6 +1085,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "kisi",
                 "slack",
                 "yacan",
+                "sonos",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
