@@ -1898,6 +1898,10 @@ class AssignCredentialSuccessActionAttempt:
             :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
 
             :ivar original_access_method_id: ID of the original access method from which this backup access method was split, if applicable.
+
+            :ivar new_code: The PIN code that was assigned instead.
+
+            :ivar original_code: The originally requested PIN code that could not be used.
             """
 
             created_at: str
@@ -1909,8 +1913,11 @@ class AssignCredentialSuccessActionAttempt:
                 "delay_in_issuing",
                 "user_identity_missing_email_address",
                 "user_identity_missing_phone_number",
+                "requested_code_unavailable",
             ]
             original_access_method_id: Optional[str]
+            new_code: Optional[str]
+            original_code: Optional[str]
 
             @classmethod
             def from_dict(cls, d: Any):
@@ -1919,6 +1926,8 @@ class AssignCredentialSuccessActionAttempt:
                     message=d.get("message", None),
                     warning_code=d.get("warning_code", None),
                     original_access_method_id=d.get("original_access_method_id", None),
+                    new_code=d.get("new_code", None),
+                    original_code=d.get("original_code", None),
                 )
 
         access_method_id: str

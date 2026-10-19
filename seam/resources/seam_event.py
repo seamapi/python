@@ -7032,6 +7032,7 @@ class LockAccessDeniedEvent:
             "too_many_attempts",
             "blocked_by_privacy_mode",
             "credential_error",
+            "connection_error",
         ]
 
         @classmethod

@@ -2191,7 +2191,7 @@ class Device:
 
             :ivar device_name: Device name for a Sensi device.
 
-            :ivar dual_setpoints_not_supported: Set to true when the device does not support the /dual-setpoints API endpoint.
+            :ivar dual_setpoints_not_supported: Deprecated. Seam no longer sets this field.
 
             :ivar product_type: Product type for a Sensi device."""
 
