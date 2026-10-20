@@ -1898,6 +1898,10 @@ class AssignCredentialSuccessActionAttempt:
             :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
 
             :ivar original_access_method_id: ID of the original access method from which this backup access method was split, if applicable.
+
+            :ivar new_code: The PIN code that was assigned instead.
+
+            :ivar original_code: The originally requested PIN code that could not be used.
             """
 
             created_at: str
@@ -1909,8 +1913,11 @@ class AssignCredentialSuccessActionAttempt:
                 "delay_in_issuing",
                 "user_identity_missing_email_address",
                 "user_identity_missing_phone_number",
+                "requested_code_unavailable",
             ]
             original_access_method_id: Optional[str]
+            new_code: Optional[str]
+            original_code: Optional[str]
 
             @classmethod
             def from_dict(cls, d: Any):
@@ -1919,6 +1926,8 @@ class AssignCredentialSuccessActionAttempt:
                     message=d.get("message", None),
                     warning_code=d.get("warning_code", None),
                     original_access_method_id=d.get("original_access_method_id", None),
+                    new_code=d.get("new_code", None),
+                    original_code=d.get("original_code", None),
                 )
 
         access_method_id: str
@@ -3268,618 +3277,6 @@ class ConvertAccessCodeToManagedErrorActionAttempt:
 
 
 @dataclass
-class SetSpeakerVolumeSuccessActionAttempt:
-    """Setting the speaker volume is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of setting the volume on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_VOLUME"]
-    error: None
-    result: Result
-    status: Literal["success"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=cls.Result.from_dict(d.get("result") or {}),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class SetSpeakerVolumePendingActionAttempt:
-    """Setting the speaker volume is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of setting the volume on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_VOLUME"]
-    error: None
-    result: None
-    status: Literal["pending"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class SetSpeakerVolumeErrorActionAttempt:
-    """Setting the speaker volume is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of setting the volume on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """Error associated with the action.
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Type of the error."""
-
-        message: str
-        type: str
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_VOLUME"]
-    error: Error
-    result: None
-    status: Literal["error"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=cls.Error.from_dict(d.get("error") or {}),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class SetSpeakerMuteSuccessActionAttempt:
-    """Muting or unmuting the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of muting or unmuting a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_MUTE"]
-    error: None
-    result: Result
-    status: Literal["success"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=cls.Result.from_dict(d.get("result") or {}),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class SetSpeakerMutePendingActionAttempt:
-    """Muting or unmuting the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of muting or unmuting a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_MUTE"]
-    error: None
-    result: None
-    status: Literal["pending"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class SetSpeakerMuteErrorActionAttempt:
-    """Muting or unmuting the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of muting or unmuting a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """Error associated with the action.
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Type of the error."""
-
-        message: str
-        type: str
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["SET_SPEAKER_MUTE"]
-    error: Error
-    result: None
-    status: Literal["error"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=cls.Error.from_dict(d.get("error") or {}),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PauseSpeakerPlaybackSuccessActionAttempt:
-    """Pausing playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of pausing playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar affected_device_ids: IDs of the speakers whose playback was paused, including speakers grouped with the requested speaker.
-        """
-
-        affected_device_ids: List[str]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                affected_device_ids=d.get("affected_device_ids", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["PAUSE_SPEAKER_PLAYBACK"]
-    error: None
-    result: Result
-    status: Literal["success"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=cls.Result.from_dict(d.get("result") or {}),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PauseSpeakerPlaybackPendingActionAttempt:
-    """Pausing playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of pausing playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    action_attempt_id: str
-    action_type: Literal["PAUSE_SPEAKER_PLAYBACK"]
-    error: None
-    result: None
-    status: Literal["pending"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PauseSpeakerPlaybackErrorActionAttempt:
-    """Pausing playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of pausing playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """Error associated with the action.
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Type of the error."""
-
-        message: str
-        type: str
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["PAUSE_SPEAKER_PLAYBACK"]
-    error: Error
-    result: None
-    status: Literal["error"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=cls.Error.from_dict(d.get("error") or {}),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class ResumeSpeakerPlaybackSuccessActionAttempt:
-    """Resuming playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of resuming playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action.
-
-        :ivar affected_device_ids: IDs of the speakers whose playback was resumed, including speakers grouped with the requested speaker.
-        """
-
-        affected_device_ids: List[str]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                affected_device_ids=d.get("affected_device_ids", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["RESUME_SPEAKER_PLAYBACK"]
-    error: None
-    result: Result
-    status: Literal["success"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=cls.Result.from_dict(d.get("result") or {}),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class ResumeSpeakerPlaybackPendingActionAttempt:
-    """Resuming playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of resuming playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    action_attempt_id: str
-    action_type: Literal["RESUME_SPEAKER_PLAYBACK"]
-    error: None
-    result: None
-    status: Literal["pending"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class ResumeSpeakerPlaybackErrorActionAttempt:
-    """Resuming playback on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of resuming playback on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """Error associated with the action.
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Type of the error."""
-
-        message: str
-        type: str
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["RESUME_SPEAKER_PLAYBACK"]
-    error: Error
-    result: None
-    status: Literal["error"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=cls.Error.from_dict(d.get("error") or {}),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PlaySpeakerChimeSuccessActionAttempt:
-    """Playing a chime on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of playing a chime on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Result(ResourceMapping):
-        """Result of the action."""
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            # pylint: disable=unused-argument
-            return cls()
-
-    action_attempt_id: str
-    action_type: Literal["PLAY_SPEAKER_CHIME"]
-    error: None
-    result: Result
-    status: Literal["success"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=cls.Result.from_dict(d.get("result") or {}),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PlaySpeakerChimePendingActionAttempt:
-    """Playing a chime on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of playing a chime on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    action_attempt_id: str
-    action_type: Literal["PLAY_SPEAKER_CHIME"]
-    error: None
-    result: None
-    status: Literal["pending"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=d.get("error", None),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
-class PlaySpeakerChimeErrorActionAttempt:
-    """Playing a chime on the speaker is pending.
-
-    :ivar action_attempt_id: ID of the action attempt.
-
-    :ivar action_type: Action attempt to track the status of playing a chime on a speaker.
-
-    :ivar error: Error associated with the action.
-
-    :ivar result: Result of the action.
-
-    :ivar status:"""
-
-    @dataclass
-    class Error(ResourceMapping):
-        """Error associated with the action.
-
-        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar type: Type of the error."""
-
-        message: str
-        type: str
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                message=d.get("message", None),
-                type=d.get("type", None),
-            )
-
-    action_attempt_id: str
-    action_type: Literal["PLAY_SPEAKER_CHIME"]
-    error: Error
-    result: None
-    status: Literal["error"]
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            action_attempt_id=d.get("action_attempt_id", None),
-            action_type=d.get("action_type", None),
-            error=cls.Error.from_dict(d.get("error") or {}),
-            result=d.get("result", None),
-            status=d.get("status", None),
-        )
-
-
-@dataclass
 class SyncAccessCodesSuccessActionAttempt:
     """
 
@@ -4788,21 +4185,6 @@ ActionAttempt = Union[
     ConvertAccessCodeToManagedSuccessActionAttempt,
     ConvertAccessCodeToManagedPendingActionAttempt,
     ConvertAccessCodeToManagedErrorActionAttempt,
-    SetSpeakerVolumeSuccessActionAttempt,
-    SetSpeakerVolumePendingActionAttempt,
-    SetSpeakerVolumeErrorActionAttempt,
-    SetSpeakerMuteSuccessActionAttempt,
-    SetSpeakerMutePendingActionAttempt,
-    SetSpeakerMuteErrorActionAttempt,
-    PauseSpeakerPlaybackSuccessActionAttempt,
-    PauseSpeakerPlaybackPendingActionAttempt,
-    PauseSpeakerPlaybackErrorActionAttempt,
-    ResumeSpeakerPlaybackSuccessActionAttempt,
-    ResumeSpeakerPlaybackPendingActionAttempt,
-    ResumeSpeakerPlaybackErrorActionAttempt,
-    PlaySpeakerChimeSuccessActionAttempt,
-    PlaySpeakerChimePendingActionAttempt,
-    PlaySpeakerChimeErrorActionAttempt,
     SyncAccessCodesSuccessActionAttempt,
     SyncAccessCodesPendingActionAttempt,
     SyncAccessCodesErrorActionAttempt,
@@ -4922,36 +4304,6 @@ ConvertAccessCodeToManagedActionAttempt = Union[
     ConvertAccessCodeToManagedErrorActionAttempt,
 ]
 
-SetSpeakerVolumeActionAttempt = Union[
-    SetSpeakerVolumeSuccessActionAttempt,
-    SetSpeakerVolumePendingActionAttempt,
-    SetSpeakerVolumeErrorActionAttempt,
-]
-
-SetSpeakerMuteActionAttempt = Union[
-    SetSpeakerMuteSuccessActionAttempt,
-    SetSpeakerMutePendingActionAttempt,
-    SetSpeakerMuteErrorActionAttempt,
-]
-
-PauseSpeakerPlaybackActionAttempt = Union[
-    PauseSpeakerPlaybackSuccessActionAttempt,
-    PauseSpeakerPlaybackPendingActionAttempt,
-    PauseSpeakerPlaybackErrorActionAttempt,
-]
-
-ResumeSpeakerPlaybackActionAttempt = Union[
-    ResumeSpeakerPlaybackSuccessActionAttempt,
-    ResumeSpeakerPlaybackPendingActionAttempt,
-    ResumeSpeakerPlaybackErrorActionAttempt,
-]
-
-PlaySpeakerChimeActionAttempt = Union[
-    PlaySpeakerChimeSuccessActionAttempt,
-    PlaySpeakerChimePendingActionAttempt,
-    PlaySpeakerChimeErrorActionAttempt,
-]
-
 SyncAccessCodesActionAttempt = Union[
     SyncAccessCodesSuccessActionAttempt,
     SyncAccessCodesPendingActionAttempt,
@@ -5011,11 +4363,6 @@ SuccessActionAttempt = Union[
     PushThermostatProgramsSuccessActionAttempt,
     ConfigureAutoLockSuccessActionAttempt,
     ConvertAccessCodeToManagedSuccessActionAttempt,
-    SetSpeakerVolumeSuccessActionAttempt,
-    SetSpeakerMuteSuccessActionAttempt,
-    PauseSpeakerPlaybackSuccessActionAttempt,
-    ResumeSpeakerPlaybackSuccessActionAttempt,
-    PlaySpeakerChimeSuccessActionAttempt,
     SyncAccessCodesSuccessActionAttempt,
     CreateAccessCodeSuccessActionAttempt,
     DeleteAccessCodeSuccessActionAttempt,
@@ -5042,11 +4389,6 @@ PendingActionAttempt = Union[
     PushThermostatProgramsPendingActionAttempt,
     ConfigureAutoLockPendingActionAttempt,
     ConvertAccessCodeToManagedPendingActionAttempt,
-    SetSpeakerVolumePendingActionAttempt,
-    SetSpeakerMutePendingActionAttempt,
-    PauseSpeakerPlaybackPendingActionAttempt,
-    ResumeSpeakerPlaybackPendingActionAttempt,
-    PlaySpeakerChimePendingActionAttempt,
     SyncAccessCodesPendingActionAttempt,
     CreateAccessCodePendingActionAttempt,
     DeleteAccessCodePendingActionAttempt,
@@ -5073,11 +4415,6 @@ ErrorActionAttempt = Union[
     PushThermostatProgramsErrorActionAttempt,
     ConfigureAutoLockErrorActionAttempt,
     ConvertAccessCodeToManagedErrorActionAttempt,
-    SetSpeakerVolumeErrorActionAttempt,
-    SetSpeakerMuteErrorActionAttempt,
-    PauseSpeakerPlaybackErrorActionAttempt,
-    ResumeSpeakerPlaybackErrorActionAttempt,
-    PlaySpeakerChimeErrorActionAttempt,
     SyncAccessCodesErrorActionAttempt,
     CreateAccessCodeErrorActionAttempt,
     DeleteAccessCodeErrorActionAttempt,
@@ -5166,21 +4503,6 @@ _ACTION_ATTEMPT_VARIANTS: Dict[Tuple[str, str], Any] = {
         "CONVERT_ACCESS_CODE_TO_MANAGED",
         "error",
     ): ConvertAccessCodeToManagedErrorActionAttempt,
-    ("SET_SPEAKER_VOLUME", "success"): SetSpeakerVolumeSuccessActionAttempt,
-    ("SET_SPEAKER_VOLUME", "pending"): SetSpeakerVolumePendingActionAttempt,
-    ("SET_SPEAKER_VOLUME", "error"): SetSpeakerVolumeErrorActionAttempt,
-    ("SET_SPEAKER_MUTE", "success"): SetSpeakerMuteSuccessActionAttempt,
-    ("SET_SPEAKER_MUTE", "pending"): SetSpeakerMutePendingActionAttempt,
-    ("SET_SPEAKER_MUTE", "error"): SetSpeakerMuteErrorActionAttempt,
-    ("PAUSE_SPEAKER_PLAYBACK", "success"): PauseSpeakerPlaybackSuccessActionAttempt,
-    ("PAUSE_SPEAKER_PLAYBACK", "pending"): PauseSpeakerPlaybackPendingActionAttempt,
-    ("PAUSE_SPEAKER_PLAYBACK", "error"): PauseSpeakerPlaybackErrorActionAttempt,
-    ("RESUME_SPEAKER_PLAYBACK", "success"): ResumeSpeakerPlaybackSuccessActionAttempt,
-    ("RESUME_SPEAKER_PLAYBACK", "pending"): ResumeSpeakerPlaybackPendingActionAttempt,
-    ("RESUME_SPEAKER_PLAYBACK", "error"): ResumeSpeakerPlaybackErrorActionAttempt,
-    ("PLAY_SPEAKER_CHIME", "success"): PlaySpeakerChimeSuccessActionAttempt,
-    ("PLAY_SPEAKER_CHIME", "pending"): PlaySpeakerChimePendingActionAttempt,
-    ("PLAY_SPEAKER_CHIME", "error"): PlaySpeakerChimeErrorActionAttempt,
     ("SYNC_ACCESS_CODES", "success"): SyncAccessCodesSuccessActionAttempt,
     ("SYNC_ACCESS_CODES", "pending"): SyncAccessCodesPendingActionAttempt,
     ("SYNC_ACCESS_CODES", "error"): SyncAccessCodesErrorActionAttempt,

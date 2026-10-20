@@ -399,11 +399,13 @@ class UnmanagedAccessGrant:
 
     @dataclass
     class RequestedCodeUnavailableWarning(ResourceMapping):
-        """Indicates that the requested PIN code was already in use on a device, so a different code was assigned.
+        """Indicates that the requested PIN code could not be used, so a different code was assigned. For example, the code was already in use on a device, or the access system rejected it because it did not meet its PIN rules.
+
+        :ivar access_method_id: ID of the access method whose requested code was unavailable. Present when an access system, such as Salto KS, assigned a different code.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
-        :ivar device_id: ID of the device where the requested code was unavailable.
+        :ivar device_id: ID of the device where the requested code was unavailable. Present when the code was set directly on a device.
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
@@ -414,8 +416,9 @@ class UnmanagedAccessGrant:
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
         """
 
+        access_method_id: Optional[str]
         created_at: str
-        device_id: str
+        device_id: Optional[str]
         message: str
         new_code: str
         original_code: str
@@ -424,6 +427,7 @@ class UnmanagedAccessGrant:
         @classmethod
         def from_dict(cls, d: Any):
             return cls(
+                access_method_id=d.get("access_method_id", None),
                 created_at=d.get("created_at", None),
                 device_id=d.get("device_id", None),
                 message=d.get("message", None),

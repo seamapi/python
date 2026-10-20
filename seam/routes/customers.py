@@ -50,7 +50,7 @@ class AbstractCustomers(abc.ABC):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features:
+        :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
 
         :param is_embedded: Whether the portal is embedded in another application.
 
@@ -250,7 +250,7 @@ class AbstractAsyncCustomers(abc.ABC):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features:
+        :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
 
         :param is_embedded: Whether the portal is embedded in another application.
 
@@ -457,7 +457,7 @@ class Customers(AbstractCustomers):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features:
+        :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
 
         :param is_embedded: Whether the portal is embedded in another application.
 
@@ -793,7 +793,7 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
-        :param features:
+        :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
 
         :param is_embedded: Whether the portal is embedded in another application.
 

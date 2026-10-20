@@ -452,6 +452,37 @@ class UnmanagedAccessMethod:
                 warning_code=d.get("warning_code", None),
             )
 
+    @dataclass
+    class RequestedCodeUnavailableWarning(ResourceMapping):
+        """Indicates that the access system could not use the PIN code requested for this `access method <https://www.seam.co/docs/use-cases/granting-access/creating-an-access-grant>`_, for example because it did not meet the access system's PIN rules, so the access system assigned a different code. Give the recipient the assigned code.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar new_code: The PIN code that was assigned instead.
+
+        :ivar original_code: The originally requested PIN code that could not be used.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        new_code: str
+        original_code: str
+        warning_code: Literal["requested_code_unavailable"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                new_code=d.get("new_code", None),
+                original_code=d.get("original_code", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     Errors = Union[FailedToIssueError, AccessNotProvisionedError]
     _ErrorsVariants = {
         "failed_to_issue": FailedToIssueError,
@@ -478,6 +509,7 @@ class UnmanagedAccessMethod:
         DelayInIssuingWarning,
         UserIdentityMissingEmailAddressWarning,
         UserIdentityMissingPhoneNumberWarning,
+        RequestedCodeUnavailableWarning,
     ]
     _WarningsVariants = {
         "being_deleted": BeingDeletedWarning,
@@ -486,6 +518,7 @@ class UnmanagedAccessMethod:
         "delay_in_issuing": DelayInIssuingWarning,
         "user_identity_missing_email_address": UserIdentityMissingEmailAddressWarning,
         "user_identity_missing_phone_number": UserIdentityMissingPhoneNumberWarning,
+        "requested_code_unavailable": RequestedCodeUnavailableWarning,
     }
 
     access_method_id: str
