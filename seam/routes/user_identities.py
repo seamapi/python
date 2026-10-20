@@ -56,6 +56,7 @@ class AbstractUserIdentities(abc.ABC):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         email_address: Optional[Union[str, Null]] = None,
         full_name: Optional[Union[str, Null]] = None,
         phone_number: Optional[Union[str, Null]] = None,
@@ -64,6 +65,8 @@ class AbstractUserIdentities(abc.ABC):
         """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param customer_key: Customer key of the customer that owns the new user identity. Set it when the user identity will be used in access grants created through that customer's client session or Customer Portal.
 
         :param email_address: Unique email address for the new user identity.
 
@@ -300,6 +303,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         email_address: Optional[Union[str, Null]] = None,
         full_name: Optional[Union[str, Null]] = None,
         phone_number: Optional[Union[str, Null]] = None,
@@ -308,6 +312,8 @@ class AbstractAsyncUserIdentities(abc.ABC):
         """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param customer_key: Customer key of the customer that owns the new user identity. Set it when the user identity will be used in access grants created through that customer's client session or Customer Portal.
 
         :param email_address: Unique email address for the new user identity.
 
@@ -572,6 +578,7 @@ class UserIdentities(AbstractUserIdentities):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         email_address: Optional[Union[str, Null]] = None,
         full_name: Optional[Union[str, Null]] = None,
         phone_number: Optional[Union[str, Null]] = None,
@@ -580,6 +587,8 @@ class UserIdentities(AbstractUserIdentities):
         """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param customer_key: Customer key of the customer that owns the new user identity. Set it when the user identity will be used in access grants created through that customer's client session or Customer Portal.
 
         :param email_address: Unique email address for the new user identity.
 
@@ -594,6 +603,8 @@ class UserIdentities(AbstractUserIdentities):
 
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if email_address is not None:
             json_payload["email_address"] = email_address
         if full_name is not None:
@@ -1100,6 +1111,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         self,
         *,
         acs_system_ids: Optional[List[str]] = None,
+        customer_key: Optional[str] = None,
         email_address: Optional[Union[str, Null]] = None,
         full_name: Optional[Union[str, Null]] = None,
         phone_number: Optional[Union[str, Null]] = None,
@@ -1108,6 +1120,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         """Creates a new `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_.
 
         :param acs_system_ids: List of access system IDs to associate with the new user identity through access system users. If there's no user with the same email address or phone number in the specified access systems, a new access system user is created. If there is an existing user with the same email or phone number in the specified access systems, the user is linked to the user identity.
+
+        :param customer_key: Customer key of the customer that owns the new user identity. Set it when the user identity will be used in access grants created through that customer's client session or Customer Portal.
 
         :param email_address: Unique email address for the new user identity.
 
@@ -1122,6 +1136,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if acs_system_ids is not None:
             json_payload["acs_system_ids"] = acs_system_ids
+        if customer_key is not None:
+            json_payload["customer_key"] = customer_key
         if email_address is not None:
             json_payload["email_address"] = email_address
         if full_name is not None:
