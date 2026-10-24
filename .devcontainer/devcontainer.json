@@ -4,7 +4,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "NODE_VERSION": "24",
+      "NODE_VERSION": "24.22.1",
       "UV_VERSION": "0.8.17",
       "VARIANT": "3.14"
     }
