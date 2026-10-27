@@ -585,6 +585,7 @@ class ScanCredentialSuccessActionAttempt:
                     "unknown_issue_with_acs_credential",
                     "needs_to_be_reissued",
                     "requested_code_unavailable",
+                    "schedule_rounded_up",
                 ]
                 new_code: Optional[str]
                 original_code: Optional[str]
@@ -1071,6 +1072,7 @@ class EncodeCredentialSuccessActionAttempt:
                 "unknown_issue_with_acs_credential",
                 "needs_to_be_reissued",
                 "requested_code_unavailable",
+                "schedule_rounded_up",
             ]
             new_code: Optional[str]
             original_code: Optional[str]
@@ -1513,6 +1515,7 @@ class ScanToAssignCredentialSuccessActionAttempt:
                 "unknown_issue_with_acs_credential",
                 "needs_to_be_reissued",
                 "requested_code_unavailable",
+                "schedule_rounded_up",
             ]
             new_code: Optional[str]
             original_code: Optional[str]
@@ -1914,6 +1917,7 @@ class AssignCredentialSuccessActionAttempt:
                 "user_identity_missing_email_address",
                 "user_identity_missing_phone_number",
                 "requested_code_unavailable",
+                "schedule_rounded_up",
             ]
             original_access_method_id: Optional[str]
             new_code: Optional[str]

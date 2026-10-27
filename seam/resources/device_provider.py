@@ -152,6 +152,7 @@ class DeviceProvider:
         "omnitec",
         "kisi",
         "aqara",
+        "eufy",
         "sonos",
     ]
     display_name: str

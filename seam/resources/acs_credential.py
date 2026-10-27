@@ -365,6 +365,29 @@ class AcsCredential:
                 warning_code=d.get("warning_code", None),
             )
 
+    @dataclass
+    class ScheduleRoundedUpWarning(ResourceMapping):
+        """Indicates that the access system can only end card access on fixed time marks, so access was extended past ``ends_at`` to the next mark. The message states when access actually ends.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["schedule_rounded_up"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     Warnings = Union[
         WaitingToBeIssuedWarning,
         ScheduleExternallyModifiedWarning,
@@ -373,6 +396,7 @@ class AcsCredential:
         UnknownIssueWithAcsCredentialWarning,
         NeedsToBeReissuedWarning,
         RequestedCodeUnavailableWarning,
+        ScheduleRoundedUpWarning,
     ]
     _WarningsVariants = {
         "waiting_to_be_issued": WaitingToBeIssuedWarning,
@@ -382,6 +406,7 @@ class AcsCredential:
         "unknown_issue_with_acs_credential": UnknownIssueWithAcsCredentialWarning,
         "needs_to_be_reissued": NeedsToBeReissuedWarning,
         "requested_code_unavailable": RequestedCodeUnavailableWarning,
+        "schedule_rounded_up": ScheduleRoundedUpWarning,
     }
 
     access_method: Literal["code", "card", "mobile_key", "cloud_key"]

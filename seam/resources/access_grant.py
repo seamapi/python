@@ -506,6 +506,33 @@ class AccessGrant:
                 warning_code=d.get("warning_code", None),
             )
 
+    @dataclass
+    class AccessRevokedWarning(ResourceMapping):
+        """Indicates that one of this access grant's access methods no longer grants access because of a change outside Seam, for example its card was encoded again for another credential. Seam does not replace the access method; issue a new one if the user still needs it.
+
+        :ivar access_method_id: ID of the access method whose access was revoked.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        access_method_id: str
+        created_at: str
+        message: str
+        warning_code: Literal["access_revoked"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                access_method_id=d.get("access_method_id", None),
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     Errors = Union[CannotCreateRequestedAccessMethodsError, AccessNotProvisionedError]
     _ErrorsVariants = {
         "cannot_create_requested_access_methods": CannotCreateRequestedAccessMethodsError,
@@ -528,6 +555,7 @@ class AccessGrant:
         RequestedCodeUnavailableWarning,
         DeviceDoesNotSupportAccessCodesWarning,
         DeviceTimeConstraintsViolatedWarning,
+        AccessRevokedWarning,
     ]
     _WarningsVariants = {
         "being_deleted": BeingDeletedWarning,
@@ -537,6 +565,7 @@ class AccessGrant:
         "requested_code_unavailable": RequestedCodeUnavailableWarning,
         "device_does_not_support_access_codes": DeviceDoesNotSupportAccessCodesWarning,
         "device_time_constraints_violated": DeviceTimeConstraintsViolatedWarning,
+        "access_revoked": AccessRevokedWarning,
     }
 
     access_grant_id: str

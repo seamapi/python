@@ -104,6 +104,7 @@ class AbstractLocks(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "eufy_lock",
             ]
         ] = None,
         device_types: Optional[
@@ -140,6 +141,7 @@ class AbstractLocks(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "eufy_lock",
                 ]
             ]
         ] = None,
@@ -320,6 +322,7 @@ class AbstractAsyncLocks(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "eufy_lock",
             ]
         ] = None,
         device_types: Optional[
@@ -356,6 +359,7 @@ class AbstractAsyncLocks(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "eufy_lock",
                 ]
             ]
         ] = None,
@@ -593,6 +597,7 @@ class Locks(AbstractLocks):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "eufy_lock",
             ]
         ] = None,
         device_types: Optional[
@@ -629,6 +634,7 @@ class Locks(AbstractLocks):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "eufy_lock",
                 ]
             ]
         ] = None,
@@ -928,6 +934,7 @@ class AsyncLocks(AbstractAsyncLocks):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "eufy_lock",
             ]
         ] = None,
         device_types: Optional[
@@ -964,6 +971,7 @@ class AsyncLocks(AbstractAsyncLocks):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "eufy_lock",
                 ]
             ]
         ] = None,
