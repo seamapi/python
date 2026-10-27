@@ -635,6 +635,8 @@ class Device:
 
         :ivar ecobee_metadata: Metadata for an ecobee device.
 
+        :ivar eufy_metadata: Metadata for a Eufy device.
+
         :ivar four_suites_metadata: Metadata for a 4SUITES device.
 
         :ivar genie_metadata: Metadata for a Genie device.
@@ -1366,6 +1368,28 @@ class Device:
                 return cls(
                     device_name=d.get("device_name", None),
                     ecobee_device_id=d.get("ecobee_device_id", None),
+                )
+
+        @dataclass
+        class EufyMetadata(ResourceMapping):
+            """Metadata for a Eufy device.
+
+            :ivar device_id:
+
+            :ivar device_name:
+
+            :ivar model:"""
+
+            device_id: Optional[str]
+            device_name: Optional[str]
+            model: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    device_id=d.get("device_id", None),
+                    device_name=d.get("device_name", None),
+                    model=d.get("model", None),
                 )
 
         @dataclass
@@ -3289,6 +3313,7 @@ class Device:
         dormakaba_oracode_iho_metadata: Optional[DormakabaOracodeIhoMetadata]
         dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
         ecobee_metadata: Optional[EcobeeMetadata]
+        eufy_metadata: Optional[EufyMetadata]
         four_suites_metadata: Optional[FourSuitesMetadata]
         genie_metadata: Optional[GenieMetadata]
         honeywell_resideo_metadata: Optional[HoneywellResideoMetadata]
@@ -3488,6 +3513,11 @@ class Device:
                 ecobee_metadata=(
                     cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
                     if d.get("ecobee_metadata") is not None
+                    else None
+                ),
+                eufy_metadata=(
+                    cls.EufyMetadata.from_dict(d.get("eufy_metadata"))
+                    if d.get("eufy_metadata") is not None
                     else None
                 ),
                 four_suites_metadata=(
@@ -4598,6 +4628,7 @@ class Device:
         "omnitec_lock",
         "kisi_lock",
         "aqara_lock",
+        "eufy_lock",
         "keynest_key",
         "noiseaware_activity_zone",
         "minut_sensor",
