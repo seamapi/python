@@ -2253,18 +2253,47 @@ class Device:
         class TadoMetadata(ResourceMapping):
             """Metadata for a tado° device.
 
-            :ivar device_type: Device type for a tado° device.
+            :ivar device_serial_numbers: Serial numbers of all tado° devices in the zone.
 
-            :ivar serial_no: Serial number for a tado° device."""
+            :ivar device_type: Device type of the main tado° device in the zone, such as ``RU02``, ``VA02`` or ``WR02``.
 
+            :ivar home_generation: Generation of the tado° home, such as ``PRE_LINE_X``.
+
+            :ivar home_id: ID of the tado° home.
+
+            :ivar home_name: Name of the tado° home.
+
+            :ivar serial_no: Serial number of the main tado° device in the zone, such as its wall thermostat or Smart AC Control.
+
+            :ivar zone_id: ID of the tado° zone within its home.
+
+            :ivar zone_name: Name of the tado° zone.
+
+            :ivar zone_type: Type of the tado° zone: ``HEATING`` or ``AIR_CONDITIONING``.
+            """
+
+            device_serial_numbers: Optional[List[str]]
             device_type: Optional[str]
+            home_generation: Optional[str]
+            home_id: Optional[str]
+            home_name: Optional[str]
             serial_no: Optional[str]
+            zone_id: Optional[str]
+            zone_name: Optional[str]
+            zone_type: Optional[str]
 
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
+                    device_serial_numbers=d.get("device_serial_numbers", None),
                     device_type=d.get("device_type", None),
+                    home_generation=d.get("home_generation", None),
+                    home_id=d.get("home_id", None),
+                    home_name=d.get("home_name", None),
                     serial_no=d.get("serial_no", None),
+                    zone_id=d.get("zone_id", None),
+                    zone_name=d.get("zone_name", None),
+                    zone_type=d.get("zone_type", None),
                 )
 
         @dataclass
