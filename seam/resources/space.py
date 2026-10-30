@@ -106,9 +106,37 @@ class Space:
                 warning_code=d.get("warning_code", None),
             )
 
-    Warnings = Union[BeingDeletedWarning]
+    @dataclass
+    class NoiseSensorConfigurationMismatchWarning(ResourceMapping):
+        """Indicates that Seam could not apply the noise sensor automation to one or more noise sensors in the space, for example because their settings keep changing back after Seam re-applies it, Seam does not know the sensor's time zone yet, or the sensor is shared with spaces that configure it differently.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar device_ids: IDs of the noise sensors in the space that Seam could not bring in line with the noise sensor automation.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        device_ids: List[str]
+        message: str
+        warning_code: Literal["noise_sensor_configuration_mismatch"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                device_ids=d.get("device_ids", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Warnings = Union[BeingDeletedWarning, NoiseSensorConfigurationMismatchWarning]
     _WarningsVariants = {
         "being_deleted": BeingDeletedWarning,
+        "noise_sensor_configuration_mismatch": NoiseSensorConfigurationMismatchWarning,
     }
 
     acs_entrance_count: float
