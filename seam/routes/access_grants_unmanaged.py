@@ -26,6 +26,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -36,6 +37,8 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -88,6 +91,7 @@ class AbstractAsyncAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -98,6 +102,8 @@ class AbstractAsyncAccessGrantsUnmanaged(abc.ABC):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -170,6 +176,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -180,6 +187,8 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -196,6 +205,8 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             params["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -292,6 +303,7 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -302,6 +314,8 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -318,6 +332,8 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
             params["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:

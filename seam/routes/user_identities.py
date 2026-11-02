@@ -139,6 +139,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -149,6 +150,8 @@ class AbstractUserIdentities(abc.ABC):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -388,6 +391,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -398,6 +402,8 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -756,6 +762,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -766,6 +773,8 @@ class UserIdentities(AbstractUserIdentities):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -784,6 +793,8 @@ class UserIdentities(AbstractUserIdentities):
             params["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -1293,6 +1304,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -1303,6 +1315,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -1321,6 +1335,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
