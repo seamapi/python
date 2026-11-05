@@ -693,6 +693,18 @@ and its ``Retry`` class is re-exported from ``seam`` for convenience:
         retries=Retry(total=3, backoff_factor=0.5, status_forcelist=[503]),
     )
 
+Retries are configured per client. If your application has its own retry
+behavior for some calls, create a second client with retries disabled and send
+those calls through it, while other calls keep the default retries:
+
+.. code-block:: python
+
+    from seam import Seam, Retry
+
+    seam = Seam(api_key="your-api-key")
+
+    seam_without_retries = Seam(api_key="your-api-key", retries=Retry(total=0))
+
 Bringing your own transport
 +++++++++++++++++++++++++++
 
