@@ -53,7 +53,7 @@ class Device:
 
     :ivar can_simulate_removal: Indicates whether the device supports simulating removal in a sandbox.
 
-    :ivar can_stream_live_video: Indicates whether the camera supports streaming live video through a camera live view session.
+    :ivar can_stream_live_video: Indicates whether the camera can stream live video through a camera live view session. ``false`` while the camera is offline.
 
     :ivar can_turn_off_hvac: Indicates whether the thermostat can be turned off.
 
@@ -694,6 +694,8 @@ class Device:
         :ivar two_n_metadata: Metadata for a 2N device.
 
         :ivar ultraloq_metadata: Metadata for an Ultraloq device.
+
+        :ivar unifi_protect_metadata: Metadata for a UniFi Protect camera.
 
         :ivar visionline_metadata: Metadata for an ASSA ABLOY Visionline system.
 
@@ -2505,6 +2507,41 @@ class Device:
                 )
 
         @dataclass
+        class UnifiProtectMetadata(ResourceMapping):
+            """Metadata for a UniFi Protect camera.
+
+            :ivar camera_id: Camera ID reported by UniFi Protect.
+
+            :ivar camera_name: Camera name reported by UniFi Protect.
+
+            :ivar has_mic: Whether the camera has a microphone.
+
+            :ivar mac: MAC address reported by the UniFi Protect camera.
+
+            :ivar model: Model reported by the UniFi Protect camera.
+
+            :ivar nvr_name: Name of the UniFi Protect console that manages the camera.
+            """
+
+            camera_id: Optional[str]
+            camera_name: Optional[str]
+            has_mic: Optional[bool]
+            mac: Optional[str]
+            model: Optional[str]
+            nvr_name: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    camera_id=d.get("camera_id", None),
+                    camera_name=d.get("camera_name", None),
+                    has_mic=d.get("has_mic", None),
+                    mac=d.get("mac", None),
+                    model=d.get("model", None),
+                    nvr_name=d.get("nvr_name", None),
+                )
+
+        @dataclass
         class VisionlineMetadata(ResourceMapping):
             """Metadata for an ASSA ABLOY Visionline system.
 
@@ -3372,6 +3409,7 @@ class Device:
         ttlock_metadata: Optional[TtlockMetadata]
         two_n_metadata: Optional[TwoNMetadata]
         ultraloq_metadata: Optional[UltraloqMetadata]
+        unifi_protect_metadata: Optional[UnifiProtectMetadata]
         visionline_metadata: Optional[VisionlineMetadata]
         wyze_metadata: Optional[WyzeMetadata]
         yacan_metadata: Optional[YacanMetadata]
@@ -3694,6 +3732,11 @@ class Device:
                 ultraloq_metadata=(
                     cls.UltraloqMetadata.from_dict(d.get("ultraloq_metadata"))
                     if d.get("ultraloq_metadata") is not None
+                    else None
+                ),
+                unifi_protect_metadata=(
+                    cls.UnifiProtectMetadata.from_dict(d.get("unifi_protect_metadata"))
+                    if d.get("unifi_protect_metadata") is not None
                     else None
                 ),
                 visionline_metadata=(
@@ -4698,6 +4741,7 @@ class Device:
         "tapo_camera",
         "arlo_camera",
         "reolink_camera",
+        "unifi_protect_camera",
         "sonos_speaker",
     ]
     display_name: str
