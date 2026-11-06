@@ -110,6 +110,7 @@ class AbstractDevices(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -163,6 +164,7 @@ class AbstractDevices(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -197,6 +199,7 @@ class AbstractDevices(abc.ABC):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -218,6 +221,7 @@ class AbstractDevices(abc.ABC):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -426,6 +430,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -479,6 +484,7 @@ class AbstractAsyncDevices(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -513,6 +519,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -534,6 +541,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -762,6 +770,7 @@ class Devices(AbstractDevices):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -815,6 +824,7 @@ class Devices(AbstractDevices):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -849,6 +859,7 @@ class Devices(AbstractDevices):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -870,6 +881,7 @@ class Devices(AbstractDevices):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -1185,6 +1197,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -1238,6 +1251,7 @@ class AsyncDevices(AbstractAsyncDevices):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -1272,6 +1286,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -1293,6 +1308,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",

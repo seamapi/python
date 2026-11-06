@@ -46,7 +46,7 @@ class DeviceProvider:
 
     :ivar can_simulate_removal: Indicates whether the device supports simulating removal in a sandbox.
 
-    :ivar can_stream_live_video: Indicates whether the camera supports streaming live video through a camera live view session.
+    :ivar can_stream_live_video: Indicates whether the camera can stream live video through a camera live view session. ``false`` while the camera is offline.
 
     :ivar can_turn_off_hvac: Indicates whether the thermostat can be turned off.
 
@@ -144,6 +144,7 @@ class DeviceProvider:
         "tapo",
         "arlo",
         "reolink",
+        "unifi_protect",
         "ical",
         "lodgify",
         "hostaway",

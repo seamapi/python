@@ -89,6 +89,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -142,6 +143,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -176,6 +178,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -197,6 +200,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -344,6 +348,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -397,6 +402,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -431,6 +437,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -452,6 +459,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -623,6 +631,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -676,6 +685,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -710,6 +720,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -731,6 +742,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -950,6 +962,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "tapo_camera",
                 "arlo_camera",
                 "reolink_camera",
+                "unifi_protect_camera",
                 "sonos_speaker",
             ]
         ] = None,
@@ -1003,6 +1016,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "tapo_camera",
                     "arlo_camera",
                     "reolink_camera",
+                    "unifi_protect_camera",
                     "sonos_speaker",
                 ]
             ]
@@ -1037,6 +1051,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "controlbyweb",
                 "tedee",
                 "keyincode",
+                "ubiquiti",
                 "akiles",
                 "aqara",
                 "ecobee",
@@ -1058,6 +1073,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "tapo",
                 "arlo",
                 "reolink",
+                "unifi_protect",
                 "ical",
                 "lodgify",
                 "hostaway",

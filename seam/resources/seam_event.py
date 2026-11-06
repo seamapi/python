@@ -7600,7 +7600,7 @@ class DeviceNameChangedEvent:
 
 @dataclass
 class CameraActivatedEvent:
-    """A camera was activated, for example, by motion detection.
+    """A camera was activated, for example, by motion detection. For Ring cameras, this event is available only in the Seam Console, not through the API or webhooks.
 
     :ivar activation_reason: The reason the camera was activated.
 
@@ -7677,7 +7677,7 @@ class CameraActivatedEvent:
 
 @dataclass
 class DeviceDoorbellRangEvent:
-    """A doorbell button was pressed on a device.
+    """A doorbell button was pressed on a device. For Ring cameras, this event is available only in the Seam Console, not through the API or webhooks.
 
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
