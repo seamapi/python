@@ -7,15 +7,6 @@
         if {{name}} is not None:
             {{../payloadVar}}["{{name}}"] = {{name}}
 {{/each}}
-{{#if requiresAtLeastOneParameter}}
-
-        if all(
-            param is None
-            for param in ({{#each atLeastOneParameterNames}}{{this}},{{#unless @last}} {{/unless}}{{/each}})
-        ):
-            raise ValueError("At least one parameter is required for {{path}}")
-{{/if}}
-
         {{#unless (eq returnType "None")}}res = {{/unless}}{{#if isAsync}}await {{/if}}self.client.{{httpVerb}}("{{path}}", {{payloadArg}}={{payloadVar}})
 {{#if (eq returnType "ActionAttempt")}}
 

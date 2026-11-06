@@ -696,16 +696,6 @@ class Devices(AbstractDevices):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /devices/get")
-
         res = self.client.get("/devices/get", params=params)
 
         return Device.from_dict(unwrap(res, "device", "/devices/get"))
@@ -967,7 +957,6 @@ class Devices(AbstractDevices):
             params["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/devices/list", params=params)
 
         return PaginatedList(
@@ -1012,7 +1001,6 @@ class Devices(AbstractDevices):
 
         if provider_category is not None:
             params["provider_category"] = provider_category
-
         res = self.client.get("/devices/list_device_providers", params=params)
 
         return [
@@ -1035,7 +1023,6 @@ class Devices(AbstractDevices):
 
         if devices is not None:
             json_payload["devices"] = devices
-
         self.client.post("/devices/report_provider_metadata", json=json_payload)
 
         return None
@@ -1084,7 +1071,6 @@ class Devices(AbstractDevices):
             json_payload["name"] = name
         if properties is not None:
             json_payload["properties"] = properties
-
         self.client.patch("/devices/update", json=json_payload)
 
         return None
@@ -1133,16 +1119,6 @@ class AsyncDevices(AbstractAsyncDevices):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /devices/get")
-
         res = await self.client.get("/devices/get", params=params)
 
         return Device.from_dict(unwrap(res, "device", "/devices/get"))
@@ -1404,7 +1380,6 @@ class AsyncDevices(AbstractAsyncDevices):
             params["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/devices/list", params=params)
 
         return PaginatedList(
@@ -1449,7 +1424,6 @@ class AsyncDevices(AbstractAsyncDevices):
 
         if provider_category is not None:
             params["provider_category"] = provider_category
-
         res = await self.client.get("/devices/list_device_providers", params=params)
 
         return [
@@ -1472,7 +1446,6 @@ class AsyncDevices(AbstractAsyncDevices):
 
         if devices is not None:
             json_payload["devices"] = devices
-
         await self.client.post("/devices/report_provider_metadata", json=json_payload)
 
         return None
@@ -1521,7 +1494,6 @@ class AsyncDevices(AbstractAsyncDevices):
             json_payload["name"] = name
         if properties is not None:
             json_payload["properties"] = properties
-
         await self.client.patch("/devices/update", json=json_payload)
 
         return None

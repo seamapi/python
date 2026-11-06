@@ -494,7 +494,6 @@ class Customers(AbstractCustomers):
             json_payload["navigation_mode"] = navigation_mode
         if read_only is not None:
             json_payload["read_only"] = read_only
-
         res = self.client.post("/customers/create_portal", json=json_payload)
 
         return CustomerPortal.from_dict(
@@ -610,7 +609,6 @@ class Customers(AbstractCustomers):
             params["user_identity_keys"] = user_identity_keys
         if user_keys is not None:
             params["user_keys"] = user_keys
-
         self.client.delete("/customers/delete_data", params=params)
 
         return None
@@ -737,7 +735,6 @@ class Customers(AbstractCustomers):
             json_payload["user_identities"] = user_identities
         if users is not None:
             json_payload["users"] = users
-
         self.client.post("/customers/push_data", json=json_payload)
 
         return None
@@ -830,7 +827,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["navigation_mode"] = navigation_mode
         if read_only is not None:
             json_payload["read_only"] = read_only
-
         res = await self.client.post("/customers/create_portal", json=json_payload)
 
         return CustomerPortal.from_dict(
@@ -946,7 +942,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             params["user_identity_keys"] = user_identity_keys
         if user_keys is not None:
             params["user_keys"] = user_keys
-
         await self.client.delete("/customers/delete_data", params=params)
 
         return None
@@ -1073,7 +1068,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["user_identities"] = user_identities
         if users is not None:
             json_payload["users"] = users
-
         await self.client.post("/customers/push_data", json=json_payload)
 
         return None

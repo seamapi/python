@@ -220,19 +220,19 @@ class AbstractAccessCodes(abc.ABC):
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
-        Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        Without ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``, returns access codes across the workspace, or across the customer when ``customer_key`` is set. Use ``limit`` and ``page_cursor`` to page through them.
 
-        :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_code_ids: IDs of the access codes that you want to retrieve.
 
-        :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_id: ID of the access grant for which you want to list access codes.
 
-        :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_key: Key of the access grant for which you want to list access codes.
 
-        :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_method_id: ID of the access method for which you want to list access codes.
 
         :param customer_key: Customer key for which you want to list access codes.
 
-        :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param device_id: ID of the device for which you want to list access codes.
 
         :param limit: Numerical limit on the number of access codes to return.
 
@@ -242,9 +242,7 @@ class AbstractAccessCodes(abc.ABC):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -570,19 +568,19 @@ class AbstractAsyncAccessCodes(abc.ABC):
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
-        Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        Without ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``, returns access codes across the workspace, or across the customer when ``customer_key`` is set. Use ``limit`` and ``page_cursor`` to page through them.
 
-        :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_code_ids: IDs of the access codes that you want to retrieve.
 
-        :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_id: ID of the access grant for which you want to list access codes.
 
-        :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_key: Key of the access grant for which you want to list access codes.
 
-        :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_method_id: ID of the access method for which you want to list access codes.
 
         :param customer_key: Customer key for which you want to list access codes.
 
-        :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param device_id: ID of the device for which you want to list access codes.
 
         :param limit: Numerical limit on the number of access codes to return.
 
@@ -592,9 +590,7 @@ class AbstractAsyncAccessCodes(abc.ABC):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -836,7 +832,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
-
         res = self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
@@ -937,7 +932,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-
         res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -965,7 +959,6 @@ class AccessCodes(AbstractAccessCodes):
             params["access_code_id"] = access_code_id
         if device_id is not None:
             params["device_id"] = device_id
-
         self.client.delete("/access_codes/delete", params=params)
 
         return None
@@ -985,7 +978,6 @@ class AccessCodes(AbstractAccessCodes):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = self.client.get("/access_codes/generate_code", params=params)
 
         return AccessCode.from_dict(
@@ -1029,34 +1021,12 @@ class AccessCodes(AbstractAccessCodes):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /access_codes/get")
-
         res = self.client.get("/access_codes/get", params=params)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
-        path="/access_codes/list",
-        at_least_one_parameter_names=(
-            "access_code_ids",
-            "access_grant_id",
-            "access_grant_key",
-            "access_method_id",
-            "customer_key",
-            "device_id",
-            "search",
-            "user_identifier_key",
-        ),
-        has_pagination=True,
+        path="/access_codes/list", at_least_one_parameter_names=(), has_pagination=True
     )
     def list(
         self,
@@ -1074,19 +1044,19 @@ class AccessCodes(AbstractAccessCodes):
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
-        Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        Without ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``, returns access codes across the workspace, or across the customer when ``customer_key`` is set. Use ``limit`` and ``page_cursor`` to page through them.
 
-        :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_code_ids: IDs of the access codes that you want to retrieve.
 
-        :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_id: ID of the access grant for which you want to list access codes.
 
-        :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_key: Key of the access grant for which you want to list access codes.
 
-        :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_method_id: ID of the access method for which you want to list access codes.
 
         :param customer_key: Customer key for which you want to list access codes.
 
-        :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param device_id: ID of the device for which you want to list access codes.
 
         :param limit: Numerical limit on the number of access codes to return.
 
@@ -1096,9 +1066,7 @@ class AccessCodes(AbstractAccessCodes):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_code_ids is not None:
@@ -1121,24 +1089,6 @@ class AccessCodes(AbstractAccessCodes):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
-        if all(
-            param is None
-            for param in (
-                access_code_ids,
-                access_grant_id,
-                access_grant_key,
-                access_method_id,
-                customer_key,
-                device_id,
-                search,
-                user_identifier_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/list"
-            )
-
         res = self.client.get("/access_codes/list", params=params)
 
         return PaginatedList(
@@ -1172,7 +1122,6 @@ class AccessCodes(AbstractAccessCodes):
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
         res = self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
         )
@@ -1216,7 +1165,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["min_code_length"] = min_code_length
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
-
         self.client.post("/access_codes/report_device_constraints", json=json_payload)
 
         return None
@@ -1299,7 +1247,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
-
         self.client.patch("/access_codes/update", json=json_payload)
 
         return None
@@ -1347,7 +1294,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         self.client.patch("/access_codes/update_multiple", json=json_payload)
 
         return None
@@ -1470,7 +1416,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
-
         res = await self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
@@ -1571,7 +1516,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-
         res = await self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -1601,7 +1545,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["access_code_id"] = access_code_id
         if device_id is not None:
             params["device_id"] = device_id
-
         await self.client.delete("/access_codes/delete", params=params)
 
         return None
@@ -1621,7 +1564,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = await self.client.get("/access_codes/generate_code", params=params)
 
         return AccessCode.from_dict(
@@ -1665,34 +1607,12 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /access_codes/get")
-
         res = await self.client.get("/access_codes/get", params=params)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
 
     @route_metadata(
-        path="/access_codes/list",
-        at_least_one_parameter_names=(
-            "access_code_ids",
-            "access_grant_id",
-            "access_grant_key",
-            "access_method_id",
-            "customer_key",
-            "device_id",
-            "search",
-            "user_identifier_key",
-        ),
-        has_pagination=True,
+        path="/access_codes/list", at_least_one_parameter_names=(), has_pagination=True
     )
     async def list(
         self,
@@ -1710,19 +1630,19 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
     ) -> List[AccessCode]:
         """Returns a list of all `access codes <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_.
 
-        Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        Without ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``, returns access codes across the workspace, or across the customer when ``customer_key`` is set. Use ``limit`` and ``page_cursor`` to page through them.
 
-        :param access_code_ids: IDs of the access codes that you want to retrieve. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_code_ids: IDs of the access codes that you want to retrieve.
 
-        :param access_grant_id: ID of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_id: ID of the access grant for which you want to list access codes.
 
-        :param access_grant_key: Key of the access grant for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_grant_key: Key of the access grant for which you want to list access codes.
 
-        :param access_method_id: ID of the access method for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param access_method_id: ID of the access method for which you want to list access codes.
 
         :param customer_key: Customer key for which you want to list access codes.
 
-        :param device_id: ID of the device for which you want to list access codes. Specify ``device_id``, ``access_code_ids``, ``access_method_id``, ``access_grant_id``, or ``access_grant_key``.
+        :param device_id: ID of the device for which you want to list access codes.
 
         :param limit: Numerical limit on the number of access codes to return.
 
@@ -1732,9 +1652,7 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param user_identifier_key: Your user ID for the user by which to filter access codes.
 
-        :returns: OK
-
-        :raises ValueError: At least one parameter must be provided."""
+        :returns: OK"""
         params: Dict[str, Any] = {}
 
         if access_code_ids is not None:
@@ -1757,24 +1675,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
-        if all(
-            param is None
-            for param in (
-                access_code_ids,
-                access_grant_id,
-                access_grant_key,
-                access_method_id,
-                customer_key,
-                device_id,
-                search,
-                user_identifier_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/list"
-            )
-
         res = await self.client.get("/access_codes/list", params=params)
 
         return PaginatedList(
@@ -1808,7 +1708,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
         res = await self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
         )
@@ -1852,7 +1751,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["min_code_length"] = min_code_length
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
-
         await self.client.post(
             "/access_codes/report_device_constraints", json=json_payload
         )
@@ -1937,7 +1835,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
-
         await self.client.patch("/access_codes/update", json=json_payload)
 
         return None
@@ -1985,7 +1882,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         await self.client.patch("/access_codes/update_multiple", json=json_payload)
 
         return None

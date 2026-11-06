@@ -9,6 +9,7 @@ from .models import AbstractAsyncSeam, AbstractSeam
 from .client import AsyncSeamHttpClient, SeamHttpClient
 from .modules.action_attempts import normalize_wait_for_action_attempt
 from .paginator import AsyncSeamPaginator, SeamPaginator
+from .route import validate_at_least_one_parameter
 
 
 class Seam(AbstractSeam):
@@ -146,15 +147,11 @@ class Seam(AbstractSeam):
         if not getattr(request, "__seam_has_pagination__", False):
             raise ValueError("Cannot create a paginator for a non-paginated endpoint")
 
-        at_least_one_parameter_names = getattr(
-            request, "__seam_at_least_one_parameter_names__", ()
+        validate_at_least_one_parameter(
+            getattr(request, "__seam_path__", "this endpoint"),
+            getattr(request, "__seam_at_least_one_parameter_names__", ()),
+            params or {},
         )
-        if at_least_one_parameter_names and (
-            not params
-            or all(params.get(name) is None for name in at_least_one_parameter_names)
-        ):
-            path = getattr(request, "__seam_path__", "this endpoint")
-            raise ValueError(f"At least one parameter is required for {path}")
 
         return SeamPaginator(self.client, request, params)
 
@@ -395,15 +392,11 @@ class AsyncSeam(AbstractAsyncSeam):
         if not getattr(request, "__seam_has_pagination__", False):
             raise ValueError("Cannot create a paginator for a non-paginated endpoint")
 
-        at_least_one_parameter_names = getattr(
-            request, "__seam_at_least_one_parameter_names__", ()
+        validate_at_least_one_parameter(
+            getattr(request, "__seam_path__", "this endpoint"),
+            getattr(request, "__seam_at_least_one_parameter_names__", ()),
+            params or {},
         )
-        if at_least_one_parameter_names and (
-            not params
-            or all(params.get(name) is None for name in at_least_one_parameter_names)
-        ):
-            path = getattr(request, "__seam_path__", "this endpoint")
-            raise ValueError(f"At least one parameter is required for {path}")
 
         return AsyncSeamPaginator(self.client, request, params)
 

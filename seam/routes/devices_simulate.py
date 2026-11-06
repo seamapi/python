@@ -141,7 +141,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/devices/simulate/connect", json=json_payload)
 
         return None
@@ -162,7 +161,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/devices/simulate/connect_to_hub", json=json_payload)
 
         return None
@@ -181,7 +179,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/devices/simulate/disconnect", json=json_payload)
 
         return None
@@ -203,7 +200,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/devices/simulate/disconnect_from_hub", json=json_payload)
 
         return None
@@ -227,7 +223,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
             json_payload["device_id"] = device_id
         if is_expired is not None:
             json_payload["is_expired"] = is_expired
-
         self.client.post("/devices/simulate/paid_subscription", json=json_payload)
 
         return None
@@ -246,7 +241,6 @@ class DevicesSimulate(AbstractDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/devices/simulate/remove", json=json_payload)
 
         return None
@@ -271,7 +265,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post("/devices/simulate/connect", json=json_payload)
 
         return None
@@ -292,7 +285,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post("/devices/simulate/connect_to_hub", json=json_payload)
 
         return None
@@ -311,7 +303,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post("/devices/simulate/disconnect", json=json_payload)
 
         return None
@@ -333,7 +324,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post(
             "/devices/simulate/disconnect_from_hub", json=json_payload
         )
@@ -359,7 +349,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
             json_payload["device_id"] = device_id
         if is_expired is not None:
             json_payload["is_expired"] = is_expired
-
         await self.client.post("/devices/simulate/paid_subscription", json=json_payload)
 
         return None
@@ -378,7 +367,6 @@ class AsyncDevicesSimulate(AbstractAsyncDevicesSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post("/devices/simulate/remove", json=json_payload)
 
         return None

@@ -1407,6 +1407,33 @@ class AccessCode:
             )
 
     @dataclass
+    class DeviceUnreachableForExtendedPeriodWarning(ResourceMapping):
+        """Seam had been unable to reach the device for an extended period when this access code was created, so the code is unlikely to be set until the device reconnects. Check the device's connection. This warning clears automatically when the device comes back online or the code is set on the device.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar device_unreachable_since: Date and time since which Seam has been unable to reach the device.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: Optional[str]
+        device_unreachable_since: str
+        message: str
+        warning_code: Literal["device_unreachable_for_extended_period"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                device_unreachable_since=d.get("device_unreachable_since", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class UnknownIssueWithAccessCodeWarning(ResourceMapping):
         """An unknown issue occurred with the access code.
 
@@ -1513,6 +1540,7 @@ class AccessCode:
         ManagementTransferredWarning,
         UsingBackupAccessCodeWarning,
         BeingDeletedWarning,
+        DeviceUnreachableForExtendedPeriodWarning,
         UnknownIssueWithAccessCodeWarning,
     ]
     _WarningsVariants = {
@@ -1527,6 +1555,7 @@ class AccessCode:
         "management_transferred": ManagementTransferredWarning,
         "using_backup_access_code": UsingBackupAccessCodeWarning,
         "being_deleted": BeingDeletedWarning,
+        "device_unreachable_for_extended_period": DeviceUnreachableForExtendedPeriodWarning,
         "unknown_issue_with_access_code": UnknownIssueWithAccessCodeWarning,
     }
 

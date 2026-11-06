@@ -45,7 +45,6 @@ class ConnectedAccountsSimulate(AbstractConnectedAccountsSimulate):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
         self.client.post("/connected_accounts/simulate/disconnect", json=json_payload)
 
         return None
@@ -70,7 +69,6 @@ class AsyncConnectedAccountsSimulate(AbstractAsyncConnectedAccountsSimulate):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
         await self.client.post(
             "/connected_accounts/simulate/disconnect", json=json_payload
         )

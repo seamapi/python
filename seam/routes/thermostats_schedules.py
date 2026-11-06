@@ -250,7 +250,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["max_override_period_minutes"] = max_override_period_minutes
         if name is not None:
             json_payload["name"] = name
-
         res = self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(
@@ -271,7 +270,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
         self.client.delete("/thermostats/schedules/delete", params=params)
 
         return None
@@ -291,7 +289,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
         res = self.client.get("/thermostats/schedules/get", params=params)
 
         return ThermostatSchedule.from_dict(
@@ -319,7 +316,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             params["device_id"] = device_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/thermostats/schedules/list", params=params)
 
         return [
@@ -377,7 +373,6 @@ class ThermostatsSchedules(AbstractThermostatsSchedules):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         self.client.patch("/thermostats/schedules/update", json=json_payload)
 
         return None
@@ -437,7 +432,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
             json_payload["max_override_period_minutes"] = max_override_period_minutes
         if name is not None:
             json_payload["name"] = name
-
         res = await self.client.post("/thermostats/schedules/create", json=json_payload)
 
         return ThermostatSchedule.from_dict(
@@ -458,7 +452,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
         await self.client.delete("/thermostats/schedules/delete", params=params)
 
         return None
@@ -478,7 +471,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
 
         if thermostat_schedule_id is not None:
             params["thermostat_schedule_id"] = thermostat_schedule_id
-
         res = await self.client.get("/thermostats/schedules/get", params=params)
 
         return ThermostatSchedule.from_dict(
@@ -506,7 +498,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
             params["device_id"] = device_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/thermostats/schedules/list", params=params)
 
         return [
@@ -564,7 +555,6 @@ class AsyncThermostatsSchedules(AbstractAsyncThermostatsSchedules):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         await self.client.patch("/thermostats/schedules/update", json=json_payload)
 
         return None

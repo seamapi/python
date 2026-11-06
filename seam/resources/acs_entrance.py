@@ -433,7 +433,7 @@ class AcsEntrance:
 
     @dataclass
     class SaltoKsEntranceAccessCodeSupportRemovedWarning(ResourceMapping):
-        """Indicates that a change in the reported device model has been detected for this Salto KS entrance, which may occur after an IQ hub reset. Access code support may be affected. See https://help.getseam.com/articles/5098842588-salto-ks-lock-loses-access-code-support for troubleshooting steps.
+        """Indicates that a change in the reported device model has been detected for this Salto KS entrance, which may occur after an IQ hub reset. Access code support may be affected. See https://www.seam.co/help/salto-ks-lock-loses-access-code-support for troubleshooting steps.
 
         :ivar created_at: Date and time at which Seam created the warning.
 

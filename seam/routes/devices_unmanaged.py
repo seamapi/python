@@ -554,18 +554,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/get"
-            )
-
         res = self.client.get("/devices/unmanaged/get", params=params)
 
         return UnmanagedDevice.from_dict(
@@ -813,7 +801,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
-
         res = self.client.get("/devices/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -854,7 +841,6 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
-
         self.client.patch("/devices/unmanaged/update", json=json_payload)
 
         return None
@@ -895,18 +881,6 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /devices/unmanaged/get"
-            )
-
         res = await self.client.get("/devices/unmanaged/get", params=params)
 
         return UnmanagedDevice.from_dict(
@@ -1154,7 +1128,6 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
-
         res = await self.client.get("/devices/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -1195,7 +1168,6 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
             json_payload["custom_metadata"] = custom_metadata
         if is_managed is not None:
             json_payload["is_managed"] = is_managed
-
         await self.client.patch("/devices/unmanaged/update", json=json_payload)
 
         return None

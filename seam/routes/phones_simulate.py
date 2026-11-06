@@ -95,7 +95,6 @@ class PhonesSimulate(AbstractPhonesSimulate):
             json_payload["custom_sdk_installation_id"] = custom_sdk_installation_id
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
-
         res = self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )
@@ -144,7 +143,6 @@ class AsyncPhonesSimulate(AbstractAsyncPhonesSimulate):
             json_payload["custom_sdk_installation_id"] = custom_sdk_installation_id
         if phone_metadata is not None:
             json_payload["phone_metadata"] = phone_metadata
-
         res = await self.client.post(
             "/phones/simulate/create_sandbox_phone", json=json_payload
         )

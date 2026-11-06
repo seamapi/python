@@ -62,7 +62,6 @@ class Media(AbstractMedia):
             params["media_id"] = media_id
         if format is not None:
             params["format"] = format
-
         res = self.client.get("/media/get", params=params)
 
         return MediaResource.from_dict(unwrap(res, "media", "/media/get"))
@@ -92,7 +91,6 @@ class AsyncMedia(AbstractAsyncMedia):
             params["media_id"] = media_id
         if format is not None:
             params["format"] = format
-
         res = await self.client.get("/media/get", params=params)
 
         return MediaResource.from_dict(unwrap(res, "media", "/media/get"))

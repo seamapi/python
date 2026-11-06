@@ -151,7 +151,6 @@ class AcsSystems(AbstractAcsSystems):
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
         res = self.client.get("/acs/systems/get", params=params)
 
         return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
@@ -185,7 +184,6 @@ class AcsSystems(AbstractAcsSystems):
             params["customer_key"] = customer_key
         if search is not None:
             params["search"] = search
-
         res = self.client.get("/acs/systems/list", params=params)
 
         return [
@@ -212,7 +210,6 @@ class AcsSystems(AbstractAcsSystems):
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
         res = self.client.get(
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
         )
@@ -253,7 +250,6 @@ class AcsSystems(AbstractAcsSystems):
             json_payload["acs_encoders"] = acs_encoders
         if acs_entrances is not None:
             json_payload["acs_entrances"] = acs_entrances
-
         self.client.post("/acs/systems/report_devices", json=json_payload)
 
         return None
@@ -277,7 +273,6 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
         res = await self.client.get("/acs/systems/get", params=params)
 
         return AcsSystem.from_dict(unwrap(res, "acs_system", "/acs/systems/get"))
@@ -311,7 +306,6 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
             params["customer_key"] = customer_key
         if search is not None:
             params["search"] = search
-
         res = await self.client.get("/acs/systems/list", params=params)
 
         return [
@@ -338,7 +332,6 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
 
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
-
         res = await self.client.get(
             "/acs/systems/list_compatible_credential_manager_acs_systems", params=params
         )
@@ -379,7 +372,6 @@ class AsyncAcsSystems(AbstractAsyncAcsSystems):
             json_payload["acs_encoders"] = acs_encoders
         if acs_entrances is not None:
             json_payload["acs_entrances"] = acs_entrances
-
         await self.client.post("/acs/systems/report_devices", json=json_payload)
 
         return None

@@ -136,7 +136,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["name"] = name
         if periods is not None:
             json_payload["periods"] = periods
-
         res = self.client.post("/thermostats/daily_programs/create", json=json_payload)
 
         return ThermostatDailyProgram.from_dict(
@@ -159,7 +158,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
 
         if thermostat_daily_program_id is not None:
             params["thermostat_daily_program_id"] = thermostat_daily_program_id
-
         self.client.delete("/thermostats/daily_programs/delete", params=params)
 
         return None
@@ -196,7 +194,6 @@ class ThermostatsDailyPrograms(AbstractThermostatsDailyPrograms):
             json_payload["periods"] = periods
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
-
         res = self.client.patch("/thermostats/daily_programs/update", json=json_payload)
 
         wait_for_action_attempt = (
@@ -244,7 +241,6 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
             json_payload["name"] = name
         if periods is not None:
             json_payload["periods"] = periods
-
         res = await self.client.post(
             "/thermostats/daily_programs/create", json=json_payload
         )
@@ -269,7 +265,6 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
 
         if thermostat_daily_program_id is not None:
             params["thermostat_daily_program_id"] = thermostat_daily_program_id
-
         await self.client.delete("/thermostats/daily_programs/delete", params=params)
 
         return None
@@ -306,7 +301,6 @@ class AsyncThermostatsDailyPrograms(AbstractAsyncThermostatsDailyPrograms):
             json_payload["periods"] = periods
         if thermostat_daily_program_id is not None:
             json_payload["thermostat_daily_program_id"] = thermostat_daily_program_id
-
         res = await self.client.patch(
             "/thermostats/daily_programs/update", json=json_payload
         )

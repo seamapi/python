@@ -935,7 +935,6 @@ class Thermostats(AbstractThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post(
             "/thermostats/activate_climate_preset", json=json_payload
         )
@@ -976,7 +975,6 @@ class Thermostats(AbstractThermostats):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post(
             "/thermostats/activate_weekly_program", json=json_payload
         )
@@ -1025,7 +1023,6 @@ class Thermostats(AbstractThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
-
         res = self.client.post("/thermostats/cool", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1119,7 +1116,6 @@ class Thermostats(AbstractThermostats):
             json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
-
         self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
         return None
@@ -1142,7 +1138,6 @@ class Thermostats(AbstractThermostats):
             params["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             params["device_id"] = device_id
-
         self.client.delete("/thermostats/delete_climate_preset", params=params)
 
         return None
@@ -1177,7 +1172,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = self.client.post("/thermostats/heat", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1236,7 +1230,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = self.client.post("/thermostats/heat_cool", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1319,7 +1312,6 @@ class Thermostats(AbstractThermostats):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = self.client.get("/thermostats/list", params=params)
 
         return [
@@ -1347,7 +1339,6 @@ class Thermostats(AbstractThermostats):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post("/thermostats/off", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1384,7 +1375,6 @@ class Thermostats(AbstractThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post("/thermostats/set_fallback_climate_preset", json=json_payload)
 
         return None
@@ -1421,7 +1411,6 @@ class Thermostats(AbstractThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
-
         res = self.client.post("/thermostats/set_fan_mode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1485,7 +1474,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = self.client.post("/thermostats/set_hvac_mode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1540,7 +1528,6 @@ class Thermostats(AbstractThermostats):
             json_payload["upper_limit_celsius"] = upper_limit_celsius
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
-
         self.client.patch("/thermostats/set_temperature_threshold", json=json_payload)
 
         return None
@@ -1622,7 +1609,6 @@ class Thermostats(AbstractThermostats):
             json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
-
         self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
         return None
@@ -1684,7 +1670,6 @@ class Thermostats(AbstractThermostats):
             json_payload["tuesday_program_id"] = tuesday_program_id
         if wednesday_program_id is not None:
             json_payload["wednesday_program_id"] = wednesday_program_id
-
         res = self.client.post("/thermostats/update_weekly_program", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1751,7 +1736,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post(
             "/thermostats/activate_climate_preset", json=json_payload
         )
@@ -1792,7 +1776,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post(
             "/thermostats/activate_weekly_program", json=json_payload
         )
@@ -1841,7 +1824,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["cooling_set_point_celsius"] = cooling_set_point_celsius
         if cooling_set_point_fahrenheit is not None:
             json_payload["cooling_set_point_fahrenheit"] = cooling_set_point_fahrenheit
-
         res = await self.client.post("/thermostats/cool", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1935,7 +1917,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
-
         await self.client.post("/thermostats/create_climate_preset", json=json_payload)
 
         return None
@@ -1960,7 +1941,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             params["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             params["device_id"] = device_id
-
         await self.client.delete("/thermostats/delete_climate_preset", params=params)
 
         return None
@@ -1995,7 +1975,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = await self.client.post("/thermostats/heat", json=json_payload)
 
         wait_for_action_attempt = (
@@ -2054,7 +2033,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = await self.client.post("/thermostats/heat_cool", json=json_payload)
 
         wait_for_action_attempt = (
@@ -2137,7 +2115,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = await self.client.get("/thermostats/list", params=params)
 
         return [
@@ -2165,7 +2142,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post("/thermostats/off", json=json_payload)
 
         wait_for_action_attempt = (
@@ -2202,7 +2178,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["climate_preset_key"] = climate_preset_key
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post(
             "/thermostats/set_fallback_climate_preset", json=json_payload
         )
@@ -2241,7 +2216,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["fan_mode"] = fan_mode
         if fan_mode_setting is not None:
             json_payload["fan_mode_setting"] = fan_mode_setting
-
         res = await self.client.post("/thermostats/set_fan_mode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -2305,7 +2279,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         res = await self.client.post("/thermostats/set_hvac_mode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -2360,7 +2333,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["upper_limit_celsius"] = upper_limit_celsius
         if upper_limit_fahrenheit is not None:
             json_payload["upper_limit_fahrenheit"] = upper_limit_fahrenheit
-
         await self.client.patch(
             "/thermostats/set_temperature_threshold", json=json_payload
         )
@@ -2444,7 +2416,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
-
         await self.client.patch("/thermostats/update_climate_preset", json=json_payload)
 
         return None
@@ -2506,7 +2477,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["tuesday_program_id"] = tuesday_program_id
         if wednesday_program_id is not None:
             json_payload["wednesday_program_id"] = wednesday_program_id
-
         res = await self.client.post(
             "/thermostats/update_weekly_program", json=json_payload
         )

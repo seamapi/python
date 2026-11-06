@@ -1007,7 +1007,7 @@ class UnmanagedDevice:
 
     @dataclass
     class SaltoKsLockAccessCodeSupportRemovedWarning(ResourceMapping):
-        """Indicates that a change in the reported device model has been detected for this Salto KS lock, which may occur after an IQ hub reset. Access code support may be affected. See https://help.getseam.com/articles/5098842588-salto-ks-lock-loses-access-code-support for troubleshooting steps.
+        """Indicates that a change in the reported device model has been detected for this Salto KS lock, which may occur after an IQ hub reset. Access code support may be affected. See https://www.seam.co/help/salto-ks-lock-loses-access-code-support for troubleshooting steps.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -1337,6 +1337,29 @@ class UnmanagedDevice:
                 warning_code=d.get("warning_code", None),
             )
 
+    @dataclass
+    class CloudRecordingNotEnabledWarning(ResourceMapping):
+        """Indicates that the camera's account plan does not include cloud recording, so event media such as motion clips is unavailable.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["cloud_recording_not_enabled"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     Errors = Union[
         AccountDisconnectedError,
         SaltoKsSubscriptionLimitExceededError,
@@ -1399,6 +1422,7 @@ class UnmanagedDevice:
         AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
+        CloudRecordingNotEnabledWarning,
     ]
     _WarningsVariants = {
         "partial_backup_access_code_pool": PartialBackupAccessCodePoolWarning,
@@ -1429,6 +1453,7 @@ class UnmanagedDevice:
         "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
+        "cloud_recording_not_enabled": CloudRecordingNotEnabledWarning,
     }
 
     can_activate_weekly_program: Optional[bool]

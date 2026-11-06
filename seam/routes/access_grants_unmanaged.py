@@ -26,6 +26,7 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -36,6 +37,8 @@ class AbstractAccessGrantsUnmanaged(abc.ABC):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -88,6 +91,7 @@ class AbstractAsyncAccessGrantsUnmanaged(abc.ABC):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -98,6 +102,8 @@ class AbstractAsyncAccessGrantsUnmanaged(abc.ABC):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -153,7 +159,6 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
         res = self.client.get("/access_grants/unmanaged/get", params=params)
 
         return UnmanagedAccessGrant.from_dict(
@@ -170,6 +175,7 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -180,6 +186,8 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -196,6 +204,8 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             params["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -204,7 +214,6 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             params["reservation_key"] = reservation_key
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/access_grants/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -249,7 +258,6 @@ class AccessGrantsUnmanaged(AbstractAccessGrantsUnmanaged):
             json_payload["is_managed"] = is_managed
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
-
         self.client.patch("/access_grants/unmanaged/update", json=json_payload)
 
         return None
@@ -275,7 +283,6 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
         res = await self.client.get("/access_grants/unmanaged/get", params=params)
 
         return UnmanagedAccessGrant.from_dict(
@@ -292,6 +299,7 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
         *,
         acs_entrance_id: Optional[str] = None,
         acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[float] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
@@ -302,6 +310,8 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
         :param acs_entrance_id: ID of the entrance by which you want to filter the list of unmanaged Access Grants.
 
         :param acs_system_id: ID of the access system by which you want to filter the list of unmanaged Access Grants.
+
+        :param customer_key: Customer key for which you want to list unmanaged Access Grants.
 
         :param limit: Numerical limit on the number of unmanaged access grants to return.
 
@@ -318,6 +328,8 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
             params["acs_entrance_id"] = acs_entrance_id
         if acs_system_id is not None:
             params["acs_system_id"] = acs_system_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -326,7 +338,6 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
             params["reservation_key"] = reservation_key
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/access_grants/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -371,7 +382,6 @@ class AsyncAccessGrantsUnmanaged(AbstractAsyncAccessGrantsUnmanaged):
             json_payload["is_managed"] = is_managed
         if access_grant_key is not None:
             json_payload["access_grant_key"] = access_grant_key
-
         await self.client.patch("/access_grants/unmanaged/update", json=json_payload)
 
         return None

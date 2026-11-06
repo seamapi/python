@@ -252,7 +252,6 @@ class AcsEntrances(AbstractAcsEntrances):
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
-
         res = self.client.get("/acs/entrances/get", params=params)
 
         return AcsEntrance.from_dict(unwrap(res, "acs_entrance", "/acs/entrances/get"))
@@ -285,7 +284,6 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         self.client.post("/acs/entrances/grant_access", json=json_payload)
 
         return None
@@ -357,7 +355,6 @@ class AcsEntrances(AbstractAcsEntrances):
             params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
-
         res = self.client.get("/acs/entrances/list", params=params)
 
         return PaginatedList(
@@ -392,7 +389,6 @@ class AcsEntrances(AbstractAcsEntrances):
             params["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
             params["include_if"] = include_if
-
         res = self.client.get(
             "/acs/entrances/list_credentials_with_access", params=params
         )
@@ -431,7 +427,6 @@ class AcsEntrances(AbstractAcsEntrances):
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
         res = self.client.post("/acs/entrances/unlock", json=json_payload)
 
         wait_for_action_attempt = (
@@ -467,7 +462,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
 
         if acs_entrance_id is not None:
             params["acs_entrance_id"] = acs_entrance_id
-
         res = await self.client.get("/acs/entrances/get", params=params)
 
         return AcsEntrance.from_dict(unwrap(res, "acs_entrance", "/acs/entrances/get"))
@@ -500,7 +494,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         await self.client.post("/acs/entrances/grant_access", json=json_payload)
 
         return None
@@ -572,7 +565,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
-
         res = await self.client.get("/acs/entrances/list", params=params)
 
         return PaginatedList(
@@ -607,7 +599,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             params["acs_entrance_id"] = acs_entrance_id
         if include_if is not None:
             params["include_if"] = include_if
-
         res = await self.client.get(
             "/acs/entrances/list_credentials_with_access", params=params
         )
@@ -646,7 +637,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             json_payload["acs_credential_id"] = acs_credential_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
         res = await self.client.post("/acs/entrances/unlock", json=json_payload)
 
         wait_for_action_attempt = (

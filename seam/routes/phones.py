@@ -114,7 +114,6 @@ class Phones(AbstractPhones):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         self.client.delete("/phones/deactivate", params=params)
 
         return None
@@ -132,7 +131,6 @@ class Phones(AbstractPhones):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = self.client.get("/phones/get", params=params)
 
         return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
@@ -159,7 +157,6 @@ class Phones(AbstractPhones):
             params["acs_credential_id"] = acs_credential_id
         if owner_user_identity_id is not None:
             params["owner_user_identity_id"] = owner_user_identity_id
-
         res = self.client.get("/phones/list", params=params)
 
         return [
@@ -188,7 +185,6 @@ class AsyncPhones(AbstractAsyncPhones):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         await self.client.delete("/phones/deactivate", params=params)
 
         return None
@@ -206,7 +202,6 @@ class AsyncPhones(AbstractAsyncPhones):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = await self.client.get("/phones/get", params=params)
 
         return Phone.from_dict(unwrap(res, "phone", "/phones/get"))
@@ -233,7 +228,6 @@ class AsyncPhones(AbstractAsyncPhones):
             params["acs_credential_id"] = acs_credential_id
         if owner_user_identity_id is not None:
             params["owner_user_identity_id"] = owner_user_identity_id
-
         res = await self.client.get("/phones/list", params=params)
 
         return [

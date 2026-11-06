@@ -367,7 +367,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
         res = self.client.put("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -387,7 +386,6 @@ class ClientSessions(AbstractClientSessions):
 
         if client_session_id is not None:
             params["client_session_id"] = client_session_id
-
         self.client.delete("/client_sessions/delete", params=params)
 
         return None
@@ -416,7 +414,6 @@ class ClientSessions(AbstractClientSessions):
             params["client_session_id"] = client_session_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/client_sessions/get", params=params)
 
         return ClientSession.from_dict(
@@ -467,7 +464,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
         res = self.client.post("/client_sessions/get_or_create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -525,22 +521,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
-        if all(
-            param is None
-            for param in (
-                client_session_id,
-                connect_webview_ids,
-                connected_account_ids,
-                user_identifier_key,
-                user_identity_id,
-                user_identity_ids,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/grant_access"
-            )
-
         self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None
@@ -584,7 +564,6 @@ class ClientSessions(AbstractClientSessions):
             params["user_identity_id"] = user_identity_id
         if without_user_identifier_key is not None:
             params["without_user_identifier_key"] = without_user_identifier_key
-
         res = self.client.get("/client_sessions/list", params=params)
 
         return [
@@ -607,7 +586,6 @@ class ClientSessions(AbstractClientSessions):
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
-
         self.client.post("/client_sessions/revoke", json=json_payload)
 
         return None
@@ -672,7 +650,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
         res = await self.client.put("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -692,7 +669,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         if client_session_id is not None:
             params["client_session_id"] = client_session_id
-
         await self.client.delete("/client_sessions/delete", params=params)
 
         return None
@@ -721,7 +697,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             params["client_session_id"] = client_session_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/client_sessions/get", params=params)
 
         return ClientSession.from_dict(
@@ -772,7 +747,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
         res = await self.client.post(
             "/client_sessions/get_or_create", json=json_payload
         )
@@ -832,22 +806,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_ids is not None:
             json_payload["user_identity_ids"] = user_identity_ids
-
-        if all(
-            param is None
-            for param in (
-                client_session_id,
-                connect_webview_ids,
-                connected_account_ids,
-                user_identifier_key,
-                user_identity_id,
-                user_identity_ids,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /client_sessions/grant_access"
-            )
-
         await self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None
@@ -891,7 +849,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             params["user_identity_id"] = user_identity_id
         if without_user_identifier_key is not None:
             params["without_user_identifier_key"] = without_user_identifier_key
-
         res = await self.client.get("/client_sessions/list", params=params)
 
         return [
@@ -914,7 +871,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
 
         if client_session_id is not None:
             json_payload["client_session_id"] = client_session_id
-
         await self.client.post("/client_sessions/revoke", json=json_payload)
 
         return None

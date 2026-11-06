@@ -219,7 +219,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["acs_credential_id"] = acs_credential_id
         if error_code is not None:
             json_payload["error_code"] = error_code
-
         self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_fail", json=json_payload
         )
@@ -248,7 +247,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["acs_encoder_id"] = acs_encoder_id
         if scenario is not None:
             json_payload["scenario"] = scenario
-
         self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_succeed",
             json=json_payload,
@@ -289,7 +287,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
         if error_code is not None:
             json_payload["error_code"] = error_code
-
         self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_fail", json=json_payload
         )
@@ -330,7 +327,6 @@ class AcsEncodersSimulate(AbstractAcsEncodersSimulate):
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
         if scenario is not None:
             json_payload["scenario"] = scenario
-
         self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_succeed",
             json=json_payload,
@@ -378,7 +374,6 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             json_payload["acs_credential_id"] = acs_credential_id
         if error_code is not None:
             json_payload["error_code"] = error_code
-
         await self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_fail", json=json_payload
         )
@@ -407,7 +402,6 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             json_payload["acs_encoder_id"] = acs_encoder_id
         if scenario is not None:
             json_payload["scenario"] = scenario
-
         await self.client.post(
             "/acs/encoders/simulate/next_credential_encode_will_succeed",
             json=json_payload,
@@ -448,7 +442,6 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
         if error_code is not None:
             json_payload["error_code"] = error_code
-
         await self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_fail", json=json_payload
         )
@@ -489,7 +482,6 @@ class AsyncAcsEncodersSimulate(AbstractAsyncAcsEncodersSimulate):
             json_payload["acs_credential_id_on_seam"] = acs_credential_id_on_seam
         if scenario is not None:
             json_payload["scenario"] = scenario
-
         await self.client.post(
             "/acs/encoders/simulate/next_credential_scan_will_succeed",
             json=json_payload,

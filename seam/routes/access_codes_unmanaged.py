@@ -269,7 +269,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-
         self.client.patch(
             "/access_codes/unmanaged/convert_to_managed", json=json_payload
         )
@@ -290,7 +289,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
 
         if access_code_id is not None:
             params["access_code_id"] = access_code_id
-
         self.client.delete("/access_codes/unmanaged/delete", params=params)
 
         return None
@@ -332,19 +330,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/get"
-            )
-
         res = self.client.get("/access_codes/unmanaged/get", params=params)
 
         return UnmanagedAccessCode.from_dict(
@@ -390,7 +375,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/access_codes/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -443,7 +427,6 @@ class AccessCodesUnmanaged(AbstractAccessCodesUnmanaged):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-
         self.client.patch("/access_codes/unmanaged/update", json=json_payload)
 
         return None
@@ -493,7 +476,6 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-
         await self.client.patch(
             "/access_codes/unmanaged/convert_to_managed", json=json_payload
         )
@@ -514,7 +496,6 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
 
         if access_code_id is not None:
             params["access_code_id"] = access_code_id
-
         await self.client.delete("/access_codes/unmanaged/delete", params=params)
 
         return None
@@ -556,19 +537,6 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_codes/unmanaged/get"
-            )
-
         res = await self.client.get("/access_codes/unmanaged/get", params=params)
 
         return UnmanagedAccessCode.from_dict(
@@ -614,7 +582,6 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/access_codes/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -667,7 +634,6 @@ class AsyncAccessCodesUnmanaged(AbstractAsyncAccessCodesUnmanaged):
             json_payload["is_external_modification_allowed"] = (
                 is_external_modification_allowed
             )
-
         await self.client.patch("/access_codes/unmanaged/update", json=json_payload)
 
         return None

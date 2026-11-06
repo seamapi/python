@@ -495,7 +495,6 @@ class Locks(AbstractLocks):
             json_payload["device_id"] = device_id
         if auto_lock_delay_seconds is not None:
             json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
-
         res = self.client.post("/locks/configure_auto_lock", json=json_payload)
 
         wait_for_action_attempt = (
@@ -541,16 +540,6 @@ class Locks(AbstractLocks):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /locks/get")
-
         res = self.client.get("/locks/get", params=params)
 
         return Device.from_dict(unwrap(res, "device", "/locks/get"))
@@ -707,7 +696,6 @@ class Locks(AbstractLocks):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = self.client.get("/locks/list", params=params)
 
         return [
@@ -735,7 +723,6 @@ class Locks(AbstractLocks):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post("/locks/lock_door", json=json_payload)
 
         wait_for_action_attempt = (
@@ -772,7 +759,6 @@ class Locks(AbstractLocks):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post("/locks/unlock_door", json=json_payload)
 
         wait_for_action_attempt = (
@@ -832,7 +818,6 @@ class AsyncLocks(AbstractAsyncLocks):
             json_payload["device_id"] = device_id
         if auto_lock_delay_seconds is not None:
             json_payload["auto_lock_delay_seconds"] = auto_lock_delay_seconds
-
         res = await self.client.post("/locks/configure_auto_lock", json=json_payload)
 
         wait_for_action_attempt = (
@@ -878,16 +863,6 @@ class AsyncLocks(AbstractAsyncLocks):
             params["device_id"] = device_id
         if name is not None:
             params["name"] = name
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                name,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /locks/get")
-
         res = await self.client.get("/locks/get", params=params)
 
         return Device.from_dict(unwrap(res, "device", "/locks/get"))
@@ -1044,7 +1019,6 @@ class AsyncLocks(AbstractAsyncLocks):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = await self.client.get("/locks/list", params=params)
 
         return [
@@ -1072,7 +1046,6 @@ class AsyncLocks(AbstractAsyncLocks):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post("/locks/lock_door", json=json_payload)
 
         wait_for_action_attempt = (
@@ -1109,7 +1082,6 @@ class AsyncLocks(AbstractAsyncLocks):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post("/locks/unlock_door", json=json_payload)
 
         wait_for_action_attempt = (

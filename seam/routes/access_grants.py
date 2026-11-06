@@ -570,7 +570,6 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["user_identity"] = user_identity
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = self.client.post("/access_grants/create", json=json_payload)
 
         return AccessGrant.from_dict(
@@ -590,7 +589,6 @@ class AccessGrants(AbstractAccessGrants):
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
         self.client.delete("/access_grants/delete", params=params)
 
         return None
@@ -624,18 +622,6 @@ class AccessGrants(AbstractAccessGrants):
             params["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
             params["access_grant_key"] = access_grant_key
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_grant_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/get"
-            )
-
         res = self.client.get("/access_grants/get", params=params)
 
         return AccessGrant.from_dict(unwrap(res, "access_grant", "/access_grants/get"))
@@ -707,20 +693,6 @@ class AccessGrants(AbstractAccessGrants):
             params["exclude"] = exclude
         if include is not None:
             params["include"] = include
-
-        if all(
-            param is None
-            for param in (
-                access_grant_ids,
-                access_grant_keys,
-                exclude,
-                include,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/get_related"
-            )
-
         res = self.client.get("/access_grants/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
@@ -807,7 +779,6 @@ class AccessGrants(AbstractAccessGrants):
             params["space_id"] = space_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/access_grants/list", params=params)
 
         return PaginatedList(
@@ -839,7 +810,6 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["access_grant_id"] = access_grant_id
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-
         res = self.client.post(
             "/access_grants/request_access_methods", json=json_payload
         )
@@ -893,21 +863,6 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_grant_key,
-                ends_at,
-                name,
-                starts_at,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/update"
-            )
-
         self.client.patch("/access_grants/update", json=json_payload)
 
         return None
@@ -1012,7 +967,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             json_payload["user_identity"] = user_identity
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = await self.client.post("/access_grants/create", json=json_payload)
 
         return AccessGrant.from_dict(
@@ -1032,7 +986,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
 
         if access_grant_id is not None:
             params["access_grant_id"] = access_grant_id
-
         await self.client.delete("/access_grants/delete", params=params)
 
         return None
@@ -1066,18 +1019,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             params["access_grant_id"] = access_grant_id
         if access_grant_key is not None:
             params["access_grant_key"] = access_grant_key
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_grant_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/get"
-            )
-
         res = await self.client.get("/access_grants/get", params=params)
 
         return AccessGrant.from_dict(unwrap(res, "access_grant", "/access_grants/get"))
@@ -1149,20 +1090,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             params["exclude"] = exclude
         if include is not None:
             params["include"] = include
-
-        if all(
-            param is None
-            for param in (
-                access_grant_ids,
-                access_grant_keys,
-                exclude,
-                include,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/get_related"
-            )
-
         res = await self.client.get("/access_grants/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_grants/get_related"))
@@ -1249,7 +1176,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             params["space_id"] = space_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/access_grants/list", params=params)
 
         return PaginatedList(
@@ -1281,7 +1207,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             json_payload["access_grant_id"] = access_grant_id
         if requested_access_methods is not None:
             json_payload["requested_access_methods"] = requested_access_methods
-
         res = await self.client.post(
             "/access_grants/request_access_methods", json=json_payload
         )
@@ -1335,21 +1260,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_grant_key,
-                ends_at,
-                name,
-                starts_at,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_grants/update"
-            )
-
         await self.client.patch("/access_grants/update", json=json_payload)
 
         return None

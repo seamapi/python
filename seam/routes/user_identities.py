@@ -139,6 +139,7 @@ class AbstractUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -149,6 +150,8 @@ class AbstractUserIdentities(abc.ABC):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -388,6 +391,7 @@ class AbstractAsyncUserIdentities(abc.ABC):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -398,6 +402,8 @@ class AbstractAsyncUserIdentities(abc.ABC):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -564,7 +570,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         self.client.put("/user_identities/add_acs_user", json=json_payload)
 
         return None
@@ -613,7 +618,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         res = self.client.post("/user_identities/create", json=json_payload)
 
         return UserIdentity.from_dict(
@@ -633,7 +637,6 @@ class UserIdentities(AbstractUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         self.client.delete("/user_identities/delete", params=params)
 
         return None
@@ -667,7 +670,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
-
         res = self.client.post(
             "/user_identities/generate_instant_key", json=json_payload
         )
@@ -705,18 +707,6 @@ class UserIdentities(AbstractUserIdentities):
             params["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             params["user_identity_key"] = user_identity_key
-
-        if all(
-            param is None
-            for param in (
-                user_identity_id,
-                user_identity_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/get"
-            )
-
         res = self.client.get("/user_identities/get", params=params)
 
         return UserIdentity.from_dict(
@@ -741,7 +731,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["device_id"] = device_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         self.client.put("/user_identities/grant_access_to_device", json=json_payload)
 
         return None
@@ -756,6 +745,7 @@ class UserIdentities(AbstractUserIdentities):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -766,6 +756,8 @@ class UserIdentities(AbstractUserIdentities):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -784,6 +776,8 @@ class UserIdentities(AbstractUserIdentities):
             params["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -792,7 +786,6 @@ class UserIdentities(AbstractUserIdentities):
             params["search"] = search
         if user_identity_ids is not None:
             params["user_identity_ids"] = user_identity_ids
-
         res = self.client.get("/user_identities/list", params=params)
 
         return PaginatedList(
@@ -818,7 +811,6 @@ class UserIdentities(AbstractUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/user_identities/list_accessible_devices", params=params)
 
         return [
@@ -843,7 +835,6 @@ class UserIdentities(AbstractUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get(
             "/user_identities/list_accessible_entrances", params=params
         )
@@ -870,7 +861,6 @@ class UserIdentities(AbstractUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/user_identities/list_acs_systems", params=params)
 
         return [
@@ -895,7 +885,6 @@ class UserIdentities(AbstractUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/user_identities/list_acs_users", params=params)
 
         return [
@@ -948,20 +937,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if all(
-            param is None
-            for param in (
-                merged_user_identity_ids,
-                merged_user_identity_keys,
-                user_identity_id,
-                user_identity_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/merge"
-            )
-
         self.client.post("/user_identities/merge", json=json_payload)
 
         return None
@@ -984,7 +959,6 @@ class UserIdentities(AbstractUserIdentities):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         self.client.delete("/user_identities/remove_acs_user", params=params)
 
         return None
@@ -1007,7 +981,6 @@ class UserIdentities(AbstractUserIdentities):
             params["device_id"] = device_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         self.client.delete("/user_identities/revoke_access_to_device", params=params)
 
         return None
@@ -1049,7 +1022,6 @@ class UserIdentities(AbstractUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         self.client.patch("/user_identities/update", json=json_payload)
 
         return None
@@ -1097,7 +1069,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         await self.client.put("/user_identities/add_acs_user", json=json_payload)
 
         return None
@@ -1146,7 +1117,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         res = await self.client.post("/user_identities/create", json=json_payload)
 
         return UserIdentity.from_dict(
@@ -1166,7 +1136,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         await self.client.delete("/user_identities/delete", params=params)
 
         return None
@@ -1200,7 +1169,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["customization_profile_id"] = customization_profile_id
         if max_use_count is not None:
             json_payload["max_use_count"] = max_use_count
-
         res = await self.client.post(
             "/user_identities/generate_instant_key", json=json_payload
         )
@@ -1238,18 +1206,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             params["user_identity_key"] = user_identity_key
-
-        if all(
-            param is None
-            for param in (
-                user_identity_id,
-                user_identity_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/get"
-            )
-
         res = await self.client.get("/user_identities/get", params=params)
 
         return UserIdentity.from_dict(
@@ -1276,7 +1232,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["device_id"] = device_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         await self.client.put(
             "/user_identities/grant_access_to_device", json=json_payload
         )
@@ -1293,6 +1248,7 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         *,
         created_before: Optional[str] = None,
         credential_manager_acs_system_id: Optional[str] = None,
+        customer_key: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
@@ -1303,6 +1259,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
         :param created_before: Timestamp by which to limit returned user identities. Returns user identities created before this timestamp.
 
         :param credential_manager_acs_system_id: ``acs_system_id`` of the credential manager by which you want to filter the list of user identities.
+
+        :param customer_key: Customer key for which you want to list user identities.
 
         :param limit: Maximum number of records to return per page.
 
@@ -1321,6 +1279,8 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["credential_manager_acs_system_id"] = (
                 credential_manager_acs_system_id
             )
+        if customer_key is not None:
+            params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
         if page_cursor is not None:
@@ -1329,7 +1289,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["search"] = search
         if user_identity_ids is not None:
             params["user_identity_ids"] = user_identity_ids
-
         res = await self.client.get("/user_identities/list", params=params)
 
         return PaginatedList(
@@ -1355,7 +1314,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get(
             "/user_identities/list_accessible_devices", params=params
         )
@@ -1384,7 +1342,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get(
             "/user_identities/list_accessible_entrances", params=params
         )
@@ -1411,7 +1368,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/user_identities/list_acs_systems", params=params)
 
         return [
@@ -1436,7 +1392,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/user_identities/list_acs_users", params=params)
 
         return [
@@ -1489,20 +1444,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
-        if all(
-            param is None
-            for param in (
-                merged_user_identity_ids,
-                merged_user_identity_keys,
-                user_identity_id,
-                user_identity_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /user_identities/merge"
-            )
-
         await self.client.post("/user_identities/merge", json=json_payload)
 
         return None
@@ -1525,7 +1466,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         await self.client.delete("/user_identities/remove_acs_user", params=params)
 
         return None
@@ -1550,7 +1490,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             params["device_id"] = device_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         await self.client.delete(
             "/user_identities/revoke_access_to_device", params=params
         )
@@ -1594,7 +1533,6 @@ class AsyncUserIdentities(AbstractAsyncUserIdentities):
             json_payload["phone_number"] = phone_number
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         await self.client.patch("/user_identities/update", json=json_payload)
 
         return None

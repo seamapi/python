@@ -374,7 +374,6 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         self.client.patch("/acs/credentials/assign", json=json_payload)
 
         return None
@@ -462,7 +461,6 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["user_identity_id"] = user_identity_id
         if visionline_metadata is not None:
             json_payload["visionline_metadata"] = visionline_metadata
-
         res = self.client.post("/acs/credentials/create", json=json_payload)
 
         return AcsCredential.from_dict(
@@ -482,7 +480,6 @@ class AcsCredentials(AbstractAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         self.client.delete("/acs/credentials/delete", params=params)
 
         return None
@@ -502,7 +499,6 @@ class AcsCredentials(AbstractAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         res = self.client.get("/acs/credentials/get", params=params)
 
         return AcsCredential.from_dict(
@@ -563,7 +559,6 @@ class AcsCredentials(AbstractAcsCredentials):
             params["search"] = search
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/acs/credentials/list", params=params)
 
         return PaginatedList(
@@ -589,7 +584,6 @@ class AcsCredentials(AbstractAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         res = self.client.get(
             "/acs/credentials/list_accessible_entrances", params=params
         )
@@ -629,7 +623,6 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         self.client.patch("/acs/credentials/unassign", json=json_payload)
 
         return None
@@ -662,7 +655,6 @@ class AcsCredentials(AbstractAcsCredentials):
             json_payload["code"] = code
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-
         self.client.patch("/acs/credentials/update", json=json_payload)
 
         return None
@@ -701,7 +693,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         await self.client.patch("/acs/credentials/assign", json=json_payload)
 
         return None
@@ -789,7 +780,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             json_payload["user_identity_id"] = user_identity_id
         if visionline_metadata is not None:
             json_payload["visionline_metadata"] = visionline_metadata
-
         res = await self.client.post("/acs/credentials/create", json=json_payload)
 
         return AcsCredential.from_dict(
@@ -809,7 +799,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         await self.client.delete("/acs/credentials/delete", params=params)
 
         return None
@@ -829,7 +818,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         res = await self.client.get("/acs/credentials/get", params=params)
 
         return AcsCredential.from_dict(
@@ -890,7 +878,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             params["search"] = search
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/acs/credentials/list", params=params)
 
         return PaginatedList(
@@ -918,7 +905,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
 
         if acs_credential_id is not None:
             params["acs_credential_id"] = acs_credential_id
-
         res = await self.client.get(
             "/acs/credentials/list_accessible_entrances", params=params
         )
@@ -958,7 +944,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         await self.client.patch("/acs/credentials/unassign", json=json_payload)
 
         return None
@@ -991,7 +976,6 @@ class AsyncAcsCredentials(AbstractAsyncAcsCredentials):
             json_payload["code"] = code
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-
         await self.client.patch("/acs/credentials/update", json=json_payload)
 
         return None

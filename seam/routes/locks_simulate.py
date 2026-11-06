@@ -118,7 +118,6 @@ class LocksSimulate(AbstractLocksSimulate):
             json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post("/locks/simulate/keypad_code_entry", json=json_payload)
 
         wait_for_action_attempt = (
@@ -157,7 +156,6 @@ class LocksSimulate(AbstractLocksSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = self.client.post(
             "/locks/simulate/manual_lock_via_keypad", json=json_payload
         )
@@ -209,7 +207,6 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
             json_payload["code"] = code
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post(
             "/locks/simulate/keypad_code_entry", json=json_payload
         )
@@ -250,7 +247,6 @@ class AsyncLocksSimulate(AbstractAsyncLocksSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         res = await self.client.post(
             "/locks/simulate/manual_lock_via_keypad", json=json_payload
         )
