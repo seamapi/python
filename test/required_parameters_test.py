@@ -42,9 +42,10 @@ def test_an_unpaginated_endpoint_still_guards_its_filters():
 def test_generated_access_codes_list_supports_workspace_wide_listing(
     recording_server,
 ):
-    with recording_server(
-        [(200, {"access_codes": [], "pagination": {}})]
-    ) as (endpoint, requests):
+    with recording_server([(200, {"access_codes": [], "pagination": {}})]) as (
+        endpoint,
+        requests,
+    ):
         with Seam(api_key="seam_apikey1_token", endpoint=endpoint) as seam:
             access_codes = seam.access_codes.list()
 
