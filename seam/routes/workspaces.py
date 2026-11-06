@@ -273,7 +273,6 @@ class Workspaces(AbstractWorkspaces):
             )
         if webview_success_message is not None:
             json_payload["webview_success_message"] = webview_success_message
-
         res = self.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
@@ -383,7 +382,6 @@ class Workspaces(AbstractWorkspaces):
             json_payload["name"] = name
         if organization_id is not None:
             json_payload["organization_id"] = organization_id
-
         self.client.patch("/workspaces/update", json=json_payload)
 
         return None
@@ -460,7 +458,6 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
             )
         if webview_success_message is not None:
             json_payload["webview_success_message"] = webview_success_message
-
         res = await self.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
@@ -570,7 +567,6 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
             json_payload["name"] = name
         if organization_id is not None:
             json_payload["organization_id"] = organization_id
-
         await self.client.patch("/workspaces/update", json=json_payload)
 
         return None

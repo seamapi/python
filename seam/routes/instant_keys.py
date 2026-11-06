@@ -99,7 +99,6 @@ class InstantKeys(AbstractInstantKeys):
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
-
         self.client.delete("/instant_keys/delete", params=params)
 
         return None
@@ -133,16 +132,6 @@ class InstantKeys(AbstractInstantKeys):
             params["instant_key_id"] = instant_key_id
         if instant_key_url is not None:
             params["instant_key_url"] = instant_key_url
-
-        if all(
-            param is None
-            for param in (
-                instant_key_id,
-                instant_key_url,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /instant_keys/get")
-
         res = self.client.get("/instant_keys/get", params=params)
 
         return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
@@ -160,7 +149,6 @@ class InstantKeys(AbstractInstantKeys):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/instant_keys/list", params=params)
 
         return [
@@ -187,7 +175,6 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
 
         if instant_key_id is not None:
             params["instant_key_id"] = instant_key_id
-
         await self.client.delete("/instant_keys/delete", params=params)
 
         return None
@@ -221,16 +208,6 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
             params["instant_key_id"] = instant_key_id
         if instant_key_url is not None:
             params["instant_key_url"] = instant_key_url
-
-        if all(
-            param is None
-            for param in (
-                instant_key_id,
-                instant_key_url,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /instant_keys/get")
-
         res = await self.client.get("/instant_keys/get", params=params)
 
         return InstantKey.from_dict(unwrap(res, "instant_key", "/instant_keys/get"))
@@ -248,7 +225,6 @@ class AsyncInstantKeys(AbstractAsyncInstantKeys):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/instant_keys/list", params=params)
 
         return [

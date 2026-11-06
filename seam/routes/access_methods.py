@@ -410,7 +410,6 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if card_number is not None:
             json_payload["card_number"] = card_number
-
         res = self.client.post("/access_methods/assign_card", json=json_payload)
 
         wait_for_action_attempt = (
@@ -460,19 +459,6 @@ class AccessMethods(AbstractAccessMethods):
             params["access_method_id"] = access_method_id
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_method_id,
-                reservation_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/delete"
-            )
-
         self.client.delete("/access_methods/delete", params=params)
 
         return None
@@ -504,7 +490,6 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-
         res = self.client.post("/access_methods/encode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -536,7 +521,6 @@ class AccessMethods(AbstractAccessMethods):
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
         res = self.client.get("/access_methods/get", params=params)
 
         return AccessMethod.from_dict(
@@ -598,7 +582,6 @@ class AccessMethods(AbstractAccessMethods):
             params["exclude"] = exclude
         if include is not None:
             params["include"] = include
-
         res = self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
@@ -672,23 +655,6 @@ class AccessMethods(AbstractAccessMethods):
             params["page_cursor"] = page_cursor
         if space_id is not None:
             params["space_id"] = space_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                access_grant_id,
-                access_grant_key,
-                acs_entrance_id,
-                customer_key,
-                device_id,
-                space_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/list"
-            )
-
         res = self.client.get("/access_methods/list", params=params)
 
         return PaginatedList(
@@ -726,7 +692,6 @@ class AccessMethods(AbstractAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
         res = self.client.post("/access_methods/unlock_door", json=json_payload)
 
         wait_for_action_attempt = (
@@ -781,7 +746,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if card_number is not None:
             json_payload["card_number"] = card_number
-
         res = await self.client.post("/access_methods/assign_card", json=json_payload)
 
         wait_for_action_attempt = (
@@ -831,19 +795,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             params["access_method_id"] = access_method_id
         if reservation_key is not None:
             params["reservation_key"] = reservation_key
-
-        if all(
-            param is None
-            for param in (
-                access_grant_id,
-                access_method_id,
-                reservation_key,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/delete"
-            )
-
         await self.client.delete("/access_methods/delete", params=params)
 
         return None
@@ -875,7 +826,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if acs_encoder_id is not None:
             json_payload["acs_encoder_id"] = acs_encoder_id
-
         res = await self.client.post("/access_methods/encode", json=json_payload)
 
         wait_for_action_attempt = (
@@ -907,7 +857,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
         res = await self.client.get("/access_methods/get", params=params)
 
         return AccessMethod.from_dict(
@@ -969,7 +918,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             params["exclude"] = exclude
         if include is not None:
             params["include"] = include
-
         res = await self.client.get("/access_methods/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/access_methods/get_related"))
@@ -1043,23 +991,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             params["page_cursor"] = page_cursor
         if space_id is not None:
             params["space_id"] = space_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                access_grant_id,
-                access_grant_key,
-                acs_entrance_id,
-                customer_key,
-                device_id,
-                space_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /access_methods/list"
-            )
-
         res = await self.client.get("/access_methods/list", params=params)
 
         return PaginatedList(
@@ -1097,7 +1028,6 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
             json_payload["access_method_id"] = access_method_id
         if acs_entrance_id is not None:
             json_payload["acs_entrance_id"] = acs_entrance_id
-
         res = await self.client.post("/access_methods/unlock_door", json=json_payload)
 
         wait_for_action_attempt = (

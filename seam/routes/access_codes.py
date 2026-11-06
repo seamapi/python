@@ -832,7 +832,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
-
         res = self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
@@ -933,7 +932,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-
         res = self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -961,7 +959,6 @@ class AccessCodes(AbstractAccessCodes):
             params["access_code_id"] = access_code_id
         if device_id is not None:
             params["device_id"] = device_id
-
         self.client.delete("/access_codes/delete", params=params)
 
         return None
@@ -981,7 +978,6 @@ class AccessCodes(AbstractAccessCodes):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = self.client.get("/access_codes/generate_code", params=params)
 
         return AccessCode.from_dict(
@@ -1025,17 +1021,6 @@ class AccessCodes(AbstractAccessCodes):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /access_codes/get")
-
         res = self.client.get("/access_codes/get", params=params)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
@@ -1104,7 +1089,6 @@ class AccessCodes(AbstractAccessCodes):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/access_codes/list", params=params)
 
         return PaginatedList(
@@ -1138,7 +1122,6 @@ class AccessCodes(AbstractAccessCodes):
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
         res = self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
         )
@@ -1182,7 +1165,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["min_code_length"] = min_code_length
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
-
         self.client.post("/access_codes/report_device_constraints", json=json_payload)
 
         return None
@@ -1265,7 +1247,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
-
         self.client.patch("/access_codes/update", json=json_payload)
 
         return None
@@ -1313,7 +1294,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         self.client.patch("/access_codes/update_multiple", json=json_payload)
 
         return None
@@ -1436,7 +1416,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
         if use_offline_access_code is not None:
             json_payload["use_offline_access_code"] = use_offline_access_code
-
         res = await self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
@@ -1537,7 +1516,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-
         res = await self.client.put("/access_codes/create_multiple", json=json_payload)
 
         return [
@@ -1567,7 +1545,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["access_code_id"] = access_code_id
         if device_id is not None:
             params["device_id"] = device_id
-
         await self.client.delete("/access_codes/delete", params=params)
 
         return None
@@ -1587,7 +1564,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = await self.client.get("/access_codes/generate_code", params=params)
 
         return AccessCode.from_dict(
@@ -1631,17 +1607,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["code"] = code
         if device_id is not None:
             params["device_id"] = device_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                code,
-                device_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /access_codes/get")
-
         res = await self.client.get("/access_codes/get", params=params)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/get"))
@@ -1710,7 +1675,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/access_codes/list", params=params)
 
         return PaginatedList(
@@ -1744,7 +1708,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         if access_code_id is not None:
             json_payload["access_code_id"] = access_code_id
-
         res = await self.client.post(
             "/access_codes/pull_backup_access_code", json=json_payload
         )
@@ -1788,7 +1751,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["min_code_length"] = min_code_length
         if supported_code_lengths is not None:
             json_payload["supported_code_lengths"] = supported_code_lengths
-
         await self.client.post(
             "/access_codes/report_device_constraints", json=json_payload
         )
@@ -1873,7 +1835,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["starts_at"] = starts_at
         if type is not None:
             json_payload["type"] = type
-
         await self.client.patch("/access_codes/update", json=json_payload)
 
         return None
@@ -1921,7 +1882,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["name"] = name
         if starts_at is not None:
             json_payload["starts_at"] = starts_at
-
         await self.client.patch("/access_codes/update_multiple", json=json_payload)
 
         return None

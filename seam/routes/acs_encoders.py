@@ -277,7 +277,6 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-
         res = self.client.post("/acs/encoders/encode_credential", json=json_payload)
 
         wait_for_action_attempt = (
@@ -307,7 +306,6 @@ class AcsEncoders(AbstractAcsEncoders):
 
         if acs_encoder_id is not None:
             params["acs_encoder_id"] = acs_encoder_id
-
         res = self.client.get("/acs/encoders/get", params=params)
 
         return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
@@ -349,7 +347,6 @@ class AcsEncoders(AbstractAcsEncoders):
             params["limit"] = limit
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
-
         res = self.client.get("/acs/encoders/list", params=params)
 
         return PaginatedList(
@@ -387,7 +384,6 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["acs_encoder_id"] = acs_encoder_id
         if salto_ks_metadata is not None:
             json_payload["salto_ks_metadata"] = salto_ks_metadata
-
         res = self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
         wait_for_action_attempt = (
@@ -441,7 +437,6 @@ class AcsEncoders(AbstractAcsEncoders):
             json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = self.client.post(
             "/acs/encoders/scan_to_assign_credential", json=json_payload
         )
@@ -503,7 +498,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             json_payload["access_method_id"] = access_method_id
         if acs_credential_id is not None:
             json_payload["acs_credential_id"] = acs_credential_id
-
         res = await self.client.post(
             "/acs/encoders/encode_credential", json=json_payload
         )
@@ -535,7 +529,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
 
         if acs_encoder_id is not None:
             params["acs_encoder_id"] = acs_encoder_id
-
         res = await self.client.get("/acs/encoders/get", params=params)
 
         return AcsEncoder.from_dict(unwrap(res, "acs_encoder", "/acs/encoders/get"))
@@ -577,7 +570,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             params["limit"] = limit
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
-
         res = await self.client.get("/acs/encoders/list", params=params)
 
         return PaginatedList(
@@ -615,7 +607,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             json_payload["acs_encoder_id"] = acs_encoder_id
         if salto_ks_metadata is not None:
             json_payload["salto_ks_metadata"] = salto_ks_metadata
-
         res = await self.client.post("/acs/encoders/scan_credential", json=json_payload)
 
         wait_for_action_attempt = (
@@ -669,7 +660,6 @@ class AsyncAcsEncoders(AbstractAsyncAcsEncoders):
             json_payload["salto_ks_metadata"] = salto_ks_metadata
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = await self.client.post(
             "/acs/encoders/scan_to_assign_credential", json=json_payload
         )

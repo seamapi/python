@@ -137,7 +137,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/user_identities/unmanaged/get", params=params)
 
         return UnmanagedUserIdentity.from_dict(
@@ -178,7 +177,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
-
         res = self.client.get("/user_identities/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -221,7 +219,6 @@ class UserIdentitiesUnmanaged(AbstractUserIdentitiesUnmanaged):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 
         return None
@@ -247,7 +244,6 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
 
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/user_identities/unmanaged/get", params=params)
 
         return UnmanagedUserIdentity.from_dict(
@@ -288,7 +284,6 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
             params["page_cursor"] = page_cursor
         if search is not None:
             params["search"] = search
-
         res = await self.client.get("/user_identities/unmanaged/list", params=params)
 
         return PaginatedList(
@@ -331,7 +326,6 @@ class AsyncUserIdentitiesUnmanaged(AbstractAsyncUserIdentitiesUnmanaged):
             json_payload["user_identity_id"] = user_identity_id
         if user_identity_key is not None:
             json_payload["user_identity_key"] = user_identity_key
-
         await self.client.patch("/user_identities/unmanaged/update", json=json_payload)
 
         return None

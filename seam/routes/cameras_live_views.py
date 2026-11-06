@@ -146,7 +146,6 @@ class CamerasLiveViews(AbstractCamerasLiveViews):
             json_payload["duration_seconds"] = duration_seconds
         if include_audio is not None:
             json_payload["include_audio"] = include_audio
-
         res = self.client.post("/cameras/live_views/create", json=json_payload)
 
         return CameraLiveViewSession.from_dict(
@@ -180,7 +179,6 @@ class CamerasLiveViews(AbstractCamerasLiveViews):
             json_payload["sdp_offer"] = sdp_offer
         if token is not None:
             json_payload["token"] = token
-
         res = self.client.post("/cameras/live_views/offer", json=json_payload)
 
         return CameraLiveViewAnswer.from_dict(
@@ -206,7 +204,6 @@ class CamerasLiveViews(AbstractCamerasLiveViews):
             json_payload["camera_live_view_session_id"] = camera_live_view_session_id
         if token is not None:
             json_payload["token"] = token
-
         self.client.post("/cameras/live_views/stop", json=json_payload)
 
         return None
@@ -248,7 +245,6 @@ class AsyncCamerasLiveViews(AbstractAsyncCamerasLiveViews):
             json_payload["duration_seconds"] = duration_seconds
         if include_audio is not None:
             json_payload["include_audio"] = include_audio
-
         res = await self.client.post("/cameras/live_views/create", json=json_payload)
 
         return CameraLiveViewSession.from_dict(
@@ -282,7 +278,6 @@ class AsyncCamerasLiveViews(AbstractAsyncCamerasLiveViews):
             json_payload["sdp_offer"] = sdp_offer
         if token is not None:
             json_payload["token"] = token
-
         res = await self.client.post("/cameras/live_views/offer", json=json_payload)
 
         return CameraLiveViewAnswer.from_dict(
@@ -308,7 +303,6 @@ class AsyncCamerasLiveViews(AbstractAsyncCamerasLiveViews):
             json_payload["camera_live_view_session_id"] = camera_live_view_session_id
         if token is not None:
             json_payload["token"] = token
-
         await self.client.post("/cameras/live_views/stop", json=json_payload)
 
         return None

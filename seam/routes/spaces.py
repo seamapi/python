@@ -467,7 +467,6 @@ class Spaces(AbstractSpaces):
             json_payload["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
@@ -492,7 +491,6 @@ class Spaces(AbstractSpaces):
             json_payload["connected_account_id"] = connected_account_id
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
@@ -514,7 +512,6 @@ class Spaces(AbstractSpaces):
             json_payload["device_ids"] = device_ids
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
@@ -566,7 +563,6 @@ class Spaces(AbstractSpaces):
             json_payload["device_ids"] = device_ids
         if space_key is not None:
             json_payload["space_key"] = space_key
-
         res = self.client.post("/spaces/create", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/create"))
@@ -582,7 +578,6 @@ class Spaces(AbstractSpaces):
 
         if space_id is not None:
             params["space_id"] = space_id
-
         self.client.delete("/spaces/delete", params=params)
 
         return None
@@ -613,16 +608,6 @@ class Spaces(AbstractSpaces):
             params["space_id"] = space_id
         if space_key is not None:
             params["space_key"] = space_key
-
-        if all(
-            param is None
-            for param in (
-                space_id,
-                space_key,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /spaces/get")
-
         res = self.client.get("/spaces/get", params=params)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/get"))
@@ -690,20 +675,6 @@ class Spaces(AbstractSpaces):
             params["space_ids"] = space_ids
         if space_keys is not None:
             params["space_keys"] = space_keys
-
-        if all(
-            param is None
-            for param in (
-                exclude,
-                include,
-                space_ids,
-                space_keys,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /spaces/get_related"
-            )
-
         res = self.client.get("/spaces/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
@@ -745,7 +716,6 @@ class Spaces(AbstractSpaces):
             params["search"] = search
         if space_key is not None:
             params["space_key"] = space_key
-
         res = self.client.get("/spaces/list", params=params)
 
         return PaginatedList(
@@ -775,7 +745,6 @@ class Spaces(AbstractSpaces):
             params["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
             params["space_id"] = space_id
-
         self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
@@ -800,7 +769,6 @@ class Spaces(AbstractSpaces):
             params["connected_account_id"] = connected_account_id
         if space_id is not None:
             params["space_id"] = space_id
-
         self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
@@ -822,7 +790,6 @@ class Spaces(AbstractSpaces):
             params["device_ids"] = device_ids
         if space_id is not None:
             params["space_id"] = space_id
-
         self.client.delete("/spaces/remove_devices", params=params)
 
         return None
@@ -869,7 +836,6 @@ class Spaces(AbstractSpaces):
             json_payload["space_id"] = space_id
         if space_key is not None:
             json_payload["space_key"] = space_key
-
         res = self.client.patch("/spaces/update", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/update"))
@@ -899,7 +865,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         await self.client.put("/spaces/add_acs_entrances", json=json_payload)
 
         return None
@@ -924,7 +889,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["connected_account_id"] = connected_account_id
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         await self.client.put("/spaces/add_connected_account", json=json_payload)
 
         return None
@@ -946,7 +910,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["device_ids"] = device_ids
         if space_id is not None:
             json_payload["space_id"] = space_id
-
         await self.client.put("/spaces/add_devices", json=json_payload)
 
         return None
@@ -998,7 +961,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["device_ids"] = device_ids
         if space_key is not None:
             json_payload["space_key"] = space_key
-
         res = await self.client.post("/spaces/create", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/create"))
@@ -1014,7 +976,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
 
         if space_id is not None:
             params["space_id"] = space_id
-
         await self.client.delete("/spaces/delete", params=params)
 
         return None
@@ -1045,16 +1006,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["space_id"] = space_id
         if space_key is not None:
             params["space_key"] = space_key
-
-        if all(
-            param is None
-            for param in (
-                space_id,
-                space_key,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /spaces/get")
-
         res = await self.client.get("/spaces/get", params=params)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/get"))
@@ -1122,20 +1073,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["space_ids"] = space_ids
         if space_keys is not None:
             params["space_keys"] = space_keys
-
-        if all(
-            param is None
-            for param in (
-                exclude,
-                include,
-                space_ids,
-                space_keys,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /spaces/get_related"
-            )
-
         res = await self.client.get("/spaces/get_related", params=params)
 
         return Batch.from_dict(unwrap(res, "batch", "/spaces/get_related"))
@@ -1177,7 +1114,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["search"] = search
         if space_key is not None:
             params["space_key"] = space_key
-
         res = await self.client.get("/spaces/list", params=params)
 
         return PaginatedList(
@@ -1207,7 +1143,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["acs_entrance_ids"] = acs_entrance_ids
         if space_id is not None:
             params["space_id"] = space_id
-
         await self.client.delete("/spaces/remove_acs_entrances", params=params)
 
         return None
@@ -1232,7 +1167,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["connected_account_id"] = connected_account_id
         if space_id is not None:
             params["space_id"] = space_id
-
         await self.client.delete("/spaces/remove_connected_account", params=params)
 
         return None
@@ -1254,7 +1188,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             params["device_ids"] = device_ids
         if space_id is not None:
             params["space_id"] = space_id
-
         await self.client.delete("/spaces/remove_devices", params=params)
 
         return None
@@ -1301,7 +1234,6 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["space_id"] = space_id
         if space_key is not None:
             json_payload["space_key"] = space_key
-
         res = await self.client.patch("/spaces/update", json=json_payload)
 
         return Space.from_dict(unwrap(res, "space", "/spaces/update"))

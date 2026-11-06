@@ -122,7 +122,6 @@ class ActionAttempts(AbstractActionAttempts):
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
         res = self.client.get("/action_attempts/get", params=params)
 
         wait_for_action_attempt = (
@@ -173,7 +172,6 @@ class ActionAttempts(AbstractActionAttempts):
             params["limit"] = limit
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
-
         res = self.client.get("/action_attempts/list", params=params)
 
         return PaginatedList(
@@ -212,7 +210,6 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         if action_attempt_id is not None:
             params["action_attempt_id"] = action_attempt_id
-
         res = await self.client.get("/action_attempts/get", params=params)
 
         wait_for_action_attempt = (
@@ -263,7 +260,6 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
             params["limit"] = limit
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
-
         res = await self.client.get("/action_attempts/list", params=params)
 
         return PaginatedList(

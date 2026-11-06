@@ -72,7 +72,6 @@ class AccessCodesSimulate(AbstractAccessCodesSimulate):
             json_payload["device_id"] = device_id
         if name is not None:
             json_payload["name"] = name
-
         res = self.client.post(
             "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )
@@ -116,7 +115,6 @@ class AsyncAccessCodesSimulate(AbstractAsyncAccessCodesSimulate):
             json_payload["device_id"] = device_id
         if name is not None:
             json_payload["name"] = name
-
         res = await self.client.post(
             "/access_codes/simulate/create_unmanaged_access_code", json=json_payload
         )

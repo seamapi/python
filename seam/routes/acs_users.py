@@ -546,7 +546,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-
         self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
@@ -603,7 +602,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = self.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
@@ -641,17 +639,6 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/delete")
-
         self.client.delete("/acs/users/delete", params=params)
 
         return None
@@ -691,17 +678,6 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/get")
-
         res = self.client.get("/acs/users/get", params=params)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
@@ -758,7 +734,6 @@ class AcsUsers(AbstractAcsUsers):
             params["user_identity_id"] = user_identity_id
         if user_identity_phone_number is not None:
             params["user_identity_phone_number"] = user_identity_phone_number
-
         res = self.client.get("/acs/users/list", params=params)
 
         return PaginatedList(
@@ -804,19 +779,6 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/list_accessible_entrances"
-            )
-
         res = self.client.get("/acs/users/list_accessible_entrances", params=params)
 
         return [
@@ -854,7 +816,6 @@ class AcsUsers(AbstractAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
@@ -892,19 +853,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
-            )
-
         self.client.post("/acs/users/revoke_access_to_all_entrances", json=json_payload)
 
         return None
@@ -942,19 +890,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/suspend"
-            )
-
         self.client.post("/acs/users/suspend", json=json_payload)
 
         return None
@@ -992,19 +927,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/unsuspend"
-            )
-
         self.client.post("/acs/users/unsuspend", json=json_payload)
 
         return None
@@ -1078,23 +1000,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                access_schedule,
-                acs_system_id,
-                acs_user_id,
-                email,
-                email_address,
-                full_name,
-                hid_acs_system_id,
-                phone_number,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/update")
-
         self.client.patch("/acs/users/update", json=json_payload)
 
         return None
@@ -1125,7 +1030,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["acs_access_group_id"] = acs_access_group_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-
         await self.client.put("/acs/users/add_to_access_group", json=json_payload)
 
         return None
@@ -1182,7 +1086,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         res = await self.client.post("/acs/users/create", json=json_payload)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/create"))
@@ -1220,17 +1123,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/delete")
-
         await self.client.delete("/acs/users/delete", params=params)
 
         return None
@@ -1270,17 +1162,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             params["acs_system_id"] = acs_system_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/get")
-
         res = await self.client.get("/acs/users/get", params=params)
 
         return AcsUser.from_dict(unwrap(res, "acs_user", "/acs/users/get"))
@@ -1337,7 +1218,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             params["user_identity_id"] = user_identity_id
         if user_identity_phone_number is not None:
             params["user_identity_phone_number"] = user_identity_phone_number
-
         res = await self.client.get("/acs/users/list", params=params)
 
         return PaginatedList(
@@ -1383,19 +1263,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/list_accessible_entrances"
-            )
-
         res = await self.client.get(
             "/acs/users/list_accessible_entrances", params=params
         )
@@ -1435,7 +1302,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         await self.client.delete("/acs/users/remove_from_access_group", params=params)
 
         return None
@@ -1473,19 +1339,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/revoke_access_to_all_entrances"
-            )
-
         await self.client.post(
             "/acs/users/revoke_access_to_all_entrances", json=json_payload
         )
@@ -1525,19 +1378,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/suspend"
-            )
-
         await self.client.post("/acs/users/suspend", json=json_payload)
 
         return None
@@ -1575,19 +1415,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                acs_system_id,
-                acs_user_id,
-                user_identity_id,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /acs/users/unsuspend"
-            )
-
         await self.client.post("/acs/users/unsuspend", json=json_payload)
 
         return None
@@ -1661,23 +1488,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["phone_number"] = phone_number
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                access_schedule,
-                acs_system_id,
-                acs_user_id,
-                email,
-                email_address,
-                full_name,
-                hid_acs_system_id,
-                phone_number,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /acs/users/update")
-
         await self.client.patch("/acs/users/update", json=json_payload)
 
         return None

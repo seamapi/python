@@ -586,7 +586,6 @@ class ConnectWebviews(AbstractConnectWebviews):
             json_payload["provider_category"] = provider_category
         if wait_for_device_creation is not None:
             json_payload["wait_for_device_creation"] = wait_for_device_creation
-
         res = self.client.post("/connect_webviews/create", json=json_payload)
 
         return ConnectWebview.from_dict(
@@ -608,7 +607,6 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
         self.client.delete("/connect_webviews/delete", params=params)
 
         return None
@@ -630,7 +628,6 @@ class ConnectWebviews(AbstractConnectWebviews):
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
         res = self.client.get("/connect_webviews/get", params=params)
 
         return ConnectWebview.from_dict(
@@ -681,7 +678,6 @@ class ConnectWebviews(AbstractConnectWebviews):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/connect_webviews/list", params=params)
 
         return PaginatedList(
@@ -874,7 +870,6 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
             json_payload["provider_category"] = provider_category
         if wait_for_device_creation is not None:
             json_payload["wait_for_device_creation"] = wait_for_device_creation
-
         res = await self.client.post("/connect_webviews/create", json=json_payload)
 
         return ConnectWebview.from_dict(
@@ -896,7 +891,6 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
         await self.client.delete("/connect_webviews/delete", params=params)
 
         return None
@@ -918,7 +912,6 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
 
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
-
         res = await self.client.get("/connect_webviews/get", params=params)
 
         return ConnectWebview.from_dict(
@@ -969,7 +962,6 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
             params["search"] = search
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/connect_webviews/list", params=params)
 
         return PaginatedList(

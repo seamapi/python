@@ -267,7 +267,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
-
         self.client.delete("/connected_accounts/delete", params=params)
 
         return None
@@ -298,18 +297,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             params["connected_account_id"] = connected_account_id
         if email is not None:
             params["email"] = email
-
-        if all(
-            param is None
-            for param in (
-                connected_account_id,
-                email,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/get"
-            )
-
         res = self.client.get("/connected_accounts/get", params=params)
 
         return ConnectedAccount.from_dict(
@@ -365,7 +352,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             params["space_id"] = space_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = self.client.get("/connected_accounts/list", params=params)
 
         return PaginatedList(
@@ -392,7 +378,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
         self.client.post("/connected_accounts/sync", json=json_payload)
 
         return None
@@ -453,7 +438,6 @@ class ConnectedAccounts(AbstractConnectedAccounts):
             json_payload["customer_key"] = customer_key
         if display_name is not None:
             json_payload["display_name"] = display_name
-
         self.client.patch("/connected_accounts/update", json=json_payload)
 
         return None
@@ -489,7 +473,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         if connected_account_id is not None:
             params["connected_account_id"] = connected_account_id
-
         await self.client.delete("/connected_accounts/delete", params=params)
 
         return None
@@ -520,18 +503,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
             params["connected_account_id"] = connected_account_id
         if email is not None:
             params["email"] = email
-
-        if all(
-            param is None
-            for param in (
-                connected_account_id,
-                email,
-            )
-        ):
-            raise ValueError(
-                "At least one parameter is required for /connected_accounts/get"
-            )
-
         res = await self.client.get("/connected_accounts/get", params=params)
 
         return ConnectedAccount.from_dict(
@@ -587,7 +558,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
             params["space_id"] = space_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
-
         res = await self.client.get("/connected_accounts/list", params=params)
 
         return PaginatedList(
@@ -614,7 +584,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
 
         if connected_account_id is not None:
             json_payload["connected_account_id"] = connected_account_id
-
         await self.client.post("/connected_accounts/sync", json=json_payload)
 
         return None
@@ -675,7 +644,6 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
             json_payload["customer_key"] = customer_key
         if display_name is not None:
             json_payload["display_name"] = display_name
-
         await self.client.patch("/connected_accounts/update", json=json_payload)
 
         return None

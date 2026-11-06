@@ -232,7 +232,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_decibels"] = noise_threshold_decibels
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
-
         res = self.client.post(
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
@@ -258,7 +257,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             params["device_id"] = device_id
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
         self.client.delete("/noise_sensors/noise_thresholds/delete", params=params)
 
         return None
@@ -278,7 +276,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
         res = self.client.get("/noise_sensors/noise_thresholds/get", params=params)
 
         return NoiseThreshold.from_dict(
@@ -300,7 +297,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = self.client.get("/noise_sensors/noise_thresholds/list", params=params)
 
         return [
@@ -358,7 +354,6 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
-
         self.client.patch("/noise_sensors/noise_thresholds/update", json=json_payload)
 
         return None
@@ -413,7 +408,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             json_payload["noise_threshold_decibels"] = noise_threshold_decibels
         if noise_threshold_nrs is not None:
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
-
         res = await self.client.post(
             "/noise_sensors/noise_thresholds/create", json=json_payload
         )
@@ -439,7 +433,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             params["device_id"] = device_id
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
         await self.client.delete(
             "/noise_sensors/noise_thresholds/delete", params=params
         )
@@ -461,7 +454,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         if noise_threshold_id is not None:
             params["noise_threshold_id"] = noise_threshold_id
-
         res = await self.client.get(
             "/noise_sensors/noise_thresholds/get", params=params
         )
@@ -485,7 +477,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
 
         if device_id is not None:
             params["device_id"] = device_id
-
         res = await self.client.get(
             "/noise_sensors/noise_thresholds/list", params=params
         )
@@ -545,7 +536,6 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
             json_payload["noise_threshold_nrs"] = noise_threshold_nrs
         if starts_daily_at is not None:
             json_payload["starts_daily_at"] = starts_daily_at
-
         await self.client.patch(
             "/noise_sensors/noise_thresholds/update", json=json_payload
         )

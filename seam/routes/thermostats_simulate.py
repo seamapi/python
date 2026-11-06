@@ -148,7 +148,6 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         self.client.post("/thermostats/simulate/hvac_mode_adjusted", json=json_payload)
 
         return None
@@ -181,7 +180,6 @@ class ThermostatsSimulate(AbstractThermostatsSimulate):
             json_payload["temperature_celsius"] = temperature_celsius
         if temperature_fahrenheit is not None:
             json_payload["temperature_fahrenheit"] = temperature_fahrenheit
-
         self.client.post("/thermostats/simulate/temperature_reached", json=json_payload)
 
         return None
@@ -235,7 +233,6 @@ class AsyncThermostatsSimulate(AbstractAsyncThermostatsSimulate):
             json_payload["heating_set_point_celsius"] = heating_set_point_celsius
         if heating_set_point_fahrenheit is not None:
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
-
         await self.client.post(
             "/thermostats/simulate/hvac_mode_adjusted", json=json_payload
         )
@@ -270,7 +267,6 @@ class AsyncThermostatsSimulate(AbstractAsyncThermostatsSimulate):
             json_payload["temperature_celsius"] = temperature_celsius
         if temperature_fahrenheit is not None:
             json_payload["temperature_fahrenheit"] = temperature_fahrenheit
-
         await self.client.post(
             "/thermostats/simulate/temperature_reached", json=json_payload
         )

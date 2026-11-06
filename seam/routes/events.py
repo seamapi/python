@@ -759,17 +759,6 @@ class Events(AbstractEvents):
             params["device_id"] = device_id
         if event_type is not None:
             params["event_type"] = event_type
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                event_id,
-                event_type,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /events/get")
-
         res = self.client.get("/events/get", params=params)
 
         return seam_event_from_dict(unwrap(res, "event", "/events/get"))
@@ -1194,41 +1183,6 @@ class Events(AbstractEvents):
             params["unstable_offset"] = unstable_offset
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                access_code_ids,
-                access_grant_id,
-                access_grant_ids,
-                access_method_id,
-                access_method_ids,
-                acs_access_group_id,
-                acs_credential_id,
-                acs_encoder_id,
-                acs_entrance_id,
-                acs_system_id,
-                acs_system_ids,
-                acs_user_id,
-                between,
-                connect_webview_id,
-                connected_account_id,
-                customer_key,
-                device_id,
-                device_ids,
-                event_ids,
-                event_type,
-                event_types,
-                since,
-                space_id,
-                space_ids,
-                unstable_offset,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /events/list")
-
         res = self.client.get("/events/list", params=params)
 
         return [
@@ -1277,17 +1231,6 @@ class AsyncEvents(AbstractAsyncEvents):
             params["device_id"] = device_id
         if event_type is not None:
             params["event_type"] = event_type
-
-        if all(
-            param is None
-            for param in (
-                device_id,
-                event_id,
-                event_type,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /events/get")
-
         res = await self.client.get("/events/get", params=params)
 
         return seam_event_from_dict(unwrap(res, "event", "/events/get"))
@@ -1712,41 +1655,6 @@ class AsyncEvents(AbstractAsyncEvents):
             params["unstable_offset"] = unstable_offset
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
-        if all(
-            param is None
-            for param in (
-                access_code_id,
-                access_code_ids,
-                access_grant_id,
-                access_grant_ids,
-                access_method_id,
-                access_method_ids,
-                acs_access_group_id,
-                acs_credential_id,
-                acs_encoder_id,
-                acs_entrance_id,
-                acs_system_id,
-                acs_system_ids,
-                acs_user_id,
-                between,
-                connect_webview_id,
-                connected_account_id,
-                customer_key,
-                device_id,
-                device_ids,
-                event_ids,
-                event_type,
-                event_types,
-                since,
-                space_id,
-                space_ids,
-                unstable_offset,
-                user_identity_id,
-            )
-        ):
-            raise ValueError("At least one parameter is required for /events/list")
-
         res = await self.client.get("/events/list", params=params)
 
         return [

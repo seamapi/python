@@ -173,7 +173,6 @@ class NoiseSensors(AbstractNoiseSensors):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = self.client.get("/noise_sensors/list", params=params)
 
         return [
@@ -247,7 +246,6 @@ class AsyncNoiseSensors(AbstractAsyncNoiseSensors):
             params["device_types"] = device_types
         if manufacturer is not None:
             params["manufacturer"] = manufacturer
-
         res = await self.client.get("/noise_sensors/list", params=params)
 
         return [

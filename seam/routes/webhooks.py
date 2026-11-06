@@ -123,7 +123,6 @@ class Webhooks(AbstractWebhooks):
             json_payload["url"] = url
         if event_types is not None:
             json_payload["event_types"] = event_types
-
         res = self.client.post("/webhooks/create", json=json_payload)
 
         return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/create"))
@@ -139,7 +138,6 @@ class Webhooks(AbstractWebhooks):
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
-
         self.client.delete("/webhooks/delete", params=params)
 
         return None
@@ -157,7 +155,6 @@ class Webhooks(AbstractWebhooks):
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
-
         res = self.client.get("/webhooks/get", params=params)
 
         return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/get"))
@@ -193,7 +190,6 @@ class Webhooks(AbstractWebhooks):
             json_payload["event_types"] = event_types
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
-
         self.client.put("/webhooks/update", json=json_payload)
 
         return None
@@ -223,7 +219,6 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
             json_payload["url"] = url
         if event_types is not None:
             json_payload["event_types"] = event_types
-
         res = await self.client.post("/webhooks/create", json=json_payload)
 
         return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/create"))
@@ -239,7 +234,6 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
-
         await self.client.delete("/webhooks/delete", params=params)
 
         return None
@@ -257,7 +251,6 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
 
         if webhook_id is not None:
             params["webhook_id"] = webhook_id
-
         res = await self.client.get("/webhooks/get", params=params)
 
         return Webhook.from_dict(unwrap(res, "webhook", "/webhooks/get"))
@@ -293,7 +286,6 @@ class AsyncWebhooks(AbstractAsyncWebhooks):
             json_payload["event_types"] = event_types
         if webhook_id is not None:
             json_payload["webhook_id"] = webhook_id
-
         await self.client.put("/webhooks/update", json=json_payload)
 
         return None

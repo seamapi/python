@@ -234,7 +234,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         self.client.put("/acs/access_groups/add_user", json=json_payload)
 
         return None
@@ -252,7 +251,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         self.client.delete("/acs/access_groups/delete", params=params)
 
         return None
@@ -272,7 +270,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = self.client.get("/acs/access_groups/get", params=params)
 
         return AcsAccessGroup.from_dict(
@@ -313,7 +310,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             params["search"] = search
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = self.client.get("/acs/access_groups/list", params=params)
 
         return [
@@ -338,7 +334,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = self.client.get(
             "/acs/access_groups/list_accessible_entrances", params=params
         )
@@ -365,7 +360,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = self.client.get("/acs/access_groups/list_users", params=params)
 
         return [
@@ -401,7 +395,6 @@ class AcsAccessGroups(AbstractAcsAccessGroups):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         self.client.delete("/acs/access_groups/remove_user", params=params)
 
         return None
@@ -440,7 +433,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
             json_payload["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-
         await self.client.put("/acs/access_groups/add_user", json=json_payload)
 
         return None
@@ -458,7 +450,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         await self.client.delete("/acs/access_groups/delete", params=params)
 
         return None
@@ -478,7 +469,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = await self.client.get("/acs/access_groups/get", params=params)
 
         return AcsAccessGroup.from_dict(
@@ -519,7 +509,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
             params["search"] = search
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         res = await self.client.get("/acs/access_groups/list", params=params)
 
         return [
@@ -544,7 +533,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = await self.client.get(
             "/acs/access_groups/list_accessible_entrances", params=params
         )
@@ -571,7 +559,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
 
         if acs_access_group_id is not None:
             params["acs_access_group_id"] = acs_access_group_id
-
         res = await self.client.get("/acs/access_groups/list_users", params=params)
 
         return [
@@ -607,7 +594,6 @@ class AsyncAcsAccessGroups(AbstractAsyncAcsAccessGroups):
             params["acs_user_id"] = acs_user_id
         if user_identity_id is not None:
             params["user_identity_id"] = user_identity_id
-
         await self.client.delete("/acs/access_groups/remove_user", params=params)
 
         return None

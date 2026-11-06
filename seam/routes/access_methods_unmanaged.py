@@ -95,7 +95,6 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
         res = self.client.get("/access_methods/unmanaged/get", params=params)
 
         return UnmanagedAccessMethod.from_dict(
@@ -136,7 +135,6 @@ class AccessMethodsUnmanaged(AbstractAccessMethodsUnmanaged):
             params["device_id"] = device_id
         if space_id is not None:
             params["space_id"] = space_id
-
         res = self.client.get("/access_methods/unmanaged/list", params=params)
 
         return [
@@ -167,7 +165,6 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
 
         if access_method_id is not None:
             params["access_method_id"] = access_method_id
-
         res = await self.client.get("/access_methods/unmanaged/get", params=params)
 
         return UnmanagedAccessMethod.from_dict(
@@ -208,7 +205,6 @@ class AsyncAccessMethodsUnmanaged(AbstractAsyncAccessMethodsUnmanaged):
             params["device_id"] = device_id
         if space_id is not None:
             params["space_id"] = space_id
-
         res = await self.client.get("/access_methods/unmanaged/list", params=params)
 
         return [

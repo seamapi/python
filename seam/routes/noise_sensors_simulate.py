@@ -45,7 +45,6 @@ class NoiseSensorsSimulate(AbstractNoiseSensorsSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         self.client.post(
             "/noise_sensors/simulate/trigger_noise_threshold", json=json_payload
         )
@@ -72,7 +71,6 @@ class AsyncNoiseSensorsSimulate(AbstractAsyncNoiseSensorsSimulate):
 
         if device_id is not None:
             json_payload["device_id"] = device_id
-
         await self.client.post(
             "/noise_sensors/simulate/trigger_noise_threshold", json=json_payload
         )
