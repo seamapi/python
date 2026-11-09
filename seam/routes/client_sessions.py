@@ -6,6 +6,7 @@ from ..null import Null
 from ..resources import ClientSession
 from ..response import unwrap
 from ..response import unwrap_list
+from ..pagination import PaginatedList
 
 
 class AbstractClientSessions(abc.ABC):
@@ -129,6 +130,9 @@ class AbstractClientSessions(abc.ABC):
         *,
         client_session_id: Optional[str] = None,
         connect_webview_id: Optional[Union[str, Null]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
@@ -138,6 +142,12 @@ class AbstractClientSessions(abc.ABC):
         :param client_session_id: ID of the client session that you want to retrieve.
 
         :param connect_webview_id: ID of the `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
+
+        :param customer_key: Customer key for which you want to list client sessions.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
@@ -279,6 +289,9 @@ class AbstractAsyncClientSessions(abc.ABC):
         *,
         client_session_id: Optional[str] = None,
         connect_webview_id: Optional[Union[str, Null]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
@@ -288,6 +301,12 @@ class AbstractAsyncClientSessions(abc.ABC):
         :param client_session_id: ID of the client session that you want to retrieve.
 
         :param connect_webview_id: ID of the `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
+
+        :param customer_key: Customer key for which you want to list client sessions.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
@@ -528,13 +547,16 @@ class ClientSessions(AbstractClientSessions):
     @route_metadata(
         path="/client_sessions/list",
         at_least_one_parameter_names=(),
-        has_pagination=False,
+        has_pagination=True,
     )
     def list(
         self,
         *,
         client_session_id: Optional[str] = None,
         connect_webview_id: Optional[Union[str, Null]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
@@ -544,6 +566,12 @@ class ClientSessions(AbstractClientSessions):
         :param client_session_id: ID of the client session that you want to retrieve.
 
         :param connect_webview_id: ID of the `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
+
+        :param customer_key: Customer key for which you want to list client sessions.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
@@ -558,6 +586,12 @@ class ClientSessions(AbstractClientSessions):
             params["client_session_id"] = client_session_id
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
+        if limit is not None:
+            params["limit"] = limit
+        if page_cursor is not None:
+            params["page_cursor"] = page_cursor
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
@@ -566,10 +600,13 @@ class ClientSessions(AbstractClientSessions):
             params["without_user_identifier_key"] = without_user_identifier_key
         res = self.client.get("/client_sessions/list", params=params)
 
-        return [
-            ClientSession.from_dict(item)
-            for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
-        ]
+        return PaginatedList(
+            [
+                ClientSession.from_dict(item)
+                for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/client_sessions/revoke",
@@ -813,13 +850,16 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
     @route_metadata(
         path="/client_sessions/list",
         at_least_one_parameter_names=(),
-        has_pagination=False,
+        has_pagination=True,
     )
     async def list(
         self,
         *,
         client_session_id: Optional[str] = None,
         connect_webview_id: Optional[Union[str, Null]] = None,
+        customer_key: Optional[str] = None,
+        limit: Optional[int] = None,
+        page_cursor: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[Union[str, Null]] = None,
         without_user_identifier_key: Optional[bool] = None,
@@ -829,6 +869,12 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         :param client_session_id: ID of the client session that you want to retrieve.
 
         :param connect_webview_id: ID of the `Connect Webview <https://www.seam.co/docs/core-concepts/connect-webviews>`_ for which you want to retrieve client sessions. Specify ``null`` to retrieve client sessions that are not associated with a Connect Webview.
+
+        :param customer_key: Customer key for which you want to list client sessions.
+
+        :param limit: Maximum number of records to return per page.
+
+        :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
         :param user_identifier_key: Your user ID for the user by which you want to filter client sessions.
 
@@ -843,6 +889,12 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             params["client_session_id"] = client_session_id
         if connect_webview_id is not None:
             params["connect_webview_id"] = connect_webview_id
+        if customer_key is not None:
+            params["customer_key"] = customer_key
+        if limit is not None:
+            params["limit"] = limit
+        if page_cursor is not None:
+            params["page_cursor"] = page_cursor
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
@@ -851,10 +903,13 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             params["without_user_identifier_key"] = without_user_identifier_key
         res = await self.client.get("/client_sessions/list", params=params)
 
-        return [
-            ClientSession.from_dict(item)
-            for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
-        ]
+        return PaginatedList(
+            [
+                ClientSession.from_dict(item)
+                for item in unwrap_list(res, "client_sessions", "/client_sessions/list")
+            ],
+            pagination=res.get("pagination"),
+        )
 
     @route_metadata(
         path="/client_sessions/revoke",
