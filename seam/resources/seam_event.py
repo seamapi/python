@@ -7082,6 +7082,177 @@ class LockAccessDeniedEvent:
 
 
 @dataclass
+class LockJammedEvent:
+    """The `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ reported that its bolt is jammed.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_id: ID of the connected account associated with the event.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_id: ID of the affected device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_id: str
+    created_at: str
+    customer_key: Optional[str]
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_id: str
+    event_description: Optional[str]
+    event_id: str
+    event_type: Literal["lock.jammed"]
+    occurred_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_id=d.get("connected_account_id", None),
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_id=d.get("device_id", None),
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class LockDoorOpenedEvent:
+    """The door sensor of the `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ reported that the door was opened.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_id: ID of the connected account associated with the event.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_id: ID of the affected device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_id: str
+    created_at: str
+    customer_key: Optional[str]
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_id: str
+    event_description: Optional[str]
+    event_id: str
+    event_type: Literal["lock.door_opened"]
+    occurred_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_id=d.get("connected_account_id", None),
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_id=d.get("device_id", None),
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
+class LockDoorClosedEvent:
+    """The door sensor of the `lock <https://www.seam.co/docs/low-level-apis/smart-locks>`_ reported that the door was closed.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_id: ID of the connected account associated with the event.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_id: ID of the affected device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_id: str
+    created_at: str
+    customer_key: Optional[str]
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_id: str
+    event_description: Optional[str]
+    event_id: str
+    event_type: Literal["lock.door_closed"]
+    occurred_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_id=d.get("connected_account_id", None),
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_id=d.get("device_id", None),
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class ThermostatClimatePresetActivatedEvent:
     """A thermostat `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ was activated.
 
@@ -8036,6 +8207,9 @@ SeamEvent = Union[
     LockLockedEvent,
     LockUnlockedEvent,
     LockAccessDeniedEvent,
+    LockJammedEvent,
+    LockDoorOpenedEvent,
+    LockDoorClosedEvent,
     ThermostatClimatePresetActivatedEvent,
     ThermostatManuallyAdjustedEvent,
     ThermostatTemperatureThresholdExceededEvent,
@@ -8147,6 +8321,9 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
     "lock.locked": LockLockedEvent,
     "lock.unlocked": LockUnlockedEvent,
     "lock.access_denied": LockAccessDeniedEvent,
+    "lock.jammed": LockJammedEvent,
+    "lock.door_opened": LockDoorOpenedEvent,
+    "lock.door_closed": LockDoorClosedEvent,
     "thermostat.climate_preset_activated": ThermostatClimatePresetActivatedEvent,
     "thermostat.manually_adjusted": ThermostatManuallyAdjustedEvent,
     "thermostat.temperature_threshold_exceeded": ThermostatTemperatureThresholdExceededEvent,

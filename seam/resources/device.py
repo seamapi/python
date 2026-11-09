@@ -73,7 +73,7 @@ class Device:
 
     :ivar device_provider: Provider of the device. Represents the third-party service through which the device is controlled.
 
-    :ivar device_type: Type of the device.
+    :ivar device_type: Type of the device. The ``august_lock`` and ``yale_lock`` values are deprecated. Use ``yale_access_lock`` in place of ``august_lock``, and ``yale_access_lock`` or ``yale_home_lock`` in place of ``yale_lock``.
 
     :ivar display_name: Display name of the device, defaults to nickname (if it is set) or ``properties.appearance.name``, otherwise. Enables administrators and users to identify the device easily, especially when there are numerous devices.
 
@@ -702,6 +702,8 @@ class Device:
         :ivar wyze_metadata: Metadata for a Wyze device.
 
         :ivar yacan_metadata: Metadata for a Yacan device.
+
+        :ivar yale_connect_metadata: Metadata for a Yale Connect lock.
 
         :ivar auto_lock_delay_seconds: The delay in seconds before the lock automatically locks after being unlocked.
 
@@ -2624,6 +2626,41 @@ class Device:
                 )
 
         @dataclass
+        class YaleConnectMetadata(ResourceMapping):
+            """Metadata for a Yale Connect lock.
+
+            :ivar device_id: Device ID for a Yale Connect lock.
+
+            :ivar device_name: Device name for a Yale Connect lock.
+
+            :ivar firmware_version: Firmware version reported by the Yale Connect lock.
+
+            :ivar home_name: Name of the Yale Connect home that contains the lock.
+
+            :ivar model: Model reported by the Yale Connect lock.
+
+            :ivar time_zone_description: Time zone of the Yale Connect home, as Yale reports it.
+            """
+
+            device_id: Optional[str]
+            device_name: Optional[str]
+            firmware_version: Optional[str]
+            home_name: Optional[str]
+            model: Optional[str]
+            time_zone_description: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    device_id=d.get("device_id", None),
+                    device_name=d.get("device_name", None),
+                    firmware_version=d.get("firmware_version", None),
+                    home_name=d.get("home_name", None),
+                    model=d.get("model", None),
+                    time_zone_description=d.get("time_zone_description", None),
+                )
+
+        @dataclass
         class CodeConstraints(ResourceMapping):
             """Constraints on access codes for the device. Seam represents each constraint as an object with a ``constraint_type`` property. Depending on the constraint type, there may also be additional properties. Note that some constraints are manufacturer- or device-specific.
 
@@ -3413,6 +3450,7 @@ class Device:
         visionline_metadata: Optional[VisionlineMetadata]
         wyze_metadata: Optional[WyzeMetadata]
         yacan_metadata: Optional[YacanMetadata]
+        yale_connect_metadata: Optional[YaleConnectMetadata]
         auto_lock_delay_seconds: Optional[float]
         auto_lock_enabled: Optional[bool]
         backup_access_code_pool_enabled: Optional[bool]
@@ -3752,6 +3790,11 @@ class Device:
                 yacan_metadata=(
                     cls.YacanMetadata.from_dict(d.get("yacan_metadata"))
                     if d.get("yacan_metadata") is not None
+                    else None
+                ),
+                yale_connect_metadata=(
+                    cls.YaleConnectMetadata.from_dict(d.get("yale_connect_metadata"))
+                    if d.get("yale_connect_metadata") is not None
                     else None
                 ),
                 auto_lock_delay_seconds=d.get("auto_lock_delay_seconds", None),
@@ -4711,6 +4754,9 @@ class Device:
         "smartthings_lock",
         "wyze_lock",
         "yale_lock",
+        "yale_access_lock",
+        "yale_home_lock",
+        "yale_connect_lock",
         "two_n_intercom",
         "controlbyweb_device",
         "ttlock_lock",
