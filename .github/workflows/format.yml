@@ -10,7 +10,7 @@ on:
 jobs:
   commit:
     name: Format code
-    runs-on: namespace-profile-mini
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout

@@ -16,7 +16,7 @@ jobs:
       upload_artifact: 'true'
   release:
     name: GitHub Releases
-    runs-on: namespace-profile-standard
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: build
     steps:

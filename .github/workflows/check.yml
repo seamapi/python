@@ -18,14 +18,14 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - namespace-profile-npm-test
+          - ubuntu-latest
         python:
           - '3.11'
           - '3.12'
           - '3.13'
           - '3.14'
         include:
-          - os: namespace-profile-npm-test
+          - os: ubuntu-latest
             os_name: Linux
     steps:
       - name: Checkout
@@ -40,7 +40,7 @@ jobs:
         run: just test
   lint:
     name: Lint (Python ${{ matrix.python }})
-    runs-on: namespace-profile-codegen
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -65,19 +65,19 @@ jobs:
     with:
       python_version: ${{ matrix.python }}
       runs_on: ${{ matrix.os }}
-      upload_artifact: ${{ matrix.python == '3.11' && matrix.os == 'namespace-profile-codegen' }}
+      upload_artifact: ${{ matrix.python == '3.11' && matrix.os == 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
         os:
-          - namespace-profile-codegen
+          - ubuntu-latest
         python:
           - '3.11'
           - '3.12'
           - '3.13'
           - '3.14'
         include:
-          - os: namespace-profile-codegen
+          - os: ubuntu-latest
             os_name: Linux
   install:
     name: Install (Python ${{ matrix.python }} on ${{ matrix.os_name }})
@@ -88,14 +88,14 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - namespace-profile-codegen
+          - ubuntu-latest
         python:
           - '3.11'
           - '3.12'
           - '3.13'
           - '3.14'
         include:
-          - os: namespace-profile-codegen
+          - os: ubuntu-latest
             os_name: Linux
     steps:
       - name: Setup Python
