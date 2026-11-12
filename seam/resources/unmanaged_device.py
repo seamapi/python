@@ -1540,6 +1540,7 @@ class UnmanagedDevice:
         "reolink_camera",
         "unifi_protect_camera",
         "sonos_speaker",
+        "alertify_sensor",
     ]
     display_name: str
     errors: List[Errors]

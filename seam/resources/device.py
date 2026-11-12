@@ -15,6 +15,8 @@ def _from_discriminated_dict(
 class Device:
     """Represents a `device <https://www.seam.co/docs/core-concepts/devices>`_ that has been connected to Seam.
 
+    :ivar air_quality_index: Air quality index, if the device measures it.
+
     :ivar can_activate_weekly_program: Indicates whether the thermostat can be returned to its weekly program, the schedule that is configured on the device itself, releasing any hold that Seam has set.
 
     :ivar can_configure_auto_lock: Indicates whether the lock supports configuring automatic locking.
@@ -61,6 +63,10 @@ class Device:
 
     :ivar capabilities_supported: Collection of capabilities that the device supports when connected to Seam. Values are ``access_code``, which indicates that the device can manage and utilize digital PIN codes for secure access; ``lock``, which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; ``noise_detection``, which indicates that the device supports monitoring and responding to ambient noise levels; ``thermostat``, which indicates that the device can regulate and adjust indoor temperatures; ``battery``, which indicates that the device can manage battery life and health; and ``phone``, which indicates that the device is a mobile device, such as a smartphone. **Important:** Superseded by `capability flags <https://www.seam.co/docs/capability-guides/device-and-system-capabilities#capability-flags>`_.
 
+    :ivar co2_ppm: Carbon dioxide concentration in parts per million, if the device measures it.
+
+    :ivar co_ppm: Carbon monoxide concentration in parts per million, if the device measures it.
+
     :ivar connected_account_id: Unique identifier for the account associated with the device.
 
     :ivar created_at: Date and time at which the device object was created.
@@ -81,13 +87,33 @@ class Device:
 
     :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
+    :ivar is_occupied: Indicates whether the device detects that the space is occupied, if the device measures occupancy.
+
+    :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
+
     :ivar location: Location information for the device.
+
+    :ivar mold_risk_level: Mold risk level as reported by the device, if the device measures it.
+
+    :ivar named_sensors: Additional sensors of the same kind on the device, each with a stable ``sensor_name``. Present only when the device has more than one sensor of a kind or no single main sensor.
 
     :ivar nickname: Optional nickname to describe the device, settable through Seam.
 
+    :ivar noise_level_decibels: Noise level in decibels, if the device measures noise.
+
+    :ivar noise_level_nrs: Noise level as a Noise Risk Score (NRS), if the device reports one.
+
+    :ivar occupant_count: Number of occupants the device detects, if the device counts occupants.
+
     :ivar properties: Properties of the device.
 
+    :ivar relative_humidity: Relative humidity, as a value between 0 and 1, inclusive, if the device measures humidity.
+
     :ivar space_ids: IDs of the spaces the device is in.
+
+    :ivar temperature_celsius: Temperature in °C, if the device measures temperature.
+
+    :ivar temperature_fahrenheit: Temperature in °F, if the device measures temperature.
 
     :ivar warnings: Array of warnings associated with the device. Each warning object within the array contains two fields: ``warning_code`` and ``message``. ``warning_code`` is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.
 
@@ -567,6 +593,73 @@ class Device:
                 room_name=d.get("room_name", None),
                 time_zone=d.get("time_zone", None),
                 timezone=d.get("timezone", None),
+            )
+
+    @dataclass
+    class NamedSensors(ResourceMapping):
+        """Additional sensors of the same kind on the device, each with a stable ``sensor_name``. Present only when the device has more than one sensor of a kind or no single main sensor.
+
+        :ivar air_quality_index: Air quality index, if the device measures it.
+
+        :ivar co2_ppm: Carbon dioxide concentration in parts per million, if the device measures it.
+
+        :ivar co_ppm: Carbon monoxide concentration in parts per million, if the device measures it.
+
+        :ivar display_name: Display name of the sensor. Defaults to ``sensor_name``.
+
+        :ivar is_occupied: Indicates whether the device detects that the space is occupied, if the device measures occupancy.
+
+        :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
+
+        :ivar mold_risk_level: Mold risk level as reported by the device, if the device measures it.
+
+        :ivar noise_level_decibels: Noise level in decibels, if the device measures noise.
+
+        :ivar noise_level_nrs: Noise level as a Noise Risk Score (NRS), if the device reports one.
+
+        :ivar occupant_count: Number of occupants the device detects, if the device counts occupants.
+
+        :ivar relative_humidity: Relative humidity, as a value between 0 and 1, inclusive, if the device measures humidity.
+
+        :ivar sensor_name: Stable, hardware-defined name of the sensor, such as a port number.
+
+        :ivar temperature_celsius: Temperature in °C, if the device measures temperature.
+
+        :ivar temperature_fahrenheit: Temperature in °F, if the device measures temperature.
+        """
+
+        air_quality_index: Optional[float]
+        co2_ppm: Optional[float]
+        co_ppm: Optional[float]
+        display_name: str
+        is_occupied: Optional[bool]
+        is_smoking_detected: Optional[bool]
+        mold_risk_level: Optional[str]
+        noise_level_decibels: Optional[float]
+        noise_level_nrs: Optional[float]
+        occupant_count: Optional[float]
+        relative_humidity: Optional[float]
+        sensor_name: str
+        temperature_celsius: Optional[float]
+        temperature_fahrenheit: Optional[float]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                air_quality_index=d.get("air_quality_index", None),
+                co2_ppm=d.get("co2_ppm", None),
+                co_ppm=d.get("co_ppm", None),
+                display_name=d.get("display_name", None),
+                is_occupied=d.get("is_occupied", None),
+                is_smoking_detected=d.get("is_smoking_detected", None),
+                mold_risk_level=d.get("mold_risk_level", None),
+                noise_level_decibels=d.get("noise_level_decibels", None),
+                noise_level_nrs=d.get("noise_level_nrs", None),
+                occupant_count=d.get("occupant_count", None),
+                relative_humidity=d.get("relative_humidity", None),
+                sensor_name=d.get("sensor_name", None),
+                temperature_celsius=d.get("temperature_celsius", None),
+                temperature_fahrenheit=d.get("temperature_fahrenheit", None),
             )
 
     @dataclass
@@ -4703,6 +4796,7 @@ class Device:
         "cloud_recording_not_enabled": CloudRecordingNotEnabledWarning,
     }
 
+    air_quality_index: Optional[float]
     can_activate_weekly_program: Optional[bool]
     can_configure_auto_lock: Optional[bool]
     can_hvac_cool: Optional[bool]
@@ -4730,6 +4824,8 @@ class Device:
             "access_code", "lock", "noise_detection", "thermostat", "battery", "phone"
         ]
     ]
+    co2_ppm: Optional[float]
+    co_ppm: Optional[float]
     connected_account_id: str
     created_at: str
     custom_metadata: Dict[str, Union[str, bool]]
@@ -4789,20 +4885,32 @@ class Device:
         "reolink_camera",
         "unifi_protect_camera",
         "sonos_speaker",
+        "alertify_sensor",
     ]
     display_name: str
     errors: List[Errors]
     is_managed: Literal[True]
+    is_occupied: Optional[bool]
+    is_smoking_detected: Optional[bool]
     location: Optional[Location]
+    mold_risk_level: Optional[str]
+    named_sensors: Optional[List[NamedSensors]]
     nickname: Optional[str]
+    noise_level_decibels: Optional[float]
+    noise_level_nrs: Optional[float]
+    occupant_count: Optional[float]
     properties: Optional[Properties]
+    relative_humidity: Optional[float]
     space_ids: List[str]
+    temperature_celsius: Optional[float]
+    temperature_fahrenheit: Optional[float]
     warnings: List[Warnings]
     workspace_id: str
 
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
+            air_quality_index=d.get("air_quality_index", None),
             can_activate_weekly_program=d.get("can_activate_weekly_program", None),
             can_configure_auto_lock=d.get("can_configure_auto_lock", None),
             can_hvac_cool=d.get("can_hvac_cool", None),
@@ -4840,6 +4948,8 @@ class Device:
             can_turn_off_hvac=d.get("can_turn_off_hvac", None),
             can_unlock_with_code=d.get("can_unlock_with_code", None),
             capabilities_supported=d.get("capabilities_supported", None),
+            co2_ppm=d.get("co2_ppm", None),
+            co_ppm=d.get("co_ppm", None),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             custom_metadata=DeepAttrDict(d.get("custom_metadata", None)),
@@ -4861,18 +4971,30 @@ class Device:
                 for i in d.get("errors") or []
             ],
             is_managed=d.get("is_managed", None),
+            is_occupied=d.get("is_occupied", None),
+            is_smoking_detected=d.get("is_smoking_detected", None),
             location=(
                 cls.Location.from_dict(d.get("location"))
                 if d.get("location") is not None
                 else None
             ),
+            mold_risk_level=d.get("mold_risk_level", None),
+            named_sensors=[
+                cls.NamedSensors.from_dict(i) for i in d.get("named_sensors") or []
+            ],
             nickname=d.get("nickname", None),
+            noise_level_decibels=d.get("noise_level_decibels", None),
+            noise_level_nrs=d.get("noise_level_nrs", None),
+            occupant_count=d.get("occupant_count", None),
             properties=(
                 cls.Properties.from_dict(d.get("properties"))
                 if d.get("properties") is not None
                 else None
             ),
+            relative_humidity=d.get("relative_humidity", None),
             space_ids=d.get("space_ids", None),
+            temperature_celsius=d.get("temperature_celsius", None),
+            temperature_fahrenheit=d.get("temperature_fahrenheit", None),
             warnings=[
                 _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
                 for i in d.get("warnings") or []

@@ -94,6 +94,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "reolink_camera",
                 "unifi_protect_camera",
                 "sonos_speaker",
+                "alertify_sensor",
             ]
         ] = None,
         device_types: Optional[
@@ -151,6 +152,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "reolink_camera",
                     "unifi_protect_camera",
                     "sonos_speaker",
+                    "alertify_sensor",
                 ]
             ]
         ] = None,
@@ -208,6 +210,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "reolink",
                 "unifi_protect",
                 "yale_connect",
+                "alertify",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -360,6 +363,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "reolink_camera",
                 "unifi_protect_camera",
                 "sonos_speaker",
+                "alertify_sensor",
             ]
         ] = None,
         device_types: Optional[
@@ -417,6 +421,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "reolink_camera",
                     "unifi_protect_camera",
                     "sonos_speaker",
+                    "alertify_sensor",
                 ]
             ]
         ] = None,
@@ -474,6 +479,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "reolink",
                 "unifi_protect",
                 "yale_connect",
+                "alertify",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -650,6 +656,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "reolink_camera",
                 "unifi_protect_camera",
                 "sonos_speaker",
+                "alertify_sensor",
             ]
         ] = None,
         device_types: Optional[
@@ -707,6 +714,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "reolink_camera",
                     "unifi_protect_camera",
                     "sonos_speaker",
+                    "alertify_sensor",
                 ]
             ]
         ] = None,
@@ -764,6 +772,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "reolink",
                 "unifi_protect",
                 "yale_connect",
+                "alertify",
                 "ical",
                 "lodgify",
                 "hostaway",
@@ -988,6 +997,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "reolink_camera",
                 "unifi_protect_camera",
                 "sonos_speaker",
+                "alertify_sensor",
             ]
         ] = None,
         device_types: Optional[
@@ -1045,6 +1055,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "reolink_camera",
                     "unifi_protect_camera",
                     "sonos_speaker",
+                    "alertify_sensor",
                 ]
             ]
         ] = None,
@@ -1102,6 +1113,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "reolink",
                 "unifi_protect",
                 "yale_connect",
+                "alertify",
                 "ical",
                 "lodgify",
                 "hostaway",
