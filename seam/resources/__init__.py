@@ -174,7 +174,6 @@ from .seam_event import (
     ClientSessionDeletedEvent,
     ConnectedAccountConnectedEvent,
     ConnectedAccountCreatedEvent,
-    ConnectedAccountSuccessfulLoginEvent,
     ConnectedAccountDisconnectedEvent,
     ConnectedAccountCompletedFirstSyncEvent,
     ConnectedAccountDeletedEvent,

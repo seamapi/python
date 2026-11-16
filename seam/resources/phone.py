@@ -1029,6 +1029,29 @@ class Phone:
             )
 
     @dataclass
+    class ServiceModeWarning(ResourceMapping):
+        """Indicates that a technician has put the pool controller in service mode. Schedules and remote changes will not run until it is switched back.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["service_mode"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class ProviderIssueWarning(ResourceMapping):
         """Indicates a provider-specific issue that may affect device functionality.
 
@@ -1177,6 +1200,29 @@ class Phone:
             )
 
     @dataclass
+    class SubscriptionRequiredForAdditionalCapabilitiesWarning(ResourceMapping):
+        """Indicates that a third-party subscription is required to enable additional device capabilities.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["subscription_required_for_additional_capabilities"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class CloudRecordingNotEnabledWarning(ResourceMapping):
         """Indicates that the camera's account plan does not include cloud recording, so event media such as motion clips is unavailable.
 
@@ -1255,12 +1301,14 @@ class Phone:
         TimeZoneMismatchWarning,
         TwoNDeviceMissingTimezoneWarning,
         HubRequiredForAdditionalCapabilitiesWarning,
+        ServiceModeWarning,
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
         AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
+        SubscriptionRequiredForAdditionalCapabilitiesWarning,
         CloudRecordingNotEnabledWarning,
     ]
     _WarningsVariants = {
@@ -1286,12 +1334,14 @@ class Phone:
         "time_zone_mismatch": TimeZoneMismatchWarning,
         "two_n_device_missing_timezone": TwoNDeviceMissingTimezoneWarning,
         "hub_required_for_additional_capabilities": HubRequiredForAdditionalCapabilitiesWarning,
+        "service_mode": ServiceModeWarning,
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
         "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
+        "subscription_required_for_additional_capabilities": SubscriptionRequiredForAdditionalCapabilitiesWarning,
         "cloud_recording_not_enabled": CloudRecordingNotEnabledWarning,
     }
 

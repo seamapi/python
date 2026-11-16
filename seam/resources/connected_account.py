@@ -47,8 +47,6 @@ class ConnectedAccount:
 
     :ivar time_zone: IANA time zone (e.g. America/Los_Angeles) for this connected account. Sourced from the connector configuration.
 
-    :ivar user_identifier: Deprecated: Use ``display_name`` instead. User identifier associated with the connected account.
-
     :ivar warnings: Warnings associated with the connected account."""
 
     @dataclass
@@ -227,37 +225,6 @@ class ConnectedAccount:
                 is_bridge_error=d.get("is_bridge_error", None),
                 is_connected_account_error=d.get("is_connected_account_error", None),
                 message=d.get("message", None),
-            )
-
-    @dataclass
-    class UserIdentifier(ResourceMapping):
-        """User identifier associated with the connected account.
-
-        :ivar api_url: API URL for the user identifier associated with the connected account.
-
-        :ivar email: Email address of the user identifier associated with the connected account.
-
-        :ivar exclusive: Indicates whether the user identifier associated with the connected account is exclusive.
-
-        :ivar phone: Phone number of the user identifier associated with the connected account.
-
-        :ivar username: Username of the user identifier associated with the connected account.
-        """
-
-        api_url: Optional[str]
-        email: Optional[str]
-        exclusive: Optional[bool]
-        phone: Optional[str]
-        username: Optional[str]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                api_url=d.get("api_url", None),
-                email=d.get("email", None),
-                exclusive=d.get("exclusive", None),
-                phone=d.get("phone", None),
-                username=d.get("username", None),
             )
 
     @dataclass
@@ -534,7 +501,13 @@ class ConnectedAccount:
 
     accepted_capabilities: List[
         Literal[
-            "lock", "thermostat", "noise_sensor", "access_control", "camera", "speaker"
+            "lock",
+            "thermostat",
+            "noise_sensor",
+            "access_control",
+            "camera",
+            "speaker",
+            "pool",
         ]
     ]
     account_type: Optional[str]
@@ -552,7 +525,6 @@ class ConnectedAccount:
     ical_url: Optional[str]
     image_url: Optional[str]
     time_zone: Optional[str]
-    user_identifier: Optional[UserIdentifier]
     warnings: List[Warnings]
 
     @classmethod
@@ -579,11 +551,6 @@ class ConnectedAccount:
             ical_url=d.get("ical_url", None),
             image_url=d.get("image_url", None),
             time_zone=d.get("time_zone", None),
-            user_identifier=(
-                cls.UserIdentifier.from_dict(d.get("user_identifier"))
-                if d.get("user_identifier") is not None
-                else None
-            ),
             warnings=[
                 _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
                 for i in d.get("warnings") or []

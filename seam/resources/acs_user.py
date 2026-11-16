@@ -31,8 +31,6 @@ class AcsUser:
 
     :ivar display_name: Display name for the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
-    :ivar email: Deprecated: use email_address.
-
     :ivar email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
     :ivar errors: Errors associated with the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
@@ -868,7 +866,6 @@ class AcsUser:
     connected_account_id: str
     created_at: str
     display_name: str
-    email: Optional[str]
     email_address: Optional[str]
     errors: List[Errors]
     external_type: Optional[
@@ -913,7 +910,6 @@ class AcsUser:
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
             display_name=d.get("display_name", None),
-            email=d.get("email", None),
             email_address=d.get("email_address", None),
             errors=[
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")

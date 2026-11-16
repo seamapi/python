@@ -492,15 +492,11 @@ class UnmanagedDevice:
 
         :ivar room_name: Name of the room within the device location, when the provider reports one.
 
-        :ivar time_zone: Time zone of the device location.
-
-        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
-        """
+        :ivar time_zone: Time zone of the device location."""
 
         location_name: Optional[str]
         room_name: Optional[str]
         time_zone: Optional[str]
-        timezone: Optional[str]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -508,7 +504,6 @@ class UnmanagedDevice:
                 location_name=d.get("location_name", None),
                 room_name=d.get("room_name", None),
                 time_zone=d.get("time_zone", None),
-                timezone=d.get("timezone", None),
             )
 
     @dataclass
@@ -531,12 +526,7 @@ class UnmanagedDevice:
 
         :ivar name: Deprecated: use device.display_name instead Name of the device.
 
-        :ivar offline_access_codes_enabled: Deprecated: use device.can_program_offline_access_codes Indicates whether it is currently possible to use offline access codes for the device.
-
-        :ivar online: Indicates whether the device is online.
-
-        :ivar online_access_codes_enabled: Deprecated: use device.can_program_online_access_codes Indicates whether it is currently possible to use online access codes for the device.
-        """
+        :ivar online: Indicates whether the device is online."""
 
         @dataclass
         class AccessoryKeypad(ResourceMapping):
@@ -598,8 +588,6 @@ class UnmanagedDevice:
         class Model(ResourceMapping):
             """Device model-related properties.
 
-            :ivar accessory_keypad_supported: Deprecated: use device.properties.model.can_connect_accessory_keypad
-
             :ivar can_connect_accessory_keypad: Indicates whether the device can connect a accessory keypad.
 
             :ivar display_name: Display name of the device model.
@@ -607,38 +595,22 @@ class UnmanagedDevice:
             :ivar has_built_in_keypad: Indicates whether the device has a built in accessory keypad.
 
             :ivar manufacturer_display_name: Display name that corresponds to the manufacturer-specific terminology for the device.
-
-            :ivar offline_access_codes_supported: Deprecated: use device.can_program_offline_access_codes.
-
-            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes.
             """
 
-            accessory_keypad_supported: Optional[bool]
             can_connect_accessory_keypad: Optional[bool]
             display_name: str
             has_built_in_keypad: Optional[bool]
             manufacturer_display_name: str
-            offline_access_codes_supported: Optional[bool]
-            online_access_codes_supported: Optional[bool]
 
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    accessory_keypad_supported=d.get(
-                        "accessory_keypad_supported", None
-                    ),
                     can_connect_accessory_keypad=d.get(
                         "can_connect_accessory_keypad", None
                     ),
                     display_name=d.get("display_name", None),
                     has_built_in_keypad=d.get("has_built_in_keypad", None),
                     manufacturer_display_name=d.get("manufacturer_display_name", None),
-                    offline_access_codes_supported=d.get(
-                        "offline_access_codes_supported", None
-                    ),
-                    online_access_codes_supported=d.get(
-                        "online_access_codes_supported", None
-                    ),
                 )
 
         accessory_keypad: Optional[AccessoryKeypad]
@@ -649,9 +621,7 @@ class UnmanagedDevice:
         manufacturer: Optional[str]
         model: Optional[Model]
         name: str
-        offline_access_codes_enabled: Optional[bool]
         online: bool
-        online_access_codes_enabled: Optional[bool]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -676,11 +646,7 @@ class UnmanagedDevice:
                     else None
                 ),
                 name=d.get("name", None),
-                offline_access_codes_enabled=d.get(
-                    "offline_access_codes_enabled", None
-                ),
                 online=d.get("online", None),
-                online_access_codes_enabled=d.get("online_access_codes_enabled", None),
             )
 
     @dataclass
@@ -1190,6 +1156,29 @@ class UnmanagedDevice:
             )
 
     @dataclass
+    class ServiceModeWarning(ResourceMapping):
+        """Indicates that a technician has put the pool controller in service mode. Schedules and remote changes will not run until it is switched back.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["service_mode"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class ProviderIssueWarning(ResourceMapping):
         """Indicates a provider-specific issue that may affect device functionality.
 
@@ -1338,6 +1327,29 @@ class UnmanagedDevice:
             )
 
     @dataclass
+    class SubscriptionRequiredForAdditionalCapabilitiesWarning(ResourceMapping):
+        """Indicates that a third-party subscription is required to enable additional device capabilities.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["subscription_required_for_additional_capabilities"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class CloudRecordingNotEnabledWarning(ResourceMapping):
         """Indicates that the camera's account plan does not include cloud recording, so event media such as motion clips is unavailable.
 
@@ -1416,12 +1428,14 @@ class UnmanagedDevice:
         TimeZoneMismatchWarning,
         TwoNDeviceMissingTimezoneWarning,
         HubRequiredForAdditionalCapabilitiesWarning,
+        ServiceModeWarning,
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
         AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
+        SubscriptionRequiredForAdditionalCapabilitiesWarning,
         CloudRecordingNotEnabledWarning,
     ]
     _WarningsVariants = {
@@ -1447,12 +1461,14 @@ class UnmanagedDevice:
         "time_zone_mismatch": TimeZoneMismatchWarning,
         "two_n_device_missing_timezone": TwoNDeviceMissingTimezoneWarning,
         "hub_required_for_additional_capabilities": HubRequiredForAdditionalCapabilitiesWarning,
+        "service_mode": ServiceModeWarning,
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
         "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
+        "subscription_required_for_additional_capabilities": SubscriptionRequiredForAdditionalCapabilitiesWarning,
         "cloud_recording_not_enabled": CloudRecordingNotEnabledWarning,
     }
 
@@ -1480,7 +1496,13 @@ class UnmanagedDevice:
     can_unlock_with_code: Optional[bool]
     capabilities_supported: List[
         Literal[
-            "access_code", "lock", "noise_detection", "thermostat", "battery", "phone"
+            "access_code",
+            "lock",
+            "noise_detection",
+            "thermostat",
+            "battery",
+            "phone",
+            "pool",
         ]
     ]
     connected_account_id: str
@@ -1522,6 +1544,7 @@ class UnmanagedDevice:
         "omnitec_lock",
         "kisi_lock",
         "aqara_lock",
+        "tuya_lock",
         "eufy_lock",
         "keynest_key",
         "noiseaware_activity_zone",
@@ -1531,6 +1554,7 @@ class UnmanagedDevice:
         "honeywell_resideo_thermostat",
         "tado_thermostat",
         "sensi_thermostat",
+        "sensibo_thermostat",
         "smartthings_thermostat",
         "ios_phone",
         "android_phone",
@@ -1541,6 +1565,8 @@ class UnmanagedDevice:
         "unifi_protect_camera",
         "sonos_speaker",
         "alertify_sensor",
+        "hayward_pool_system",
+        "hayward_pool",
     ]
     display_name: str
     errors: List[Errors]

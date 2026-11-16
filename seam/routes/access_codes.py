@@ -52,7 +52,6 @@ class AbstractAccessCodes(abc.ABC):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -91,8 +90,6 @@ class AbstractAccessCodes(abc.ABC):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://www.seam.co/docs/api/access_codes/pull_backup_access_code>`_.
-
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -398,7 +395,6 @@ class AbstractAsyncAccessCodes(abc.ABC):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -437,8 +433,6 @@ class AbstractAsyncAccessCodes(abc.ABC):
         :param starts_at: Date and time at which the validity of the new access code starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://www.seam.co/docs/api/access_codes/pull_backup_access_code>`_.
-
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -753,7 +747,6 @@ class AccessCodes(AbstractAccessCodes):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -793,8 +786,6 @@ class AccessCodes(AbstractAccessCodes):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://www.seam.co/docs/api/access_codes/pull_backup_access_code>`_.
 
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
@@ -830,8 +821,6 @@ class AccessCodes(AbstractAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-        if use_offline_access_code is not None:
-            json_payload["use_offline_access_code"] = use_offline_access_code
         res = self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))
@@ -1337,7 +1326,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
         preferred_code_length: Optional[float] = None,
         starts_at: Optional[str] = None,
         use_backup_access_code_pool: Optional[bool] = None,
-        use_offline_access_code: Optional[bool] = None,
     ) -> AccessCode:
         """Creates a new `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_. For granting access, we recommend `Access Grants <https://www.seam.co/docs/use-cases/granting-access>`_ instead: they work across both standalone smart locks and access control systems and manage the underlying codes for you. Use this low-level endpoint only when you need direct control over a code on a single device, such as setting a custom PIN value.
 
@@ -1377,8 +1365,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
 
         :param use_backup_access_code_pool: Indicates whether to use a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_ provided by Seam. If ``true``, you can use ```/access_codes/pull_backup_access_code`` <https://www.seam.co/docs/api/access_codes/pull_backup_access_code>`_.
 
-        :param use_offline_access_code: Deprecated: Use ``is_offline_access_code`` instead.
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
@@ -1414,8 +1400,6 @@ class AsyncAccessCodes(AbstractAsyncAccessCodes):
             json_payload["starts_at"] = starts_at
         if use_backup_access_code_pool is not None:
             json_payload["use_backup_access_code_pool"] = use_backup_access_code_pool
-        if use_offline_access_code is not None:
-            json_payload["use_offline_access_code"] = use_offline_access_code
         res = await self.client.post("/access_codes/create", json=json_payload)
 
         return AccessCode.from_dict(unwrap(res, "access_code", "/access_codes/create"))

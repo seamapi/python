@@ -27,8 +27,6 @@ class AcsSystem:
 
     :ivar connected_account_id: ID of the connected account associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
-    :ivar connected_account_ids: Deprecated: Use ``connected_account_id``. IDs of the `connected accounts <https://www.seam.co/docs/core-concepts/connected-accounts>`_ associated with the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
-
     :ivar created_at: Date and time at which the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ was created.
 
     :ivar default_credential_manager_acs_system_id: ID of the default credential manager ``acs_system`` for this `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
@@ -48,10 +46,6 @@ class AcsSystem:
     :ivar location: Location information for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
     :ivar name: Name of the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
-
-    :ivar system_type: Deprecated: Use ``external_type``.
-
-    :ivar system_type_display_name: Deprecated: Use ``external_type_display_name``.
 
     :ivar visionline_metadata: Visionline-specific metadata for the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_.
 
@@ -361,6 +355,29 @@ class AcsSystem:
             )
 
     @dataclass
+    class SaltoKsCustomPinsNotSupportedWarning(ResourceMapping):
+        """Indicates that the Salto KS site does not accept custom PIN codes, either because its Salto subscription does not include the Custom PIN feature or because Custom PIN is turned off in the site's settings. Salto KS generates every PIN on the site, so a PIN code requested on an access grant or reservation is replaced with a Salto-generated one. The message says which of the two applies.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["salto_ks_custom_pins_not_supported"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class TimeZoneDoesNotMatchLocationWarning(ResourceMapping):
         """Indicates the `access control system <https://www.seam.co/docs/low-level-apis/access-systems>`_ time zone could not be determined because the reported physical location does not match the time zone configured on the physical `ACS entrances <https://www.seam.co/docs/low-level-apis/access-systems/retrieving-entrance-details>`_.
 
@@ -368,14 +385,11 @@ class AcsSystem:
 
         :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
 
-        :ivar misconfigured_acs_entrance_ids: Deprecated: this field is deprecated.
-
         :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
         """
 
         created_at: str
         message: str
-        misconfigured_acs_entrance_ids: Optional[List[str]]
         warning_code: Literal["time_zone_does_not_match_location"]
 
         @classmethod
@@ -383,9 +397,6 @@ class AcsSystem:
             return cls(
                 created_at=d.get("created_at", None),
                 message=d.get("message", None),
-                misconfigured_acs_entrance_ids=d.get(
-                    "misconfigured_acs_entrance_ids", None
-                ),
                 warning_code=d.get("warning_code", None),
             )
 
@@ -462,12 +473,14 @@ class AcsSystem:
 
     Warnings = Union[
         SaltoKsSubscriptionLimitAlmostReachedWarning,
+        SaltoKsCustomPinsNotSupportedWarning,
         TimeZoneDoesNotMatchLocationWarning,
         SetupRequiredWarning,
         UnknownIssueWithAcsSystemWarning,
     ]
     _WarningsVariants = {
         "salto_ks_subscription_limit_almost_reached": SaltoKsSubscriptionLimitAlmostReachedWarning,
+        "salto_ks_custom_pins_not_supported": SaltoKsCustomPinsNotSupportedWarning,
         "time_zone_does_not_match_location": TimeZoneDoesNotMatchLocationWarning,
         "setup_required": SetupRequiredWarning,
         "unknown_issue_with_acs_system": UnknownIssueWithAcsSystemWarning,
@@ -477,7 +490,6 @@ class AcsSystem:
     acs_system_id: str
     acs_user_count: Optional[float]
     connected_account_id: str
-    connected_account_ids: List[str]
     created_at: str
     default_credential_manager_acs_system_id: Optional[str]
     errors: List[Errors]
@@ -508,28 +520,6 @@ class AcsSystem:
     is_credential_manager: bool
     location: Optional[Location]
     name: str
-    system_type: Optional[
-        Literal[
-            "pti_site",
-            "avigilon_alta_org",
-            "salto_ks_site",
-            "salto_space_system",
-            "brivo_account",
-            "hid_credential_manager_organization",
-            "visionline_system",
-            "assa_abloy_credential_service",
-            "latch_building",
-            "dormakaba_community_site",
-            "dormakaba_ambiance_site",
-            "legic_connect_credential_service",
-            "assa_abloy_vostio",
-            "assa_abloy_vostio_credential_service",
-            "hotek_site",
-            "kisi_organization",
-            "akiles_organization",
-        ]
-    ]
-    system_type_display_name: Optional[str]
     visionline_metadata: Optional[VisionlineMetadata]
     warnings: List[Warnings]
     workspace_id: str
@@ -541,7 +531,6 @@ class AcsSystem:
             acs_system_id=d.get("acs_system_id", None),
             acs_user_count=d.get("acs_user_count", None),
             connected_account_id=d.get("connected_account_id", None),
-            connected_account_ids=d.get("connected_account_ids", None),
             created_at=d.get("created_at", None),
             default_credential_manager_acs_system_id=d.get(
                 "default_credential_manager_acs_system_id", None
@@ -561,8 +550,6 @@ class AcsSystem:
                 else None
             ),
             name=d.get("name", None),
-            system_type=d.get("system_type", None),
-            system_type_display_name=d.get("system_type_display_name", None),
             visionline_metadata=(
                 cls.VisionlineMetadata.from_dict(d.get("visionline_metadata"))
                 if d.get("visionline_metadata") is not None

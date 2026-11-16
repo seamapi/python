@@ -204,6 +204,7 @@ class AbstractSpaces(abc.ABC):
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
         device_ids: Optional[List[str]] = None,
+        geolocation: Optional[Union[Dict[str, Any], Null]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
         space_key: Optional[str] = None,
@@ -215,6 +216,8 @@ class AbstractSpaces(abc.ABC):
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
+
+        :param geolocation: Geographic coordinates of the space. Pass null to clear them. Seam keeps this value until the connected PMS reports different coordinates for the space.
 
         :param name: Name of the space.
 
@@ -423,6 +426,7 @@ class AbstractAsyncSpaces(abc.ABC):
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
         device_ids: Optional[List[str]] = None,
+        geolocation: Optional[Union[Dict[str, Any], Null]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
         space_key: Optional[str] = None,
@@ -434,6 +438,8 @@ class AbstractAsyncSpaces(abc.ABC):
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
+
+        :param geolocation: Geographic coordinates of the space. Pass null to clear them. Seam keeps this value until the connected PMS reports different coordinates for the space.
 
         :param name: Name of the space.
 
@@ -803,6 +809,7 @@ class Spaces(AbstractSpaces):
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
         device_ids: Optional[List[str]] = None,
+        geolocation: Optional[Union[Dict[str, Any], Null]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
         space_key: Optional[str] = None,
@@ -814,6 +821,8 @@ class Spaces(AbstractSpaces):
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
+
+        :param geolocation: Geographic coordinates of the space. Pass null to clear them. Seam keeps this value until the connected PMS reports different coordinates for the space.
 
         :param name: Name of the space.
 
@@ -830,6 +839,8 @@ class Spaces(AbstractSpaces):
             json_payload["customer_data"] = customer_data
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
+        if geolocation is not None:
+            json_payload["geolocation"] = geolocation
         if name is not None:
             json_payload["name"] = name
         if space_id is not None:
@@ -1201,6 +1212,7 @@ class AsyncSpaces(AbstractAsyncSpaces):
         acs_entrance_ids: Optional[List[str]] = None,
         customer_data: Optional[Dict[str, Any]] = None,
         device_ids: Optional[List[str]] = None,
+        geolocation: Optional[Union[Dict[str, Any], Null]] = None,
         name: Optional[str] = None,
         space_id: Optional[str] = None,
         space_key: Optional[str] = None,
@@ -1212,6 +1224,8 @@ class AsyncSpaces(AbstractAsyncSpaces):
         :param customer_data: Reservation/stay-related defaults for the space. Only the keys you provide are updated; omit a key to leave it unchanged. Pass null on a key to clear it.
 
         :param device_ids: IDs of the devices that you want to set for the space. If specified, this will replace all existing devices.
+
+        :param geolocation: Geographic coordinates of the space. Pass null to clear them. Seam keeps this value until the connected PMS reports different coordinates for the space.
 
         :param name: Name of the space.
 
@@ -1228,6 +1242,8 @@ class AsyncSpaces(AbstractAsyncSpaces):
             json_payload["customer_data"] = customer_data
         if device_ids is not None:
             json_payload["device_ids"] = device_ids
+        if geolocation is not None:
+            json_payload["geolocation"] = geolocation
         if name is not None:
             json_payload["name"] = name
         if space_id is not None:

@@ -24,6 +24,7 @@ class AbstractConnectWebviews(abc.ABC):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -79,6 +80,7 @@ class AbstractConnectWebviews(abc.ABC):
                     "tado",
                     "salto_space",
                     "sensi",
+                    "sensibo",
                     "keynest",
                     "korelock",
                     "keyincode",
@@ -105,6 +107,8 @@ class AbstractConnectWebviews(abc.ABC):
                     "aqara",
                     "eufy",
                     "sonos",
+                    "hayward_omnilogic",
+                    "tuya",
                     "hid_cm",
                     "google_nest",
                     "slack",
@@ -227,6 +231,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -282,6 +287,7 @@ class AbstractAsyncConnectWebviews(abc.ABC):
                     "tado",
                     "salto_space",
                     "sensi",
+                    "sensibo",
                     "keynest",
                     "korelock",
                     "keyincode",
@@ -308,6 +314,8 @@ class AbstractAsyncConnectWebviews(abc.ABC):
                     "aqara",
                     "eufy",
                     "sonos",
+                    "hayward_omnilogic",
+                    "tuya",
                     "hid_cm",
                     "google_nest",
                     "slack",
@@ -437,6 +445,7 @@ class ConnectWebviews(AbstractConnectWebviews):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -492,6 +501,7 @@ class ConnectWebviews(AbstractConnectWebviews):
                     "tado",
                     "salto_space",
                     "sensi",
+                    "sensibo",
                     "keynest",
                     "korelock",
                     "keyincode",
@@ -518,6 +528,8 @@ class ConnectWebviews(AbstractConnectWebviews):
                     "aqara",
                     "eufy",
                     "sonos",
+                    "hayward_omnilogic",
+                    "tuya",
                     "hid_cm",
                     "google_nest",
                     "slack",
@@ -725,6 +737,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -780,6 +793,7 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
                     "tado",
                     "salto_space",
                     "sensi",
+                    "sensibo",
                     "keynest",
                     "korelock",
                     "keyincode",
@@ -806,6 +820,8 @@ class AsyncConnectWebviews(AbstractAsyncConnectWebviews):
                     "aqara",
                     "eufy",
                     "sonos",
+                    "hayward_omnilogic",
+                    "tuya",
                     "hid_cm",
                     "google_nest",
                     "slack",

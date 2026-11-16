@@ -133,6 +133,7 @@ class DeviceProvider:
         "tado",
         "salto_space",
         "sensi",
+        "sensibo",
         "keynest",
         "korelock",
         "keyincode",
@@ -159,6 +160,8 @@ class DeviceProvider:
         "aqara",
         "eufy",
         "sonos",
+        "hayward_omnilogic",
+        "tuya",
     ]
     display_name: str
     image_url: str

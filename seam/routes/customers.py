@@ -16,7 +16,6 @@ class AbstractCustomers(abc.ABC):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -45,8 +44,6 @@ class AbstractCustomers(abc.ABC):
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
         :param customization_profile_id: The ID of the customization profile to use for the portal.
-
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
@@ -216,7 +213,6 @@ class AbstractAsyncCustomers(abc.ABC):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -245,8 +241,6 @@ class AbstractAsyncCustomers(abc.ABC):
         :param customer_resources_filters: Filter configuration for resources based on their custom_metadata. Each filter specifies a field, operation, and value to match against resource custom_metadata.
 
         :param customization_profile_id: The ID of the customization profile to use for the portal.
-
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
 
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
@@ -423,7 +417,6 @@ class Customers(AbstractCustomers):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -453,8 +446,6 @@ class Customers(AbstractCustomers):
 
         :param customization_profile_id: The ID of the customization profile to use for the portal.
 
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
-
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
         :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
@@ -478,8 +469,6 @@ class Customers(AbstractCustomers):
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
             json_payload["customization_profile_id"] = customization_profile_id
-        if deep_link is not None:
-            json_payload["deep_link"] = deep_link
         if exclude_locale_picker is not None:
             json_payload["exclude_locale_picker"] = exclude_locale_picker
         if features is not None:
@@ -756,7 +745,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
         customer_data: Optional[Dict[str, Any]] = None,
         customer_resources_filters: Optional[List[Dict[str, Any]]] = None,
         customization_profile_id: Optional[str] = None,
-        deep_link: Optional[Dict[str, Any]] = None,
         exclude_locale_picker: Optional[bool] = None,
         features: Optional[Dict[str, Any]] = None,
         is_embedded: Optional[bool] = None,
@@ -786,8 +774,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
 
         :param customization_profile_id: The ID of the customization profile to use for the portal.
 
-        :param deep_link: Deep link target resource for initial redirect. When set, the portal will navigate directly to the specified resource.
-
         :param exclude_locale_picker: Whether to exclude the option to select a locale within the portal UI.
 
         :param features: Features to include in the portal. Settings you omit use the portal's customization profile, then the Seam default. Settings you pass take precedence over the customization profile's, so changing the profile doesn't change them.
@@ -811,8 +797,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["customer_resources_filters"] = customer_resources_filters
         if customization_profile_id is not None:
             json_payload["customization_profile_id"] = customization_profile_id
-        if deep_link is not None:
-            json_payload["deep_link"] = deep_link
         if exclude_locale_picker is not None:
             json_payload["exclude_locale_picker"] = exclude_locale_picker
         if features is not None:

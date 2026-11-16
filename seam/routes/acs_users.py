@@ -31,7 +31,6 @@ class AbstractAcsUsers(abc.ABC):
         full_name: str,
         access_schedule: Optional[Dict[str, Any]] = None,
         acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -45,8 +44,6 @@ class AbstractAcsUsers(abc.ABC):
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
 
         :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -234,7 +231,6 @@ class AbstractAcsUsers(abc.ABC):
         access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
@@ -248,8 +244,6 @@ class AbstractAcsUsers(abc.ABC):
         :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
 
         :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -287,7 +281,6 @@ class AbstractAsyncAcsUsers(abc.ABC):
         full_name: str,
         access_schedule: Optional[Dict[str, Any]] = None,
         acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -301,8 +294,6 @@ class AbstractAsyncAcsUsers(abc.ABC):
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
 
         :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -490,7 +481,6 @@ class AbstractAsyncAcsUsers(abc.ABC):
         access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
@@ -504,8 +494,6 @@ class AbstractAsyncAcsUsers(abc.ABC):
         :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
 
         :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -560,7 +548,6 @@ class AcsUsers(AbstractAcsUsers):
         full_name: str,
         access_schedule: Optional[Dict[str, Any]] = None,
         acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -574,8 +561,6 @@ class AcsUsers(AbstractAcsUsers):
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
 
         :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -594,8 +579,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["access_schedule"] = access_schedule
         if acs_access_group_ids is not None:
             json_payload["acs_access_group_ids"] = acs_access_group_ids
-        if email is not None:
-            json_payload["email"] = email
         if email_address is not None:
             json_payload["email_address"] = email_address
         if phone_number is not None:
@@ -937,7 +920,6 @@ class AcsUsers(AbstractAcsUsers):
             "access_schedule",
             "acs_system_id",
             "acs_user_id",
-            "email",
             "email_address",
             "full_name",
             "hid_acs_system_id",
@@ -952,7 +934,6 @@ class AcsUsers(AbstractAcsUsers):
         access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
@@ -966,8 +947,6 @@ class AcsUsers(AbstractAcsUsers):
         :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
 
         :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -988,8 +967,6 @@ class AcsUsers(AbstractAcsUsers):
             json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-        if email is not None:
-            json_payload["email"] = email
         if email_address is not None:
             json_payload["email_address"] = email_address
         if full_name is not None:
@@ -1044,7 +1021,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         full_name: str,
         access_schedule: Optional[Dict[str, Any]] = None,
         acs_access_group_ids: Optional[List[str]] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         phone_number: Optional[str] = None,
         user_identity_id: Optional[str] = None,
@@ -1058,8 +1034,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         :param access_schedule: ``starts_at`` and ``ends_at`` timestamps for the new access system user's access. If you specify an ``access_schedule``, you may include both ``starts_at`` and ``ends_at``. If you omit ``starts_at``, it defaults to the current time. ``ends_at`` is optional and must be a time in the future and after ``starts_at``.
 
         :param acs_access_group_ids: Array of access group IDs to indicate the access groups to which you want to add the new access system user.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -1078,8 +1052,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["access_schedule"] = access_schedule
         if acs_access_group_ids is not None:
             json_payload["acs_access_group_ids"] = acs_access_group_ids
-        if email is not None:
-            json_payload["email"] = email
         if email_address is not None:
             json_payload["email_address"] = email_address
         if phone_number is not None:
@@ -1425,7 +1397,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             "access_schedule",
             "acs_system_id",
             "acs_user_id",
-            "email",
             "email_address",
             "full_name",
             "hid_acs_system_id",
@@ -1440,7 +1411,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         access_schedule: Optional[Union[Dict[str, Any], Null]] = None,
         acs_system_id: Optional[str] = None,
         acs_user_id: Optional[str] = None,
-        email: Optional[str] = None,
         email_address: Optional[str] = None,
         full_name: Optional[str] = None,
         hid_acs_system_id: Optional[str] = None,
@@ -1454,8 +1424,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
         :param acs_system_id: ID of the access system that you want to update. You can only provide acs_system_id with user_identity_id.
 
         :param acs_user_id: ID of the access system user that you want to update. You can only provide acs_user_id or user_identity_id.
-
-        :param email: Deprecated: use email_address.
 
         :param email_address: Email address of the `access system user <https://www.seam.co/docs/low-level-apis/access-systems/user-management>`_.
 
@@ -1476,8 +1444,6 @@ class AsyncAcsUsers(AbstractAsyncAcsUsers):
             json_payload["acs_system_id"] = acs_system_id
         if acs_user_id is not None:
             json_payload["acs_user_id"] = acs_user_id
-        if email is not None:
-            json_payload["email"] = email
         if email_address is not None:
             json_payload["email_address"] = email_address
         if full_name is not None:

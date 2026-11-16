@@ -97,6 +97,7 @@ class AbstractDevices(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
                 "keynest_key",
                 "noiseaware_activity_zone",
@@ -106,6 +107,7 @@ class AbstractDevices(abc.ABC):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
                 "ios_phone",
                 "android_phone",
@@ -116,6 +118,8 @@ class AbstractDevices(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
+                "hayward_pool_system",
+                "hayward_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -155,6 +159,7 @@ class AbstractDevices(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                     "keynest_key",
                     "noiseaware_activity_zone",
@@ -164,6 +169,7 @@ class AbstractDevices(abc.ABC):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                     "ios_phone",
                     "android_phone",
@@ -174,6 +180,8 @@ class AbstractDevices(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
+                    "hayward_pool_system",
+                    "hayward_pool",
                 ]
             ]
         ] = None,
@@ -222,6 +230,7 @@ class AbstractDevices(abc.ABC):
                 "nest",
                 "noiseaware",
                 "sensi",
+                "sensibo",
                 "smartthings",
                 "tado",
                 "ultraloq",
@@ -242,12 +251,13 @@ class AbstractDevices(abc.ABC):
                 "slack",
                 "yacan",
                 "sonos",
+                "hayward_omnilogic",
+                "tuya",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
@@ -279,8 +289,6 @@ class AbstractDevices(abc.ABC):
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
 
         :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
@@ -427,6 +435,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
                 "keynest_key",
                 "noiseaware_activity_zone",
@@ -436,6 +445,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
                 "ios_phone",
                 "android_phone",
@@ -446,6 +456,8 @@ class AbstractAsyncDevices(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
+                "hayward_pool_system",
+                "hayward_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -485,6 +497,7 @@ class AbstractAsyncDevices(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                     "keynest_key",
                     "noiseaware_activity_zone",
@@ -494,6 +507,7 @@ class AbstractAsyncDevices(abc.ABC):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                     "ios_phone",
                     "android_phone",
@@ -504,6 +518,8 @@ class AbstractAsyncDevices(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
+                    "hayward_pool_system",
+                    "hayward_pool",
                 ]
             ]
         ] = None,
@@ -552,6 +568,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "nest",
                 "noiseaware",
                 "sensi",
+                "sensibo",
                 "smartthings",
                 "tado",
                 "ultraloq",
@@ -572,12 +589,13 @@ class AbstractAsyncDevices(abc.ABC):
                 "slack",
                 "yacan",
                 "sonos",
+                "hayward_omnilogic",
+                "tuya",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
@@ -609,8 +627,6 @@ class AbstractAsyncDevices(abc.ABC):
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
 
         :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
@@ -777,6 +793,7 @@ class Devices(AbstractDevices):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
                 "keynest_key",
                 "noiseaware_activity_zone",
@@ -786,6 +803,7 @@ class Devices(AbstractDevices):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
                 "ios_phone",
                 "android_phone",
@@ -796,6 +814,8 @@ class Devices(AbstractDevices):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
+                "hayward_pool_system",
+                "hayward_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -835,6 +855,7 @@ class Devices(AbstractDevices):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                     "keynest_key",
                     "noiseaware_activity_zone",
@@ -844,6 +865,7 @@ class Devices(AbstractDevices):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                     "ios_phone",
                     "android_phone",
@@ -854,6 +876,8 @@ class Devices(AbstractDevices):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
+                    "hayward_pool_system",
+                    "hayward_pool",
                 ]
             ]
         ] = None,
@@ -902,6 +926,7 @@ class Devices(AbstractDevices):
                 "nest",
                 "noiseaware",
                 "sensi",
+                "sensibo",
                 "smartthings",
                 "tado",
                 "ultraloq",
@@ -922,12 +947,13 @@ class Devices(AbstractDevices):
                 "slack",
                 "yacan",
                 "sonos",
+                "hayward_omnilogic",
+                "tuya",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
@@ -959,8 +985,6 @@ class Devices(AbstractDevices):
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
 
         :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
@@ -995,8 +1019,6 @@ class Devices(AbstractDevices):
             params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
-        if unstable_location_id is not None:
-            params["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
         res = self.client.get("/devices/list", params=params)
@@ -1214,6 +1236,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
                 "keynest_key",
                 "noiseaware_activity_zone",
@@ -1223,6 +1246,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
                 "ios_phone",
                 "android_phone",
@@ -1233,6 +1257,8 @@ class AsyncDevices(AbstractAsyncDevices):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
+                "hayward_pool_system",
+                "hayward_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -1272,6 +1298,7 @@ class AsyncDevices(AbstractAsyncDevices):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                     "keynest_key",
                     "noiseaware_activity_zone",
@@ -1281,6 +1308,7 @@ class AsyncDevices(AbstractAsyncDevices):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                     "ios_phone",
                     "android_phone",
@@ -1291,6 +1319,8 @@ class AsyncDevices(AbstractAsyncDevices):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
+                    "hayward_pool_system",
+                    "hayward_pool",
                 ]
             ]
         ] = None,
@@ -1339,6 +1369,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "nest",
                 "noiseaware",
                 "sensi",
+                "sensibo",
                 "smartthings",
                 "tado",
                 "ultraloq",
@@ -1359,12 +1390,13 @@ class AsyncDevices(AbstractAsyncDevices):
                 "slack",
                 "yacan",
                 "sonos",
+                "hayward_omnilogic",
+                "tuya",
             ]
         ] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
-        unstable_location_id: Optional[Union[str, Null]] = None,
         user_identifier_key: Optional[str] = None,
     ) -> List[Device]:
         """Returns a list of all `devices <https://www.seam.co/docs/core-concepts/devices>`_.
@@ -1396,8 +1428,6 @@ class AsyncDevices(AbstractAsyncDevices):
         :param search: String for which to search. Filters returned devices to include all records that satisfy a partial match using ``device_id`` (full or partial UUID prefix, minimum 4 characters), ``connected_account_id``, ``display_name``, ``custom_metadata`` or ``location.location_name``.
 
         :param space_id: ID of the space for which you want to list devices.
-
-        :param unstable_location_id: Deprecated: Use ``space_id``.
 
         :param user_identifier_key: Your own internal user ID for the user for which you want to list devices.
 
@@ -1432,8 +1462,6 @@ class AsyncDevices(AbstractAsyncDevices):
             params["search"] = search
         if space_id is not None:
             params["space_id"] = space_id
-        if unstable_location_id is not None:
-            params["unstable_location_id"] = unstable_location_id
         if user_identifier_key is not None:
             params["user_identifier_key"] = user_identifier_key
         res = await self.client.get("/devices/list", params=params)

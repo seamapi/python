@@ -37,8 +37,6 @@ class AccessGrant:
 
     :ivar instant_key_url: Instant Key URL. Only returned if the Access Grant has a single mobile_key access_method.
 
-    :ivar location_ids: Deprecated: Use ``space_ids``.
-
     :ivar name: Name of the Access Grant. If not provided, the display name will be computed.
 
     :ivar pending_mutations: List of pending mutations for the access grant. This shows updates that are in progress.
@@ -579,7 +577,6 @@ class AccessGrant:
     ends_at: Optional[str]
     errors: List[Errors]
     instant_key_url: Optional[str]
-    location_ids: List[str]
     name: Optional[str]
     pending_mutations: List[PendingMutations]
     requested_access_methods: List[RequestedAccessMethods]
@@ -607,7 +604,6 @@ class AccessGrant:
                 for i in d.get("errors") or []
             ],
             instant_key_url=d.get("instant_key_url", None),
-            location_ids=d.get("location_ids", None),
             name=d.get("name", None),
             pending_mutations=[
                 _from_discriminated_dict(

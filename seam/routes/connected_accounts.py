@@ -102,6 +102,7 @@ class AbstractConnectedAccounts(abc.ABC):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -214,6 +215,7 @@ class AbstractAsyncConnectedAccounts(abc.ABC):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -400,6 +402,7 @@ class ConnectedAccounts(AbstractConnectedAccounts):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
@@ -606,6 +609,7 @@ class AsyncConnectedAccounts(AbstractAsyncConnectedAccounts):
                     "access_control",
                     "camera",
                     "speaker",
+                    "pool",
                 ]
             ]
         ] = None,
