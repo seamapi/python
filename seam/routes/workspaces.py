@@ -19,21 +19,14 @@ class AbstractWorkspaces(abc.ABC):
         self,
         *,
         name: str,
-        company_name: Optional[str] = None,
         connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
-
-        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
@@ -42,14 +35,6 @@ class AbstractWorkspaces(abc.ABC):
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
-
-        :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
-
-        :param webview_primary_button_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_color`` instead.
-
-        :param webview_primary_button_text_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_text_color`` instead.
-
-        :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -114,21 +99,14 @@ class AbstractAsyncWorkspaces(abc.ABC):
         self,
         *,
         name: str,
-        company_name: Optional[str] = None,
         connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
-
-        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
@@ -137,14 +115,6 @@ class AbstractAsyncWorkspaces(abc.ABC):
         :param is_sandbox: Indicates whether the new workspace is a `sandbox workspace <https://www.seam.co/docs/core-concepts/workspaces#sandbox-workspaces>`_.
 
         :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
-
-        :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
-
-        :param webview_primary_button_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_color`` instead.
-
-        :param webview_primary_button_text_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_text_color`` instead.
-
-        :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -214,21 +184,14 @@ class Workspaces(AbstractWorkspaces):
         self,
         *,
         name: str,
-        company_name: Optional[str] = None,
         connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
-
-        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
@@ -238,21 +201,11 @@ class Workspaces(AbstractWorkspaces):
 
         :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
-        :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
-
-        :param webview_primary_button_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_color`` instead.
-
-        :param webview_primary_button_text_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_text_color`` instead.
-
-        :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
             json_payload["name"] = name
-        if company_name is not None:
-            json_payload["company_name"] = company_name
         if connect_partner_name is not None:
             json_payload["connect_partner_name"] = connect_partner_name
         if connect_webview_customization is not None:
@@ -263,16 +216,6 @@ class Workspaces(AbstractWorkspaces):
             json_payload["is_sandbox"] = is_sandbox
         if organization_id is not None:
             json_payload["organization_id"] = organization_id
-        if webview_logo_shape is not None:
-            json_payload["webview_logo_shape"] = webview_logo_shape
-        if webview_primary_button_color is not None:
-            json_payload["webview_primary_button_color"] = webview_primary_button_color
-        if webview_primary_button_text_color is not None:
-            json_payload["webview_primary_button_text_color"] = (
-                webview_primary_button_text_color
-            )
-        if webview_success_message is not None:
-            json_payload["webview_success_message"] = webview_success_message
         res = self.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))
@@ -399,21 +342,14 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
         self,
         *,
         name: str,
-        company_name: Optional[str] = None,
         connect_partner_name: Optional[Union[str, Null]] = None,
         connect_webview_customization: Optional[Dict[str, Any]] = None,
         is_sandbox: Optional[bool] = None,
         organization_id: Optional[str] = None,
-        webview_logo_shape: Optional[Literal["circle", "square"]] = None,
-        webview_primary_button_color: Optional[str] = None,
-        webview_primary_button_text_color: Optional[str] = None,
-        webview_success_message: Optional[str] = None,
     ) -> Workspace:
         """Creates a new `workspace <https://www.seam.co/docs/core-concepts/workspaces>`_.
 
         :param name: Name of the new workspace.
-
-        :param company_name: Deprecated: Use ``connect_partner_name`` instead. Company name for the new workspace.
 
         :param connect_partner_name: Connect partner name for the new workspace.
 
@@ -423,21 +359,11 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
 
         :param organization_id: ID of the organization to associate with the new workspace. If omitted, the new workspace is associated with the organization that you administer, if you administer exactly one. If you administer no organization, Seam creates one for you and associates the new workspace with it.
 
-        :param webview_logo_shape: Deprecated: Use ``connect_webview_customization.webview_logo_shape`` instead.
-
-        :param webview_primary_button_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_color`` instead.
-
-        :param webview_primary_button_text_color: Deprecated: Use ``connect_webview_customization.webview_primary_button_text_color`` instead.
-
-        :param webview_success_message: Deprecated: Use ``connect_webview_customization.webview_success_message`` instead.
-
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
 
         if name is not None:
             json_payload["name"] = name
-        if company_name is not None:
-            json_payload["company_name"] = company_name
         if connect_partner_name is not None:
             json_payload["connect_partner_name"] = connect_partner_name
         if connect_webview_customization is not None:
@@ -448,16 +374,6 @@ class AsyncWorkspaces(AbstractAsyncWorkspaces):
             json_payload["is_sandbox"] = is_sandbox
         if organization_id is not None:
             json_payload["organization_id"] = organization_id
-        if webview_logo_shape is not None:
-            json_payload["webview_logo_shape"] = webview_logo_shape
-        if webview_primary_button_color is not None:
-            json_payload["webview_primary_button_color"] = webview_primary_button_color
-        if webview_primary_button_text_color is not None:
-            json_payload["webview_primary_button_text_color"] = (
-                webview_primary_button_text_color
-            )
-        if webview_success_message is not None:
-            json_payload["webview_success_message"] = webview_success_message
         res = await self.client.post("/workspaces/create", json=json_payload)
 
         return Workspace.from_dict(unwrap(res, "workspace", "/workspaces/create"))

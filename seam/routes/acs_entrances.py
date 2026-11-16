@@ -58,7 +58,6 @@ class AbstractAcsEntrances(abc.ABC):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[Union[str, Null]] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -78,8 +77,6 @@ class AbstractAcsEntrances(abc.ABC):
         :param customer_key: Customer key for which you want to list entrances.
 
         :param limit: Maximum number of records to return per page.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -166,7 +163,6 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[Union[str, Null]] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -186,8 +182,6 @@ class AbstractAsyncAcsEntrances(abc.ABC):
         :param customer_key: Customer key for which you want to list entrances.
 
         :param limit: Maximum number of records to return per page.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -301,7 +295,6 @@ class AcsEntrances(AbstractAcsEntrances):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[Union[str, Null]] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -321,8 +314,6 @@ class AcsEntrances(AbstractAcsEntrances):
         :param customer_key: Customer key for which you want to list entrances.
 
         :param limit: Maximum number of records to return per page.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -347,8 +338,6 @@ class AcsEntrances(AbstractAcsEntrances):
             params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
-        if location_id is not None:
-            params["location_id"] = location_id
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
         if search is not None:
@@ -511,7 +500,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         connected_account_id: Optional[str] = None,
         customer_key: Optional[str] = None,
         limit: Optional[int] = None,
-        location_id: Optional[Union[str, Null]] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         search: Optional[str] = None,
         space_id: Optional[str] = None,
@@ -531,8 +519,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
         :param customer_key: Customer key for which you want to list entrances.
 
         :param limit: Maximum number of records to return per page.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -557,8 +543,6 @@ class AsyncAcsEntrances(AbstractAsyncAcsEntrances):
             params["customer_key"] = customer_key
         if limit is not None:
             params["limit"] = limit
-        if location_id is not None:
-            params["location_id"] = location_id
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
         if search is not None:

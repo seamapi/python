@@ -22,7 +22,6 @@ class AbstractClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_.
 
@@ -39,8 +38,6 @@ class AbstractClientSessions(abc.ABC):
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session. When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -77,7 +74,6 @@ class AbstractClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -91,8 +87,6 @@ class AbstractClientSessions(abc.ABC):
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
 
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
         :returns: OK"""
         raise NotImplementedError()
 
@@ -105,7 +99,6 @@ class AbstractClientSessions(abc.ABC):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_, `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -118,8 +111,6 @@ class AbstractClientSessions(abc.ABC):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -181,7 +172,6 @@ class AbstractAsyncClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_.
 
@@ -198,8 +188,6 @@ class AbstractAsyncClientSessions(abc.ABC):
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session. When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         raise NotImplementedError()
@@ -236,7 +224,6 @@ class AbstractAsyncClientSessions(abc.ABC):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -250,8 +237,6 @@ class AbstractAsyncClientSessions(abc.ABC):
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
 
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
         :returns: OK"""
         raise NotImplementedError()
 
@@ -264,7 +249,6 @@ class AbstractAsyncClientSessions(abc.ABC):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_, `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -277,8 +261,6 @@ class AbstractAsyncClientSessions(abc.ABC):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :raises ValueError: At least one parameter must be provided."""
         raise NotImplementedError()
@@ -347,7 +329,6 @@ class ClientSessions(AbstractClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_.
 
@@ -364,8 +345,6 @@ class ClientSessions(AbstractClientSessions):
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session. When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -384,8 +363,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         res = self.client.put("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -452,7 +429,6 @@ class ClientSessions(AbstractClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -465,8 +441,6 @@ class ClientSessions(AbstractClientSessions):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session (or that is already associated with the existing client session). When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -481,8 +455,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         res = self.client.post("/client_sessions/get_or_create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -497,7 +469,6 @@ class ClientSessions(AbstractClientSessions):
             "connected_account_ids",
             "user_identifier_key",
             "user_identity_id",
-            "user_identity_ids",
         ),
         has_pagination=False,
     )
@@ -509,7 +480,6 @@ class ClientSessions(AbstractClientSessions):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_, `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -522,8 +492,6 @@ class ClientSessions(AbstractClientSessions):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
@@ -538,8 +506,6 @@ class ClientSessions(AbstractClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None
@@ -648,7 +614,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Creates a new `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_.
 
@@ -665,8 +630,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         :param user_identifier_key: Your user ID for the user for whom you want to create a client session. When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ for which you want to create a client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -685,8 +648,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         res = await self.client.put("/client_sessions/create", json=json_payload)
 
         return ClientSession.from_dict(
@@ -753,7 +714,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         expires_at: Optional[str] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> ClientSession:
         """Returns a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ with specific characteristics or creates a new client session with these characteristics if it does not yet exist.
 
@@ -766,8 +726,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session (or that is already associated with the existing client session). When you authenticate with a publishable key, the ``user_identifier_key`` must be a high-entropy secret that only the user knows, such as a UUIDv4 or a salted hash. Do not use an email address, name, phone number, or other guessable value, because anyone who knows the ``user_identifier_key`` can retrieve the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session (or that are already associated with the existing client session).
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :returns: OK"""
         json_payload: Dict[str, Any] = {}
@@ -782,8 +740,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         res = await self.client.post(
             "/client_sessions/get_or_create", json=json_payload
         )
@@ -800,7 +756,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             "connected_account_ids",
             "user_identifier_key",
             "user_identity_id",
-            "user_identity_ids",
         ),
         has_pagination=False,
     )
@@ -812,7 +767,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         connected_account_ids: Optional[List[str]] = None,
         user_identifier_key: Optional[str] = None,
         user_identity_id: Optional[str] = None,
-        user_identity_ids: Optional[List[str]] = None,
     ) -> None:
         """Grants a `client session <https://www.seam.co/docs/core-concepts/authentication/client-session-tokens>`_ access to one or more resources, such as `Connect Webviews <https://www.seam.co/docs/core-concepts/connect-webviews>`_, `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_, and so on.
 
@@ -825,8 +779,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
         :param user_identifier_key: Your user ID for the user that you want to associate with the client session.
 
         :param user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
-
-        :param user_identity_ids: Deprecated: Use ``user_identity_id``. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ that you want to associate with the client session.
 
         :raises ValueError: At least one parameter must be provided."""
         json_payload: Dict[str, Any] = {}
@@ -841,8 +793,6 @@ class AsyncClientSessions(AbstractAsyncClientSessions):
             json_payload["user_identifier_key"] = user_identifier_key
         if user_identity_id is not None:
             json_payload["user_identity_id"] = user_identity_id
-        if user_identity_ids is not None:
-            json_payload["user_identity_ids"] = user_identity_ids
         await self.client.patch("/client_sessions/grant_access", json=json_payload)
 
         return None

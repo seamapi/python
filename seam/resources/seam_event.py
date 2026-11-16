@@ -3916,58 +3916,6 @@ class ConnectedAccountCreatedEvent:
 
 
 @dataclass
-class ConnectedAccountSuccessfulLoginEvent:
-    """A connected account had a successful login using a Connect Webview.
-
-    :ivar connect_webview_id: ID of the Connect Webview associated with the event.
-
-    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
-
-    :ivar connected_account_id: ID of the affected connected account.
-
-    :ivar created_at: Date and time at which the event was created.
-
-    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
-
-    :ivar event_id: ID of the event.
-
-    :ivar event_type:
-
-    :ivar occurred_at: Date and time at which the event occurred.
-
-    :ivar workspace_id: ID of the workspace associated with the event.
-
-    .. deprecated::
-       Use ``connect_webview.login_succeeded``."""
-
-    connect_webview_id: str
-    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
-    connected_account_id: str
-    created_at: str
-    event_description: Optional[str]
-    event_id: str
-    event_type: Literal["connected_account.successful_login"]
-    occurred_at: str
-    workspace_id: str
-
-    @classmethod
-    def from_dict(cls, d: Any):
-        return cls(
-            connect_webview_id=d.get("connect_webview_id", None),
-            connected_account_custom_metadata=DeepAttrDict(
-                d.get("connected_account_custom_metadata", None)
-            ),
-            connected_account_id=d.get("connected_account_id", None),
-            created_at=d.get("created_at", None),
-            event_description=d.get("event_description", None),
-            event_id=d.get("event_id", None),
-            event_type=d.get("event_type", None),
-            occurred_at=d.get("occurred_at", None),
-            workspace_id=d.get("workspace_id", None),
-        )
-
-
-@dataclass
 class ConnectedAccountDisconnectedEvent:
     """A connected account was disconnected.
 
@@ -5558,8 +5506,6 @@ class DeviceLowBatteryEvent:
 
     :ivar accessory_keypad_battery_level: Number in the range 0 to 1.0 indicating the battery level of the affected device's paired accessory keypad, when the device has one and its level is known.
 
-    :ivar battery_level: Deprecated: Use device_battery_level and accessory_keypad_battery_level, which distinguish the device's own battery from a paired accessory keypad's battery. Number in the range 0 to 1.0 indicating the level of the battery whose drop triggered this event.
-
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
     :ivar connected_account_id: ID of the connected account associated with the event.
@@ -5585,7 +5531,6 @@ class DeviceLowBatteryEvent:
     :ivar workspace_id: ID of the workspace associated with the event."""
 
     accessory_keypad_battery_level: Optional[float]
-    battery_level: float
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
@@ -5605,7 +5550,6 @@ class DeviceLowBatteryEvent:
             accessory_keypad_battery_level=d.get(
                 "accessory_keypad_battery_level", None
             ),
-            battery_level=d.get("battery_level", None),
             connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
@@ -7773,8 +7717,6 @@ class DeviceNameChangedEvent:
 class CameraActivatedEvent:
     """A camera was activated, for example, by motion detection. For Ring cameras, this event is available only in the Seam Console, not through the API or webhooks.
 
-    :ivar activation_reason: The reason the camera was activated.
-
     :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
 
     :ivar connected_account_id: ID of the connected account associated with the event.
@@ -7795,6 +7737,8 @@ class CameraActivatedEvent:
 
     :ivar image_url: URL to a thumbnail image captured at the time of activation.
 
+    :ivar is_motion_detected: Whether motion detection activated the camera, if known.
+
     :ivar media_ids: IDs of the media, such as a video clip and a thumbnail image, captured for this activation. Use ``/media/get`` to retrieve each one.
 
     :ivar motion_sub_type: Sub-type of motion detected, if available.
@@ -7805,7 +7749,6 @@ class CameraActivatedEvent:
 
     :ivar workspace_id: ID of the workspace associated with the event."""
 
-    activation_reason: Literal["motion_detected"]
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
@@ -7816,6 +7759,7 @@ class CameraActivatedEvent:
     event_id: str
     event_type: Literal["camera.activated"]
     image_url: Optional[str]
+    is_motion_detected: Optional[bool]
     media_ids: Optional[List[str]]
     motion_sub_type: Optional[Literal["human", "vehicle", "package", "other"]]
     occurred_at: str
@@ -7825,7 +7769,6 @@ class CameraActivatedEvent:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
-            activation_reason=d.get("activation_reason", None),
             connected_account_custom_metadata=DeepAttrDict(
                 d.get("connected_account_custom_metadata", None)
             ),
@@ -7838,6 +7781,7 @@ class CameraActivatedEvent:
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
             image_url=d.get("image_url", None),
+            is_motion_detected=d.get("is_motion_detected", None),
             media_ids=d.get("media_ids", None),
             motion_sub_type=d.get("motion_sub_type", None),
             occurred_at=d.get("occurred_at", None),
@@ -8165,7 +8109,6 @@ SeamEvent = Union[
     ClientSessionDeletedEvent,
     ConnectedAccountConnectedEvent,
     ConnectedAccountCreatedEvent,
-    ConnectedAccountSuccessfulLoginEvent,
     ConnectedAccountDisconnectedEvent,
     ConnectedAccountCompletedFirstSyncEvent,
     ConnectedAccountDeletedEvent,
@@ -8279,7 +8222,6 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
     "client_session.deleted": ClientSessionDeletedEvent,
     "connected_account.connected": ConnectedAccountConnectedEvent,
     "connected_account.created": ConnectedAccountCreatedEvent,
-    "connected_account.successful_login": ConnectedAccountSuccessfulLoginEvent,
     "connected_account.disconnected": ConnectedAccountDisconnectedEvent,
     "connected_account.completed_first_sync": ConnectedAccountCompletedFirstSyncEvent,
     "connected_account.deleted": ConnectedAccountDeletedEvent,

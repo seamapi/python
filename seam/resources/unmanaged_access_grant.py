@@ -27,8 +27,6 @@ class UnmanagedAccessGrant:
 
     :ivar errors: Errors associated with the `access grant <https://www.seam.co/docs/use-cases/granting-access>`_.
 
-    :ivar location_ids: Deprecated: Use ``space_ids``.
-
     :ivar name: Name of the Access Grant. If not provided, the display name will be computed.
 
     :ivar pending_mutations: List of pending mutations for the access grant. This shows updates that are in progress.
@@ -564,7 +562,6 @@ class UnmanagedAccessGrant:
     display_name: str
     ends_at: Optional[str]
     errors: List[Errors]
-    location_ids: List[str]
     name: Optional[str]
     pending_mutations: List[PendingMutations]
     requested_access_methods: List[RequestedAccessMethods]
@@ -587,7 +584,6 @@ class UnmanagedAccessGrant:
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
                 for i in d.get("errors") or []
             ],
-            location_ids=d.get("location_ids", None),
             name=d.get("name", None),
             pending_mutations=[
                 _from_discriminated_dict(

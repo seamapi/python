@@ -19,10 +19,6 @@ class AcsAccessGroup:
 
     To learn whether your access control system supports access groups, see the corresponding `system integration guide <https://www.seam.co/docs/device-and-system-integration-guides#access-control-systems>`_.
 
-    :ivar access_group_type: Deprecated: Use ``external_type``.
-
-    :ivar access_group_type_display_name: Deprecated: Use ``external_type_display_name``.
-
     :ivar access_schedule: ``starts_at`` and ``ends_at`` timestamps for the access group's access.
 
     :ivar acs_access_group_id: ID of the access group.
@@ -498,19 +494,6 @@ class AcsAccessGroup:
         "deferring_user_membership_update": DeferringUserMembershipUpdatePendingMutation,
     }
 
-    access_group_type: Literal[
-        "pti_unit",
-        "pti_access_level",
-        "salto_ks_access_group",
-        "brivo_group",
-        "salto_space_group",
-        "dormakaba_community_access_group",
-        "dormakaba_ambiance_access_group",
-        "avigilon_alta_group",
-        "kisi_access_group",
-        "akiles_member_group",
-    ]
-    access_group_type_display_name: str
     access_schedule: Optional[AccessSchedule]
     acs_access_group_id: str
     acs_system_id: str
@@ -540,10 +523,6 @@ class AcsAccessGroup:
     @classmethod
     def from_dict(cls, d: Any):
         return cls(
-            access_group_type=d.get("access_group_type", None),
-            access_group_type_display_name=d.get(
-                "access_group_type_display_name", None
-            ),
             access_schedule=(
                 cls.AccessSchedule.from_dict(d.get("access_schedule"))
                 if d.get("access_schedule") is not None

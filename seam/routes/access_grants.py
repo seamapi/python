@@ -32,8 +32,6 @@ class AbstractAccessGrants(abc.ABC):
         customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[Union[str, Null]] = None,
-        location: Optional[Dict[str, Any]] = None,
-        location_ids: Optional[List[str]] = None,
         name: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
@@ -55,10 +53,6 @@ class AbstractAccessGrants(abc.ABC):
         :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-
-        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-
-        :param location_ids: Deprecated: Use ``space_ids``.
 
         :param name: Name for the access grant.
 
@@ -164,7 +158,6 @@ class AbstractAccessGrants(abc.ABC):
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
-        location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         search: Optional[str] = None,
@@ -188,8 +181,6 @@ class AbstractAccessGrants(abc.ABC):
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
 
         :param limit: Numerical limit on the number of access grants to return.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -260,8 +251,6 @@ class AbstractAsyncAccessGrants(abc.ABC):
         customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[Union[str, Null]] = None,
-        location: Optional[Dict[str, Any]] = None,
-        location_ids: Optional[List[str]] = None,
         name: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
@@ -283,10 +272,6 @@ class AbstractAsyncAccessGrants(abc.ABC):
         :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-
-        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-
-        :param location_ids: Deprecated: Use ``space_ids``.
 
         :param name: Name for the access grant.
 
@@ -392,7 +377,6 @@ class AbstractAsyncAccessGrants(abc.ABC):
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
-        location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         search: Optional[str] = None,
@@ -416,8 +400,6 @@ class AbstractAsyncAccessGrants(abc.ABC):
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
 
         :param limit: Numerical limit on the number of access grants to return.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -495,8 +477,6 @@ class AccessGrants(AbstractAccessGrants):
         customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[Union[str, Null]] = None,
-        location: Optional[Dict[str, Any]] = None,
-        location_ids: Optional[List[str]] = None,
         name: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
@@ -518,10 +498,6 @@ class AccessGrants(AbstractAccessGrants):
         :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-
-        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-
-        :param location_ids: Deprecated: Use ``space_ids``.
 
         :param name: Name for the access grant.
 
@@ -552,10 +528,6 @@ class AccessGrants(AbstractAccessGrants):
             json_payload["device_ids"] = device_ids
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-        if location is not None:
-            json_payload["location"] = location
-        if location_ids is not None:
-            json_payload["location_ids"] = location_ids
         if name is not None:
             json_payload["name"] = name
         if reservation_key is not None:
@@ -711,7 +683,6 @@ class AccessGrants(AbstractAccessGrants):
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
-        location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         search: Optional[str] = None,
@@ -735,8 +706,6 @@ class AccessGrants(AbstractAccessGrants):
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
 
         :param limit: Numerical limit on the number of access grants to return.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -767,8 +736,6 @@ class AccessGrants(AbstractAccessGrants):
             params["device_id"] = device_id
         if limit is not None:
             params["limit"] = limit
-        if location_id is not None:
-            params["location_id"] = location_id
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
         if reservation_key is not None:
@@ -892,8 +859,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         customization_profile_id: Optional[str] = None,
         device_ids: Optional[List[str]] = None,
         ends_at: Optional[Union[str, Null]] = None,
-        location: Optional[Dict[str, Any]] = None,
-        location_ids: Optional[List[str]] = None,
         name: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         space_ids: Optional[List[str]] = None,
@@ -915,10 +880,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         :param device_ids: Set of IDs of the `devices <https://www.seam.co/docs/api/devices/list>`_ to which access is being granted.
 
         :param ends_at: Date and time at which the validity of the new grant ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format. Must be a time in the future and after ``starts_at``.
-
-        :param location: Deprecated: Create a space first, then reference it using ``space_ids``.
-
-        :param location_ids: Deprecated: Use ``space_ids``.
 
         :param name: Name for the access grant.
 
@@ -949,10 +910,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             json_payload["device_ids"] = device_ids
         if ends_at is not None:
             json_payload["ends_at"] = ends_at
-        if location is not None:
-            json_payload["location"] = location
-        if location_ids is not None:
-            json_payload["location_ids"] = location_ids
         if name is not None:
             json_payload["name"] = name
         if reservation_key is not None:
@@ -1108,7 +1065,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         customer_key: Optional[str] = None,
         device_id: Optional[str] = None,
         limit: Optional[float] = None,
-        location_id: Optional[str] = None,
         page_cursor: Optional[Union[str, Null]] = None,
         reservation_key: Optional[str] = None,
         search: Optional[str] = None,
@@ -1132,8 +1088,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
         :param device_id: ID of the device by which you want to filter the list of Access Grants.
 
         :param limit: Numerical limit on the number of access grants to return.
-
-        :param location_id: Deprecated: Use ``space_id``.
 
         :param page_cursor: Identifies the specific page of results to return, obtained from the previous page's ``next_page_cursor``.
 
@@ -1164,8 +1118,6 @@ class AsyncAccessGrants(AbstractAsyncAccessGrants):
             params["device_id"] = device_id
         if limit is not None:
             params["limit"] = limit
-        if location_id is not None:
-            params["location_id"] = location_id
         if page_cursor is not None:
             params["page_cursor"] = page_cursor
         if reservation_key is not None:

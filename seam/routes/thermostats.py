@@ -122,7 +122,6 @@ class AbstractThermostats(abc.ABC):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -146,8 +145,6 @@ class AbstractThermostats(abc.ABC):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -227,6 +224,7 @@ class AbstractThermostats(abc.ABC):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -238,13 +236,20 @@ class AbstractThermostats(abc.ABC):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
         ] = None,
         manufacturer: Optional[
             Literal[
-                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+                "ecobee",
+                "honeywell_resideo",
+                "nest",
+                "sensi",
+                "sensibo",
+                "smartthings",
+                "tado",
             ]
         ] = None,
     ) -> List[Device]:
@@ -388,7 +393,6 @@ class AbstractThermostats(abc.ABC):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -412,8 +416,6 @@ class AbstractThermostats(abc.ABC):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -549,7 +551,6 @@ class AbstractAsyncThermostats(abc.ABC):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -573,8 +574,6 @@ class AbstractAsyncThermostats(abc.ABC):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -656,6 +655,7 @@ class AbstractAsyncThermostats(abc.ABC):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -667,13 +667,20 @@ class AbstractAsyncThermostats(abc.ABC):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
         ] = None,
         manufacturer: Optional[
             Literal[
-                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+                "ecobee",
+                "honeywell_resideo",
+                "nest",
+                "sensi",
+                "sensibo",
+                "smartthings",
+                "tado",
             ]
         ] = None,
     ) -> List[Device]:
@@ -817,7 +824,6 @@ class AbstractAsyncThermostats(abc.ABC):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -841,8 +847,6 @@ class AbstractAsyncThermostats(abc.ABC):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -1061,7 +1065,6 @@ class Thermostats(AbstractThermostats):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -1085,8 +1088,6 @@ class Thermostats(AbstractThermostats):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -1112,8 +1113,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if hvac_mode_setting is not None:
             json_payload["hvac_mode_setting"] = hvac_mode_setting
-        if manual_override_allowed is not None:
-            json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
         self.client.post("/thermostats/create_climate_preset", json=json_payload)
@@ -1262,6 +1261,7 @@ class Thermostats(AbstractThermostats):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -1273,13 +1273,20 @@ class Thermostats(AbstractThermostats):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
         ] = None,
         manufacturer: Optional[
             Literal[
-                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+                "ecobee",
+                "honeywell_resideo",
+                "nest",
+                "sensi",
+                "sensibo",
+                "smartthings",
+                "tado",
             ]
         ] = None,
     ) -> List[Device]:
@@ -1554,7 +1561,6 @@ class Thermostats(AbstractThermostats):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -1578,8 +1584,6 @@ class Thermostats(AbstractThermostats):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -1605,8 +1609,6 @@ class Thermostats(AbstractThermostats):
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if hvac_mode_setting is not None:
             json_payload["hvac_mode_setting"] = hvac_mode_setting
-        if manual_override_allowed is not None:
-            json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
         self.client.patch("/thermostats/update_climate_preset", json=json_payload)
@@ -1862,7 +1864,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Creates a `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -1886,8 +1887,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat or using the API can change the thermostat's settings.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -1913,8 +1912,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if hvac_mode_setting is not None:
             json_payload["hvac_mode_setting"] = hvac_mode_setting
-        if manual_override_allowed is not None:
-            json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
         await self.client.post("/thermostats/create_climate_preset", json=json_payload)
@@ -2065,6 +2062,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
                 "honeywell_resideo_thermostat",
                 "tado_thermostat",
                 "sensi_thermostat",
+                "sensibo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -2076,13 +2074,20 @@ class AsyncThermostats(AbstractAsyncThermostats):
                     "honeywell_resideo_thermostat",
                     "tado_thermostat",
                     "sensi_thermostat",
+                    "sensibo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
         ] = None,
         manufacturer: Optional[
             Literal[
-                "ecobee", "honeywell_resideo", "nest", "sensi", "smartthings", "tado"
+                "ecobee",
+                "honeywell_resideo",
+                "nest",
+                "sensi",
+                "sensibo",
+                "smartthings",
+                "tado",
             ]
         ] = None,
     ) -> List[Device]:
@@ -2361,7 +2366,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
         hvac_mode_setting: Optional[
             Literal["off", "heat", "cool", "heat_cool", "eco"]
         ] = None,
-        manual_override_allowed: Optional[bool] = None,
         name: Optional[Union[str, Null]] = None,
     ) -> None:
         """Updates a specified `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for a specified `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_.
@@ -2385,8 +2389,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
         :param heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
         :param hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-        :param manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
         :param name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
         """
@@ -2412,8 +2414,6 @@ class AsyncThermostats(AbstractAsyncThermostats):
             json_payload["heating_set_point_fahrenheit"] = heating_set_point_fahrenheit
         if hvac_mode_setting is not None:
             json_payload["hvac_mode_setting"] = hvac_mode_setting
-        if manual_override_allowed is not None:
-            json_payload["manual_override_allowed"] = manual_override_allowed
         if name is not None:
             json_payload["name"] = name
         await self.client.patch("/thermostats/update_climate_preset", json=json_payload)

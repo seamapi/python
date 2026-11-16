@@ -58,7 +58,13 @@ class ConnectWebview:
 
     accepted_capabilities: List[
         Literal[
-            "lock", "thermostat", "noise_sensor", "access_control", "camera", "speaker"
+            "lock",
+            "thermostat",
+            "noise_sensor",
+            "access_control",
+            "camera",
+            "speaker",
+            "pool",
         ]
     ]
     accepted_providers: List[str]

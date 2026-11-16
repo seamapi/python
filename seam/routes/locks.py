@@ -107,6 +107,7 @@ class AbstractLocks(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
             ]
         ] = None,
@@ -147,6 +148,7 @@ class AbstractLocks(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                 ]
             ]
@@ -189,6 +191,7 @@ class AbstractLocks(abc.ABC):
                 "omnitec",
                 "kisi",
                 "yacan",
+                "tuya",
             ]
         ] = None,
     ) -> List[Device]:
@@ -332,6 +335,7 @@ class AbstractAsyncLocks(abc.ABC):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
             ]
         ] = None,
@@ -372,6 +376,7 @@ class AbstractAsyncLocks(abc.ABC):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                 ]
             ]
@@ -414,6 +419,7 @@ class AbstractAsyncLocks(abc.ABC):
                 "omnitec",
                 "kisi",
                 "yacan",
+                "tuya",
             ]
         ] = None,
     ) -> List[Device]:
@@ -603,6 +609,7 @@ class Locks(AbstractLocks):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
             ]
         ] = None,
@@ -643,6 +650,7 @@ class Locks(AbstractLocks):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                 ]
             ]
@@ -685,6 +693,7 @@ class Locks(AbstractLocks):
                 "omnitec",
                 "kisi",
                 "yacan",
+                "tuya",
             ]
         ] = None,
     ) -> List[Device]:
@@ -933,6 +942,7 @@ class AsyncLocks(AbstractAsyncLocks):
                 "omnitec_lock",
                 "kisi_lock",
                 "aqara_lock",
+                "tuya_lock",
                 "eufy_lock",
             ]
         ] = None,
@@ -973,6 +983,7 @@ class AsyncLocks(AbstractAsyncLocks):
                     "omnitec_lock",
                     "kisi_lock",
                     "aqara_lock",
+                    "tuya_lock",
                     "eufy_lock",
                 ]
             ]
@@ -1015,6 +1026,7 @@ class AsyncLocks(AbstractAsyncLocks):
                 "omnitec",
                 "kisi",
                 "yacan",
+                "tuya",
             ]
         ] = None,
     ) -> List[Device]:

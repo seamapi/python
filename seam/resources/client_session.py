@@ -36,8 +36,6 @@ class ClientSession:
 
     :ivar user_identity_id: ID of the `user identity <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with the client session.
 
-    :ivar user_identity_ids: Deprecated: Use ``user_identity_id`` instead. IDs of the `user identities <https://www.seam.co/docs/capability-guides/mobile-access/managing-mobile-app-user-accounts-with-user-identities#what-is-a-user-identity>`_ associated with the client session.
-
     :ivar workspace_id: ID of the workspace associated with the client session."""
 
     client_session_id: str
@@ -50,7 +48,6 @@ class ClientSession:
     token: str
     user_identifier_key: Optional[str]
     user_identity_id: Optional[str]
-    user_identity_ids: List[str]
     workspace_id: str
 
     @classmethod
@@ -66,6 +63,5 @@ class ClientSession:
             token=d.get("token", None),
             user_identifier_key=d.get("user_identifier_key", None),
             user_identity_id=d.get("user_identity_id", None),
-            user_identity_ids=d.get("user_identity_ids", None),
             workspace_id=d.get("workspace_id", None),
         )

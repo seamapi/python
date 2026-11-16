@@ -85,9 +85,11 @@ class Device:
 
     :ivar errors: Array of errors associated with the device. Each error object within the array contains two fields: ``error_code`` and ``message``. ``error_code`` is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. ``message`` provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.
 
+    :ivar estimated_occupant_count: Estimated number of occupants detected by the device.
+
     :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
-    :ivar is_occupied: Indicates whether the device detects that the space is occupied, if the device measures occupancy.
+    :ivar is_occupancy_detected: Indicates whether the device detects occupancy.
 
     :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
 
@@ -102,8 +104,6 @@ class Device:
     :ivar noise_level_decibels: Noise level in decibels, if the device measures noise.
 
     :ivar noise_level_nrs: Noise level as a Noise Risk Score (NRS), if the device reports one.
-
-    :ivar occupant_count: Number of occupants the device detects, if the device counts occupants.
 
     :ivar properties: Properties of the device.
 
@@ -576,15 +576,11 @@ class Device:
 
         :ivar room_name: Name of the room within the device location, when the provider reports one.
 
-        :ivar time_zone: Time zone of the device location.
-
-        :ivar timezone: Deprecated: Use ``time_zone`` instead. Time zone of the device location.
-        """
+        :ivar time_zone: Time zone of the device location."""
 
         location_name: Optional[str]
         room_name: Optional[str]
         time_zone: Optional[str]
-        timezone: Optional[str]
 
         @classmethod
         def from_dict(cls, d: Any):
@@ -592,7 +588,6 @@ class Device:
                 location_name=d.get("location_name", None),
                 room_name=d.get("room_name", None),
                 time_zone=d.get("time_zone", None),
-                timezone=d.get("timezone", None),
             )
 
     @dataclass
@@ -607,7 +602,9 @@ class Device:
 
         :ivar display_name: Display name of the sensor. Defaults to ``sensor_name``.
 
-        :ivar is_occupied: Indicates whether the device detects that the space is occupied, if the device measures occupancy.
+        :ivar estimated_occupant_count: Estimated number of occupants detected by the device.
+
+        :ivar is_occupancy_detected: Indicates whether the device detects occupancy.
 
         :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
 
@@ -616,8 +613,6 @@ class Device:
         :ivar noise_level_decibels: Noise level in decibels, if the device measures noise.
 
         :ivar noise_level_nrs: Noise level as a Noise Risk Score (NRS), if the device reports one.
-
-        :ivar occupant_count: Number of occupants the device detects, if the device counts occupants.
 
         :ivar relative_humidity: Relative humidity, as a value between 0 and 1, inclusive, if the device measures humidity.
 
@@ -632,12 +627,12 @@ class Device:
         co2_ppm: Optional[float]
         co_ppm: Optional[float]
         display_name: str
-        is_occupied: Optional[bool]
+        estimated_occupant_count: Optional[float]
+        is_occupancy_detected: Optional[bool]
         is_smoking_detected: Optional[bool]
         mold_risk_level: Optional[str]
         noise_level_decibels: Optional[float]
         noise_level_nrs: Optional[float]
-        occupant_count: Optional[float]
         relative_humidity: Optional[float]
         sensor_name: str
         temperature_celsius: Optional[float]
@@ -650,12 +645,12 @@ class Device:
                 co2_ppm=d.get("co2_ppm", None),
                 co_ppm=d.get("co_ppm", None),
                 display_name=d.get("display_name", None),
-                is_occupied=d.get("is_occupied", None),
+                estimated_occupant_count=d.get("estimated_occupant_count", None),
+                is_occupancy_detected=d.get("is_occupancy_detected", None),
                 is_smoking_detected=d.get("is_smoking_detected", None),
                 mold_risk_level=d.get("mold_risk_level", None),
                 noise_level_decibels=d.get("noise_level_decibels", None),
                 noise_level_nrs=d.get("noise_level_nrs", None),
-                occupant_count=d.get("occupant_count", None),
                 relative_humidity=d.get("relative_humidity", None),
                 sensor_name=d.get("sensor_name", None),
                 temperature_celsius=d.get("temperature_celsius", None),
@@ -690,17 +685,9 @@ class Device:
 
         :ivar noise_level_decibels: Indicates current noise level in decibels, if the device supports noise detection.
 
-        :ivar offline_access_codes_enabled: Deprecated: use device.can_program_offline_access_codes Indicates whether it is currently possible to use offline access codes for the device.
-
         :ivar online: Indicates whether the device is online.
 
-        :ivar online_access_codes_enabled: Deprecated: use device.can_program_online_access_codes Indicates whether it is currently possible to use online access codes for the device.
-
         :ivar serial_number: Serial number of the device.
-
-        :ivar supports_accessory_keypad: Deprecated: use device.properties.model.can_connect_accessory_keypad
-
-        :ivar supports_offline_access_codes: Deprecated: use offline_access_codes_enabled
 
         :ivar assa_abloy_credential_service_metadata: ASSA ABLOY Credential Service metadata for the phone.
 
@@ -766,13 +753,13 @@ class Device:
 
         :ivar salto_ks_metadata: Metadata for a Salto KS device.
 
-        :ivar salto_metadata: Deprecated: Use ``salto_ks_metadata`` instead. Metada for a Salto device.
-
         :ivar schlage_metadata: Metadata for a Schlage device.
 
         :ivar seam_bridge_metadata: Metadata for Seam Bridge.
 
         :ivar sensi_metadata: Metadata for a Sensi device.
+
+        :ivar sensibo_metadata: Metadata for a Sensibo device.
 
         :ivar smartthings_metadata: Metadata for a SmartThings device.
 
@@ -783,6 +770,8 @@ class Device:
         :ivar tedee_metadata: Metadata for a Tedee device.
 
         :ivar ttlock_metadata: Metadata for a TTLock device.
+
+        :ivar tuya_metadata: Metadata for a Tuya device.
 
         :ivar two_n_metadata: Metadata for a 2N device.
 
@@ -810,7 +799,7 @@ class Device:
 
         :ivar has_native_entry_events: Indicates whether the device supports native entry events.
 
-        :ivar keypad_battery: Keypad battery status.
+        :ivar keypad_battery: Deprecated: Use ``accessory_keypad.battery`` instead. Keypad battery status.
 
         :ivar locked: Indicates whether the lock is locked.
 
@@ -824,8 +813,6 @@ class Device:
 
         :ivar supports_backup_access_code_pool: Indicates whether the device supports a `backup access code pool <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes/backup-access-codes>`_.
 
-        :ivar active_thermostat_schedule: Deprecated: Use ``active_thermostat_schedule_id`` with ``/thermostats/schedules/get`` instead. Active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
         :ivar active_thermostat_schedule_id: ID of the active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
         :ivar available_climate_preset_modes: Climate preset modes that the thermostat supports, such as "home", "away", "wake", "sleep", "occupied", and "unoccupied".
@@ -838,11 +825,7 @@ class Device:
 
         :ivar current_climate_setting: Current climate setting.
 
-        :ivar default_climate_setting: Deprecated: use fallback_climate_preset_key to specify a fallback climate preset instead.
-
         :ivar fallback_climate_preset_key: Key of the `fallback climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets/setting-the-fallback-climate-preset>`_ for the thermostat.
-
-        :ivar fan_mode_setting: Deprecated: Use ``current_climate_setting.fan_mode_setting`` instead.
 
         :ivar is_cooling: Indicates whether the connected HVAC system is currently cooling, as reported by the thermostat.
 
@@ -966,8 +949,6 @@ class Device:
         class Model(ResourceMapping):
             """Device model-related properties.
 
-            :ivar accessory_keypad_supported: Deprecated: use device.properties.model.can_connect_accessory_keypad
-
             :ivar can_connect_accessory_keypad: Indicates whether the device can connect a accessory keypad.
 
             :ivar display_name: Display name of the device model.
@@ -975,38 +956,22 @@ class Device:
             :ivar has_built_in_keypad: Indicates whether the device has a built in accessory keypad.
 
             :ivar manufacturer_display_name: Display name that corresponds to the manufacturer-specific terminology for the device.
-
-            :ivar offline_access_codes_supported: Deprecated: use device.can_program_offline_access_codes.
-
-            :ivar online_access_codes_supported: Deprecated: use device.can_program_online_access_codes.
             """
 
-            accessory_keypad_supported: Optional[bool]
             can_connect_accessory_keypad: Optional[bool]
             display_name: str
             has_built_in_keypad: Optional[bool]
             manufacturer_display_name: str
-            offline_access_codes_supported: Optional[bool]
-            online_access_codes_supported: Optional[bool]
 
             @classmethod
             def from_dict(cls, d: Any):
                 return cls(
-                    accessory_keypad_supported=d.get(
-                        "accessory_keypad_supported", None
-                    ),
                     can_connect_accessory_keypad=d.get(
                         "can_connect_accessory_keypad", None
                     ),
                     display_name=d.get("display_name", None),
                     has_built_in_keypad=d.get("has_built_in_keypad", None),
                     manufacturer_display_name=d.get("manufacturer_display_name", None),
-                    offline_access_codes_supported=d.get(
-                        "offline_access_codes_supported", None
-                    ),
-                    online_access_codes_supported=d.get(
-                        "online_access_codes_supported", None
-                    ),
                 )
 
         @dataclass
@@ -1366,8 +1331,6 @@ class Device:
 
             :ivar predefined_time_slots: Predefined time slots for a dormakaba Oracode device.
 
-            :ivar site_id: Deprecated: Previously marked as "@DEPRECATED." Site ID for a dormakaba Oracode device.
-
             :ivar site_name: Site name for a dormakaba Oracode device."""
 
             @dataclass
@@ -1430,7 +1393,6 @@ class Device:
             door_name: Optional[str]
             iana_timezone: Optional[str]
             predefined_time_slots: Optional[List[PredefinedTimeSlots]]
-            site_id: Optional[float]
             site_name: Optional[str]
 
             @classmethod
@@ -1445,7 +1407,6 @@ class Device:
                         cls.PredefinedTimeSlots.from_dict(i)
                         for i in d.get("predefined_time_slots") or []
                     ],
-                    site_id=d.get("site_id", None),
                     site_name=d.get("site_name", None),
                 )
 
@@ -2206,49 +2167,6 @@ class Device:
                 )
 
         @dataclass
-        class SaltoMetadata(ResourceMapping):
-            """Metada for a Salto device.
-
-            :ivar battery_level: Battery level for a Salto device.
-
-            :ivar customer_reference: Customer reference for a Salto device.
-
-            :ivar lock_id: Lock ID for a Salto device.
-
-            :ivar lock_type: Lock type for a Salto device.
-
-            :ivar locked_state: Locked state for a Salto device.
-
-            :ivar model: Model for a Salto device.
-
-            :ivar site_id: Site ID for the Salto KS site to which the device belongs.
-
-            :ivar site_name: Site name for the Salto KS site to which the device belongs.
-            """
-
-            battery_level: Optional[str]
-            customer_reference: Optional[str]
-            lock_id: Optional[str]
-            lock_type: Optional[str]
-            locked_state: Optional[str]
-            model: Optional[str]
-            site_id: Optional[str]
-            site_name: Optional[str]
-
-            @classmethod
-            def from_dict(cls, d: Any):
-                return cls(
-                    battery_level=d.get("battery_level", None),
-                    customer_reference=d.get("customer_reference", None),
-                    lock_id=d.get("lock_id", None),
-                    lock_type=d.get("lock_type", None),
-                    locked_state=d.get("locked_state", None),
-                    model=d.get("model", None),
-                    site_id=d.get("site_id", None),
-                    site_name=d.get("site_name", None),
-                )
-
-        @dataclass
         class SchlageMetadata(ResourceMapping):
             """Metadata for a Schlage device.
 
@@ -2300,13 +2218,10 @@ class Device:
 
             :ivar device_name: Device name for a Sensi device.
 
-            :ivar dual_setpoints_not_supported: Deprecated. Seam no longer sets this field.
-
             :ivar product_type: Product type for a Sensi device."""
 
             device_id: Optional[str]
             device_name: Optional[str]
-            dual_setpoints_not_supported: Optional[bool]
             product_type: Optional[str]
 
             @classmethod
@@ -2314,10 +2229,46 @@ class Device:
                 return cls(
                     device_id=d.get("device_id", None),
                     device_name=d.get("device_name", None),
-                    dual_setpoints_not_supported=d.get(
-                        "dual_setpoints_not_supported", None
-                    ),
                     product_type=d.get("product_type", None),
+                )
+
+        @dataclass
+        class SensiboMetadata(ResourceMapping):
+            """Metadata for a Sensibo device.
+
+            :ivar firmware_version: Firmware version of the Sensibo device.
+
+            :ivar mac_address: MAC address of the Sensibo device.
+
+            :ivar pod_id: ID of the Sensibo device, which Sensibo calls a pod.
+
+            :ivar product_model: Product model of the Sensibo device, such as ``skyv2`` or ``air``.
+
+            :ivar room_name: Name of the room that the Sensibo device is in.
+
+            :ivar serial_number: Serial number of the Sensibo device.
+
+            :ivar temperature_unit: Temperature unit that the Sensibo device displays: ``C`` or ``F``.
+            """
+
+            firmware_version: Optional[str]
+            mac_address: Optional[str]
+            pod_id: Optional[str]
+            product_model: Optional[str]
+            room_name: Optional[str]
+            serial_number: Optional[str]
+            temperature_unit: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    firmware_version=d.get("firmware_version", None),
+                    mac_address=d.get("mac_address", None),
+                    pod_id=d.get("pod_id", None),
+                    product_model=d.get("product_model", None),
+                    room_name=d.get("room_name", None),
+                    serial_number=d.get("serial_number", None),
+                    temperature_unit=d.get("temperature_unit", None),
                 )
 
         @dataclass
@@ -2555,6 +2506,44 @@ class Device:
                         cls.WirelessKeypads.from_dict(i)
                         for i in d.get("wireless_keypads") or []
                     ],
+                )
+
+        @dataclass
+        class TuyaMetadata(ResourceMapping):
+            """Metadata for a Tuya device.
+
+            :ivar category: Tuya product category code for the device (e.g. ms).
+
+            :ivar device_id: Device ID for a Tuya device.
+
+            :ivar device_name: Device name for a Tuya device.
+
+            :ivar model: Model reported for a Tuya device.
+
+            :ivar product_id: Tuya product ID for the device.
+
+            :ivar product_name: Tuya product name for the device.
+
+            :ivar time_zone: Time zone reported for a Tuya device (e.g. +08:00)."""
+
+            category: Optional[str]
+            device_id: Optional[str]
+            device_name: Optional[str]
+            model: Optional[str]
+            product_id: Optional[str]
+            product_name: Optional[str]
+            time_zone: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    category=d.get("category", None),
+                    device_id=d.get("device_id", None),
+                    device_name=d.get("device_name", None),
+                    model=d.get("model", None),
+                    product_id=d.get("product_id", None),
+                    product_name=d.get("product_name", None),
+                    time_zone=d.get("time_zone", None),
                 )
 
         @dataclass
@@ -2945,86 +2934,6 @@ class Device:
                 )
 
         @dataclass
-        class ActiveThermostatSchedule(ResourceMapping):
-            """Active `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-            :ivar climate_preset_key: Key of the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ to use for the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-            :ivar created_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ was created.
-
-            :ivar device_id: ID of the desired `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ device.
-
-            :ivar ends_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-            :ivar errors: Errors associated with the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-            :ivar is_override_allowed: Indicates whether a person at the thermostat can change the thermostat's settings after the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts.
-
-            :ivar max_override_period_minutes: Number of minutes for which a person at the thermostat can change the thermostat's settings after the activation of the scheduled `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_. See also `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
-
-            :ivar name: User-friendly name to identify the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-            :ivar starts_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
-
-            :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-            :ivar workspace_id: ID of the workspace that contains the thermostat schedule.
-            """
-
-            @dataclass
-            class Errors(ResourceMapping):
-                """Errors associated with the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
-
-                :ivar created_at: Date and time at which Seam created the error.
-
-                :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
-
-                :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
-                """
-
-                created_at: str
-                error_code: str
-                message: str
-
-                @classmethod
-                def from_dict(cls, d: Any):
-                    return cls(
-                        created_at=d.get("created_at", None),
-                        error_code=d.get("error_code", None),
-                        message=d.get("message", None),
-                    )
-
-            climate_preset_key: str
-            created_at: str
-            device_id: str
-            ends_at: str
-            errors: List[Errors]
-            is_override_allowed: Optional[bool]
-            max_override_period_minutes: Optional[int]
-            name: Optional[str]
-            starts_at: str
-            thermostat_schedule_id: str
-            workspace_id: str
-
-            @classmethod
-            def from_dict(cls, d: Any):
-                return cls(
-                    climate_preset_key=d.get("climate_preset_key", None),
-                    created_at=d.get("created_at", None),
-                    device_id=d.get("device_id", None),
-                    ends_at=d.get("ends_at", None),
-                    errors=[cls.Errors.from_dict(i) for i in d.get("errors") or []],
-                    is_override_allowed=d.get("is_override_allowed", None),
-                    max_override_period_minutes=d.get(
-                        "max_override_period_minutes", None
-                    ),
-                    name=d.get("name", None),
-                    starts_at=d.get("starts_at", None),
-                    thermostat_schedule_id=d.get("thermostat_schedule_id", None),
-                    workspace_id=d.get("workspace_id", None),
-                )
-
-        @dataclass
         class AvailableClimatePresets(ResourceMapping):
             """Available `climate presets <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ for the thermostat.
 
@@ -3053,8 +2962,6 @@ class Device:
             :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
 
             :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
 
             :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
             """
@@ -3099,7 +3006,6 @@ class Device:
             hvac_mode_setting: Optional[
                 Literal["off", "heat", "cool", "heat_cool", "eco"]
             ]
-            manual_override_allowed: bool
             name: Optional[str]
 
             @classmethod
@@ -3128,7 +3034,6 @@ class Device:
                         "heating_set_point_fahrenheit", None
                     ),
                     hvac_mode_setting=d.get("hvac_mode_setting", None),
-                    manual_override_allowed=d.get("manual_override_allowed", None),
                     name=d.get("name", None),
                 )
 
@@ -3162,8 +3067,6 @@ class Device:
 
             :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
 
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
-
             :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
             """
 
@@ -3207,7 +3110,6 @@ class Device:
             hvac_mode_setting: Optional[
                 Literal["off", "heat", "cool", "heat_cool", "eco"]
             ]
-            manual_override_allowed: Optional[bool]
             name: Optional[str]
 
             @classmethod
@@ -3236,115 +3138,6 @@ class Device:
                         "heating_set_point_fahrenheit", None
                     ),
                     hvac_mode_setting=d.get("hvac_mode_setting", None),
-                    manual_override_allowed=d.get("manual_override_allowed", None),
-                    name=d.get("name", None),
-                )
-
-        @dataclass
-        class DefaultClimateSetting(ResourceMapping):
-            """
-
-            :ivar can_delete: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be deleted.
-
-            :ivar can_edit: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be edited.
-
-            :ivar can_use_with_thermostat_daily_programs: Indicates whether the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ key can be programmed in a thermostat daily program.
-
-            :ivar climate_preset_key: Unique key to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-            :ivar climate_preset_mode: The climate preset mode for the thermostat, based on the available climate preset modes reported by the device.
-
-            :ivar cooling_set_point_celsius: Temperature to which the thermostat should cool (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-
-            :ivar cooling_set_point_fahrenheit: Temperature to which the thermostat should cool (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-
-            :ivar display_name: Display name for the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-
-            :ivar ecobee_metadata: Metadata specific to the Ecobee climate, if applicable.
-
-            :ivar fan_mode_setting: Desired `fan mode setting <https://www.seam.co/docs/capability-guides/thermostats/configure-current-climate-settings#fan-mode-settings>`_, such as ``on``, ``auto``, or ``circulate``.
-
-            :ivar heating_set_point_celsius: Temperature to which the thermostat should heat (in °C). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-
-            :ivar heating_set_point_fahrenheit: Temperature to which the thermostat should heat (in °F). See also `Set Points <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/set-points>`_.
-
-            :ivar hvac_mode_setting: Desired `HVAC mode <https://www.seam.co/docs/capability-guides/thermostats/understanding-thermostat-concepts/hvac-mode>`_ setting, such as ``heat``, ``cool``, ``heat_cool``, or ``off``.
-
-            :ivar manual_override_allowed: Deprecated: Use 'thermostat_schedule.is_override_allowed' Indicates whether a person at the thermostat can change the thermostat's settings. See `Specifying Manual Override Permissions <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules#specifying-manual-override-permissions>`_.
-
-            :ivar name: User-friendly name to identify the `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_.
-            """
-
-            @dataclass
-            class EcobeeMetadata(ResourceMapping):
-                """Metadata specific to the Ecobee climate, if applicable.
-
-                :ivar climate_ref: Reference to the Ecobee climate, if applicable.
-
-                :ivar is_optimized: Indicates if the climate preset is optimized by Ecobee.
-
-                :ivar owner: Indicates whether the climate preset is owned by the user or the system.
-                """
-
-                climate_ref: Optional[str]
-                is_optimized: Optional[bool]
-                owner: Optional[Literal["user", "system"]]
-
-                @classmethod
-                def from_dict(cls, d: Any):
-                    return cls(
-                        climate_ref=d.get("climate_ref", None),
-                        is_optimized=d.get("is_optimized", None),
-                        owner=d.get("owner", None),
-                    )
-
-            can_delete: Optional[bool]
-            can_edit: Optional[bool]
-            can_use_with_thermostat_daily_programs: Optional[bool]
-            climate_preset_key: Optional[str]
-            climate_preset_mode: Optional[
-                Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]
-            ]
-            cooling_set_point_celsius: Optional[float]
-            cooling_set_point_fahrenheit: Optional[float]
-            display_name: Optional[str]
-            ecobee_metadata: Optional[EcobeeMetadata]
-            fan_mode_setting: Optional[Literal["auto", "on", "circulate"]]
-            heating_set_point_celsius: Optional[float]
-            heating_set_point_fahrenheit: Optional[float]
-            hvac_mode_setting: Optional[
-                Literal["off", "heat", "cool", "heat_cool", "eco"]
-            ]
-            manual_override_allowed: Optional[bool]
-            name: Optional[str]
-
-            @classmethod
-            def from_dict(cls, d: Any):
-                return cls(
-                    can_delete=d.get("can_delete", None),
-                    can_edit=d.get("can_edit", None),
-                    can_use_with_thermostat_daily_programs=d.get(
-                        "can_use_with_thermostat_daily_programs", None
-                    ),
-                    climate_preset_key=d.get("climate_preset_key", None),
-                    climate_preset_mode=d.get("climate_preset_mode", None),
-                    cooling_set_point_celsius=d.get("cooling_set_point_celsius", None),
-                    cooling_set_point_fahrenheit=d.get(
-                        "cooling_set_point_fahrenheit", None
-                    ),
-                    display_name=d.get("display_name", None),
-                    ecobee_metadata=(
-                        cls.EcobeeMetadata.from_dict(d.get("ecobee_metadata"))
-                        if d.get("ecobee_metadata") is not None
-                        else None
-                    ),
-                    fan_mode_setting=d.get("fan_mode_setting", None),
-                    heating_set_point_celsius=d.get("heating_set_point_celsius", None),
-                    heating_set_point_fahrenheit=d.get(
-                        "heating_set_point_fahrenheit", None
-                    ),
-                    hvac_mode_setting=d.get("hvac_mode_setting", None),
-                    manual_override_allowed=d.get("manual_override_allowed", None),
                     name=d.get("name", None),
                 )
 
@@ -3486,12 +3279,8 @@ class Device:
         model: Optional[Model]
         name: str
         noise_level_decibels: Optional[float]
-        offline_access_codes_enabled: Optional[bool]
         online: bool
-        online_access_codes_enabled: Optional[bool]
         serial_number: Optional[str]
-        supports_accessory_keypad: Optional[bool]
-        supports_offline_access_codes: Optional[bool]
         assa_abloy_credential_service_metadata: Optional[
             AssaAbloyCredentialServiceMetadata
         ]
@@ -3528,15 +3317,16 @@ class Device:
         reolink_metadata: Optional[ReolinkMetadata]
         ring_metadata: Optional[RingMetadata]
         salto_ks_metadata: Optional[SaltoKsMetadata]
-        salto_metadata: Optional[SaltoMetadata]
         schlage_metadata: Optional[SchlageMetadata]
         seam_bridge_metadata: Optional[SeamBridgeMetadata]
         sensi_metadata: Optional[SensiMetadata]
+        sensibo_metadata: Optional[SensiboMetadata]
         smartthings_metadata: Optional[SmartthingsMetadata]
         tado_metadata: Optional[TadoMetadata]
         tapo_metadata: Optional[TapoMetadata]
         tedee_metadata: Optional[TedeeMetadata]
         ttlock_metadata: Optional[TtlockMetadata]
+        tuya_metadata: Optional[TuyaMetadata]
         two_n_metadata: Optional[TwoNMetadata]
         ultraloq_metadata: Optional[UltraloqMetadata]
         unifi_protect_metadata: Optional[UnifiProtectMetadata]
@@ -3557,7 +3347,6 @@ class Device:
         online_time_frame_options: Optional[List[OnlineTimeFrameOptions]]
         supported_code_lengths: Optional[List[float]]
         supports_backup_access_code_pool: Optional[bool]
-        active_thermostat_schedule: Optional[ActiveThermostatSchedule]
         active_thermostat_schedule_id: Optional[str]
         available_climate_preset_modes: Optional[
             List[Literal["home", "away", "wake", "sleep", "occupied", "unoccupied"]]
@@ -3568,9 +3357,7 @@ class Device:
             List[Literal["off", "heat", "cool", "heat_cool", "eco"]]
         ]
         current_climate_setting: Optional[CurrentClimateSetting]
-        default_climate_setting: Optional[DefaultClimateSetting]
         fallback_climate_preset_key: Optional[str]
-        fan_mode_setting: Optional[Literal["auto", "on", "circulate"]]
         is_cooling: Optional[bool]
         is_fan_running: Optional[bool]
         is_heating: Optional[bool]
@@ -3628,16 +3415,8 @@ class Device:
                 ),
                 name=d.get("name", None),
                 noise_level_decibels=d.get("noise_level_decibels", None),
-                offline_access_codes_enabled=d.get(
-                    "offline_access_codes_enabled", None
-                ),
                 online=d.get("online", None),
-                online_access_codes_enabled=d.get("online_access_codes_enabled", None),
                 serial_number=d.get("serial_number", None),
-                supports_accessory_keypad=d.get("supports_accessory_keypad", None),
-                supports_offline_access_codes=d.get(
-                    "supports_offline_access_codes", None
-                ),
                 assa_abloy_credential_service_metadata=(
                     cls.AssaAbloyCredentialServiceMetadata.from_dict(
                         d.get("assa_abloy_credential_service_metadata")
@@ -3810,11 +3589,6 @@ class Device:
                     if d.get("salto_ks_metadata") is not None
                     else None
                 ),
-                salto_metadata=(
-                    cls.SaltoMetadata.from_dict(d.get("salto_metadata"))
-                    if d.get("salto_metadata") is not None
-                    else None
-                ),
                 schlage_metadata=(
                     cls.SchlageMetadata.from_dict(d.get("schlage_metadata"))
                     if d.get("schlage_metadata") is not None
@@ -3828,6 +3602,11 @@ class Device:
                 sensi_metadata=(
                     cls.SensiMetadata.from_dict(d.get("sensi_metadata"))
                     if d.get("sensi_metadata") is not None
+                    else None
+                ),
+                sensibo_metadata=(
+                    cls.SensiboMetadata.from_dict(d.get("sensibo_metadata"))
+                    if d.get("sensibo_metadata") is not None
                     else None
                 ),
                 smartthings_metadata=(
@@ -3853,6 +3632,11 @@ class Device:
                 ttlock_metadata=(
                     cls.TtlockMetadata.from_dict(d.get("ttlock_metadata"))
                     if d.get("ttlock_metadata") is not None
+                    else None
+                ),
+                tuya_metadata=(
+                    cls.TuyaMetadata.from_dict(d.get("tuya_metadata"))
+                    if d.get("tuya_metadata") is not None
                     else None
                 ),
                 two_n_metadata=(
@@ -3920,13 +3704,6 @@ class Device:
                 supports_backup_access_code_pool=d.get(
                     "supports_backup_access_code_pool", None
                 ),
-                active_thermostat_schedule=(
-                    cls.ActiveThermostatSchedule.from_dict(
-                        d.get("active_thermostat_schedule")
-                    )
-                    if d.get("active_thermostat_schedule") is not None
-                    else None
-                ),
                 active_thermostat_schedule_id=d.get(
                     "active_thermostat_schedule_id", None
                 ),
@@ -3948,15 +3725,7 @@ class Device:
                     if d.get("current_climate_setting") is not None
                     else None
                 ),
-                default_climate_setting=(
-                    cls.DefaultClimateSetting.from_dict(
-                        d.get("default_climate_setting")
-                    )
-                    if d.get("default_climate_setting") is not None
-                    else None
-                ),
                 fallback_climate_preset_key=d.get("fallback_climate_preset_key", None),
-                fan_mode_setting=d.get("fan_mode_setting", None),
                 is_cooling=d.get("is_cooling", None),
                 is_fan_running=d.get("is_fan_running", None),
                 is_heating=d.get("is_heating", None),
@@ -4530,6 +4299,29 @@ class Device:
             )
 
     @dataclass
+    class ServiceModeWarning(ResourceMapping):
+        """Indicates that a technician has put the pool controller in service mode. Schedules and remote changes will not run until it is switched back.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["service_mode"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class ProviderIssueWarning(ResourceMapping):
         """Indicates a provider-specific issue that may affect device functionality.
 
@@ -4678,6 +4470,29 @@ class Device:
             )
 
     @dataclass
+    class SubscriptionRequiredForAdditionalCapabilitiesWarning(ResourceMapping):
+        """Indicates that a third-party subscription is required to enable additional device capabilities.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["subscription_required_for_additional_capabilities"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class CloudRecordingNotEnabledWarning(ResourceMapping):
         """Indicates that the camera's account plan does not include cloud recording, so event media such as motion clips is unavailable.
 
@@ -4756,12 +4571,14 @@ class Device:
         TimeZoneMismatchWarning,
         TwoNDeviceMissingTimezoneWarning,
         HubRequiredForAdditionalCapabilitiesWarning,
+        ServiceModeWarning,
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
         AccessoryKeypadLowBatteryWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
+        SubscriptionRequiredForAdditionalCapabilitiesWarning,
         CloudRecordingNotEnabledWarning,
     ]
     _WarningsVariants = {
@@ -4787,12 +4604,14 @@ class Device:
         "time_zone_mismatch": TimeZoneMismatchWarning,
         "two_n_device_missing_timezone": TwoNDeviceMissingTimezoneWarning,
         "hub_required_for_additional_capabilities": HubRequiredForAdditionalCapabilitiesWarning,
+        "service_mode": ServiceModeWarning,
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
         "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
+        "subscription_required_for_additional_capabilities": SubscriptionRequiredForAdditionalCapabilitiesWarning,
         "cloud_recording_not_enabled": CloudRecordingNotEnabledWarning,
     }
 
@@ -4821,7 +4640,13 @@ class Device:
     can_unlock_with_code: Optional[bool]
     capabilities_supported: List[
         Literal[
-            "access_code", "lock", "noise_detection", "thermostat", "battery", "phone"
+            "access_code",
+            "lock",
+            "noise_detection",
+            "thermostat",
+            "battery",
+            "phone",
+            "pool",
         ]
     ]
     co2_ppm: Optional[float]
@@ -4867,6 +4692,7 @@ class Device:
         "omnitec_lock",
         "kisi_lock",
         "aqara_lock",
+        "tuya_lock",
         "eufy_lock",
         "keynest_key",
         "noiseaware_activity_zone",
@@ -4876,6 +4702,7 @@ class Device:
         "honeywell_resideo_thermostat",
         "tado_thermostat",
         "sensi_thermostat",
+        "sensibo_thermostat",
         "smartthings_thermostat",
         "ios_phone",
         "android_phone",
@@ -4886,11 +4713,14 @@ class Device:
         "unifi_protect_camera",
         "sonos_speaker",
         "alertify_sensor",
+        "hayward_pool_system",
+        "hayward_pool",
     ]
     display_name: str
     errors: List[Errors]
+    estimated_occupant_count: Optional[float]
     is_managed: Literal[True]
-    is_occupied: Optional[bool]
+    is_occupancy_detected: Optional[bool]
     is_smoking_detected: Optional[bool]
     location: Optional[Location]
     mold_risk_level: Optional[str]
@@ -4898,7 +4728,6 @@ class Device:
     nickname: Optional[str]
     noise_level_decibels: Optional[float]
     noise_level_nrs: Optional[float]
-    occupant_count: Optional[float]
     properties: Optional[Properties]
     relative_humidity: Optional[float]
     space_ids: List[str]
@@ -4970,8 +4799,9 @@ class Device:
                 _from_discriminated_dict(i, cls._ErrorsVariants, "error_code")
                 for i in d.get("errors") or []
             ],
+            estimated_occupant_count=d.get("estimated_occupant_count", None),
             is_managed=d.get("is_managed", None),
-            is_occupied=d.get("is_occupied", None),
+            is_occupancy_detected=d.get("is_occupancy_detected", None),
             is_smoking_detected=d.get("is_smoking_detected", None),
             location=(
                 cls.Location.from_dict(d.get("location"))
@@ -4985,7 +4815,6 @@ class Device:
             nickname=d.get("nickname", None),
             noise_level_decibels=d.get("noise_level_decibels", None),
             noise_level_nrs=d.get("noise_level_nrs", None),
-            occupant_count=d.get("occupant_count", None),
             properties=(
                 cls.Properties.from_dict(d.get("properties"))
                 if d.get("properties") is not None
