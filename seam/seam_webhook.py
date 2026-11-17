@@ -1,10 +1,13 @@
+import os
 from json import JSONDecodeError
-from typing import Dict
+from typing import Dict, overload
 
 from svix.webhooks import Webhook
 
 from .exceptions import SeamInvalidWebhookPayloadError
 from .resources import SeamEvent, seam_event_from_dict
+
+_MISSING = object()
 
 
 class SeamWebhook:
@@ -15,11 +18,29 @@ class SeamWebhook:
     is not a readable event raises ``SeamInvalidWebhookPayloadError``.
     """
 
-    def __init__(self, secret: str):
+    @overload
+    def __init__(self): ...
+
+    @overload
+    def __init__(self, secret: str): ...
+
+    def __init__(self, secret: object = _MISSING):
         """
-        :param secret: The secret key used for webhook verification.
+        :param secret: The secret key used for webhook verification. Only when
+            omitted, reads SEAM_WEBHOOK_SECRET at construction time. An explicit
+            secret takes precedence; None and empty strings are invalid.
         :type secret: str
+        :raises TypeError: If an explicit secret is not a string.
+        :raises ValueError: If the effective secret is missing or empty.
         """
+        if secret is _MISSING:
+            secret = os.getenv("SEAM_WEBHOOK_SECRET", "")
+        if not isinstance(secret, str):
+            raise TypeError("Webhook secret must be a string.")
+        if not secret:
+            raise ValueError(
+                "A webhook secret is required: pass secret or set SEAM_WEBHOOK_SECRET."
+            )
         self._webhook = Webhook(secret)
 
     def verify(self, payload: str, headers: Dict[str, str]) -> SeamEvent:
