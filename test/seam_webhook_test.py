@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 import pytest
+from standardwebhooks.webhooks import EmptyWebhookSecretError
 from svix.webhooks import Webhook, WebhookVerificationError
 
 from seam import (
@@ -43,6 +44,77 @@ def test_verifies_and_parses_a_signed_event():
 
     assert event.event_type == "device.connected"
     assert event.event_id == "11111111-1111-1111-1111-111111111111"
+
+
+@pytest.mark.parametrize("kwargs", [{}, {"secret": None}])
+def test_uses_the_environment_secret(monkeypatch, kwargs):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
+
+    webhook = SeamWebhook(**kwargs)
+    event = webhook.verify(EVENT_PAYLOAD, sign_headers(EVENT_PAYLOAD))
+
+    assert event.event_type == "device.connected"
+
+
+def test_an_explicit_secret_overrides_the_environment(monkeypatch):
+    env_secret = "WrongQ9r8GKYqrTwjUPD8ILPZIo2LaLa"
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", env_secret)
+
+    webhook = SeamWebhook(secret=SECRET)
+
+    assert webhook.verify(EVENT_PAYLOAD, sign_headers(EVENT_PAYLOAD)).event_type == (
+        "device.connected"
+    )
+    with pytest.raises(SeamWebhookVerificationError, match="No matching signature"):
+        webhook.verify(EVENT_PAYLOAD, sign_headers(EVENT_PAYLOAD, secret=env_secret))
+
+
+@pytest.mark.parametrize("env_secret", [None, ""])
+@pytest.mark.parametrize("kwargs", [{}, {"secret": None}])
+def test_missing_or_empty_environment_secret_fails_at_construction(
+    monkeypatch, env_secret, kwargs
+):
+    if env_secret is None:
+        monkeypatch.delenv("SEAM_WEBHOOK_SECRET", raising=False)
+    else:
+        monkeypatch.setenv("SEAM_WEBHOOK_SECRET", env_secret)
+
+    with pytest.raises(ValueError, match="SEAM_WEBHOOK_SECRET"):
+        SeamWebhook(**kwargs)
+
+
+def test_an_explicit_empty_secret_does_not_fall_back(monkeypatch):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
+
+    with pytest.raises(ValueError, match="webhook secret is required"):
+        SeamWebhook("")
+
+
+@pytest.mark.parametrize("env_secret", ["whsec_", "!!!"])
+def test_a_decoded_empty_environment_secret_fails_at_construction(
+    monkeypatch, env_secret
+):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", env_secret)
+
+    with pytest.raises(EmptyWebhookSecretError, match="secret may not be empty"):
+        SeamWebhook()
+
+
+def test_reads_the_environment_for_each_new_instance(monkeypatch):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
+    first = SeamWebhook()
+    other_secret = "WrongQ9r8GKYqrTwjUPD8ILPZIo2LaLa"
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", other_secret)
+    second = SeamWebhook()
+
+    first_headers = sign_headers(EVENT_PAYLOAD)
+    second_headers = sign_headers(EVENT_PAYLOAD, secret=other_secret)
+    assert first.verify(EVENT_PAYLOAD, first_headers).event_type == "device.connected"
+    assert second.verify(EVENT_PAYLOAD, second_headers).event_type == "device.connected"
+    with pytest.raises(SeamWebhookVerificationError, match="No matching signature"):
+        second.verify(EVENT_PAYLOAD, first_headers)
+    with pytest.raises(SeamWebhookVerificationError, match="No matching signature"):
+        first.verify(EVENT_PAYLOAD, second_headers)
 
 
 def test_accepts_mixed_case_headers():

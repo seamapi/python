@@ -594,6 +594,11 @@ Use it to parse and validate `Seam webhook events <https://docs.seam.co/latest/d
 
 Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/introduction>`_ for an in-depth guide on best-practices for handling webhooks in your application.
 
+Omit the secret (or pass ``None``) to read ``SEAM_WEBHOOK_SECRET`` when constructing
+``SeamWebhook()``. Pass ``SeamWebhook(secret="your-webhook-secret")`` to override
+the environment. A missing or empty effective secret raises ``ValueError`` at
+construction; an explicit empty string is invalid and does not fall back.
+
 This example is for `Flask <https://flask.palletsprojects.com/>`_,
 see the `Svix docs for more examples in specific frameworks <https://docs.svix.com/receiving/verifying-payloads/how>`_.
 
@@ -607,14 +612,13 @@ backoff schedule.
 
 .. code-block:: python
 
-  import os
-
   from flask import Flask, request
   from seam import SeamInvalidWebhookPayloadError, SeamWebhook, SeamWebhookVerificationError
 
   app = Flask(__name__)
 
-  webhook = SeamWebhook(os.getenv('SEAM_WEBHOOK_SECRET'))
+  # Set SEAM_WEBHOOK_SECRET before constructing the verifier.
+  webhook = SeamWebhook()
 
   @app.route('/webhook', methods=['POST'])
   def handle_webhook():
