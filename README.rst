@@ -594,10 +594,12 @@ Use it to parse and validate `Seam webhook events <https://docs.seam.co/latest/d
 
 Refer to the `Svix docs on Consuming Webhooks <https://docs.svix.com/receiving/introduction>`_ for an in-depth guide on best-practices for handling webhooks in your application.
 
-Omit the secret (or pass ``None``) to read ``SEAM_WEBHOOK_SECRET`` when constructing
-``SeamWebhook()``. Pass ``SeamWebhook(secret="your-webhook-secret")`` to override
-the environment. A missing or empty effective secret raises ``ValueError`` at
-construction; an explicit empty string is invalid and does not fall back.
+Omit the secret to read ``SEAM_WEBHOOK_SECRET`` when constructing ``SeamWebhook()``.
+Pass ``SeamWebhook(secret="your-webhook-secret")`` to override the environment.
+Explicit ``None`` or other non-string values raise ``TypeError``; they never fall
+back to the environment. A missing or empty effective secret raises ``ValueError``
+at construction; an explicit empty string is invalid and does not fall back.
+Invalid signing secrets are rejected by Svix at construction.
 
 This example is for `Flask <https://flask.palletsprojects.com/>`_,
 see the `Svix docs for more examples in specific frameworks <https://docs.svix.com/receiving/verifying-payloads/how>`_.

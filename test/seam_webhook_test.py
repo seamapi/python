@@ -1,3 +1,4 @@
+import binascii
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -46,11 +47,10 @@ def test_verifies_and_parses_a_signed_event():
     assert event.event_id == "11111111-1111-1111-1111-111111111111"
 
 
-@pytest.mark.parametrize("kwargs", [{}, {"secret": None}])
-def test_uses_the_environment_secret(monkeypatch, kwargs):
+def test_uses_the_environment_secret(monkeypatch):
     monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
 
-    webhook = SeamWebhook(**kwargs)
+    webhook = SeamWebhook()
     event = webhook.verify(EVENT_PAYLOAD, sign_headers(EVENT_PAYLOAD))
 
     assert event.event_type == "device.connected"
@@ -70,9 +70,8 @@ def test_an_explicit_secret_overrides_the_environment(monkeypatch):
 
 
 @pytest.mark.parametrize("env_secret", [None, ""])
-@pytest.mark.parametrize("kwargs", [{}, {"secret": None}])
 def test_missing_or_empty_environment_secret_fails_at_construction(
-    monkeypatch, env_secret, kwargs
+    monkeypatch, env_secret
 ):
     if env_secret is None:
         monkeypatch.delenv("SEAM_WEBHOOK_SECRET", raising=False)
@@ -80,7 +79,7 @@ def test_missing_or_empty_environment_secret_fails_at_construction(
         monkeypatch.setenv("SEAM_WEBHOOK_SECRET", env_secret)
 
     with pytest.raises(ValueError, match="SEAM_WEBHOOK_SECRET"):
-        SeamWebhook(**kwargs)
+        SeamWebhook()
 
 
 def test_an_explicit_empty_secret_does_not_fall_back(monkeypatch):
@@ -88,6 +87,33 @@ def test_an_explicit_empty_secret_does_not_fall_back(monkeypatch):
 
     with pytest.raises(ValueError, match="webhook secret is required"):
         SeamWebhook("")
+
+
+@pytest.mark.parametrize("secret", [None, False, 0, {}, [], b"invalid"])
+@pytest.mark.parametrize("keyword", [False, True])
+def test_an_explicit_non_string_secret_does_not_fall_back(monkeypatch, secret, keyword):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
+
+    with pytest.raises(TypeError, match="secret must be a string"):
+        if keyword:
+            SeamWebhook(secret=secret)
+        else:
+            SeamWebhook(secret)
+
+
+@pytest.mark.parametrize(
+    "secret, error",
+    [
+        ("a", binascii.Error),
+        ("whsec_", EmptyWebhookSecretError),
+        ("!!!", EmptyWebhookSecretError),
+    ],
+)
+def test_an_explicit_invalid_secret_does_not_fall_back(monkeypatch, secret, error):
+    monkeypatch.setenv("SEAM_WEBHOOK_SECRET", SECRET)
+
+    with pytest.raises(error):
+        SeamWebhook(secret)
 
 
 @pytest.mark.parametrize("env_secret", ["whsec_", "!!!"])
