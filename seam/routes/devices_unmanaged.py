@@ -97,7 +97,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_system",
+                "hayward_pool_controller",
                 "hayward_pool",
             ]
         ] = None,
@@ -159,7 +159,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_system",
+                    "hayward_pool_controller",
                     "hayward_pool",
                 ]
             ]
@@ -377,7 +377,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_system",
+                "hayward_pool_controller",
                 "hayward_pool",
             ]
         ] = None,
@@ -439,7 +439,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_system",
+                    "hayward_pool_controller",
                     "hayward_pool",
                 ]
             ]
@@ -681,7 +681,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_system",
+                "hayward_pool_controller",
                 "hayward_pool",
             ]
         ] = None,
@@ -743,7 +743,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_system",
+                    "hayward_pool_controller",
                     "hayward_pool",
                 ]
             ]
@@ -1033,7 +1033,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_system",
+                "hayward_pool_controller",
                 "hayward_pool",
             ]
         ] = None,
@@ -1095,7 +1095,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_system",
+                    "hayward_pool_controller",
                     "hayward_pool",
                 ]
             ]
