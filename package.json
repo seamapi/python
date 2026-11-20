@@ -32,7 +32,7 @@
     "@seamapi/blueprint": "^1.13.4",
     "@seamapi/fake-seam-connect": "2.0.8",
     "@seamapi/smith": "^1.2.1",
-    "@seamapi/types": "1.1203.0",
+    "@seamapi/types": "1.1207.0",
     "change-case": "^5.4.4",
     "prettier": "^3.2.5"
   }
