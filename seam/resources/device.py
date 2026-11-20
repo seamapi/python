@@ -2242,7 +2242,9 @@ class Device:
 
             :ivar pod_id: ID of the Sensibo device, which Sensibo calls a pod.
 
-            :ivar product_model: Product model of the Sensibo device, such as ``skyv2`` or ``air``.
+            :ivar product_model: Product model of the Sensibo device, such as ``skyv2`` or ``skyplus``.
+
+            :ivar product_name: Product name of the Sensibo device, such as ``Sensibo Sky`` or ``Sensibo Air``.
 
             :ivar room_name: Name of the room that the Sensibo device is in.
 
@@ -2255,6 +2257,7 @@ class Device:
             mac_address: Optional[str]
             pod_id: Optional[str]
             product_model: Optional[str]
+            product_name: Optional[str]
             room_name: Optional[str]
             serial_number: Optional[str]
             temperature_unit: Optional[str]
@@ -2266,6 +2269,7 @@ class Device:
                     mac_address=d.get("mac_address", None),
                     pod_id=d.get("pod_id", None),
                     product_model=d.get("product_model", None),
+                    product_name=d.get("product_name", None),
                     room_name=d.get("room_name", None),
                     serial_number=d.get("serial_number", None),
                     temperature_unit=d.get("temperature_unit", None),
