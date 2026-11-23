@@ -36,7 +36,7 @@ class AccessCodeCreatedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.created"]
     occurred_at: str
@@ -121,7 +121,7 @@ class AccessCodeChangedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.changed"]
     occurred_at: str
@@ -218,7 +218,7 @@ class AccessCodeNameChangedEvent:
     description: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.name_changed"]
     from_: Optional[From]
@@ -317,7 +317,7 @@ class AccessCodeCodeChangedEvent:
     description: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.code_changed"]
     from_: Optional[From]
@@ -424,7 +424,7 @@ class AccessCodeTimeFrameChangedEvent:
     description: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.time_frame_changed"]
     from_: Optional[From]
@@ -520,7 +520,7 @@ class AccessCodeMutationsRequestedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.mutations_requested"]
     occurred_at: str
@@ -585,7 +585,7 @@ class AccessCodeScheduledOnDeviceEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.scheduled_on_device"]
     occurred_at: str
@@ -646,7 +646,7 @@ class AccessCodeSetOnDeviceEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.set_on_device"]
     occurred_at: str
@@ -704,7 +704,7 @@ class AccessCodeRemovedFromDeviceEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.removed_from_device"]
     occurred_at: str
@@ -917,7 +917,7 @@ class AccessCodeDelayInSettingOnDeviceEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.delay_in_setting_on_device"]
     occurred_at: str
@@ -1152,7 +1152,7 @@ class AccessCodeFailedToSetOnDeviceEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.failed_to_set_on_device"]
     occurred_at: str
@@ -1234,7 +1234,7 @@ class AccessCodeDeletedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.deleted"]
     occurred_at: str
@@ -1452,7 +1452,7 @@ class AccessCodeDelayInRemovingFromDeviceEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.delay_in_removing_from_device"]
     occurred_at: str
@@ -1687,7 +1687,7 @@ class AccessCodeFailedToRemoveFromDeviceEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.failed_to_remove_from_device"]
     occurred_at: str
@@ -1766,7 +1766,7 @@ class AccessCodeModifiedExternalToSeamEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.modified_external_to_seam"]
     occurred_at: str
@@ -1823,7 +1823,7 @@ class AccessCodeDeletedExternalToSeamEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.deleted_external_to_seam"]
     occurred_at: str
@@ -1883,7 +1883,7 @@ class AccessCodeBackupAccessCodePulledEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.backup_access_code_pulled"]
     occurred_at: str
@@ -1941,7 +1941,7 @@ class AccessCodeUnmanagedConvertedToManagedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.unmanaged.converted_to_managed"]
     occurred_at: str
@@ -2154,7 +2154,7 @@ class AccessCodeUnmanagedFailedToConvertToManagedEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.unmanaged.failed_to_convert_to_managed"]
     occurred_at: str
@@ -2233,7 +2233,7 @@ class AccessCodeUnmanagedCreatedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.unmanaged.created"]
     occurred_at: str
@@ -2290,7 +2290,7 @@ class AccessCodeUnmanagedRemovedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_code.unmanaged.removed"]
     occurred_at: str
@@ -2335,7 +2335,7 @@ class AccessGrantCreatedEvent:
 
     access_grant_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.created"]
     occurred_at: str
@@ -2374,7 +2374,7 @@ class AccessGrantDeletedEvent:
 
     access_grant_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.deleted"]
     occurred_at: str
@@ -2413,7 +2413,7 @@ class AccessGrantAccessGrantedToAllDoorsEvent:
 
     access_grant_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.access_granted_to_all_doors"]
     occurred_at: str
@@ -2455,7 +2455,7 @@ class AccessGrantAccessGrantedToDoorEvent:
     access_grant_id: str
     acs_entrance_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.access_granted_to_door"]
     occurred_at: str
@@ -2498,7 +2498,7 @@ class AccessGrantAccessToDoorLostEvent:
     access_grant_id: str
     acs_entrance_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.access_to_door_lost"]
     occurred_at: str
@@ -2546,7 +2546,7 @@ class AccessGrantAccessTimesChangedEvent:
     access_grant_key: Optional[str]
     created_at: str
     ends_at: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.access_times_changed"]
     occurred_at: str
@@ -2594,7 +2594,7 @@ class AccessGrantCouldNotCreateRequestedAccessMethodsEvent:
     access_grant_id: str
     created_at: str
     error_message: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_grant.could_not_create_requested_access_methods"]
     missing_device_ids: Optional[List[str]]
@@ -2647,7 +2647,7 @@ class AccessMethodIssuedEvent:
     access_method_id: str
     code: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.issued"]
     is_backup_code: Optional[bool]
@@ -2697,7 +2697,7 @@ class AccessMethodRevokedEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.revoked"]
     occurred_at: str
@@ -2744,7 +2744,7 @@ class AccessMethodCardEncodingRequiredEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.card_encoding_required"]
     occurred_at: str
@@ -2791,7 +2791,7 @@ class AccessMethodDeletedEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.deleted"]
     occurred_at: str
@@ -2843,7 +2843,7 @@ class AccessMethodReissuedEvent:
     access_method_id: str
     code: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.reissued"]
     is_backup_code: Optional[bool]
@@ -2893,7 +2893,7 @@ class AccessMethodCreatedEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.created"]
     occurred_at: str
@@ -2940,7 +2940,7 @@ class AccessMethodDelayInIssuingEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.delay_in_issuing"]
     occurred_at: str
@@ -2987,7 +2987,7 @@ class AccessMethodFailedToIssueEvent:
     access_grant_keys: Optional[List[str]]
     access_method_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["access_method.failed_to_issue"]
     occurred_at: str
@@ -3031,7 +3031,7 @@ class AcsSystemConnectedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_system.connected"]
     occurred_at: str
@@ -3074,7 +3074,7 @@ class AcsSystemAddedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_system.added"]
     occurred_at: str
@@ -3221,7 +3221,7 @@ class AcsSystemDisconnectedEvent:
     connected_account_id: Optional[str]
     connected_account_warnings: List[ConnectedAccountWarnings]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_system.disconnected"]
     occurred_at: str
@@ -3283,7 +3283,7 @@ class AcsCredentialDeletedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_credential.deleted"]
     occurred_at: str
@@ -3330,7 +3330,7 @@ class AcsCredentialIssuedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_credential.issued"]
     occurred_at: str
@@ -3377,7 +3377,7 @@ class AcsCredentialReissuedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_credential.reissued"]
     occurred_at: str
@@ -3424,7 +3424,7 @@ class AcsCredentialInvalidatedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_credential.invalidated"]
     occurred_at: str
@@ -3471,7 +3471,7 @@ class AcsUserCreatedEvent:
     acs_user_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_user.created"]
     occurred_at: str
@@ -3518,7 +3518,7 @@ class AcsUserDeletedEvent:
     acs_user_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_user.deleted"]
     occurred_at: str
@@ -3565,7 +3565,7 @@ class AcsEncoderAddedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_encoder.added"]
     occurred_at: str
@@ -3612,7 +3612,7 @@ class AcsEncoderRemovedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_encoder.removed"]
     occurred_at: str
@@ -3659,7 +3659,7 @@ class AcsAccessGroupDeletedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_access_group.deleted"]
     occurred_at: str
@@ -3706,7 +3706,7 @@ class AcsEntranceAddedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_entrance.added"]
     occurred_at: str
@@ -3753,7 +3753,7 @@ class AcsEntranceRemovedEvent:
     acs_system_id: str
     connected_account_id: Optional[str]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["acs_entrance.removed"]
     occurred_at: str
@@ -3794,7 +3794,7 @@ class ClientSessionDeletedEvent:
 
     client_session_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["client_session.deleted"]
     occurred_at: str
@@ -3842,7 +3842,7 @@ class ConnectedAccountConnectedEvent:
     connected_account_id: str
     created_at: str
     customer_key: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.connected"]
     occurred_at: str
@@ -3892,7 +3892,7 @@ class ConnectedAccountCreatedEvent:
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.created"]
     occurred_at: str
@@ -3990,7 +3990,7 @@ class ConnectedAccountDisconnectedEvent:
     connected_account_id: str
     connected_account_warnings: List[ConnectedAccountWarnings]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.disconnected"]
     occurred_at: str
@@ -4043,7 +4043,7 @@ class ConnectedAccountCompletedFirstSyncEvent:
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.completed_first_sync"]
     occurred_at: str
@@ -4091,7 +4091,7 @@ class ConnectedAccountDeletedEvent:
     connected_account_id: str
     created_at: str
     customer_key: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.deleted"]
     occurred_at: str
@@ -4137,7 +4137,7 @@ class ConnectedAccountCompletedFirstSyncAfterReconnectionEvent:
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.completed_first_sync_after_reconnection"]
     occurred_at: str
@@ -4234,7 +4234,7 @@ class ConnectedAccountReauthorizationRequestedEvent:
     connected_account_id: str
     connected_account_warnings: List[ConnectedAccountWarnings]
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connected_account.reauthorization_requested"]
     occurred_at: str
@@ -4295,7 +4295,7 @@ class ActionAttemptLockDoorSucceededEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.lock_door.succeeded"]
     occurred_at: str
@@ -4350,7 +4350,7 @@ class ActionAttemptLockDoorFailedEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.lock_door.failed"]
     occurred_at: str
@@ -4405,7 +4405,7 @@ class ActionAttemptUnlockDoorSucceededEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.unlock_door.succeeded"]
     occurred_at: str
@@ -4460,7 +4460,7 @@ class ActionAttemptUnlockDoorFailedEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.unlock_door.failed"]
     occurred_at: str
@@ -4515,7 +4515,7 @@ class ActionAttemptSimulateKeypadCodeEntrySucceededEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.simulate_keypad_code_entry.succeeded"]
     occurred_at: str
@@ -4570,7 +4570,7 @@ class ActionAttemptSimulateKeypadCodeEntryFailedEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.simulate_keypad_code_entry.failed"]
     occurred_at: str
@@ -4625,7 +4625,7 @@ class ActionAttemptSimulateManualLockViaKeypadSucceededEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.simulate_manual_lock_via_keypad.succeeded"]
     occurred_at: str
@@ -4680,7 +4680,7 @@ class ActionAttemptSimulateManualLockViaKeypadFailedEvent:
     connected_account_id: Optional[str]
     created_at: str
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["action_attempt.simulate_manual_lock_via_keypad.failed"]
     occurred_at: str
@@ -4733,7 +4733,7 @@ class ConnectWebviewLoginSucceededEvent:
     connected_account_id: str
     created_at: str
     customer_key: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connect_webview.login_succeeded"]
     occurred_at: str
@@ -4777,7 +4777,7 @@ class ConnectWebviewLoginFailedEvent:
 
     connect_webview_id: str
     created_at: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["connect_webview.login_failed"]
     occurred_at: str
@@ -4828,7 +4828,7 @@ class DeviceConnectedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.connected"]
     occurred_at: str
@@ -4885,7 +4885,7 @@ class DeviceAddedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.added"]
     occurred_at: str
@@ -4942,7 +4942,7 @@ class DeviceConvertedToUnmanagedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.converted_to_unmanaged"]
     occurred_at: str
@@ -4999,7 +4999,7 @@ class DeviceUnmanagedConvertedToManagedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.unmanaged.converted_to_managed"]
     occurred_at: str
@@ -5056,7 +5056,7 @@ class DeviceUnmanagedConnectedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.unmanaged.connected"]
     occurred_at: str
@@ -5220,9 +5220,12 @@ class DeviceDisconnectedEvent:
     device_id: str
     device_warnings: List[DeviceWarnings]
     error_code: Literal[
-        "account_disconnected", "hub_disconnected", "device_disconnected"
+        "account_disconnected",
+        "hub_disconnected",
+        "device_disconnected",
+        "bridge_disconnected",
     ]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.disconnected"]
     occurred_at: str
@@ -5401,9 +5404,12 @@ class DeviceUnmanagedDisconnectedEvent:
     device_id: str
     device_warnings: List[DeviceWarnings]
     error_code: Literal[
-        "account_disconnected", "hub_disconnected", "device_disconnected"
+        "account_disconnected",
+        "hub_disconnected",
+        "device_disconnected",
+        "bridge_disconnected",
     ]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.unmanaged.disconnected"]
     occurred_at: str
@@ -5465,6 +5471,10 @@ class DeviceTamperedEvent:
 
     :ivar event_type:
 
+    :ivar is_casing_tampered_with: Whether the device casing was tampered with at the time of the event. Omitted when the provider did not report this state.
+
+    :ivar is_detached_from_mounting_plate: Whether the device was detached from its mounting plate at the time of the event. Omitted when the provider did not report this state.
+
     :ivar occurred_at: Date and time at which the event occurred.
 
     :ivar workspace_id: ID of the workspace associated with the event."""
@@ -5475,9 +5485,11 @@ class DeviceTamperedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.tampered"]
+    is_casing_tampered_with: Optional[bool]
+    is_detached_from_mounting_plate: Optional[bool]
     occurred_at: str
     workspace_id: str
 
@@ -5495,6 +5507,10 @@ class DeviceTamperedEvent:
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
+            is_casing_tampered_with=d.get("is_casing_tampered_with", None),
+            is_detached_from_mounting_plate=d.get(
+                "is_detached_from_mounting_plate", None
+            ),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -5538,7 +5554,7 @@ class DeviceLowBatteryEvent:
     device_battery_level: Optional[float]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.low_battery"]
     occurred_at: str
@@ -5605,7 +5621,7 @@ class DeviceBatteryStatusChangedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.battery_status_changed"]
     occurred_at: str
@@ -5664,7 +5680,7 @@ class DeviceRemovedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.removed"]
     occurred_at: str
@@ -5724,7 +5740,7 @@ class DeviceDeletedEvent:
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
     device_name: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.deleted"]
     occurred_at: str
@@ -5782,7 +5798,7 @@ class DeviceThirdPartyIntegrationDetectedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.third_party_integration_detected"]
     occurred_at: str
@@ -5839,7 +5855,7 @@ class DeviceThirdPartyIntegrationNoLongerDetectedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.third_party_integration_no_longer_detected"]
     occurred_at: str
@@ -5896,7 +5912,7 @@ class DeviceSaltoPrivacyModeActivatedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.salto.privacy_mode_activated"]
     occurred_at: str
@@ -5953,7 +5969,7 @@ class DeviceSaltoPrivacyModeDeactivatedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.salto.privacy_mode_deactivated"]
     occurred_at: str
@@ -6114,7 +6130,7 @@ class DeviceConnectionBecameFlakyEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.connection_became_flaky"]
     occurred_at: str
@@ -6185,7 +6201,7 @@ class DeviceConnectionStabilizedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.connection_stabilized"]
     occurred_at: str
@@ -6346,7 +6362,7 @@ class DeviceErrorSubscriptionRequiredEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.error.subscription_required"]
     occurred_at: str
@@ -6417,7 +6433,7 @@ class DeviceErrorSubscriptionRequiredResolvedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.error.subscription_required.resolved"]
     occurred_at: str
@@ -6474,7 +6490,7 @@ class DeviceAccessoryKeypadConnectedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.accessory_keypad_connected"]
     occurred_at: str
@@ -6635,7 +6651,7 @@ class DeviceAccessoryKeypadDisconnectedEvent:
     device_errors: List[DeviceErrors]
     device_id: str
     device_warnings: List[DeviceWarnings]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.accessory_keypad_disconnected"]
     occurred_at: str
@@ -6718,7 +6734,7 @@ class NoiseSensorNoiseThresholdTriggeredEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["noise_sensor.noise_threshold_triggered"]
     minut_metadata: Optional[Dict[str, Any]]
@@ -6805,7 +6821,7 @@ class LockLockedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.locked"]
     is_via_bluetooth: Optional[bool]
@@ -6892,7 +6908,7 @@ class LockUnlockedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.unlocked"]
     is_via_bluetooth: Optional[bool]
@@ -6993,7 +7009,7 @@ class LockAccessDeniedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: Optional[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.access_denied"]
     occurred_at: str
@@ -7057,7 +7073,7 @@ class LockJammedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.jammed"]
     occurred_at: str
@@ -7114,7 +7130,7 @@ class LockDoorOpenedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.door_opened"]
     occurred_at: str
@@ -7171,7 +7187,7 @@ class LockDoorClosedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["lock.door_closed"]
     occurred_at: str
@@ -7235,7 +7251,7 @@ class ThermostatClimatePresetActivatedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.climate_preset_activated"]
     is_fallback_climate_preset: bool
@@ -7313,7 +7329,7 @@ class ThermostatManuallyAdjustedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.manually_adjusted"]
     fan_mode_setting: Optional[Literal["auto", "on", "circulate"]]
@@ -7394,7 +7410,7 @@ class ThermostatTemperatureThresholdExceededEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.temperature_threshold_exceeded"]
     lower_limit_celsius: Optional[float]
@@ -7475,7 +7491,7 @@ class ThermostatTemperatureThresholdNoLongerExceededEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.temperature_threshold_no_longer_exceeded"]
     lower_limit_celsius: Optional[float]
@@ -7554,7 +7570,7 @@ class ThermostatTemperatureReachedSetPointEvent:
     desired_temperature_fahrenheit: Optional[float]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.temperature_reached_set_point"]
     occurred_at: str
@@ -7623,7 +7639,7 @@ class ThermostatTemperatureChangedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["thermostat.temperature_changed"]
     occurred_at: str
@@ -7687,7 +7703,7 @@ class DeviceNameChangedEvent:
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
     device_name: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.name_changed"]
     occurred_at: str
@@ -7755,7 +7771,7 @@ class CameraActivatedEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["camera.activated"]
     image_url: Optional[str]
@@ -7828,7 +7844,7 @@ class DeviceDoorbellRangEvent:
     customer_key: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["device.doorbell_rang"]
     image_url: Optional[str]
@@ -7882,7 +7898,7 @@ class PhoneDeactivatedEvent:
     created_at: str
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["phone.deactivated"]
     occurred_at: str
@@ -7929,7 +7945,7 @@ class SpaceDeviceMembershipChangedEvent:
     acs_entrance_ids: List[str]
     created_at: str
     device_ids: List[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["space.device_membership_changed"]
     occurred_at: str
@@ -7980,7 +7996,7 @@ class SpaceCreatedEvent:
     acs_entrance_ids: List[str]
     created_at: str
     device_ids: List[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["space.created"]
     occurred_at: str
@@ -8031,7 +8047,7 @@ class SpaceDeletedEvent:
     acs_entrance_ids: List[str]
     created_at: str
     device_ids: List[str]
-    event_description: Optional[str]
+    event_description: str
     event_id: str
     event_type: Literal["space.deleted"]
     occurred_at: str

@@ -707,6 +707,8 @@ class Device:
 
         :ivar brivo_metadata: Metadata for a Brivo device.
 
+        :ivar cielo_metadata: Metadata for a Cielo device.
+
         :ivar controlbyweb_metadata: Metadata for a ControlByWeb device.
 
         :ivar dormakaba_oracode_iho_metadata: Metadata for a dormakaba Oracode Homeowner's Portal device.
@@ -1228,6 +1230,37 @@ class Device:
                 return cls(
                     activation_enabled=d.get("activation_enabled", None),
                     device_name=d.get("device_name", None),
+                )
+
+        @dataclass
+        class CieloMetadata(ResourceMapping):
+            """Metadata for a Cielo device.
+
+            :ivar appliance_id: ID of the air conditioner or heat pump model that the Cielo device is set up to control.
+
+            :ivar cielo_device_type: Device type that Cielo reports, such as ``Thermostat`` for a Cielo thermostat.
+
+            :ivar device_name: Name of the device in the Cielo Home app.
+
+            :ivar mac_address: MAC address of the Cielo device.
+
+            :ivar temperature_unit: Temperature unit that the Cielo device displays: ``C`` or ``F``.
+            """
+
+            appliance_id: Optional[str]
+            cielo_device_type: Optional[str]
+            device_name: Optional[str]
+            mac_address: Optional[str]
+            temperature_unit: Optional[str]
+
+            @classmethod
+            def from_dict(cls, d: Any):
+                return cls(
+                    appliance_id=d.get("appliance_id", None),
+                    cielo_device_type=d.get("cielo_device_type", None),
+                    device_name=d.get("device_name", None),
+                    mac_address=d.get("mac_address", None),
+                    temperature_unit=d.get("temperature_unit", None),
                 )
 
         @dataclass
@@ -2242,7 +2275,9 @@ class Device:
 
             :ivar pod_id: ID of the Sensibo device, which Sensibo calls a pod.
 
-            :ivar product_model: Product model of the Sensibo device, such as ``skyv2`` or ``air``.
+            :ivar product_model: Product model of the Sensibo device, such as ``skyv2`` or ``skyplus``.
+
+            :ivar product_name: Product name of the Sensibo device, such as ``Sensibo Sky`` or ``Sensibo Air``.
 
             :ivar room_name: Name of the room that the Sensibo device is in.
 
@@ -2255,6 +2290,7 @@ class Device:
             mac_address: Optional[str]
             pod_id: Optional[str]
             product_model: Optional[str]
+            product_name: Optional[str]
             room_name: Optional[str]
             serial_number: Optional[str]
             temperature_unit: Optional[str]
@@ -2266,6 +2302,7 @@ class Device:
                     mac_address=d.get("mac_address", None),
                     pod_id=d.get("pod_id", None),
                     product_model=d.get("product_model", None),
+                    product_name=d.get("product_name", None),
                     room_name=d.get("room_name", None),
                     serial_number=d.get("serial_number", None),
                     temperature_unit=d.get("temperature_unit", None),
@@ -3294,6 +3331,7 @@ class Device:
         august_metadata: Optional[AugustMetadata]
         avigilon_alta_metadata: Optional[AvigilonAltaMetadata]
         brivo_metadata: Optional[BrivoMetadata]
+        cielo_metadata: Optional[CieloMetadata]
         controlbyweb_metadata: Optional[ControlbywebMetadata]
         dormakaba_oracode_iho_metadata: Optional[DormakabaOracodeIhoMetadata]
         dormakaba_oracode_metadata: Optional[DormakabaOracodeMetadata]
@@ -3466,6 +3504,11 @@ class Device:
                 brivo_metadata=(
                     cls.BrivoMetadata.from_dict(d.get("brivo_metadata"))
                     if d.get("brivo_metadata") is not None
+                    else None
+                ),
+                cielo_metadata=(
+                    cls.CieloMetadata.from_dict(d.get("cielo_metadata"))
+                    if d.get("cielo_metadata") is not None
                     else None
                 ),
                 controlbyweb_metadata=(
@@ -4703,6 +4746,7 @@ class Device:
         "tado_thermostat",
         "sensi_thermostat",
         "sensibo_thermostat",
+        "cielo_thermostat",
         "smartthings_thermostat",
         "ios_phone",
         "android_phone",

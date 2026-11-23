@@ -909,12 +909,15 @@ class AccessCode:
 
         :ivar created_at: Date and time at which the mutation was created.
 
+        :ivar is_code_usable: Indicates whether the access code may still unlock the device while Seam removes it, based on the last state Seam observed. ``false`` means the device has already stopped accepting the code, for example, because a natively scheduled code passed its ``ends_at``, and only cleanup remains.
+
         :ivar message: Detailed description of the mutation.
 
         :ivar mutation_code: Mutation code to indicate that Seam is in the process of removing an access code from the device.
         """
 
         created_at: str
+        is_code_usable: bool
         message: str
         mutation_code: Literal["deleting"]
 
@@ -922,6 +925,7 @@ class AccessCode:
         def from_dict(cls, d: Any):
             return cls(
                 created_at=d.get("created_at", None),
+                is_code_usable=d.get("is_code_usable", None),
                 message=d.get("message", None),
                 mutation_code=d.get("mutation_code", None),
             )
