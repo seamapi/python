@@ -37,7 +37,7 @@ class UnmanagedAccessCode:
 
     :ivar device_id: Unique identifier for the device associated with the access code.
 
-    :ivar display_status: Human-readable label for the code's state: ``Active`` or ``Not active``, based on whether the code is set on the device. For display only. The wording is not stable and is not an enumeration — never compare against or branch on it.
+    :ivar display_status: Human-readable label for the code's state: ``Active`` or ``Not active``, based on whether the code is set on the device, or ``Deleting`` while the code is being removed from the device. For display only. The wording is not stable and is not an enumeration — never compare against or branch on it.
 
     :ivar dormakaba_oracode_metadata: Metadata for a dormakaba Oracode unmanaged access code. Only present for unmanaged access codes from dormakaba Oracode devices.
 

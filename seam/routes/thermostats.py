@@ -225,6 +225,7 @@ class AbstractThermostats(abc.ABC):
                 "tado_thermostat",
                 "sensi_thermostat",
                 "sensibo_thermostat",
+                "cielo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -237,6 +238,7 @@ class AbstractThermostats(abc.ABC):
                     "tado_thermostat",
                     "sensi_thermostat",
                     "sensibo_thermostat",
+                    "cielo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
@@ -245,6 +247,7 @@ class AbstractThermostats(abc.ABC):
             Literal[
                 "ecobee",
                 "honeywell_resideo",
+                "cielo",
                 "nest",
                 "sensi",
                 "sensibo",
@@ -656,6 +659,7 @@ class AbstractAsyncThermostats(abc.ABC):
                 "tado_thermostat",
                 "sensi_thermostat",
                 "sensibo_thermostat",
+                "cielo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -668,6 +672,7 @@ class AbstractAsyncThermostats(abc.ABC):
                     "tado_thermostat",
                     "sensi_thermostat",
                     "sensibo_thermostat",
+                    "cielo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
@@ -676,6 +681,7 @@ class AbstractAsyncThermostats(abc.ABC):
             Literal[
                 "ecobee",
                 "honeywell_resideo",
+                "cielo",
                 "nest",
                 "sensi",
                 "sensibo",
@@ -1262,6 +1268,7 @@ class Thermostats(AbstractThermostats):
                 "tado_thermostat",
                 "sensi_thermostat",
                 "sensibo_thermostat",
+                "cielo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -1274,6 +1281,7 @@ class Thermostats(AbstractThermostats):
                     "tado_thermostat",
                     "sensi_thermostat",
                     "sensibo_thermostat",
+                    "cielo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
@@ -1282,6 +1290,7 @@ class Thermostats(AbstractThermostats):
             Literal[
                 "ecobee",
                 "honeywell_resideo",
+                "cielo",
                 "nest",
                 "sensi",
                 "sensibo",
@@ -2063,6 +2072,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
                 "tado_thermostat",
                 "sensi_thermostat",
                 "sensibo_thermostat",
+                "cielo_thermostat",
                 "smartthings_thermostat",
             ]
         ] = None,
@@ -2075,6 +2085,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
                     "tado_thermostat",
                     "sensi_thermostat",
                     "sensibo_thermostat",
+                    "cielo_thermostat",
                     "smartthings_thermostat",
                 ]
             ]
@@ -2083,6 +2094,7 @@ class AsyncThermostats(AbstractAsyncThermostats):
             Literal[
                 "ecobee",
                 "honeywell_resideo",
+                "cielo",
                 "nest",
                 "sensi",
                 "sensibo",

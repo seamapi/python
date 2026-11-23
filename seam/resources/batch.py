@@ -105,7 +105,7 @@ class Batch:
 
     :ivar instant_keys: Represents a Seam Instant Key. For issuing Bluetooth mobile keys, Instant Keys are the fastest way to share access. With a single API call, you can create a mobile key and send it through text or email or embed it in your own app.
 
-    There’s no app to install, nor account to create. Your user just taps a link and gets a lightweight, native-feeling experience using iOS App Clip or Instant Apps on Android. Further, Instant Keys work offline, so even in areas with poor cellular or Wi-Fi, like elevator banks or concrete-walled hallways, the Instant Keys still work.
+    There’s no account to create. Your user just taps a link and gets a lightweight, native-feeling experience. On iOS, the key opens in an App Clip, so there’s no app to install. On Android, Google has discontinued Google Play Instant, so the first time your user opens an Instant Key they must install the Seam Instant Key app from the Google Play Store. Further, Instant Keys work offline, so even in areas with poor cellular or Wi-Fi, like elevator banks or concrete-walled hallways, the Instant Keys still work.
 
     :ivar noise_thresholds: Represents a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
