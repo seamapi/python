@@ -1200,6 +1200,241 @@ class AccessCodeFailedToSetOnDeviceEvent:
 
 
 @dataclass
+class AccessCodeFailedToDeleteEvent:
+    """Seam was unable to remove an `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ from the device in time after it was deleted or its ``ends_at`` passed, so the recipient may still be able to unlock the device. Seam keeps trying to delete it, and the accompanying ``failed_to_delete`` error clears automatically once the access code is no longer usable on the device.
+
+    :ivar access_code_errors: Errors associated with the access code.
+
+    :ivar access_code_id: ID of the affected access code.
+
+    :ivar access_code_warnings: Warnings associated with the access code.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_errors: Errors associated with the connected account.
+
+    :ivar connected_account_id: ID of the connected account associated with the affected access code.
+
+    :ivar connected_account_warnings: Warnings associated with the connected account.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_errors: Errors associated with the device.
+
+    :ivar device_id: ID of the device associated with the affected access code.
+
+    :ivar device_warnings: Warnings associated with the device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    @dataclass
+    class AccessCodeErrors(ResourceMapping):
+        """Errors associated with the access code.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class AccessCodeWarnings(ResourceMapping):
+        """Warnings associated with the access code.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class ConnectedAccountErrors(ResourceMapping):
+        """Errors associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class ConnectedAccountWarnings(ResourceMapping):
+        """Warnings associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class DeviceErrors(ResourceMapping):
+        """Errors associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class DeviceWarnings(ResourceMapping):
+        """Warnings associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    access_code_errors: List[AccessCodeErrors]
+    access_code_id: str
+    access_code_warnings: List[AccessCodeWarnings]
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_errors: List[ConnectedAccountErrors]
+    connected_account_id: str
+    connected_account_warnings: List[ConnectedAccountWarnings]
+    created_at: str
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_errors: List[DeviceErrors]
+    device_id: str
+    device_warnings: List[DeviceWarnings]
+    event_description: str
+    event_id: str
+    event_type: Literal["access_code.failed_to_delete"]
+    occurred_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            access_code_errors=[
+                cls.AccessCodeErrors.from_dict(i)
+                for i in d.get("access_code_errors") or []
+            ],
+            access_code_id=d.get("access_code_id", None),
+            access_code_warnings=[
+                cls.AccessCodeWarnings.from_dict(i)
+                for i in d.get("access_code_warnings") or []
+            ],
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
+            connected_account_id=d.get("connected_account_id", None),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
+            created_at=d.get("created_at", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
+            device_id=d.get("device_id", None),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class AccessCodeDeletedEvent:
     """An `access code <https://www.seam.co/docs/low-level-apis/smart-locks/access-codes>`_ was deleted.
 
@@ -8083,6 +8318,7 @@ SeamEvent = Union[
     AccessCodeRemovedFromDeviceEvent,
     AccessCodeDelayInSettingOnDeviceEvent,
     AccessCodeFailedToSetOnDeviceEvent,
+    AccessCodeFailedToDeleteEvent,
     AccessCodeDeletedEvent,
     AccessCodeDelayInRemovingFromDeviceEvent,
     AccessCodeFailedToRemoveFromDeviceEvent,
@@ -8196,6 +8432,7 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
     "access_code.removed_from_device": AccessCodeRemovedFromDeviceEvent,
     "access_code.delay_in_setting_on_device": AccessCodeDelayInSettingOnDeviceEvent,
     "access_code.failed_to_set_on_device": AccessCodeFailedToSetOnDeviceEvent,
+    "access_code.failed_to_delete": AccessCodeFailedToDeleteEvent,
     "access_code.deleted": AccessCodeDeletedEvent,
     "access_code.delay_in_removing_from_device": AccessCodeDelayInRemovingFromDeviceEvent,
     "access_code.failed_to_remove_from_device": AccessCodeFailedToRemoveFromDeviceEvent,

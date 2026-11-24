@@ -87,9 +87,15 @@ class Device:
 
     :ivar estimated_occupant_count: Estimated number of occupants detected by the device.
 
+    :ivar is_casing_tampered_with: Indicates whether the device was last reported as having its casing opened or tampered with. Omitted when the provider reports no casing state, including when the device does not support casing tamper detection. This is independent of ``is_detached_from_mounting_plate``.
+
+    :ivar is_detached_from_mounting_plate: Indicates whether the device was last reported as detached from its mounting plate. Omitted when Seam has no accepted observation, including when the device does not support mounting plate detection, reports an unknown status, or is offline. This is the last accepted provider observation, not a guarantee of current hardware state; check ``is_online`` before acting on it.
+
     :ivar is_managed: Indicates whether Seam manages the device. See also `Managed and Unmanaged Devices <https://www.seam.co/docs/core-concepts/devices/managed-and-unmanaged-devices>`_.
 
     :ivar is_occupancy_detected: Indicates whether the device detects occupancy.
+
+    :ivar is_online: Indicates whether the device is online.
 
     :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
 
@@ -444,6 +450,33 @@ class Device:
 
         created_at: str
         error_code: Literal["august_lock_not_authorized"]
+        is_device_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_device_error=d.get("is_device_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class LowBatteryError(ResourceMapping):
+        """Indicates that the lock has about one week, two days, or a critically low amount of battery life remaining. Replace the lock's batteries promptly to avoid losing access.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_device_error: Indicates that the error is a device error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["low_battery"]
         is_device_error: Literal[True]
         message: str
 
@@ -4457,6 +4490,29 @@ class Device:
             )
 
     @dataclass
+    class BatteryReplacementRecommendedWarning(ResourceMapping):
+        """Indicates that the lock has about two weeks of battery life remaining or the provider otherwise recommends replacing the lock's batteries soon.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["battery_replacement_recommended"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
     class UnreliableOnlineStatusWarning(ResourceMapping):
         """Indicates that the device may optimistically be reported as online because the provider does not reliably report its online status.
 
@@ -4569,6 +4625,7 @@ class Device:
         DeviceDisconnectedError,
         EmptyBackupAccessCodePoolError,
         AugustLockNotAuthorizedError,
+        LowBatteryError,
         MissingDeviceCredentialsError,
         AuxiliaryHeatRunningError,
         SubscriptionRequiredError,
@@ -4585,6 +4642,7 @@ class Device:
         "device_disconnected": DeviceDisconnectedError,
         "empty_backup_access_code_pool": EmptyBackupAccessCodePoolError,
         "august_lock_not_authorized": AugustLockNotAuthorizedError,
+        "low_battery": LowBatteryError,
         "missing_device_credentials": MissingDeviceCredentialsError,
         "auxiliary_heat_running": AuxiliaryHeatRunningError,
         "subscription_required": SubscriptionRequiredError,
@@ -4619,6 +4677,7 @@ class Device:
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
         AccessoryKeypadLowBatteryWarning,
+        BatteryReplacementRecommendedWarning,
         UnreliableOnlineStatusWarning,
         MaxAccessCodesReachedWarning,
         SubscriptionRequiredForAdditionalCapabilitiesWarning,
@@ -4652,6 +4711,7 @@ class Device:
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,
         "accessory_keypad_low_battery": AccessoryKeypadLowBatteryWarning,
+        "battery_replacement_recommended": BatteryReplacementRecommendedWarning,
         "unreliable_online_status": UnreliableOnlineStatusWarning,
         "max_access_codes_reached": MaxAccessCodesReachedWarning,
         "subscription_required_for_additional_capabilities": SubscriptionRequiredForAdditionalCapabilitiesWarning,
@@ -4763,8 +4823,11 @@ class Device:
     display_name: str
     errors: List[Errors]
     estimated_occupant_count: Optional[float]
+    is_casing_tampered_with: Optional[bool]
+    is_detached_from_mounting_plate: Optional[bool]
     is_managed: Literal[True]
     is_occupancy_detected: Optional[bool]
+    is_online: bool
     is_smoking_detected: Optional[bool]
     location: Optional[Location]
     mold_risk_level: Optional[str]
@@ -4844,8 +4907,13 @@ class Device:
                 for i in d.get("errors") or []
             ],
             estimated_occupant_count=d.get("estimated_occupant_count", None),
+            is_casing_tampered_with=d.get("is_casing_tampered_with", None),
+            is_detached_from_mounting_plate=d.get(
+                "is_detached_from_mounting_plate", None
+            ),
             is_managed=d.get("is_managed", None),
             is_occupancy_detected=d.get("is_occupancy_detected", None),
+            is_online=d.get("is_online", None),
             is_smoking_detected=d.get("is_smoking_detected", None),
             location=(
                 cls.Location.from_dict(d.get("location"))

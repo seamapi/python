@@ -22,6 +22,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the request fails with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the request fails with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
+
         :param device_id: ID of the device for which you want to create a noise threshold.
 
         :param ends_daily_at: Time at which the new noise threshold should become inactive daily.
@@ -40,6 +42,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
     @abc.abstractmethod
     def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
@@ -78,6 +82,8 @@ class AbstractNoiseSensorsNoiseThresholds(abc.ABC):
     ) -> None:
         """Updates a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
+
         :param device_id: ID of the device that contains the noise threshold that you want to update.
 
         :param noise_threshold_id: ID of the noise threshold that you want to update.
@@ -110,6 +116,8 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the request fails with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the request fails with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
+
         :param device_id: ID of the device for which you want to create a noise threshold.
 
         :param ends_daily_at: Time at which the new noise threshold should become inactive daily.
@@ -128,6 +136,8 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
     @abc.abstractmethod
     async def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
@@ -165,6 +175,8 @@ class AbstractAsyncNoiseSensorsNoiseThresholds(abc.ABC):
         starts_daily_at: Optional[str] = None,
     ) -> None:
         """Updates a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
 
@@ -204,6 +216,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
         noise_threshold_nrs: Optional[float] = None,
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the request fails with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the request fails with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device for which you want to create a noise threshold.
 
@@ -247,6 +261,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
     )
     def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
@@ -324,6 +340,8 @@ class NoiseSensorsNoiseThresholds(AbstractNoiseSensorsNoiseThresholds):
     ) -> None:
         """Updates a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
 
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
+
         :param device_id: ID of the device that contains the noise threshold that you want to update.
 
         :param noise_threshold_id: ID of the noise threshold that you want to update.
@@ -381,6 +399,8 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
     ) -> NoiseThreshold:
         """Creates a new `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_. Thresholds represent the limits of noise tolerated at a property, which can be customized for each hour of the day. Each device has its own default thresholds, but you can use the Seam API to modify them.
 
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the request fails with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the request fails with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
+
         :param device_id: ID of the device for which you want to create a noise threshold.
 
         :param ends_daily_at: Time at which the new noise threshold should become inactive daily.
@@ -423,6 +443,8 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
     )
     async def delete(self, *, device_id: str, noise_threshold_id: str) -> None:
         """Deletes a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ from a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to delete.
 
@@ -505,6 +527,8 @@ class AsyncNoiseSensorsNoiseThresholds(AbstractAsyncNoiseSensorsNoiseThresholds)
         starts_daily_at: Optional[str] = None,
     ) -> None:
         """Updates a `noise threshold <https://www.seam.co/docs/capability-guides/noise-sensors/configure-noise-threshold-settings>`_ for a `noise sensor <https://www.seam.co/docs/capability-guides/noise-sensors>`_.
+
+        For Minut sensors, Seam does not change thresholds that Minut manages through a noise preset, which can be shared across homes. If the home of the sensor is assigned a noise preset, the action attempt ends with a ``noise_threshold_managed_by_noise_profile`` error; edit the noise preset in the Minut app instead. If Seam cannot check which noise preset applies to the home of the sensor, the action attempt ends with a ``noise_profile_assignment_unverified`` error and nothing is changed; try again.
 
         :param device_id: ID of the device that contains the noise threshold that you want to update.
 

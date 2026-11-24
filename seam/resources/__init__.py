@@ -132,6 +132,7 @@ from .seam_event import (
     AccessCodeRemovedFromDeviceEvent,
     AccessCodeDelayInSettingOnDeviceEvent,
     AccessCodeFailedToSetOnDeviceEvent,
+    AccessCodeFailedToDeleteEvent,
     AccessCodeDeletedEvent,
     AccessCodeDelayInRemovingFromDeviceEvent,
     AccessCodeFailedToRemoveFromDeviceEvent,
