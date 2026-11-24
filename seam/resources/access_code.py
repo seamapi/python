@@ -430,7 +430,7 @@ class AccessCode:
 
     @dataclass
     class FailedToDeleteError(ResourceMapping):
-        """This access code is still active on the device even though its ``ends_at`` has passed, so the recipient may still be able to unlock the device after their access window ended. Seam is attempting to delete it, and this error clears automatically once the access code is no longer active.
+        """Seam was unable to remove this access code from the device in time after it was deleted or its ``ends_at`` passed, so the recipient may still be able to unlock the device. Seam keeps trying to delete it, and this error clears automatically once the access code is no longer usable on the device.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -729,6 +729,33 @@ class AccessCode:
 
         created_at: str
         error_code: Literal["august_lock_not_authorized"]
+        is_device_error: Literal[True]
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                is_device_error=d.get("is_device_error", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class LowBatteryError(ResourceMapping):
+        """Indicates that the lock has about one week, two days, or a critically low amount of battery life remaining. Replace the lock's batteries promptly to avoid losing access.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar is_device_error: Indicates that the error is a device error.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: Literal["low_battery"]
         is_device_error: Literal[True]
         message: str
 
@@ -1389,7 +1416,7 @@ class AccessCode:
 
     @dataclass
     class BeingDeletedWarning(ResourceMapping):
-        """Access code is being deleted.
+        """Access code is being deleted, because it was deleted or passed its ``ends_at``. It can no longer be updated.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -1482,6 +1509,7 @@ class AccessCode:
         DeviceDisconnectedError,
         EmptyBackupAccessCodePoolError,
         AugustLockNotAuthorizedError,
+        LowBatteryError,
         MissingDeviceCredentialsError,
         AuxiliaryHeatRunningError,
         SubscriptionRequiredError,
@@ -1509,6 +1537,7 @@ class AccessCode:
         "device_disconnected": DeviceDisconnectedError,
         "empty_backup_access_code_pool": EmptyBackupAccessCodePoolError,
         "august_lock_not_authorized": AugustLockNotAuthorizedError,
+        "low_battery": LowBatteryError,
         "missing_device_credentials": MissingDeviceCredentialsError,
         "auxiliary_heat_running": AuxiliaryHeatRunningError,
         "subscription_required": SubscriptionRequiredError,

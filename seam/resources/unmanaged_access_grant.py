@@ -521,6 +521,29 @@ class UnmanagedAccessGrant:
                 warning_code=d.get("warning_code", None),
             )
 
+    @dataclass
+    class MobileKeyWithheldWarning(ResourceMapping):
+        """Indicates that Seam did not issue the mobile key requested for this access grant, because the user's email address or phone number belongs to other user identities and Seam cannot tell which person's app should receive it. The other requested access methods were issued.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["mobile_key_withheld"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
     Errors = Union[CannotCreateRequestedAccessMethodsError, AccessNotProvisionedError]
     _ErrorsVariants = {
         "cannot_create_requested_access_methods": CannotCreateRequestedAccessMethodsError,
@@ -544,6 +567,7 @@ class UnmanagedAccessGrant:
         DeviceDoesNotSupportAccessCodesWarning,
         DeviceTimeConstraintsViolatedWarning,
         AccessRevokedWarning,
+        MobileKeyWithheldWarning,
     ]
     _WarningsVariants = {
         "being_deleted": BeingDeletedWarning,
@@ -554,6 +578,7 @@ class UnmanagedAccessGrant:
         "device_does_not_support_access_codes": DeviceDoesNotSupportAccessCodesWarning,
         "device_time_constraints_violated": DeviceTimeConstraintsViolatedWarning,
         "access_revoked": AccessRevokedWarning,
+        "mobile_key_withheld": MobileKeyWithheldWarning,
     }
 
     access_grant_id: str

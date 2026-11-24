@@ -61,7 +61,11 @@ class AbstractAccessMethods(abc.ABC):
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
-        :raises ValueError: At least one parameter must be provided."""
+        :raises ValueError: At least one parameter must be provided.
+
+        .. deprecated::
+           Access methods are managed by their access grant. Some workflows still need this endpoint today; access grant routes will replace it for them soon.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -238,7 +242,11 @@ class AbstractAsyncAccessMethods(abc.ABC):
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
-        :raises ValueError: At least one parameter must be provided."""
+        :raises ValueError: At least one parameter must be provided.
+
+        .. deprecated::
+           Access methods are managed by their access grant. Some workflows still need this endpoint today; access grant routes will replace it for them soon.
+        """
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -450,7 +458,11 @@ class AccessMethods(AbstractAccessMethods):
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
-        :raises ValueError: At least one parameter must be provided."""
+        :raises ValueError: At least one parameter must be provided.
+
+        .. deprecated::
+           Access methods are managed by their access grant. Some workflows still need this endpoint today; access grant routes will replace it for them soon.
+        """
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
@@ -786,7 +798,11 @@ class AsyncAccessMethods(AbstractAsyncAccessMethods):
 
         :param reservation_key: Reservation key of the access grant whose access methods should be deleted.
 
-        :raises ValueError: At least one parameter must be provided."""
+        :raises ValueError: At least one parameter must be provided.
+
+        .. deprecated::
+           Access methods are managed by their access grant. Some workflows still need this endpoint today; access grant routes will replace it for them soon.
+        """
         params: Dict[str, Any] = {}
 
         if access_grant_id is not None:
