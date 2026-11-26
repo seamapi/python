@@ -99,7 +99,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -162,7 +164,9 @@ class AbstractDevicesUnmanaged(abc.ABC):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -234,6 +238,7 @@ class AbstractDevicesUnmanaged(abc.ABC):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -382,7 +387,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -445,7 +452,9 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -517,6 +526,7 @@ class AbstractAsyncDevicesUnmanaged(abc.ABC):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -689,7 +699,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -752,7 +764,9 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -824,6 +838,7 @@ class DevicesUnmanaged(AbstractDevicesUnmanaged):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -1044,7 +1059,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -1107,7 +1124,9 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -1179,6 +1198,7 @@ class AsyncDevicesUnmanaged(AbstractAsyncDevicesUnmanaged):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,

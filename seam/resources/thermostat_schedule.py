@@ -4,6 +4,13 @@ from ..deep_attr_dict import DeepAttrDict
 from ..resource_mapping import ResourceMapping
 
 
+def _from_discriminated_dict(
+    d: Any, variants: Dict[str, Any], discriminator: str
+) -> Any:
+    variant = variants.get(d.get(discriminator))
+    return DeepAttrDict(d) if variant is None else variant.from_dict(d)
+
+
 @dataclass
 class ThermostatSchedule:
     """Represents a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ that activates a configured `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ on a `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ at a specified starting time and deactivates the climate preset at a specified ending time.
@@ -27,6 +34,8 @@ class ThermostatSchedule:
     :ivar starts_at: Date and time at which the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
 
     :ivar thermostat_schedule_id: ID of the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
+
+    :ivar warnings: Warnings associated with the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_.
 
     :ivar workspace_id: ID of the workspace that contains the thermostat schedule."""
 
@@ -53,6 +62,34 @@ class ThermostatSchedule:
                 message=d.get("message", None),
             )
 
+    @dataclass
+    class ClimatePresetActivationMayFailWarning(ResourceMapping):
+        """Indicates that the `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ may fail to activate a climate preset when the `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts or ends. The warning message explains the cause. Currently present while the thermostat is offline and the next start or end of the thermostat schedule is less than an hour away; it clears automatically once the thermostat is back online or that time passes.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: Literal["climate_preset_activation_may_fail"]
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    Warnings = Union[ClimatePresetActivationMayFailWarning]
+    _WarningsVariants = {
+        "climate_preset_activation_may_fail": ClimatePresetActivationMayFailWarning,
+    }
+
     climate_preset_key: str
     created_at: str
     device_id: str
@@ -63,6 +100,7 @@ class ThermostatSchedule:
     name: Optional[str]
     starts_at: str
     thermostat_schedule_id: str
+    warnings: List[Warnings]
     workspace_id: str
 
     @classmethod
@@ -78,5 +116,9 @@ class ThermostatSchedule:
             name=d.get("name", None),
             starts_at=d.get("starts_at", None),
             thermostat_schedule_id=d.get("thermostat_schedule_id", None),
+            warnings=[
+                _from_discriminated_dict(i, cls._WarningsVariants, "warning_code")
+                for i in d.get("warnings") or []
+            ],
             workspace_id=d.get("workspace_id", None),
         )

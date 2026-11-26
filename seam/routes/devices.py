@@ -120,7 +120,9 @@ class AbstractDevices(abc.ABC):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -183,10 +185,65 @@ class AbstractDevices(abc.ABC):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
+        has_error_or_warning_codes: Optional[
+            List[
+                Literal[
+                    "device_offline",
+                    "device_removed",
+                    "hub_disconnected",
+                    "device_disconnected",
+                    "account_disconnected",
+                    "empty_backup_access_code_pool",
+                    "august_lock_not_authorized",
+                    "low_battery",
+                    "salto_ks_subscription_limit_exceeded",
+                    "insufficient_permissions",
+                    "dormakaba_sites_disconnected",
+                    "missing_device_credentials",
+                    "auxiliary_heat_running",
+                    "subscription_required",
+                    "bridge_disconnected",
+                    "partial_backup_access_code_pool",
+                    "many_active_backup_codes",
+                    "device_has_flaky_connection",
+                    "third_party_integration_detected",
+                    "ttlock_lock_gateway_unlocking_not_enabled",
+                    "ttlock_weak_gateway_signal",
+                    "power_saving_mode",
+                    "temperature_threshold_exceeded",
+                    "device_communication_degraded",
+                    "scheduled_maintenance_window",
+                    "salto_ks_office_mode",
+                    "salto_ks_privacy_mode",
+                    "privacy_mode",
+                    "salto_ks_subscription_limit_almost_reached",
+                    "salto_ks_lock_access_code_support_removed",
+                    "unknown_issue_with_phone",
+                    "lockly_time_zone_not_configured",
+                    "ultraloq_time_zone_unknown",
+                    "time_zone_unknown",
+                    "time_zone_mismatch",
+                    "two_n_device_missing_timezone",
+                    "hub_required_for_additional_capabilities",
+                    "service_mode",
+                    "provider_issue",
+                    "keynest_unsupported_locker",
+                    "accessory_keypad_setup_required",
+                    "accessory_keypad_low_battery",
+                    "battery_replacement_recommended",
+                    "unreliable_online_status",
+                    "max_access_codes_reached",
+                    "subscription_required_for_additional_capabilities",
+                ]
+            ]
+        ] = None,
+        has_errors_or_warnings: Optional[bool] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[
             Literal[
@@ -255,6 +312,7 @@ class AbstractDevices(abc.ABC):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -282,6 +340,10 @@ class AbstractDevices(abc.ABC):
         :param device_type: Device type for which you want to list devices.
 
         :param device_types: Array of device types for which you want to list devices.
+
+        :param has_error_or_warning_codes: Array of error and warning codes. Returns devices that have at least one error or warning with any of these codes.
+
+        :param has_errors_or_warnings: Filters devices by whether they have any errors or warnings. Specify ``true`` to list only devices with at least one error or warning, or ``false`` to list only devices with none.
 
         :param limit: Numerical limit on the number of devices to return.
 
@@ -461,7 +523,9 @@ class AbstractAsyncDevices(abc.ABC):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -524,10 +588,65 @@ class AbstractAsyncDevices(abc.ABC):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
+        has_error_or_warning_codes: Optional[
+            List[
+                Literal[
+                    "device_offline",
+                    "device_removed",
+                    "hub_disconnected",
+                    "device_disconnected",
+                    "account_disconnected",
+                    "empty_backup_access_code_pool",
+                    "august_lock_not_authorized",
+                    "low_battery",
+                    "salto_ks_subscription_limit_exceeded",
+                    "insufficient_permissions",
+                    "dormakaba_sites_disconnected",
+                    "missing_device_credentials",
+                    "auxiliary_heat_running",
+                    "subscription_required",
+                    "bridge_disconnected",
+                    "partial_backup_access_code_pool",
+                    "many_active_backup_codes",
+                    "device_has_flaky_connection",
+                    "third_party_integration_detected",
+                    "ttlock_lock_gateway_unlocking_not_enabled",
+                    "ttlock_weak_gateway_signal",
+                    "power_saving_mode",
+                    "temperature_threshold_exceeded",
+                    "device_communication_degraded",
+                    "scheduled_maintenance_window",
+                    "salto_ks_office_mode",
+                    "salto_ks_privacy_mode",
+                    "privacy_mode",
+                    "salto_ks_subscription_limit_almost_reached",
+                    "salto_ks_lock_access_code_support_removed",
+                    "unknown_issue_with_phone",
+                    "lockly_time_zone_not_configured",
+                    "ultraloq_time_zone_unknown",
+                    "time_zone_unknown",
+                    "time_zone_mismatch",
+                    "two_n_device_missing_timezone",
+                    "hub_required_for_additional_capabilities",
+                    "service_mode",
+                    "provider_issue",
+                    "keynest_unsupported_locker",
+                    "accessory_keypad_setup_required",
+                    "accessory_keypad_low_battery",
+                    "battery_replacement_recommended",
+                    "unreliable_online_status",
+                    "max_access_codes_reached",
+                    "subscription_required_for_additional_capabilities",
+                ]
+            ]
+        ] = None,
+        has_errors_or_warnings: Optional[bool] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[
             Literal[
@@ -596,6 +715,7 @@ class AbstractAsyncDevices(abc.ABC):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -623,6 +743,10 @@ class AbstractAsyncDevices(abc.ABC):
         :param device_type: Device type for which you want to list devices.
 
         :param device_types: Array of device types for which you want to list devices.
+
+        :param has_error_or_warning_codes: Array of error and warning codes. Returns devices that have at least one error or warning with any of these codes.
+
+        :param has_errors_or_warnings: Filters devices by whether they have any errors or warnings. Specify ``true`` to list only devices with at least one error or warning, or ``false`` to list only devices with none.
 
         :param limit: Numerical limit on the number of devices to return.
 
@@ -822,7 +946,9 @@ class Devices(AbstractDevices):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -885,10 +1011,65 @@ class Devices(AbstractDevices):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
+        has_error_or_warning_codes: Optional[
+            List[
+                Literal[
+                    "device_offline",
+                    "device_removed",
+                    "hub_disconnected",
+                    "device_disconnected",
+                    "account_disconnected",
+                    "empty_backup_access_code_pool",
+                    "august_lock_not_authorized",
+                    "low_battery",
+                    "salto_ks_subscription_limit_exceeded",
+                    "insufficient_permissions",
+                    "dormakaba_sites_disconnected",
+                    "missing_device_credentials",
+                    "auxiliary_heat_running",
+                    "subscription_required",
+                    "bridge_disconnected",
+                    "partial_backup_access_code_pool",
+                    "many_active_backup_codes",
+                    "device_has_flaky_connection",
+                    "third_party_integration_detected",
+                    "ttlock_lock_gateway_unlocking_not_enabled",
+                    "ttlock_weak_gateway_signal",
+                    "power_saving_mode",
+                    "temperature_threshold_exceeded",
+                    "device_communication_degraded",
+                    "scheduled_maintenance_window",
+                    "salto_ks_office_mode",
+                    "salto_ks_privacy_mode",
+                    "privacy_mode",
+                    "salto_ks_subscription_limit_almost_reached",
+                    "salto_ks_lock_access_code_support_removed",
+                    "unknown_issue_with_phone",
+                    "lockly_time_zone_not_configured",
+                    "ultraloq_time_zone_unknown",
+                    "time_zone_unknown",
+                    "time_zone_mismatch",
+                    "two_n_device_missing_timezone",
+                    "hub_required_for_additional_capabilities",
+                    "service_mode",
+                    "provider_issue",
+                    "keynest_unsupported_locker",
+                    "accessory_keypad_setup_required",
+                    "accessory_keypad_low_battery",
+                    "battery_replacement_recommended",
+                    "unreliable_online_status",
+                    "max_access_codes_reached",
+                    "subscription_required_for_additional_capabilities",
+                ]
+            ]
+        ] = None,
+        has_errors_or_warnings: Optional[bool] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[
             Literal[
@@ -957,6 +1138,7 @@ class Devices(AbstractDevices):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -984,6 +1166,10 @@ class Devices(AbstractDevices):
         :param device_type: Device type for which you want to list devices.
 
         :param device_types: Array of device types for which you want to list devices.
+
+        :param has_error_or_warning_codes: Array of error and warning codes. Returns devices that have at least one error or warning with any of these codes.
+
+        :param has_errors_or_warnings: Filters devices by whether they have any errors or warnings. Specify ``true`` to list only devices with at least one error or warning, or ``false`` to list only devices with none.
 
         :param limit: Numerical limit on the number of devices to return.
 
@@ -1018,6 +1204,10 @@ class Devices(AbstractDevices):
             params["device_type"] = device_type
         if device_types is not None:
             params["device_types"] = device_types
+        if has_error_or_warning_codes is not None:
+            params["has_error_or_warning_codes"] = has_error_or_warning_codes
+        if has_errors_or_warnings is not None:
+            params["has_errors_or_warnings"] = has_errors_or_warnings
         if limit is not None:
             params["limit"] = limit
         if manufacturer is not None:
@@ -1268,7 +1458,9 @@ class AsyncDevices(AbstractAsyncDevices):
                 "sonos_speaker",
                 "alertify_sensor",
                 "hayward_pool_controller",
+                "jandy_pool_controller",
                 "hayward_pool",
+                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -1331,10 +1523,65 @@ class AsyncDevices(AbstractAsyncDevices):
                     "sonos_speaker",
                     "alertify_sensor",
                     "hayward_pool_controller",
+                    "jandy_pool_controller",
                     "hayward_pool",
+                    "jandy_pool",
                 ]
             ]
         ] = None,
+        has_error_or_warning_codes: Optional[
+            List[
+                Literal[
+                    "device_offline",
+                    "device_removed",
+                    "hub_disconnected",
+                    "device_disconnected",
+                    "account_disconnected",
+                    "empty_backup_access_code_pool",
+                    "august_lock_not_authorized",
+                    "low_battery",
+                    "salto_ks_subscription_limit_exceeded",
+                    "insufficient_permissions",
+                    "dormakaba_sites_disconnected",
+                    "missing_device_credentials",
+                    "auxiliary_heat_running",
+                    "subscription_required",
+                    "bridge_disconnected",
+                    "partial_backup_access_code_pool",
+                    "many_active_backup_codes",
+                    "device_has_flaky_connection",
+                    "third_party_integration_detected",
+                    "ttlock_lock_gateway_unlocking_not_enabled",
+                    "ttlock_weak_gateway_signal",
+                    "power_saving_mode",
+                    "temperature_threshold_exceeded",
+                    "device_communication_degraded",
+                    "scheduled_maintenance_window",
+                    "salto_ks_office_mode",
+                    "salto_ks_privacy_mode",
+                    "privacy_mode",
+                    "salto_ks_subscription_limit_almost_reached",
+                    "salto_ks_lock_access_code_support_removed",
+                    "unknown_issue_with_phone",
+                    "lockly_time_zone_not_configured",
+                    "ultraloq_time_zone_unknown",
+                    "time_zone_unknown",
+                    "time_zone_mismatch",
+                    "two_n_device_missing_timezone",
+                    "hub_required_for_additional_capabilities",
+                    "service_mode",
+                    "provider_issue",
+                    "keynest_unsupported_locker",
+                    "accessory_keypad_setup_required",
+                    "accessory_keypad_low_battery",
+                    "battery_replacement_recommended",
+                    "unreliable_online_status",
+                    "max_access_codes_reached",
+                    "subscription_required_for_additional_capabilities",
+                ]
+            ]
+        ] = None,
+        has_errors_or_warnings: Optional[bool] = None,
         limit: Optional[float] = None,
         manufacturer: Optional[
             Literal[
@@ -1403,6 +1650,7 @@ class AsyncDevices(AbstractAsyncDevices):
                 "yacan",
                 "sonos",
                 "hayward_omnilogic",
+                "jandy_iaqualink",
                 "tuya",
             ]
         ] = None,
@@ -1430,6 +1678,10 @@ class AsyncDevices(AbstractAsyncDevices):
         :param device_type: Device type for which you want to list devices.
 
         :param device_types: Array of device types for which you want to list devices.
+
+        :param has_error_or_warning_codes: Array of error and warning codes. Returns devices that have at least one error or warning with any of these codes.
+
+        :param has_errors_or_warnings: Filters devices by whether they have any errors or warnings. Specify ``true`` to list only devices with at least one error or warning, or ``false`` to list only devices with none.
 
         :param limit: Numerical limit on the number of devices to return.
 
@@ -1464,6 +1716,10 @@ class AsyncDevices(AbstractAsyncDevices):
             params["device_type"] = device_type
         if device_types is not None:
             params["device_types"] = device_types
+        if has_error_or_warning_codes is not None:
+            params["has_error_or_warning_codes"] = has_error_or_warning_codes
+        if has_errors_or_warnings is not None:
+            params["has_errors_or_warnings"] = has_errors_or_warnings
         if limit is not None:
             params["limit"] = limit
         if manufacturer is not None:

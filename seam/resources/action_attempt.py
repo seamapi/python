@@ -12,6 +12,8 @@ class LockDoorSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of locking a door.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -35,6 +37,7 @@ class LockDoorSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["LOCK_DOOR"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -44,6 +47,7 @@ class LockDoorSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -58,6 +62,8 @@ class LockDoorPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of locking a door.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -66,6 +72,7 @@ class LockDoorPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["LOCK_DOOR"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -75,6 +82,7 @@ class LockDoorPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -88,6 +96,8 @@ class LockDoorErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of locking a door.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -115,6 +125,7 @@ class LockDoorErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["LOCK_DOOR"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -124,6 +135,7 @@ class LockDoorErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -137,6 +149,8 @@ class UnlockDoorSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of unlocking a door.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -161,6 +175,7 @@ class UnlockDoorSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UNLOCK_DOOR"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -170,6 +185,7 @@ class UnlockDoorSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -184,6 +200,8 @@ class UnlockDoorPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of unlocking a door.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -192,6 +210,7 @@ class UnlockDoorPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UNLOCK_DOOR"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -201,6 +220,7 @@ class UnlockDoorPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -214,6 +234,8 @@ class UnlockDoorErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of unlocking a door.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -241,6 +263,7 @@ class UnlockDoorErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UNLOCK_DOOR"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -250,6 +273,7 @@ class UnlockDoorErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -263,6 +287,8 @@ class ScanCredentialSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of scanning a credential.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -751,6 +777,7 @@ class ScanCredentialSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_CREDENTIAL"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -760,6 +787,7 @@ class ScanCredentialSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -774,6 +802,8 @@ class ScanCredentialPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of scanning a credential.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error:
 
     :ivar result: Result of scanning a card. If the attempt was successful, includes a snapshot of credential data read from the physical encoder, the corresponding data stored on Seam and the access system, and any associated warnings.
@@ -782,6 +812,7 @@ class ScanCredentialPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_CREDENTIAL"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -791,6 +822,7 @@ class ScanCredentialPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -804,6 +836,8 @@ class ScanCredentialErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of scanning a credential.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -839,6 +873,7 @@ class ScanCredentialErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_CREDENTIAL"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -848,6 +883,7 @@ class ScanCredentialErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -861,6 +897,8 @@ class EncodeCredentialSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of encoding credential data from the physical encoder onto a card.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -1190,6 +1228,7 @@ class EncodeCredentialSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ENCODE_CREDENTIAL"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -1199,6 +1238,7 @@ class EncodeCredentialSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -1213,6 +1253,8 @@ class EncodeCredentialPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of encoding credential data from the physical encoder onto a card.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error:
 
     :ivar result: Result of an encoding attempt. If the attempt was successful, includes the credential data that was encoded onto the card.
@@ -1221,6 +1263,7 @@ class EncodeCredentialPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ENCODE_CREDENTIAL"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -1230,6 +1273,7 @@ class EncodeCredentialPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -1243,6 +1287,8 @@ class EncodeCredentialErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of encoding credential data from the physical encoder onto a card.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -1282,6 +1328,7 @@ class EncodeCredentialErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ENCODE_CREDENTIAL"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -1291,6 +1338,7 @@ class EncodeCredentialErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -1304,6 +1352,8 @@ class ScanToAssignCredentialSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of scanning a physical card and assigning the credential to an ACS user.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -1633,6 +1683,7 @@ class ScanToAssignCredentialSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -1642,6 +1693,7 @@ class ScanToAssignCredentialSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -1656,6 +1708,8 @@ class ScanToAssignCredentialPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of scanning a physical card and assigning the credential to an ACS user.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error:
 
     :ivar result: Result of a scan to assign attempt. If the attempt was successful, includes the credential data that was scanned and assigned.
@@ -1664,6 +1718,7 @@ class ScanToAssignCredentialPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -1673,6 +1728,7 @@ class ScanToAssignCredentialPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -1686,6 +1742,8 @@ class ScanToAssignCredentialErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of scanning a physical card and assigning the credential to an ACS user.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -1716,6 +1774,7 @@ class ScanToAssignCredentialErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SCAN_TO_ASSIGN_CREDENTIAL"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -1725,6 +1784,7 @@ class ScanToAssignCredentialErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -1738,6 +1798,8 @@ class AssignCredentialSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of assigning a pre-registered card credential to an access method.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -1983,6 +2045,7 @@ class AssignCredentialSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ASSIGN_CREDENTIAL"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -1992,6 +2055,7 @@ class AssignCredentialSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2006,6 +2070,8 @@ class AssignCredentialPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of assigning a pre-registered card credential to an access method.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error:
 
     :ivar result: Result of assigning a credential. If successful, includes the updated access method with the assigned credential.
@@ -2014,6 +2080,7 @@ class AssignCredentialPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ASSIGN_CREDENTIAL"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2023,6 +2090,7 @@ class AssignCredentialPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2036,6 +2104,8 @@ class AssignCredentialErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of assigning a pre-registered card credential to an access method.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error:
 
@@ -2065,6 +2135,7 @@ class AssignCredentialErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ASSIGN_CREDENTIAL"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2074,6 +2145,7 @@ class AssignCredentialErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2088,6 +2160,8 @@ class ResetSandboxWorkspaceSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of resetting a sandbox workspace.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2105,6 +2179,7 @@ class ResetSandboxWorkspaceSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2114,6 +2189,7 @@ class ResetSandboxWorkspaceSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2128,6 +2204,8 @@ class ResetSandboxWorkspacePendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of resetting a sandbox workspace.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2136,6 +2214,7 @@ class ResetSandboxWorkspacePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2145,6 +2224,7 @@ class ResetSandboxWorkspacePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2159,6 +2239,8 @@ class ResetSandboxWorkspaceErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of resetting a sandbox workspace.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2185,6 +2267,7 @@ class ResetSandboxWorkspaceErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["RESET_SANDBOX_WORKSPACE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2194,6 +2277,7 @@ class ResetSandboxWorkspaceErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2208,6 +2292,8 @@ class SetFanModeSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the fan mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2225,6 +2311,7 @@ class SetFanModeSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_FAN_MODE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2234,6 +2321,7 @@ class SetFanModeSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2248,6 +2336,8 @@ class SetFanModePendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the fan mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2256,6 +2346,7 @@ class SetFanModePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_FAN_MODE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2265,6 +2356,7 @@ class SetFanModePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2279,6 +2371,8 @@ class SetFanModeErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the fan mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2305,6 +2399,7 @@ class SetFanModeErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_FAN_MODE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2314,6 +2409,7 @@ class SetFanModeErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2328,6 +2424,8 @@ class SetHvacModeSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the HVAC mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2345,6 +2443,7 @@ class SetHvacModeSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_HVAC_MODE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2354,6 +2453,7 @@ class SetHvacModeSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2368,6 +2468,8 @@ class SetHvacModePendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the HVAC mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2376,6 +2478,7 @@ class SetHvacModePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_HVAC_MODE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2385,6 +2488,7 @@ class SetHvacModePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2399,6 +2503,8 @@ class SetHvacModeErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of setting the HVAC mode on a thermostat.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2425,6 +2531,7 @@ class SetHvacModeErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SET_HVAC_MODE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2434,6 +2541,7 @@ class SetHvacModeErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2448,6 +2556,8 @@ class ActivateClimatePresetSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of a climate preset activation.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2465,6 +2575,7 @@ class ActivateClimatePresetSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2474,6 +2585,7 @@ class ActivateClimatePresetSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2488,6 +2600,8 @@ class ActivateClimatePresetPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of a climate preset activation.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2496,6 +2610,7 @@ class ActivateClimatePresetPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2505,6 +2620,7 @@ class ActivateClimatePresetPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2519,6 +2635,8 @@ class ActivateClimatePresetErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of a climate preset activation.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2545,6 +2663,7 @@ class ActivateClimatePresetErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_CLIMATE_PRESET"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2554,6 +2673,7 @@ class ActivateClimatePresetErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2568,6 +2688,8 @@ class ActivateWeeklyProgramSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of returning a thermostat to its weekly program.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2585,6 +2707,7 @@ class ActivateWeeklyProgramSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_WEEKLY_PROGRAM"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2594,6 +2717,7 @@ class ActivateWeeklyProgramSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2608,6 +2732,8 @@ class ActivateWeeklyProgramPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of returning a thermostat to its weekly program.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2616,6 +2742,7 @@ class ActivateWeeklyProgramPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_WEEKLY_PROGRAM"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2625,6 +2752,7 @@ class ActivateWeeklyProgramPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2639,6 +2767,8 @@ class ActivateWeeklyProgramErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of returning a thermostat to its weekly program.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2665,6 +2795,7 @@ class ActivateWeeklyProgramErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["ACTIVATE_WEEKLY_PROGRAM"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2674,6 +2805,7 @@ class ActivateWeeklyProgramErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2688,6 +2820,8 @@ class SimulateKeypadCodeEntrySuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a keypad code entry.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2705,6 +2839,7 @@ class SimulateKeypadCodeEntrySuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2714,6 +2849,7 @@ class SimulateKeypadCodeEntrySuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2728,6 +2864,8 @@ class SimulateKeypadCodeEntryPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a keypad code entry.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2736,6 +2874,7 @@ class SimulateKeypadCodeEntryPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2745,6 +2884,7 @@ class SimulateKeypadCodeEntryPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2759,6 +2899,8 @@ class SimulateKeypadCodeEntryErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a keypad code entry.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2785,6 +2927,7 @@ class SimulateKeypadCodeEntryErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_KEYPAD_CODE_ENTRY"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2794,6 +2937,7 @@ class SimulateKeypadCodeEntryErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2808,6 +2952,8 @@ class SimulateManualLockViaKeypadSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a manual lock action using a keypad.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2825,6 +2971,7 @@ class SimulateManualLockViaKeypadSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2834,6 +2981,7 @@ class SimulateManualLockViaKeypadSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2848,6 +2996,8 @@ class SimulateManualLockViaKeypadPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a manual lock action using a keypad.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2856,6 +3006,7 @@ class SimulateManualLockViaKeypadPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2865,6 +3016,7 @@ class SimulateManualLockViaKeypadPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2879,6 +3031,8 @@ class SimulateManualLockViaKeypadErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of simulating a manual lock action using a keypad.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2905,6 +3059,7 @@ class SimulateManualLockViaKeypadErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SIMULATE_MANUAL_LOCK_VIA_KEYPAD"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -2914,6 +3069,7 @@ class SimulateManualLockViaKeypadErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2928,6 +3084,8 @@ class PushThermostatProgramsSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of pushing thermostat programs.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2945,6 +3103,7 @@ class PushThermostatProgramsSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -2954,6 +3113,7 @@ class PushThermostatProgramsSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -2968,6 +3128,8 @@ class PushThermostatProgramsPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of pushing thermostat programs.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -2976,6 +3138,7 @@ class PushThermostatProgramsPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -2985,6 +3148,7 @@ class PushThermostatProgramsPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -2999,6 +3163,8 @@ class PushThermostatProgramsErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of pushing thermostat programs.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3025,6 +3191,7 @@ class PushThermostatProgramsErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["PUSH_THERMOSTAT_PROGRAMS"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3034,6 +3201,7 @@ class PushThermostatProgramsErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3048,6 +3216,8 @@ class ConfigureAutoLockSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of configuring the auto-lock on a lock.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3065,6 +3235,7 @@ class ConfigureAutoLockSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3074,6 +3245,7 @@ class ConfigureAutoLockSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3088,6 +3260,8 @@ class ConfigureAutoLockPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of configuring the auto-lock on a lock.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3096,6 +3270,7 @@ class ConfigureAutoLockPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3105,6 +3280,7 @@ class ConfigureAutoLockPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3119,6 +3295,8 @@ class ConfigureAutoLockErrorActionAttempt:
 
     :ivar action_type: Action attempt to track the status of configuring the auto-lock on a lock.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3145,6 +3323,7 @@ class ConfigureAutoLockErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONFIGURE_AUTO_LOCK"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3154,6 +3333,7 @@ class ConfigureAutoLockErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3168,6 +3348,8 @@ class ConvertAccessCodeToManagedSuccessActionAttempt:
 
     :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3185,6 +3367,7 @@ class ConvertAccessCodeToManagedSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3194,6 +3377,7 @@ class ConvertAccessCodeToManagedSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3208,6 +3392,8 @@ class ConvertAccessCodeToManagedPendingActionAttempt:
 
     :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3216,6 +3402,7 @@ class ConvertAccessCodeToManagedPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3225,6 +3412,7 @@ class ConvertAccessCodeToManagedPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3238,6 +3426,8 @@ class ConvertAccessCodeToManagedErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Action attempt to track the status of converting an unmanaged access code to a managed access code.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3265,6 +3455,7 @@ class ConvertAccessCodeToManagedErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CONVERT_ACCESS_CODE_TO_MANAGED"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3274,6 +3465,7 @@ class ConvertAccessCodeToManagedErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3287,6 +3479,8 @@ class SyncAccessCodesSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Syncing access codes is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3305,6 +3499,7 @@ class SyncAccessCodesSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SYNC_ACCESS_CODES"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3314,6 +3509,7 @@ class SyncAccessCodesSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3328,6 +3524,8 @@ class SyncAccessCodesPendingActionAttempt:
 
     :ivar action_type: Syncing access codes is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3336,6 +3534,7 @@ class SyncAccessCodesPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SYNC_ACCESS_CODES"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3345,6 +3544,7 @@ class SyncAccessCodesPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3358,6 +3558,8 @@ class SyncAccessCodesErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Syncing access codes is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3385,6 +3587,7 @@ class SyncAccessCodesErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["SYNC_ACCESS_CODES"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3394,6 +3597,7 @@ class SyncAccessCodesErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3407,6 +3611,8 @@ class CreateAccessCodeSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Creating an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3430,6 +3636,7 @@ class CreateAccessCodeSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3439,6 +3646,7 @@ class CreateAccessCodeSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3453,6 +3661,8 @@ class CreateAccessCodePendingActionAttempt:
 
     :ivar action_type: Creating an access code is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3461,6 +3671,7 @@ class CreateAccessCodePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3470,6 +3681,7 @@ class CreateAccessCodePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3483,6 +3695,8 @@ class CreateAccessCodeErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Creating an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3510,6 +3724,7 @@ class CreateAccessCodeErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_ACCESS_CODE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3519,6 +3734,7 @@ class CreateAccessCodeErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3532,6 +3748,8 @@ class DeleteAccessCodeSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Deleting an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3550,6 +3768,7 @@ class DeleteAccessCodeSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3559,6 +3778,7 @@ class DeleteAccessCodeSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3573,6 +3793,8 @@ class DeleteAccessCodePendingActionAttempt:
 
     :ivar action_type: Deleting an access code is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3581,6 +3803,7 @@ class DeleteAccessCodePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3590,6 +3813,7 @@ class DeleteAccessCodePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3603,6 +3827,8 @@ class DeleteAccessCodeErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Deleting an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3630,6 +3856,7 @@ class DeleteAccessCodeErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_ACCESS_CODE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3639,6 +3866,7 @@ class DeleteAccessCodeErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3652,6 +3880,8 @@ class UpdateAccessCodeSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Updating an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3675,6 +3905,7 @@ class UpdateAccessCodeSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3684,6 +3915,7 @@ class UpdateAccessCodeSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3698,6 +3930,8 @@ class UpdateAccessCodePendingActionAttempt:
 
     :ivar action_type: Updating an access code is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3706,6 +3940,7 @@ class UpdateAccessCodePendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_ACCESS_CODE"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3715,6 +3950,7 @@ class UpdateAccessCodePendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3728,6 +3964,8 @@ class UpdateAccessCodeErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Updating an access code is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3755,6 +3993,7 @@ class UpdateAccessCodeErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_ACCESS_CODE"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3764,6 +4003,7 @@ class UpdateAccessCodeErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3777,6 +4017,8 @@ class CreateNoiseThresholdSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Creating a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3800,6 +4042,7 @@ class CreateNoiseThresholdSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3809,6 +4052,7 @@ class CreateNoiseThresholdSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3823,6 +4067,8 @@ class CreateNoiseThresholdPendingActionAttempt:
 
     :ivar action_type: Creating a noise threshold is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3831,6 +4077,7 @@ class CreateNoiseThresholdPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3840,6 +4087,7 @@ class CreateNoiseThresholdPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3853,6 +4101,8 @@ class CreateNoiseThresholdErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Creating a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3880,6 +4130,7 @@ class CreateNoiseThresholdErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["CREATE_NOISE_THRESHOLD"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -3889,6 +4140,7 @@ class CreateNoiseThresholdErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3902,6 +4154,8 @@ class DeleteNoiseThresholdSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Deleting a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -3920,6 +4174,7 @@ class DeleteNoiseThresholdSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -3929,6 +4184,7 @@ class DeleteNoiseThresholdSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -3943,6 +4199,8 @@ class DeleteNoiseThresholdPendingActionAttempt:
 
     :ivar action_type: Deleting a noise threshold is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -3951,6 +4209,7 @@ class DeleteNoiseThresholdPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -3960,6 +4219,7 @@ class DeleteNoiseThresholdPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -3973,6 +4233,8 @@ class DeleteNoiseThresholdErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Deleting a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -4000,6 +4262,7 @@ class DeleteNoiseThresholdErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["DELETE_NOISE_THRESHOLD"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -4009,6 +4272,7 @@ class DeleteNoiseThresholdErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -4022,6 +4286,8 @@ class UpdateNoiseThresholdSuccessActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Updating a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -4045,6 +4311,7 @@ class UpdateNoiseThresholdSuccessActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: Result
     status: Literal["success"]
@@ -4054,6 +4321,7 @@ class UpdateNoiseThresholdSuccessActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=cls.Result.from_dict(d.get("result") or {}),
             status=d.get("status", None),
@@ -4068,6 +4336,8 @@ class UpdateNoiseThresholdPendingActionAttempt:
 
     :ivar action_type: Updating a noise threshold is pending.
 
+    :ivar created_at: Date and time at which the action attempt was created.
+
     :ivar error: Error associated with the action.
 
     :ivar result: Result of the action.
@@ -4076,6 +4346,7 @@ class UpdateNoiseThresholdPendingActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_NOISE_THRESHOLD"]
+    created_at: str
     error: None
     result: None
     status: Literal["pending"]
@@ -4085,6 +4356,7 @@ class UpdateNoiseThresholdPendingActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=d.get("error", None),
             result=d.get("result", None),
             status=d.get("status", None),
@@ -4098,6 +4370,8 @@ class UpdateNoiseThresholdErrorActionAttempt:
     :ivar action_attempt_id: ID of the action attempt.
 
     :ivar action_type: Updating a noise threshold is pending.
+
+    :ivar created_at: Date and time at which the action attempt was created.
 
     :ivar error: Error associated with the action.
 
@@ -4125,6 +4399,7 @@ class UpdateNoiseThresholdErrorActionAttempt:
 
     action_attempt_id: str
     action_type: Literal["UPDATE_NOISE_THRESHOLD"]
+    created_at: str
     error: Error
     result: None
     status: Literal["error"]
@@ -4134,6 +4409,7 @@ class UpdateNoiseThresholdErrorActionAttempt:
         return cls(
             action_attempt_id=d.get("action_attempt_id", None),
             action_type=d.get("action_type", None),
+            created_at=d.get("created_at", None),
             error=cls.Error.from_dict(d.get("error") or {}),
             result=d.get("result", None),
             status=d.get("status", None),

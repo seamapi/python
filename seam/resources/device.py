@@ -101,7 +101,9 @@ class Device:
 
     :ivar location: Location information for the device.
 
-    :ivar mold_risk_level: Mold risk level as reported by the device, if the device measures it.
+    :ivar mold_display_risk: Display wording for the current mold risk, as reported by the provider or derived by Seam. The values are not stable and are only for display; use mold_risk_index for logic.
+
+    :ivar mold_risk_index: Mold risk index from 0 (no risk) to 1 (high risk), if the device measures it. Seam defines this scale and maps each provider onto it: 0 = low, 0.5 = medium, 1 = high for providers that report levels.
 
     :ivar named_sensors: Additional sensors of the same kind on the device, each with a stable ``sensor_name``. Present only when the device has more than one sensor of a kind or no single main sensor.
 
@@ -641,7 +643,9 @@ class Device:
 
         :ivar is_smoking_detected: Indicates whether the device detects smoking, if the device measures it.
 
-        :ivar mold_risk_level: Mold risk level as reported by the device, if the device measures it.
+        :ivar mold_display_risk: Display wording for the current mold risk, as reported by the provider or derived by Seam. The values are not stable and are only for display; use mold_risk_index for logic.
+
+        :ivar mold_risk_index: Mold risk index from 0 (no risk) to 1 (high risk), if the device measures it. Seam defines this scale and maps each provider onto it: 0 = low, 0.5 = medium, 1 = high for providers that report levels.
 
         :ivar noise_level_decibels: Noise level in decibels, if the device measures noise.
 
@@ -663,7 +667,8 @@ class Device:
         estimated_occupant_count: Optional[float]
         is_occupancy_detected: Optional[bool]
         is_smoking_detected: Optional[bool]
-        mold_risk_level: Optional[str]
+        mold_display_risk: Optional[str]
+        mold_risk_index: Optional[float]
         noise_level_decibels: Optional[float]
         noise_level_nrs: Optional[float]
         relative_humidity: Optional[float]
@@ -681,7 +686,8 @@ class Device:
                 estimated_occupant_count=d.get("estimated_occupant_count", None),
                 is_occupancy_detected=d.get("is_occupancy_detected", None),
                 is_smoking_detected=d.get("is_smoking_detected", None),
-                mold_risk_level=d.get("mold_risk_level", None),
+                mold_display_risk=d.get("mold_display_risk", None),
+                mold_risk_index=d.get("mold_risk_index", None),
                 noise_level_decibels=d.get("noise_level_decibels", None),
                 noise_level_nrs=d.get("noise_level_nrs", None),
                 relative_humidity=d.get("relative_humidity", None),
@@ -4818,7 +4824,9 @@ class Device:
         "sonos_speaker",
         "alertify_sensor",
         "hayward_pool_controller",
+        "jandy_pool_controller",
         "hayward_pool",
+        "jandy_pool",
     ]
     display_name: str
     errors: List[Errors]
@@ -4830,7 +4838,8 @@ class Device:
     is_online: bool
     is_smoking_detected: Optional[bool]
     location: Optional[Location]
-    mold_risk_level: Optional[str]
+    mold_display_risk: Optional[str]
+    mold_risk_index: Optional[float]
     named_sensors: Optional[List[NamedSensors]]
     nickname: Optional[str]
     noise_level_decibels: Optional[float]
@@ -4920,7 +4929,8 @@ class Device:
                 if d.get("location") is not None
                 else None
             ),
-            mold_risk_level=d.get("mold_risk_level", None),
+            mold_display_risk=d.get("mold_display_risk", None),
+            mold_risk_index=d.get("mold_risk_index", None),
             named_sensors=[
                 cls.NamedSensors.from_dict(i) for i in d.get("named_sensors") or []
             ],

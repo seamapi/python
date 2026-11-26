@@ -1623,7 +1623,9 @@ class UnmanagedDevice:
         "sonos_speaker",
         "alertify_sensor",
         "hayward_pool_controller",
+        "jandy_pool_controller",
         "hayward_pool",
+        "jandy_pool",
     ]
     display_name: str
     errors: List[Errors]
