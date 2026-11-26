@@ -264,7 +264,7 @@ class AccessCode:
     class ConflictingExternalModificationError(ResourceMapping):
         """Code was modified or removed externally after Seam successfully set it on the device. The external change conflicts with the state that Seam is trying to apply, so Seam will attempt to set the code on the device again.
 
-        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
+        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device. ``deactivated`` means the code is still on the device but was disabled or suspended.
 
         :ivar created_at: Date and time at which Seam created the error.
 
@@ -299,7 +299,7 @@ class AccessCode:
                     to=d.get("to", None),
                 )
 
-        change_type: Optional[Literal["modified", "removed"]]
+        change_type: Optional[Literal["modified", "removed", "deactivated"]]
         created_at: Optional[str]
         error_code: Literal["conflicting_external_modification"]
         is_access_code_error: Literal[True]
@@ -1201,7 +1201,7 @@ class AccessCode:
     class ExternalModificationInEffectWarning(ResourceMapping):
         """Code was modified or removed externally after Seam successfully set it on the device. External modification is allowed for this code, so the externally modified state is being honored.
 
-        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device.
+        :ivar change_type: Indicates the type of external modification. ``modified`` means the code's PIN or schedule was changed. ``removed`` means the code was deleted from the device. ``deactivated`` means the code is still on the device but was disabled or suspended.
 
         :ivar created_at: Date and time at which Seam created the warning.
 
@@ -1234,7 +1234,7 @@ class AccessCode:
                     to=d.get("to", None),
                 )
 
-        change_type: Optional[Literal["modified", "removed"]]
+        change_type: Optional[Literal["modified", "removed", "deactivated"]]
         created_at: Optional[str]
         message: str
         modified_fields: Optional[List[ModifiedFields]]

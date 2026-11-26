@@ -162,6 +162,7 @@ class DeviceProvider:
         "eufy",
         "sonos",
         "hayward_omnilogic",
+        "jandy_iaqualink",
         "tuya",
     ]
     display_name: str

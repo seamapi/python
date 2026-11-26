@@ -1448,6 +1448,8 @@ class AccessCodeDeletedEvent:
 
     :ivar created_at: Date and time at which the event was created.
 
+    :ivar description: Human-readable description of the deletion and its source.
+
     :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
 
     :ivar device_id: ID of the device associated with the affected access code.
@@ -1467,6 +1469,7 @@ class AccessCodeDeletedEvent:
     connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     connected_account_id: str
     created_at: str
+    description: Optional[str]
     device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
     device_id: str
     event_description: str
@@ -1485,6 +1488,7 @@ class AccessCodeDeletedEvent:
             ),
             connected_account_id=d.get("connected_account_id", None),
             created_at=d.get("created_at", None),
+            description=d.get("description", None),
             device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
             device_id=d.get("device_id", None),
             event_description=d.get("event_description", None),
@@ -3018,6 +3022,8 @@ class AccessMethodDeletedEvent:
 
     :ivar event_type:
 
+    :ivar failed_to_delete_access_code_ids: IDs of the access codes that were still set on a device when the access method was deleted. Access may still be possible with these codes until Seam removes them from the device. Each access code keeps its own deletion lifecycle, so watch it for ``access_code.deleted`` or ``access_code.failed_to_delete``. Only present when at least one access code was still set on a device.
+
     :ivar occurred_at: Date and time at which the event occurred.
 
     :ivar workspace_id: ID of the workspace associated with the event."""
@@ -3029,6 +3035,7 @@ class AccessMethodDeletedEvent:
     event_description: str
     event_id: str
     event_type: Literal["access_method.deleted"]
+    failed_to_delete_access_code_ids: Optional[List[str]]
     occurred_at: str
     workspace_id: str
 
@@ -3042,6 +3049,9 @@ class AccessMethodDeletedEvent:
             event_description=d.get("event_description", None),
             event_id=d.get("event_id", None),
             event_type=d.get("event_type", None),
+            failed_to_delete_access_code_ids=d.get(
+                "failed_to_delete_access_code_ids", None
+            ),
             occurred_at=d.get("occurred_at", None),
             workspace_id=d.get("workspace_id", None),
         )
@@ -5752,6 +5762,63 @@ class DeviceTamperedEvent:
 
 
 @dataclass
+class SensorSmokingDetectedEvent:
+    """A sensor reported smoking. Emitted once when ``is_smoking_detected`` becomes true. No event is emitted when it returns to false; re-read the device for the current value.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_id: ID of the connected account associated with the event.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_id: ID of the affected device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_id: str
+    created_at: str
+    customer_key: Optional[str]
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_id: str
+    event_description: str
+    event_id: str
+    event_type: Literal["sensor.smoking_detected"]
+    occurred_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_id=d.get("connected_account_id", None),
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_id=d.get("device_id", None),
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class DeviceLowBatteryEvent:
     """A device battery level dropped below the low threshold.
 
@@ -7602,6 +7669,193 @@ class ThermostatManuallyAdjustedEvent:
 
 
 @dataclass
+class ThermostatScheduleClimatePresetActivationMayFailEvent:
+    """A `thermostat <https://www.seam.co/docs/capability-guides/thermostats>`_ may fail to activate a `climate preset <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-climate-presets>`_ when a `thermostat schedule <https://www.seam.co/docs/capability-guides/thermostats/creating-and-managing-thermostat-schedules>`_ starts or ends, because the thermostat was offline shortly before the scheduled time. While the thermostat stays offline, the thermostat schedule carries a ``climate_preset_activation_may_fail`` warning until the scheduled time.
+
+    :ivar connected_account_custom_metadata: Custom metadata of the connected account, present when connected_account_id is provided.
+
+    :ivar connected_account_errors: Errors associated with the connected account.
+
+    :ivar connected_account_id: ID of the connected account associated with the event.
+
+    :ivar connected_account_warnings: Warnings associated with the connected account.
+
+    :ivar created_at: Date and time at which the event was created.
+
+    :ivar customer_key: The customer key associated with the device, if any.
+
+    :ivar device_custom_metadata: Custom metadata of the device, present when device_id is provided.
+
+    :ivar device_errors: Errors associated with the device.
+
+    :ivar device_id: ID of the affected device.
+
+    :ivar device_warnings: Warnings associated with the device.
+
+    :ivar event_description: Human-readable description of the event. Persisted when the event is created (so the creating code, including a provider, can supply a tailored description) and otherwise derived from the event.
+
+    :ivar event_id: ID of the event.
+
+    :ivar event_type:
+
+    :ivar occurred_at: Date and time at which the event occurred.
+
+    :ivar thermostat_schedule_ends_at: Date and time at which the thermostat schedule ends, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+    :ivar thermostat_schedule_id: ID of the thermostat schedule whose climate preset activation may fail.
+
+    :ivar thermostat_schedule_starts_at: Date and time at which the thermostat schedule starts, in `ISO 8601 <https://www.iso.org/iso-8601-date-and-time-format.html>`_ format.
+
+    :ivar workspace_id: ID of the workspace associated with the event."""
+
+    @dataclass
+    class ConnectedAccountErrors(ResourceMapping):
+        """Errors associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class ConnectedAccountWarnings(ResourceMapping):
+        """Warnings associated with the connected account.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    @dataclass
+    class DeviceErrors(ResourceMapping):
+        """Errors associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the error.
+
+        :ivar error_code: Unique identifier of the type of error. Enables quick recognition and categorization of the issue.
+
+        :ivar message: Detailed description of the error. Provides insights into the issue and potentially how to rectify it.
+        """
+
+        created_at: str
+        error_code: str
+        message: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                error_code=d.get("error_code", None),
+                message=d.get("message", None),
+            )
+
+    @dataclass
+    class DeviceWarnings(ResourceMapping):
+        """Warnings associated with the device.
+
+        :ivar created_at: Date and time at which Seam created the warning.
+
+        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
+
+        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
+        """
+
+        created_at: str
+        message: str
+        warning_code: str
+
+        @classmethod
+        def from_dict(cls, d: Any):
+            return cls(
+                created_at=d.get("created_at", None),
+                message=d.get("message", None),
+                warning_code=d.get("warning_code", None),
+            )
+
+    connected_account_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    connected_account_errors: List[ConnectedAccountErrors]
+    connected_account_id: str
+    connected_account_warnings: List[ConnectedAccountWarnings]
+    created_at: str
+    customer_key: Optional[str]
+    device_custom_metadata: Optional[Dict[str, Union[str, bool]]]
+    device_errors: List[DeviceErrors]
+    device_id: str
+    device_warnings: List[DeviceWarnings]
+    event_description: str
+    event_id: str
+    event_type: Literal["thermostat_schedule.climate_preset_activation_may_fail"]
+    occurred_at: str
+    thermostat_schedule_ends_at: str
+    thermostat_schedule_id: str
+    thermostat_schedule_starts_at: str
+    workspace_id: str
+
+    @classmethod
+    def from_dict(cls, d: Any):
+        return cls(
+            connected_account_custom_metadata=DeepAttrDict(
+                d.get("connected_account_custom_metadata", None)
+            ),
+            connected_account_errors=[
+                cls.ConnectedAccountErrors.from_dict(i)
+                for i in d.get("connected_account_errors") or []
+            ],
+            connected_account_id=d.get("connected_account_id", None),
+            connected_account_warnings=[
+                cls.ConnectedAccountWarnings.from_dict(i)
+                for i in d.get("connected_account_warnings") or []
+            ],
+            created_at=d.get("created_at", None),
+            customer_key=d.get("customer_key", None),
+            device_custom_metadata=DeepAttrDict(d.get("device_custom_metadata", None)),
+            device_errors=[
+                cls.DeviceErrors.from_dict(i) for i in d.get("device_errors") or []
+            ],
+            device_id=d.get("device_id", None),
+            device_warnings=[
+                cls.DeviceWarnings.from_dict(i) for i in d.get("device_warnings") or []
+            ],
+            event_description=d.get("event_description", None),
+            event_id=d.get("event_id", None),
+            event_type=d.get("event_type", None),
+            occurred_at=d.get("occurred_at", None),
+            thermostat_schedule_ends_at=d.get("thermostat_schedule_ends_at", None),
+            thermostat_schedule_id=d.get("thermostat_schedule_id", None),
+            thermostat_schedule_starts_at=d.get("thermostat_schedule_starts_at", None),
+            workspace_id=d.get("workspace_id", None),
+        )
+
+
+@dataclass
 class ThermostatTemperatureThresholdExceededEvent:
     """A `thermostat's <https://www.seam.co/docs/capability-guides/thermostats>`_ temperature reading exceeded the set `threshold <https://www.seam.co/docs/capability-guides/thermostats/setting-and-monitoring-temperature-thresholds>`_.
 
@@ -8384,6 +8638,7 @@ SeamEvent = Union[
     DeviceDisconnectedEvent,
     DeviceUnmanagedDisconnectedEvent,
     DeviceTamperedEvent,
+    SensorSmokingDetectedEvent,
     DeviceLowBatteryEvent,
     DeviceBatteryStatusChangedEvent,
     DeviceRemovedEvent,
@@ -8407,6 +8662,7 @@ SeamEvent = Union[
     LockDoorClosedEvent,
     ThermostatClimatePresetActivatedEvent,
     ThermostatManuallyAdjustedEvent,
+    ThermostatScheduleClimatePresetActivationMayFailEvent,
     ThermostatTemperatureThresholdExceededEvent,
     ThermostatTemperatureThresholdNoLongerExceededEvent,
     ThermostatTemperatureReachedSetPointEvent,
@@ -8498,6 +8754,7 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
     "device.disconnected": DeviceDisconnectedEvent,
     "device.unmanaged.disconnected": DeviceUnmanagedDisconnectedEvent,
     "device.tampered": DeviceTamperedEvent,
+    "sensor.smoking_detected": SensorSmokingDetectedEvent,
     "device.low_battery": DeviceLowBatteryEvent,
     "device.battery_status_changed": DeviceBatteryStatusChangedEvent,
     "device.removed": DeviceRemovedEvent,
@@ -8521,6 +8778,7 @@ _SEAM_EVENT_VARIANTS: Dict[str, Any] = {
     "lock.door_closed": LockDoorClosedEvent,
     "thermostat.climate_preset_activated": ThermostatClimatePresetActivatedEvent,
     "thermostat.manually_adjusted": ThermostatManuallyAdjustedEvent,
+    "thermostat_schedule.climate_preset_activation_may_fail": ThermostatScheduleClimatePresetActivationMayFailEvent,
     "thermostat.temperature_threshold_exceeded": ThermostatTemperatureThresholdExceededEvent,
     "thermostat.temperature_threshold_no_longer_exceeded": ThermostatTemperatureThresholdNoLongerExceededEvent,
     "thermostat.temperature_reached_set_point": ThermostatTemperatureReachedSetPointEvent,

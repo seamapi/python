@@ -36,13 +36,52 @@ class AbstractActionAttempts(abc.ABC):
         self,
         *,
         action_attempt_ids: Optional[List[str]] = None,
+        action_types: Optional[
+            List[
+                Literal[
+                    "LOCK_DOOR",
+                    "UNLOCK_DOOR",
+                    "SCAN_CREDENTIAL",
+                    "ENCODE_CREDENTIAL",
+                    "SCAN_TO_ASSIGN_CREDENTIAL",
+                    "ASSIGN_CREDENTIAL",
+                    "RESET_SANDBOX_WORKSPACE",
+                    "SET_FAN_MODE",
+                    "SET_HVAC_MODE",
+                    "ACTIVATE_CLIMATE_PRESET",
+                    "ACTIVATE_WEEKLY_PROGRAM",
+                    "SIMULATE_KEYPAD_CODE_ENTRY",
+                    "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+                    "PUSH_THERMOSTAT_PROGRAMS",
+                    "CONFIGURE_AUTO_LOCK",
+                    "CONVERT_ACCESS_CODE_TO_MANAGED",
+                    "SET_SPEAKER_VOLUME",
+                    "SET_SPEAKER_MUTE",
+                    "PAUSE_SPEAKER_PLAYBACK",
+                    "RESUME_SPEAKER_PLAYBACK",
+                    "PLAY_SPEAKER_CHIME",
+                    "PLAY_SPEAKER_FAVORITE",
+                    "PLAY_SPEAKER_AUDIO_CLIP",
+                    "SET_TEMPERATURE_CONTROLLER_MODE",
+                    "SYNC_ACCESS_CODES",
+                    "CREATE_ACCESS_CODE",
+                    "DELETE_ACCESS_CODE",
+                    "UPDATE_ACCESS_CODE",
+                    "CREATE_NOISE_THRESHOLD",
+                    "DELETE_NOISE_THRESHOLD",
+                    "UPDATE_NOISE_THRESHOLD",
+                ]
+            ]
+        ] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s or by ``device_id``, newest first.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
+
+        :param action_types: Types of the action attempts that you want to list, such as ``LOCK_DOOR`` and ``UNLOCK_DOOR``.
 
         :param device_id: ID of the device to filter action attempts by.
 
@@ -77,13 +116,52 @@ class AbstractAsyncActionAttempts(abc.ABC):
         self,
         *,
         action_attempt_ids: Optional[List[str]] = None,
+        action_types: Optional[
+            List[
+                Literal[
+                    "LOCK_DOOR",
+                    "UNLOCK_DOOR",
+                    "SCAN_CREDENTIAL",
+                    "ENCODE_CREDENTIAL",
+                    "SCAN_TO_ASSIGN_CREDENTIAL",
+                    "ASSIGN_CREDENTIAL",
+                    "RESET_SANDBOX_WORKSPACE",
+                    "SET_FAN_MODE",
+                    "SET_HVAC_MODE",
+                    "ACTIVATE_CLIMATE_PRESET",
+                    "ACTIVATE_WEEKLY_PROGRAM",
+                    "SIMULATE_KEYPAD_CODE_ENTRY",
+                    "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+                    "PUSH_THERMOSTAT_PROGRAMS",
+                    "CONFIGURE_AUTO_LOCK",
+                    "CONVERT_ACCESS_CODE_TO_MANAGED",
+                    "SET_SPEAKER_VOLUME",
+                    "SET_SPEAKER_MUTE",
+                    "PAUSE_SPEAKER_PLAYBACK",
+                    "RESUME_SPEAKER_PLAYBACK",
+                    "PLAY_SPEAKER_CHIME",
+                    "PLAY_SPEAKER_FAVORITE",
+                    "PLAY_SPEAKER_AUDIO_CLIP",
+                    "SET_TEMPERATURE_CONTROLLER_MODE",
+                    "SYNC_ACCESS_CODES",
+                    "CREATE_ACCESS_CODE",
+                    "DELETE_ACCESS_CODE",
+                    "UPDATE_ACCESS_CODE",
+                    "CREATE_NOISE_THRESHOLD",
+                    "DELETE_NOISE_THRESHOLD",
+                    "UPDATE_NOISE_THRESHOLD",
+                ]
+            ]
+        ] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s or by ``device_id``, newest first.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
+
+        :param action_types: Types of the action attempts that you want to list, such as ``LOCK_DOOR`` and ``UNLOCK_DOOR``.
 
         :param device_id: ID of the device to filter action attempts by.
 
@@ -147,13 +225,52 @@ class ActionAttempts(AbstractActionAttempts):
         self,
         *,
         action_attempt_ids: Optional[List[str]] = None,
+        action_types: Optional[
+            List[
+                Literal[
+                    "LOCK_DOOR",
+                    "UNLOCK_DOOR",
+                    "SCAN_CREDENTIAL",
+                    "ENCODE_CREDENTIAL",
+                    "SCAN_TO_ASSIGN_CREDENTIAL",
+                    "ASSIGN_CREDENTIAL",
+                    "RESET_SANDBOX_WORKSPACE",
+                    "SET_FAN_MODE",
+                    "SET_HVAC_MODE",
+                    "ACTIVATE_CLIMATE_PRESET",
+                    "ACTIVATE_WEEKLY_PROGRAM",
+                    "SIMULATE_KEYPAD_CODE_ENTRY",
+                    "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+                    "PUSH_THERMOSTAT_PROGRAMS",
+                    "CONFIGURE_AUTO_LOCK",
+                    "CONVERT_ACCESS_CODE_TO_MANAGED",
+                    "SET_SPEAKER_VOLUME",
+                    "SET_SPEAKER_MUTE",
+                    "PAUSE_SPEAKER_PLAYBACK",
+                    "RESUME_SPEAKER_PLAYBACK",
+                    "PLAY_SPEAKER_CHIME",
+                    "PLAY_SPEAKER_FAVORITE",
+                    "PLAY_SPEAKER_AUDIO_CLIP",
+                    "SET_TEMPERATURE_CONTROLLER_MODE",
+                    "SYNC_ACCESS_CODES",
+                    "CREATE_ACCESS_CODE",
+                    "DELETE_ACCESS_CODE",
+                    "UPDATE_ACCESS_CODE",
+                    "CREATE_NOISE_THRESHOLD",
+                    "DELETE_NOISE_THRESHOLD",
+                    "UPDATE_NOISE_THRESHOLD",
+                ]
+            ]
+        ] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s or by ``device_id``, newest first.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
+
+        :param action_types: Types of the action attempts that you want to list, such as ``LOCK_DOOR`` and ``UNLOCK_DOOR``.
 
         :param device_id: ID of the device to filter action attempts by.
 
@@ -166,6 +283,8 @@ class ActionAttempts(AbstractActionAttempts):
 
         if action_attempt_ids is not None:
             params["action_attempt_ids"] = action_attempt_ids
+        if action_types is not None:
+            params["action_types"] = action_types
         if device_id is not None:
             params["device_id"] = device_id
         if limit is not None:
@@ -235,13 +354,52 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
         self,
         *,
         action_attempt_ids: Optional[List[str]] = None,
+        action_types: Optional[
+            List[
+                Literal[
+                    "LOCK_DOOR",
+                    "UNLOCK_DOOR",
+                    "SCAN_CREDENTIAL",
+                    "ENCODE_CREDENTIAL",
+                    "SCAN_TO_ASSIGN_CREDENTIAL",
+                    "ASSIGN_CREDENTIAL",
+                    "RESET_SANDBOX_WORKSPACE",
+                    "SET_FAN_MODE",
+                    "SET_HVAC_MODE",
+                    "ACTIVATE_CLIMATE_PRESET",
+                    "ACTIVATE_WEEKLY_PROGRAM",
+                    "SIMULATE_KEYPAD_CODE_ENTRY",
+                    "SIMULATE_MANUAL_LOCK_VIA_KEYPAD",
+                    "PUSH_THERMOSTAT_PROGRAMS",
+                    "CONFIGURE_AUTO_LOCK",
+                    "CONVERT_ACCESS_CODE_TO_MANAGED",
+                    "SET_SPEAKER_VOLUME",
+                    "SET_SPEAKER_MUTE",
+                    "PAUSE_SPEAKER_PLAYBACK",
+                    "RESUME_SPEAKER_PLAYBACK",
+                    "PLAY_SPEAKER_CHIME",
+                    "PLAY_SPEAKER_FAVORITE",
+                    "PLAY_SPEAKER_AUDIO_CLIP",
+                    "SET_TEMPERATURE_CONTROLLER_MODE",
+                    "SYNC_ACCESS_CODES",
+                    "CREATE_ACCESS_CODE",
+                    "DELETE_ACCESS_CODE",
+                    "UPDATE_ACCESS_CODE",
+                    "CREATE_NOISE_THRESHOLD",
+                    "DELETE_NOISE_THRESHOLD",
+                    "UPDATE_NOISE_THRESHOLD",
+                ]
+            ]
+        ] = None,
         device_id: Optional[str] = None,
         limit: Optional[int] = None,
         page_cursor: Optional[Union[str, Null]] = None,
     ) -> List[ActionAttempt]:
-        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s.
+        """Returns a list of the `action attempts <https://www.seam.co/docs/core-concepts/action-attempts>`_ that you specify as an array of ``action_attempt_id``s or by ``device_id``, newest first.
 
         :param action_attempt_ids: IDs of the action attempts that you want to retrieve.
+
+        :param action_types: Types of the action attempts that you want to list, such as ``LOCK_DOOR`` and ``UNLOCK_DOOR``.
 
         :param device_id: ID of the device to filter action attempts by.
 
@@ -254,6 +412,8 @@ class AsyncActionAttempts(AbstractAsyncActionAttempts):
 
         if action_attempt_ids is not None:
             params["action_attempt_ids"] = action_attempt_ids
+        if action_types is not None:
+            params["action_types"] = action_types
         if device_id is not None:
             params["device_id"] = device_id
         if limit is not None:
