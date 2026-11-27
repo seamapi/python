@@ -29,7 +29,7 @@
   },
   "packageManager": "npm@11.19.0",
   "devDependencies": {
-    "@seamapi/blueprint": "^1.13.4",
+    "@seamapi/blueprint": "^1.13.5",
     "@seamapi/fake-seam-connect": "2.0.10",
     "@seamapi/smith": "^1.2.1",
     "@seamapi/types": "1.1246.0",
