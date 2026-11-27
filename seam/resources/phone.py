@@ -1056,29 +1056,6 @@ class Phone:
             )
 
     @dataclass
-    class ServiceModeWarning(ResourceMapping):
-        """Indicates that a technician has put the pool controller in service mode. Schedules and remote changes will not run until it is switched back.
-
-        :ivar created_at: Date and time at which Seam created the warning.
-
-        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-        """
-
-        created_at: str
-        message: str
-        warning_code: Literal["service_mode"]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                created_at=d.get("created_at", None),
-                message=d.get("message", None),
-                warning_code=d.get("warning_code", None),
-            )
-
-    @dataclass
     class ProviderIssueWarning(ResourceMapping):
         """Indicates a provider-specific issue that may affect device functionality.
 
@@ -1353,7 +1330,6 @@ class Phone:
         TimeZoneMismatchWarning,
         TwoNDeviceMissingTimezoneWarning,
         HubRequiredForAdditionalCapabilitiesWarning,
-        ServiceModeWarning,
         ProviderIssueWarning,
         KeynestUnsupportedLockerWarning,
         AccessoryKeypadSetupRequiredWarning,
@@ -1387,7 +1363,6 @@ class Phone:
         "time_zone_mismatch": TimeZoneMismatchWarning,
         "two_n_device_missing_timezone": TwoNDeviceMissingTimezoneWarning,
         "hub_required_for_additional_capabilities": HubRequiredForAdditionalCapabilitiesWarning,
-        "service_mode": ServiceModeWarning,
         "provider_issue": ProviderIssueWarning,
         "keynest_unsupported_locker": KeynestUnsupportedLockerWarning,
         "accessory_keypad_setup_required": AccessoryKeypadSetupRequiredWarning,

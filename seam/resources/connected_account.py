@@ -442,29 +442,6 @@ class ConnectedAccount:
                 warning_code=d.get("warning_code", None),
             )
 
-    @dataclass
-    class DormakabaSitesUnapprovedWarning(ResourceMapping):
-        """Indicates that one or more dormakaba sites associated with the connected account are not approved. Contact support@getseam.com to finish setting up your account.
-
-        :ivar created_at: Date and time at which Seam created the warning.
-
-        :ivar message: Detailed description of the warning. Provides insights into the issue and potentially how to rectify it.
-
-        :ivar warning_code: Unique identifier of the type of warning. Enables quick recognition and categorization of the issue.
-        """
-
-        created_at: str
-        message: str
-        warning_code: Literal["dormakaba_sites_unapproved"]
-
-        @classmethod
-        def from_dict(cls, d: Any):
-            return cls(
-                created_at=d.get("created_at", None),
-                message=d.get("message", None),
-                warning_code=d.get("warning_code", None),
-            )
-
     Errors = Union[
         AccountDisconnectedError,
         BridgeDisconnectedError,
@@ -486,7 +463,6 @@ class ConnectedAccount:
         BeingDeletedWarning,
         ProviderServiceUnavailableWarning,
         SetupRequiredWarning,
-        DormakabaSitesUnapprovedWarning,
     ]
     _WarningsVariants = {
         "scheduled_maintenance_window": ScheduledMaintenanceWindowWarning,
@@ -496,7 +472,6 @@ class ConnectedAccount:
         "being_deleted": BeingDeletedWarning,
         "provider_service_unavailable": ProviderServiceUnavailableWarning,
         "setup_required": SetupRequiredWarning,
-        "dormakaba_sites_unapproved": DormakabaSitesUnapprovedWarning,
     }
 
     accepted_capabilities: List[

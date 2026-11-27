@@ -150,7 +150,6 @@ class AbstractCustomers(abc.ABC):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -191,8 +190,6 @@ class AbstractCustomers(abc.ABC):
         :param sites: List of general sites or areas.
 
         :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
 
         :param tenants: List of tenants.
 
@@ -347,7 +344,6 @@ class AbstractAsyncCustomers(abc.ABC):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -388,8 +384,6 @@ class AbstractAsyncCustomers(abc.ABC):
         :param sites: List of general sites or areas.
 
         :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
 
         :param tenants: List of tenants.
 
@@ -627,7 +621,6 @@ class Customers(AbstractCustomers):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -668,8 +661,6 @@ class Customers(AbstractCustomers):
         :param sites: List of general sites or areas.
 
         :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
 
         :param tenants: List of tenants.
 
@@ -714,8 +705,6 @@ class Customers(AbstractCustomers):
             json_payload["sites"] = sites
         if spaces is not None:
             json_payload["spaces"] = spaces
-        if staff_members is not None:
-            json_payload["staff_members"] = staff_members
         if tenants is not None:
             json_payload["tenants"] = tenants
         if units is not None:
@@ -955,7 +944,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
         rooms: Optional[List[Dict[str, Any]]] = None,
         sites: Optional[List[Dict[str, Any]]] = None,
         spaces: Optional[List[Dict[str, Any]]] = None,
-        staff_members: Optional[List[Dict[str, Any]]] = None,
         tenants: Optional[List[Dict[str, Any]]] = None,
         units: Optional[List[Dict[str, Any]]] = None,
         user_identities: Optional[List[Dict[str, Any]]] = None,
@@ -996,8 +984,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
         :param sites: List of general sites or areas.
 
         :param spaces: List of general spaces or areas.
-
-        :param staff_members: List of staff members.
 
         :param tenants: List of tenants.
 
@@ -1042,8 +1028,6 @@ class AsyncCustomers(AbstractAsyncCustomers):
             json_payload["sites"] = sites
         if spaces is not None:
             json_payload["spaces"] = spaces
-        if staff_members is not None:
-            json_payload["staff_members"] = staff_members
         if tenants is not None:
             json_payload["tenants"] = tenants
         if units is not None:
