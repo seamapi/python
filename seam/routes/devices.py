@@ -119,10 +119,6 @@ class AbstractDevices(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_controller",
-                "jandy_pool_controller",
-                "hayward_pool",
-                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -184,10 +180,6 @@ class AbstractDevices(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_controller",
-                    "jandy_pool_controller",
-                    "hayward_pool",
-                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -522,10 +514,6 @@ class AbstractAsyncDevices(abc.ABC):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_controller",
-                "jandy_pool_controller",
-                "hayward_pool",
-                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -587,10 +575,6 @@ class AbstractAsyncDevices(abc.ABC):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_controller",
-                    "jandy_pool_controller",
-                    "hayward_pool",
-                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -945,10 +929,6 @@ class Devices(AbstractDevices):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_controller",
-                "jandy_pool_controller",
-                "hayward_pool",
-                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -1010,10 +990,6 @@ class Devices(AbstractDevices):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_controller",
-                    "jandy_pool_controller",
-                    "hayward_pool",
-                    "jandy_pool",
                 ]
             ]
         ] = None,
@@ -1457,10 +1433,6 @@ class AsyncDevices(AbstractAsyncDevices):
                 "unifi_protect_camera",
                 "sonos_speaker",
                 "alertify_sensor",
-                "hayward_pool_controller",
-                "jandy_pool_controller",
-                "hayward_pool",
-                "jandy_pool",
             ]
         ] = None,
         device_types: Optional[
@@ -1522,10 +1494,6 @@ class AsyncDevices(AbstractAsyncDevices):
                     "unifi_protect_camera",
                     "sonos_speaker",
                     "alertify_sensor",
-                    "hayward_pool_controller",
-                    "jandy_pool_controller",
-                    "hayward_pool",
-                    "jandy_pool",
                 ]
             ]
         ] = None,
